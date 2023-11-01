@@ -1,139 +1,108 @@
 import React from "react";
+import { InputWithLabel } from "../InputWithLabel";
 
 export const CenteralActivities = () => {
   return (
     <div className="w-full " dir="rtl">
-      <table className="w-full border border-gray-400 rounded-4xl">
-        <thead className="bg-gray-100 mb-5">
-          <tr>
-            <td>مرکزی طے شدھ سرگرمیاں</td>
-            <td>طےشدھ</td>
-            <td>منعقدھ</td>
-            <td>اوسط حاضری</td>
+      <table className="w-full border border-gray-400 ">
+        <div className=" w-full bg-gray-100 p-2 flex justify-between items-start">
+          <tr className=" w-full bg-gray-100 mb-3 flex justify-between items-start">
+            <td className="text-start w-full">مرکزی طے شدھ سرگرمیاں</td>
+            <td className="text-start w-full">طےشدھ</td>
+            <td className="text-start w-full">منعقدھ</td>
+            <td className="text-center w-full">اوسط حاضری</td>
           </tr>
-        </thead>
-        <tbody>
-          <tr>
+        </div>
+        <div className="p-2 flex w-full flex-col justify-between items-start">
+          <tr className=" w-full bg-gray-100 mb-5 flex justify-between items-start">
             <td>اجتمعِ ارکان</td>
             <td>
-              <input
-                type="number"
-                className="w-full border p-2 rounded-lg mb-2"
-                placeholder="Input 1"
-              />
+              <InputWithLabel label={""} type={"number"} />
             </td>
             <td>
-              <input
-                type="number"
-                className="w-full border p-2 rounded-lg mb-2"
-                placeholder="Input 1"
-              />
+              <td>
+                <InputWithLabel label={""} type={"number"} />
+              </td>
             </td>
             <td>
-              <input
-                type="number"
-                className="w-full border p-2 rounded-lg mb-2"
-                placeholder="Input 1"
-              />
+              <td>
+                <InputWithLabel label={""} type={"number"} />
+              </td>
             </td>
           </tr>
-          <tr>
+          <tr className=" w-full bg-gray-100 mb-5 flex justify-between items-start">
             <td>سٹڈی سرکل</td>
             <td>
-              <input
-                type="number"
-                className="w-full border p-2 rounded-lg mb-2"
-                placeholder="Input 1"
-              />
+              <td>
+                <InputWithLabel label={""} type={"number"} />
+              </td>
             </td>
             <td>
-              <input
-                type="number"
-                className="w-full border p-2 rounded-lg mb-2"
-                placeholder="Input 1"
-              />
+              <td>
+                <InputWithLabel label={""} type={"number"} />
+              </td>
             </td>
             <td>
-              <input
-                type="number"
-                className="w-full border p-2 rounded-lg mb-2"
-                placeholder="Input 1"
-              />
+              <td>
+                <InputWithLabel label={""} type={"number"} />
+              </td>
             </td>
           </tr>
-          <tr>
+          <tr className=" w-full bg-gray-100 mb-5 flex justify-between items-start">
             <td>اجتمع ناظمین</td>
             <td>
-              <input
-                type="number"
-                className="w-full border p-2 rounded-lg mb-2"
-                placeholder="Input 1"
-              />
+              <td>
+                <InputWithLabel label={""} type={"number"} />
+              </td>
             </td>
             <td>
-              <input
-                type="number"
-                className="w-full border p-2 rounded-lg mb-2"
-                placeholder="Input 1"
-              />
+              <td>
+                <InputWithLabel label={""} type={"number"} />
+              </td>
             </td>
             <td>
-              <input
-                type="number"
-                className="w-full border p-2 rounded-lg mb-2"
-                placeholder="Input 1"
-              />
+              <td>
+                <InputWithLabel label={""} type={"number"} />
+              </td>
             </td>
           </tr>
-          <tr>
+          <tr className=" w-full bg-gray-100 mb-5 flex justify-between items-start">
             <td>اجتمع امیدوار</td>
             <td>
-              <input
-                type="number"
-                className="w-full border p-2 rounded-lg mb-2"
-                placeholder="Input 1"
-              />
+              <td>
+                <InputWithLabel label={""} type={"number"} />
+              </td>
             </td>
             <td>
-              <input
-                type="number"
-                className="w-full border p-2 rounded-lg mb-2"
-                placeholder="Input 1"
-              />
+              <td>
+                <InputWithLabel label={""} type={"number"} />
+              </td>
             </td>
             <td>
-              <input
-                type="number"
-                className="w-full border p-2 rounded-lg mb-2"
-                placeholder="Input 1"
-              />
+              <td>
+                <InputWithLabel label={""} type={"number"} />
+              </td>
             </td>
           </tr>
-          <tr>
+          <tr className=" w-full bg-gray-100 mb-5 flex justify-between items-start">
             <td>صدورمیٹینگ</td>
             <td>
-              <input
-                type="number"
-                className="w-full border p-2 rounded-lg mb-2"
-                placeholder="Input 1"
-              />
+              <td>
+                <InputWithLabel label={""} type={"number"} />
+              </td>
             </td>
             <td>
-              <input
-                type="number"
-                className="w-full border p-2 rounded-lg mb-2"
-                placeholder="Input 1"
-              />
+              <td>
+                <InputWithLabel label={""} type={"number"} />
+              </td>
             </td>
             <td>
-              <input
-                type="number"
-                className="w-full border p-2 rounded-lg mb-2"
-                placeholder="Input 1"
-              />
+              <td>
+                <InputWithLabel label={""} type={"number"} />
+              </td>
             </td>
           </tr>
-        </tbody>
+        </div>
       </table>
     </div>
   );

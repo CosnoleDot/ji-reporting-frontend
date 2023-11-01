@@ -1,35 +1,107 @@
-export const Division = () => {
-  const headings = [
-    "تنظیم",
-    "آغاز میں",
-    "اضافہ",
-    "کمی",
-    "اختتام",
-    "فعال",
-    "غیر فعال",
-  ];
+import { InputWithLabel } from "../InputWithLabel";
 
+export const Division = () => {
   return (
-    <div>
-      <table className="w-full border-collapse border border-gray-300">
-        <thead>
-          <tr className="bg-gray-100">
-            {headings.map((heading, index) => (
-              <th key={index} className="border border-gray-300 p-2">
-                {heading}
-              </th>
-            ))}
+    <div className="w-full " dir="rtl">
+      <table className="w-full border border-gray-400 ">
+        <div className=" w-full bg-gray-100 p-2 flex justify-between items-start">
+          <tr className=" w-full bg-gray-100 mb-3 flex justify-between items-start">
+            <td className="text-start w-full">مرکزی طے شدھ سرگرمیاں</td>
+            <td className="text-start w-full">طےشدھ</td>
+            <td className="text-start w-full">منعقدھ</td>
+            <td className="text-center w-full">اوسط حاضری</td>
           </tr>
-        </thead>
-        <tbody>
-          <tr>
-            {headings.map((_, index) => (
-              <td key={index} className="border border-gray-300 p-2">
-                <input type="number" className="w-full border p-2" />
+        </div>
+        <div className="p-2 flex w-full flex-col justify-between items-start">
+          <tr className=" w-full bg-gray-100 mb-5 flex justify-between items-start">
+            <td>اجتمعِ ارکان</td>
+            <td>
+              <InputWithLabel label={""} type={"number"} />
+            </td>
+            <td>
+              <td>
+                <InputWithLabel label={""} type={"number"} />
               </td>
-            ))}
+            </td>
+            <td>
+              <td>
+                <InputWithLabel label={""} type={"number"} />
+              </td>
+            </td>
           </tr>
-        </tbody>
+          <tr className=" w-full bg-gray-100 mb-5 flex justify-between items-start">
+            <td>سٹڈی سرکل</td>
+            <td>
+              <td>
+                <InputWithLabel label={""} type={"number"} />
+              </td>
+            </td>
+            <td>
+              <td>
+                <InputWithLabel label={""} type={"number"} />
+              </td>
+            </td>
+            <td>
+              <td>
+                <InputWithLabel label={""} type={"number"} />
+              </td>
+            </td>
+          </tr>
+          <tr className=" w-full bg-gray-100 mb-5 flex justify-between items-start">
+            <td>اجتمع ناظمین</td>
+            <td>
+              <td>
+                <InputWithLabel label={""} type={"number"} />
+              </td>
+            </td>
+            <td>
+              <td>
+                <InputWithLabel label={""} type={"number"} />
+              </td>
+            </td>
+            <td>
+              <td>
+                <InputWithLabel label={""} type={"number"} />
+              </td>
+            </td>
+          </tr>
+          <tr className=" w-full bg-gray-100 mb-5 flex justify-between items-start">
+            <td>اجتمع امیدوار</td>
+            <td>
+              <td>
+                <InputWithLabel label={""} type={"number"} />
+              </td>
+            </td>
+            <td>
+              <td>
+                <InputWithLabel label={""} type={"number"} />
+              </td>
+            </td>
+            <td>
+              <td>
+                <InputWithLabel label={""} type={"number"} />
+              </td>
+            </td>
+          </tr>
+          <tr className=" w-full bg-gray-100 mb-5 flex justify-between items-start">
+            <td>صدورمیٹینگ</td>
+            <td>
+              <td>
+                <InputWithLabel label={""} type={"number"} />
+              </td>
+            </td>
+            <td>
+              <td>
+                <InputWithLabel label={""} type={"number"} />
+              </td>
+            </td>
+            <td>
+              <td>
+                <InputWithLabel label={""} type={"number"} />
+              </td>
+            </td>
+          </tr>
+        </div>
       </table>
     </div>
   );
