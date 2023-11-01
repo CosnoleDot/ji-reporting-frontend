@@ -1,17 +1,16 @@
 import React from "react";
-import { Division } from "../components/maqam/Division";
 import { CenteralActivities, ExpandParty, Library, Zeli } from "../components";
 import { OtherActivities } from "../components/OtherActivities";
 
-export const Maqam = () => {
+export const Division = () => {
   return (
     <div className="flex flex-col justify-center items-center p-4" dir="rtl">
-      <h2 className="text-2xl">جا ئزءکارکردگی رپورٹ (براے مقام)</h2>
+      <h2 className="text-2xl">جا ئزءکارکردگی رپورٹ (براے ڈویژن)</h2>
       <div className="w-full p-4">
         <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
           <div className="w-full md:pr-0 mb-2">
             <label htmlFor="" className="mb-2 text-lg">
-              مقام کانام
+              ڈویژن کانام
             </label>
             <input
               type="text"

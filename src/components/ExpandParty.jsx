@@ -6,7 +6,9 @@ export const ExpandParty = () => {
       <h3 className="text-lg mb-3">توسیع دعوت</h3>
       <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
         <div className="w-full md:pr-0 mb-2">
-          <label htmlFor="">روابط</label>
+          <label className="text-lg mb-2" htmlFor="">
+            روابط
+          </label>
           <input
             type="text"
             className="w-full border p-2 rounded-lg"
@@ -14,7 +16,9 @@ export const ExpandParty = () => {
           />
         </div>
         <div className="w-full mb-2">
-          <label htmlFor="">موجود</label>
+          <label className="text-lg mb-2" htmlFor="">
+            موجود
+          </label>
           <input
             type="text"
             className="w-full border p-2 rounded-lg"
@@ -24,7 +28,9 @@ export const ExpandParty = () => {
       </div>
       <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
         <div className="w-full md:pr-0 mb-2">
-          <label htmlFor="">ملاقاتیں</label>
+          <label className="text-lg mb-2" htmlFor="">
+            ملاقاتیں
+          </label>
           <input
             type="text"
             className="w-full border p-2 rounded-lg"
@@ -32,13 +38,15 @@ export const ExpandParty = () => {
           />
         </div>
         <div className="w-full mb-2">
-          <label htmlFor="">روابط رجسٹر</label>
+          <label className="text-lg mb-2" htmlFor="">
+            روابط رجسٹر
+          </label>
           <div className="mt-4 flex">
-            <label className="block">
+            <label className="text-md mb-1 block">
               <input type="radio" className="mr-2" name="radio-group" />
               مرتب
             </label>
-            <label className="block">
+            <label className="text-md mb-1 block">
               <input type="radio" className="mr-2" name="radio-group" />
               غیرمرتب
             </label>
@@ -46,11 +54,13 @@ export const ExpandParty = () => {
         </div>
       </div>
       <div className="w-full">
-        <h3>عام طلبء</h3>
+        <h3 className="text-xl">عام طلبء</h3>
       </div>
       <div className=" w-full lg:flex md:flex-row sm:flex-col mb-4 gap-2">
         <div className="w-full md:pr-0 mb-2">
-          <label htmlFor="">ملاقاتیں</label>
+          <label className="text-lg mb-2" htmlFor="">
+            ملاقاتیں
+          </label>
           <input
             type="text"
             className="w-full border p-2 rounded-lg"
@@ -58,7 +68,9 @@ export const ExpandParty = () => {
           />
         </div>
         <div className="w-full mb-2">
-          <label htmlFor="">تقسیم لٹریچر</label>
+          <label className="text-lg mb-2" htmlFor="">
+            تقسیم لٹریچر
+          </label>
           <input
             type="text"
             className="w-full border p-2 rounded-lg"
