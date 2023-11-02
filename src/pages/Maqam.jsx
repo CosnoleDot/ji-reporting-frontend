@@ -1,5 +1,5 @@
 import React from "react";
-import { Division } from "../components/maqam/Division";
+import { DivisionTable } from "../components/maqam/DivisionTable";
 import { CenteralActivities, ExpandParty, Library, Zeli } from "../components";
 import { OtherActivities } from "../components/OtherActivities";
 
@@ -31,7 +31,7 @@ export const Maqam = () => {
           </div>
         </div>
         <div className="mb-4">
-          <Division />
+          <DivisionTable />
         </div>
         <div className="mb-4">
           <CenteralActivities />

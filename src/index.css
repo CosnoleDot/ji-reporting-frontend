@@ -596,8 +596,32 @@ video {
   position: relative;
 }
 
+.left-1 {
+  left: 0.25rem;
+}
+
 .m-0 {
   margin: 0px;
+}
+
+.m-20 {
+  margin: 5rem;
+}
+
+.m-auto {
+  margin: auto;
+}
+
+.m-5 {
+  margin: 1.25rem;
+}
+
+.m-10 {
+  margin: 2.5rem;
+}
+
+.m-3 {
+  margin: 0.75rem;
 }
 
 .mx-auto {
@@ -625,12 +649,60 @@ video {
   margin-bottom: 1.25rem;
 }
 
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+
 .mr-2 {
   margin-right: 0.5rem;
 }
 
 .mt-4 {
   margin-top: 1rem;
+}
+
+.mb-10 {
+  margin-bottom: 2.5rem;
+}
+
+.mr-10 {
+  margin-right: 2.5rem;
+}
+
+.mr-1 {
+  margin-right: 0.25rem;
+}
+
+.ml-10 {
+  margin-left: 2.5rem;
+}
+
+.ml-20 {
+  margin-left: 5rem;
+}
+
+.mt-10 {
+  margin-top: 2.5rem;
+}
+
+.mt-20 {
+  margin-top: 5rem;
+}
+
+.ml-5 {
+  margin-left: 1.25rem;
+}
+
+.mt-2 {
+  margin-top: 0.5rem;
+}
+
+.mt-6 {
+  margin-top: 1.5rem;
+}
+
+.mt-3 {
+  margin-top: 0.75rem;
 }
 
 .block {
@@ -653,6 +725,22 @@ video {
   display: none;
 }
 
+.h-full {
+  height: 100%;
+}
+
+.h-screen {
+  height: 100vh;
+}
+
+.h-auto {
+  height: auto;
+}
+
+.h-32 {
+  height: 8rem;
+}
+
 .min-h-\[200px\] {
   min-height: 200px;
 }
@@ -661,12 +749,28 @@ video {
   width: 0.25rem;
 }
 
+.w-1\/2 {
+  width: 50%;
+}
+
 .w-\[8rem\] {
   width: 8rem;
 }
 
 .w-full {
   width: 100%;
+}
+
+.w-auto {
+  width: auto;
+}
+
+.w-32 {
+  width: 8rem;
+}
+
+.w-40 {
+  width: 10rem;
 }
 
 .min-w-\[700px\] {
@@ -770,12 +874,26 @@ video {
   border-radius: .5rem;
 }
 
+.rounded-sm {
+  border-radius: .125rem;
+}
+
 .border {
   border-width: 1px;
 }
 
 .border-none {
   border-style: none;
+}
+
+.bg-\[\#049cfc\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(4 156 252 / var(--tw-bg-opacity));
+}
+
+.bg-\[\#E9EBEF\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(233 235 239 / var(--tw-bg-opacity));
 }
 
 .bg-blue {
@@ -786,6 +904,10 @@ video {
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.bg-\[\] {
+  background-color: ;
 }
 
 .p-0 {
@@ -883,6 +1005,10 @@ video {
   line-height: 1rem;
 }
 
+.font-bold {
+  font-weight: 700;
+}
+
 .font-medium {
   font-weight: 500;
 }
@@ -899,9 +1025,19 @@ video {
   letter-spacing: 0.05em;
 }
 
+.text-\[\#049cfc\] {
+  --tw-text-opacity: 1;
+  color: rgb(4 156 252 / var(--tw-text-opacity));
+}
+
 .text-blue {
   --tw-text-opacity: 1;
   color: rgb(31 182 255 / var(--tw-text-opacity));
+}
+
+.text-gray {
+  --tw-text-opacity: 1;
+  color: rgb(132 146 166 / var(--tw-text-opacity));
 }
 
 .text-gray-light {
