@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import "./App.css";
 import { Division, Halqa, Home, Maqam, SignIn, SignUp } from "./pages";
-import { Navbar, Sidebar } from "./components";
+
 function App() {
   return (
     <div className="flex flex-col">
