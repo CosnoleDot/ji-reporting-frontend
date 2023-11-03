@@ -4,7 +4,7 @@ import {
   DivisionTable,
   ExpandParty,
   Library,
-  Zeli,
+  Zila,
 } from "../components";
 import { OtherActivities } from "../components/OtherActivities";
 
@@ -42,7 +42,7 @@ export const Division = () => {
           <CenteralActivities />
         </div>
         <div className="mb-4">
-          <Zeli />
+          <Zila />
         </div>
         <div className=" mb-4">
           <OtherActivities />

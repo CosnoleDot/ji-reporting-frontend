@@ -1,7 +1,7 @@
 import React from "react";
 import { InputWithLabel } from "../InputWithLabel";
 
-export const Zeli = () => {
+export const Zila = () => {
   return (
     <div className="w-full " dir="rtl">
       <table className="w-full border border-gray-400 ">

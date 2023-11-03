@@ -11,7 +11,7 @@ export const SignIn = () => {
           <h1 className="text-2xl font-bold text-center">Login Please</h1>
         </div>
         <div className="mb-6 mt-6 ">
-          <label htmlFor="" className=" text-gray font-medium">
+          <label htmlFor="" className=" opacity-70 font-medium">
             Username
           </label>
           <input
@@ -21,7 +21,7 @@ export const SignIn = () => {
           />
         </div>
         <div className="mb-6 ">
-          <label htmlFor="" className="text-gray font-medium">
+          <label htmlFor="" className=" opacity-70 font-medium">
             Password
           </label>
           <input
