@@ -1,14 +1,16 @@
 import React from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import "./App.css";
-import { Division, Halqa, Home, Maqam } from "./pages";
-
+import { Division, Halqa, Home, Maqam, SignIn, SignUp } from "./pages";
+import { Navbar, Sidebar } from "./components";
 function App() {
   return (
     <div className="flex flex-col">
       <BrowserRouter>
         <Routes>
           <Route path="/halqa" element={<Halqa />} />
+          <Route path="/login" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route path="/maqam" element={<Maqam />} />
           <Route path="/division" element={<Division />} />
           <Route path="/" element={<Home />} />

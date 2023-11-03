@@ -1,5 +1,11 @@
 import React from "react";
-import { CenteralActivities, ExpandParty, Library, Zeli } from "../components";
+import {
+  CenteralActivities,
+  DivisionTable,
+  ExpandParty,
+  Library,
+  Zila,
+} from "../components";
 import { OtherActivities } from "../components/OtherActivities";
 
 export const Division = () => {
@@ -30,13 +36,13 @@ export const Division = () => {
           </div>
         </div>
         <div className="mb-4">
-          <Division />
+          <DivisionTable />
         </div>
         <div className="mb-4">
           <CenteralActivities />
         </div>
         <div className="mb-4">
-          <Zeli />
+          <Zila />
         </div>
         <div className=" mb-4">
           <OtherActivities />

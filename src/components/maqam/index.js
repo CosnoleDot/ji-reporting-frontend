@@ -1,3 +1,3 @@
 export * from "./CenteralActivities";
-export * from "./Division";
-export * from "./Zeli";
+export * from "./DivisionTable";
+export * from "./Zila";
