@@ -11,7 +11,7 @@ export const Sidebar = () => {
   const handleMenuItemClick = (index) => {
     setOpenSubMenu(openSubMenu === index ? null : index);
   };
-  const userRole = "division";
+  const userRole = "province";
 
   return (
     <div className="drawer lg:drawer-close z-50 ">
@@ -78,12 +78,16 @@ export const Sidebar = () => {
                     ))}
                   </ul>
                 )}
+                {/* Role condition for checking the user */}
+
                 {val.Role &&
-                  val.Role.find((role) => role.user === userRole) &&
+                  val.Role.find(
+                    (writeacess) => writeacess.access.rw[0] === userRole
+                  ) &&
                   openSubMenu === key && (
                     <ul>
                       {val.Role.map((subItem, key) =>
-                        subItem.user === userRole ? (
+                        subItem.access.rw[0] === userRole ? (
                           <li key={key}>
                             <Link to={subItem.link}>{subItem.title}</Link>
                           </li>

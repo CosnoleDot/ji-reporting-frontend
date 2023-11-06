@@ -31,21 +31,13 @@ export const SidebarData = [
   },
   {
     title: "Edit Halqa Details",
-
     Role: [
       {
-        user: "division",
-        title: "Halqa Detail",
-        link: "/halqa",
-      },
-      {
-        user: "maqam",
-        title: "Halqa Detail",
-        link: "/halqa",
-      },
-      {
-        user: "province",
-        title: "Halqa Detail",
+        title: "Halqa Data",
+        access: {
+          ro: ["halqa", "maqam", "tehsil", "district", "division"],
+          rw: ["province"],
+        },
         link: "/halqa",
       },
     ],
@@ -56,32 +48,30 @@ export const SidebarData = [
   },
   {
     title: "Edit User Data",
-
     Role: [
       {
-        user: "division",
-        title: "Halqa User Detail",
+        title: "Halqa Detail",
+        access: {
+          ro: ["halqa", "maqam", "tehsil", "district", "division"],
+          rw: ["province"],
+        },
         link: "/halqa",
       },
       {
-        user: "maqam",
-        title: "Halqa User Detail",
-        link: "/halqa",
+        title: "Maqam Detail",
+        access: {
+          ro: ["halqa", "maqam", "tehsil", "district", "division"],
+          rw: ["province"],
+        },
+        link: "/Maqam",
       },
       {
-        user: "province",
-        title: "Maqam User Detail",
-        link: "/maqam",
-      },
-      {
-        user: "province",
-        title: "Division User Detail",
-        link: "/division",
-      },
-      {
-        user: "province",
-        title: "Halqa User Detail",
-        link: "/halqa",
+        title: "Division Detail",
+        access: {
+          ro: ["halqa", "maqam", "tehsil", "district", "division"],
+          rw: ["province"],
+        },
+        link: "/Division",
       },
     ],
   },
