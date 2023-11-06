@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../../assets/imgs/download3.png";
+import logo from "../../assets/png/download3.png";
 import indicator from "../../assets/svgs/indicator.svg";
 import { Sidebar } from "./Sidebar";
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logo from "../../assets/imgs/profile.jpg";
+import logo from "../../assets/jpgs/profile.jpg";
 import hamburger from "../../assets/svgs/hamburgerIcon.svg";
 import { SidebarData } from "./SidebarData";
 import { useState } from "react";

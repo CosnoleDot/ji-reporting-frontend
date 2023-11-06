@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../assets/imgs/download3.png";
+import logo from "../assets/png/download3.png";
 import { useNavigate } from "react-router-dom";
 export const SignIn = () => {
   const navigate = useNavigate();
