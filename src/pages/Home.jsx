@@ -7,9 +7,9 @@ export const Home = () => {
   const navigate = useNavigate();
   return (
     <Layout>
-      <div className="w-full p-2 flex justify-start items-center flex-col">
+      <div className="w-full p-2 flex justify-start items-center flex-col ">
         <h1 className="text-xl mb-3">Dashboard</h1>
-        <div className="w-full justify-between items-center flex md:flex-col lg:flex-row gap-2 mb-4">
+        <div className="w-full justify-between items-center flex sm:flex-col md:flex-col lg:flex-row gap-2 mb-4">
           <div className="w-full bg-blue rounded-lg min-h-[200px] p-2">
             Total Reports{" "}
           </div>

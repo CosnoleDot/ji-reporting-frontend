@@ -2,9 +2,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/imgs/profile.jpg";
 import hamburger from "../../assets/svgs/hamburgerIcon.svg";
+import { SidebarData } from "./SidebarData";
+import { useState } from "react";
 // import edit from "../../assets/svgs/editIcon.svg";
 // import closeBtn from "../../assets/svgs/closeIcon.svg";
 export const Sidebar = () => {
+  const [openSubMenu, setOpenSubMenu] = useState("");
+
+  const handleMenuItemClick = (index) => {
+    setOpenSubMenu(openSubMenu === index ? null : index);
+  };
   return (
     <div className="drawer lg:drawer-close z-50 ">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -16,12 +23,7 @@ export const Sidebar = () => {
         >
           <input type="checkbox" />
 
-          {/* hamburger icon */}
-          {/* <Hamburger /> */}
           <img src={hamburger} alt="asd" />
-          {/* close icon */}
-          {/* <CloseBtn /> */}
-          {/* <img src={closeBtn} alt="asd" /> */}
         </label>
       </div>
       <div className="drawer-side ">
@@ -31,7 +33,7 @@ export const Sidebar = () => {
           className="drawer-overlay"
         ></label>
         {/* Main side bar components */}
-        <ul className="menu p-4 w-80 min-h-full bg-[#049cfc] font-medium text-lg gap-1">
+        <ul className="menu p-4 w-80 min-h-full bg-[#049cfc] font-medium text-lg gap-1 sm:w-60">
           {/* User Profile */}
 
           <div className="w-full h-50 flex flex-col mb-4 ">
@@ -45,12 +47,12 @@ export const Sidebar = () => {
             {/* Name label */}
             <label
               htmlFor=""
-              className="text-black font-sans font-bold text-xl"
+              className="text-white font-sans font-bold text-xl "
             >
               Sandra Adams
             </label>
             {/* Email label */}
-            <label htmlFor="" className="text-black text-opacity-50 text-sm">
+            <label htmlFor="" className="text-white  text-sm">
               sandra@example.com
             </label>
           </div>
@@ -58,71 +60,32 @@ export const Sidebar = () => {
           {/* Sidebar content here */}
 
           <div className="divider"></div>
-          <li className="text-white">
-            <Link to="/">Deshboard</Link>
-          </li>
-
-          <li className="text-white">
-            <details close>
-              <summary>New Reports</summary>
-              <ul>
-                <li className="text-white">
-                  <Link to="/halqa">Halqa</Link>
-                </li>
-                <li className="text-white">
-                  <Link to="/maqam">Maqam</Link>
-                </li>
-                <li className="text-white">
-                  <Link to="/division">Division</Link>
-                </li>
-              </ul>
-            </details>
-          </li>
-          <li
-            className="text-white"
-            onClick={() => {
-              alert("to show New User Request");
-            }}
-          >
-            <Link to="/halqa">New User Request</Link>
-          </li>
-          <li
-            className="text-white"
-            onClick={() => {
-              alert("to show report comparison");
-            }}
-          >
-            <Link to="/">Reports Comparison</Link>
-          </li>
-          <li className="text-white">
-            <Link to="/">Edit Halqa Details</Link>
-          </li>
-
-          <li
-            className="text-white"
-            onClick={() => {
-              alert("to show Edit User Data comparison");
-            }}
-          >
-            <Link to="/">Edit User Data</Link>
-          </li>
-          <li
-            className="text-white"
-            onClick={() => {
-              alert("to show edit user profile");
-            }}
-          >
-            <Link to="/">Edit Your Profile</Link>
-          </li>
-          <li>
-            <Link to="/login">
-              <label
-                htmlFor=""
-                className="btn btn-active w-60 p-0  hover:text-[#049cfc]"
+          {SidebarData.map((val, key) => {
+            return (
+              <li
+                className="text-white flex flex-col"
+                key={key}
+                onClick={() => handleMenuItemClick(key)}
               >
-                Logout
-              </label>
-            </Link>
+                <Link to={val.link}>{val.title}</Link>
+
+                {val.subRoute && openSubMenu === key && (
+                  <ul>
+                    {val.subRoute.map((subItem, subKey) => (
+                      <li key={subKey}>
+                        <Link to={subItem.link}>{subItem.title}</Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            );
+          })}
+          <div className="divider"></div>
+          <li>
+            <button className="btn btn-md text-opacity-50 p-4  sm:btn">
+              logout
+            </button>
           </li>
         </ul>
       </div>
