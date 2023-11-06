@@ -4,14 +4,15 @@ import logo from "../../assets/jpgs/profile.jpg";
 import hamburger from "../../assets/svgs/hamburgerIcon.svg";
 import { SidebarData } from "./SidebarData";
 import { useState } from "react";
-// import edit from "../../assets/svgs/editIcon.svg";
-// import closeBtn from "../../assets/svgs/closeIcon.svg";
+
 export const Sidebar = () => {
   const [openSubMenu, setOpenSubMenu] = useState("");
 
   const handleMenuItemClick = (index) => {
     setOpenSubMenu(openSubMenu === index ? null : index);
   };
+  const userRole = "division";
+
   return (
     <div className="drawer lg:drawer-close z-50 ">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -77,6 +78,21 @@ export const Sidebar = () => {
                     ))}
                   </ul>
                 )}
+                {val.Role &&
+                  val.Role.find((role) => role.user === userRole) &&
+                  openSubMenu === key && (
+                    <ul>
+                      {val.Role.map((subItem, key) =>
+                        subItem.user === userRole ? (
+                          <li key={key}>
+                            <Link to={subItem.link}>{subItem.title}</Link>
+                          </li>
+                        ) : (
+                          <></>
+                        )
+                      )}
+                    </ul>
+                  )}
               </li>
             );
           })}

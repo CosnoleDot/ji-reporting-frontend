@@ -1,7 +1,7 @@
 export const SidebarData = [
   {
     title: "New Report",
-    link: "/",
+
     subRoute: [
       {
         title: "Halqa",
@@ -18,9 +18,8 @@ export const SidebarData = [
     ],
   },
   {
-    title: "Deshboard",
+    title: "Dashboard",
     link: "/",
-    // icon: <ReportIcon />,
   },
   {
     title: "New User Requests",
@@ -32,7 +31,24 @@ export const SidebarData = [
   },
   {
     title: "Edit Halqa Details",
-    link: "/halqa",
+
+    Role: [
+      {
+        user: "division",
+        title: "Halqa Detail",
+        link: "/halqa",
+      },
+      {
+        user: "maqam",
+        title: "Halqa Detail",
+        link: "/halqa",
+      },
+      {
+        user: "province",
+        title: "Halqa Detail",
+        link: "/halqa",
+      },
+    ],
   },
   {
     title: "Reports Comparison",
@@ -40,10 +56,33 @@ export const SidebarData = [
   },
   {
     title: "Edit User Data",
-    link: "/",
+
+    Role: [
+      {
+        user: "division",
+        title: "Halqa User Detail",
+        link: "/halqa",
+      },
+      {
+        user: "maqam",
+        title: "Halqa User Detail",
+        link: "/halqa",
+      },
+      {
+        user: "province",
+        title: "Maqam User Detail",
+        link: "/maqam",
+      },
+      {
+        user: "province",
+        title: "Division User Detail",
+        link: "/division",
+      },
+      {
+        user: "province",
+        title: "Halqa User Detail",
+        link: "/halqa",
+      },
+    ],
   },
-  // {
-  //   title: "Logout",
-  //   link: "/login",
-  // },
 ];
