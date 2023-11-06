@@ -57,9 +57,8 @@ export const Sidebar = () => {
             </label>
           </div>
 
-          {/* Sidebar content here */}
-
           <div className="divider"></div>
+          {/* Sidebar content here */}
           {SidebarData.map((val, key) => {
             return (
               <li
@@ -73,7 +72,7 @@ export const Sidebar = () => {
                   <ul>
                     {val.subRoute.map((subItem, subKey) => (
                       <li key={subKey}>
-                        <Link to="/login">{subItem.title}</Link>
+                        <Link to={subItem.link}>{subItem.title}</Link>
                       </li>
                     ))}
                   </ul>

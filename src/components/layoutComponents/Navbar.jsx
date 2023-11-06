@@ -1,11 +1,12 @@
 import React from "react";
 import logo from "../../assets/png/download3.png";
 import indicator from "../../assets/svgs/indicator.svg";
+
 import { Sidebar } from "./Sidebar";
 
 export const Navbar = () => {
   return (
-    <div className="navbar  bg-base-100 p-6 border-b border-opacity-10">
+    <div className="navbar  bg-base-100  ">
       <div className="flex-none">
         <Sidebar />
       </div>

@@ -5,6 +5,7 @@ export const Layout = ({ children }) => {
   return (
     <div>
       <Navbar />
+      <div className="divider"></div>
       {children}
     </div>
   );
