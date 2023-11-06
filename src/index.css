@@ -4237,10 +4237,6 @@ details.collapse summary::-webkit-details-marker {
   z-index: 50;
 }
 
-.z-\[1\] {
-  z-index: 1;
-}
-
 .m-0 {
   margin: 0px;
 }
@@ -4265,16 +4261,16 @@ details.collapse summary::-webkit-details-marker {
   margin: 0.75rem;
 }
 
+.m-4 {
+  margin: 1rem;
+}
+
 .m-5 {
   margin: 1.25rem;
 }
 
 .m-auto {
   margin: auto;
-}
-
-.m-4 {
-  margin: 1rem;
 }
 
 .mx-auto {
@@ -4434,6 +4430,10 @@ details.collapse summary::-webkit-details-marker {
   height: 15rem;
 }
 
+.h-7 {
+  height: 1.75rem;
+}
+
 .h-8 {
   height: 2rem;
 }
@@ -4448,10 +4448,6 @@ details.collapse summary::-webkit-details-marker {
 
 .h-screen {
   height: 100vh;
-}
-
-.h-7 {
-  height: 1.75rem;
 }
 
 .max-h-56 {
@@ -5334,27 +5330,6 @@ details.collapse summary::-webkit-details-marker {
     outline-color: hsl(var(--p) / 1);
   }
 
-  .sm\:btn-sm {
-    height: 2rem;
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
-    min-height: 2rem;
-    font-size: 0.875rem;
-  }
-
-  .btn-square:where(.sm\:btn-sm) {
-    height: 2rem;
-    width: 2rem;
-    padding: 0px;
-  }
-
-  .btn-circle:where(.sm\:btn-sm) {
-    height: 2rem;
-    width: 2rem;
-    border-radius: 9999px;
-    padding: 0px;
-  }
-
   .btn-group .sm\:btn:not(:first-child):not(:last-child) {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -5418,11 +5393,6 @@ details.collapse summary::-webkit-details-marker {
   }
 }
 
-.hover\:text-\[\#049cfc\]:hover {
-  --tw-text-opacity: 1;
-  color: rgb(4 156 252 / var(--tw-text-opacity));
-}
-
 .focus\:outline-none:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
@@ -5440,10 +5410,6 @@ details.collapse summary::-webkit-details-marker {
 }
 
 @media (min-width: 340px) and (max-width: 767px) {
-  .sm\:w-40 {
-    width: 10rem;
-  }
-
   .sm\:w-60 {
     width: 15rem;
   }

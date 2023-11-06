@@ -73,7 +73,7 @@ export const Sidebar = () => {
                   <ul>
                     {val.subRoute.map((subItem, subKey) => (
                       <li key={subKey}>
-                        <Link to={subItem.link}>{subItem.title}</Link>
+                        <Link to="/login">{subItem.title}</Link>
                       </li>
                     ))}
                   </ul>
@@ -82,11 +82,13 @@ export const Sidebar = () => {
             );
           })}
           <div className="divider"></div>
-          <li>
-            <button className="btn btn-md text-opacity-50 p-4  sm:btn">
-              logout
-            </button>
-          </li>
+          <Link to="/login">
+            <li>
+              <button className="btn btn-md text-opacity-50 p-4  sm:btn">
+                Logout
+              </button>
+            </li>
+          </Link>
         </ul>
       </div>
     </div>

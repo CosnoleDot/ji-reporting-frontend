@@ -61,6 +61,9 @@ module.exports = {
       lg: ".5rem",
       full: "9999px",
     },
+    daisyui: {
+      themes: ["light"],
+    },
     extend: {
       spacing: {
         128: "32rem",
