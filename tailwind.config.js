@@ -2,14 +2,22 @@
 module.exports = {
   content: ["./src/**/**"],
   theme: {
-    // screens: {
-    //   xs: "420px",
-    //   sm: "620px",
-    //   md: "728px",
-    //   lg: "1024px",
-    //   xl: "1280px",
-    //   "2xl": "1536px",
-    // },
+    screens: {
+      sm: { min: "340px", max: "767px" },
+      // => @media (min-width: 640px and max-width: 767px) { ... }
+
+      md: { min: "768px", max: "1023px" },
+      // => @media (min-width: 768px and max-width: 1023px) { ... }
+
+      lg: { min: "1024px", max: "1279px" },
+      // => @media (min-width: 1024px and max-width: 1279px) { ... }
+      //   xs: "420px",
+      //   sm: "620px",
+      //   md: "728px",
+      //   lg: "1024px",
+      //   xl: "1280px",
+      //   "2xl": "1536px",
+    },
     colors: {
       blue: "#1fb6ff",
       purple: "#7e5bef",
@@ -52,6 +60,9 @@ module.exports = {
       DEFAULT: ".8px",
       lg: ".5rem",
       full: "9999px",
+    },
+    daisyui: {
+      themes: ["light"],
     },
     extend: {
       spacing: {

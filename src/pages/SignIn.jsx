@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../assets/download3.png";
+import logo from "../assets/png/download3.png";
 import { useNavigate } from "react-router-dom";
 export const SignIn = () => {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ export const SignIn = () => {
           <input
             type="text"
             className="w-full  p-2 rounded-lg mt-2"
-            placeholder=""
+            placeholder="Enter Username"
           />
         </div>
         <div className="mb-6 ">
@@ -27,7 +27,7 @@ export const SignIn = () => {
           <input
             type="text"
             className="w-full p-2 rounded-lg mt-2"
-            placeholder=""
+            placeholder="Enter Password"
           />
         </div>
         <label

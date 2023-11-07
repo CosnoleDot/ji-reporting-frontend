@@ -14,7 +14,7 @@ export const SignUp = () => {
           <input
             type="text"
             className="w-full p-2 rounded-lg mt-2"
-            placeholder=""
+            placeholder="Enter Username"
           />
         </div>
         <div className="w-full mb-2 ">
@@ -24,7 +24,7 @@ export const SignUp = () => {
           <input
             type="number"
             className="w-full p-2 rounded-lg mt-2"
-            placeholder=""
+            placeholder="Enter Phone Number"
           />
         </div>
         <div className="w-full mb-2 ">
@@ -34,7 +34,7 @@ export const SignUp = () => {
           <input
             type="text"
             className="w-full p-2 rounded-lg mt-2"
-            placeholder=""
+            placeholder="Enter Age"
           />
         </div>
         <div className="w-full mb-2 ">
