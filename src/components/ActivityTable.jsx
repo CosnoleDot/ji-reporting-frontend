@@ -24,7 +24,7 @@ const data = [
 
 export const ActivityTable = () => {
   return (
-    <div className="w-full p-4" dir="rtl">
+    <div className="w-full p-3" dir="rtl">
       <table className="w-full border border-gray-400 rounded-lg">
         <thead className="bg-gray-100">
           <tr>

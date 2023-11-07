@@ -17,7 +17,7 @@ export const Library = () => {
         </div>
         <div className="w-full mb-2">
           <label htmlFor="" className="text-lg mb-2">
-            اضافء
+            اضافہ
           </label>
           <input
             type="text"

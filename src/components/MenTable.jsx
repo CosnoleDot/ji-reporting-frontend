@@ -3,17 +3,17 @@ import React from "react";
 const data = ["Value1", "Value2", "Value3", "Value4", "Value5", "Value6"];
 
 const columns = [
-  "افرادی",
-  "قوت آغاز",
-  "اختتام معیاد",
+  "افرادی قُوّت",
+  "آغاز میں",
+  "اضافہ",
+  "کمی",
+  "اختتام پر ",
   "سالانہ ہدف",
-  "اَرکان",
-  "امیدوار",
 ];
 
 export const MenTable = () => {
   return (
-    <div className="w-full p-4" dir="rtl">
+    <div className="w-full p-3" dir="rtl">
       <table className="w-full border border-gray-400 rounded-lg">
         <thead className="bg-gray-100">
           <tr>

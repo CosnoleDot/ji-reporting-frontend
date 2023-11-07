@@ -5,9 +5,12 @@ export const ExpandParty = () => {
     <div className="w-full" dir="rtl">
       <h3 className="text-lg mb-3">توسیع دعوت</h3>
       <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
+        <label className="text-lg mb-2" htmlFor="">
+          روابط
+        </label>
         <div className="w-full md:pr-0 mb-2">
           <label className="text-lg mb-2" htmlFor="">
-            روابط
+            طے شدہ
           </label>
           <input
             type="text"
@@ -35,6 +38,16 @@ export const ExpandParty = () => {
             type="text"
             className="w-full border p-2 rounded-lg"
             placeholder="Input 1"
+          />
+        </div>
+        <div className="w-full mb-2">
+          <label className="text-lg mb-2" htmlFor="">
+            تقسیم لٹریچر
+          </label>
+          <input
+            type="text"
+            className="w-full border p-2 rounded-lg"
+            placeholder="Input 2"
           />
         </div>
         <div className="w-full mb-2">
