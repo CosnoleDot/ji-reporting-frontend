@@ -4273,6 +4273,10 @@ details.collapse summary::-webkit-details-marker {
   margin: auto;
 }
 
+.m-8 {
+  margin: 2rem;
+}
+
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -4546,6 +4550,34 @@ details.collapse summary::-webkit-details-marker {
   width: 100vw;
 }
 
+.w-\[6rem\] {
+  width: 6rem;
+}
+
+.w-\[rem\] {
+  width: rem;
+}
+
+.w-\[1rem\] {
+  width: 1rem;
+}
+
+.w-\[15rem\] {
+  width: 15rem;
+}
+
+.w-\[5rem\] {
+  width: 5rem;
+}
+
+.w-\[8\] {
+  width: 8;
+}
+
+.w-\[4rem\] {
+  width: 4rem;
+}
+
 .min-w-\[700px\] {
   min-width: 700px;
 }
@@ -4564,6 +4596,15 @@ details.collapse summary::-webkit-details-marker {
 
 .max-w-sm {
   max-width: 24rem;
+}
+
+.max-w-min {
+  max-width: -webkit-min-content;
+  max-width: min-content;
+}
+
+.max-w-lg {
+  max-width: 32rem;
 }
 
 .flex-1 {
@@ -4664,6 +4705,10 @@ details.collapse summary::-webkit-details-marker {
   justify-content: space-between;
 }
 
+.justify-around {
+  justify-content: space-around;
+}
+
 .gap-0 {
   gap: 0px;
 }
@@ -4720,10 +4765,18 @@ details.collapse summary::-webkit-details-marker {
   overflow-y: scroll;
 }
 
+.overscroll-x-contain {
+  overscroll-behavior-x: contain;
+}
+
 .truncate {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.whitespace-pre-line {
+  white-space: pre-line;
 }
 
 .rounded {
@@ -4841,6 +4894,16 @@ details.collapse summary::-webkit-details-marker {
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.bg-gray {
+  --tw-bg-opacity: 1;
+  background-color: rgb(132 146 166 / var(--tw-bg-opacity));
+}
+
+.bg-gray-light {
+  --tw-bg-opacity: 1;
+  background-color: rgb(211 220 230 / var(--tw-bg-opacity));
 }
 
 .fill-current {
@@ -5450,8 +5513,29 @@ details.collapse summary::-webkit-details-marker {
     width: 15rem;
   }
 
+  .sm\:w-1\/2 {
+    width: 50%;
+  }
+
+  .sm\:w-screen {
+    width: 100vw;
+  }
+
+  .sm\:w-full {
+    width: 100%;
+  }
+
+  .sm\:max-w-min {
+    max-width: -webkit-min-content;
+    max-width: min-content;
+  }
+
   .sm\:flex-col {
     flex-direction: column;
+  }
+
+  .sm\:overflow-x-scroll {
+    overflow-x: scroll;
   }
 
   .sm\:text-sm {
@@ -5465,6 +5549,10 @@ details.collapse summary::-webkit-details-marker {
 }
 
 @media (min-width: 768px) and (max-width: 1023px) {
+  .md\:w-1\/2 {
+    width: 50%;
+  }
+
   .md\:flex-row {
     flex-direction: row;
   }
@@ -5481,6 +5569,10 @@ details.collapse summary::-webkit-details-marker {
 @media (min-width: 1024px) and (max-width: 1279px) {
   .lg\:flex {
     display: flex;
+  }
+
+  .lg\:w-full {
+    width: 100%;
   }
 
   .lg\:flex-row {

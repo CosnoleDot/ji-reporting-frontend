@@ -3,21 +3,21 @@ import React from "react";
 export const Library = () => {
   const arr = [
     {
-      title: "تعداد کتب",
+      title: "کل تعداد لائبریریز",
       placeholder: "Input 1",
     },
     {
-      title: "اضافء",
+      title: "ااضافہ کتب",
       placeholder: "Input 1",
     },
   ];
   const arr1 = [
     {
-      title: "کمی",
+      title: "کمی کتب",
       placeholder: "Input 1",
     },
     {
-      title: "اجرآےکتب",
+      title: "اکل اجرائے کتب",
       placeholder: "Input 1",
     },
   ];

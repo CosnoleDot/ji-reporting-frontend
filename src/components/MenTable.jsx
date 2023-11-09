@@ -5,16 +5,16 @@ const data = ["Value1", "Value2", "Value3", "Value4", "Value5", "Value6"];
 const columns = [
   " افرادی قوت",
   "  آغاز میں",
-  "اختتام معیاد",
+  "اضافہ",
+  "کمی",
+  "اختتام",
   "سالانہ ہدف",
-  "اَرکان",
-  "امیدوار",
 ];
 
 export const MenTable = () => {
   return (
-    <div className="w-full p-4" dir="rtl">
-      <table className="w-full border border-gray-400 rounded-lg">
+    <div className="w-full p-4 overflow-x-scroll" dir="rtl">
+      <table className="w-full border border-gray-400 rounded-lg table">
         <thead className="bg-gray-100">
           <tr>
             {columns.map((column, index) => (

@@ -3,7 +3,7 @@ import { InputWithLabel } from "../InputWithLabel";
 
 export const CenteralActivities = () => {
   return (
-    <div className="w-full " dir="rtl">
+    <div className="w-full sm:overflow-x-scroll" dir="rtl">
       <table className="w-full border border-gray-400 ">
         <div className=" w-full bg-gray-100 p-2 flex justify-between items-start">
           <tr className=" w-full bg-gray-100 mb-3 flex justify-between items-start">
@@ -16,7 +16,7 @@ export const CenteralActivities = () => {
             <td className="text-center text-lg w-full">غیرفعال</td>
           </tr>
         </div>
-        <div className="p-2 flex w-full flex-col justify-between items-start min-w-[700px] overflow-x-scroll">
+        <div className="p-2 flex w-full flex-col justify-between items-start min-w-[700px] ">
           <tr className=" w-full bg-gray-100 mb-5 flex justify-between items-start">
             <td className="w-[8rem]">رھاشی حلقے</td>
             <td>
@@ -224,7 +224,7 @@ export const CenteralActivities = () => {
             </td>
           </tr>
           <tr className=" w-full bg-gray-100 mb-5 flex justify-between items-start">
-            <td> بزم کےکل یونٹس</td>
+            <td className="w-[8rem]"> بزم کےکل یونٹس</td>
             <td>
               <InputWithLabel label={""} type={"number"} />
             </td>
