@@ -3,8 +3,8 @@ import React from "react";
 const data = ["Value1", "Value2", "Value3", "Value4", "Value5", "Value6"];
 
 const columns = [
-  "افرادی",
-  "قوت آغاز",
+  " افرادی قوت",
+  "  آغاز میں",
   "اختتام معیاد",
   "سالانہ ہدف",
   "اَرکان",
@@ -34,7 +34,7 @@ export const MenTable = () => {
           </tr>
         </tbody>
       </table>
-      <div className="mt-4">
+      {/* <div className="mt-4">
         <label className="block">
           <input type="radio" className="mr-2" name="radio-group" />
           پہلا ریڈیو بٹن
@@ -43,7 +43,7 @@ export const MenTable = () => {
           <input type="radio" className="mr-2" name="radio-group" />
           دوسری ریڈیو بٹن
         </label>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -3,7 +3,7 @@ import React from "react";
 export const ExpandParty = () => {
   return (
     <div className="w-full" dir="rtl">
-      <h3 className="text-lg mb-3">توسیع دعوت</h3>
+      <h3 className="text-xl font-bold mb-3">توسیع دعوت</h3>
       <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
         <div className="w-full md:pr-0 mb-2">
           <label className="text-lg mb-2" htmlFor="">

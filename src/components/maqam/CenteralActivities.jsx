@@ -94,7 +94,33 @@ export const CenteralActivities = () => {
             </td>
           </tr>
           <tr className=" w-full bg-gray-100 mb-5 flex justify-between items-start">
-            <td className="w-[8rem]">اجتمع امیدوار</td>
+            <td className="w-[8rem]">رھاشی ذیلی حلقے</td>
+            <td>
+              <InputWithLabel label={""} type={"number"} />
+            </td>
+
+            <td>
+              <InputWithLabel label={""} type={"number"} />
+            </td>
+
+            <td>
+              <InputWithLabel label={""} type={"number"} />
+            </td>
+
+            <td>
+              <InputWithLabel label={""} type={"number"} />
+            </td>
+
+            <td>
+              <InputWithLabel label={""} type={"number"} />
+            </td>
+
+            <td>
+              <InputWithLabel label={""} type={"number"} />
+            </td>
+          </tr>
+          <tr className=" w-full bg-gray-100 mb-5 flex justify-between items-start">
+            <td className="w-[8rem]">تعلیمی ذیلی حلقے</td>
             <td>
               <InputWithLabel label={""} type={"number"} />
             </td>

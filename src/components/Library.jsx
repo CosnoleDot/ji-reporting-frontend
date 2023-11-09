@@ -1,52 +1,56 @@
 import React from "react";
 
 export const Library = () => {
+  const arr = [
+    {
+      title: "تعداد کتب",
+      placeholder: "Input 1",
+    },
+    {
+      title: "اضافء",
+      placeholder: "Input 1",
+    },
+  ];
+  const arr1 = [
+    {
+      title: "کمی",
+      placeholder: "Input 1",
+    },
+    {
+      title: "اجرآےکتب",
+      placeholder: "Input 1",
+    },
+  ];
   return (
     <div className="w-full" dir="rtl">
-      <h3 className="text-lg mb-3">لائبریری</h3>
+      <h3 className="text-xl mb-3 font-bold">لائبریری</h3>
       <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
-        <div className="w-full md:pr-0 mb-2">
-          <label htmlFor="" className="text-lg mb-2">
-            تعداد کتب
-          </label>
-          <input
-            type="text"
-            className="w-full border p-2 rounded-lg"
-            placeholder="Input 1"
-          />
-        </div>
-        <div className="w-full mb-2">
-          <label htmlFor="" className="text-lg mb-2">
-            اضافء
-          </label>
-          <input
-            type="text"
-            className="w-full border p-2 rounded-lg"
-            placeholder="Input 2"
-          />
-        </div>
+        {arr.map((obj, index) => (
+          <div className="w-full md:pr-0 mb-2" key={index}>
+            <label htmlFor="" className="text-lg mb-2">
+              {obj.title}
+            </label>
+            <input
+              type="text"
+              className="w-full border p-2 rounded-lg"
+              placeholder={obj.placeholder}
+            />
+          </div>
+        ))}
       </div>
       <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
-        <div className="w-full md:pr-0 mb-2">
-          <label htmlFor="" className="text-lg mb-2">
-            کمی
-          </label>
-          <input
-            type="text"
-            className="w-full border p-2 rounded-lg"
-            placeholder="Input 1"
-          />
-        </div>
-        <div className="w-full mb-2">
-          <label htmlFor="" className="text-lg mb-2">
-            اجرآےکتب
-          </label>
-          <input
-            type="text"
-            className="w-full border p-2 rounded-lg"
-            placeholder="Input 1"
-          />
-        </div>
+        {arr1.map((obj, index) => (
+          <div className="w-full md:pr-0 mb-2" key={index}>
+            <label htmlFor="" className="text-lg mb-2">
+              {obj.title}
+            </label>
+            <input
+              type="text"
+              className="w-full border p-2 rounded-lg"
+              placeholder={obj.placeholder}
+            />
+          </div>
+        ))}
       </div>
       <div className="w-full mb-2">
         <label htmlFor="" className="text-lg mb-2">
