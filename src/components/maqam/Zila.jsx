@@ -15,7 +15,7 @@ export const Zila = () => {
         </div>
         <div className="p-2 flex w-full flex-col justify-between items-start">
           <tr className=" w-full bg-gray-100 mb-5 flex justify-between items-start">
-            <td>اجتمعِ ارکان</td>
+            <td>اجتمعِ رفقا </td>
             <td>
               <InputWithLabel label={""} type={"number"} />
             </td>
@@ -49,7 +49,7 @@ export const Zila = () => {
             </td>
           </tr>
           <tr className=" w-full bg-gray-100 mb-5 flex justify-between items-start">
-            <td>اجتمع ناظمین</td>
+            <td>اجتمع کارکنان </td>
             <td>
               <td>
                 <InputWithLabel label={""} type={"number"} />
@@ -67,7 +67,7 @@ export const Zila = () => {
             </td>
           </tr>
           <tr className=" w-full bg-gray-100 mb-5 flex justify-between items-start">
-            <td>اجتمع امیدوار</td>
+            <td>درس قرآن </td>
             <td>
               <td>
                 <InputWithLabel label={""} type={"number"} />
@@ -85,7 +85,25 @@ export const Zila = () => {
             </td>
           </tr>
           <tr className=" w-full bg-gray-100 mb-5 flex justify-between items-start">
-            <td>صدورمیٹینگ</td>
+            <td> شاہین میٹنگ </td>
+            <td>
+              <td>
+                <InputWithLabel label={""} type={"number"} />
+              </td>
+            </td>
+            <td>
+              <td>
+                <InputWithLabel label={""} type={"number"} />
+              </td>
+            </td>
+            <td>
+              <td>
+                <InputWithLabel label={""} type={"number"} />
+              </td>
+            </td>
+          </tr>
+          <tr className=" w-full bg-gray-100 mb-5 flex justify-between items-start">
+            <td> پیغام محفل </td>
             <td>
               <td>
                 <InputWithLabel label={""} type={"number"} />

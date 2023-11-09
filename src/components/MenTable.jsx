@@ -3,8 +3,8 @@ import React from "react";
 const data = ["Value1", "Value2", "Value3", "Value4", "Value5", "Value6"];
 
 const columns = [
-  "افرادی",
-  "قوت آغاز",
+  " افرادی قوت",
+  "  آغاز میں",
   "اختتام معیاد",
   "سالانہ ہدف",
   "اَرکان",

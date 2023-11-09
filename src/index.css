@@ -4554,6 +4554,18 @@ details.collapse summary::-webkit-details-marker {
   min-width: 100%;
 }
 
+.max-w-full {
+  max-width: 100%;
+}
+
+.max-w-md {
+  max-width: 28rem;
+}
+
+.max-w-sm {
+  max-width: 24rem;
+}
+
 .flex-1 {
   flex: 1 1 0%;
 }
@@ -4580,6 +4592,10 @@ details.collapse summary::-webkit-details-marker {
 
 .grow-0 {
   flex-grow: 0;
+}
+
+.table-auto {
+  table-layout: auto;
 }
 
 .border-collapse {
@@ -4686,6 +4702,14 @@ details.collapse summary::-webkit-details-marker {
 
 .overflow-auto {
   overflow: auto;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.overflow-scroll {
+  overflow: scroll;
 }
 
 .overflow-x-scroll {
@@ -4841,6 +4865,10 @@ details.collapse summary::-webkit-details-marker {
 
 .p-1 {
   padding: 0.25rem;
+}
+
+.p-10 {
+  padding: 2.5rem;
 }
 
 .p-2 {
