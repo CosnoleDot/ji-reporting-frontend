@@ -18,7 +18,6 @@ export const SignIn = () => {
             type="text"
             className="w-full  p-2 rounded-lg mt-2"
             placeholder="Enter Username"
-            name=""
           />
         </div>
         <div className="mb-6 ">
