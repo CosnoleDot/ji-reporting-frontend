@@ -34,16 +34,6 @@ export const MenTable = () => {
           </tr>
         </tbody>
       </table>
-      {/* <div className="mt-4">
-        <label className="block">
-          <input type="radio" className="mr-2" name="radio-group" />
-          پہلا ریڈیو بٹن
-        </label>
-        <label className="block">
-          <input type="radio" className="mr-2" name="radio-group" />
-          دوسری ریڈیو بٹن
-        </label>
-      </div> */}
     </div>
   );
 };

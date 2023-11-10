@@ -1,254 +1,79 @@
 import React from "react";
+
 import { InputWithLabel } from "../InputWithLabel";
 
 export const CenteralActivities = () => {
+  const headings = [
+    "تنظیم",
+    "آغازمیں",
+    "اضافء",
+    "کمی",
+    "اختتام",
+    "فعال",
+    "غیرفعال",
+  ];
+  const rows = [
+    {
+      title: "رھاشی حلقے",
+      numberOfInputFields: 6,
+    },
+    {
+      title: " ﺗﻌﻠﯾﻣﯽ ﺣﻠﻘﮯ",
+      numberOfInputFields: 6,
+    },
+    {
+      title: "ﮐل ﺣﻠﻘﮯ",
+      numberOfInputFields: 6,
+    },
+    {
+      title: "رھاشی ذﯾﻠﯽ حلقے",
+      numberOfInputFields: 6,
+    },
+    {
+      title: "ﮐل ذﯾﻠﯽ حلقے",
+      numberOfInputFields: 6,
+    },
+    {
+      title: "رھاشی حلقے",
+      numberOfInputFields: 6,
+    },
+    {
+      title: "ﺑزم ﮐﮯ ﺳﮑول ﯾوﻧﭨس",
+      numberOfInputFields: 6,
+    },
+    {
+      title: "ﺑزم ﮐﮯ رھﺎﺷﯽ ﯾوﻧﭨس",
+      numberOfInputFields: 6,
+    },
+    {
+      title: "ﺑزم ﮐﮯ ﮐل ﯾوﻧﭨس",
+      numberOfInputFields: 6,
+    },
+  ];
   return (
-    <div className="w-full sm:overflow-x-scroll" dir="rtl">
+    <div className="w-full max-w-full overflow-x-scroll " dir="rtl">
       <table className="w-full border border-gray-400 ">
-        <div className=" w-full bg-gray-100 p-2 flex justify-between items-start">
-          <tr className=" w-full bg-gray-100 mb-3 flex justify-between items-start">
-            <td className="text-start text-lg w-full">تنظیم</td>
-            <td className="text-start text-lg w-full">آغازمیں</td>
-            <td className="text-start text-lg w-full">اضافء</td>
-            <td className="text-center text-lg w-full">کمی</td>
-            <td className="text-center text-lg w-full">اختتام</td>
-            <td className="text-center text-lg w-full">فعال</td>
-            <td className="text-center text-lg w-full">غیرفعال</td>
+        <div className=" flex w-full items-start justify-between bg-gray-100 p-2">
+          <tr className=" mb-3 flex w-full items-start justify-between bg-gray-100">
+            {headings.map((heading) => (
+              <td className="w-full text-start text-lg">{heading}</td>
+            ))}
           </tr>
         </div>
-        <div className="p-2 flex w-full flex-col justify-between items-start min-w-[700px] ">
-          <tr className=" w-full bg-gray-100 mb-5 flex justify-between items-start">
-            <td className="w-[8rem]">رھاشی حلقے</td>
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-          </tr>
-          <tr className=" w-full bg-gray-100 mb-5 flex justify-between items-start">
-            <td className="w-[8rem]">تعلیمی حلقے</td>
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-          </tr>
-          <tr className=" w-full bg-gray-100 mb-5 flex justify-between items-start">
-            <td className="w-[8rem]">کل حلقے</td>
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-          </tr>
-          <tr className=" w-full bg-gray-100 mb-5 flex justify-between items-start">
-            <td className="w-[8rem]">رھاشی ذیلی حلقے</td>
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-          </tr>
-          <tr className=" w-full bg-gray-100 mb-5 flex justify-between items-start">
-            <td className="w-[8rem]">تعلیمی ذیلی حلقے</td>
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-          </tr>
-          <tr className=" w-full bg-gray-100 mb-5 flex justify-between items-start">
-            <td className="w-[8rem]">کل ذیلی حلقے</td>
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-          </tr>
-          <tr className=" w-full bg-gray-100 mb-5 flex justify-between items-start">
-            <td className="w-[8rem]">بزم کے سکول یونٹس</td>
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-          </tr>
-          <tr className=" w-full bg-gray-100 mb-5 flex justify-between items-start">
-            <td className="w-[8rem]">بزم کے رھاشی یونٹس</td>
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-          </tr>
-          <tr className=" w-full bg-gray-100 mb-5 flex justify-between items-start">
-            <td className="w-[8rem]"> بزم کےکل یونٹس</td>
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-          </tr>
+        <div className="flex w-full min-w-[700px] flex-col items-start justify-between  p-2">
+          {rows.map((row, index) => (
+            <tr
+              className=" mb-5 flex w-full items-start justify-between bg-gray-100"
+              key={index}
+            >
+              <td className="w-[8rem]">{row.title}</td>
+              {Array.from({ length: row.numberOfInputFields }, (_, index) => (
+                <td key={index}>
+                  <InputWithLabel label={""} type={"number"} />
+                </td>
+              ))}
+            </tr>
+          ))}
         </div>
       </table>
     </div>
