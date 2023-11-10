@@ -51,10 +51,7 @@ export const CenteralActivities = () => {
     },
   ];
   return (
-    <div
-      className="w-full max-w-full overflow-x-scroll font-notoUrdu"
-      dir="rtl"
-    >
+    <div className="w-full max-w-full overflow-x-scroll " dir="rtl">
       <table className="w-full border border-gray-400 table">
         <thead>
           <tr className="flex w-full items-start justify-between bg-gray-100">
