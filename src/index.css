@@ -4366,8 +4366,26 @@ details.collapse summary::-webkit-details-marker {
   margin-top: 1.5rem;
 }
 
+.mt-5 {
+  margin-top: 1.25rem;
+}
+
 .box-border {
   box-sizing: border-box;
+}
+
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.line-clamp-none {
+  overflow: visible;
+  display: block;
+  -webkit-box-orient: horizontal;
+  -webkit-line-clamp: none;
 }
 
 .block {
@@ -4534,12 +4552,22 @@ details.collapse summary::-webkit-details-marker {
   width: 24rem;
 }
 
+.w-\[10rem\] {
+  width: 10rem;
+}
+
 .w-\[8rem\] {
   width: 8rem;
 }
 
 .w-auto {
   width: auto;
+}
+
+.w-fit {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
 }
 
 .w-full {
@@ -4554,14 +4582,14 @@ details.collapse summary::-webkit-details-marker {
   min-width: 700px;
 }
 
-.min-w-full {
-  min-width: 100%;
-}
-
 .min-w-fit {
   min-width: -webkit-fit-content;
   min-width: -moz-fit-content;
   min-width: fit-content;
+}
+
+.min-w-full {
+  min-width: 100%;
 }
 
 .max-w-full {
@@ -4687,6 +4715,10 @@ details.collapse summary::-webkit-details-marker {
   justify-content: space-around;
 }
 
+.justify-evenly {
+  justify-content: space-evenly;
+}
+
 .gap-0 {
   gap: 0px;
 }
@@ -4709,6 +4741,10 @@ details.collapse summary::-webkit-details-marker {
 
 .gap-5 {
   gap: 1.25rem;
+}
+
+.gap-4 {
+  gap: 1rem;
 }
 
 .space-x-2 > :not([hidden]) ~ :not([hidden]) {
@@ -4755,6 +4791,19 @@ details.collapse summary::-webkit-details-marker {
 
 .whitespace-pre-line {
   white-space: pre-line;
+}
+
+.break-normal {
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+.break-words {
+  overflow-wrap: break-word;
+}
+
+.break-all {
+  word-break: break-all;
 }
 
 .rounded {
@@ -5033,6 +5082,10 @@ details.collapse summary::-webkit-details-marker {
 
 .font-sans {
   font-family: Graphik, sans-serif;
+}
+
+.font-notoUrdu {
+  font-family: Noto Nastaliq Urdu, serif;
 }
 
 .text-2xl {
@@ -5500,10 +5553,6 @@ details.collapse summary::-webkit-details-marker {
     flex-direction: column;
   }
 
-  .sm\:overflow-x-scroll {
-    overflow-x: scroll;
-  }
-
   .sm\:text-sm {
     font-size: 0.875rem;
     line-height: 1.25rem;
@@ -5531,10 +5580,6 @@ details.collapse summary::-webkit-details-marker {
 @media (min-width: 1024px) and (max-width: 1279px) {
   .lg\:flex {
     display: flex;
-  }
-
-  .lg\:w-full {
-    width: 100%;
   }
 
   .lg\:flex-row {

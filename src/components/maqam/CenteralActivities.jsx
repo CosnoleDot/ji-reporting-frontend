@@ -30,11 +30,11 @@ export const CenteralActivities = () => {
       numberOfInputFields: 6,
     },
     {
-      title: "ﮐل ذﯾﻠﯽ حلقے",
+      title: "تعلیمی ذیلی حلقے",
       numberOfInputFields: 6,
     },
     {
-      title: "رھاشی حلقے",
+      title: "کل ذیلی حلقے",
       numberOfInputFields: 6,
     },
     {
@@ -51,22 +51,32 @@ export const CenteralActivities = () => {
     },
   ];
   return (
-    <div className="w-full max-w-full overflow-x-scroll " dir="rtl">
-      <table className="w-full border border-gray-400 ">
-        <div className=" flex w-full items-start justify-between bg-gray-100 p-2">
-          <tr className=" mb-3 flex w-full items-start justify-between bg-gray-100">
-            {headings.map((heading) => (
-              <td className="w-full text-start text-lg">{heading}</td>
+    <div
+      className="w-full max-w-full overflow-x-scroll font-notoUrdu"
+      dir="rtl"
+    >
+      <table className="w-full border border-gray-400 table">
+        <thead>
+          <tr className="flex w-full items-start justify-between bg-gray-100">
+            {headings.map((heading, index) => (
+              <th
+                className="w-[10rem] text-start text-lg sm:text-sm"
+                key={index}
+              >
+                {heading}
+              </th>
             ))}
           </tr>
-        </div>
-        <div className="flex w-full min-w-[700px] flex-col items-start justify-between  p-2">
+        </thead>
+        <tbody>
           {rows.map((row, index) => (
             <tr
-              className=" mb-5 flex w-full items-start justify-between bg-gray-100"
+              className="flex w-full items-center justify-between bg-gray-100"
               key={index}
             >
-              <td className="w-[8rem]">{row.title}</td>
+              <td className="w-[10rem]  text-start text-lg sm:text-sm">
+                {row.title}
+              </td>
               {Array.from({ length: row.numberOfInputFields }, (_, index) => (
                 <td key={index}>
                   <InputWithLabel label={""} type={"number"} />
@@ -74,7 +84,7 @@ export const CenteralActivities = () => {
               ))}
             </tr>
           ))}
-        </div>
+        </tbody>
       </table>
     </div>
   );

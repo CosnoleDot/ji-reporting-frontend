@@ -42,7 +42,10 @@ export const Halqa = () => {
     },
   ];
   return (
-    <div className="flex flex-col justify-center items-center p-4" dir="rtl">
+    <div
+      className="flex flex-col justify-center items-center p-4 font-notoUrdu"
+      dir="rtl"
+    >
       <h2 className="text-2xl">کار کردگی رپورٹ (براے حلقء)</h2>
       <div className="w-full p-4">
         <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
@@ -52,7 +55,7 @@ export const Halqa = () => {
             </label>
             <input
               type="text"
-              className="w-full border p-2 rounded-lg"
+              className="w-full border p-2 rounded-lg mt-2"
               placeholder="Input 1"
             />
           </div>
@@ -62,7 +65,7 @@ export const Halqa = () => {
             </label>
             <input
               type="text"
-              className="w-full border p-2 rounded-lg"
+              className="w-full border p-2 rounded-lg mt-2"
               placeholder="Input 2"
             />
           </div>
@@ -72,7 +75,7 @@ export const Halqa = () => {
       <ActivityTable />
       <OtherActivities arr={arr} />
       <ExpandParty />
-      <Library />
+      <Library condition={true} />
       <EveningDiary />
     </div>
   );

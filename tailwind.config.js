@@ -72,6 +72,9 @@ module.exports = {
       borderRadius: {
         "4xl": "2rem",
       },
+      fontFamily: {
+        notoUrdu: ["Noto Nastaliq Urdu", "serif"],
+      },
     },
   },
   plugins: [require("daisyui")],

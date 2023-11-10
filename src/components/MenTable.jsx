@@ -18,7 +18,7 @@ export const MenTable = () => {
         <thead className="bg-gray-100">
           <tr>
             {columns.map((column, index) => (
-              <th key={index} className="border border-gray-400 p-2">
+              <th key={index} className="border border-gray-400 p-2 text-start">
                 {column}
               </th>
             ))}
@@ -27,7 +27,10 @@ export const MenTable = () => {
         <tbody>
           <tr>
             {data.map((column, columnIndex) => (
-              <td key={columnIndex} className="border border-gray-400 p-2">
+              <td
+                key={columnIndex}
+                className="border border-gray-400 p-2 text-start"
+              >
                 {column}
               </td>
             ))}

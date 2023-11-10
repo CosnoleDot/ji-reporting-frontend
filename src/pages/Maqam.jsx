@@ -46,7 +46,10 @@ export const Maqam = () => {
   ];
 
   return (
-    <div className="flex flex-col justify-center items-center p-4" dir="rtl">
+    <div
+      className="flex flex-col justify-center items-center p-4 font-notoUrdu"
+      dir="rtl"
+    >
       <h2 className="text-2xl">جا ئزءکارکردگی رپورٹ (براے مقام)</h2>
       <div className="w-full p-4">
         <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
@@ -90,7 +93,7 @@ export const Maqam = () => {
           <ExpandParty />
         </div>
         <div className=" mb-4">
-          <Library />
+          <Library condition={false} />
         </div>
         <div className=" mb-4">
           <MessageDigest />
