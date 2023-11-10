@@ -4,19 +4,19 @@ export const ExpandParty = () => {
   const arr = [
     {
       title: "طے شدہ",
-      placeholder: "",
+      placeholder: "طے شدہ",
     },
     {
       title: "موجود",
-      placeholder: "",
+      placeholder: "موجود",
     },
     {
       title: "ملاقاتیں",
-      placeholder: "",
+      placeholder: "ملاقاتیں",
     },
     {
       title: "تقسیم لٹریچر",
-      placeholder: "",
+      placeholder: "تقسیم لٹریچر",
     },
   ];
   return (
@@ -53,7 +53,7 @@ export const ExpandParty = () => {
           <input
             type="text"
             className="w-full border p-2 rounded-lg mt-3 mb-3"
-            placeholder="Input 1"
+            placeholder="ملاقاتیں"
           />
         </div>
         <div className="w-full mb-2">
@@ -63,7 +63,7 @@ export const ExpandParty = () => {
           <input
             type="text"
             className="w-full border p-2 rounded-lg mt-5"
-            placeholder="Input 2"
+            placeholder=" تقسیم لٹریچر"
           />
         </div>
       </div>

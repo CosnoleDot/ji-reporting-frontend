@@ -4,41 +4,41 @@ export const Library = ({ condition }) => {
   const arr = [
     {
       title: "کل تعداد لائبریریز",
-      placeholder: "Input 1",
+      placeholder: "کل تعداد لائبریریز",
     },
     {
       title: "ااضافہ کتب",
-      placeholder: "Input 1",
+      placeholder: "ااضافہ کتب",
     },
     {
       title: "کمی کتب",
-      placeholder: "Input 1",
+      placeholder: "کمی کتب",
     },
     {
       title: "اکل اجرائے کتب",
-      placeholder: "Input 1",
+      placeholder: "اکل اجرائے کتب",
     },
   ];
   const arr2 = [
     {
-      title: "کل تعداد لائبریریز:",
-      placeholder: "Input 1",
+      title: "کل تعداد لائبریریز",
+      placeholder: "کل تعداد لائبریریز",
     },
     {
       title: "کل تعدادکتب",
-      placeholder: "Input 1",
+      placeholder: "کل تعدادکتب",
     },
     {
       title: "اضافہ کتب",
-      placeholder: "Input 1",
+      placeholder: "اضافہ کتب",
     },
     {
       title: "کمی کتب",
-      placeholder: "Input 1",
+      placeholder: "کمی کتب",
     },
     {
       title: "کل اجرائے کتب",
-      placeholder: "Input 1",
+      placeholder: "کل اجرائے کتب",
     },
   ];
 
