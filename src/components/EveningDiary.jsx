@@ -4,23 +4,23 @@ export const EveningDiary = () => {
   const arr = [
     {
       title: "کتنے ارکان فل کرتے ھیں",
-      placeholder: "Input 1",
+      placeholder: "کتنے ارکان فل کرتے ھیں",
     },
     {
       title: "کتنےرفقافل کرتے ھیں",
-      placeholder: "Input 2",
+      placeholder: "کتنےرفقافل کرتے ھیں",
     },
     {
       title: "تبصرہ",
-      placeholder: "Input 3",
+      placeholder: "تبصرہ",
     },
     {
       title: "نام ناظم حلقء",
-      placeholder: "Input 4",
+      placeholder: "نام ناظم حلقء",
     },
     {
       title: "تاریخ",
-      placeholder: "Input 5",
+      placeholder: "تاریخ",
     },
   ];
   return (
@@ -32,7 +32,7 @@ export const EveningDiary = () => {
             <label htmlFor="">{obj.title}</label>
             <input
               type="text"
-              className="w-full border p-2 rounded-lg"
+              className="w-full border p-2 rounded-lg mt-3 mb-3"
               placeholder={obj.placeholder}
             />
           </div>

@@ -13,36 +13,39 @@ export const Halqa = () => {
     {
       title: "دعوتی وفود",
 
-      placeholder: "Input 1",
+      placeholder: "دعوتی وفود",
     },
     {
       title: "روابط پارٹیز",
 
-      placeholder: "Input 1",
+      placeholder: "روابط پارٹیز",
     },
     {
       title: " حادیث سرکل",
 
-      placeholder: "Input 1",
+      placeholder: "حادیث سرکل",
     },
     {
       title: "نظام الصلٰتہ",
 
-      placeholder: "Input 1",
+      placeholder: "نظام الصلٰتہ",
     },
     {
       title: "شب بیداری",
 
-      placeholder: "Input 1",
+      placeholder: "شب بیداری",
     },
     {
       title: "کوءی اور سرگرمی",
 
-      placeholder: "Input 1",
+      placeholder: "کوءی اور سرگرمی",
     },
   ];
   return (
-    <div className="flex flex-col justify-center items-center p-4" dir="rtl">
+    <div
+      className="flex flex-col justify-center items-center p-4 font-notoUrdu"
+      dir="rtl"
+    >
       <h2 className="text-2xl">کار کردگی رپورٹ (براے حلقء)</h2>
       <div className="w-full p-4">
         <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
@@ -52,8 +55,8 @@ export const Halqa = () => {
             </label>
             <input
               type="text"
-              className="w-full border p-2 rounded-lg"
-              placeholder="Input 1"
+              className="w-full border p-2 rounded-lg mt-2"
+              placeholder="حلقء کانام"
             />
           </div>
           <div className="w-full mb-2">
@@ -62,8 +65,8 @@ export const Halqa = () => {
             </label>
             <input
               type="text"
-              className="w-full border p-2 rounded-lg"
-              placeholder="Input 2"
+              className="w-full border p-2 rounded-lg mt-2"
+              placeholder=" براے ماھ"
             />
           </div>
         </div>
@@ -72,7 +75,7 @@ export const Halqa = () => {
       <ActivityTable />
       <OtherActivities arr={arr} />
       <ExpandParty />
-      <Library />
+      <Library condition={true} />
       <EveningDiary />
     </div>
   );

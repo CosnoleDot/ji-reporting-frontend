@@ -20,7 +20,7 @@ export const MessageDigest = () => {
             <label htmlFor="">{obj.title}</label>
             <input
               type="text"
-              className="w-full border p-2 rounded-lg"
+              className="w-full border p-2 rounded-lg mt-3"
               placeholder={obj.placeholder}
             />
           </div>

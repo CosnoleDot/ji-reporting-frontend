@@ -1,107 +1,63 @@
+import React from "react";
+
 import { InputWithLabel } from "../InputWithLabel";
 
 export const DivisionTable = () => {
+  const headings = ["ﻣرﮐزی طﮯ ﺷدھ ﺳرﮔرﻣﯾﺎں", "طﮯﺷدھ", "ﻣﻧﻌﻘدھ", "اوﺳط ﺣﺎﺿری"];
+  const rows = [
+    {
+      title: "اﺟﺗﻣﻊ ارﮐﺎن",
+      numberOfInputFields: 3,
+    },
+    {
+      title: " ﺳﭨڈی ﺳرﮐل",
+      numberOfInputFields: 3,
+    },
+    {
+      title: "اﺟﺗﻣﻊ ﻧﺎظﻣﯾن",
+      numberOfInputFields: 3,
+    },
+    {
+      title: "اﺟﺗﻣﻊ اﻣﯾدوار ",
+      numberOfInputFields: 3,
+    },
+    {
+      title: " ﺻدورﻣﯾﭨﯾﻧﮓ",
+      numberOfInputFields: 3,
+    },
+  ];
   return (
-    <div className="w-full " dir="rtl">
-      <table className="w-full border border-gray-400 ">
-        <div className=" w-full bg-gray-100 p-2 flex justify-between items-start">
-          <tr className=" w-full bg-gray-100 mb-3 flex justify-between items-start">
-            <td className="text-start text-lg w-full">مرکزی طے شدھ سرگرمیاں</td>
-            <td className="text-start text-lg w-full">طےشدھ</td>
-            <td className="text-start text-lg w-full">منعقدھ</td>
-            <td className="text-center w-full text-lg">اوسط حاضری</td>
+    <div className="w-full max-w-full overflow-x-scroll " dir="rtl">
+      <table className="w-full border border-gray-400 table">
+        <thead>
+          <tr className="flex w-full items-start justify-between bg-gray-100">
+            {headings.map((heading, index) => (
+              <th
+                className="w-[10rem] text-start text-lg sm:text-sm"
+                key={index}
+              >
+                {heading}
+              </th>
+            ))}
           </tr>
-        </div>
-        <div className="p-2 flex w-full flex-col justify-between items-start">
-          <tr className=" w-full bg-gray-100 mb-5 flex justify-between items-start">
-            <td>اجتمعِ ارکان</td>
-            <td>
-              <InputWithLabel label={""} type={"number"} />
-            </td>
-            <td>
-              <td>
-                <InputWithLabel label={""} type={"number"} />
+        </thead>
+        <tbody>
+          {rows.map((row, index) => (
+            <tr
+              className="flex w-full items-center justify-between bg-gray-100"
+              key={index}
+            >
+              <td className="w-[10rem]  text-start text-lg sm:text-sm">
+                {row.title}
               </td>
-            </td>
-            <td>
-              <td>
-                <InputWithLabel label={""} type={"number"} />
-              </td>
-            </td>
-          </tr>
-          <tr className=" w-full bg-gray-100 mb-5 flex justify-between items-start">
-            <td>سٹڈی سرکل</td>
-            <td>
-              <td>
-                <InputWithLabel label={""} type={"number"} />
-              </td>
-            </td>
-            <td>
-              <td>
-                <InputWithLabel label={""} type={"number"} />
-              </td>
-            </td>
-            <td>
-              <td>
-                <InputWithLabel label={""} type={"number"} />
-              </td>
-            </td>
-          </tr>
-          <tr className=" w-full bg-gray-100 mb-5 flex justify-between items-start">
-            <td>اجتمع ناظمین</td>
-            <td>
-              <td>
-                <InputWithLabel label={""} type={"number"} />
-              </td>
-            </td>
-            <td>
-              <td>
-                <InputWithLabel label={""} type={"number"} />
-              </td>
-            </td>
-            <td>
-              <td>
-                <InputWithLabel label={""} type={"number"} />
-              </td>
-            </td>
-          </tr>
-          <tr className=" w-full bg-gray-100 mb-5 flex justify-between items-start">
-            <td>اجتمع امیدوار</td>
-            <td>
-              <td>
-                <InputWithLabel label={""} type={"number"} />
-              </td>
-            </td>
-            <td>
-              <td>
-                <InputWithLabel label={""} type={"number"} />
-              </td>
-            </td>
-            <td>
-              <td>
-                <InputWithLabel label={""} type={"number"} />
-              </td>
-            </td>
-          </tr>
-          <tr className=" w-full bg-gray-100 mb-5 flex justify-between items-start">
-            <td>صدورمیٹینگ</td>
-            <td>
-              <td>
-                <InputWithLabel label={""} type={"number"} />
-              </td>
-            </td>
-            <td>
-              <td>
-                <InputWithLabel label={""} type={"number"} />
-              </td>
-            </td>
-            <td>
-              <td>
-                <InputWithLabel label={""} type={"number"} />
-              </td>
-            </td>
-          </tr>
-        </div>
+              {Array.from({ length: row.numberOfInputFields }, (_, index) => (
+                <td key={index}>
+                  <InputWithLabel label={""} type={"number"} />
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
       </table>
     </div>
   );
