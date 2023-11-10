@@ -4362,12 +4362,12 @@ details.collapse summary::-webkit-details-marker {
   margin-top: 1rem;
 }
 
-.mt-6 {
-  margin-top: 1.5rem;
-}
-
 .mt-5 {
   margin-top: 1.25rem;
+}
+
+.mt-6 {
+  margin-top: 1.5rem;
 }
 
 .box-border {
@@ -4556,10 +4556,6 @@ details.collapse summary::-webkit-details-marker {
   width: 10rem;
 }
 
-.w-\[8rem\] {
-  width: 8rem;
-}
-
 .w-auto {
   width: auto;
 }
@@ -4576,10 +4572,6 @@ details.collapse summary::-webkit-details-marker {
 
 .w-screen {
   width: 100vw;
-}
-
-.min-w-\[700px\] {
-  min-width: 700px;
 }
 
 .min-w-fit {
@@ -4739,12 +4731,12 @@ details.collapse summary::-webkit-details-marker {
   gap: 0.75rem;
 }
 
-.gap-5 {
-  gap: 1.25rem;
-}
-
 .gap-4 {
   gap: 1rem;
+}
+
+.gap-5 {
+  gap: 1.25rem;
 }
 
 .space-x-2 > :not([hidden]) ~ :not([hidden]) {
@@ -5080,12 +5072,16 @@ details.collapse summary::-webkit-details-marker {
   text-align: end;
 }
 
-.font-sans {
-  font-family: Graphik, sans-serif;
+.align-middle {
+  vertical-align: middle;
 }
 
 .font-notoUrdu {
   font-family: Noto Nastaliq Urdu, serif;
+}
+
+.font-sans {
+  font-family: Graphik, sans-serif;
 }
 
 .text-2xl {

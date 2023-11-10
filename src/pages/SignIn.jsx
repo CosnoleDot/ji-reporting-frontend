@@ -1,8 +1,13 @@
 import React from "react";
 import logo from "../assets/png/download3.png";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 export const SignIn = () => {
-  const navigate = useNavigate();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
   return (
     <div className="w-full h-screen  bg-[#E9EBEF]">
       <div className="w-1/2 h-full flex flex-col m-auto  ">
@@ -18,6 +23,11 @@ export const SignIn = () => {
             type="text"
             className="w-full  p-2 rounded-lg mt-2"
             placeholder="Enter Username"
+            name="username"
+            value={username}
+            onChange={(e) => {
+              setUsername(e.target.value);
+            }}
           />
         </div>
         <div className="mb-6 ">
@@ -28,6 +38,12 @@ export const SignIn = () => {
             type="text"
             className="w-full p-2 rounded-lg mt-2"
             placeholder="Enter Password"
+            id="password"
+            name="password"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
           />
         </div>
         <label
@@ -42,14 +58,11 @@ export const SignIn = () => {
         <div className="flex flex-col">
           <button
             className="w-full bg-[#049cfc] p-2 text-white font-bold mb-5 rounded-lg"
-            onClick={() => navigate("/")}
+            onClick={handleSubmit}
           >
             Login
           </button>
-          <button
-            className="w-full  p-2 text-[#049cfc] font-bold "
-            onClick={() => navigate("/signup")}
-          >
+          <button className="w-full  p-2 text-[#049cfc] font-bold ">
             Signup
           </button>
         </div>
