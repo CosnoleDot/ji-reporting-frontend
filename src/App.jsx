@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import "./App.css";
-import { Division, Halqa, Home, Maqam, SignIn, SignUp } from "./pages";
+import { Division, Halqa, Home, Maqam, ResetPassword, SignIn, SignUp } from "./pages";
 
 function App() {
   return (
@@ -13,6 +13,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/maqam" element={<Maqam />} />
           <Route path="/division" element={<Division />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/" element={<Home />} />
         </Routes>
       </BrowserRouter>

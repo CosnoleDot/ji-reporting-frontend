@@ -2,64 +2,26 @@ import { Fragment, useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 
-const people = [
-  {
-    id: 1,
-    name: "Wade Cooper",
-  },
-  {
-    id: 2,
-    name: "Arlene Mccoy",
-  },
-  {
-    id: 3,
-    name: "Devon Webb",
-  },
-  {
-    id: 4,
-    name: "Tom Cook",
-  },
-  {
-    id: 5,
-    name: "Tanya Fox",
-  },
-  {
-    id: 6,
-    name: "Hellen Schmidt",
-  },
-  {
-    id: 7,
-    name: "Caroline Schultz",
-  },
-  {
-    id: 8,
-    name: "Mason Heaney",
-  },
-  {
-    id: 9,
-    name: "Claudie Smitham",
-  },
-  {
-    id: 10,
-    name: "Emil Schaefer",
-  },
-];
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export const CustomDropDown = () => {
-  const [selected, setSelected] = useState(people[2]);
-
+export const CustomDropDown = ({ location, onSelect, title }) => {
+  const [selected, setSelected] = useState(null);
   return (
-    <Listbox value={selected} onChange={setSelected}>
+    <Listbox value={selected} onChange={(value) => setSelected(value)}>
       {({ open }) => (
         <>
           <div className="relative mt-2">
             <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-blue sm:text-sm sm:leading-6 rounded-lg">
               <span className="flex items-center">
-                <span className="ml-3 block truncate">{selected.name}</span>
+                <span
+                  className={`ml-3 block truncate ${
+                    selected !== null ? "text-black" : "text-[#7a7a7a]"
+                  }`}
+                >
+                  {selected !== null ? selected?.name : title}
+                </span>
               </span>
               <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
                 <ChevronUpDownIcon
@@ -77,7 +39,7 @@ export const CustomDropDown = () => {
               leaveTo="opacity-0"
             >
               <Listbox.Options className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                {people.map((person) => (
+                {location.map((person) => (
                   <Listbox.Option
                     key={person.id}
                     className={({ active }) =>
@@ -87,6 +49,7 @@ export const CustomDropDown = () => {
                       )
                     }
                     value={person}
+                    onClick={() => onSelect(person)}
                   >
                     {({ selected, active }) => (
                       <>
