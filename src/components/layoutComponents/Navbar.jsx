@@ -6,7 +6,7 @@ import { Sidebar } from "./Sidebar";
 
 export const Navbar = () => {
   return (
-    <div className="navbar  bg-base-100  ">
+    <div className="navbar  bg-base-100 border-b-2 border-inherit">
       <div className="flex-none">
         <Sidebar />
       </div>
@@ -22,7 +22,7 @@ export const Navbar = () => {
         </button>
         <div className="dropdown">
           <label tabIndex={0} className="">
-            <img src={logo} alt="" className="w-20 h-22" />
+            <img src={logo} alt="" className="w-16 h-12" />
           </label>
         </div>
       </div>
