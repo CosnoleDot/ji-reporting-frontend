@@ -23,7 +23,7 @@ export const SidebarData = [
   },
   {
     title: "New User Requests",
-    link: "/",
+    link: "/user-requests",
   },
   {
     title: "Edit Your Profile",
