@@ -1,7 +1,16 @@
 import React from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import "./App.css";
-import { Division, Halqa, Home, Maqam, ResetPassword, SignIn, SignUp } from "./pages";
+import {
+  Division,
+  Halqa,
+  Home,
+  Maqam,
+  ResetPassword,
+  SignIn,
+  SignUp,
+} from "./pages";
+import { UserRequests } from "./pages/UserRequests";
 
 function App() {
   return (
@@ -15,6 +24,7 @@ function App() {
           <Route path="/division" element={<Division />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/" element={<Home />} />
+          <Route path="/user-requests" element={<UserRequests />} />
         </Routes>
       </BrowserRouter>
     </div>

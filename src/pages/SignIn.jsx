@@ -15,6 +15,8 @@ export const SignIn = () => {
       .post("/user/login", { email: username, password: password })
       .then((res) => {
         navigate("/");
+
+        localStorage.setItem("@token", res?.data?.data?.token);
       })
       .catch((error) => {
         const message = error?.response?.data?.message;
