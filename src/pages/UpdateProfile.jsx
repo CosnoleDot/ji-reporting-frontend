@@ -10,24 +10,24 @@ const UpdateProfile = () => {
   const handleSubmit = () => {
     // Validation
     if (!name.trim()) {
-      alert("نام درست ڈالیں");
+      alert("Please enter your name");
       return;
     }
 
     if (!age.trim()) {
-      alert("عمر درست ڈالیں");
+      alert("Please enter your age");
       return;
     }
 
     // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      alert("صحیح ای میل ڈالیں (مثال: email@domain.com)");
+      alert("Please enter a valid email (e.g., email@domain.com)");
       return;
     }
 
     if (!password.trim()) {
-      alert("پاس ورڈ درست ڈالیں");
+      alert("Please enter your password");
       return;
     }
 
@@ -36,7 +36,7 @@ const UpdateProfile = () => {
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/;
     if (!passwordRegex.test(password)) {
       alert(
-        "پاس ورڈ کم سے کم 8 حروف کا ہونا چاہئے، اس میں کم سے کم ایک بڑا حرف، ایک چھوٹا حرف، ایک ڈیجٹ، اور ایک خاص حرف ہونا چاہئے۔ مثال: Abc@1234"
+        "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one digit, and one special character. Example: Abc@1234"
       );
       return;
     }
@@ -51,21 +51,22 @@ const UpdateProfile = () => {
 
   return (
     <Layout>
+        <h2 className="text-2xl text-center font-bold">Update Profile</h2>
       <div
-        className="flex flex-col justify-center items-center p-4 font-notoUrdu"
-        dir="rtl"
+        className="flex flex-col justify-center items-start p-4 font-notoUrdu"
+        dir="ltr"
       >
-        <h2 className="text-2xl">پروفائل اپ ڈیٹ کریں</h2>
+       
         <div className="w-full p-4">
-          <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
-            <div className="w-full md:pr-0 mb-2">
+          <div className="lg:flex md:flex-row sm:flex-col mb-4 gap-2">
+            <div className="w-full md:pl-0 mb-2">
               <label htmlFor="" className="mb-2 text-lg">
-                نام:
+                Name:
               </label>
               <input
                 type="text"
                 className="w-full border p-2 rounded-lg mt-3"
-                placeholder="آپ کا نام"
+                placeholder="Your name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 style={{ color: "black" }}
@@ -74,12 +75,12 @@ const UpdateProfile = () => {
             </div>
             <div className="w-full mb-2">
               <label htmlFor="" className="mb-2 text-lg">
-                عمر:
+                Age:
               </label>
               <input
                 type="text"
                 className="w-full border p-2 rounded-lg mt-3"
-                placeholder="آپ کی عمر"
+                placeholder="Your age"
                 value={age}
                 onChange={(e) => setAge(e.target.value)}
                 style={{ color: "black" }}
@@ -89,12 +90,12 @@ const UpdateProfile = () => {
           </div>
           <div className="mb-2">
             <label htmlFor="" className="mb-2 text-lg">
-              ای میل:
+              Email:
             </label>
             <input
               type="email"
               className="w-full border p-2 rounded-lg mt-3"
-              placeholder="نیا ای میل"
+              placeholder="New email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               style={{ color: "black" }}
@@ -103,12 +104,12 @@ const UpdateProfile = () => {
           </div>
           <div className="mb-2">
             <label htmlFor="" className="mb-2 text-lg">
-              پاس ورڈ:
+              Password:
             </label>
             <input
               type="password"
               className="w-full border p-2 rounded-lg mt-3"
-              placeholder="نیا پاس ورڈ"
+              placeholder="New password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               style={{ color: "black" }}
@@ -121,7 +122,7 @@ const UpdateProfile = () => {
             className="btn btn-cyan btn-block"
             onClick={handleSubmit}
           >
-            پروفائل اپ ڈیٹ کریں
+            Update Profile
           </button>
         </div>
       </div>
