@@ -54,8 +54,9 @@ export const Sidebar = () => {
           className="drawer-overlay"
         ></label>
         {/* Main side bar components */}
+
         <ul className="menu p-4 w-80 min-h-full bg-blue font-medium text-lg gap-1 sm:w-60">
-          {/* User Profile */}
+
 
           <div className="w-full h-50 flex flex-col mb-4 ">
             <div className="avatar mb-2 ">

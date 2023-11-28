@@ -1,3 +1,4 @@
+
 import { useNavigate } from "react-router-dom";
 import { Logo } from "../assets/png";
 import { useEffect, useState } from "react";
@@ -168,3 +169,4 @@ export const UpdateProfile = () => {
     </Layout>
   );
 };
+

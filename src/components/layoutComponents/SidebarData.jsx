@@ -1,3 +1,4 @@
+import UpdateProfile  from "../../pages/UpdateProfile"
 export const SidebarData = [
   {
     title: "New Report",
@@ -19,7 +20,7 @@ export const SidebarData = [
   },
   {
     title: "Dashboard",
-    link: "/",
+    link: "dashboard",
   },
   {
     title: "New User Requests",
