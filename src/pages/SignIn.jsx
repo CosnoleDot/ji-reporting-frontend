@@ -1,6 +1,7 @@
 import React from "react";
 import logo from "../assets/png/download3.png";
 import { useState } from "react";
+
 import instance from "../api/instrance";
 import { useNavigate } from "react-router-dom";
 
@@ -34,7 +35,6 @@ export const SignIn = () => {
         alert("error");
       });
   };
-
   return (
     <div className="w-full h-screen  bg-[#E9EBEF]">
       <div className="w-full  xl:w-1/2 lg:w-1/2  md:w-1/2 h-screen flex flex-col p-3">
@@ -125,6 +125,7 @@ export const SignIn = () => {
           >
             Login
           </button>
+
           <button
             onClick={() => navigate("/signup")}
             className="w-full  p-2 text-[#049cfc] font-bold "

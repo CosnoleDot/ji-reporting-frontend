@@ -4560,14 +4560,14 @@ details.collapse summary::-webkit-details-marker {
 
 .mt-5 {
   margin-top: 1.25rem;
+
+
+.mb-12 {
+  margin-bottom: 3rem;
 }
 
 .mt-6 {
   margin-top: 1.5rem;
-}
-
-.mb-12 {
-  margin-bottom: 3rem;
 }
 
 .box-border {
@@ -4985,14 +4985,14 @@ details.collapse summary::-webkit-details-marker {
 
 .gap-4 {
   gap: 1rem;
+
+
+.gap-6 {
+  gap: 1.5rem;
 }
 
 .gap-5 {
   gap: 1.25rem;
-}
-
-.gap-6 {
-  gap: 1.5rem;
 }
 
 .space-x-2 > :not([hidden]) ~ :not([hidden]) {
@@ -5408,6 +5408,12 @@ details.collapse summary::-webkit-details-marker {
 .text-end {
   text-align: end;
 }
+
+
+.align-middle {
+  vertical-align: middle;
+}
+
 
 .font-notoUrdu {
   font-family: Noto Nastaliq Urdu, serif;
