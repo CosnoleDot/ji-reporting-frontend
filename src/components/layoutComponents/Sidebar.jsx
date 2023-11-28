@@ -1,13 +1,33 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/jpgs/profile.jpg";
 import hamburger from "../../assets/svgs/hamburgerIcon.svg";
 import { SidebarData } from "./SidebarData";
 import { useState } from "react";
+import instance from "../../api/instrance";
 
 export const Sidebar = () => {
   const [openSubMenu, setOpenSubMenu] = useState("");
+  const [data, setData] = useState();
 
+  const UserData = async () => {
+    try {
+      instance
+        .get("user/me", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
+        })
+        .then((res) => setData(res?.data?.data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    UserData();
+  });
   const handleMenuItemClick = (index) => {
     setOpenSubMenu(openSubMenu === index ? null : index);
   };
@@ -38,23 +58,21 @@ export const Sidebar = () => {
           {/* User Profile */}
 
           <div className="w-full h-50 flex flex-col mb-4 ">
-            {/* Avatar logo */}
             <div className="avatar mb-2 ">
-              <div className="w-20 rounded-full">
+              {/* <div className="w-20 rounded-full">
                 <img src={logo} alt="" />
-              </div>
+              </div> */}
             </div>
 
-            {/* Name label */}
             <label
               htmlFor=""
               className="text-white font-sans font-bold text-xl "
             >
-              Sandra Adams
+              {data?.name}
             </label>
-            {/* Email label */}
+
             <label htmlFor="" className="text-white  text-sm">
-              sandra@example.com
+              {data?.email}
             </label>
           </div>
 

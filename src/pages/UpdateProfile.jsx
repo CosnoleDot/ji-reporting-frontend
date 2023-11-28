@@ -71,37 +71,6 @@ export const UpdateProfile = () => {
             <h2 className="">Edit Profile</h2>
           </div>
           <div className="p-6">
-            {/* <div className="flex flex-col items-center mb-6 ">
-          <div class="relative w-36 h-36 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
-            <svg
-              class="absolute w-36 h-36 text-gray-400 -left-1"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-          </div>
-
-          <div className="flex flex-col justify-center items-center">
-            <h3 className="text-lg font-semibold">Profile Photo</h3>
-            <p className="text-gray-600 text-sm mb-2">
-              <i> Accepted file type: .png. File size: Less than 1MB</i>
-            </p>
-            <label
-              htmlFor="fileInput"
-              className="bg-blue text-white py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 cursor-pointer"
-            >
-              Change
-            </label>
-            <input id="fileInput" className="hidden" type="file" />
-          </div>
-        </div> */}
-
             <form className="space-y-4" onSubmit={handleSubmit}>
               <div className="grid grid-cols-2 sm:grid-cols-1 xs:grid-cols-1 gap-6 mb-4 lg:mb-12">
                 <div>
