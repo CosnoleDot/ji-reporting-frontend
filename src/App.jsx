@@ -11,6 +11,7 @@ import {
   SignUp,
 } from "./pages";
 import { UserRequests } from "./pages/UserRequests";
+import { UpdateProfile } from "./pages/UpdateProfile";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/" element={<Home />} />
           <Route path="/user-requests" element={<UserRequests />} />
+          <Route path="/update-profile" element={<UpdateProfile />} />
         </Routes>
       </BrowserRouter>
     </div>

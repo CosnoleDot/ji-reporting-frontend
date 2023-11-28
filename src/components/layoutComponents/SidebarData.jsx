@@ -27,7 +27,7 @@ export const SidebarData = [
   },
   {
     title: "Edit Your Profile",
-    link: "/",
+    link: "/update-profile",
   },
   {
     title: "Edit Halqa Details",
