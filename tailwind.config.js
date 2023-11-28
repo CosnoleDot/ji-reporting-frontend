@@ -10,6 +10,7 @@ module.exports = {
       // => @media (min-width: 768px and max-width: 1023px) { ... }
 
       lg: { min: "1024px", max: "1279px" },
+      xs: { min: "0px", max: "339px" },
       // => @media (min-width: 1024px and max-width: 1279px) { ... }
       //   xs: "420px",
       //   sm: "620px",
