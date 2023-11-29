@@ -1,4 +1,3 @@
-
 import { useNavigate } from "react-router-dom";
 import { Logo } from "../assets/png";
 import { useEffect, useState } from "react";
@@ -10,8 +9,6 @@ export const UpdateProfile = () => {
   const [data, setData] = useState();
 
   const navigate = useNavigate();
-  //   const [password, setPassword] = useState("");
-  //   const [cPassword, setCPassword] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -118,36 +115,6 @@ export const UpdateProfile = () => {
                 </div>
               </div>
 
-              {/* <div className="grid grid-cols-2 sm:grid-cols-1 xs:grid-cols-1 gap-6">
-                <div>
-                  <label
-                    htmlFor="confirmPassword"
-                    className="block font-semibold mb-1"
-                  >
-                    Confirm Password
-                  </label>
-                  <input
-                    type="confirmPassword"
-                    id="confirmPassword"
-                    className="w-full bg-gray-100 border-b-2 border-gray-300 focus:outline-none focus:border-blue-500 py-2 px-4 rounded-lg"
-                    placeholder="Confirm Password"
-                    onChange={(e) => setCPassword(e.target.value)}
-                  />
-                  <label className="label">
-                    <span></span>
-                    {cPassword == password && password?.split().length > 0 ? (
-                      <span className="label-text-alt text-blue">
-                        Password matched!
-                      </span>
-                    ) : (
-                      <span className="label-text-alt text-orange">
-                        Password not matched!
-                      </span>
-                    )}
-                  </label>
-                </div>
-              </div> */}
-
               <div className="flex justify-end">
                 <button
                   className="bg-blue text-white py-2 px-6 rounded-lg shadow-md hover:bg-blue-600"
@@ -169,4 +136,3 @@ export const UpdateProfile = () => {
     </Layout>
   );
 };
-
