@@ -1,4 +1,4 @@
-import UpdateProfile  from "../../pages/UpdateProfile"
+// import UpdateProfile  from "../../pages/UpdateProfile"
 export const SidebarData = [
   {
     title: "New Report",
