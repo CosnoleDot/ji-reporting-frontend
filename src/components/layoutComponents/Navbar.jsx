@@ -73,7 +73,7 @@ export const Navbar = () => {
                 <span className='badge'>New</span>
               </span>
             </li> */}
-              <li>
+              <li onClick={() => navigate('/profile')}>
                 <span>Profile</span>
               </li>
               <li onClick={() => navigate('/change-password')}>

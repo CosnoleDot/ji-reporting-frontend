@@ -9,6 +9,7 @@ import { Comparision } from "./pages/Comparision";
 import { ReportChart } from "./components/ReportChart";
 import { Signup } from "./pages/Signup";
 import { Reports } from "./pages/Reports";
+import { EditProfile } from "./pages";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/comparison" element={<Comparision />} />
           <Route path="/chart" element={<ReportChart />} />
           <Route path="/reports" element={<Reports />} />
+          <Route path="/profile" element={<EditProfile />} />
           {/* <Route path="/halqa" element={<Halqa />} />
           <Route path="/maqam" element={<Maqam />} />
           <Route path="/division" element={<Division />} />
