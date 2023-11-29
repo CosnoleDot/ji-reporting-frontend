@@ -10,12 +10,12 @@ function App() {
     <div className="flex flex-col">
       <BrowserRouter>
         <Routes>
-          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          {/* <Route path="/login" element={<Login />} />
           <Route path="/" element={<Dashboard />} />
           <Route path="/reset-password" element={<Forget />} />
           <Route path="change-password" element={<ChangePassword />} />
           {/* <Route path="/halqa" element={<Halqa />} />
-          <Route path="/signup" element={<SignUp />} />
           <Route path="/maqam" element={<Maqam />} />
           <Route path="/division" element={<Division />} />
           <Route path="/reset-password" element={<ResetPassword />} />
@@ -23,6 +23,7 @@ function App() {
           <Route path="/update-profile" element={<UpdateProfile />} /> */}
         </Routes>
       </BrowserRouter>
+      <Toast />
     </div>
   );
 }

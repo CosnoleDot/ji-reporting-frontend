@@ -1,325 +1,219 @@
-import React, { useState, useEffect } from "react";
-import { CustomDropDown } from "../components";
-import instance from "../api/instrance";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { Loader } from '../components';
+import instance from '../api/instrance';
+import { useToastState } from '../context';
 
-export const SignUp = () => {
-  const [divisions, setDivisions] = useState([]);
-  const [tehsil, setTehsil] = useState([]);
-  const [halqa, setHalqa] = useState([]);
-  const [maqamData, setMaqamData] = useState([]);
-  const [district, setDistrict] = useState([]);
-  const [userType, setUserType] = useState("");
-  const [formData, setFormData] = useState({
-    email: "",
-    password1: "",
-    password2: "",
-    name: "",
-    age: "",
-    userAreaId: "",
-    userAreaType: "",
-    nazim: "",
-  });
-  const navigate = useNavigate();
-  const setDivision = () => {
-    setUserType("Division");
-    setFormData({ ...formData, nazim: "Division" });
+export const Signup = () => {
+  const [userAreaType, setUserAreaType] = useState('Division');
+  const [areas, setAreas] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const { dispatch } = useToastState();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      userAreaId: formData.get('userAreaId'),
+      userAreaType: formData.get('userAreaType'),
+      email: formData.get('email'),
+      password1: formData.get('password1'),
+      password2: formData.get('password2'),
+      name: formData.get('name'),
+      age: formData.get('age'),
+      nazim: formData.get('userAreaType').toLowerCase(),
+    };
+    try {
+      const request = await instance.post('/user/signup', data, {
+        headers: { 'Content-Type': 'application/json' },
+      });
+      dispatch({ type: 'SUCCESS', payload: request.data?.message });
+      e.target.reset();
+    } catch (err) {
+      dispatch({ type: 'ERROR', payload: err.response.data.message });
+    }
+    setLoading(false);
   };
-
-  const setMaqam = () => {
-    setUserType("Maqam");
-    setFormData({ ...formData, nazim: "Maqam" });
-  };
-  const fetchData = async () => {
-    try {
-      const divisionResponse = await instance.get("/locations/division");
-      setDivisions(divisionResponse.data.data);
-    } catch (error) {
-      console.error("Error fetching divisions:", error);
-    }
-    try {
-      const tehsilResponse = await instance.get("/locations/tehsil");
-      setTehsil(tehsilResponse.data.data);
-    } catch (error) {
-      console.error("Error fetching tehsil:", error);
-    }
-    try {
-      const halqaResponse = await instance.get("/locations/maqam");
-      setMaqamData(halqaResponse.data.data);
-    } catch (error) {
-      console.error("Error fetching tehsil:", error);
-    }
-    try {
-      const halqaResponse = await instance.get("/locations/halqa");
-      setHalqa(halqaResponse.data.data);
-    } catch (error) {
-      console.error("Error fetching tehsil:", error);
-    }
-
-    try {
-      const districtResponse = await instance.get("/locations/district");
-      setDistrict(districtResponse.data.data);
-    } catch (error) {
-      console.error("Error fetching tehsil:", error);
+  const getAreas = async () => {
+    let data;
+    switch (userAreaType) {
+      case 'Division':
+        setLoading(true);
+        data = await instance.get('/locations/division');
+        setLoading(false);
+        setAreas(data.data.data);
+        break;
+      case 'Maqam':
+        setLoading(true);
+        data = await instance.get('/locations/maqam');
+        setLoading(false);
+        setAreas(data.data.data);
+        break;
+      case 'Halqa':
+        setLoading(true);
+        data = await instance.get('/locations/halqa');
+        setLoading(false);
+        setAreas(data.data.data);
+        break;
+      default:
+        break;
     }
   };
-
   useEffect(() => {
-    fetchData();
-  }, []);
-
-  const handleSubmit = async () => {
-    try {
-      const response = await instance.post("/user/signup", formData);
-      if (response.status === 200) {
-        navigate("/signup");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    getAreas();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userAreaType]);
   return (
-    <div className="w-full h-full flex flex-col  bg-[#E9EBEF]">
-      <h1 className="text-2xl font-bold text-center m-3">Signup Please</h1>
-      <div className="w-full h-full  flex flex-col justify-start items-start p-3">
-        <div className="w-full mb-4">
-          <label htmlFor="" className=" opacity-70 font-medium">
-            Username
-          </label>
-          <input
-            type="text"
-            className="w-full p-2 rounded-lg mt-2"
-            placeholder="Enter Username"
-            name="name"
-            value={formData.name}
-            onChange={(e) => {
-              setFormData({ ...formData, name: e.target.value });
-            }}
-          />
+    <div className='relative flex flex-col justify-center h-screen p-2'>
+      <div className='w-full p-6 m-auto bg-white rounded-md shadow-md lg:max-w-lg'>
+        <div className='w-full flex items-center justify-center'>
+          <img src='/logo.png' className='text-center w-25 h-20' alt='LOGO' />
         </div>
-        <div className="w-full mb-4">
-          <label htmlFor="" className=" opacity-70 font-medium">
-            Email
-          </label>
-          <input
-            type="mail"
-            className="w-full p-2 rounded-lg mt-2"
-            placeholder="Enter Email"
-            name="email"
-            value={formData.email}
-            onChange={(e) => {
-              setFormData({ ...formData, email: e.target.value });
-            }}
-          />
-        </div>
-        <div className="w-full mb-4 ">
-          <label htmlFor="" className=" opacity-70 font-medium">
-            Age
-          </label>
-          <input
-            type="number"
-            pattern="[0-9]*"
-            className="w-full p-2 rounded-lg mt-2"
-            placeholder="Enter Age"
-            name="age"
-            value={formData.age}
-            onChange={(e) => {
-              setFormData({ ...formData, age: e.target.value });
-            }}
-          />
-        </div>
-        <div className="w-full mb-4 ">
-          <label htmlFor="" className=" opacity-70 font-medium">
-            Password
-          </label>
-          <input
-            type="password"
-            pattern="[0-9]*"
-            className="w-full p-2 rounded-lg mt-2"
-            placeholder="Enter Password"
-            name="password1"
-            value={formData.password1}
-            onChange={(e) => {
-              setFormData({ ...formData, password1: e.target.value });
-            }}
-          />
-        </div>
-        <div className="w-full mb-4 ">
-          <label htmlFor="" className=" opacity-70 font-medium">
-            Confirm Password
-          </label>
-          <input
-            type="password"
-            pattern="[0-9]*"
-            className="w-full p-2 rounded-lg mt-2"
-            placeholder="Confirm Password"
-            name="confirm-password"
-            value={formData.password2}
-            onChange={(e) => {
-              setFormData({ ...formData, password2: e.target.value });
-            }}
-          />
-        </div>
-        <div>
-          <h2>Select your Type</h2>
-          <div className="form-control flex flex-row">
-            <label className="label cursor-pointer mr-2">
-              <span className="label-text mr-2">Division</span>
-              <input
-                type="radio"
-                name="radio-10"
-                className="radio checked:bg-[#049cfc]"
-                checked={userType === "Division"}
-                onChange={setDivision}
-              />
-            </label>
-            <label className="label cursor-pointer mr-2">
-              <span className="label-text mr-2">Maqam</span>
-              <input
-                type="radio"
-                name="radio-10"
-                className="radio checked:bg-[#049cfc]"
-                checked={userType === "Maqam"}
-                onChange={setMaqam}
-              />
-            </label>
-          </div>
-        </div>
-
-        {userType === "Division" && (
-          <div className="w-full mb-10">
-            <div className="w-full flex flex-row md:flex-col sm:flex-col  gap-5 ">
-              <div className="w-full mb-5">
-                <label htmlFor="" className="opacity-70 font-medium">
-                  Division
-                </label>
-                <CustomDropDown
-                  onSelect={(selected) => {
-                    if (selected) {
-                      setFormData({
-                        ...formData,
-                        userAreaId: selected._id,
-                        userAreaType: "Division",
-                        nazim: "division",
-                      });
-                    }
-                  }}
-                  location={divisions}
-                  title={"Select Division"}
-                />
-              </div>
-              <div className="w-full mb-4 ">
-                <label htmlFor="" className=" opacity-70 font-medium">
-                  District
-                </label>
-                <CustomDropDown
-                  onSelect={(selected) => {
-                    if (selected) {
-                      setFormData({
-                        ...formData,
-                        userAreaId: selected._id,
-                        userAreaType: "District",
-                        nazim: "district",
-                      });
-                    }
-                  }}
-                  location={district}
-                  title={"Select District"}
-                />
-              </div>
-            </div>
-            <div className="w-full flex flex-row md:flex-col sm:flex-col  gap-5">
-              <div className="w-full mb-4 ">
-                <label htmlFor="" className=" opacity-70 font-medium">
-                  Tehsil
-                </label>
-                <CustomDropDown
-                  onSelect={(selected) => {
-                    if (selected) {
-                      setFormData({
-                        ...formData,
-                        userAreaId: selected._id,
-                        userAreaType: "Tehsil",
-                        nazim: "tehsil",
-                      });
-                    }
-                  }}
-                  location={tehsil}
-                  title={"Select Tehsil"}
-                />
-              </div>
-              <div className="w-full mb-4 ">
-                <label htmlFor="" className=" opacity-70 font-medium">
-                  Halqa
-                </label>
-                <CustomDropDown
-                  onSelect={(selected) => {
-                    if (selected) {
-                      setFormData({
-                        ...formData,
-                        userAreaId: selected._id,
-                        userAreaType: "Halqa",
-                        nazim: "halqa",
-                      });
-                    }
-                  }}
-                  location={halqa}
-                  title={"Select Halqa"}
-                />
-              </div>
-            </div>
-          </div>
-        )}
-
-        {userType === "Maqam" && (
-          <div className="w-full flex flex-row md:flex-col sm:flex-col  gap-5 ">
-            <div className="w-full mb-5 ">
-              <label htmlFor="maqam" className=" opacity-70 font-medium">
-                Maqam
+        <form className='space-y-4' onSubmit={handleSubmit}>
+          <h1 className='font-semibold text-2xl'>Signup Form</h1>
+          <div className='flex items-center justify-between'>
+            <div>
+              <label className='label'>
+                <span className='text-base label-text'>Full Name</span>
               </label>
-              <CustomDropDown
-                onSelect={(selected) => {
-                  if (selected) {
-                    setFormData({
-                      ...formData,
-                      userAreaId: selected._id,
-                      userAreaType: "Maqam",
-                      nazim: "maqam",
-                    });
-                  }
-                }}
-                location={maqamData}
-                title={"Select Maqam"}
+              <input
+                type='text'
+                placeholder='Full Name'
+                name='name'
+                className='w-full input input-bordered input-primary'
+                required
               />
             </div>
-            <div className="w-full mb-5 ">
-              <label htmlFor="" className=" opacity-70 font-medium">
-                Halqa
+            <div>
+              <label className='label'>
+                <span className='text-base label-text'>Age</span>
               </label>
-              <CustomDropDown
-                onSelect={(selected) => {
-                  if (selected) {
-                    setFormData({
-                      ...formData,
-                      userAreaId: selected._id,
-                      userAreaType: "Halqa",
-                      nazim: "halqa",
-                    });
-                  }
-                }}
-                location={halqa}
-                title={"Select Halqa"}
+              <input
+                type='number'
+                placeholder='Age'
+                name='age'
+                className='w-full input input-bordered input-primary'
+                required
               />
             </div>
           </div>
-        )}
-        <button
-          className="w-full bg-[#049cfc] p-2 text-white font-bold mb-5 rounded-lg"
-          onClick={handleSubmit}
-        >
-          Signup
-        </button>
+          <div>
+            <label className='label'>
+              <span className='text-base label-text'>Email</span>
+            </label>
+            <input
+              type='email'
+              placeholder='Email Address'
+              name='email'
+              className='w-full input input-bordered input-primary'
+              required
+            />
+          </div>
+          <div className='flex items-center justify-between'>
+            <div>
+              <label className='label'>
+                <span className='text-base label-text'>Password</span>
+              </label>
+              <input
+                type='password'
+                placeholder='Enter Password'
+                name='password1'
+                className='w-full input input-bordered input-primary'
+                required
+              />
+            </div>
+            <div>
+              <label className='label'>
+                <span className='text-base label-text'>Confirm Password</span>
+              </label>
+              <input
+                type='password'
+                name='password2'
+                placeholder='Confirm Password'
+                className='w-full input input-bordered input-primary'
+                required
+              />
+            </div>
+          </div>
+          <div>
+            <span className='px-1 py-2 block font-semibold'>Nazim Type:</span>
+            <div className='flex items-center justify-between'>
+              <div className='form-control'>
+                <label className='label cursor-pointer gap-2'>
+                  <input
+                    type='radio'
+                    name='userAreaType'
+                    className='radio checked:bg-blue-500'
+                    checked={userAreaType === 'Division'}
+                    value='Division'
+                    onChange={(e) => setUserAreaType(e.target.value)}
+                  />
+                  <span className='label-text'>Division</span>
+                </label>
+              </div>
+              <div className='form-control'>
+                <label className='label cursor-pointer gap-2'>
+                  <input
+                    type='radio'
+                    name='userAreaType'
+                    className='radio checked:bg-blue-500'
+                    checked={userAreaType === 'Maqam'}
+                    value='Maqam'
+                    onChange={(e) => setUserAreaType(e.target.value)}
+                  />
+                  <span className='label-text'>Maqam</span>
+                </label>
+              </div>
+              <div className='form-control'>
+                <label className='label cursor-pointer gap-2'>
+                  <input
+                    type='radio'
+                    name='userAreaType'
+                    className='radio checked:bg-blue-500'
+                    checked={userAreaType === 'Halqa'}
+                    value='Halqa'
+                    onChange={(e) => setUserAreaType(e.target.value)}
+                  />
+                  <span className='label-text'>Halqa</span>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div>
+            <span className='px-1 py-2 block font-semibold'>Area:</span>
+            <select
+              className='select select-bordered w-full'
+              defaultValue={''}
+              name='userAreaId'
+              required
+            >
+              <option value={''} disabled>
+                Select area
+              </option>
+              {areas
+                .sort((a, b) => a?.name?.localeCompare(b?.name))
+                .map((area, index) => (
+                  <option value={area?._id} key={index}>
+                    {area?.name}{' '}
+                    {userAreaType === 'Halqa' &&
+                      `- ${area?.parentId?.name} (${area?.parentType})`}
+                  </option>
+                ))}
+            </select>
+          </div>
+          <a
+            href='/'
+            className='text-xs text-gray-600 hover:underline mt-5 block hover:text-blue-600'
+          >
+            Already have an account?
+          </a>
+          <div>
+            <button type='submit' className='btn btn-primary w-full'>
+              Sign Up
+            </button>
+          </div>
+        </form>
       </div>
+      {loading && <Loader />}
     </div>
   );
 };
