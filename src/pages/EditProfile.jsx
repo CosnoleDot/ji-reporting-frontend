@@ -25,7 +25,7 @@ export const EditProfile = () => {
     try {
       const formData = new FormData(e.currentTarget);
       const req = await instance.put(
-        `/user/${data?._id}`,
+        `/user`,
         {
           name: formData.get('name'),
           age: formData.get('age'),

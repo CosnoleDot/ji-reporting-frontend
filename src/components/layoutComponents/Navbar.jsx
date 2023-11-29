@@ -82,7 +82,7 @@ export const Navbar = () => {
               <li>
                 <span
                   onClick={() => {
-                    localStorage.removeItem('@token');
+                    localStorage.clear();
                     navigate('/login');
                   }}
                 >
