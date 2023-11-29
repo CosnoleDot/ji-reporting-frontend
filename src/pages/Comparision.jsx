@@ -32,7 +32,7 @@ export const Comparision = () => {
     }
   };
   return (
-    <GeneralLayout>
+    <GeneralLayout active={"compare"}>
       <div className="relative flex flex-col gap-3 items-center p-5 justify-center h-[calc(100vh-65.6px-64px)]">
         <div className="flex w-full items-center justify-between">
           <h3 className="font-bold text-xl">Compare Reports</h3>

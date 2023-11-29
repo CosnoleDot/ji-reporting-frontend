@@ -38,7 +38,7 @@ export const ReportChart = () => {
       const monthlyCtx = document.getElementById("monthlyChart");
       monthlyChartRef.current = new Chart(monthlyCtx, {
         type: "bar",
-        data: resizeBy,
+        data: res,
         options: {
           scales: {
             y: {
