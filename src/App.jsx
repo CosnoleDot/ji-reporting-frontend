@@ -5,16 +5,23 @@ import { Home } from "./pages-old/Home";
 import { Forget } from "./pages/Forget";
 import { Dashboard } from "./pages/Dashboard";
 import { ChangePassword } from "./pages/ChangePassword";
+import { Toast } from "./components/Toast";
+import { Comparision } from "./pages/Comparision";
+import { ReportChart } from "./components/ReportChart";
+import { Signup } from "./pages/Signup";
+
 function App() {
   return (
     <div className="flex flex-col">
       <BrowserRouter>
         <Routes>
           <Route path="/signup" element={<Signup />} />
-          {/* <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/" element={<Dashboard />} />
           <Route path="/reset-password" element={<Forget />} />
           <Route path="change-password" element={<ChangePassword />} />
+          <Route path="/comparison" element={<Comparision />} />
+          <Route path="chart" element={<ReportChart />} />
           {/* <Route path="/halqa" element={<Halqa />} />
           <Route path="/maqam" element={<Maqam />} />
           <Route path="/division" element={<Division />} />
