@@ -1,19 +1,35 @@
-import instance from '../api/instrance';
+import { useEffect, useState } from 'react';
 import { GeneralLayout } from '../components';
+import instance from '../api/instrance';
 import { useToastState } from '../context';
 
-export const ChangePassword = () => {
+export const EditProfile = () => {
+  const [data, setData] = useState({});
   const { dispatch } = useToastState();
+  const getProfile = async () => {
+    try {
+      const req = await instance.get('/user/me', {
+        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
+      });
+      setData(req.data.data);
+    } catch (err) {
+      dispatch({ type: 'ERROR', payload: err.response.data.message });
+    }
+  };
+  useEffect(() => {
+    getProfile();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const formData = new FormData(e.currentTarget);
       const req = await instance.put(
-        '/user/change-password',
+        `/user`,
         {
-          password0: formData.get('password0'),
-          password1: formData.get('password1'),
-          password2: formData.get('password2'),
+          name: formData.get('name'),
+          age: formData.get('age'),
+          email: formData.get('email'),
         },
         {
           headers: {
@@ -23,7 +39,6 @@ export const ChangePassword = () => {
         }
       );
       dispatch({ type: 'SUCCESS', payload: req.data?.message });
-      e.target.reset();
     } catch (err) {
       dispatch({ type: 'ERROR', payload: err.response.data.message });
     }
@@ -32,46 +47,44 @@ export const ChangePassword = () => {
     <GeneralLayout>
       <div className='relative flex flex-col justify-center h-[calc(100vh-65.6px-64px)]'>
         <div className='w-full p-6 m-auto bg-white rounded-md lg:max-w-lg'>
-          <h3 className='font-bold text-2xl'>Change Password</h3>
+          <h3 className='font-bold text-2xl'>Edit Profile</h3>
           <form className='space-y-4' onSubmit={handleSubmit}>
             <div>
               <label className='label'>
-                <span className='text-base label-text'>Current Password</span>
+                <span className='text-base label-text'>Name</span>
               </label>
               <input
-                type='password'
-                placeholder='Current Password'
+                type='text'
+                placeholder='Full Name'
                 className='w-full input input-bordered input-primary'
-                name='password0'
-                minLength={4}
+                name='name'
+                defaultValue={data?.name}
                 required
               />
             </div>
             <div>
               <label className='label'>
-                <span className='text-base label-text'>New Password</span>
+                <span className='text-base label-text'>Email</span>
               </label>
               <input
-                type='password'
-                placeholder='New Passowrd'
+                type='email'
+                placeholder='Email Address'
                 className='w-full input input-bordered input-primary'
-                name='password1'
-                minLength={4}
+                name='email'
+                defaultValue={data?.email}
                 required
               />
             </div>
             <div>
               <label className='label'>
-                <span className='text-base label-text'>
-                  Confirm New Password
-                </span>
+                <span className='text-base label-text'>Age</span>
               </label>
               <input
-                type='password'
-                placeholder='Confirm New Password'
+                type='number'
+                placeholder='Enter Age'
+                name='age'
                 className='w-full input input-bordered input-primary'
-                minLength={4}
-                name='password2'
+                defaultValue={data?.age}
                 required
               />
             </div>
