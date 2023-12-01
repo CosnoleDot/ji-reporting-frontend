@@ -1,13 +1,17 @@
 import instance from '../api/instrance';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { toJson } from '../utils';
 import { useToastState } from '../context';
+import { useState } from 'react';
+import { Loader } from '../components';
 
 export const Login = () => {
   const navigate = useNavigate();
   const { dispatch } = useToastState();
+  const [loading, setLoading] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const formData = new FormData(e.currentTarget);
     const { email, password } = toJson(formData);
     try {
@@ -23,6 +27,7 @@ export const Login = () => {
       const message = error?.response?.data?.message;
       dispatch({ type: 'ERROR', payload: message });
     }
+    setLoading(false);
   };
   return (
     <div className='relative flex flex-col justify-center h-screen overflow-hidden'>
@@ -53,19 +58,32 @@ export const Login = () => {
               className='w-full input input-bordered input-primary'
             />
           </div>
-          <a
-            href='/reset-password'
-            className='text-xs text-gray-600 hover:underline hover:text-blue-600'
-          >
-            Forget Password?
-          </a>
+          <div className='flex justify-between items-center'>
+            <Link
+              to='/reset-password'
+              className='text-xs text-gray-600 hover:underline hover:text-blue-600'
+            >
+              Forget Password?
+            </Link>
+            <Link
+              to='/signup'
+              className='text-xs text-gray-600 hover:underline hover:text-blue-600'
+            >
+              Create new account
+            </Link>
+          </div>
           <div>
-            <button className='btn btn-primary' type='submit'>
+            <button
+              disabled={loading}
+              className='btn btn-primary'
+              type='submit'
+            >
               Login
             </button>
           </div>
         </form>
       </div>
+      {loading && <Loader />}
     </div>
   );
 };
