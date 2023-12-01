@@ -4,7 +4,8 @@ import { FaUserPlus } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import instance from '../../api/instrance';
-export const Navbar = () => {
+
+export const Navbar = ({ title }) => {
   const navigate = useNavigate();
   const [requests, showRequests] = useState(false);
   const [profileTab, showProfileTab] = useState(false);
@@ -24,13 +25,20 @@ export const Navbar = () => {
     }
   };
   useEffect(() => {
-    getAllRequests();
+    const intervalId = setInterval(() => {
+      getAllRequests();
+    }, 2000); // 2000 milliseconds = 2 seconds
+
+    // Cleanup the interval on component unmount
+    return () => clearInterval(intervalId);
   }, []);
   return (
     <>
       <div className='navbar bg-base-100'>
         <div className='flex-1'>
-          <span className='btn btn-ghost text-xl'>JI REPORTING</span>
+          <span className='btn btn-ghost text-xl'>
+            {title || 'JI Reporting'}
+          </span>
         </div>
         <div className='flex-none'>
           {localStorage.getItem('@type') !== 'halqa' && (
@@ -39,7 +47,10 @@ export const Navbar = () => {
                 tabIndex={0}
                 role='button'
                 className='btn btn-ghost btn-circle'
-                onClick={() => showRequests(!requests)}
+                onClick={() => {
+                  showRequests(!requests);
+                  showProfileTab(false);
+                }}
               >
                 <div className='indicator'>
                   <FaUserPlus className='text-xl' />
@@ -53,7 +64,10 @@ export const Navbar = () => {
           <div className='dropdown dropdown-end'>
             <div
               tabIndex={0}
-              onClick={() => showProfileTab(!profileTab)}
+              onClick={() => {
+                showRequests(false);
+                showProfileTab(!profileTab);
+              }}
               role='button'
               className='btn btn-ghost btn-circle avatar'
             >
