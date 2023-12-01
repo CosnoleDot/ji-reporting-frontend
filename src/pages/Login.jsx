@@ -58,12 +58,20 @@ export const Login = () => {
               className='w-full input input-bordered input-primary'
             />
           </div>
-          <Link
-            to='/reset-password'
-            className='text-xs text-gray-600 hover:underline hover:text-blue-600'
-          >
-            Forget Password?
-          </Link>
+          <div className='flex justify-between items-center'>
+            <Link
+              to='/reset-password'
+              className='text-xs text-gray-600 hover:underline hover:text-blue-600'
+            >
+              Forget Password?
+            </Link>
+            <Link
+              to='/signup'
+              className='text-xs text-gray-600 hover:underline hover:text-blue-600'
+            >
+              Create new account
+            </Link>
+          </div>
           <div>
             <button
               disabled={loading}

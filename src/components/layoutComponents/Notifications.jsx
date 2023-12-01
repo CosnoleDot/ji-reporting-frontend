@@ -30,7 +30,7 @@ export const Notifications = ({ userRequests, getAllRequests }) => {
   };
   return (
     <div className='card-body max-h-[320px] overflow-y-scroll'>
-      {userRequests.length < 1 && <h1 className='p-2'>No requests fouund!</h1>}
+      {userRequests.length < 1 && <h1 className='p-2'>No requests found!</h1>}
       {userRequests.map((req, index) => (
         <div
           key={index}
