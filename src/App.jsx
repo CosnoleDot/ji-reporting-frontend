@@ -6,11 +6,10 @@ import { Dashboard } from "./pages/Dashboard";
 import { ChangePassword } from "./pages/ChangePassword";
 import { Toast } from "./components/Toast";
 import { Comparision } from "./pages/Comparision";
-
+import { ReportChart } from "./components/ReportChart";
 import { Signup } from "./pages/Signup";
 import { Reports } from "./pages/Reports";
-import { EditProfile } from "./pages";
-import { ReportChart } from "./components/ReportChart";
+import { EditProfile, Locations } from "./pages";
 
 function App() {
   return (
@@ -26,6 +25,7 @@ function App() {
           <Route path="/chart" element={<ReportChart />} />
           <Route path="/reports" element={<Reports />} />
           <Route path="/profile" element={<EditProfile />} />
+          <Route path="/locations" element={<Locations />} />
           {/* <Route path="/halqa" element={<Halqa />} />
           <Route path="/maqam" element={<Maqam />} />
           <Route path="/division" element={<Division />} />

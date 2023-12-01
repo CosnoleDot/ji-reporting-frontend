@@ -48,7 +48,7 @@ export const Dashboard = () => {
     getAllReports();
   }, []);
   return (
-    <GeneralLayout active={'dashboard'}>
+    <GeneralLayout title={"Dashboard"} active={'dashboard'}>
       <div className='relative flex lg:flex-row flex-col gap-3 items-center p-5 justify-center h-[calc(100vh-65.6px-64px)]'>
         <div className='p-5 w-full bg-slate-200 rounded-xl'>
           <h1 className='font-bold text-lg'>Total Reports</h1>
