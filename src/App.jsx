@@ -12,19 +12,19 @@ import { EditProfile, Locations } from './pages';
 
 function App() {
   return (
-    <div className='flex flex-col'>
+    <div className="flex flex-col">
       <BrowserRouter>
         <Routes>
-          <Route path='/signup' element={<Signup />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/' element={<Dashboard />} />
-          <Route path='/reset-password' element={<Forget />} />
-          <Route path='change-password' element={<ChangePassword />} />
-          <Route path='/comparison' element={<Comparision />} />
-          <Route path='/chart' element={<ReportChart />} />
-          <Route path='/reports' element={<Reports />} />
-          <Route path='/profile' element={<EditProfile />} />
-          <Route path='/locations' element={<Locations />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/reset-password" element={<Forget />} />
+          <Route path="change-password" element={<ChangePassword />} />
+          <Route path="/comparison" element={<Comparision />} />
+          <Route path="/chart" element={<ReportChart />} />
+          <Route path="/reports" element={<Reports />} />
+          <Route path="/profile" element={<EditProfile />} />
+          <Route path="/locations" element={<Locations />} />
           {/* <Route path="/halqa" element={<Halqa />} />
           <Route path="/maqam" element={<Maqam />} />
           <Route path="/division" element={<Division />} />
