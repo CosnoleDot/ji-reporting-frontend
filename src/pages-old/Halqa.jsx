@@ -48,7 +48,11 @@ export const Halqa = () => {
         if (i === "month") {
           elem.value = data[i]?.split("")?.slice(0, 7)?.join("");
         } else {
-          elem.value = data[i];
+          if (elem.type === "checkbox") {
+            elem.defaultChecked = data[i];
+          } else {
+            elem.value = data[i];
+          }
         }
       }
     });
@@ -59,7 +63,7 @@ export const Halqa = () => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const jsonData = convertDataFormat(toJson(formData));
-
+    setLoading(true);
     try {
       if (id) {
         const req = await instance.put(`/reports/halqa/${id}`, jsonData, {
@@ -85,6 +89,7 @@ export const Halqa = () => {
       dispatch({ type: "ERROR", payload: err.response.data.message });
       navigate("/reports");
     }
+    setLoading(false);
   };
 
   return (
@@ -127,7 +132,7 @@ export const Halqa = () => {
               </div>
             </div>
             <div className="w-full">
-              <button className="btn btn-primary">
+              <button disabled={loading} className="btn btn-primary">
                 {id ? "Update" : "Add"}
               </button>
             </div>

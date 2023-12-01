@@ -29,15 +29,16 @@ export const convertDataFormat = (data) => {
   Object.keys(data).forEach((key) => {
     const processedKey = processKey(key);
 
-    if (processedKey !== null) {
-      result[processedKey] = data[key];
-    }
+    // if (processedKey !== null) {
+    result[processedKey] = data?.[key] || null;
+    // }
   });
 
   return result;
 };
 
 export const reverseDataFormat = (data) => {
+  console.log(data);
   const obj = {};
   Object.keys(data).forEach((i) => {
     if (!data[i]) {
@@ -54,18 +55,27 @@ export const reverseDataFormat = (data) => {
               .forEach((k) => {
                 if (i === "mentionedActivityId" && j === "studyCircle") {
                   obj[j + "Mentioned-" + k] = data[i][j][k];
+                } else if (i === "tdId" && j === "registered") {
+                  obj["registeredTosee"] = data[i][j][k];
                 } else {
                   obj[j + "-" + k] = data[i][j][k];
                 }
               });
           } else {
-            obj[j] = data[i][j];
+            if (i === "tdId" && j === "registered") {
+              obj["registeredTosee"] = data[i][j];
+            } else if (i === "halqaLibId" && j === "registered") {
+              obj["registeredLibrary"] = data[i][j];
+            } else if (i === "wiId" && j === "registered") {
+              obj["registeredWorker"] = data[i][j];
+            } else {
+              obj[j] = data[i][j];
+            }
           }
         });
     } else {
       obj[i] = data[i];
     }
   });
-  console.log(obj);
   return obj;
 };

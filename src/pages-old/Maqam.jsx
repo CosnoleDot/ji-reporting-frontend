@@ -51,6 +51,7 @@ export const Maqam = () => {
     if (l === "view") {
       setView(true);
     }
+    setId(params?.id);
   }, [params]);
   useEffect(() => {
     if (id) getData("maqam", id, setData, dispatch, setLoading);
@@ -65,7 +66,11 @@ export const Maqam = () => {
         if (i === "month") {
           elem.value = data[i]?.split("")?.slice(0, 7)?.join("");
         } else {
-          elem.value = data[i];
+          if (elem.type === "checkbox") {
+            elem.defaultChecked = data[i];
+          } else {
+            elem.value = data[i];
+          }
         }
       }
     });
@@ -76,6 +81,7 @@ export const Maqam = () => {
 
     const formData = new FormData(e.currentTarget);
     const jsonData = convertDataFormat(toJson(formData));
+    setLoading(true);
     try {
       if (id) {
         const req = await instance.put(`/reports/maqam/${id}`, jsonData, {
@@ -84,8 +90,8 @@ export const Maqam = () => {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
-        dispatch({ type: "SUCCESS", payload: req.data?.message });
-        navigate("/reports");
+
+        dispatch({ type: "SUCCESS", payload: req?.data?.message });
       } else {
         const req = await instance.post("/reports/maqam", jsonData, {
           headers: {
@@ -94,14 +100,12 @@ export const Maqam = () => {
           },
         });
         dispatch({ type: "SUCCESS", payload: req.data?.message });
-        navigate("/reports");
       }
-
-      console.log(req);
-      e.target.reset();
+      navigate("/reports");
     } catch (error) {
-      dispatch({ type: "SUCCESS", payload: error.data?.message });
+      dispatch({ type: "ERROR", payload: error?.response?.data?.message });
     }
+    setLoading(false);
   };
 
   return (

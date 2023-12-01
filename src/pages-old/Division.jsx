@@ -64,6 +64,7 @@ export const Division = () => {
 
     const formData = new FormData(e.currentTarget);
     const jsonData = convertDataFormat(toJson(formData));
+    setLoading(true);
     try {
       if (id) {
         const req = await instance.put(`/reports/division/${id}`, jsonData, {
@@ -89,6 +90,7 @@ export const Division = () => {
     } catch (error) {
       dispatch({ type: "ERROR", payload: error.response.data.message });
     }
+    setLoading(false);
   };
   const arr = [
     {
@@ -179,7 +181,7 @@ export const Division = () => {
               </div>
             </div>
             <div className="w-full">
-              <button className="btn btn-primary">
+              <button className="btn btn-primary" disabled={loading}>
                 {id ? "Update" : "Add"}
               </button>
             </div>
