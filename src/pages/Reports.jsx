@@ -1,5 +1,9 @@
 import { FaEdit, FaEye, FaPlus } from "react-icons/fa";
-import { GeneralLayout } from "../components";
+import { GeneralLayout, Loader } from "../components";
+import { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router";
+import instance from "../api/instrance";
+import moment from "moment/moment";
 
 export const months = [
   {
@@ -52,6 +56,40 @@ export const months = [
   },
 ];
 export const Reports = () => {
+  const [reports, setReports] = useState([]);
+  const navigate = useNavigate();
+  const userType = localStorage.getItem("@type");
+  const [loading, setLoading] = useState(false);
+
+  const handleReport = () => {
+    navigate(`/reports/create`);
+  };
+
+  const viewReport = async (id) => {
+    navigate(`view/${id}`);
+  };
+  const editReport = (id) => {
+    navigate(`edit/${id}`);
+  };
+  useEffect(() => {
+    const fetchReports = async () => {
+      setLoading(true);
+      try {
+        const response = await instance.get(`reports/${userType}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
+        });
+        setReports(response?.data?.data);
+      } catch (error) {
+        console.error("Error fetching reports:", error);
+      }
+      setLoading(false);
+    };
+
+    fetchReports();
+  }, [userType]);
+
   return (
     <GeneralLayout active={"reports"}>
       <div className="relative flex flex-col gap-3 items-center p-5 justify-center h-[calc(100vh-65.6px-64px)]">
@@ -85,23 +123,33 @@ export const Reports = () => {
               <button className="btn join-item">Search</button>
             </div>
           </div>
-          <button className="btn">
-            <FaPlus />{" "}
-            <span className="hidden lg:block xl:block">New Report</span>
-          </button>
+          {localStorage.getItem("@type") !== "province" && (
+            <button className="btn" onClick={handleReport}>
+              <FaPlus />
+              <span className="hidden lg:block xl:block">New Report</span>
+            </button>
+          )}
         </div>
         <div className="relative overflow-y-scroll gap-3 w-full items-center p-5 justify-center h-[calc(100vh-65.6px-64px-48px)]">
-          {[1, 2, 3, 4, 5].map(() => (
-            <div className="card-body flex items-center justify-between w-full p-5 mb-1 bg-slate-200 rounded-xl flex-row">
+          {reports?.map((obj) => (
+            <div
+              key={obj?._id}
+              className="card-body flex items-center justify-between w-full p-5 mb-1 bg-slate-200 rounded-xl flex-row"
+            >
               <div className="flex flex-col items-start justify-center">
-                <span className="text-lg font-semibold">Jan, 2023</span>
-                <span>Last Modified: Jan 02, 2023</span>
+                <span className="text-lg font-semibold">
+                  {moment(obj?.month).format("MMMM Do YYYY , hh:mm:ss a")}
+                </span>
+                <span>
+                  Last Modified:
+                  {moment(obj?.updatedAt).startOf("day").fromNow()}
+                </span>
               </div>
               <div className="flex items-center justify-center gap-3">
-                <button className="btn">
+                <button className="btn" onClick={() => viewReport(obj?._id)}>
                   <FaEye />
                 </button>
-                <button className="btn">
+                <button className="btn" onClick={() => editReport(obj?._id)}>
                   <FaEdit />
                 </button>
               </div>
@@ -109,6 +157,7 @@ export const Reports = () => {
           ))}
         </div>
       </div>
+      {loading && <Loader />}
     </GeneralLayout>
   );
 };

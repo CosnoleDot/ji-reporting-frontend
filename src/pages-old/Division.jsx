@@ -4,14 +4,92 @@ import {
   DivisionTable,
   ExpandParty,
   Library,
-  Zila,
+  Zaili,
   MessageDigest,
   EveningDiary,
   MenTable,
+  GeneralLayout,
+  Loader,
 } from "../components";
 import { OtherActivities } from "../components/OtherActivities";
+import { convertDataFormat, reverseDataFormat, toJson } from "../utils";
+import instance from "../api/instrance";
+import { InputWithLabel } from "../components/InputWithLabel";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useState } from "react";
+import { useToastState } from "../context";
+import { useEffect } from "react";
+import { getData } from "./Maqam";
 
 export const Division = () => {
+  // EDIT CODE START
+  const params = useParams();
+  const [id, setId] = useState(null);
+  const { dispatch } = useToastState();
+  const [data, setData] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [view, setView] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const l = location.pathname?.split("/")[2];
+    if (l === "view") {
+      setView(true);
+    }
+    setId(params?.id);
+  }, [params]);
+  useEffect(() => {
+    if (id) getData("division", id, setData, dispatch, setLoading);
+    else {
+      setLoading(false);
+    }
+  }, [id]);
+  useEffect(() => {
+    Object.keys(data).forEach((i) => {
+      const elem = document.getElementById(i);
+      if (elem) {
+        if (i === "month") {
+          elem.value = data[i]?.split("")?.slice(0, 7)?.join("");
+        } else {
+          elem.value = data[i];
+        }
+      }
+    });
+  }, [data]);
+  // EDIT CODE END
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    const jsonData = convertDataFormat(toJson(formData));
+    try {
+      if (id) {
+        const req = await instance.put(`/reports/division/${id}`, jsonData, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
+        });
+        dispatch({ type: "SUCCESS", payload: req.data?.message });
+        navigate("/reports");
+      } else {
+        const req = await instance.post("/reports/division", jsonData, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
+        });
+        dispatch({ type: "SUCCESS", payload: req.data?.message });
+        navigate("/reports");
+      }
+
+      e.target.reset();
+    } catch (error) {
+      dispatch({ type: "ERROR", payload: error.response.data.message });
+    }
+  };
   const arr = [
     {
       title: "دعوتی وفود",
@@ -40,62 +118,75 @@ export const Division = () => {
     },
   ];
   return (
-    <div
-      className="flex flex-col justify-center items-center p-4 font-notoUrdu"
-      dir="rtl"
-    >
-      <h2 className="text-2xl">جا ئزءکارکردگی رپورٹ (براے ڈویژن)</h2>
-      <div className="w-full p-4">
-        <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
-          <div className="w-full md:pr-0 mb-2">
-            <label htmlFor="" className="mb-2 text-lg">
-              ڈویژن کانام
-            </label>
-            <input
-              type="text"
-              className="w-full border p-2 rounded-lg mt-3"
-              placeholder="Input 1"
-            />
-          </div>
-          <div className="w-full mb-2">
-            <label htmlFor="" className="mb-2 text-lg">
-              براے ماھ
-            </label>
-            <input
-              type="text"
-              className="w-full border p-2 rounded-lg"
-              placeholder="Input 2"
-            />
-          </div>
-        </div>
-        <div className="mb-4">
-          <CenteralActivities />
-        </div>
-        <div className="mb-4">
-          <MenTable />
-        </div>
-        <div className="mb-4">
-          <DivisionTable />
-        </div>
-        <div className="mb-4">
-          <Zila />
-        </div>
-        <div className=" mb-4">
-          <OtherActivities arr={arr} />
-        </div>
-        <div className=" mb-4">
-          <ExpandParty />
-        </div>
-        <div className=" mb-4">
-          <Library />
-        </div>
-        <div className=" mb-4">
-          <MessageDigest />
-        </div>
-        <div className=" mb-4">
-          <EveningDiary />
-        </div>
+    <GeneralLayout>
+      <div className="h-[calc(100vh-64.4px-64px)] overflow-y-scroll">
+        <form
+          className="flex flex-col justify-center items-center p-4 font-notoUrdu"
+          dir="rtl"
+          onSubmit={handleSubmit}
+        >
+          <fieldset disabled={view}>
+            <h2 className="text-2xl">جا ئزءکارکردگی رپورٹ (براے ڈویژن)</h2>
+            <div className="w-full p-4">
+              <div className="mb-4">
+                <CenteralActivities />
+              </div>
+              <div className="mb-4">
+                <MenTable />
+              </div>
+              <div className="mb-4">
+                <DivisionTable />
+              </div>
+              <div className="mb-4">
+                <Zaili />
+              </div>
+              <div className=" mb-4">
+                <OtherActivities arr={arr} />
+              </div>
+              <div className=" mb-4">
+                <ExpandParty />
+              </div>
+              <div className=" mb-4">
+                <Library />
+              </div>
+              <div className=" mb-4">
+                <MessageDigest />
+              </div>
+              <div className=" mb-4">
+                <EveningDiary />
+              </div>
+            </div>
+            <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
+              <div className="w-full md:pr-0 mb-2">
+                <InputWithLabel
+                  type={"textarea"}
+                  required={true}
+                  placeholder={" تبصرھ"}
+                  label={" تبصرھ"}
+                  id={"comments"}
+                  name={"comments"}
+                />
+              </div>
+              <div className="w-full mb-2">
+                <InputWithLabel
+                  required={true}
+                  label={"براے ماھ"}
+                  type={"month"}
+                  id={"month"}
+                  name={"month"}
+                  value={"sdfhasdfhas"}
+                />
+              </div>
+            </div>
+            <div className="w-full">
+              <button className="btn btn-primary">
+                {id ? "Update" : "Add"}
+              </button>
+            </div>
+          </fieldset>
+        </form>
       </div>
-    </div>
+      {loading && <Loader />}
+    </GeneralLayout>
   );
 };

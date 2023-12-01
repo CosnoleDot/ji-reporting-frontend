@@ -1,35 +1,22 @@
 import React from "react";
 import { InputWithLabel } from "../InputWithLabel";
 
-export const Zila = () => {
+export const Zaili = () => {
   const headings = ["زﯾﻠﯽ طﮯ ﺷدھ ﺳرﮔرﻣﯾﺎں", "طﮯﺷدھ", "ﻣﻧﻌﻘدھ", "اوﺳط ﺣﺎﺿری"];
   const rows = [
     {
+      key: "ijtRafaqa",
       title: "اﺟﺗﻣﻊ رﻓﻘﺎ",
-      numberOfInputFields: 3,
     },
     {
+      key: "studyCircleMentioned",
       title: " ﺳﭨڈی ﺳرﮐل",
-      numberOfInputFields: 3,
     },
-    {
-      title: "اﺟﺗﻣﻊ ﮐﺎرﮐﻧﺎن",
-      numberOfInputFields: 3,
-    },
-    {
-      title: "درس ﻗرآن ",
-      numberOfInputFields: 3,
-    },
-    {
-      title: " ﺷﺎﮨﯾن ﻣﯾﭨﻧﮓ",
-      numberOfInputFields: 3,
-    },
-    {
-      title: "ﭘﯾﻐﺎم ﻣﺣﻔل",
-      numberOfInputFields: 3,
-    },
+    { key: "ijtKarkunan", title: "اﺟﺗﻣﻊ ﮐﺎرﮐﻧﺎن" },
+    { key: "darseQuran", title: "درس ﻗرآن " },
+    { key: "shaheenMeeting", title: " ﺷﺎﮨﯾن ﻣﯾﭨﻧﮓ" },
+    { key: "paighamEvent", title: "ﭘﯾﻐﺎم ﻣﺣﻔل" },
   ];
-
   return (
     <div className="w-full max-w-full overflow-x-scroll" dir="rtl">
       <table className="w-full border border-gray-400 table">
@@ -54,11 +41,31 @@ export const Zila = () => {
               <td className="w-[10rem]  text-start text-lg sm:text-sm">
                 {row.title}
               </td>
-              {Array.from({ length: row.numberOfInputFields }, (_, index) => (
-                <td key={index}>
-                  <InputWithLabel label={""} type={"number"} />
-                </td>
-              ))}
+
+              <td className="flex flex-row w-full">
+                <InputWithLabel
+                  label={""}
+                  type={"number"}
+                  name={`${row?.key}-decided`}
+                  id={`${row?.key}-decided`}
+                />
+              </td>
+              <td className="flex flex-row w-full">
+                <InputWithLabel
+                  label={""}
+                  type={"number"}
+                  name={`${row?.key}-done`}
+                  id={`${row?.key}-done`}
+                />
+              </td>
+              <td className="flex flex-row w-full">
+                <InputWithLabel
+                  label={""}
+                  type={"number"}
+                  name={`${row?.key}-averageAttendance`}
+                  id={`${row?.key}-averageAttendance`}
+                />
+              </td>
             </tr>
           ))}
         </tbody>

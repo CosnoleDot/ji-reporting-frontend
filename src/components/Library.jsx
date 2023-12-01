@@ -1,43 +1,53 @@
 import React from "react";
+import { InputWithLabel } from "./InputWithLabel";
 
 export const Library = ({ condition }) => {
   const arr = [
     {
-      title: "کل تعداد لائبریریز",
+      label: "کل تعداد لائبریریز",
+      key: "books",
       placeholder: "کل تعداد لائبریریز",
     },
     {
-      title: "ااضافہ کتب",
+      label: "ااضافہ کتب",
+      key: "increase",
       placeholder: "ااضافہ کتب",
     },
     {
-      title: "کمی کتب",
+      label: "کمی کتب",
+      key: "decrease",
       placeholder: "کمی کتب",
     },
     {
-      title: "اکل اجرائے کتب",
+      label: "اکل اجرائے کتب",
+      key: "bookRent",
       placeholder: "اکل اجرائے کتب",
     },
   ];
   const arr2 = [
     {
-      title: "کل تعداد لائبریریز",
+      label: "کل تعداد لائبریریز",
+      key: "totalLibraries",
       placeholder: "کل تعداد لائبریریز",
     },
     {
-      title: "کل تعدادکتب",
+      label: "کل تعدادکتب",
+      key: "totalBooks",
       placeholder: "کل تعدادکتب",
     },
     {
-      title: "اضافہ کتب",
+      label: "اضافہ کتب",
+      key: "totalIncrease",
       placeholder: "اضافہ کتب",
     },
     {
-      title: "کمی کتب",
+      label: "کمی کتب",
+      key: "totalDecrease",
       placeholder: "کمی کتب",
     },
     {
-      title: "کل اجرائے کتب",
+      label: "کل اجرائے کتب",
+      key: "totalBookRent",
       placeholder: "کل اجرائے کتب",
     },
   ];
@@ -50,47 +60,44 @@ export const Library = ({ condition }) => {
           <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
             {arr.map((obj, index) => (
               <div className="w-full md:pr-0 mb-2" key={index}>
-                <label htmlFor="" className="text-lg mb-2">
-                  {obj.title}
-                </label>
-                <input
-                  type="text"
-                  className="w-full border p-2 rounded-lg mt-3 mb-3"
+                <InputWithLabel
+                  type={"number"}
                   placeholder={obj.placeholder}
+                  label={obj.label}
+                  id={obj?.key}
+                  name={obj?.key}
                 />
               </div>
             ))}
           </div>
-          <div className="w-full mb-2">
-            <label htmlFor="" className="text-lg mb-2">
-              لاِئبریری رجسٹر
-            </label>
-            <div className="mt-4 flex">
-              <label className="block">
-                <input type="radio" className="mr-2" name="radio-group" />
-                مرتب
-              </label>
-              <label className="block">
-                <input type="radio" className="mr-2" name="radio-group" />
-                غیرمرتب
-              </label>
+          <div className=" w-full lg:flex md:flex-row sm:flex-col mb-4 gap-2">
+            <div className="w-full md:pr-0 mb-2">
+              <div className="form-control">
+                <label className="label cursor-pointer">
+                  <span className="label-text">مرتب</span>
+                  <input
+                    type="checkbox"
+                    className="checkbox"
+                    id="registeredLibrary"
+                    name="registeredLibrary"
+                  />
+                </label>
+              </div>
             </div>
           </div>
         </div>
       ) : (
         <div>
-          {" "}
           <h3 className="text-xl mb-3 font-bold">لائبریری</h3>
           <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
             {arr2.map((obj, index) => (
               <div className="w-full md:pr-0 mb-2" key={index}>
-                <label htmlFor="" className="text-lg mb-2">
-                  {obj.title}
-                </label>
-                <input
-                  type="text"
-                  className="w-full border p-2 rounded-lg mt-3 mb-3"
+                <InputWithLabel
+                  type={"number"}
                   placeholder={obj.placeholder}
+                  label={obj.label}
+                  id={obj?.key}
+                  name={obj?.key}
                 />
               </div>
             ))}

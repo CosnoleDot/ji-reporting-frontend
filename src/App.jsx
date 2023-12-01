@@ -10,6 +10,7 @@ import { ReportChart } from "./components/ReportChart";
 import { Signup } from "./pages/Signup";
 import { Reports } from "./pages/Reports";
 import { EditProfile } from "./pages";
+import { Division, Halqa, Maqam } from "./pages-old";
 
 function App() {
   return (
@@ -24,13 +25,47 @@ function App() {
           <Route path="/comparison" element={<Comparision />} />
           <Route path="/chart" element={<ReportChart />} />
           <Route path="/reports" element={<Reports />} />
+          <Route
+            path="/reports/create"
+            element={
+              localStorage.getItem("@type") === "maqam" ? (
+                <Maqam />
+              ) : localStorage.getItem("@type") === "division" ? (
+                <Division />
+              ) : (
+                <Halqa />
+              )
+            }
+          />
+          <Route
+            path="/reports/edit/:id"
+            element={
+              localStorage.getItem("@type") === "maqam" ? (
+                <Maqam />
+              ) : localStorage.getItem("@type") === "division" ? (
+                <Division />
+              ) : (
+                <Halqa />
+              )
+            }
+          />
+          <Route
+            path="/reports/view/:id"
+            element={
+              localStorage.getItem("@type") === "maqam" ? (
+                <Maqam />
+              ) : localStorage.getItem("@type") === "division" ? (
+                <Division />
+              ) : (
+                <Halqa />
+              )
+            }
+          />
           <Route path="/profile" element={<EditProfile />} />
-          {/* <Route path="/halqa" element={<Halqa />} />
-          <Route path="/maqam" element={<Maqam />} />
-          <Route path="/division" element={<Division />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/user-requests" element={<UserRequests />} />
-          <Route path="/update-profile" element={<UpdateProfile />} /> */}
+          {/* 
+           <Route path="/reset-password" element={<ResetPassword />} />
+           <Route path="/user-requests" element={<UserRequests />} />
+           <Route path="/update-profile" element={<UpdateProfile />} />  */}
         </Routes>
       </BrowserRouter>
       <Toast />

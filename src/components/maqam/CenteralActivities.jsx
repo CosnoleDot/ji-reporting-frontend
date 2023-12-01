@@ -14,42 +14,43 @@ export const CenteralActivities = () => {
   ];
   const rows = [
     {
-      title: "رھاشی حلقے",
-      numberOfInputFields: 6,
+      key: "rehaishHalqay",
+      label: "رھاشی حلقے",
     },
     {
-      title: " ﺗﻌﻠﯾﻣﯽ ﺣﻠﻘﮯ",
-      numberOfInputFields: 6,
+      key: "taleemHalqay",
+      label: " ﺗﻌﻠﯾﻣﯽ ﺣﻠﻘﮯ",
     },
     {
-      title: "ﮐل ﺣﻠﻘﮯ",
-      numberOfInputFields: 6,
+      key: "totalHalqay",
+      label: "ﮐل ﺣﻠﻘﮯ",
     },
     {
-      title: "رھاشی ذﯾﻠﯽ حلقے",
-      numberOfInputFields: 6,
+      key: "subRehaishHalqay",
+      label: "رھاشی ذﯾﻠﯽ حلقے",
     },
     {
-      title: "تعلیمی ذیلی حلقے",
-      numberOfInputFields: 6,
+      key: "subTaleemHalqay",
+      label: "تعلیمی ذیلی حلقے",
     },
     {
-      title: "کل ذیلی حلقے",
-      numberOfInputFields: 6,
+      key: "subTotalHalqay",
+      label: "کل ذیلی حلقے",
     },
     {
-      title: "ﺑزم ﮐﮯ ﺳﮑول ﯾوﻧﭨس",
-      numberOfInputFields: 6,
+      key: "busmSchoolUnits",
+      label: "ﺑزم ﮐﮯ ﺳﮑول ﯾوﻧﭨس",
     },
     {
-      title: "ﺑزم ﮐﮯ رھﺎﺷﯽ ﯾوﻧﭨس",
-      numberOfInputFields: 6,
+      key: "busmRehaishUnits",
+      label: "ﺑزم ﮐﮯ رھﺎﺷﯽ ﯾوﻧﭨس",
     },
     {
-      title: "ﺑزم ﮐﮯ ﮐل ﯾوﻧﭨس",
-      numberOfInputFields: 6,
+      key: "busmTotalUnits",
+      label: "ﺑزم ﮐﮯ ﮐل ﯾوﻧﭨس",
     },
   ];
+
   return (
     <div className="w-full max-w-full overflow-x-scroll " dir="rtl">
       <table className="w-full border border-gray-400 table">
@@ -71,14 +72,47 @@ export const CenteralActivities = () => {
               className="flex w-full items-center justify-between bg-gray-100"
               key={index}
             >
-              <td className="w-[10rem]  text-start text-lg sm:text-sm">
-                {row.title}
+              <td className="flex flex-row w-full ">{row.label}</td>
+              <td className="flex flex-row w-full">
+                <InputWithLabel
+                  label={""}
+                  type={"number"}
+                  name={`${row.key}-start`}
+                  id={`${row.key}-start`}
+                />
               </td>
-              {Array.from({ length: row.numberOfInputFields }, (_, index) => (
-                <td key={index}>
-                  <InputWithLabel label={""} type={"number"} />
-                </td>
-              ))}
+              <td className="flex flex-row w-full">
+                <InputWithLabel
+                  label={""}
+                  type={"number"}
+                  name={`${row.key}-increase`}
+                  id={`${row.key}-increase`}
+                />
+              </td>
+              <td className="flex flex-row w-full">
+                <InputWithLabel
+                  label={""}
+                  type={"number"}
+                  name={`${row.key}-decrease`}
+                  id={`${row.key}-decrease`}
+                />
+              </td>
+              <td className="flex flex-row w-full">
+                <InputWithLabel
+                  label={""}
+                  type={"number"}
+                  name={`${row.key}-continue`}
+                  id={`${row.key}-continue`}
+                />
+              </td>
+              <td className="flex flex-row w-full">
+                <InputWithLabel
+                  label={""}
+                  type={"number"}
+                  name={`${row.key}-paused`}
+                  id={`${row.key}-paused`}
+                />
+              </td>
             </tr>
           ))}
         </tbody>
