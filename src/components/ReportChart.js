@@ -1,43 +1,13 @@
-import React, { useEffect, useRef } from "react";
-import Chart from "chart.js/auto";
-import instance from "../api/instrance";
+import React, { useEffect, useRef } from 'react';
+import Chart from 'chart.js/auto';
 
-export const ReportChart = () => {
+export const ReportChart = ({ res, type }) => {
   const monthlyChartRef = useRef(null);
-  const yearlyChartRef = useRef(null);
-
   const getData = async () => {
-    const res = await instance
-      .post("compare/halqa/other-activity", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          duration: [
-            {
-              year: 2022,
-              month: 11,
-            },
-            {
-              year: 2023,
-              month: 11,
-            },
-            {
-              year: 2022,
-              month: 12,
-            },
-          ],
-          duration_type: "month",
-        }),
-      })
-      .then((res) => res.json())
-      .then((res) => res.data);
-    console.log(res);
     if (!monthlyChartRef.current) {
-      const monthlyCtx = document.getElementById("monthlyChart");
+      const monthlyCtx = document.getElementById('monthlyChart');
       monthlyChartRef.current = new Chart(monthlyCtx, {
-        type: "bar",
+        type: 'bar',
         data: res,
         options: {
           scales: {
@@ -73,13 +43,17 @@ export const ReportChart = () => {
 
   useEffect(() => {
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div className="flex justify-around p-8">
-      <div>Infradi Quwat Chart</div>
-      <div className="w-1/2 " style={{ width: "80%", fontSize: "16px" }}>
-        <canvas id="monthlyChart" className="p-16"></canvas>
+    <div className='w-full'>
+      <span>{type}</span>
+      <div
+        className=' '
+        style={{ width: '100%', height: '100%', fontSize: '16px' }}
+      >
+        <canvas id='monthlyChart' className='p-0 h-[300px] '></canvas>
       </div>
     </div>
   );

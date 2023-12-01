@@ -27,7 +27,7 @@ export const Navbar = ({ title }) => {
   useEffect(() => {
     const intervalId = setInterval(() => {
       getAllRequests();
-    }, 2000); // 2000 milliseconds = 2 seconds
+    }, 10000); // 10000 milliseconds = 10 seconds
 
     // Cleanup the interval on component unmount
     return () => clearInterval(intervalId);
@@ -54,7 +54,7 @@ export const Navbar = ({ title }) => {
               >
                 <div className='indicator'>
                   <FaUserPlus className='text-xl' />
-                  <span className='badge badge-sm indicator-item'>
+                  <span className='badge badge-sm indicator-item z-10'>
                     {userRequests.length}
                   </span>
                 </div>
