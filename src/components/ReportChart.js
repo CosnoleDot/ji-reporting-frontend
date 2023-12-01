@@ -53,9 +53,9 @@ export const ReportChart = ({ res, type }) => {
       <span>{type}</span>
       <div
         className=" "
-        style={{ width: "80%", height: "300px", fontSize: "16px" }}
+        style={{ width: "100%", height: "100%", fontSize: "16px" }}
       >
-        <canvas id="monthlyChart" className="p-0"></canvas>
+        <canvas id="monthlyChart" className="p-0 h-[300px] "></canvas>
       </div>
     </div>
   );

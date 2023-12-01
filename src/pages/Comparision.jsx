@@ -94,16 +94,13 @@ export const Comparision = () => {
     getProvData();
   }, [reportType]);
   return (
-    <GeneralLayout>
-      <div className="relative flex flex-col gap-3  h-[calc(100vh-65.6px-64px)]">
-        <div className="flex flex-col w-full  justify-between">
-          <div className="flex  justify-between">
-            <h3 className="font-bold text-xl">Compare Reports</h3>
-          </div>
-          <div className="join flex">
+    <GeneralLayout title={"Comparison"} active={"comparison"}>
+      <div className="relative flex flex-col gap-3  h-full">
+        <div className="flex w-full flex-wrap justify-around gap-2 ">
+          <div className="flex">
             <div>
               <select
-                className="select select-bordered join-item max-w-[120px]"
+                className="select select-bordered join-item rounded-tr-none rounded-br-none "
                 onChange={(e) => setReportType(e.target.value)}
               >
                 <option disabled selected>
@@ -121,11 +118,12 @@ export const Comparision = () => {
             </div>
             {reportType !== "" && (
               <div>
-                <select className="select select-bordered join-item max-w-[120px]">
-                  <option disabled selected>
-                    {`${
-                      reportType.charAt(0).toUpperCase() + reportType.slice(1)
-                    }'s`}
+                <select
+                  className="select select-bordered join-item max-w-[133px] rounded-tl-none rounded-bl-none "
+                  required
+                >
+                  <option disabled value={""}>
+                    Area
                   </option>
                   {type !== "province"
                     ? halqas?.map((i) => (
@@ -137,65 +135,73 @@ export const Comparision = () => {
                 </select>
               </div>
             )}
+          </div>
+          <select
+            className="select select-bordered join-item "
+            onChange={(e) => setSelectedProperty(e.target.value)}
+          >
+            <option disabled selected>
+              Property
+            </option>
+            <option value={"activity"}>Activity</option>
+            <option value={"ifradi-kuwat"}>Ifradi Kuwat</option>
+            <option value={"library"}>Library</option>
+            <option value={"other-activity"}>Other Activity</option>
+            {localStorage.getItem("@type") !== "halqa" && (
+              <option value={"tanzeem"}>Tanzeem</option>
+            )}
+          </select>
+          <div>
             <select
-              className="select select-bordered join-item max-w-[120px]"
-              onChange={(e) => setSelectedProperty(e.target.value)}
-            >
-              <option disabled selected>
-                Property
-              </option>
-              <option value={"activity"}>Activity</option>
-              <option value={"ifradi-kuwat"}>Ifradi Kuwat</option>
-              <option value={"library"}>Library</option>
-              <option value={"other-activity"}>Other Activity</option>
-            </select>
-            <select
-              className="select select-bordered join-item max-w-[120px]"
+              className="select select-bordered rounded-tr-none rounded-br-none join-item "
               value={durationType}
               onChange={(e) => setDurationType(e.target.value)}
-              onClick={() => setShowList(true)}
+              onClick={() => setShowList(!showList)}
             >
               <option value={""}>Duration Type</option>
               <option value={"month"}>Month</option>
               <option value={"year"}>Year</option>
             </select>
-            <div className="dropdown dropdown-end">
-              <div
-                tabIndex={0}
-                role="button"
-                className="btn rounded-none rounded-tr-lg rounded-br-lg"
-              >
-                Dates
-              </div>
-              <button
-                className="btn"
-                onClick={() => {
-                  getData();
-                  setShowList(false);
-                }}
-              >
-                Generate
-              </button>
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn rounded-none rounded-tr-lg rounded-br-lg"
+            >
+              Dates
             </div>
-            {showList == true && (
-              <>
-                {durationType === "year" ? (
-                  <ul className="fixed mt-[50px] dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 ">
-                    {Array(10)
-                      .fill(1)
-                      .map((_, index) => (
-                        <li className="form-control">
-                          <label className="label cursor-pointer">
-                            <span className="label-text">{2023 + index}</span>
-                            <input type="checkbox" className="checkbox" />
-                          </label>
-                        </li>
-                      ))}
-                  </ul>
-                ) : (
-                  durationType === "month" && (
-                    <div className="fixed mt-[50px] z-[1]  p-2 shadow bg-base-100 rounded-box flex">
-                      <ul className="z-[1] menu p-2 shadow bg-base-100 rounded-box w-full overflow-y-scroll">
+          </div>
+          <div className="dropdown dropdown-end">
+            <button
+              className="btn"
+              onClick={() => {
+                getData();
+                setShowList(false);
+              }}
+            >
+              Generate
+            </button>
+          </div>
+
+          {showList == true && (
+            <>
+              {durationType === "year" ? (
+                <ul className="fixed mt-[50px] dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 ">
+                  {Array(10)
+                    .fill(1)
+                    .map((_, index) => (
+                      <li className="form-control">
+                        <label className="label cursor-pointer">
+                          <span className="label-text">{2023 + index}</span>
+                          <input type="checkbox" className="checkbox" />
+                        </label>
+                      </li>
+                    ))}
+                </ul>
+              ) : (
+                durationType === "month" && (
+                  <div className="fixed top-[72px] left-[12px] mt-[50px] z-[1] w-[296px] lg:w-auto p-2 shadow bg-base-100 rounded-box flex overflow-x-scroll">
+                    <div className="w-full overflow-x-hidden overflow-y-scroll max-h-[300px]">
+                      <ul className="z-[1] menu p-2 shadow bg-base-100 rounded-box w-full">
                         <li className="form-control">
                           <input
                             type="number"
@@ -228,7 +234,9 @@ export const Comparision = () => {
                           </li>
                         ))}
                       </ul>
-                      {selectedMonths.length > 0 && (
+                    </div>
+                    {selectedMonths.length > 0 && (
+                      <div className="w-[75%] overflow-x-hidden overflow-y-scroll max-h-[300px]">
                         <ul className="z-[1] menu p-2 shadow bg-base-100 rounded-box w-full">
                           {selectedMonths.map((_, index) => (
                             <li key={index} className="form-control">
@@ -242,7 +250,7 @@ export const Comparision = () => {
                                     ),
                                   ])
                                 }
-                                className="label cursor-pointer"
+                                className="label cursor-pointer px-3"
                               >
                                 <span className="label-text">
                                   {_?.title}, {_?.input?.year}
@@ -252,19 +260,19 @@ export const Comparision = () => {
                             </li>
                           ))}
                         </ul>
-                      )}
-                    </div>
-                  )
-                )}
-              </>
-            )}
-            {/* <div className='indicator'> */}
-            {/* <span className='indicator-item badge badge-secondary'>new</span> */}
-            {/* <button className='btn join-item'>Next</button>
+                      </div>
+                    )}
+                  </div>
+                )
+              )}
+            </>
+          )}
+          {/* <div className='indicator'> */}
+          {/* <span className='indicator-item badge badge-secondary'>new</span> */}
+          {/* <button className='btn join-item'>Next</button>
             </div> */}
-          </div>
         </div>
-        <div className="relative overflow-y-scroll gap-3 w-full items-center p-5 justify-center h-[calc(100vh-65.6px-64px-48px)]">
+        <div className="relative overflow-y-scroll gap-3 w-full items-center p-5 justify-center h-full">
           {response != undefined ? (
             <ReportChart res={response} type={selectedProperty} />
           ) : (
