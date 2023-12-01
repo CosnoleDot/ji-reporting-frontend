@@ -29,7 +29,7 @@ export const Notifications = ({ userRequests, getAllRequests }) => {
     setLoading(false);
   };
   return (
-    <div className='card-body h-[320px] overflow-y-scroll'>
+    <div className='card-body max-h-[320px] overflow-y-scroll'>
       {userRequests.length < 1 && <h1 className='p-2'>No requests fouund!</h1>}
       {userRequests.map((req, index) => (
         <div

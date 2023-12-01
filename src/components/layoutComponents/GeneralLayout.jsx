@@ -3,7 +3,7 @@ import { BottomNav } from '../BottomNav';
 import { Navbar } from './Navbar';
 import { useNavigate } from 'react-router-dom';
 
-export const GeneralLayout = ({ children, active }) => {
+export const GeneralLayout = ({ children, active, title }) => {
   const navigate = useNavigate();
   useEffect(() => {
     const token = localStorage.getItem('@token');
@@ -13,7 +13,7 @@ export const GeneralLayout = ({ children, active }) => {
   }, [navigate]);
   return (
     <>
-      <Navbar />
+      <Navbar title={title} />
       {children}
       <BottomNav active={active} />
     </>
