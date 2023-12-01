@@ -18,3 +18,8 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #ddd;
 }
+
+.inlineQ::-webkit-scrollbar {
+  width: 2px;
+  display: none;
+}
