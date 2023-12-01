@@ -61,7 +61,7 @@ const Maqam = ({ me, setLoading0 }) => {
       } else if (localStorage.getItem('@type') === 'maqam') {
         setMaqams(
           [...req.data.data].filter(
-            (i) => i?._id === me?.userAreaId?._iduserAreaId?._id
+            (i) => i?._id === me?.userAreaId?._id
           )
         );
       }
@@ -79,7 +79,7 @@ const Maqam = ({ me, setLoading0 }) => {
       } else if (localStorage.getItem('@type') === 'maqam') {
         setHalqas(
           [...req.data.data].filter(
-            (i) => i?.parentId?._id === me?.userAreaId?._iduserAreaId?._id
+            (i) => i?.parentId?._id === me?.userAreaId?._id
           )
         );
       }
