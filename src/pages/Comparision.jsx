@@ -1,285 +1,284 @@
-import { useEffect, useState } from "react";
-
-import { FaChevronCircleRight, FaTimesCircle } from "react-icons/fa";
+import { useState } from "react";
 import { GeneralLayout, Loader } from "../components";
+import { useToastState } from "../context";
+import instance from "../api/instrance";
+import { useEffect } from "react";
+import { ReportChart } from "../components/ReportChart";
+import { FaTimes, FaChevronCircleRight, FaTimesCircle } from "react-icons/fa";
 import { months } from "./Reports";
 
-import instance from "../api/instrance";
-import { ReportChart } from "../components/ReportChart";
+const Dates = ({
+  durationMonths,
+  setDurationMonths,
+  showDates,
+  durationType,
+  durationYears,
+  setDurationYears,
+}) => {
+  const [year, setYear] = useState(2023);
+  return (
+    <div className="fixed top-0 left-0 z-1 w-full h-screen bg-white">
+      <div className="flex z-50 w-full p-3 items-center border-b justify-between">
+        <h1 className="text-xl font-bold">Dates</h1>
+        <button className="btn" onClick={() => showDates(false)}>
+          <FaTimes />
+        </button>
+      </div>
+      {durationType === "month" && (
+        <div className="flex items-start justify-start w-full h-[calc(100vh-72.8px-64px)]">
+          <div className="w-full h-[calc(100vh-72.8px-64px)] overflow-hidden overflow-y-scroll">
+            <input
+              type="number"
+              id="yearInput"
+              name="yearInput"
+              placeholder="YYYY"
+              min="1900"
+              max="2100"
+              step="1"
+              className="input-bordered input w-full"
+              value={year}
+              onChange={(e) => setYear(e.target.value)}
+            />
+            {months.map((i, index) => (
+              <div
+                key={index}
+                className="flex p-3 hover:bg-slate-200 items-center justify-between"
+                onClick={() =>
+                  setDurationMonths([
+                    ...durationMonths,
+                    { title: i?.title, year },
+                  ])
+                }
+              >
+                <span>
+                  {i?.title}, {year}
+                </span>
+                <FaChevronCircleRight />
+              </div>
+            ))}
+          </div>
+          <div className="w-full h-[calc(100vh-72.8px-64px)] overflow-hidden overflow-y-scroll">
+            {durationMonths.map((i, index) => (
+              <div
+                key={index}
+                onClick={() =>
+                  setDurationMonths([
+                    ...durationMonths.slice(0, index),
+                    ...durationMonths.slice(index + 1, durationMonths.length),
+                  ])
+                }
+                className="flex p-3 hover:bg-slate-200 items-center justify-between"
+              >
+                <span>
+                  {i?.title}, {i?.year}
+                </span>
+                <FaTimesCircle />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+      {durationType === "year" && (
+        <div className="flex items-start justify-start w-full h-[calc(100vh-72.8px-64px)]">
+          <div className="w-full h-[calc(100vh-72.8px-64px)] overflow-hidden overflow-y-scroll">
+            {Array(10)
+              .fill(1)
+              .map((_, index) => (
+                <div
+                  key={index}
+                  className="flex p-3 hover:bg-slate-200 items-center justify-between"
+                  onClick={() =>
+                    setDurationYears([...durationYears, 2023 + index])
+                  }
+                >
+                  <span>{2023 + index}</span>
+                  <FaChevronCircleRight />
+                </div>
+              ))}
+          </div>
+          <div className="w-full h-[calc(100vh-72.8px-64px)] overflow-hidden overflow-y-scroll">
+            {durationYears.map((i, index) => (
+              <div
+                key={index}
+                onClick={() =>
+                  setDurationYears([
+                    ...durationYears.slice(0, index),
+                    ...durationYears.slice(index + 1, durationYears.length),
+                  ])
+                }
+                className="flex p-3 hover:bg-slate-200 items-center justify-between"
+              >
+                <span>{i}</span>
+                <FaTimesCircle />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
 
 export const Comparision = () => {
-  const [year, setYear] = useState(2023);
-  const [selectedMonths, setSelectedMonths] = useState([]);
-  const [selectedProperty, setSelectedProperty] = useState("");
-  const [durationType, setDurationType] = useState("");
-  const [isGenerate, setIsGenerate] = useState(false);
-  const [reportType, setReportType] = useState("");
-  const [halqas, setHalqas] = useState("");
-  const [response, setResponse] = useState();
-  const [showList, setShowList] = useState(
-    response != undefined ? false : true
-  );
   const [loading, setLoading] = useState(true);
-  const [provData, setProvData] = useState();
-
-  const type = localStorage.getItem("@type");
-  let duration = [];
-  for (let i = 0; i < selectedMonths?.length; i++) {
-    duration.push(selectedMonths[i]?.input);
-  }
-  const data = JSON.stringify({
-    duration: duration,
-    duration_type: durationType,
+  const [durationMonths, setDurationMonths] = useState([]);
+  const [durationType, setDurationType] = useState("");
+  const [reportType, setReportType] = useState("");
+  const [dates, showDates] = useState(false);
+  const [durationYears, setDurationYears] = useState([]);
+  const [areas, setAreas] = useState({
+    maqam: [],
+    division: [],
+    halqa: [],
   });
+  const { dispatch } = useToastState();
   const getHalqas = async () => {
     setLoading(true);
     try {
-      const res = await instance.get("locations/filter", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("@token")}`,
-        },
+      const req = await instance("/locations/halqa", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
       });
-      setHalqas(res?.data?.data);
-    } catch (error) {}
+      if (req) {
+        setAreas((prev) => ({ ...prev, halqa: [...req.data?.data] }));
+      }
+    } catch (err) {
+      dispatch({ type: "ERROR", payload: err.response.data.message });
+    }
     setLoading(false);
   };
-  const getProvData = async () => {
-    if (reportType === "maqam") {
-      setLoading(true);
-      try {
-        const res = await instance.get("locations/maqam");
-        setProvData(res?.data?.data);
-      } catch (error) {
-        setLoading(false);
-      }
-      setLoading(false);
-    } else if (reportType === "division") {
-      setLoading(true);
-      try {
-        const res = await instance.get("locations/division");
-        setProvData(res?.data?.data);
-      } catch (error) {
-        setLoading(false);
-      }
-      setLoading(false);
-    } else if (reportType == "halqa") {
-      setLoading(true);
-      try {
-        const res = await instance.get("locations/halqa");
-        setProvData(res?.data?.data);
-      } catch (error) {
-        setLoading(false);
-      }
-      setLoading(false);
-    }
-  };
-  const getData = () => {
+  const getMaqams = async () => {
     setLoading(true);
     try {
-      instance
-        .post(`compare/${reportType}/${selectedProperty}`, data, {
-          headers: { "Content-Type": "application/json" },
-        })
-        .then((res) => setResponse(res?.data?.data));
-    } catch (error) {
-      console.log(error);
+      const req = await instance("/locations/maqam", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
+      });
+      if (req) {
+        setAreas((prev) => ({ ...prev, maqam: [...req.data?.data] }));
+      }
+    } catch (err) {
+      dispatch({ type: "ERROR", payload: err.response.data.message });
     }
     setLoading(false);
   };
+  const getDivisions = async () => {
+    setLoading(true);
+    try {
+      const req = await instance("/locations/division", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
+      });
+      if (req) {
+        setAreas((prev) => ({ ...prev, division: [...req.data?.data] }));
+      }
+    } catch (err) {
+      dispatch({ type: "ERROR", payload: err.response.data.message });
+    }
+    setLoading(false);
+  };
+  const getAll = async () => {
+    if (localStorage.getItem("@type") === "province") {
+      await getDivisions();
+      await getMaqams();
+    }
+    await getHalqas();
+  };
   useEffect(() => {
-    getHalqas();
+    getAll();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
-    getProvData();
-  }, [reportType]);
+    console.log(areas);
+  }, [areas]);
   return (
     <GeneralLayout title={"Comparison"} active={"comparison"}>
-      <div className="relative flex flex-col gap-3  h-full">
-        <div className="flex w-full flex-wrap justify-around gap-2 ">
-          <div className="flex">
-            <div>
-              <select
-                className="select select-bordered join-item rounded-tr-none rounded-br-none "
-                onChange={(e) => setReportType(e.target.value)}
-              >
-                <option disabled selected>
-                  Report Type
-                </option>
-
-                <option value={"halqa"}>Halqa</option>
-                {type === "province" && (
-                  <>
-                    <option value={"maqam"}>Maqam</option>
-                    <option value={"division"}>Division</option>
-                  </>
-                )}
-              </select>
-            </div>
-            {reportType !== "" && (
-              <div>
-                <select
-                  className="select select-bordered join-item max-w-[133px] rounded-tl-none rounded-bl-none "
-                  required
-                >
-                  <option disabled value={""}>
-                    Area
-                  </option>
-                  {type !== "province"
-                    ? halqas?.map((i) => (
-                        <option value={"halqa"}>{i?.name}</option>
-                      ))
-                    : provData?.map((i) => (
-                        <option value={reportType}>{i.name}</option>
-                      ))}
-                </select>
-              </div>
-            )}
-          </div>
+      <div className="relative flex flex-col gap-3 h-[calc(100vh-66px-64px)] w-full p-3">
+        <div className="flex items-center justify-center gap-3 border-b border-t py-3 overflow-hidden overflow-x-scroll">
           <select
-            className="select select-bordered join-item "
-            onChange={(e) => setSelectedProperty(e.target.value)}
+            value={reportType}
+            onChange={(e) => setReportType(e.target.value)}
+            className="select select-bordered"
           >
-            <option disabled selected>
+            <option value="" disabled>
+              Report Type
+            </option>
+            <option value="halqa">Halqa</option>
+            {localStorage.getItem("@type") === "province" && (
+              <>
+                <option value="maqam">Maqam</option>
+                <option value="division">Division</option>
+              </>
+            )}
+          </select>
+          <select defaultValue={""} className="select select-bordered">
+            <option value="" disabled>
+              Area
+            </option>
+            {areas[reportType]?.map((i, index) => (
+              <option key={index} value={i?._id}>
+                {i?.name}
+              </option>
+            ))}
+          </select>
+          <select defaultValue={""} className="select select-bordered">
+            <option value="" disabled>
               Property
             </option>
             <option value={"activity"}>Activity</option>
             <option value={"ifradi-kuwat"}>Ifradi Kuwat</option>
             <option value={"library"}>Library</option>
             <option value={"other-activity"}>Other Activity</option>
-            {localStorage.getItem("@type") !== "halqa" && (
+            {["maqam", "division"].includes(reportType) && (
               <option value={"tanzeem"}>Tanzeem</option>
             )}
           </select>
-          <div>
-            <select
-              className="select select-bordered rounded-tr-none rounded-br-none join-item "
-              value={durationType}
-              onChange={(e) => setDurationType(e.target.value)}
-              onClick={() => setShowList(!showList)}
-            >
-              <option value={""}>Duration Type</option>
-              <option value={"month"}>Month</option>
-              <option value={"year"}>Year</option>
-            </select>
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn rounded-none rounded-tr-lg rounded-br-lg"
-            >
-              Dates
-            </div>
-          </div>
-          <div className="dropdown dropdown-end">
-            <button
-              className="btn"
-              onClick={() => {
-                getData();
-                setShowList(false);
-              }}
-            >
-              Generate
-            </button>
-          </div>
-
-          {showList == true && (
-            <>
-              {durationType === "year" ? (
-                <ul className="fixed mt-[50px] dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 ">
-                  {Array(10)
-                    .fill(1)
-                    .map((_, index) => (
-                      <li className="form-control">
-                        <label className="label cursor-pointer">
-                          <span className="label-text">{2023 + index}</span>
-                          <input type="checkbox" className="checkbox" />
-                        </label>
-                      </li>
-                    ))}
-                </ul>
-              ) : (
-                durationType === "month" && (
-                  <div className="fixed top-[72px] left-[12px] mt-[50px] z-[1] w-[296px] lg:w-auto p-2 shadow bg-base-100 rounded-box flex overflow-x-scroll">
-                    <div className="w-full overflow-x-hidden overflow-y-scroll max-h-[300px]">
-                      <ul className="z-[1] menu p-2 shadow bg-base-100 rounded-box w-full">
-                        <li className="form-control">
-                          <input
-                            type="number"
-                            name="year"
-                            placeholder="Year ****"
-                            className="border"
-                            onChange={(e) => setYear(e.target.value)}
-                          />
-                        </li>
-                        {months.map((_, index) => (
-                          <li key={index} className="form-control">
-                            <label
-                              onClick={() =>
-                                setSelectedMonths([
-                                  ...selectedMonths,
-                                  {
-                                    value: _?.value,
-                                    title: _?.title,
-                                    input: { year, month: _?.value },
-                                  },
-                                ])
-                              }
-                              className="label cursor-pointer"
-                            >
-                              <span className="label-text">
-                                {_?.title}, {year}
-                              </span>
-                              <FaChevronCircleRight />
-                            </label>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    {selectedMonths.length > 0 && (
-                      <div className="w-[75%] overflow-x-hidden overflow-y-scroll max-h-[300px]">
-                        <ul className="z-[1] menu p-2 shadow bg-base-100 rounded-box w-full">
-                          {selectedMonths.map((_, index) => (
-                            <li key={index} className="form-control">
-                              <label
-                                onClick={() =>
-                                  setSelectedMonths([
-                                    ...selectedMonths.slice(0, index),
-                                    ...selectedMonths.slice(
-                                      index + 1,
-                                      selectedMonths.length
-                                    ),
-                                  ])
-                                }
-                                className="label cursor-pointer px-3"
-                              >
-                                <span className="label-text">
-                                  {_?.title}, {_?.input?.year}
-                                </span>
-                                <FaTimesCircle />
-                              </label>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                  </div>
-                )
-              )}
-            </>
-          )}
-          {/* <div className='indicator'> */}
-          {/* <span className='indicator-item badge badge-secondary'>new</span> */}
-          {/* <button className='btn join-item'>Next</button>
-            </div> */}
+          <select
+            value={durationType}
+            onChange={(e) => setDurationType(e.target.value)}
+            className="select select-bordered"
+          >
+            <option value="" disabled>
+              Duration Type
+            </option>
+            <option value="month">Month</option>
+            <option value="year">Year</option>
+          </select>
+          <button
+            onClick={() => {
+              if (durationType !== "") showDates(true);
+            }}
+            className="btn"
+          >
+            Dates
+          </button>
+          <button className="btn">Generate</button>
         </div>
-        <div className="relative overflow-y-scroll gap-3 w-full items-center p-5 justify-center h-full">
-          {response != undefined ? (
-            <ReportChart res={response} type={selectedProperty} />
-          ) : (
-            <></>
-          )}
+        <div className="relative flex flex-col gap-3 h-[calc(100vh-66px-64px-73.6px)] w-full p-3 overflow-scroll">
+          <ReportChart
+            res={{
+              labels: ["2017", "2018", "2019", "2020", "2021", "2022"],
+              datasets: [
+                {
+                  label: "Yearly Progress",
+                  data: [0, 50, 120, 100, 200, 300],
+                  backgroundColor: "rgba(255, 99, 132, 0.5)",
+                  borderColor: "rgba(255, 99, 132, 1)",
+                  borderWidth: 1,
+                },
+              ],
+            }}
+            type={"Test"}
+          />
         </div>
       </div>
+      {dates && durationType !== "" && (
+        <Dates
+          durationMonths={durationMonths}
+          setDurationMonths={setDurationMonths}
+          durationType={durationType}
+          showDates={showDates}
+          durationYears={durationYears}
+          setDurationYears={setDurationYears}
+        />
+      )}
       {loading && <Loader />}
     </GeneralLayout>
   );

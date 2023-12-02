@@ -21,7 +21,7 @@ export const BottomNav = ({ active }) => {
       {localStorage.getItem('@type') !== 'halqa' && (
         <Link
           to={'/comparison'}
-          className={!active || active === 'compare' ? 'active' : ''}
+          className={!active || active === 'comparison' ? 'active' : ''}
         >
           <BsFiles className='h-5 w-5' />
         </Link>
