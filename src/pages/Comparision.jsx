@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { FaChevronCircleRight, FaTimesCircle } from "react-icons/fa";
 import { GeneralLayout, Loader } from "../components";
 import { months } from "./Reports";
-import { async } from "q";
+
 import instance from "../api/instrance";
 import { ReportChart } from "../components/ReportChart";
 

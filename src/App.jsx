@@ -10,6 +10,7 @@ import { ReportChart } from "./components/ReportChart";
 import { Signup } from "./pages/Signup";
 import { Reports } from "./pages/Reports";
 import { EditProfile, Locations } from "./pages";
+import { Reset } from "./pages/Reset";
 
 function App() {
   return (
@@ -19,13 +20,14 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Dashboard />} />
-          <Route path="/reset-password" element={<Forget />} />
-          <Route path="change-password" element={<ChangePassword />} />
+          <Route path="/forget-password" element={<Forget />} />
+          <Route path="/change-password" element={<ChangePassword />} />
           <Route path="/comparison" element={<Comparision />} />
           <Route path="/chart" element={<ReportChart />} />
           <Route path="/reports" element={<Reports />} />
           <Route path="/profile" element={<EditProfile />} />
           <Route path="/locations" element={<Locations />} />
+          <Route path="/reset-password" element={<Reset />} />
           {/* <Route path="/halqa" element={<Halqa />} />
           <Route path="/maqam" element={<Maqam />} />
           <Route path="/division" element={<Division />} />
