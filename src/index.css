@@ -4267,6 +4267,11 @@ html {
   background: #ddd;
 }
 
+.inlineQ::-webkit-scrollbar {
+  width: 2px;
+  display: none;
+}
+
 @media (min-width: 640px) {
   .sm\:btn {
     display: inline-flex;
@@ -4716,6 +4721,10 @@ html {
     justify-content: flex-start;
   }
 
+  .lg\:justify-center {
+    justify-content: center;
+  }
+
   .lg\:text-base {
     font-size: 1rem;
     line-height: 1.5rem;
@@ -4729,5 +4738,9 @@ html {
 
   .xl\:w-1\/2 {
     width: 50%;
+  }
+
+  .xl\:justify-center {
+    justify-content: center;
   }
 }

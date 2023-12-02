@@ -1,11 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
-import instance from "../api/instrance";
 
 export const ReportChart = ({ res, type }) => {
   const monthlyChartRef = useRef(null);
-  const yearlyChartRef = useRef(null);
-
   const getData = async () => {
     if (!monthlyChartRef.current) {
       const monthlyCtx = document.getElementById("monthlyChart");
@@ -46,6 +43,7 @@ export const ReportChart = ({ res, type }) => {
 
   useEffect(() => {
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

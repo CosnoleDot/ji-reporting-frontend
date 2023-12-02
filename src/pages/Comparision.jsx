@@ -20,9 +20,14 @@ const Dates = ({
     <div className="fixed top-0 left-0 z-1 w-full h-screen bg-white">
       <div className="flex z-50 w-full p-3 items-center border-b justify-between">
         <h1 className="text-xl font-bold">Dates</h1>
-        <button className="btn" onClick={() => showDates(false)}>
-          <FaTimes />
-        </button>
+        <div className="flex justify-end items-center gap-3">
+          <button className="btn" onClick={() => showDates(false)}>
+            Generate
+          </button>
+          <button className="btn" onClick={() => showDates(false)}>
+            <FaTimes />
+          </button>
+        </div>
       </div>
       {durationType === "month" && (
         <div className="flex items-start justify-start w-full h-[calc(100vh-72.8px-64px)]">
@@ -122,9 +127,9 @@ const Dates = ({
 export const Comparision = () => {
   const [loading, setLoading] = useState(true);
   const [durationMonths, setDurationMonths] = useState([]);
+  const [me, setMe] = useState({});
   const [durationType, setDurationType] = useState("");
   const [reportType, setReportType] = useState("");
-  const [selectedProperty, setSelectedProperty] = useState("");
   const [dates, showDates] = useState(false);
   const [areaId, setAreaId] = useState("");
   const [response, setResponse] = useState(null);
@@ -137,6 +142,20 @@ export const Comparision = () => {
   });
 
   const { dispatch } = useToastState();
+  const getMe = async () => {
+    try {
+      const req = await instance.get("/user/me", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
+      });
+      setMe(req.data.data);
+    } catch (err) {
+      dispatch({ type: "ERROR", payload: err.response.data.message });
+    }
+  };
+  useEffect(() => {
+    getMe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const getHalqas = async () => {
     setLoading(true);
     try {
@@ -144,7 +163,15 @@ export const Comparision = () => {
         headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
       });
       if (req) {
-        setAreas((prev) => ({ ...prev, halqa: [...req.data?.data] }));
+        setAreas((prev) => ({
+          ...prev,
+          halqa:
+            localStorage.getItem("@type") === "province"
+              ? [...req.data?.data]
+              : [...req.data?.data].filter(
+                  (i) => i?.parentId?._id === me?.userAreaId?._id
+                ),
+        }));
       }
     } catch (err) {
       dispatch({ type: "ERROR", payload: err.response.data.message });
@@ -225,7 +252,7 @@ export const Comparision = () => {
   return (
     <GeneralLayout title={"Comparison"} active={"comparison"}>
       <div className="relative flex flex-col gap-3 h-[calc(100vh-66px-64px)] w-full p-3">
-        <div className="flex items-center justify-center gap-3 border-b border-t py-3 overflow-hidden overflow-x-scroll">
+        <div className="flex items-center justify-start lg:justify-center xl:justify-center gap-3 border-b border-t py-3 overflow-hidden overflow-x-scroll inlineQ">
           <select
             value={reportType}
             onChange={(e) => setReportType(e.target.value)}
