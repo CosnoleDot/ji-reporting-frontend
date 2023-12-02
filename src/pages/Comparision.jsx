@@ -128,6 +128,7 @@ export const Comparision = () => {
   const [loading, setLoading] = useState(true);
   const [durationMonths, setDurationMonths] = useState([]);
   const [me, setMe] = useState({});
+  const [selectedProperty, setSelectedProperty] = useState("");
   const [durationType, setDurationType] = useState("");
   const [reportType, setReportType] = useState("");
   const [dates, showDates] = useState(false);
