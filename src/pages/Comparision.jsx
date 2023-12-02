@@ -46,7 +46,7 @@ const Dates = ({
                 onClick={() =>
                   setDurationMonths([
                     ...durationMonths,
-                    { title: i?.title, year },
+                    { month: i?.title, year, value: i?.value },
                   ])
                 }
               >
@@ -70,7 +70,7 @@ const Dates = ({
                 className="flex p-3 hover:bg-slate-200 items-center justify-between"
               >
                 <span>
-                  {i?.title}, {i?.year}
+                  {i?.month}, {i?.year}
                 </span>
                 <FaTimesCircle />
               </div>
@@ -124,13 +124,18 @@ export const Comparision = () => {
   const [durationMonths, setDurationMonths] = useState([]);
   const [durationType, setDurationType] = useState("");
   const [reportType, setReportType] = useState("");
+  const [selectedProperty, setSelectedProperty] = useState("");
   const [dates, showDates] = useState(false);
+  const [areaId, setAreaId] = useState("");
+  const [response, setResponse] = useState(null);
   const [durationYears, setDurationYears] = useState([]);
+
   const [areas, setAreas] = useState({
     maqam: [],
     division: [],
     halqa: [],
   });
+
   const { dispatch } = useToastState();
   const getHalqas = async () => {
     setLoading(true);
@@ -185,9 +190,38 @@ export const Comparision = () => {
     getAll();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  useEffect(() => {
-    console.log(areas);
-  }, [areas]);
+  const transformedArray = durationMonths.map((item) => {
+    return {
+      month: item.value,
+      year: item.year,
+    };
+  });
+
+  const data =
+    durationType === "month"
+      ? {
+          duration: transformedArray,
+          duration_type: durationType,
+          areaId,
+        }
+      : { duration: durationYears, duration_type: durationType, areaId };
+  const getData = async () => {
+    setLoading(true);
+    setResponse(null);
+    try {
+      const res = await instance.post(
+        `compare/${reportType}/${selectedProperty}`,
+        data,
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      setResponse(res?.data?.data);
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
+  };
   return (
     <GeneralLayout title={"Comparison"} active={"comparison"}>
       <div className="relative flex flex-col gap-3 h-[calc(100vh-66px-64px)] w-full p-3">
@@ -208,7 +242,11 @@ export const Comparision = () => {
               </>
             )}
           </select>
-          <select defaultValue={""} className="select select-bordered">
+          <select
+            value={areaId}
+            onChange={(e) => setAreaId(e.target.value)}
+            className="select select-bordered"
+          >
             <option value="" disabled>
               Area
             </option>
@@ -218,7 +256,11 @@ export const Comparision = () => {
               </option>
             ))}
           </select>
-          <select defaultValue={""} className="select select-bordered">
+          <select
+            defaultValue={""}
+            className="select select-bordered"
+            onChange={(e) => setSelectedProperty(e.target.value)}
+          >
             <option value="" disabled>
               Property
             </option>
@@ -243,30 +285,24 @@ export const Comparision = () => {
           </select>
           <button
             onClick={() => {
-              if (durationType !== "") showDates(true);
+              if (
+                durationType !== "" &&
+                reportType !== "" &&
+                areaId !== "" &&
+                selectedProperty !== ""
+              )
+                showDates(true);
             }}
             className="btn"
           >
             Dates
           </button>
-          <button className="btn">Generate</button>
+          <button className="btn" onClick={getData}>
+            Generate
+          </button>
         </div>
         <div className="relative flex flex-col gap-3 h-[calc(100vh-66px-64px-73.6px)] w-full p-3 overflow-scroll">
-          <ReportChart
-            res={{
-              labels: ["2017", "2018", "2019", "2020", "2021", "2022"],
-              datasets: [
-                {
-                  label: "Yearly Progress",
-                  data: [0, 50, 120, 100, 200, 300],
-                  backgroundColor: "rgba(255, 99, 132, 0.5)",
-                  borderColor: "rgba(255, 99, 132, 1)",
-                  borderWidth: 1,
-                },
-              ],
-            }}
-            type={"Test"}
-          />
+          {response && <ReportChart res={response} type={selectedProperty} />}
         </div>
       </div>
       {dates && durationType !== "" && (

@@ -5,7 +5,7 @@ import instance from "../api/instrance";
 export const ReportChart = ({ res, type }) => {
   const monthlyChartRef = useRef(null);
   const yearlyChartRef = useRef(null);
-  console.log(res);
+
   const getData = async () => {
     if (!monthlyChartRef.current) {
       const monthlyCtx = document.getElementById("monthlyChart");
@@ -50,7 +50,9 @@ export const ReportChart = ({ res, type }) => {
 
   return (
     <div className="w-full">
-      <span>{type}</span>
+      <span className="capitalize font-semibold">
+        {type?.split("-").join(" ")}
+      </span>
       <div
         className=" "
         style={{ width: "100%", height: "100%", fontSize: "16px" }}
