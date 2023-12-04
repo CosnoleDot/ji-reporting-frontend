@@ -48,7 +48,7 @@ export const ReportChart = ({ res, type }) => {
 
   return (
     <div className='w-full'>
-      <span>{type}</span>
+      <span className='capitalize'>{type?.split('-')?.join(" ")}</span>
       <div
         className=' '
         style={{ width: '100%', height: '100%', fontSize: '16px' }}

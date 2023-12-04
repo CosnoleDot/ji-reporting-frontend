@@ -293,6 +293,7 @@ export const Comparision = () => {
       );
       setResponse(res?.data?.data);
     } catch (error) {
+      console.log(error)
       dispatch({ type: 'ERROR', payload: error?.response?.data?.message });
     }
     setLoading(false);
