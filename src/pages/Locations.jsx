@@ -1351,7 +1351,7 @@ export const Locations = () => {
   useEffect(() => {
     getMe();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [active]);
   useEffect(() => {
     // Function to parse query parameters
     const getQueryParams = () => {
