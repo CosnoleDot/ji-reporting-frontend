@@ -1,7 +1,7 @@
 import React from "react";
 import { InputWithLabel } from "../InputWithLabel";
 
-export const Zaili = () => {
+export const Zaili = ({ view }) => {
   const headings = ["زﯾﻠﯽ طﮯ ﺷدھ ﺳرﮔرﻣﯾﺎں", "طﮯﺷدھ", "ﻣﻧﻌﻘدھ", "اوﺳط ﺣﺎﺿری"];
   const rows = [
     {
@@ -44,6 +44,7 @@ export const Zaili = () => {
 
               <td className="flex flex-row w-full">
                 <InputWithLabel
+                  readOnly={view}
                   label={""}
                   type={"number"}
                   name={`${row?.key}-decided`}
@@ -52,6 +53,7 @@ export const Zaili = () => {
               </td>
               <td className="flex flex-row w-full">
                 <InputWithLabel
+                  readOnly={view}
                   label={""}
                   type={"number"}
                   name={`${row?.key}-done`}
@@ -60,6 +62,7 @@ export const Zaili = () => {
               </td>
               <td className="flex flex-row w-full">
                 <InputWithLabel
+                  readOnly={view}
                   label={""}
                   type={"number"}
                   name={`${row?.key}-averageAttendance`}

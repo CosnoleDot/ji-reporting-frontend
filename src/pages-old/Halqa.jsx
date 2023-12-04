@@ -82,6 +82,7 @@ export const Halqa = () => {
           },
         });
         dispatch({ type: "SUCCESS", payload: req.data?.message });
+        navigate("/reports");
       }
 
       e.target.reset();
@@ -107,11 +108,12 @@ export const Halqa = () => {
             <ActivityTable />
             <OtherActivities />
             <ExpandParty />
-            <Library condition={true} />
+            <Library condition={true} view={view} />
             <EveningDiary />
             <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
               <div className="w-full md:pr-0 mb-2">
                 <InputWithLabel
+                  readOnly={view}
                   type={"textarea"}
                   required={true}
                   placeholder={" تبصرھ"}
@@ -122,6 +124,7 @@ export const Halqa = () => {
               </div>
               <div className="w-full mb-2">
                 <InputWithLabel
+                  readOnly={view}
                   required={true}
                   label={"براے ماھ"}
                   placeholder={"براے ماھ"}

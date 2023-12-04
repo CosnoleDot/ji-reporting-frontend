@@ -1,13 +1,14 @@
 import React from "react";
 import { InputWithLabel } from "./InputWithLabel";
 
-export const MessageDigest = () => {
+export const MessageDigest = ({ view }) => {
   return (
     <div className="w-full" dir="rtl">
       <h3 className="text-lg mb-3 font-bold">پیغام ڈائجسٹ</h3>
       <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
         <div className="w-full mb-3">
           <InputWithLabel
+            readOnly={view}
             label={"کل موصولہ"}
             placeholder={"کل موصولہ"}
             required={true}
@@ -16,6 +17,7 @@ export const MessageDigest = () => {
             id={"totalReceived"}
           />
           <InputWithLabel
+            readOnly={view}
             label={"فروخت کردہ"}
             placeholder={"فروخت کردہ"}
             required={true}

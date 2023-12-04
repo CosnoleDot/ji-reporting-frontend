@@ -6,6 +6,7 @@ export const InputWithLabel = ({
   name,
   value,
   id,
+  readOnly,
 }) => {
   if (type === "textarea")
     return (
@@ -31,6 +32,7 @@ export const InputWithLabel = ({
       </label>
       <input
         type={type || "number"}
+        readOnly={readOnly}
         className="w-full border p-2 rounded-lg mb-2"
         placeholder={value || placeholder || label}
         required={required || true}

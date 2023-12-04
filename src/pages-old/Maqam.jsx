@@ -121,35 +121,36 @@ export const Maqam = () => {
             <h2 className="text-2xl">جا ئزءکارکردگی رپورٹ (براے مقام)</h2>
             <div className="w-full p-4">
               <div className="mb-4">
-                <CenteralActivities />
+                <CenteralActivities view={view} />
               </div>
               <div className="mb-4">
-                <MenTable />
+                <MenTable view={view} />
               </div>
               <div className="mb-4">
-                <DivisionTable />
+                <DivisionTable view={view} />
               </div>
               <div className="mb-4">
-                <Zaili />
+                <Zaili view={view} />
               </div>
               <div className=" mb-4">
-                <OtherActivities />
+                <OtherActivities view={view} />
               </div>
               <div className=" mb-4">
-                <ExpandParty />
+                <ExpandParty view={view} />
               </div>
               <div className=" mb-4">
-                <Library condition={false} />
+                <Library condition={false} view={view} />
               </div>
               <div className=" mb-4">
-                <MessageDigest />
+                <MessageDigest view={view} />
               </div>
               <div className=" mb-4">
-                <EveningDiary />
+                <EveningDiary view={view} />
               </div>
               <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
                 <div className="w-full md:pr-0 mb-2">
                   <InputWithLabel
+                    readOnly={view}
                     type={"textarea"}
                     required={true}
                     placeholder={" تبصرھ"}
@@ -160,6 +161,7 @@ export const Maqam = () => {
                 </div>
                 <div className="w-full mb-2">
                   <InputWithLabel
+                    readOnly={view}
                     required={true}
                     label={"براے ماھ"}
                     placeholder={"براے ماھ"}

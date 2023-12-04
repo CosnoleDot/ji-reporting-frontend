@@ -1,7 +1,7 @@
 import React from "react";
 import { InputWithLabel } from "./InputWithLabel";
 
-export const ExpandParty = () => {
+export const ExpandParty = ({ view }) => {
   const arr = [
     {
       title: "طے شدہ",
@@ -32,6 +32,7 @@ export const ExpandParty = () => {
         {arr.map((obj, index) => (
           <div className="w-full mb-2" key={index}>
             <InputWithLabel
+              readOnly={view}
               type={"number"}
               label={obj?.title}
               required={true}
@@ -48,6 +49,7 @@ export const ExpandParty = () => {
       <div className=" w-full lg:flex md:flex-row sm:flex-col mb-4 gap-2">
         <div className="w-full md:pr-0 mb-2">
           <InputWithLabel
+            readOnly={view}
             label={"ملاقاتیں"}
             placeholder={"ملاقاتیں"}
             required={true}
@@ -58,6 +60,7 @@ export const ExpandParty = () => {
         </div>
         <div className="w-full mb-2">
           <InputWithLabel
+            readOnly={view}
             label={"تقسیم لٹریچر"}
             placeholder={"تقسیم لٹریچر"}
             required={true}

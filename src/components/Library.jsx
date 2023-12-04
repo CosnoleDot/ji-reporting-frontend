@@ -1,7 +1,7 @@
 import React from "react";
 import { InputWithLabel } from "./InputWithLabel";
 
-export const Library = ({ condition }) => {
+export const Library = ({ condition, view }) => {
   const arr = [
     {
       label: "کل تعداد لائبریریز",
@@ -61,6 +61,7 @@ export const Library = ({ condition }) => {
             {arr.map((obj, index) => (
               <div className="w-full md:pr-0 mb-2" key={index}>
                 <InputWithLabel
+                  readOnly={view}
                   type={"number"}
                   placeholder={obj.placeholder}
                   label={obj.label}
@@ -93,6 +94,7 @@ export const Library = ({ condition }) => {
             {arr2.map((obj, index) => (
               <div className="w-full md:pr-0 mb-2" key={index}>
                 <InputWithLabel
+                  readOnly={view}
                   type={"number"}
                   placeholder={obj.placeholder}
                   label={obj.label}

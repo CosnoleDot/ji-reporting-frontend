@@ -2,7 +2,7 @@ import React from "react";
 
 import { InputWithLabel } from "../InputWithLabel";
 
-export const DivisionTable = () => {
+export const DivisionTable = ({ view }) => {
   const headings = ["ﻣرﮐزی طﮯ ﺷدھ ﺳرﮔرﻣﯾﺎں", "طﮯﺷدھ", "ﻣﻧﻌﻘدھ", "اوﺳط ﺣﺎﺿری"];
   const rows = [
     {
@@ -56,6 +56,7 @@ export const DivisionTable = () => {
 
                   <td className="flex flex-row w-full">
                     <InputWithLabel
+                      readOnly={view}
                       label={""}
                       type={"number"}
                       name={`${row?.key}-decided`}
@@ -64,6 +65,7 @@ export const DivisionTable = () => {
                   </td>
                   <td className="flex flex-row w-full">
                     <InputWithLabel
+                      readOnly={view}
                       label={""}
                       type={"number"}
                       name={`${row?.key}-done`}
@@ -72,6 +74,7 @@ export const DivisionTable = () => {
                   </td>
                   <td className="flex flex-row w-full">
                     <InputWithLabel
+                      readOnly={view}
                       label={""}
                       type={"number"}
                       name={`${row?.key}-averageAttendance`}
@@ -93,6 +96,7 @@ export const DivisionTable = () => {
 
                 <td className="flex flex-row w-full">
                   <InputWithLabel
+                    readOnly={view}
                     label={""}
                     type={"number"}
                     name={`${row?.key}-decided`}
@@ -101,6 +105,7 @@ export const DivisionTable = () => {
                 </td>
                 <td className="flex flex-row w-full">
                   <InputWithLabel
+                    readOnly={view}
                     label={""}
                     type={"number"}
                     name={`${row?.key}-done`}
@@ -109,6 +114,7 @@ export const DivisionTable = () => {
                 </td>
                 <td className="flex flex-row w-full">
                   <InputWithLabel
+                    readOnly={view}
                     label={""}
                     type={"number"}
                     name={`${row?.key}-averageAttendance`}

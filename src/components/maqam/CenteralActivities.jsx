@@ -2,7 +2,7 @@ import React from "react";
 
 import { InputWithLabel } from "../InputWithLabel";
 
-export const CenteralActivities = () => {
+export const CenteralActivities = ({ view }) => {
   const headings = [
     "تنظیم",
     "آغازمیں",
@@ -75,6 +75,7 @@ export const CenteralActivities = () => {
               <td className="flex flex-row w-full ">{row.label}</td>
               <td className="flex flex-row w-full">
                 <InputWithLabel
+                  readOnly={view}
                   label={""}
                   type={"number"}
                   name={`${row.key}-start`}
@@ -83,6 +84,7 @@ export const CenteralActivities = () => {
               </td>
               <td className="flex flex-row w-full">
                 <InputWithLabel
+                  readOnly={view}
                   label={""}
                   type={"number"}
                   name={`${row.key}-increase`}
@@ -91,6 +93,7 @@ export const CenteralActivities = () => {
               </td>
               <td className="flex flex-row w-full">
                 <InputWithLabel
+                  readOnly={view}
                   label={""}
                   type={"number"}
                   name={`${row.key}-decrease`}
@@ -99,6 +102,7 @@ export const CenteralActivities = () => {
               </td>
               <td className="flex flex-row w-full">
                 <InputWithLabel
+                  readOnly={view}
                   label={""}
                   type={"number"}
                   name={`${row.key}-continue`}
@@ -107,6 +111,7 @@ export const CenteralActivities = () => {
               </td>
               <td className="flex flex-row w-full">
                 <InputWithLabel
+                  readOnly={view}
                   label={""}
                   type={"number"}
                   name={`${row.key}-paused`}

@@ -3,7 +3,7 @@ import { InputWithLabel } from "./InputWithLabel";
 
 const headings = ["تعشد سرگرمیا", "تعشد ", "منقیدہ", "حاضری", "عنوان"];
 
-export const ActivityTable = () => {
+export const ActivityTable = ({ view }) => {
   const userType = localStorage.getItem("@type");
   const rows = [
     {
@@ -44,6 +44,7 @@ export const ActivityTable = () => {
 
               <td className="flex flex-row w-full">
                 <InputWithLabel
+                  readOnly={view}
                   label={""}
                   type={"number"}
                   name={`${row?.key}-decided`}
@@ -52,6 +53,7 @@ export const ActivityTable = () => {
               </td>
               <td className="flex flex-row w-full">
                 <InputWithLabel
+                  readOnly={view}
                   label={""}
                   type={"number"}
                   name={`${row?.key}-completed`}
@@ -60,6 +62,7 @@ export const ActivityTable = () => {
               </td>
               <td className="flex flex-row w-full">
                 <InputWithLabel
+                  readOnly={view}
                   label={""}
                   type={"number"}
                   name={`${row?.key}-attendance`}
@@ -68,6 +71,7 @@ export const ActivityTable = () => {
               </td>
               <td className="flex flex-row w-full">
                 <InputWithLabel
+                  readOnly={view}
                   label={""}
                   type={"text"}
                   name={`${row?.key}-title`}

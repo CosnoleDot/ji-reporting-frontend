@@ -28,17 +28,20 @@ const row2 = [
     key: "karkunan",
   },
 ];
-export const MenTable = () => {
+export const MenTable = ({ view }) => {
   const userType = localStorage.getItem("@type");
   return (
-    <div className="w-full" dir="rtl">
-      <table className="w-full border border-gray-400 rounded-lg table  overflow-x-scroll">
-        <thead className="bg-gray-100">
-          <tr className="flex flex-row w-full ">
-            {columns.map((column, index) => (
-              <td key={index} className=" p-2 text-center w-full">
-                {column}
-              </td>
+    <div className="w-full max-w-full overflow-x-scroll" dir="rtl">
+      <table className="w-full border border-gray-400 rounded-lg table ">
+        <thead>
+          <tr className="flex w-full items-start justify-between bg-gray-100">
+            {columns?.map((heading, index) => (
+              <th
+                className="w-[10rem] text-start text-lg sm:text-sm"
+                key={index}
+              >
+                {heading}
+              </th>
             ))}
           </tr>
         </thead>
@@ -52,6 +55,7 @@ export const MenTable = () => {
                   <td className="flex flex-row w-full ">{row.label}</td>
                   <td className="flex flex-row w-full">
                     <InputWithLabel
+                      readOnly={view}
                       label={""}
                       type={"number"}
                       name={`${row?.key}-start`}
@@ -60,6 +64,7 @@ export const MenTable = () => {
                   </td>
                   <td className="flex flex-row w-full">
                     <InputWithLabel
+                      readOnly={view}
                       label={""}
                       type={"number"}
                       name={`${row?.key}-increase`}
@@ -68,6 +73,7 @@ export const MenTable = () => {
                   </td>
                   <td className="flex flex-row w-full">
                     <InputWithLabel
+                      readOnly={view}
                       label={""}
                       type={"number"}
                       name={`${row?.key}-decrease`}
@@ -76,6 +82,7 @@ export const MenTable = () => {
                   </td>
                   <td className="flex flex-row w-full">
                     <InputWithLabel
+                      readOnly={view}
                       label={""}
                       type={"number"}
                       name={`${row?.key}-annual`}
@@ -92,6 +99,7 @@ export const MenTable = () => {
                   <td className="flex flex-row w-full ">{row.label}</td>
                   <td className="flex flex-row w-full">
                     <InputWithLabel
+                      readOnly={view}
                       label={""}
                       type={"number"}
                       name={`${row?.key}-start`}
@@ -100,6 +108,7 @@ export const MenTable = () => {
                   </td>
                   <td className="flex flex-row w-full">
                     <InputWithLabel
+                      readOnly={view}
                       label={""}
                       type={"number"}
                       name={`${row?.key}-increase`}
@@ -108,6 +117,7 @@ export const MenTable = () => {
                   </td>
                   <td className="flex flex-row w-full">
                     <InputWithLabel
+                      readOnly={view}
                       label={""}
                       type={"number"}
                       name={`${row?.key}-decrease`}
@@ -116,6 +126,7 @@ export const MenTable = () => {
                   </td>
                   <td className="flex flex-row w-full">
                     <InputWithLabel
+                      readOnly={view}
                       label={""}
                       type={"number"}
                       name={`${row?.key}-annual`}

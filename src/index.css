@@ -1790,6 +1790,11 @@ html {
   background-color: hsl(var(--b1) / var(--tw-bg-opacity));
 }
 
+.table-zebra tbody tr:nth-child(even) :where(.table-pin-cols tr th) {
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--b2) / var(--tw-bg-opacity));
+}
+
 .textarea {
   flex-shrink: 1;
   min-height: 3rem;
@@ -2811,12 +2816,6 @@ html {
   background-color: hsl(var(--b2) / var(--tw-bg-opacity)) !important;
 }
 
-.table-zebra tr.\!active,
-    .table-zebra tr.\!active:nth-child(even) {
-  --tw-bg-opacity: 1 !important;
-  background-color: hsl(var(--b3) / var(--tw-bg-opacity)) !important;
-}
-
 .table-zebra tr.active,
     .table-zebra tr.active:nth-child(even),
     .table-zebra-zebra tbody tr:nth-child(even) {
@@ -3400,6 +3399,10 @@ html {
   left: 0px;
 }
 
+.left-\[5px\] {
+  left: 5px;
+}
+
 .right-0 {
   right: 0px;
 }
@@ -3412,12 +3415,20 @@ html {
   top: 0px;
 }
 
+.top-\[140px\] {
+  top: 140px;
+}
+
 .top-\[64\.5px\] {
   top: 64.5px;
 }
 
 .z-10 {
   z-index: 10;
+}
+
+.z-40 {
+  z-index: 40;
 }
 
 .z-50 {
@@ -3492,6 +3503,11 @@ html {
   margin-left: auto;
 }
 
+.ms-3 {
+  -webkit-margin-start: 0.75rem;
+          margin-inline-start: 0.75rem;
+}
+
 .mt-1 {
   margin-top: 0.25rem;
 }
@@ -3561,11 +3577,7 @@ html {
 }
 
 .h-\[300px\] {
-  height: 300px; 
-}
-
-.h-\[calc\(100vh-64\.4px-64px\)\] {
-  height: calc(100vh - 64.4px - 64px);
+  height: 300px;
 }
 
 .h-\[calc\(100vh-64\.4px-64px\)\] {
@@ -3612,12 +3624,24 @@ html {
   max-height: 14rem;
 }
 
+.max-h-\[320px\] {
+  max-height: 320px;
+}
+
 .min-h-\[200px\] {
   min-height: 200px;
 }
 
+.min-h-\[300px\] {
+  min-height: 300px;
+}
+
 .min-h-full {
   min-height: 100%;
+}
+
+.min-h-\[400px\] {
+  min-height: 400px;
 }
 
 .w-10 {
@@ -3658,6 +3682,10 @@ html {
 
 .w-\[10rem\] {
   width: 10rem;
+}
+
+.w-\[calc\(100\%-10px\)\] {
+  width: calc(100% - 10px);
 }
 
 .w-full {
@@ -4678,6 +4706,14 @@ html {
 
   .sm\:flex-col {
     flex-direction: column;
+  }
+
+  .sm\:items-end {
+    align-items: flex-end;
+  }
+
+  .sm\:justify-end {
+    justify-content: flex-end;
   }
 
   .sm\:rounded-lg {

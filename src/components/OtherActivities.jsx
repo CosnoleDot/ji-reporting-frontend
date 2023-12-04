@@ -27,7 +27,7 @@ const arr = [
     name: "hadithCircle",
   },
 ];
-export const OtherActivities = () => {
+export const OtherActivities = ({ view }) => {
   return (
     <div className="w-full " dir="rtl">
       <h3 className="w-full text-lg mb-3 font-bold ">دیگر سرگرمیاں</h3>
@@ -37,6 +37,7 @@ export const OtherActivities = () => {
             localStorage.getItem("@type") === "halqa" ? (
               <div className="w-full md:pr-0 mb-2" key={index}>
                 <InputWithLabel
+                  readOnly={view}
                   placeholder={obj.title}
                   label={obj.title}
                   id={obj?.name}
@@ -50,6 +51,7 @@ export const OtherActivities = () => {
           ) : (
             <div className="w-full md:pr-0 mb-2" key={index}>
               <InputWithLabel
+                readOnly={view}
                 placeholder={obj.title}
                 label={obj.title}
                 id={obj?.name}

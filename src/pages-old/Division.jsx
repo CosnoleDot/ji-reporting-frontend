@@ -121,71 +121,73 @@ export const Division = () => {
   ];
   return (
     <GeneralLayout>
-      <div className="h-[calc(100vh-64.4px-64px)] overflow-y-scroll">
+      <div className="h-[calc(100vh-64.4px-64px)]  w-full">
         <form
-          className="flex flex-col justify-center items-center p-4 font-notoUrdu"
+          className="flex w-full flex-col justify-center items-center p-4 font-notoUrdu"
           dir="rtl"
           onSubmit={handleSubmit}
         >
-          <fieldset disabled={view}>
-            <h2 className="text-2xl">جا ئزءکارکردگی رپورٹ (براے ڈویژن)</h2>
-            <div className="w-full p-4">
-              <div className="mb-4">
-                <CenteralActivities />
-              </div>
-              <div className="mb-4">
-                <MenTable />
-              </div>
-              <div className="mb-4">
-                <DivisionTable />
-              </div>
-              <div className="mb-4">
-                <Zaili />
-              </div>
-              <div className=" mb-4">
-                <OtherActivities arr={arr} />
-              </div>
-              <div className=" mb-4">
-                <ExpandParty />
-              </div>
-              <div className=" mb-4">
-                <Library />
-              </div>
-              <div className=" mb-4">
-                <MessageDigest />
-              </div>
-              <div className=" mb-4">
-                <EveningDiary />
-              </div>
+          {/* <fieldset disabled={view} className="w-full"> */}
+          <h2 className="text-2xl">جا ئزءکارکردگی رپورٹ (براے ڈویژن)</h2>
+          <div className="w-full">
+            <div>
+              <CenteralActivities view={view} />
             </div>
-            <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
-              <div className="w-full md:pr-0 mb-2">
-                <InputWithLabel
-                  type={"textarea"}
-                  required={true}
-                  placeholder={" تبصرھ"}
-                  label={" تبصرھ"}
-                  id={"comments"}
-                  name={"comments"}
-                />
-              </div>
-              <div className="w-full mb-2">
-                <InputWithLabel
-                  required={true}
-                  label={"براے ماھ"}
-                  type={"month"}
-                  id={"month"}
-                  name={"month"}
-                  value={"sdfhasdfhas"}
-                />
-              </div>
+            <div className="mb-4">
+              <MenTable view={view} />
             </div>
-            <div className="w-full">
-              <button className="btn btn-primary" disabled={loading}>
-                {id ? "Update" : "Add"}
-              </button>
+            <div className="mb-4">
+              <DivisionTable view={view} />
             </div>
-          </fieldset>
+            <div className="mb-4">
+              <Zaili view={view} />
+            </div>
+            <div className=" mb-4">
+              <OtherActivities arr={arr} view={view} />
+            </div>
+            <div className=" mb-4">
+              <ExpandParty view={view} />
+            </div>
+            <div className=" mb-4">
+              <Library view={view} />
+            </div>
+            <div className=" mb-4">
+              <MessageDigest view={view} />
+            </div>
+            <div className=" mb-4">
+              <EveningDiary view={view} />
+            </div>
+          </div>
+          <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
+            <div className="w-full md:pr-0 mb-2">
+              <InputWithLabel
+                readOnly={view}
+                type={"textarea"}
+                required={true}
+                placeholder={" تبصرھ"}
+                label={" تبصرھ"}
+                id={"comments"}
+                name={"comments"}
+              />
+            </div>
+            <div className="w-full mb-2">
+              <InputWithLabel
+                readOnly={view}
+                required={true}
+                label={"براے ماھ"}
+                type={"month"}
+                id={"month"}
+                name={"month"}
+                value={"sdfhasdfhas"}
+              />
+            </div>
+          </div>
+          <div className="w-full">
+            <button className="btn btn-primary" disabled={loading}>
+              {id ? "Update" : "Add"}
+            </button>
+          </div>
+          {/* </fieldset> */}
         </form>
       </div>
       {loading && <Loader />}
