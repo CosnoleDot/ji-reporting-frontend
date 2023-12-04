@@ -65,12 +65,14 @@ export const Reports = () => {
   const [search, showSearch] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
-  const [month, setMonth] = useState(null);
-  const [year, setYear] = useState(null);
+  const [month, setMonth] = useState("");
+  const [year, setYear] = useState("2023");
+  const [filerData, setFilterData] = useState([]);
   const [me, setMe] = useState({});
   const { dispatch } = useToastState();
   const [tab, setTab] = useState("maqam");
   const [active, setActive] = useState("maqam");
+  const [filterAllData, setFilterAllData] = useState({});
   const params = useLocation();
   useEffect(() => {
     // Function to parse query parameters
@@ -81,9 +83,8 @@ export const Reports = () => {
       for (let [key, value] of searchParams.entries()) {
         queryParams[key] = value;
       }
-
-      setActive(queryParams?.active);
-      setTab(queryParams?.tab);
+      if (queryParams?.active) setActive(queryParams?.active);
+      if (queryParams?.tab) setTab(queryParams?.tab);
     };
 
     // Call the function when the component mounts or when the location changes
@@ -143,7 +144,7 @@ export const Reports = () => {
           halqa: h.data.data,
           division: d.data.data,
         });
-        console.log({
+        setFilterAllData({
           maqam: m.data.data,
           halqa: h.data.data,
           division: d.data.data,
@@ -155,39 +156,88 @@ export const Reports = () => {
           },
         });
         setReports(response?.data?.data);
+        setFilterData(response?.data?.data);
       }
     } catch (error) {
       console.error("Error fetching reports:", error);
     }
     setLoading(false);
   };
+  const clearFilters = () => {
+    setMonth("");
+    setYear("2023");
+    setFilterAllData(allReports);
+    setFilterData(reports);
+  };
   useEffect(() => {
     fetchReports();
   }, [userType]);
 
+  useEffect(() => {
+    console.log(filterAllData[active]);
+  }, [filterAllData, active]);
+
   const searchResults = () => {
-    if (year !== null && month !== null) {
-      const filteredData = reports.reduce((acc, curr) => {
-        const reportYear = parseInt((curr?.month).split("-")[0]);
-        const reportMonth = parseInt((curr?.month).split("-")[1]);
-        if (reportMonth === parseInt(month) && reportYear === parseInt(year)) {
-          acc.push(curr);
-        }
-        return acc;
-      }, []);
-      setReports(filteredData);
-      showSearch(false);
-    } else if (year !== null) {
-      const filteredData = reports.filter((curr) => {
-        const reportedYear = (curr?.month).split("-")[0];
-        return reportedYear === year;
-      });
-      setReports(filteredData);
-      showSearch(false);
-    } else if (year === null && month === null) {
-      dispatch({ type: "ERROR", payload: "Date is required" });
+    if (userType === "province") {
+      if (year !== "" && month !== "") {
+        const filteredData = { ...allReports };
+        filteredData[active] = allReports[active].filter((i) => {
+          const [f_year, f_month] = [
+            i?.month?.split("-")[0],
+            i?.month?.split("-")[1],
+          ];
+          return year == f_year && month == f_month;
+        });
+        showSearch(false);
+        setFilterAllData(filteredData);
+      } else if (year !== "" && month === "") {
+        const filteredData = { ...allReports };
+        filteredData[active] = allReports[active].filter((i) => {
+          const f_year = i?.month?.split("-")[0];
+          return year == f_year;
+        });
+        showSearch(false);
+        setFilterAllData(filteredData);
+      } else if (year === "" && month !== "") {
+        dispatch({ type: "ERROR", payload: "Enter year with month" });
+        setFilterAllData(allReports);
+      } else if (year === "" && month === "") {
+        dispatch({ type: "ERROR", payload: "Date is required" });
+        setFilterAllData(allReports);
+      } else {
+        setFilterAllData(allReports);
+      }
     } else {
-      dispatch({ type: "ERROR", payload: "Enter year with month" });
+      if (year !== "" && month !== "") {
+        const filteredData = reports?.reduce((acc, curr) => {
+          const reportYear = parseInt((curr?.month).split("-")[0]);
+          const reportMonth = parseInt((curr?.month).split("-")[1]);
+          if (
+            reportMonth === parseInt(month) &&
+            reportYear === parseInt(year)
+          ) {
+            acc.push(curr);
+          }
+          return acc;
+        }, []);
+        showSearch(false);
+        setFilterData(filteredData);
+      } else if (year !== "" && month === "") {
+        const filteredData = reports?.filter((curr) => {
+          const reportedYear = (curr?.month).split("-")[0];
+          return parseInt(reportedYear) === parseInt(year);
+        });
+        showSearch(false);
+        setFilterData(filteredData);
+      } else if (year === "" && month !== "") {
+        dispatch({ type: "ERROR", payload: "Enter year with month" });
+        setFilterData(reports);
+      } else if (year === "" && month === "") {
+        dispatch({ type: "ERROR", payload: "Date is required" });
+        setFilterData(reports);
+      } else {
+        setFilterData(reports);
+      }
     }
   };
 
@@ -211,16 +261,15 @@ export const Reports = () => {
           <h3 className="font-bold text-xl hidden lg:block xl:block">
             Reports
           </h3>
-          <div className="join xs:w-full gap-3">
+          <div className="join xs:w-full">
             {!isMobileView && (
               <div className="w-full">
                 <select
                   className="select select-bordered join-item"
                   onChange={(e) => setMonth(e.target.value)}
+                  value={month}
                 >
-                  <option disabled selected>
-                    Month
-                  </option>
+                  <option value={""}>Month</option>
                   {months.map((month, index) => (
                     <option value={month?.value} key={index}>
                       {month.title}
@@ -230,8 +279,9 @@ export const Reports = () => {
                 <select
                   className="select select-bordered join-item"
                   onChange={(e) => setYear(e.target.value)}
+                  value={year}
                 >
-                  <option disabled selected>
+                  <option disabled value={""}>
                     Year
                   </option>
                   {Array(10)
@@ -245,16 +295,15 @@ export const Reports = () => {
               </div>
             )}
             {search && (
-              <div className="fixed z-40 rounded-lg top-[140px] left-[5px] w-[calc(100%-10px)] bg-white min-h-[200px] border">
-                <div className="flex  gap-3">
-                  <div className="w-full">
+              <div className="fixed z-40 rounded-lg top-[140px] left-[5px] w-[calc(100%-10px)] overflow-hidden bg-white min-h-[100px] border">
+                <div className="flex flex-col gap-3">
+                  <div className="w-full flex flex-col">
                     <select
-                      className="select select-bordered join-item"
+                      className="select select-bordered w-full rounded-none rounded-tl-lg rounded-tr-lg"
                       onChange={(e) => setMonth(e.target.value)}
+                      value={month}
                     >
-                      <option disabled selected>
-                        Month
-                      </option>
+                      <option value={""}>Month</option>
                       {months.map((month, index) => (
                         <option value={month?.value} key={index}>
                           {month.title}
@@ -262,10 +311,11 @@ export const Reports = () => {
                       ))}
                     </select>
                     <select
-                      className="select select-bordered join-item"
+                      className="select select-bordered w-full rounded-none rounded-bl-lg rounded-br-lg"
+                      value={year}
                       onChange={(e) => setYear(e.target.value)}
                     >
-                      <option disabled selected>
+                      <option value={""} disabled>
                         Year
                       </option>
                       {Array(10)
@@ -277,7 +327,7 @@ export const Reports = () => {
                         ))}
                     </select>
                   </div>
-                  <button className="btn join-item" onClick={searchResults}>
+                  <button className="btn" onClick={searchResults}>
                     Search
                   </button>
                 </div>
@@ -293,6 +343,9 @@ export const Reports = () => {
                 }
               >
                 Search
+              </button>
+              <button className="btn join-item" onClick={clearFilters}>
+                Clear
               </button>
             </div>
           </div>
@@ -367,8 +420,8 @@ export const Reports = () => {
         )}
         <div className="relative overflow-y-scroll gap-3 w-full items-center p-5 justify-center h-[calc(100vh-65.6px-64px-48px)]">
           {userType === "province"
-            ? allReports[active]?.map((obj) =>
-                tab === "division" ? (
+            ? filterAllData[active]?.map((obj) =>
+                active === "halqa" && tab === "division" ? (
                   obj?.halqaAreaId?.parentType === "Tehsil" && (
                     <div
                       key={obj?._id}
@@ -394,7 +447,7 @@ export const Reports = () => {
                       </div>
                     </div>
                   )
-                ) : tab === "maqam" ? (
+                ) : active === "halqa" && tab === "maqam" ? (
                   obj?.halqaAreaId?.parentType === "Maqam" && (
                     <div
                       key={obj?._id}
@@ -446,7 +499,7 @@ export const Reports = () => {
                   </div>
                 )
               )
-            : reports?.map((obj) => (
+            : filerData?.map((obj) => (
                 <div
                   key={obj?._id}
                   className="card-body flex items-between justify-between w-full p-5 mb-1 bg-slate-200 rounded-xl lg:flex-row md:flex-row sm:flex-col"
