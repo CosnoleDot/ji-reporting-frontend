@@ -1,27 +1,27 @@
 import React from "react";
-import { InputWithLabel } from "./InputWithLabel";
+import { InputWithLabel } from "../InputWithLabel";
 
-const headings = ["تعشد سرگرمیا", "تعشد ", "منقیدہ", "حاضری", "عنوان"];
-
-export const ActivityTable = ({ view }) => {
-  const userType = localStorage.getItem("@type");
+export const Zaili = ({ view }) => {
+  const headings = ["زﯾﻠﯽ طﮯ ﺷدھ ﺳرﮔرﻣﯾﺎں", "طﮯﺷدھ", "ﻣﻧﻌﻘدھ", "اوﺳط ﺣﺎﺿری"];
   const rows = [
     {
       key: "ijtRafaqa",
       title: "اﺟﺗﻣﻊ رﻓﻘﺎ",
     },
     {
-      key: userType === "maqam" ? "studyCircleMentioned" : "studyCircle",
+      key: "studyCircleMentioned",
       title: " ﺳﭨڈی ﺳرﮐل",
     },
     { key: "ijtKarkunan", title: "اﺟﺗﻣﻊ ﮐﺎرﮐﻧﺎن" },
     { key: "darseQuran", title: "درس ﻗرآن " },
+    { key: "shaheenMeeting", title: " ﺷﺎﮨﯾن ﻣﯾﭨﻧﮓ" },
+    { key: "paighamEvent", title: "ﭘﯾﻐﺎم ﻣﺣﻔل" },
   ];
   return (
-    <div className="w-full p-4" dir="rtl">
-      <table className="w-full border border-gray-400 rounded-lg">
+    <div className="w-full max-w-full overflow-x-scroll" dir="rtl">
+      <table className="w-full border border-gray-400 table">
         <thead>
-          <tr className="flex w-full items-start justify-between bg-gray-100">
+          <tr className=" flex w-full items-start justify-between bg-gray-100">
             {headings.map((heading, index) => (
               <th
                 className="w-[10rem] text-start text-lg sm:text-sm"
@@ -38,7 +38,7 @@ export const ActivityTable = ({ view }) => {
               className="flex w-full items-center justify-between bg-gray-100"
               key={index}
             >
-              <td className="w-full  text-start text-lg sm:text-sm">
+              <td className="w-[10rem]  text-start text-lg sm:text-sm">
                 {row.title}
               </td>
 
@@ -56,8 +56,8 @@ export const ActivityTable = ({ view }) => {
                   readOnly={view}
                   label={""}
                   type={"number"}
-                  name={`${row?.key}-completed`}
-                  id={`${row?.key}-completed`}
+                  name={`${row?.key}-done`}
+                  id={`${row?.key}-done`}
                 />
               </td>
               <td className="flex flex-row w-full">
@@ -65,17 +65,8 @@ export const ActivityTable = ({ view }) => {
                   readOnly={view}
                   label={""}
                   type={"number"}
-                  name={`${row?.key}-attendance`}
-                  id={`${row?.key}-attendance`}
-                />
-              </td>
-              <td className="flex flex-row w-full">
-                <InputWithLabel
-                  readOnly={view}
-                  label={""}
-                  type={"text"}
-                  name={`${row?.key}-title`}
-                  id={`${row?.key}-title`}
+                  name={`${row?.key}-averageAttendance`}
+                  id={`${row?.key}-averageAttendance`}
                 />
               </td>
             </tr>

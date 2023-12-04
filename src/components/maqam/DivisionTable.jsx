@@ -2,30 +2,31 @@ import React from "react";
 
 import { InputWithLabel } from "../InputWithLabel";
 
-export const DivisionTable = () => {
+export const DivisionTable = ({ view }) => {
   const headings = ["ﻣرﮐزی طﮯ ﺷدھ ﺳرﮔرﻣﯾﺎں", "طﮯﺷدھ", "ﻣﻧﻌﻘدھ", "اوﺳط ﺣﺎﺿری"];
   const rows = [
     {
       title: "اﺟﺗﻣﻊ ارﮐﺎن",
-      numberOfInputFields: 3,
+      key: "ijtArkan",
     },
     {
       title: " ﺳﭨڈی ﺳرﮐل",
-      numberOfInputFields: 3,
+      key: "studyCircle",
     },
     {
       title: "اﺟﺗﻣﻊ ﻧﺎظﻣﯾن",
-      numberOfInputFields: 3,
+      key: "ijtNazmeen",
     },
     {
       title: "اﺟﺗﻣﻊ اﻣﯾدوار ",
-      numberOfInputFields: 3,
+      key: "ijtUmeedwaran",
     },
     {
       title: " ﺻدورﻣﯾﭨﯾﻧﮓ",
-      numberOfInputFields: 3,
+      key: "sadurMeeting",
     },
   ];
+
   return (
     <div className="w-full max-w-full overflow-x-scroll " dir="rtl">
       <table className="w-full border border-gray-400 table">
@@ -42,21 +43,87 @@ export const DivisionTable = () => {
           </tr>
         </thead>
         <tbody>
-          {rows.map((row, index) => (
-            <tr
-              className="flex w-full items-center justify-between bg-gray-100"
-              key={index}
-            >
-              <td className="w-[10rem]  text-start text-lg sm:text-sm">
-                {row.title}
-              </td>
-              {Array.from({ length: row.numberOfInputFields }, (_, index) => (
-                <td key={index}>
-                  <InputWithLabel label={""} type={"number"} />
+          {rows.map((row, index) =>
+            row?.key === "ijtArkan" ? (
+              localStorage.getItem("@type") !== "division" ? (
+                <tr
+                  className="flex w-full items-center justify-between bg-gray-100"
+                  key={index}
+                >
+                  <td className="w-full  text-start text-lg sm:text-sm">
+                    {row.title}
+                  </td>
+
+                  <td className="flex flex-row w-full">
+                    <InputWithLabel
+                      readOnly={view}
+                      label={""}
+                      type={"number"}
+                      name={`${row?.key}-decided`}
+                      id={`${row?.key}-decided`}
+                    />
+                  </td>
+                  <td className="flex flex-row w-full">
+                    <InputWithLabel
+                      readOnly={view}
+                      label={""}
+                      type={"number"}
+                      name={`${row?.key}-done`}
+                      id={`${row?.key}-done`}
+                    />
+                  </td>
+                  <td className="flex flex-row w-full">
+                    <InputWithLabel
+                      readOnly={view}
+                      label={""}
+                      type={"number"}
+                      name={`${row?.key}-averageAttendance`}
+                      id={`${row?.key}-averageAttendance`}
+                    />
+                  </td>
+                </tr>
+              ) : (
+                <></>
+              )
+            ) : (
+              <tr
+                className="flex w-full items-center justify-between bg-gray-100"
+                key={index}
+              >
+                <td className="w-full  text-start text-lg sm:text-sm">
+                  {row.title}
                 </td>
-              ))}
-            </tr>
-          ))}
+
+                <td className="flex flex-row w-full">
+                  <InputWithLabel
+                    readOnly={view}
+                    label={""}
+                    type={"number"}
+                    name={`${row?.key}-decided`}
+                    id={`${row?.key}-decided`}
+                  />
+                </td>
+                <td className="flex flex-row w-full">
+                  <InputWithLabel
+                    readOnly={view}
+                    label={""}
+                    type={"number"}
+                    name={`${row?.key}-done`}
+                    id={`${row?.key}-done`}
+                  />
+                </td>
+                <td className="flex flex-row w-full">
+                  <InputWithLabel
+                    readOnly={view}
+                    label={""}
+                    type={"number"}
+                    name={`${row?.key}-averageAttendance`}
+                    id={`${row?.key}-averageAttendance`}
+                  />
+                </td>
+              </tr>
+            )
+          )}
         </tbody>
       </table>
     </div>

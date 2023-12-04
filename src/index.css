@@ -1629,6 +1629,24 @@ html {
   background-color: hsl(var(--b2) / var(--tw-bg-opacity));
 }
 
+.textarea {
+  flex-shrink: 1;
+  min-height: 3rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  line-height: 2;
+  border-width: 1px;
+  border-color: hsl(var(--bc) / var(--tw-border-opacity));
+  --tw-border-opacity: 0;
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--b1) / var(--tw-bg-opacity));
+  border-radius: var(--rounded-btn, 0.5rem);
+}
+
 .avatar-group :where(.avatar) {
   overflow: hidden;
   border-radius: 9999px;
@@ -2557,6 +2575,36 @@ html {
   color: hsl(var(--bc) / 0.6);
 }
 
+.textarea:focus {
+  outline-style: solid;
+  outline-width: 2px;
+  outline-offset: 2px;
+  outline-color: hsl(var(--bc) / 0.2);
+}
+
+.textarea-disabled,
+  .textarea:disabled,
+  .textarea[disabled] {
+  cursor: not-allowed;
+  --tw-border-opacity: 1;
+  border-color: hsl(var(--b2) / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--b2) / var(--tw-bg-opacity));
+  --tw-text-opacity: 0.2;
+}
+
+.textarea-disabled::-webkit-input-placeholder, .textarea:disabled::-webkit-input-placeholder, .textarea[disabled]::-webkit-input-placeholder {
+  color: hsl(var(--bc) / var(--tw-placeholder-opacity));
+  --tw-placeholder-opacity: 0.2;
+}
+
+.textarea-disabled::placeholder,
+  .textarea:disabled::placeholder,
+  .textarea[disabled]::placeholder {
+  color: hsl(var(--bc) / var(--tw-placeholder-opacity));
+  --tw-placeholder-opacity: 0.2;
+}
+
 @-webkit-keyframes toast-pop {
   0% {
     -webkit-transform: scale(0.9);
@@ -3034,6 +3082,10 @@ html {
   left: 0px;
 }
 
+.left-\[5px\] {
+  left: 5px;
+}
+
 .right-0 {
   right: 0px;
 }
@@ -3046,12 +3098,20 @@ html {
   top: 0px;
 }
 
+.top-\[140px\] {
+  top: 140px;
+}
+
 .top-\[64\.5px\] {
   top: 64.5px;
 }
 
 .z-10 {
   z-index: 10;
+}
+
+.z-40 {
+  z-index: 40;
 }
 
 .z-50 {
@@ -3126,10 +3186,6 @@ html {
   margin-left: auto;
 }
 
-.mr-2 {
-  margin-right: 0.5rem;
-}
-
 .ms-3 {
   -webkit-margin-start: 0.75rem;
           margin-inline-start: 0.75rem;
@@ -3149,10 +3205,6 @@ html {
 
 .mt-3 {
   margin-top: 0.75rem;
-}
-
-.mt-4 {
-  margin-top: 1rem;
 }
 
 .mt-5 {
@@ -3209,6 +3261,10 @@ html {
 
 .h-\[300px\] {
   height: 300px;
+}
+
+.h-\[calc\(100vh-64\.4px-64px\)\] {
+  height: calc(100vh - 64.4px - 64px);
 }
 
 .h-\[calc\(100vh-65\.6px-64px\)\] {
@@ -3289,6 +3345,10 @@ html {
 
 .w-\[10rem\] {
   width: 10rem;
+}
+
+.w-\[calc\(100\%-10px\)\] {
+  width: calc(100% - 10px);
 }
 
 .w-full {
