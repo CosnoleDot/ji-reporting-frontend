@@ -260,7 +260,6 @@ export const Comparision = () => {
     await getDistricts();
     await getMaqams();
     await getHalqas();
-    console.log(areas)
   };
   useEffect(() => {
     if (me) getAll();
@@ -294,7 +293,7 @@ export const Comparision = () => {
       );
       setResponse(res?.data?.data);
     } catch (error) {
-      console.log(error);
+      dispatch({ type: 'ERROR', payload: error?.response?.data?.message });
     }
     setLoading(false);
   };
