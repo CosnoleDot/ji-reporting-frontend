@@ -3632,16 +3632,8 @@ html {
   min-height: 200px;
 }
 
-.min-h-\[300px\] {
-  min-height: 300px;
-}
-
 .min-h-full {
   min-height: 100%;
-}
-
-.min-h-\[400px\] {
-  min-height: 400px;
 }
 
 .w-10 {
@@ -4706,14 +4698,6 @@ html {
 
   .sm\:flex-col {
     flex-direction: column;
-  }
-
-  .sm\:items-end {
-    align-items: flex-end;
-  }
-
-  .sm\:justify-end {
-    justify-content: flex-end;
   }
 
   .sm\:rounded-lg {

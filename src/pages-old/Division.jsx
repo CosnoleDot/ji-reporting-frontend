@@ -121,7 +121,7 @@ export const Division = () => {
   ];
   return (
     <GeneralLayout>
-      <div className="h-[calc(100vh-64.4px-64px)]  w-full">
+      <div className="h-[calc(100vh-64.4px-64px)] overflow-hidden overflow-y-scroll w-full">
         <form
           className="flex w-full flex-col justify-center items-center p-4 font-notoUrdu"
           dir="rtl"

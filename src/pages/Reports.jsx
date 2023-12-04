@@ -5,6 +5,8 @@ import { useNavigate, useLocation } from "react-router";
 import { useToastState } from "../context";
 import instance from "../api/instrance";
 import moment from "moment/moment";
+import { Link } from "react-router-dom";
+import userEvent from "@testing-library/user-event";
 
 export const months = [
   {
@@ -58,8 +60,12 @@ export const months = [
 ];
 export const Reports = () => {
   const [reports, setReports] = useState([]);
+  const [allReports, setAllReports] = useState([]);
   const navigate = useNavigate();
-  const userType = localStorage.getItem("@type");
+  const [userType, setUserType] = useState(localStorage.getItem("@type"));
+  useEffect(() => {
+    setUserType(localStorage.getItem("@type"));
+  }, [localStorage]);
   const [search, showSearch] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
@@ -67,6 +73,24 @@ export const Reports = () => {
   const [year, setYear] = useState(null);
   const [me, setMe] = useState({});
   const { dispatch } = useToastState();
+  const [active, setActive] = useState("maqam");
+  const params = useLocation();
+  useEffect(() => {
+    // Function to parse query parameters
+    const getQueryParams = () => {
+      const searchParams = new URLSearchParams(params.search);
+      const queryParams = {};
+
+      for (let [key, value] of searchParams.entries()) {
+        queryParams[key] = value;
+      }
+
+      setActive(queryParams.active);
+    };
+
+    // Call the function when the component mounts or when the location changes
+    getQueryParams();
+  }, [params]);
   const getMe = async () => {
     const req = await instance.get("/user/me", {
       headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
@@ -96,22 +120,50 @@ export const Reports = () => {
   const editReport = (id) => {
     navigate(`edit/${id}`);
   };
-  useEffect(() => {
-    const fetchReports = async () => {
-      setLoading(true);
-      try {
-        const response = await instance.get(`reports/${userType}`, {
+  const fetchReports = async () => {
+    setLoading(true);
+    try {
+      let response;
+      if (userType === "province") {
+        const m = await instance.get(`reports/maqam`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
+        });
+        const h = await instance.get(`reports/halqa`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
+        });
+        const d = await instance.get(`reports/division`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
+        });
+        setAllReports({
+          maqam: m.data.data,
+          halqa: h.data.data,
+          division: d.data.data,
+        });
+        console.log({
+          maqam: m.data.data,
+          halqa: h.data.data,
+          division: d.data.data,
+        });
+      } else {
+        response = await instance.get(`reports/${userType}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
         setReports(response?.data?.data);
-      } catch (error) {
-        console.error("Error fetching reports:", error);
       }
-      setLoading(false);
-    };
-
+    } catch (error) {
+      console.error("Error fetching reports:", error);
+    }
+    setLoading(false);
+  };
+  useEffect(() => {
     fetchReports();
   }, [userType]);
 
@@ -149,7 +201,10 @@ export const Reports = () => {
     }
   }, [window.innerWidth]);
   return (
-    <GeneralLayout title={me?.userAreaId?.name.toUpperCase()} active={"reports"}>
+    <GeneralLayout
+      title={me?.userAreaId?.name.toUpperCase()}
+      active={"reports"}
+    >
       <div className="relative flex flex-col gap-3 items-center p-5 justify-center h-[calc(100vh-65.6px-64px)]">
         <div className="flex w-full items-center justify-between xs:flex-col">
           <h3 className="font-bold text-xl hidden lg:block xl:block">
@@ -247,31 +302,99 @@ export const Reports = () => {
             </button>
           )}
         </div>
-        <div className="relative overflow-y-scroll gap-3 w-full items-center p-5 justify-center h-[calc(100vh-65.6px-64px-48px)]">
-          {reports?.map((obj) => (
-            <div
-              key={obj?._id}
-              className="card-body flex items-between justify-between w-full p-5 mb-1 bg-slate-200 rounded-xl lg:flex-row md:flex-row sm:flex-col"
+        {localStorage.getItem("@type") === "province" && (
+          <div
+            role="tablist"
+            className="w-full flex justify-between items-center"
+          >
+            <Link
+              to={"?active=division"}
+              role="tab"
+              className={`tab w-full ${
+                active === "division" ? "tab-active bg-slate-200" : ""
+              }`}
             >
-              <div className="flex w-full flex-col items-start justify-center">
-                <span className="text-lg font-semibold">
-                  {moment(obj?.month).format("MMMM Do YYYY")}
-                </span>
-                <span>
-                  Last Modified:
-                  {moment(obj?.updatedAt).startOf("day").fromNow()}
-                </span>
-              </div>
-              <div className="flex items-end w-full justify-end gap-3 ">
-                <button className="btn" onClick={() => viewReport(obj?._id)}>
-                  <FaEye />
-                </button>
-                <button className="btn" onClick={() => editReport(obj?._id)}>
-                  <FaEdit />
-                </button>
-              </div>
-            </div>
-          ))}
+              Division
+            </Link>
+
+            <Link
+              to={"?active=maqam"}
+              role="tab"
+              className={`tab w-full ${
+                active === "maqam" ? "tab-active bg-slate-200" : ""
+              }`}
+            >
+              Maqam
+            </Link>
+
+            <Link
+              to={"?active=halqa"}
+              role="tab"
+              className={`tab w-full ${
+                active === "halqa" ? "tab-active bg-slate-200" : ""
+              }`}
+            >
+              Halqa
+            </Link>
+          </div>
+        )}
+        <div className="relative overflow-y-scroll gap-3 w-full items-center p-5 justify-center h-[calc(100vh-65.6px-64px-48px)]">
+          {userType === "province"
+            ? allReports[active]?.map((obj) => (
+                <div
+                  key={obj?._id}
+                  className="card-body flex items-between justify-between w-full p-5 mb-1 bg-slate-200 rounded-xl lg:flex-row md:flex-row sm:flex-col"
+                >
+                  <div className="flex w-full flex-col items-start justify-center">
+                    <span className="text-lg font-semibold">
+                      {obj?.[active + "AreaId"]?.name || "UNKNOWN"} - {" "}
+                      {moment(obj?.month).format("MMMM YYYY")}
+                    </span>
+                    <span>
+                      Last Modified:
+                      {moment(obj?.updatedAt).startOf("day").fromNow()}
+                    </span>
+                  </div>
+                  <div className="flex items-end w-full justify-end gap-3 ">
+                    <button
+                      className="btn"
+                      onClick={() => viewReport(obj?._id)}
+                    >
+                      <FaEye />
+                    </button>
+                  </div>
+                </div>
+              ))
+            : reports?.map((obj) => (
+                <div
+                  key={obj?._id}
+                  className="card-body flex items-between justify-between w-full p-5 mb-1 bg-slate-200 rounded-xl lg:flex-row md:flex-row sm:flex-col"
+                >
+                  <div className="flex w-full flex-col items-start justify-center">
+                    <span className="text-lg font-semibold">
+                      {moment(obj?.month).format("MMMM YYYY")}
+                    </span>
+                    <span>
+                      Last Modified:
+                      {moment(obj?.updatedAt).startOf("day").fromNow()}
+                    </span>
+                  </div>
+                  <div className="flex items-end w-full justify-end gap-3 ">
+                    <button
+                      className="btn"
+                      onClick={() => viewReport(obj?._id)}
+                    >
+                      <FaEye />
+                    </button>
+                    <button
+                      className="btn"
+                      onClick={() => editReport(obj?._id)}
+                    >
+                      <FaEdit />
+                    </button>
+                  </div>
+                </div>
+              ))}
         </div>
       </div>
       {loading && <Loader />}
