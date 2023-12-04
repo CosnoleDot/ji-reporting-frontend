@@ -6,7 +6,6 @@ import { useToastState } from "../context";
 import instance from "../api/instrance";
 import moment from "moment/moment";
 import { Link } from "react-router-dom";
-import userEvent from "@testing-library/user-event";
 
 export const months = [
   {
@@ -63,9 +62,6 @@ export const Reports = () => {
   const [allReports, setAllReports] = useState([]);
   const navigate = useNavigate();
   const [userType, setUserType] = useState(localStorage.getItem("@type"));
-  useEffect(() => {
-    setUserType(localStorage.getItem("@type"));
-  }, [localStorage]);
   const [search, showSearch] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
@@ -73,6 +69,7 @@ export const Reports = () => {
   const [year, setYear] = useState(null);
   const [me, setMe] = useState({});
   const { dispatch } = useToastState();
+  const [tab, setTab] = useState("maqam");
   const [active, setActive] = useState("maqam");
   const params = useLocation();
   useEffect(() => {
@@ -85,7 +82,8 @@ export const Reports = () => {
         queryParams[key] = value;
       }
 
-      setActive(queryParams.active);
+      setActive(queryParams?.active);
+      setTab(queryParams?.tab);
     };
 
     // Call the function when the component mounts or when the location changes
@@ -200,6 +198,9 @@ export const Reports = () => {
       }
     }
   }, [window.innerWidth]);
+  useEffect(() => {
+    setUserType(localStorage.getItem("@type"));
+  }, [localStorage]);
   return (
     <GeneralLayout
       title={me?.userAreaId?.name.toUpperCase()}
@@ -338,33 +339,113 @@ export const Reports = () => {
             </Link>
           </div>
         )}
+        {active === "halqa" && (
+          <div
+            role="tablist"
+            className="w-full flex justify-between items-center"
+          >
+            <Link
+              to={"?active=halqa&tab=maqam"}
+              role="tab"
+              className={`tab w-full ${
+                tab === "maqam" ? "tab-active bg-slate-200" : ""
+              }`}
+            >
+              Maqam Halqa
+            </Link>
+
+            <Link
+              to={"?active=halqa&tab=division"}
+              role="tab"
+              className={`tab w-full ${
+                tab === "division" ? "tab-active bg-slate-200" : ""
+              }`}
+            >
+              Division Halqa
+            </Link>
+          </div>
+        )}
         <div className="relative overflow-y-scroll gap-3 w-full items-center p-5 justify-center h-[calc(100vh-65.6px-64px-48px)]">
           {userType === "province"
-            ? allReports[active]?.map((obj) => (
-                <div
-                  key={obj?._id}
-                  className="card-body flex items-between justify-between w-full p-5 mb-1 bg-slate-200 rounded-xl lg:flex-row md:flex-row sm:flex-col"
-                >
-                  <div className="flex w-full flex-col items-start justify-center">
-                    <span className="text-lg font-semibold">
-                      {obj?.[active + "AreaId"]?.name || "UNKNOWN"} - {" "}
-                      {moment(obj?.month).format("MMMM YYYY")}
-                    </span>
-                    <span>
-                      Last Modified:
-                      {moment(obj?.updatedAt).startOf("day").fromNow()}
-                    </span>
-                  </div>
-                  <div className="flex items-end w-full justify-end gap-3 ">
-                    <button
-                      className="btn"
-                      onClick={() => viewReport(obj?._id)}
+            ? allReports[active]?.map((obj) =>
+                tab === "division" ? (
+                  obj?.halqaAreaId?.parentType === "Tehsil" && (
+                    <div
+                      key={obj?._id}
+                      className="card-body flex items-between justify-between w-full p-5 mb-1 bg-slate-200 rounded-xl lg:flex-row md:flex-row sm:flex-col"
                     >
-                      <FaEye />
-                    </button>
+                      <div className="flex w-full flex-col items-start justify-center">
+                        <span className="text-lg font-semibold">
+                          {obj?.[active + "AreaId"]?.name || "UNKNOWN"} -{" "}
+                          {moment(obj?.month).format("MMMM YYYY")}
+                        </span>
+                        <span>
+                          Last Modified:
+                          {moment(obj?.updatedAt).startOf("day").fromNow()}
+                        </span>
+                      </div>
+                      <div className="flex items-end w-full justify-end gap-3 ">
+                        <button
+                          className="btn"
+                          onClick={() => viewReport(obj?._id)}
+                        >
+                          <FaEye />
+                        </button>
+                      </div>
+                    </div>
+                  )
+                ) : tab === "maqam" ? (
+                  obj?.halqaAreaId?.parentType === "Maqam" && (
+                    <div
+                      key={obj?._id}
+                      className="card-body flex items-between justify-between w-full p-5 mb-1 bg-slate-200 rounded-xl lg:flex-row md:flex-row sm:flex-col"
+                    >
+                      <div className="flex w-full flex-col items-start justify-center">
+                        <span className="text-lg font-semibold">
+                          {obj?.[active + "AreaId"]?.name || "UNKNOWN"} -{" "}
+                          {moment(obj?.month).format("MMMM YYYY")}
+                        </span>
+                        <span>
+                          Last Modified:
+                          {moment(obj?.updatedAt).startOf("day").fromNow()}
+                        </span>
+                      </div>
+                      <div className="flex items-end w-full justify-end gap-3 ">
+                        <button
+                          className="btn"
+                          onClick={() => viewReport(obj?._id)}
+                        >
+                          <FaEye />
+                        </button>
+                      </div>
+                    </div>
+                  )
+                ) : (
+                  <div
+                    key={obj?._id}
+                    className="card-body flex items-between justify-between w-full p-5 mb-1 bg-slate-200 rounded-xl lg:flex-row md:flex-row sm:flex-col"
+                  >
+                    <div className="flex w-full flex-col items-start justify-center">
+                      <span className="text-lg font-semibold">
+                        {obj?.[active + "AreaId"]?.name || "UNKNOWN"} -{" "}
+                        {moment(obj?.month).format("MMMM YYYY")}
+                      </span>
+                      <span>
+                        Last Modified:
+                        {moment(obj?.updatedAt).startOf("day").fromNow()}
+                      </span>
+                    </div>
+                    <div className="flex items-end w-full justify-end gap-3 ">
+                      <button
+                        className="btn"
+                        onClick={() => viewReport(obj?._id)}
+                      >
+                        <FaEye />
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))
+                )
+              )
             : reports?.map((obj) => (
                 <div
                   key={obj?._id}
