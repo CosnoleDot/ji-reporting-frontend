@@ -173,10 +173,6 @@ export const Reports = () => {
     fetchReports();
   }, [userType]);
 
-  useEffect(() => {
-    console.log(filterAllData[active]);
-  }, [filterAllData, active]);
-
   const searchResults = () => {
     if (userType === "province") {
       if (year !== "" && month !== "") {
