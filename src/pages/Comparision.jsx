@@ -14,6 +14,7 @@ const Dates = ({
   durationType,
   durationYears,
   setDurationYears,
+  getData,
 }) => {
   const [year, setYear] = useState(2023);
   return (
@@ -21,7 +22,13 @@ const Dates = ({
       <div className='flex z-50 w-full p-3 items-center border-b justify-between'>
         <h1 className='text-xl font-bold'>Dates</h1>
         <div className='flex justify-end items-center gap-3'>
-          <button className='btn' onClick={() => showDates(false)}>
+          <button
+            className='btn'
+            onClick={() => {
+              showDates(false);
+              getData();
+            }}
+          >
             Generate
           </button>
           <button className='btn' onClick={() => showDates(false)}>
@@ -51,7 +58,7 @@ const Dates = ({
                 onClick={() =>
                   setDurationMonths([
                     ...durationMonths,
-                    { title: i?.title, year },
+                    { month: i?.title, year, value: i?.value },
                   ])
                 }
               >
@@ -75,7 +82,7 @@ const Dates = ({
                 className='flex p-3 hover:bg-slate-200 items-center justify-between'
               >
                 <span>
-                  {i?.title}, {i?.year}
+                  {i?.month}, {i?.year}
                 </span>
                 <FaTimesCircle />
               </div>
@@ -127,31 +134,37 @@ const Dates = ({
 export const Comparision = () => {
   const [loading, setLoading] = useState(true);
   const [durationMonths, setDurationMonths] = useState([]);
-  const [me, setMe] = useState({});
+  const [me, setMe] = useState(null);
+  const [selectedProperty, setSelectedProperty] = useState('');
   const [durationType, setDurationType] = useState('');
   const [reportType, setReportType] = useState('');
   const [dates, showDates] = useState(false);
+  const [areaId, setAreaId] = useState('');
+  const [response, setResponse] = useState(null);
   const [durationYears, setDurationYears] = useState([]);
+
   const [areas, setAreas] = useState({
     maqam: [],
     division: [],
     halqa: [],
+    district: [],
   });
+
   const { dispatch } = useToastState();
   const getMe = async () => {
     try {
       const req = await instance.get('/user/me', {
         headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
       });
-      setMe(req.data.data);
+      setMe(req?.data?.data);
     } catch (err) {
-      dispatch({ type: 'ERROR', payload: err.response.data.message });
+      dispatch({ type: 'ERROR', payload: err.response?.data.message });
     }
   };
   useEffect(() => {
     getMe();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [reportType]);
   const getHalqas = async () => {
     setLoading(true);
     try {
@@ -159,18 +172,32 @@ export const Comparision = () => {
         headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
       });
       if (req) {
-        setAreas((prev) => ({
-          ...prev,
-          halqa:
-            localStorage.getItem('@type') === 'province'
-              ? [...req.data?.data]
-              : [...req.data?.data].filter(
-                  (i) => i?.parentId?._id === me?.userAreaId?._id
-                ),
-        }));
+        setTimeout(() => {
+          setAreas((prev) => ({
+            ...prev,
+            halqa:
+              localStorage.getItem('@type') === 'province'
+                ? [...req.data?.data]
+                : localStorage.getItem('@type') === 'maqam'
+                ? [...req.data?.data]
+                    .filter((i) => i?.parentType === 'Maqam')
+                    .filter((i) =>
+                      areas.maqam
+                        .map((i) => i?._id?.toString())
+                        .includes(i?.parentId?._id.toString())
+                    )
+                    .sort((a, b) => a?.name?.localeCompare(b?.name))
+                : [...req.data?.data]
+                    .filter((i) => i?.parentType === 'Tehsil')
+                    .filter((i) =>
+                      areas.district.includes(i?.parentId?.district.toString())
+                    )
+                    .sort((a, b) => a?.name?.localeCompare(b?.name)),
+          }));
+        }, 1000);
       }
     } catch (err) {
-      dispatch({ type: 'ERROR', payload: err.response.data.message });
+      dispatch({ type: 'ERROR', payload: err.response?.data.message });
     }
     setLoading(false);
   };
@@ -181,7 +208,14 @@ export const Comparision = () => {
         headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
       });
       if (req) {
-        setAreas((prev) => ({ ...prev, maqam: [...req.data?.data] }));
+        localStorage.getItem('@type') === 'province'
+          ? setAreas((prev) => ({ ...prev, maqam: [...req.data?.data] }))
+          : setAreas((prev) => ({
+              ...prev,
+              maqam: [...req.data?.data].filter(
+                (i) => i?._id === me?.userAreaId?._id
+              ),
+            }));
       }
     } catch (err) {
       dispatch({ type: 'ERROR', payload: err.response.data.message });
@@ -202,17 +236,68 @@ export const Comparision = () => {
     }
     setLoading(false);
   };
-  const getAll = async () => {
-    if (localStorage.getItem('@type') === 'province') {
-      await getDivisions();
-      await getMaqams();
+  const getDistricts = async () => {
+    setLoading(true);
+    try {
+      const req = await instance('/locations/district', {
+        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
+      });
+      if (req) {
+        setAreas((prev) => ({
+          ...prev,
+          district: [...req.data?.data]
+            .filter((i) => i?.division?._id === me?.userAreaId?._id)
+            .map((i) => i?._id?.toString()),
+        }));
+      }
+    } catch (err) {
+      dispatch({ type: 'ERROR', payload: err.response.data.message });
     }
+    setLoading(false);
+  };
+  const getAll = async () => {
+    await getDivisions();
+    await getDistricts();
+    await getMaqams();
     await getHalqas();
+    console.log(areas)
   };
   useEffect(() => {
-    getAll();
+    if (me) getAll();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [me]);
+  const transformedArray = durationMonths.map((item) => {
+    return {
+      month: item.value,
+      year: item.year,
+    };
+  });
+
+  const data =
+    durationType === 'month'
+      ? {
+          duration: transformedArray,
+          duration_type: durationType,
+          areaId,
+        }
+      : { duration: durationYears, duration_type: durationType, areaId };
+  const getData = async () => {
+    setLoading(true);
+    setResponse(null);
+    try {
+      const res = await instance.post(
+        `compare/${reportType}/${selectedProperty}`,
+        data,
+        {
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+      setResponse(res?.data?.data);
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
+  };
   return (
     <GeneralLayout title={'Comparison'} active={'comparison'}>
       <div className='relative flex flex-col gap-3 h-[calc(100vh-66px-64px)] w-full p-3'>
@@ -233,7 +318,11 @@ export const Comparision = () => {
               </>
             )}
           </select>
-          <select defaultValue={''} className='select select-bordered'>
+          <select
+            value={areaId}
+            onChange={(e) => setAreaId(e.target.value)}
+            className='select select-bordered'
+          >
             <option value='' disabled>
               Area
             </option>
@@ -243,7 +332,11 @@ export const Comparision = () => {
               </option>
             ))}
           </select>
-          <select defaultValue={''} className='select select-bordered'>
+          <select
+            defaultValue={''}
+            className='select select-bordered'
+            onChange={(e) => setSelectedProperty(e.target.value)}
+          >
             <option value='' disabled>
               Property
             </option>
@@ -268,7 +361,13 @@ export const Comparision = () => {
           </select>
           <button
             onClick={() => {
-              if (durationType !== '') showDates(true);
+              if (
+                durationType !== '' &&
+                reportType !== '' &&
+                areaId !== '' &&
+                selectedProperty !== ''
+              )
+                showDates(true);
             }}
             className='btn'
           >
@@ -276,21 +375,7 @@ export const Comparision = () => {
           </button>
         </div>
         <div className='relative flex flex-col gap-3 h-[calc(100vh-66px-64px-73.6px)] w-full p-3 overflow-scroll'>
-          <ReportChart
-            res={{
-              labels: ['2017', '2018', '2019', '2020', '2021', '2022'],
-              datasets: [
-                {
-                  label: 'Yearly Progress',
-                  data: [0, 50, 120, 100, 200, 300],
-                  backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                  borderColor: 'rgba(255, 99, 132, 1)',
-                  borderWidth: 1,
-                },
-              ],
-            }}
-            type={'Test'}
-          />
+          {response && <ReportChart res={response} type={selectedProperty} />}
         </div>
       </div>
       {dates && durationType !== '' && (
@@ -301,6 +386,7 @@ export const Comparision = () => {
           showDates={showDates}
           durationYears={durationYears}
           setDurationYears={setDurationYears}
+          getData={getData}
         />
       )}
       {loading && <Loader />}

@@ -25,12 +25,6 @@ function App() {
           <Route path="/reports" element={<Reports />} />
           <Route path="/profile" element={<EditProfile />} />
           <Route path="/locations" element={<Locations />} />
-          {/* <Route path="/halqa" element={<Halqa />} />
-          <Route path="/maqam" element={<Maqam />} />
-          <Route path="/division" element={<Division />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/user-requests" element={<UserRequests />} />
-          <Route path="/update-profile" element={<UpdateProfile />} /> */}
         </Routes>
       </BrowserRouter>
       <Toast />
