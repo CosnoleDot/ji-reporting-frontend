@@ -1,5 +1,7 @@
 import React from "react";
 import { InputWithLabel } from "./InputWithLabel";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const columns = [" افرادی قوت", "  آغاز میں", "اضافہ", "کمی", "سالانہ ہدف"];
 const row = [
@@ -29,7 +31,12 @@ const row2 = [
   },
 ];
 export const MenTable = ({ view }) => {
-  const userType = localStorage.getItem("@type");
+  const [userType, setUserType] = useState("");
+
+  useEffect(() => {
+    setUserType(localStorage.getItem("@type"));
+  }, [userType]);
+
   return (
     <div className="w-full max-w-full overflow-x-scroll" dir="rtl">
       <table className="w-full border border-gray-400 rounded-lg table ">
@@ -46,7 +53,9 @@ export const MenTable = ({ view }) => {
           </tr>
         </thead>
         <tbody>
-          {userType === "maqam" || userType === "division"
+          {userType === "maqam" ||
+          userType === "division" ||
+          userType === "province"
             ? row.map((row, index) => (
                 <tr
                   className="flex w-full items-center justify-between bg-gray-100"

@@ -9,7 +9,7 @@ import { ReportChart } from "./components/ReportChart";
 import { Signup } from "./pages/Signup";
 import { Reports } from "./pages/Reports";
 import { EditProfile, Locations } from "./pages";
-import { Division, Halqa, Maqam } from "./pages-old";
+import { Division, Halqa, Maqam, Province } from "./pages-old";
 
 function App() {
   return (
@@ -49,12 +49,18 @@ function App() {
             }
           />
           <Route
-            path="/reports/view/:id"
+            path={
+              localStorage.getItem("@type") !== "province"
+                ? "/reports/view/:id"
+                : "/reports/view/date/:date"
+            }
             element={
               localStorage.getItem("@type") === "maqam" ? (
                 <Maqam />
               ) : localStorage.getItem("@type") === "division" ? (
                 <Division />
+              ) : localStorage.getItem("@type") === "province" ? (
+                <Province />
               ) : (
                 <Halqa />
               )

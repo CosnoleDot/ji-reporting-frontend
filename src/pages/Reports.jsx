@@ -71,9 +71,36 @@ export const Reports = () => {
   const [me, setMe] = useState({});
   const { dispatch } = useToastState();
   const [tab, setTab] = useState("maqam");
-  const [active, setActive] = useState("maqam");
+  const [active, setActive] = useState("province");
   const [filterAllData, setFilterAllData] = useState({});
+  const [months, setMonths] = useState([]);
+
   const params = useLocation();
+  // GENERATE MONTHS
+  const generateMonths = () => {
+    const startMonth = new Date("2022-12-01");
+    const currentDate = new Date(Date.now());
+    const months = [];
+
+    while (startMonth <= currentDate) {
+      const monthName = startMonth.toLocaleString("en-us", { month: "short" });
+      const year = startMonth.getFullYear();
+
+      months.push({
+        title: `${monthName} ${year}`,
+        value: `${year}-${startMonth.getMonth() + 1}`,
+      });
+
+      startMonth.setMonth(startMonth.getMonth() + 1);
+    }
+
+    return months;
+  };
+
+  useEffect(() => {
+    const generatedMonths = generateMonths();
+    setMonths(generatedMonths);
+  }, []);
   useEffect(() => {
     // Function to parse query parameters
     const getQueryParams = () => {
@@ -114,7 +141,11 @@ export const Reports = () => {
   };
 
   const viewReport = async (id) => {
-    navigate(`view/${id}`);
+    if (userType === "province") {
+      navigate(`view/date/${id}`);
+    } else {
+      navigate(`view/${id}`);
+    }
   };
   const editReport = (id) => {
     navigate(`edit/${id}`);
@@ -140,14 +171,14 @@ export const Reports = () => {
           },
         });
         setAllReports({
-          maqam: m.data.data,
-          halqa: h.data.data,
-          division: d.data.data,
+          maqam: m?.data?.data,
+          halqa: h?.data?.data,
+          division: d?.data?.data,
         });
         setFilterAllData({
-          maqam: m.data.data,
-          halqa: h.data.data,
-          division: d.data.data,
+          maqam: m?.data?.data,
+          halqa: h?.data?.data,
+          division: d?.data?.data,
         });
       } else {
         response = await instance.get(`reports/${userType}`, {
@@ -358,6 +389,15 @@ export const Reports = () => {
             className="w-full flex justify-between items-center"
           >
             <Link
+              to={"?active=province"}
+              role="tab"
+              className={`tab w-full ${
+                active === "province" ? "tab-active bg-slate-200" : ""
+              }`}
+            >
+              Province
+            </Link>
+            <Link
               to={"?active=division"}
               role="tab"
               className={`tab w-full ${
@@ -525,6 +565,34 @@ export const Reports = () => {
                   </div>
                 </div>
               ))}
+          {active === "province" ? (
+            <div>
+              {months.map((month) => (
+                <div
+                  key={month.value}
+                  className="card-body flex items-start justify-start w-full p-5 mb-1 bg-slate-200 rounded-xl lg:flex-row md:flex-row sm:flex-col"
+                >
+                  <div className="flex w-full flex-col items-start justify-center">
+                    <span className="text-lg font-semibold">{month.title}</span>
+                    <span>
+                      Last Modified:{" "}
+                      {moment(month.value).startOf("month").fromNow()}
+                    </span>
+                  </div>
+                  <div className="flex items-end w-full justify-end gap-3">
+                    <button
+                      className="btn"
+                      onClick={() => viewReport(month.value)}
+                    >
+                      <FaEye />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
       {loading && <Loader />}

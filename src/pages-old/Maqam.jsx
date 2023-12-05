@@ -117,67 +117,65 @@ export const Maqam = () => {
           onSubmit={handleSubmit}
           id="maqam-form"
         >
-          <fieldset disabled={view}>
-            <h2 className="text-2xl">جا ئزءکارکردگی رپورٹ (براے مقام)</h2>
-            <div className="w-full p-4">
-              <div className="mb-4">
-                <CenteralActivities view={view} />
+          <h2 className="text-2xl">جا ئزءکارکردگی رپورٹ (براے مقام)</h2>
+          <div className="w-full p-4">
+            <div className="mb-4">
+              <CenteralActivities view={view} />
+            </div>
+            <div className="mb-4">
+              <MenTable view={view} />
+            </div>
+            <div className="mb-4">
+              <DivisionTable view={view} />
+            </div>
+            <div className="mb-4">
+              <Zaili view={view} />
+            </div>
+            <div className=" mb-4">
+              <OtherActivities view={view} />
+            </div>
+            <div className=" mb-4">
+              <ExpandParty view={view} />
+            </div>
+            <div className=" mb-4">
+              <Library condition={false} view={view} />
+            </div>
+            <div className=" mb-4">
+              <MessageDigest view={view} />
+            </div>
+            <div className=" mb-4">
+              <EveningDiary view={view} />
+            </div>
+            <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
+              <div className="w-full md:pr-0 mb-2">
+                <InputWithLabel
+                  readOnly={view}
+                  type={"textarea"}
+                  required={true}
+                  placeholder={" تبصرھ"}
+                  label={" تبصرھ"}
+                  id={"comments"}
+                  name={"comments"}
+                />
               </div>
-              <div className="mb-4">
-                <MenTable view={view} />
-              </div>
-              <div className="mb-4">
-                <DivisionTable view={view} />
-              </div>
-              <div className="mb-4">
-                <Zaili view={view} />
-              </div>
-              <div className=" mb-4">
-                <OtherActivities view={view} />
-              </div>
-              <div className=" mb-4">
-                <ExpandParty view={view} />
-              </div>
-              <div className=" mb-4">
-                <Library condition={false} view={view} />
-              </div>
-              <div className=" mb-4">
-                <MessageDigest view={view} />
-              </div>
-              <div className=" mb-4">
-                <EveningDiary view={view} />
-              </div>
-              <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
-                <div className="w-full md:pr-0 mb-2">
-                  <InputWithLabel
-                    readOnly={view}
-                    type={"textarea"}
-                    required={true}
-                    placeholder={" تبصرھ"}
-                    label={" تبصرھ"}
-                    id={"comments"}
-                    name={"comments"}
-                  />
-                </div>
-                <div className="w-full mb-2">
-                  <InputWithLabel
-                    readOnly={view}
-                    required={true}
-                    label={"براے ماھ"}
-                    placeholder={"براے ماھ"}
-                    type={"month"}
-                    id={"month"}
-                    name={"month"}
-                  />
-                </div>
+              <div className="w-full mb-2">
+                <InputWithLabel
+                  readOnly={view}
+                  required={true}
+                  label={"براے ماھ"}
+                  placeholder={"براے ماھ"}
+                  type={"month"}
+                  id={"month"}
+                  name={"month"}
+                />
               </div>
             </div>
-            <div className="w-full">
-              <button disabled={loading} className="btn btn-primary">
-                {id ? "Update" : "Add"}
-              </button>
-            </div>
-          </fieldset>
+          </div>
+          <div className="w-full">
+            <button disabled={loading} className="btn btn-primary">
+              {id ? "Update" : "Add"}
+            </button>
+          </div>
         </form>
       </div>
       {loading && <Loader />}

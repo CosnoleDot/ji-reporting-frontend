@@ -6,6 +6,10 @@ export const DivisionTable = ({ view }) => {
   const headings = ["ﻣرﮐزی طﮯ ﺷدھ ﺳرﮔرﻣﯾﺎں", "طﮯﺷدھ", "ﻣﻧﻌﻘدھ", "اوﺳط ﺣﺎﺿری"];
   const rows = [
     {
+      title: "ڈویژنل مشاورات",
+      key: "divMushawarat",
+    },
+    {
       title: "اﺟﺗﻣﻊ ارﮐﺎن",
       key: "ijtArkan",
     },

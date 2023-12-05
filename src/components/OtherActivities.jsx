@@ -1,30 +1,31 @@
 import React from "react";
 import { InputWithLabel } from "./InputWithLabel";
 const arr = [
+  { title: "تربیت گاہ", key: "terbiyatGah" },
   {
     title: "دعوتی وفود",
-    name: "dawatiWafud",
+    key: "dawatiWafud",
   },
   {
     title: "روابط پارٹیز",
-    name: "rawabitParties",
+    key: "rawabitParties",
   },
 
   {
     title: "نظام الصلٰتہ",
-    name: "nazimSalah",
+    key: "nazimSalah",
   },
   {
     title: "شب بیداری",
-    name: "shabBedari",
+    key: "shabBedari",
   },
   {
-    title: "کوءی اور سرگرمی",
-    name: "anyOther",
+    title: "کوئ اور سرگرمی",
+    key: "anyOther",
   },
   {
-    title: "حادیث سرکل",
-    name: "hadithCircle",
+    title: "حدیث سرکل",
+    key: "hadithCircle",
   },
 ];
 export const OtherActivities = ({ view }) => {
@@ -40,8 +41,8 @@ export const OtherActivities = ({ view }) => {
                   readOnly={view}
                   placeholder={obj.title}
                   label={obj.title}
-                  id={obj?.name}
-                  name={obj?.name}
+                  id={obj?.key}
+                  name={obj?.key}
                   type={"number"}
                 />
               </div>
@@ -54,8 +55,8 @@ export const OtherActivities = ({ view }) => {
                 readOnly={view}
                 placeholder={obj.title}
                 label={obj.title}
-                id={obj?.name}
-                name={obj?.name}
+                id={obj?.key}
+                name={obj?.key}
                 type={"number"}
               />
             </div>

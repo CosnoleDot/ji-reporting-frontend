@@ -21,7 +21,7 @@ export const Zaili = ({ view }) => {
     <div className="w-full max-w-full overflow-x-scroll" dir="rtl">
       <table className="w-full border border-gray-400 table">
         <thead>
-          <tr className=" flex w-full items-start justify-between bg-gray-100">
+          <tr className="flex w-full items-start justify-between bg-gray-100">
             {headings.map((heading, index) => (
               <th
                 className="w-[10rem] text-start text-lg sm:text-sm"
