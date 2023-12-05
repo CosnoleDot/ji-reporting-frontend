@@ -5,7 +5,7 @@ import { CiLocationOn } from 'react-icons/ci';
 
 export const BottomNav = ({ active }) => {
   return (
-    <div className='btm-nav border-none'>
+    <div className='btm-nav border-none text-gray-300'>
       <Link
         to={'/'}
         className={!active || active === 'dashboard' ? 'bg-blue-500 text-white' : 'bg-blue-50'}
