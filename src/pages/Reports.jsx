@@ -6,6 +6,14 @@ import { useToastState } from '../context';
 import instance from '../api/instrance';
 import moment from 'moment/moment';
 import { Link } from 'react-router-dom';
+import { FaRegFileExcel } from 'react-icons/fa';
+
+const NoReports = () => (
+  <div className='card-body flex flex-col items-center justify-center w-full p-5 mb-1 rounded-xl'>
+    <FaRegFileExcel className='text-gray-300 w-40 h-40' />
+    <span className='text-gray-300 font-bold text-3xl'>No Reports Found!</span>
+  </div>
+);
 
 export const months = [
   {
@@ -179,7 +187,7 @@ export const Reports = () => {
     if (userType === 'province') {
       if (year !== '' && month !== '') {
         const filteredData = { ...allReports };
-        filteredData[active] = allReports[active].filter((i) => {
+        filteredData[active] = allReports[active]?.filter((i) => {
           const [f_year, f_month] = [
             i?.month?.split('-')[0],
             i?.month?.split('-')[1],
@@ -193,7 +201,7 @@ export const Reports = () => {
         setFilterAllData(filteredData);
       } else if (year !== '' && month === '') {
         const filteredData = { ...allReports };
-        filteredData[active] = allReports[active].filter((i) => {
+        filteredData[active] = allReports[active]?.filter((i) => {
           const f_year = i?.month?.split('-')[0];
           return parseInt(year) === parseInt(f_year);
         });
@@ -417,8 +425,23 @@ export const Reports = () => {
           </div>
         )}
         <div className='relative overflow-y-scroll gap-3 w-full items-center p-5 justify-center h-[calc(100vh-65.6px-64px-48px)]'>
-          {userType === 'province'
-            ? filterAllData[active]?.map((obj) =>
+          {userType === 'province' ? (
+            filterAllData[active]?.length < 1 ? (
+              <NoReports />
+            ) : active === 'halqa' &&
+              tab === 'division' &&
+              filterAllData[active]?.filter(
+                (obj) => obj?.halqaAreaId?.parentType === 'Tehsil'
+              ).length < 1 ? (
+              <NoReports />
+            ) : active === 'halqa' &&
+              tab === 'maqam' &&
+              filterAllData[active]?.filter(
+                (obj) => obj?.halqaAreaId?.parentType === 'Maqam'
+              ).length < 1 ? (
+              <NoReports />
+            ) : (
+              filterAllData[active]?.map((obj) =>
                 active === 'halqa' && tab === 'division' ? (
                   obj?.halqaAreaId?.parentType === 'Tehsil' && (
                     <div
@@ -497,36 +520,35 @@ export const Reports = () => {
                   </div>
                 )
               )
-            : filerData?.map((obj) => (
-                <div
-                  key={obj?._id}
-                  className='card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col'
-                >
-                  <div className='flex w-full flex-col items-start justify-center'>
-                    <span className='text-lg font-semibold'>
-                      {moment(obj?.month).format('MMMM YYYY')}
-                    </span>
-                    <span>
-                      Last Modified:{' '}
-                      {moment(obj?.updatedAt).startOf('day').fromNow()}
-                    </span>
-                  </div>
-                  <div className='flex items-end w-full justify-end gap-3 '>
-                    <button
-                      className='btn'
-                      onClick={() => viewReport(obj?._id)}
-                    >
-                      <FaEye />
-                    </button>
-                    <button
-                      className='btn'
-                      onClick={() => editReport(obj?._id)}
-                    >
-                      <FaEdit />
-                    </button>
-                  </div>
+            )
+          ) : filerData?.length < 1 ? (
+            <NoReports />
+          ) : (
+            filerData?.map((obj) => (
+              <div
+                key={obj?._id}
+                className='card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col'
+              >
+                <div className='flex w-full flex-col items-start justify-center'>
+                  <span className='text-lg font-semibold'>
+                    {moment(obj?.month).format('MMMM YYYY')}
+                  </span>
+                  <span>
+                    Last Modified:{' '}
+                    {moment(obj?.updatedAt).startOf('day').fromNow()}
+                  </span>
                 </div>
-              ))}
+                <div className='flex items-end w-full justify-end gap-3 '>
+                  <button className='btn' onClick={() => viewReport(obj?._id)}>
+                    <FaEye />
+                  </button>
+                  <button className='btn' onClick={() => editReport(obj?._id)}>
+                    <FaEdit />
+                  </button>
+                </div>
+              </div>
+            ))
+          )}
         </div>
       </div>
       {loading && <Loader />}
