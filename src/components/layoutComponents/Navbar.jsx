@@ -4,6 +4,7 @@ import { FaUserPlus } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import instance from '../../api/instrance';
+import { FaRegUserCircle } from 'react-icons/fa';
 
 export const Navbar = ({ title }) => {
   const navigate = useNavigate();
@@ -27,14 +28,14 @@ export const Navbar = ({ title }) => {
   useEffect(() => {
     const intervalId = setInterval(() => {
       getAllRequests();
-    }, 10000); // 10000 milliseconds = 10 seconds
+    }, 2000); // 2000 milliseconds = 2 seconds
 
     // Cleanup the interval on component unmount
     return () => clearInterval(intervalId);
   }, []);
   return (
     <>
-      <div className='navbar bg-base-100'>
+      <div className='navbar bg-blue-500 text-white'>
         <div className='flex-1'>
           <span className='btn btn-ghost text-xl'>
             {title || 'JI Reporting'}
@@ -71,16 +72,13 @@ export const Navbar = ({ title }) => {
               role='button'
               className='btn btn-ghost btn-circle avatar'
             >
-              <div className='w-10 rounded-full'>
-                <img
-                  alt='Tailwind CSS Navbar component'
-                  src='https://cdn-icons-png.flaticon.com/512/1159/1159740.png'
-                />
+              <div className='w-8'>
+                <FaRegUserCircle className='w-full h-full' />
               </div>
             </div>
           </div>
           {profileTab && (
-            <ul className='fixed right-0 top-[64.5px] menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52'>
+            <ul className='text-black fixed right-[10px] top-[60.5px] menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52'>
               {/* <li>
               <span className='justify-between'>
                 Profile
@@ -111,7 +109,7 @@ export const Navbar = ({ title }) => {
       {requests && (
         <div
           tabIndex={0}
-          className='mt-3 top-[64.5px] right-0 lg:right-10 fixed z-[1] w-full lg:w-[420px] card card-compact dropdown-content bg-base-100 shadow'
+          className='mt-3 top-[60.5px] right-[10px] lg:right-10 fixed z-[1] w-[calc(100%-20px)] lg:w-[420px] card card-compact dropdown-content bg-base-100 border-2 overflow-hidden'
         >
           <h2 className='p-5 font-bold text-xl'>User Request(s)</h2>
           <Notifications

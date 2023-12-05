@@ -23,3 +23,19 @@
   width: 2px;
   display: none;
 }
+
+.btn {
+  background-color: rgb(59 130 246 / 1.5);
+  color: #fff;
+}
+
+.tab-active {
+  background: #60a5fa;
+  color: #fff;
+}
+
+.table tr.active,
+.table tr.active:nth-child(even),
+.table-zebra tbody tr:nth-child(even) {
+  background-color: #b2d5ff;
+}

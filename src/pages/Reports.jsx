@@ -131,6 +131,7 @@ export const Reports = () => {
   };
   useEffect(() => {
     if (localStorage.getItem("@token")) getMe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const toggleSearch = () => {
@@ -202,6 +203,7 @@ export const Reports = () => {
   };
   useEffect(() => {
     fetchReports();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userType]);
 
   const searchResults = () => {
@@ -213,7 +215,10 @@ export const Reports = () => {
             i?.month?.split("-")[0],
             i?.month?.split("-")[1],
           ];
-          return year == f_year && month == f_month;
+          return (
+            parseInt(year) === parseInt(f_year) &&
+            parseInt(month) === parseInt(f_month)
+          );
         });
         showSearch(false);
         setFilterAllData(filteredData);
@@ -221,7 +226,7 @@ export const Reports = () => {
         const filteredData = { ...allReports };
         filteredData[active] = allReports[active].filter((i) => {
           const f_year = i?.month?.split("-")[0];
-          return year == f_year;
+          return parseInt(year) === parseInt(f_year);
         });
         showSearch(false);
         setFilterAllData(filteredData);
@@ -274,9 +279,11 @@ export const Reports = () => {
         setIsMobileView(true);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [window.innerWidth]);
   useEffect(() => {
     setUserType(localStorage.getItem("@type"));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localStorage]);
   return (
     <GeneralLayout
@@ -322,7 +329,7 @@ export const Reports = () => {
               </div>
             )}
             {search && (
-              <div className="fixed z-40 rounded-lg top-[140px] left-[5px] w-[calc(100%-10px)] overflow-hidden bg-white min-h-[100px] border">
+              <div className="fixed p-3 z-40 rounded-lg top-[140px] left-[5px] w-[calc(100%-10px)] overflow-hidden bg-white min-h-[100px] border">
                 <div className="flex flex-col gap-3">
                   <div className="w-full flex flex-col">
                     <select
@@ -364,14 +371,17 @@ export const Reports = () => {
             <div className="indicator ">
               {/* <span className='indicator-item badge badge-secondary'>new</span> */}
               <button
-                className="btn join-item"
+                className={`btn ${!isMobileView ? "join-item" : ""}`}
                 onClick={() =>
                   !isMobileView ? searchResults() : toggleSearch()
                 }
               >
                 Search
               </button>
-              <button className="btn join-item" onClick={clearFilters}>
+              <button
+                className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
+                onClick={clearFilters}
+              >
                 Clear
               </button>
             </div>
@@ -398,10 +408,19 @@ export const Reports = () => {
               Province
             </Link>
             <Link
+              to={"?active=province"}
+              role="tab"
+              className={`tab w-full ${
+                active === "province" ? "tab-active bg-slate-200" : ""
+              }`}
+            >
+              Province
+            </Link>
+            <Link
               to={"?active=division"}
               role="tab"
               className={`tab w-full ${
-                active === "division" ? "tab-active bg-slate-200" : ""
+                active === "division" ? "tab-active" : ""
               }`}
             >
               Division
@@ -410,9 +429,7 @@ export const Reports = () => {
             <Link
               to={"?active=maqam"}
               role="tab"
-              className={`tab w-full ${
-                active === "maqam" ? "tab-active bg-slate-200" : ""
-              }`}
+              className={`tab w-full ${active === "maqam" ? "tab-active" : ""}`}
             >
               Maqam
             </Link>
@@ -420,9 +437,7 @@ export const Reports = () => {
             <Link
               to={"?active=halqa"}
               role="tab"
-              className={`tab w-full ${
-                active === "halqa" ? "tab-active bg-slate-200" : ""
-              }`}
+              className={`tab w-full ${active === "halqa" ? "tab-active" : ""}`}
             >
               Halqa
             </Link>
@@ -436,9 +451,7 @@ export const Reports = () => {
             <Link
               to={"?active=halqa&tab=maqam"}
               role="tab"
-              className={`tab w-full ${
-                tab === "maqam" ? "tab-active bg-slate-200" : ""
-              }`}
+              className={`tab w-full ${tab === "maqam" ? "tab-active" : ""}`}
             >
               Maqam Halqa
             </Link>
@@ -446,9 +459,7 @@ export const Reports = () => {
             <Link
               to={"?active=halqa&tab=division"}
               role="tab"
-              className={`tab w-full ${
-                tab === "division" ? "tab-active bg-slate-200" : ""
-              }`}
+              className={`tab w-full ${tab === "division" ? "tab-active" : ""}`}
             >
               Division Halqa
             </Link>
@@ -461,7 +472,7 @@ export const Reports = () => {
                   obj?.halqaAreaId?.parentType === "Tehsil" && (
                     <div
                       key={obj?._id}
-                      className="card-body flex items-between justify-between w-full p-5 mb-1 bg-slate-200 rounded-xl lg:flex-row md:flex-row sm:flex-col"
+                      className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
                     >
                       <div className="flex w-full flex-col items-start justify-center">
                         <span className="text-lg font-semibold">
@@ -469,7 +480,7 @@ export const Reports = () => {
                           {moment(obj?.month).format("MMMM YYYY")}
                         </span>
                         <span>
-                          Last Modified:
+                          Last Modified:{" "}
                           {moment(obj?.updatedAt).startOf("day").fromNow()}
                         </span>
                       </div>
@@ -487,7 +498,7 @@ export const Reports = () => {
                   obj?.halqaAreaId?.parentType === "Maqam" && (
                     <div
                       key={obj?._id}
-                      className="card-body flex items-between justify-between w-full p-5 mb-1 bg-slate-200 rounded-xl lg:flex-row md:flex-row sm:flex-col"
+                      className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
                     >
                       <div className="flex w-full flex-col items-start justify-center">
                         <span className="text-lg font-semibold">
@@ -495,7 +506,7 @@ export const Reports = () => {
                           {moment(obj?.month).format("MMMM YYYY")}
                         </span>
                         <span>
-                          Last Modified:
+                          Last Modified:{" "}
                           {moment(obj?.updatedAt).startOf("day").fromNow()}
                         </span>
                       </div>
@@ -512,7 +523,7 @@ export const Reports = () => {
                 ) : (
                   <div
                     key={obj?._id}
-                    className="card-body flex items-between justify-between w-full p-5 mb-1 bg-slate-200 rounded-xl lg:flex-row md:flex-row sm:flex-col"
+                    className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
                   >
                     <div className="flex w-full flex-col items-start justify-center">
                       <span className="text-lg font-semibold">
@@ -520,7 +531,7 @@ export const Reports = () => {
                         {moment(obj?.month).format("MMMM YYYY")}
                       </span>
                       <span>
-                        Last Modified:
+                        Last Modified:{" "}
                         {moment(obj?.updatedAt).startOf("day").fromNow()}
                       </span>
                     </div>
@@ -538,14 +549,14 @@ export const Reports = () => {
             : filerData?.map((obj) => (
                 <div
                   key={obj?._id}
-                  className="card-body flex items-between justify-between w-full p-5 mb-1 bg-slate-200 rounded-xl lg:flex-row md:flex-row sm:flex-col"
+                  className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
                 >
                   <div className="flex w-full flex-col items-start justify-center">
                     <span className="text-lg font-semibold">
                       {moment(obj?.month).format("MMMM YYYY")}
                     </span>
                     <span>
-                      Last Modified:
+                      Last Modified:{" "}
                       {moment(obj?.updatedAt).startOf("day").fromNow()}
                     </span>
                   </div>
