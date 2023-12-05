@@ -3424,6 +3424,10 @@ html {
   min-height: 200px;
 }
 
+.min-h-\[100px\] {
+  min-height: 100px;
+}
+
 .w-10 {
   width: 2.5rem;
 }
@@ -3644,6 +3648,26 @@ html {
 
 .rounded-sm {
   border-radius: 0.125rem;
+}
+
+.rounded-none {
+  border-radius: 0px;
+}
+
+.rounded-bl-lg {
+  border-bottom-left-radius: 0.5rem;
+}
+
+.rounded-br-lg {
+  border-bottom-right-radius: 0.5rem;
+}
+
+.rounded-tl-lg {
+  border-top-left-radius: 0.5rem;
+}
+
+.rounded-tr-lg {
+  border-top-right-radius: 0.5rem;
 }
 
 .border {
