@@ -1,22 +1,40 @@
-import React, { useEffect, useState } from "react";
 import {
-  ActivityTable,
-  EveningDiary,
-  ExpandParty,
   GeneralLayout,
-  Library,
   Loader,
-  MenTable,
+  MenTableMaqam,
+  ZailiActivitesMaqam,
+  OtherActivitiesMaqam,
+  ExpandPartyMaqam,
+  LibraryMaqam,
+  MessageDigestMaqam,
+  EveningDiaryMaqam,
+  TanzeemMaqam,
+  CentralActivitiesMaqam,
 } from "../components";
-import { OtherActivities } from "../components/OtherActivities";
-import { InputWithLabel } from "../components/InputWithLabel";
-import { convertDataFormat, toJson } from "../utils";
+import { convertDataFormat, reverseDataFormat, toJson } from "../utils";
 import instance from "../api/instrance";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useState } from "react";
+import { useEffect } from "react";
 import { useToastState } from "../context";
-import { getData } from "./Maqam";
+import { InputWithLabel } from "../components/InputWithLabel";
 
-export const Halqa = () => {
+export const getData = async (path, id, setData, dispatch, setLoading) => {
+  setLoading(true);
+  try {
+    const req = await instance(`/reports/${path}/${id}`, {
+      headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
+    });
+    if (req) {
+      setData(reverseDataFormat(req?.data?.data));
+    }
+  } catch (err) {
+    dispatch({ type: "ERROR", payload: err?.response?.data?.message });
+  }
+  setLoading(false);
+};
+
+export const Maqam = () => {
   // EDIT CODE START
   const params = useParams();
   const [id, setId] = useState(null);
@@ -26,6 +44,7 @@ export const Halqa = () => {
   const [view, setView] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const [rawabit, setRawabit] = useState({});
 
   useEffect(() => {
     const l = location.pathname?.split("/")[2];
@@ -35,9 +54,8 @@ export const Halqa = () => {
     setId(params?.id);
   }, [params]);
   useEffect(() => {
-    if (id) {
-      getData("halqa", id, setData, dispatch, setLoading);
-    } else {
+    if (id) getData("maqam", id, setData, dispatch, setLoading);
+    else {
       setLoading(false);
     }
   }, [id]);
@@ -58,58 +76,80 @@ export const Halqa = () => {
     });
   }, [data]);
   // EDIT CODE END
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const formData = new FormData(e.currentTarget);
     const jsonData = convertDataFormat(toJson(formData));
     setLoading(true);
     try {
       if (id) {
-        const req = await instance.put(`/reports/halqa/${id}`, jsonData, {
+        const req = await instance.put(`/reports/maqam/${id}`, jsonData, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
+
         dispatch({ type: "SUCCESS", payload: req?.data?.message });
-        navigate("/reports");
       } else {
-        const req = await instance.post("/reports/halqa", jsonData, {
+        const req = await instance.post("/reports/maqam", jsonData, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
         dispatch({ type: "SUCCESS", payload: req.data?.message });
-        navigate("/reports");
       }
-
-      e.target.reset();
-    } catch (err) {
-      dispatch({ type: "ERROR", payload: err.response.data.message });
       navigate("/reports");
+    } catch (error) {
+      dispatch({ type: "ERROR", payload: error?.response?.data?.message });
     }
     setLoading(false);
   };
 
   return (
     <GeneralLayout>
-      <div className="h-[calc(100vh-64.4px-64px)] overflow-y-scroll">
+      <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">
         <form
           className="flex flex-col justify-center items-center p-4 font-notoUrdu"
           dir="rtl"
           onSubmit={handleSubmit}
+          id="maqam-form"
         >
-          <fieldset disabled={view}>
-            <h2 className="text-2xl">کار کردگی رپورٹ (براے حلقء)</h2>
-
-            <MenTable />
-            <ActivityTable />
-            <OtherActivities />
-            <ExpandParty />
-            <Library condition={true} view={view} />
-            <EveningDiary />
+          <h2 className="text-2xl">جا ئزءکارکردگی رپورٹ (براے مقام)</h2>
+          <div className="w-full p-4">
+            <div className="mb-4">
+              <TanzeemMaqam view={view} />
+            </div>
+            <div className="mb-4">
+              <MenTableMaqam
+                view={view}
+                rawabit={rawabit}
+                setRawabit={setRawabit}
+              />
+            </div>
+            <div className="mb-4">
+              <CentralActivitiesMaqam view={view} />
+            </div>
+            <div className="mb-4">
+              <ZailiActivitesMaqam />
+            </div>
+            <div className=" mb-4">
+              <OtherActivitiesMaqam view={view} />
+            </div>
+            <div className=" mb-4">
+              <ExpandPartyMaqam view={view} />
+            </div>
+            <div className=" mb-4">
+              <LibraryMaqam view={view} />
+            </div>
+            <div className=" mb-4">
+              <MessageDigestMaqam view={view} />
+            </div>
+            <div className=" mb-4">
+              <EveningDiaryMaqam view={view} />
+            </div>
             <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
               <div className="w-full md:pr-0 mb-2">
                 <InputWithLabel
@@ -134,12 +174,12 @@ export const Halqa = () => {
                 />
               </div>
             </div>
-            <div className="w-full">
-              <button disabled={loading} className="btn btn-primary">
-                {id ? "Update" : "Add"}
-              </button>
-            </div>
-          </fieldset>
+          </div>
+          <div className="w-full">
+            <button disabled={loading} className="btn btn-primary">
+              {id ? "Update" : "Add"}
+            </button>
+          </div>
         </form>
       </div>
       {loading && <Loader />}

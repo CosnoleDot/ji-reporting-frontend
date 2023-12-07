@@ -78,12 +78,12 @@ export const Reports = () => {
   const params = useLocation();
   // GENERATE MONTHS
   const generateMonths = () => {
-    const startMonth = new Date("2022-12-01");
+    const startMonth = new Date("2023-12-01");
     const currentDate = new Date(Date.now());
     const months = [];
 
     while (startMonth <= currentDate) {
-      const monthName = startMonth.toLocaleString("en-us", { month: "short" });
+      const monthName = startMonth.toLocaleString("en-us", { month: "long" });
       const year = startMonth.getFullYear();
 
       months.push({
@@ -408,15 +408,6 @@ export const Reports = () => {
               Province
             </Link>
             <Link
-              to={"?active=province"}
-              role="tab"
-              className={`tab w-full ${
-                active === "province" ? "tab-active bg-slate-200" : ""
-              }`}
-            >
-              Province
-            </Link>
-            <Link
               to={"?active=division"}
               role="tab"
               className={`tab w-full ${
@@ -576,19 +567,15 @@ export const Reports = () => {
                   </div>
                 </div>
               ))}
-          {active === "province" ? (
+          {active === "province" && userType === "province" ? (
             <div>
               {months.map((month) => (
                 <div
                   key={month.value}
-                  className="card-body flex items-start justify-start w-full p-5 mb-1 bg-slate-200 rounded-xl lg:flex-row md:flex-row sm:flex-col"
+                  className="card-body flex items-center justify-start w-full p-5 mb-1 bg-slate-200 rounded-xl lg:flex-row md:flex-row sm:flex-col"
                 >
                   <div className="flex w-full flex-col items-start justify-center">
-                    <span className="text-lg font-semibold">{month.title}</span>
-                    <span>
-                      Last Modified:{" "}
-                      {moment(month.value).startOf("month").fromNow()}
-                    </span>
+                    <h4 className="text-lg font-semibold">{month.title}</h4>
                   </div>
                   <div className="flex items-end w-full justify-end gap-3">
                     <button

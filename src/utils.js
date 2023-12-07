@@ -38,7 +38,6 @@ export const convertDataFormat = (data) => {
 };
 
 export const reverseDataFormat = (data) => {
-  console.log(data);
   const obj = {};
   Object.keys(data).forEach((i) => {
     if (!data[i]) {
@@ -79,3 +78,5 @@ export const reverseDataFormat = (data) => {
   });
   return obj;
 };
+
+

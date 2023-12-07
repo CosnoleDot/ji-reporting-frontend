@@ -8,8 +8,14 @@ import { Comparision } from "./pages/Comparision";
 import { ReportChart } from "./components/ReportChart";
 import { Signup } from "./pages/Signup";
 import { Reports } from "./pages/Reports";
-import { EditProfile, Locations } from "./pages";
-import { Division, Halqa, Maqam, Province } from "./pages-old";
+import {
+  Division,
+  EditProfile,
+  Halqa,
+  Locations,
+  Maqam,
+  Province,
+} from "./pages";
 
 function App() {
   return (

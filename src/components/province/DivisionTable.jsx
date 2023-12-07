@@ -89,6 +89,47 @@ export const DivisionTable = ({ view }) => {
               ) : (
                 <></>
               )
+            ) : row?.key === "divMushawarat" ? (
+              localStorage.getItem("@type") === "province" ? (
+                <tr
+                  className="flex w-full items-center justify-between bg-gray-100"
+                  key={index}
+                >
+                  <td className="w-full  text-start text-lg sm:text-sm">
+                    {row.title}
+                  </td>
+
+                  <td className="flex flex-row w-full">
+                    <InputWithLabel
+                      readOnly={view}
+                      label={""}
+                      type={"number"}
+                      name={`${row?.key}-decided`}
+                      id={`${row?.key}-decided`}
+                    />
+                  </td>
+                  <td className="flex flex-row w-full">
+                    <InputWithLabel
+                      readOnly={view}
+                      label={""}
+                      type={"number"}
+                      name={`${row?.key}-done`}
+                      id={`${row?.key}-done`}
+                    />
+                  </td>
+                  <td className="flex flex-row w-full">
+                    <InputWithLabel
+                      readOnly={view}
+                      label={""}
+                      type={"number"}
+                      name={`${row?.key}-averageAttendance`}
+                      id={`${row?.key}-averageAttendance`}
+                    />
+                  </td>
+                </tr>
+              ) : (
+                <></>
+              )
             ) : (
               <tr
                 className="flex w-full items-center justify-between bg-gray-100"

@@ -7,11 +7,13 @@ export const InputWithLabel = ({
   value,
   id,
   readOnly,
+  onChange,
+  disabled,
 }) => {
   if (type === "textarea")
     return (
       <>
-        <label className="mb-2 block" htmlFor={id}>
+        <label className="mb-3 block" htmlFor={id}>
           {label}
         </label>
         <textarea
@@ -20,14 +22,14 @@ export const InputWithLabel = ({
           required={required || true}
           name={name}
           id={id}
-          rows={2}
+          rows={1}
         ></textarea>
       </>
     );
 
   return (
     <>
-      <label className="mb-2 block" htmlFor={id}>
+      <label className="mb-3 block" htmlFor={id}>
         {label}
       </label>
       <input
@@ -38,6 +40,8 @@ export const InputWithLabel = ({
         required={required || true}
         name={name}
         id={id}
+        onChange={onChange}
+        disabled={disabled}
       />
     </>
   );

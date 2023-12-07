@@ -39,3 +39,7 @@
 .table-zebra tbody tr:nth-child(even) {
   background-color: #b2d5ff;
 }
+
+.reports {
+  font-family: 'Noto Nastaliq Urdu', serif;
+}
