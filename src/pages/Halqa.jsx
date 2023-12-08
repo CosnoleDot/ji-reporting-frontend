@@ -105,8 +105,8 @@ export const Halqa = () => {
           <h2 className="text-2xl mb-4">کارکردگی رپورٹ براۓ حلقہ</h2>
 
           <MenTableHalqa
-            endingValue={rawabit}
-            setEndingValue={setRawabit}
+            rawabit={rawabit}
+            setRawabit={setRawabit}
           />
           <ActivityTableHalqa />
           <OtherActivitiesHalqa />

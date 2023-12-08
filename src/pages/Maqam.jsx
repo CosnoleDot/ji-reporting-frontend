@@ -45,6 +45,9 @@ export const Maqam = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [rawabit, setRawabit] = useState({});
+  const [unfilledUsers, setUnfilledUsers] = useState([]);
+  const [totalUsers, setTotalUsers] = useState(0);
+  const [showUnfilled, setShowUnfilled] = useState(false);
 
   useEffect(() => {
     const l = location.pathname?.split("/")[2];
@@ -52,6 +55,7 @@ export const Maqam = () => {
       setView(true);
     }
     setId(params?.id);
+    getUnfilled();
   }, [params]);
   useEffect(() => {
     if (id) getData("maqam", id, setData, dispatch, setLoading);
@@ -76,6 +80,20 @@ export const Maqam = () => {
     });
   }, [data]);
   // EDIT CODE END
+  const getUnfilled = async () => {
+    try {
+      const res = await instance.get(
+        "/user/un-filled/" + params?.id + "?type=maqam",
+        {
+          headers: {
+            Authorization: `Barrear ${localStorage.getItem("@token")}`,
+          },
+        }
+      );
+      setUnfilledUsers([...res.data.data.result]);
+      setTotalUsers(res.data.data.total);
+    } catch (error) {}
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -117,7 +135,45 @@ export const Maqam = () => {
           onSubmit={handleSubmit}
           id="maqam-form"
         >
-          <h2 className="text-2xl">جا ئزءکارکردگی رپورٹ (براے مقام)</h2>
+          <div className="relative flex justify-between items-center w-full">
+            <h2 className="text-2xl">جا ئزءکارکردگی رپورٹ (براے مقام)</h2>
+            <span
+              className="btn"
+              onClick={() => {
+                setShowUnfilled(!showUnfilled);
+              }}
+            >
+              Total reports filled: {totalUsers - unfilledUsers.length}/
+              {totalUsers}
+            </span>
+            {showUnfilled && (
+              <div className="z-50 absolute top-[45px] left-0 w-[320px] min-h-8 max-h-[400px] overflow-hidden overflow-y-scroll rounded-lg bg-slate-200">
+                {unfilledUsers?.length > 0
+                  ? unfilledUsers.map((user, index) => (
+                      <div
+                        key={index}
+                        className="p-3 hover:bg-slate-300 flex flex-col lg:flex-row lg:items-center justify-end"
+                      >
+                        <div className="flex items-center justify-end">
+                          <div dir="ltr" className="flex flex-col px-3">
+                            <span className="font-semibold">{user?.name}</span>
+                            <span>{user?.email}</span>
+                          </div>
+                          <div className="avatar">
+                            <div className="w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                              <img
+                                src="https://cdn-icons-png.flaticon.com/512/1159/1159740.png"
+                                alt="logo"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  : "No Unfilled Reports"}
+              </div>
+            )}
+          </div>
           <div className="w-full p-4">
             <div className="mb-4">
               <TanzeemMaqam view={view} />

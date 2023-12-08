@@ -31,11 +31,15 @@ export const MenTableHalqa = ({ view, rawabit, setRawabit }) => {
   }, [userType]);
 
   const calcultate = (value) => {
-    console.log(value)
-    const i = parseInt(rawabit[`${value}-increase`]);
-    const d = parseInt(rawabit[`${value}-decrease`]);
-    const s = parseInt(rawabit[`${value}-start`]);
-    return (rawabit[`${value}-end`] = i + s - d);
+    if (value !== null || value !== undefined) {
+      console.log(value);
+      const i = parseInt(rawabit[`${value}-increase`]);
+      const d = parseInt(rawabit[`${value}-decrease`]);
+      const s = parseInt(rawabit[`${value}-start`]);
+      rawabit[`${value}-end`] = i + s - d;
+      return rawabit[`${value}-end`];
+    }
+    return {};
   };
 
   return (

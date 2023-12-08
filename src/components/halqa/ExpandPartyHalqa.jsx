@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { InputWithLabel } from "../InputWithLabel";
 
-export const ExpandPartyHalqa = ({ view, endingValue }) => {
+export const ExpandPartyHalqa = ({ view, rawabit }) => {
   const arr = [
     {
       title: "طے شدہ",
@@ -23,12 +23,15 @@ export const ExpandPartyHalqa = ({ view, endingValue }) => {
   ];
 
   const calculateRawabit = () => {
-    const arkan = parseInt(endingValue["arkan-end"]);
-    const umeedwaran = parseInt(endingValue["umeedWaran-end"]);
-    const rafaqa = parseInt(endingValue["rafaqa-end"]);
-    const totalA = arkan + umeedwaran * 3;
-    const totalB = rafaqa * 2;
-    return totalA + totalB;
+    if (rawabit !== undefined) {
+      const arkan = parseInt(rawabit["arkan-end"]);
+      const umeedwaran = parseInt(rawabit["umeedWaran-end"]);
+      const rafaqa = parseInt(rawabit["rafaqa-end"]);
+      const totalA = arkan + umeedwaran * 3;
+      const totalB = rafaqa * 2;
+      return totalA + totalB;
+    }
+    return {};
   };
 
   return (

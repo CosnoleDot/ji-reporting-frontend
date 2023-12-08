@@ -198,6 +198,7 @@ const Maqam = ({ me, setLoading0 }) => {
       }
     );
   };
+
   return (
     <>
       <div
@@ -237,7 +238,7 @@ const Maqam = ({ me, setLoading0 }) => {
           Add Halqa
         </button>
       </div>
-
+     
       <div role="tablist" className="w-full flex justify-between items-center">
         {["province"].includes(localStorage.getItem("@type")) && (
           <Link

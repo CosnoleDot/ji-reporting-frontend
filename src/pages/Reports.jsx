@@ -1,17 +1,18 @@
-import { FaEdit, FaEye, FaPlus } from 'react-icons/fa';
-import { GeneralLayout, Loader } from '../components';
-import { useEffect, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router';
-import { useToastState } from '../context';
-import instance from '../api/instrance';
-import moment from 'moment/moment';
-import { Link } from 'react-router-dom';
-import { FaRegFileExcel } from 'react-icons/fa';
+import { FaBell, FaEdit, FaEye, FaPlus, FaRegBell } from "react-icons/fa";
+import { GeneralLayout, Loader } from "../components";
+import { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router";
+import { useToastState } from "../context";
+import instance from "../api/instrance";
+import moment from "moment/moment";
+import { Link } from "react-router-dom";
+import { FaRegFileExcel } from "react-icons/fa";
+import { AiFillBell } from "react-icons/ai";
 
 const NoReports = () => (
-  <div className='card-body flex flex-col items-center justify-center w-full p-5 mb-1 rounded-xl'>
-    <FaRegFileExcel className='text-gray-300 w-40 h-40' />
-    <span className='text-gray-300 font-bold text-3xl'>No Reports Found!</span>
+  <div className="card-body flex flex-col items-center justify-center w-full p-5 mb-1 rounded-xl">
+    <FaRegFileExcel className="text-gray-300 w-40 h-40" />
+    <span className="text-gray-300 font-bold text-3xl">No Reports Found!</span>
   </div>
 );
 
@@ -82,6 +83,8 @@ export const Reports = () => {
   const [active, setActive] = useState("province");
   const [filterAllData, setFilterAllData] = useState({});
   const [months, setMonths] = useState([]);
+  const [showNotification, setShowNotification] = useState(false);
+  const [notifyTo, setNotifyTo] = useState("halqa");
 
   const params = useLocation();
   // GENERATE MONTHS
@@ -179,6 +182,7 @@ export const Reports = () => {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
+
         setAllReports({
           maqam: m?.data?.data,
           halqa: h?.data?.data,
@@ -195,8 +199,18 @@ export const Reports = () => {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
-        setReports(response?.data?.data);
-        setFilterData(response?.data?.data);
+        const data = response?.data?.data;
+        if (data) {
+          const hasReportThisMonth = data.some((element) => {
+            const createdAtDate = new Date(element.createdAt);
+            const currentMonth = new Date().getMonth();
+
+            return createdAtDate.getMonth() === currentMonth;
+          });
+          setShowNotification(hasReportThisMonth);
+        }
+        setReports(data);
+        setFilterData(data);
       }
     } catch (error) {
       console.error("Error fetching reports:", error);
@@ -233,7 +247,7 @@ export const Reports = () => {
       } else if (year !== "" && month === "") {
         const filteredData = { ...allReports };
         filteredData[active] = allReports[active]?.filter((i) => {
-          const f_year = i?.month?.split('-')[0];
+          const f_year = i?.month?.split("-")[0];
           return parseInt(year) === parseInt(f_year);
         });
         showSearch(false);
@@ -293,6 +307,27 @@ export const Reports = () => {
     setUserType(localStorage.getItem("@type"));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localStorage]);
+
+  const sendNotification = async () => {
+    try {
+      setLoading(true);
+      const req = await instance.post(
+        "/notifications",
+        { created_for: notifyTo, content: "Please fill your area reports" },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      dispatch({ type: "SUCCESS", payload: req.data?.message });
+    } catch (err) {
+      setLoading(false);
+      dispatch({ type: "ERROR", payload: err.response.data.message });
+    }
+    setLoading(false);
+  };
   return (
     <GeneralLayout
       title={me?.userAreaId?.name.toUpperCase()}
@@ -392,14 +427,32 @@ export const Reports = () => {
               >
                 Clear
               </button>
+              {isMobileView && active !== "province" && (
+                <button
+                  onClick={sendNotification}
+                  className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
+                >
+                  <AiFillBell />
+                </button>
+              )}
             </div>
           </div>
-          {localStorage.getItem("@type") !== "province" && (
-            <button className="btn " onClick={handleReport}>
-              <FaPlus />
-              <span className="hidden lg:block xl:block">New Report</span>
-            </button>
-          )}
+          <div className="flex justify-end items-center gap-4">
+            {localStorage.getItem("@type") !== "province" && (
+              <button className="btn " onClick={handleReport}>
+                <FaPlus />
+                <span className="hidden lg:block xl:block">New Report</span>
+              </button>
+            )}
+            {!isMobileView && active !== "province" && (
+              <button
+                onClick={sendNotification}
+                className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
+              >
+                <AiFillBell />
+              </button>
+            )}
+          </div>
         </div>
         {localStorage.getItem("@type") === "province" && (
           <div
@@ -421,6 +474,7 @@ export const Reports = () => {
               className={`tab w-full ${
                 active === "division" ? "tab-active" : ""
               }`}
+              onClick={() => setNotifyTo("division")}
             >
               Division
             </Link>
@@ -429,6 +483,7 @@ export const Reports = () => {
               to={"?active=maqam"}
               role="tab"
               className={`tab w-full ${active === "maqam" ? "tab-active" : ""}`}
+              onClick={() => setNotifyTo("maqam")}
             >
               Maqam
             </Link>
@@ -437,6 +492,7 @@ export const Reports = () => {
               to={"?active=halqa"}
               role="tab"
               className={`tab w-full ${active === "halqa" ? "tab-active" : ""}`}
+              onClick={() => setNotifyTo("halqa")}
             >
               Halqa
             </Link>
@@ -464,26 +520,26 @@ export const Reports = () => {
             </Link>
           </div>
         )}
-        <div className='relative overflow-y-scroll gap-3 w-full items-center p-5 justify-center h-[calc(100vh-65.6px-64px-48px)]'>
-          {userType === 'province' ? (
+        <div className="relative overflow-y-scroll gap-3 w-full items-center p-5 justify-center h-[calc(100vh-65.6px-64px-48px)]">
+          {userType === "province" ? (
             filterAllData[active]?.length < 1 ? (
               <NoReports />
-            ) : active === 'halqa' &&
-              tab === 'division' &&
+            ) : active === "halqa" &&
+              tab === "division" &&
               filterAllData[active]?.filter(
-                (obj) => obj?.halqaAreaId?.parentType === 'Tehsil'
+                (obj) => obj?.halqaAreaId?.parentType === "Tehsil"
               ).length < 1 ? (
               <NoReports />
-            ) : active === 'halqa' &&
-              tab === 'maqam' &&
+            ) : active === "halqa" &&
+              tab === "maqam" &&
               filterAllData[active]?.filter(
-                (obj) => obj?.halqaAreaId?.parentType === 'Maqam'
+                (obj) => obj?.halqaAreaId?.parentType === "Maqam"
               ).length < 1 ? (
               <NoReports />
             ) : (
               filterAllData[active]?.map((obj) =>
-                active === 'halqa' && tab === 'division' ? (
-                  obj?.halqaAreaId?.parentType === 'Tehsil' && (
+                active === "halqa" && tab === "division" ? (
+                  obj?.halqaAreaId?.parentType === "Tehsil" && (
                     <div
                       key={obj?._id}
                       className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
@@ -567,22 +623,22 @@ export const Reports = () => {
             filerData?.map((obj) => (
               <div
                 key={obj?._id}
-                className='card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col'
+                className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
               >
-                <div className='flex w-full flex-col items-start justify-center'>
-                  <span className='text-lg font-semibold'>
-                    {moment(obj?.month).format('MMMM YYYY')}
+                <div className="flex w-full flex-col items-start justify-center">
+                  <span className="text-lg font-semibold">
+                    {moment(obj?.month).format("MMMM YYYY")}
                   </span>
                   <span>
-                    Last Modified:{' '}
-                    {moment(obj?.updatedAt).startOf('day').fromNow()}
+                    Last Modified:{" "}
+                    {moment(obj?.updatedAt).startOf("day").fromNow()}
                   </span>
                 </div>
-                <div className='flex items-end w-full justify-end gap-3 '>
-                  <button className='btn' onClick={() => viewReport(obj?._id)}>
+                <div className="flex items-end w-full justify-end gap-3 ">
+                  <button className="btn" onClick={() => viewReport(obj?._id)}>
                     <FaEye />
                   </button>
-                  <button className='btn' onClick={() => editReport(obj?._id)}>
+                  <button className="btn" onClick={() => editReport(obj?._id)}>
                     <FaEdit />
                   </button>
                 </div>
