@@ -1,27 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
-  CenteralActivities,
-  DivisionTable,
-  ExpandParty,
-  Library,
-  Zaili,
-  MessageDigest,
-  EveningDiary,
-  MenTable,
+  ActivityTableHalqa,
+  EveningDiaryHalqa,
+  ExpandPartyHalqa,
   GeneralLayout,
+  LibraryHalqa,
   Loader,
+  MenTableHalqa,
+  OtherActivitiesHalqa,
 } from "../components";
-import { OtherActivities } from "../components/OtherActivities";
-import { convertDataFormat, reverseDataFormat, toJson } from "../utils";
-import instance from "../api/instrance";
 import { InputWithLabel } from "../components/InputWithLabel";
+import { convertDataFormat, toJson } from "../utils";
+import instance from "../api/instrance";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useState } from "react";
 import { useToastState } from "../context";
-import { useEffect } from "react";
 import { getData } from "./Maqam";
 
-export const Division = () => {
+export const Halqa = () => {
   // EDIT CODE START
   const params = useParams();
   const [id, setId] = useState(null);
@@ -31,6 +26,7 @@ export const Division = () => {
   const [view, setView] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const [rawabit, setRawabit] = useState({});
 
   useEffect(() => {
     const l = location.pathname?.split("/")[2];
@@ -40,8 +36,9 @@ export const Division = () => {
     setId(params?.id);
   }, [params]);
   useEffect(() => {
-    if (id) getData("division", id, setData, dispatch, setLoading);
-    else {
+    if (id) {
+      getData("halqa", id, setData, dispatch, setLoading);
+    } else {
       setLoading(false);
     }
   }, [id]);
@@ -52,7 +49,11 @@ export const Division = () => {
         if (i === "month") {
           elem.value = data[i]?.split("")?.slice(0, 7)?.join("");
         } else {
-          elem.value = data[i];
+          if (elem.type === "checkbox") {
+            elem.defaultChecked = data[i];
+          } else {
+            elem.value = data[i];
+          }
         }
       }
     });
@@ -61,22 +62,21 @@ export const Division = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const formData = new FormData(e.currentTarget);
     const jsonData = convertDataFormat(toJson(formData));
     setLoading(true);
     try {
       if (id) {
-        const req = await instance.put(`/reports/division/${id}`, jsonData, {
+        const req = await instance.put(`/reports/halqa/${id}`, jsonData, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
-        dispatch({ type: "SUCCESS", payload: req.data?.message });
+        dispatch({ type: "SUCCESS", payload: req?.data?.message });
         navigate("/reports");
       } else {
-        const req = await instance.post("/reports/division", jsonData, {
+        const req = await instance.post("/reports/halqa", jsonData, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
@@ -87,77 +87,32 @@ export const Division = () => {
       }
 
       e.target.reset();
-    } catch (error) {
-      dispatch({ type: "ERROR", payload: error.response.data.message });
+    } catch (err) {
+      dispatch({ type: "ERROR", payload: err.response.data.message });
+      navigate("/reports");
     }
     setLoading(false);
   };
-  const arr = [
-    {
-      title: "دعوتی وفود",
 
-      placeholder: "Input 1",
-    },
-    {
-      title: "روابط پارٹیز",
-
-      placeholder: "Input 1",
-    },
-    {
-      title: "نظام الصلٰتہ",
-
-      placeholder: "Input 1",
-    },
-    {
-      title: "شب بیداری",
-
-      placeholder: "Input 1",
-    },
-    {
-      title: "کوءی اور سرگرمی",
-
-      placeholder: "Input 1",
-    },
-  ];
   return (
     <GeneralLayout>
-      <div className="h-[calc(100vh-64.4px-64px)] overflow-hidden overflow-y-scroll w-full">
+      <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">
         <form
-          className="flex w-full flex-col justify-center items-center p-4 font-notoUrdu"
+          className="flex flex-col justify-center items-center p-4 font-notoUrdu"
           dir="rtl"
           onSubmit={handleSubmit}
         >
-          {/* <fieldset disabled={view} className="w-full"> */}
-          <h2 className="text-2xl">جا ئزءکارکردگی رپورٹ (براے ڈویژن)</h2>
-          <div className="w-full">
-            <div>
-              <CenteralActivities view={view} />
-            </div>
-            <div className="mb-4">
-              <MenTable view={view} />
-            </div>
-            <div className="mb-4">
-              <DivisionTable view={view} />
-            </div>
-            <div className="mb-4">
-              <Zaili view={view} />
-            </div>
-            <div className=" mb-4">
-              <OtherActivities arr={arr} view={view} />
-            </div>
-            <div className=" mb-4">
-              <ExpandParty view={view} />
-            </div>
-            <div className=" mb-4">
-              <Library view={view} />
-            </div>
-            <div className=" mb-4">
-              <MessageDigest view={view} />
-            </div>
-            <div className=" mb-4">
-              <EveningDiary view={view} />
-            </div>
-          </div>
+          <h2 className="text-2xl mb-4">کارکردگی رپورٹ براۓ حلقہ</h2>
+
+          <MenTableHalqa
+            endingValue={rawabit}
+            setEndingValue={setRawabit}
+          />
+          <ActivityTableHalqa />
+          <OtherActivitiesHalqa />
+          <ExpandPartyHalqa rawabit={rawabit} />
+          <LibraryHalqa view={view} />
+          <EveningDiaryHalqa />
           <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
             <div className="w-full md:pr-0 mb-2">
               <InputWithLabel
@@ -175,19 +130,18 @@ export const Division = () => {
                 readOnly={view}
                 required={true}
                 label={"براے ماھ"}
+                placeholder={"براے ماھ"}
                 type={"month"}
                 id={"month"}
                 name={"month"}
-                value={"sdfhasdfhas"}
               />
             </div>
           </div>
           <div className="w-full">
-            <button className="btn btn-primary" disabled={loading}>
+            <button disabled={loading} className="btn btn-primary">
               {id ? "Update" : "Add"}
             </button>
           </div>
-          {/* </fieldset> */}
         </form>
       </div>
       {loading && <Loader />}

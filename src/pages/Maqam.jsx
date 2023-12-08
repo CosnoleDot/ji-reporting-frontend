@@ -1,24 +1,23 @@
-import React from "react";
-import { DivisionTable } from "../components/maqam/DivisionTable";
 import {
-  CenteralActivities,
-  ExpandParty,
-  Library,
-  Zaili,
-  MessageDigest,
-  EveningDiary,
-  MenTable,
   GeneralLayout,
   Loader,
+  MenTableMaqam,
+  ZailiActivitesMaqam,
+  OtherActivitiesMaqam,
+  ExpandPartyMaqam,
+  LibraryMaqam,
+  MessageDigestMaqam,
+  EveningDiaryMaqam,
+  TanzeemMaqam,
+  CentralActivitiesMaqam,
 } from "../components";
-import { OtherActivities } from "../components/OtherActivities";
-import { InputWithLabel } from "../components/InputWithLabel";
 import { convertDataFormat, reverseDataFormat, toJson } from "../utils";
 import instance from "../api/instrance";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useToastState } from "../context";
+import { InputWithLabel } from "../components/InputWithLabel";
 
 export const getData = async (path, id, setData, dispatch, setLoading) => {
   setLoading(true);
@@ -45,6 +44,7 @@ export const Maqam = () => {
   const [view, setView] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const [rawabit, setRawabit] = useState({});
 
   useEffect(() => {
     const l = location.pathname?.split("/")[2];
@@ -110,74 +110,76 @@ export const Maqam = () => {
 
   return (
     <GeneralLayout>
-      <div className="h-[calc(100vh-64.4px-64px)] overflow-y-scroll">
+      <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">
         <form
           className="flex flex-col justify-center items-center p-4 font-notoUrdu"
           dir="rtl"
           onSubmit={handleSubmit}
           id="maqam-form"
         >
-          <fieldset disabled={view}>
-            <h2 className="text-2xl">جا ئزءکارکردگی رپورٹ (براے مقام)</h2>
-            <div className="w-full p-4">
-              <div className="mb-4">
-                <CenteralActivities view={view} />
+          <h2 className="text-2xl">جا ئزءکارکردگی رپورٹ (براے مقام)</h2>
+          <div className="w-full p-4">
+            <div className="mb-4">
+              <TanzeemMaqam view={view} />
+            </div>
+            <div className="mb-4">
+              <MenTableMaqam
+                view={view}
+                rawabit={rawabit}
+                setRawabit={setRawabit}
+              />
+            </div>
+            <div className="mb-4">
+              <CentralActivitiesMaqam view={view} />
+            </div>
+            <div className="mb-4">
+              <ZailiActivitesMaqam />
+            </div>
+            <div className=" mb-4">
+              <OtherActivitiesMaqam view={view} />
+            </div>
+            <div className=" mb-4">
+              <ExpandPartyMaqam view={view} />
+            </div>
+            <div className=" mb-4">
+              <LibraryMaqam view={view} />
+            </div>
+            <div className=" mb-4">
+              <MessageDigestMaqam view={view} />
+            </div>
+            <div className=" mb-4">
+              <EveningDiaryMaqam view={view} />
+            </div>
+            <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
+              <div className="w-full md:pr-0 mb-2">
+                <InputWithLabel
+                  readOnly={view}
+                  type={"textarea"}
+                  required={true}
+                  placeholder={" تبصرھ"}
+                  label={" تبصرھ"}
+                  id={"comments"}
+                  name={"comments"}
+                />
               </div>
-              <div className="mb-4">
-                <MenTable view={view} />
-              </div>
-              <div className="mb-4">
-                <DivisionTable view={view} />
-              </div>
-              <div className="mb-4">
-                <Zaili view={view} />
-              </div>
-              <div className=" mb-4">
-                <OtherActivities view={view} />
-              </div>
-              <div className=" mb-4">
-                <ExpandParty view={view} />
-              </div>
-              <div className=" mb-4">
-                <Library condition={false} view={view} />
-              </div>
-              <div className=" mb-4">
-                <MessageDigest view={view} />
-              </div>
-              <div className=" mb-4">
-                <EveningDiary view={view} />
-              </div>
-              <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
-                <div className="w-full md:pr-0 mb-2">
-                  <InputWithLabel
-                    readOnly={view}
-                    type={"textarea"}
-                    required={true}
-                    placeholder={" تبصرھ"}
-                    label={" تبصرھ"}
-                    id={"comments"}
-                    name={"comments"}
-                  />
-                </div>
-                <div className="w-full mb-2">
-                  <InputWithLabel
-                    readOnly={view}
-                    required={true}
-                    label={"براے ماھ"}
-                    placeholder={"براے ماھ"}
-                    type={"month"}
-                    id={"month"}
-                    name={"month"}
-                  />
-                </div>
+              <div className="w-full mb-2">
+                <InputWithLabel
+                  readOnly={view}
+                  required={true}
+                  label={"براے ماھ"}
+                  placeholder={"براے ماھ"}
+                  type={"month"}
+                  id={"month"}
+                  name={"month"}
+                />
               </div>
             </div>
-            <div className="w-full">
-              <button disabled={loading} className="btn btn-primary">
-                {id ? "Update" : "Add"}
-              </button>
-            </div>
-          </fieldset>
+          </div>
+          <div className="w-full">
+            <button disabled={loading} className="btn btn-primary">
+              {id ? "Update" : "Add"}
+            </button>
+          </div>
         </form>
       </div>
       {loading && <Loader />}
