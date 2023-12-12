@@ -12,7 +12,7 @@ const columns = [
 ];
 
 const row2 = [
-  { label: "ارکان", key: "arkan" },
+  // { label: "ارکان", key: "arkan" },
   {
     label: "امیدواران",
     key: "umeedWaran",

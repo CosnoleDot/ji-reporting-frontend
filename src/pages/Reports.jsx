@@ -17,51 +17,51 @@ const NoReports = () => (
 
 export const months = [
   {
-    title: "January",
+    title: 'January',
     value: 1,
   },
   {
-    title: "February",
+    title: 'February',
     value: 2,
   },
   {
-    title: "March",
+    title: 'March',
     value: 3,
   },
   {
-    title: "April",
+    title: 'April',
     value: 4,
   },
   {
-    title: "May",
+    title: 'May',
     value: 5,
   },
   {
-    title: "June",
+    title: 'June',
     value: 6,
   },
   {
-    title: "July",
+    title: 'July',
     value: 7,
   },
   {
-    title: "August",
+    title: 'August',
     value: 8,
   },
   {
-    title: "September",
+    title: 'September',
     value: 9,
   },
   {
-    title: "October",
+    title: 'October',
     value: 10,
   },
   {
-    title: "November",
+    title: 'November',
     value: 11,
   },
   {
-    title: "December",
+    title: 'December',
     value: 12,
   },
 ];
@@ -69,29 +69,29 @@ export const Reports = () => {
   const [reports, setReports] = useState([]);
   const [allReports, setAllReports] = useState([]);
   const navigate = useNavigate();
-  const [userType, setUserType] = useState(localStorage.getItem("@type"));
+  const [userType, setUserType] = useState(localStorage.getItem('@type'));
   const [search, showSearch] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
-  const [month, setMonth] = useState("");
-  const [year, setYear] = useState("2023");
+  const [month, setMonth] = useState('');
+  const [year, setYear] = useState('2023');
   const [filerData, setFilterData] = useState([]);
   const [me, setMe] = useState({});
   const { dispatch } = useToastState();
-  const [tab, setTab] = useState("maqam");
-  const [active, setActive] = useState("province");
+  const [tab, setTab] = useState('maqam');
+  const [active, setActive] = useState('province');
   const [filterAllData, setFilterAllData] = useState({});
   const [months, setMonths] = useState([]);
 
   const params = useLocation();
   // GENERATE MONTHS
   const generateMonths = () => {
-    const startMonth = new Date("2023-12-01");
+    const startMonth = new Date('2023-12-01');
     const currentDate = new Date(Date.now());
     const months = [];
 
     while (startMonth <= currentDate) {
-      const monthName = startMonth.toLocaleString("en-us", { month: "long" });
+      const monthName = startMonth.toLocaleString('en-us', { month: 'long' });
       const year = startMonth.getFullYear();
 
       months.push({
@@ -126,19 +126,19 @@ export const Reports = () => {
     getQueryParams();
   }, [params]);
   const getMe = async () => {
-    const req = await instance.get("/user/me", {
-      headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
+    const req = await instance.get('/user/me', {
+      headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
     });
     if (req) {
       setMe(req.data.data);
     }
     try {
     } catch (err) {
-      dispatch({ type: "ERROR", payload: err?.response?.data?.message });
+      dispatch({ type: 'ERROR', payload: err?.response?.data?.message });
     }
   };
   useEffect(() => {
-    if (localStorage.getItem("@token")) getMe();
+    if (localStorage.getItem('@token')) getMe();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -150,7 +150,7 @@ export const Reports = () => {
   };
 
   const viewReport = async (id) => {
-    if (userType === "province") {
+    if (userType === 'province') {
       navigate(`view/date/${id}`);
     } else {
       navigate(`view/${id}`);
@@ -163,20 +163,20 @@ export const Reports = () => {
     setLoading(true);
     try {
       let response;
-      if (userType === "province") {
+      if (userType === 'province') {
         const m = await instance.get(`reports/maqam`, {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+            Authorization: `Bearer ${localStorage.getItem('@token')}`,
           },
         });
         const h = await instance.get(`reports/halqa`, {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+            Authorization: `Bearer ${localStorage.getItem('@token')}`,
           },
         });
         const d = await instance.get(`reports/division`, {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+            Authorization: `Bearer ${localStorage.getItem('@token')}`,
           },
         });
         setAllReports({
@@ -192,20 +192,20 @@ export const Reports = () => {
       } else {
         response = await instance.get(`reports/${userType}`, {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+            Authorization: `Bearer ${localStorage.getItem('@token')}`,
           },
         });
         setReports(response?.data?.data);
         setFilterData(response?.data?.data);
       }
     } catch (error) {
-      console.error("Error fetching reports:", error);
+      console.error('Error fetching reports:', error);
     }
     setLoading(false);
   };
   const clearFilters = () => {
-    setMonth("");
-    setYear("2023");
+    setMonth('');
+    setYear('2023');
     setFilterAllData(allReports);
     setFilterData(reports);
   };
@@ -215,13 +215,13 @@ export const Reports = () => {
   }, [userType]);
 
   const searchResults = () => {
-    if (userType === "province") {
-      if (year !== "" && month !== "") {
+    if (userType === 'province') {
+      if (year !== '' && month !== '') {
         const filteredData = { ...allReports };
         filteredData[active] = allReports[active]?.filter((i) => {
           const [f_year, f_month] = [
-            i?.month?.split("-")[0],
-            i?.month?.split("-")[1],
+            i?.month?.split('-')[0],
+            i?.month?.split('-')[1],
           ];
           return (
             parseInt(year) === parseInt(f_year) &&
@@ -230,7 +230,7 @@ export const Reports = () => {
         });
         showSearch(false);
         setFilterAllData(filteredData);
-      } else if (year !== "" && month === "") {
+      } else if (year !== '' && month === '') {
         const filteredData = { ...allReports };
         filteredData[active] = allReports[active]?.filter((i) => {
           const f_year = i?.month?.split('-')[0];
@@ -238,20 +238,20 @@ export const Reports = () => {
         });
         showSearch(false);
         setFilterAllData(filteredData);
-      } else if (year === "" && month !== "") {
-        dispatch({ type: "ERROR", payload: "Enter year with month" });
+      } else if (year === '' && month !== '') {
+        dispatch({ type: 'ERROR', payload: 'Enter year with month' });
         setFilterAllData(allReports);
-      } else if (year === "" && month === "") {
-        dispatch({ type: "ERROR", payload: "Date is required" });
+      } else if (year === '' && month === '') {
+        dispatch({ type: 'ERROR', payload: 'Date is required' });
         setFilterAllData(allReports);
       } else {
         setFilterAllData(allReports);
       }
     } else {
-      if (year !== "" && month !== "") {
+      if (year !== '' && month !== '') {
         const filteredData = reports?.reduce((acc, curr) => {
-          const reportYear = parseInt((curr?.month).split("-")[0]);
-          const reportMonth = parseInt((curr?.month).split("-")[1]);
+          const reportYear = parseInt((curr?.month).split('-')[0]);
+          const reportMonth = parseInt((curr?.month).split('-')[1]);
           if (
             reportMonth === parseInt(month) &&
             reportYear === parseInt(year)
@@ -262,18 +262,18 @@ export const Reports = () => {
         }, []);
         showSearch(false);
         setFilterData(filteredData);
-      } else if (year !== "" && month === "") {
+      } else if (year !== '' && month === '') {
         const filteredData = reports?.filter((curr) => {
-          const reportedYear = (curr?.month).split("-")[0];
+          const reportedYear = (curr?.month).split('-')[0];
           return parseInt(reportedYear) === parseInt(year);
         });
         showSearch(false);
         setFilterData(filteredData);
-      } else if (year === "" && month !== "") {
-        dispatch({ type: "ERROR", payload: "Enter year with month" });
+      } else if (year === '' && month !== '') {
+        dispatch({ type: 'ERROR', payload: 'Enter year with month' });
         setFilterData(reports);
-      } else if (year === "" && month === "") {
-        dispatch({ type: "ERROR", payload: "Date is required" });
+      } else if (year === '' && month === '') {
+        dispatch({ type: 'ERROR', payload: 'Date is required' });
         setFilterData(reports);
       } else {
         setFilterData(reports);
@@ -290,28 +290,28 @@ export const Reports = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [window.innerWidth]);
   useEffect(() => {
-    setUserType(localStorage.getItem("@type"));
+    setUserType(localStorage.getItem('@type'));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localStorage]);
   return (
     <GeneralLayout
       title={me?.userAreaId?.name.toUpperCase()}
-      active={"reports"}
+      active={'reports'}
     >
-      <div className="relative flex flex-col gap-3 items-center p-5 justify-center h-[calc(100vh-65.6px-64px)]">
-        <div className="flex w-full items-center justify-between xs:flex-col">
-          <h3 className="font-bold text-xl hidden lg:block xl:block">
+      <div className='relative flex flex-col gap-3 items-center p-5 justify-center h-[calc(100vh-65.6px-64px)]'>
+        <div className='flex w-full items-center justify-between xs:flex-col'>
+          <h3 className='font-bold text-xl hidden lg:block xl:block'>
             Reports
           </h3>
-          <div className="join xs:w-full">
+          <div className='join xs:w-full'>
             {!isMobileView && (
-              <div className="w-full">
+              <div className='w-full'>
                 <select
-                  className="select select-bordered join-item"
+                  className='select select-bordered join-item'
                   onChange={(e) => setMonth(e.target.value)}
                   value={month}
                 >
-                  <option value={""}>Month</option>
+                  <option value={''}>Month</option>
                   {months.map((month, index) => (
                     <option value={month?.value} key={index}>
                       {month.title}
@@ -319,11 +319,11 @@ export const Reports = () => {
                   ))}
                 </select>
                 <select
-                  className="select select-bordered join-item"
+                  className='select select-bordered join-item'
                   onChange={(e) => setYear(e.target.value)}
                   value={year}
                 >
-                  <option disabled value={""}>
+                  <option disabled value={''}>
                     Year
                   </option>
                   {Array(10)
@@ -337,15 +337,15 @@ export const Reports = () => {
               </div>
             )}
             {search && (
-              <div className="fixed p-3 z-40 rounded-lg top-[140px] left-[5px] w-[calc(100%-10px)] overflow-hidden bg-white min-h-[100px] border">
-                <div className="flex flex-col gap-3">
-                  <div className="w-full flex flex-col">
+              <div className='fixed p-3 z-40 rounded-lg top-[140px] left-[5px] w-[calc(100%-10px)] overflow-hidden bg-white min-h-[100px] border'>
+                <div className='flex flex-col gap-3'>
+                  <div className='w-full flex flex-col'>
                     <select
-                      className="select select-bordered w-full rounded-none rounded-tl-lg rounded-tr-lg"
+                      className='select select-bordered w-full rounded-none rounded-tl-lg rounded-tr-lg'
                       onChange={(e) => setMonth(e.target.value)}
                       value={month}
                     >
-                      <option value={""}>Month</option>
+                      <option value={''}>Month</option>
                       {months.map((month, index) => (
                         <option value={month?.value} key={index}>
                           {month.title}
@@ -353,11 +353,11 @@ export const Reports = () => {
                       ))}
                     </select>
                     <select
-                      className="select select-bordered w-full rounded-none rounded-bl-lg rounded-br-lg"
+                      className='select select-bordered w-full rounded-none rounded-bl-lg rounded-br-lg'
                       value={year}
                       onChange={(e) => setYear(e.target.value)}
                     >
-                      <option value={""} disabled>
+                      <option value={''} disabled>
                         Year
                       </option>
                       {Array(10)
@@ -369,17 +369,17 @@ export const Reports = () => {
                         ))}
                     </select>
                   </div>
-                  <button className="btn" onClick={searchResults}>
+                  <button className='btn' onClick={searchResults}>
                     Search
                   </button>
                 </div>
               </div>
             )}
 
-            <div className="indicator ">
+            <div className='indicator '>
               {/* <span className='indicator-item badge badge-secondary'>new</span> */}
               <button
-                className={`btn ${!isMobileView ? "join-item" : ""}`}
+                className={`btn ${!isMobileView ? 'join-item' : ''}`}
                 onClick={() =>
                   !isMobileView ? searchResults() : toggleSearch()
                 }
@@ -387,78 +387,76 @@ export const Reports = () => {
                 Search
               </button>
               <button
-                className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
+                className={`btn ${!isMobileView ? 'join-item' : 'ms-3'}`}
                 onClick={clearFilters}
               >
                 Clear
               </button>
             </div>
           </div>
-          {localStorage.getItem("@type") !== "province" && (
-            <button className="btn " onClick={handleReport}>
-              <FaPlus />
-              <span className="hidden lg:block xl:block">New Report</span>
-            </button>
-          )}
+          <button className='btn ' onClick={handleReport}>
+            <FaPlus />
+            <span className='hidden lg:block xl:block'>New Report</span>
+          </button>
         </div>
-        {localStorage.getItem("@type") === "province" && (
+        {localStorage.getItem('@type') === 'province' && (
           <div
-            role="tablist"
-            className="w-full flex justify-between items-center"
+            role='tablist'
+            className='w-full flex justify-between items-center'
           >
             <Link
-              to={"?active=province"}
-              role="tab"
+              to={'?active=province'}
+              role='tab'
               className={`tab w-full ${
-                active === "province" ? "tab-active bg-slate-200" : ""
+                active === 'province' ? 'tab-active bg-slate-200' : ''
               }`}
             >
               Province
             </Link>
             <Link
-              to={"?active=division"}
-              role="tab"
+              to={'?active=division'}
+              role='tab'
               className={`tab w-full ${
-                active === "division" ? "tab-active" : ""
+                active === 'division' ? 'tab-active' : ''
               }`}
             >
               Division
             </Link>
 
             <Link
-              to={"?active=maqam"}
-              role="tab"
-              className={`tab w-full ${active === "maqam" ? "tab-active" : ""}`}
+              to={'?active=maqam'}
+              role='tab'
+              className={`tab w-full ${active === 'maqam' ? 'tab-active' : ''}`}
             >
               Maqam
             </Link>
 
             <Link
-              to={"?active=halqa"}
-              role="tab"
-              className={`tab w-full ${active === "halqa" ? "tab-active" : ""}`}
+              to={'?active=halqa'}
+              role='tab'
+              className={`tab w-full ${active === 'halqa' ? 'tab-active' : ''}`}
             >
               Halqa
             </Link>
           </div>
         )}
-        {active === "halqa" && (
+        {active === 'halqa' && (
           <div
-            role="tablist"
-            className="w-full flex justify-between items-center"
+            role='tablist'
+            className='w-full flex justify-between items-center'
           >
             <Link
-              to={"?active=halqa&tab=maqam"}
-              role="tab"
-              className={`tab w-full ${tab === "maqam" ? "tab-active" : ""}`}
+              to={'?active=halqa&tab=maqam'}
+              role='tab'
+              className={`tab w-full ${tab === 'maqam' ? 'tab-active' : ''}`}
             >
               Maqam Halqa
             </Link>
 
             <Link
-              to={"?active=halqa&tab=division"}
-              role="tab"
-              className={`tab w-full ${tab === "division" ? "tab-active" : ""}`}
+              to={'?active=halqa&tab=division'}
+              role='tab'
+              className={`tab w-full ${tab === 'division' ? 'tab-active' : ''}`}
             >
               Division Halqa
             </Link>
@@ -486,21 +484,21 @@ export const Reports = () => {
                   obj?.halqaAreaId?.parentType === 'Tehsil' && (
                     <div
                       key={obj?._id}
-                      className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
+                      className='card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col'
                     >
-                      <div className="flex w-full flex-col items-start justify-center">
-                        <span className="text-lg font-semibold">
-                          {obj?.[active + "AreaId"]?.name || "UNKNOWN"} -{" "}
-                          {moment(obj?.month).format("MMMM YYYY")}
+                      <div className='flex w-full flex-col items-start justify-center'>
+                        <span className='text-lg font-semibold'>
+                          {obj?.[active + 'AreaId']?.name || 'UNKNOWN'} -{' '}
+                          {moment(obj?.month).format('MMMM YYYY')}
                         </span>
                         <span>
-                          Last Modified:{" "}
-                          {moment(obj?.updatedAt).startOf("day").fromNow()}
+                          Last Modified:{' '}
+                          {moment(obj?.updatedAt).startOf('day').fromNow()}
                         </span>
                       </div>
-                      <div className="flex items-end w-full justify-end gap-3 ">
+                      <div className='flex items-end w-full justify-end gap-3 '>
                         <button
-                          className="btn"
+                          className='btn'
                           onClick={() => viewReport(obj?._id)}
                         >
                           <FaEye />
@@ -508,25 +506,25 @@ export const Reports = () => {
                       </div>
                     </div>
                   )
-                ) : active === "halqa" && tab === "maqam" ? (
-                  obj?.halqaAreaId?.parentType === "Maqam" && (
+                ) : active === 'halqa' && tab === 'maqam' ? (
+                  obj?.halqaAreaId?.parentType === 'Maqam' && (
                     <div
                       key={obj?._id}
-                      className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
+                      className='card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col'
                     >
-                      <div className="flex w-full flex-col items-start justify-center">
-                        <span className="text-lg font-semibold">
-                          {obj?.[active + "AreaId"]?.name || "UNKNOWN"} -{" "}
-                          {moment(obj?.month).format("MMMM YYYY")}
+                      <div className='flex w-full flex-col items-start justify-center'>
+                        <span className='text-lg font-semibold'>
+                          {obj?.[active + 'AreaId']?.name || 'UNKNOWN'} -{' '}
+                          {moment(obj?.month).format('MMMM YYYY')}
                         </span>
                         <span>
-                          Last Modified:{" "}
-                          {moment(obj?.updatedAt).startOf("day").fromNow()}
+                          Last Modified:{' '}
+                          {moment(obj?.updatedAt).startOf('day').fromNow()}
                         </span>
                       </div>
-                      <div className="flex items-end w-full justify-end gap-3 ">
+                      <div className='flex items-end w-full justify-end gap-3 '>
                         <button
-                          className="btn"
+                          className='btn'
                           onClick={() => viewReport(obj?._id)}
                         >
                           <FaEye />
@@ -537,21 +535,21 @@ export const Reports = () => {
                 ) : (
                   <div
                     key={obj?._id}
-                    className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
+                    className='card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col'
                   >
-                    <div className="flex w-full flex-col items-start justify-center">
-                      <span className="text-lg font-semibold">
-                        {obj?.[active + "AreaId"]?.name || "UNKNOWN"} -{" "}
-                        {moment(obj?.month).format("MMMM YYYY")}
+                    <div className='flex w-full flex-col items-start justify-center'>
+                      <span className='text-lg font-semibold'>
+                        {obj?.[active + 'AreaId']?.name || 'UNKNOWN'} -{' '}
+                        {moment(obj?.month).format('MMMM YYYY')}
                       </span>
                       <span>
-                        Last Modified:{" "}
-                        {moment(obj?.updatedAt).startOf("day").fromNow()}
+                        Last Modified:{' '}
+                        {moment(obj?.updatedAt).startOf('day').fromNow()}
                       </span>
                     </div>
-                    <div className="flex items-end w-full justify-end gap-3 ">
+                    <div className='flex items-end w-full justify-end gap-3 '>
                       <button
-                        className="btn"
+                        className='btn'
                         onClick={() => viewReport(obj?._id)}
                       >
                         <FaEye />

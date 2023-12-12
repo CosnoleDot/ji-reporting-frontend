@@ -1,150 +1,78 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
+import instance from '../api/instrance';
 import {
-  ActivityTableHalqa,
-  EveningDiaryHalqa,
-  ExpandPartyHalqa,
+  Activity,
+  GeneralInfo,
   GeneralLayout,
-  LibraryHalqa,
-  Loader,
-  MenTableHalqa,
-  OtherActivitiesHalqa,
-} from "../components";
-import { InputWithLabel } from "../components/InputWithLabel";
-import { convertDataFormat, toJson } from "../utils";
-import instance from "../api/instrance";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useToastState } from "../context";
-import { getData } from "./Maqam";
+  IfradiKuwat,
+  Library,
+  OtherActivities,
+  RozOShabDiary,
+  ToseeDawat,
+} from '../components';
+import { useToastState } from '../context';
 
 export const Halqa = () => {
-  // EDIT CODE START
-  const params = useParams();
-  const [id, setId] = useState(null);
   const { dispatch } = useToastState();
-  const [data, setData] = useState({});
-  const [loading, setLoading] = useState(true);
-  const [view, setView] = useState(false);
-  const location = useLocation();
-  const navigate = useNavigate();
-  const [rawabit, setRawabit] = useState({});
-
-  useEffect(() => {
-    const l = location.pathname?.split("/")[2];
-    if (l === "view") {
-      setView(true);
-    }
-    setId(params?.id);
-  }, [params]);
-  useEffect(() => {
-    if (id) {
-      getData("halqa", id, setData, dispatch, setLoading);
-    } else {
-      setLoading(false);
-    }
-  }, [id]);
-  useEffect(() => {
-    Object.keys(data).forEach((i) => {
-      const elem = document.getElementById(i);
-      if (elem) {
-        if (i === "month") {
-          elem.value = data[i]?.split("")?.slice(0, 7)?.join("");
-        } else {
-          if (elem.type === "checkbox") {
-            elem.defaultChecked = data[i];
-          } else {
-            elem.value = data[i];
-          }
-        }
-      }
-    });
-  }, [data]);
-  // EDIT CODE END
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const jsonData = convertDataFormat(toJson(formData));
-    setLoading(true);
+  const [me, setMe] = useState(null);
+  const getMe = async () => {
     try {
-      if (id) {
-        const req = await instance.put(`/reports/halqa/${id}`, jsonData, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("@token")}`,
-          },
-        });
-        dispatch({ type: "SUCCESS", payload: req?.data?.message });
-        navigate("/reports");
-      } else {
-        const req = await instance.post("/reports/halqa", jsonData, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("@token")}`,
-          },
-        });
-        dispatch({ type: "SUCCESS", payload: req.data?.message });
-        navigate("/reports");
-      }
-
-      e.target.reset();
+      const req = await instance.get('/user/me', {
+        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
+      });
+      setMe(req.data.data);
     } catch (err) {
-      dispatch({ type: "ERROR", payload: err.response.data.message });
-      navigate("/reports");
+      dispatch({
+        type: 'ERROR',
+        payload: err?.response?.data?.message || err?.data?.message,
+      });
     }
-    setLoading(false);
   };
-
+  useEffect(() => {
+    getMe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <GeneralLayout>
-      <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">
+      <div className='reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll'>
+        <h2 className='block w-full text-center p-3'>
+          کارکردگی رپورٹ براۓ حلقہ
+        </h2>
         <form
-          className="flex flex-col justify-center items-center p-4 font-notoUrdu"
-          dir="rtl"
-          onSubmit={handleSubmit}
+          className='flex flex-col items-center justify-start gap-5 p-3 w-full overflow-auto'
+          onSubmit={(e) => e.preventDefault()}
+          dir='rtl'
         >
-          <h2 className="text-2xl mb-4">کارکردگی رپورٹ براۓ حلقہ</h2>
-
-          <MenTableHalqa
-            endingValue={rawabit}
-            setEndingValue={setRawabit}
-          />
-          <ActivityTableHalqa />
-          <OtherActivitiesHalqa />
-          <ExpandPartyHalqa rawabit={rawabit} />
-          <LibraryHalqa view={view} />
-          <EveningDiaryHalqa />
-          <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
-            <div className="w-full md:pr-0 mb-2">
-              <InputWithLabel
-                readOnly={view}
-                type={"textarea"}
-                required={true}
-                placeholder={" تبصرھ"}
-                label={" تبصرھ"}
-                id={"comments"}
-                name={"comments"}
-              />
-            </div>
-            <div className="w-full mb-2">
-              <InputWithLabel
-                readOnly={view}
-                required={true}
-                label={"براے ماھ"}
-                placeholder={"براے ماھ"}
-                type={"month"}
-                id={"month"}
-                name={"month"}
-              />
-            </div>
+          <GeneralInfo me={me} />
+          <IfradiKuwat />
+          <Activity />
+          <OtherActivities />
+          <ToseeDawat />
+          <Library />
+          <RozOShabDiary />
+          <div className='w-full flex p-2'>
+            <label htmlFor='comment'>تبصرھ</label>
+            <input
+              type='text'
+              name='comment'
+              className='border-b-2 border-dashed w-full'
+              id='comment'
+            />
           </div>
-          <div className="w-full">
-            <button disabled={loading} className="btn btn-primary">
-              {id ? "Update" : "Add"}
-            </button>
+          <div className='w-full flex flex-col items-end gap-3 p-2'>
+            <div>
+              <label htmlFor='nazim'>نام ناظمِ:</label>
+              <input
+                type='text'
+                className='border-b-2 border-dashed text-center'
+                id='nazim'
+                defaultValue={me?.name || ''}
+                readOnly
+              />
+            </div>
           </div>
         </form>
       </div>
-      {loading && <Loader />}
     </GeneralLayout>
   );
 };
