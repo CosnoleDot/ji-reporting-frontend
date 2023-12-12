@@ -9,8 +9,28 @@ import { FaRegUserCircle } from 'react-icons/fa';
 export const Navbar = ({ title }) => {
   const navigate = useNavigate();
   const [requests, showRequests] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
   const [profileTab, showProfileTab] = useState(false);
   const [userRequests, setUserRequests] = useState([]);
+  const [notifications, setNotifications] = useState([]);
+  const [reports, setReports] = useState([]);
+  const getAllReports = async () => {
+    if (localStorage.getItem('@token') && localStorage.getItem('@type') !== "province") {
+      try {
+        const req = await instance.get(
+          '/reports/' + localStorage.getItem('@type'),
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('@token')}`,
+            },
+          }
+        );
+        setReports(req.data?.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
   const getAllRequests = async () => {
     if (localStorage.getItem('@token')) {
       try {
@@ -25,13 +45,42 @@ export const Navbar = ({ title }) => {
       }
     }
   };
+  const getAllNotifications = async () => {
+    if (localStorage.getItem('@token')) {
+      try {
+        const req = await instance.get(
+          '/notifications?type=' + localStorage.getItem('@type').toLowerCase(),
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('@token')}`,
+            },
+          }
+        );
+        setNotifications(
+          req.data?.data.filter((i) => {
+            const months = reports.map((_) =>
+              _.month.split('-').slice(0, 2).join('-')
+            );
+            return months.includes(
+              i.createdAt.split('-').slice(0, 2).join('-')
+            );
+          })
+        );
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
   useEffect(() => {
     const intervalId = setInterval(() => {
       getAllRequests();
+      getAllNotifications();
+      getAllReports();
     }, 2000); // 2000 milliseconds = 2 seconds
 
     // Cleanup the interval on component unmount
     return () => clearInterval(intervalId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <>
@@ -48,14 +97,15 @@ export const Navbar = ({ title }) => {
               role='button'
               className='btn btn-ghost btn-circle'
               onClick={() => {
-                showRequests(!requests);
+                setShowNotifications(!showNotifications);
+                showRequests(false);
                 showProfileTab(false);
               }}
             >
               <div className='indicator'>
                 <FaBell className='text-xl' />
                 <span className='badge badge-sm indicator-item z-10'>
-                  {userRequests.length}
+                  {notifications?.length || 0}
                 </span>
               </div>
             </div>
@@ -67,6 +117,7 @@ export const Navbar = ({ title }) => {
                 role='button'
                 className='btn btn-ghost btn-circle'
                 onClick={() => {
+                  setShowNotifications(false);
                   showRequests(!requests);
                   showProfileTab(false);
                 }}
@@ -84,6 +135,7 @@ export const Navbar = ({ title }) => {
             <div
               tabIndex={0}
               onClick={() => {
+                setShowNotifications(false);
                 showRequests(false);
                 showProfileTab(!profileTab);
               }}
@@ -133,6 +185,21 @@ export const Navbar = ({ title }) => {
           <Notifications
             userRequests={userRequests}
             getAllRequests={getAllRequests}
+            type='request'
+          />
+        </div>
+      )}
+
+      {showNotifications && (
+        <div
+          tabIndex={0}
+          className='mt-3 top-[60.5px] right-[10px] lg:right-10 fixed z-[1] w-[calc(100%-20px)] lg:w-[420px] card card-compact dropdown-content bg-base-100 border-2 overflow-hidden'
+        >
+          <h2 className='p-5 font-bold text-xl'>Notification(s)</h2>
+          <Notifications
+            userRequests={notifications}
+            getAllRequests={getAllNotifications}
+            type='notify'
           />
         </div>
       )}

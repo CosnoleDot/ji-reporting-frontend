@@ -192,9 +192,6 @@ export const Province = () => {
     Object.keys(allReports?.["division"] || {}).forEach((i) => {
       const elem = document.getElementById(i);
       if (elem) {
-        if (i.key === "ijtKarkunan-start") {
-          console.log("first");
-        }
         if (i === "month") {
           elem.value = allReports[i]
             ?.toString()

@@ -12,24 +12,29 @@ import {
 } from '../components';
 import { useToastState } from '../context';
 
-export const Halqa = () => {
-  const { dispatch } = useToastState();
-  const [me, setMe] = useState(null);
-  const getMe = async () => {
-    try {
-      const req = await instance.get('/user/me', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
-      });
-      setMe(req.data.data);
-    } catch (err) {
+export const getMe = async (setMe, dispatch) => {
+  try {
+    const req = await instance.get('/user/me', {
+      headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
+    });
+    setMe(req.data.data);
+  } catch (err) {
+    if (dispatch) {
       dispatch({
         type: 'ERROR',
         payload: err?.response?.data?.message || err?.data?.message,
       });
+    } else {
+      console.error(err);
     }
-  };
+  }
+};
+
+export const Halqa = () => {
+  const { dispatch } = useToastState();
+  const [me, setMe] = useState(null);
   useEffect(() => {
-    getMe();
+    getMe(setMe, dispatch);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
