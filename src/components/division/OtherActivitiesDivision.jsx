@@ -16,7 +16,7 @@ const arr = [
 
   {
     title: "نظام الصلٰتہ",
-    key: "nazimSalah",
+    key: "nizamSalah",
   },
   {
     title: "کوئ اور سرگرمی",

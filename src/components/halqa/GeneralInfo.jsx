@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export function GeneralInfo({ me }) {
   return (
     <div className='grid w-full grid-cols-1 lg:grid-cols-2'>

@@ -493,7 +493,7 @@ export const Reports = () => {
                         </span>
                         <span>
                           Last Modified:{' '}
-                          {moment(obj?.updatedAt).startOf('day').fromNow()}
+                          {moment(obj?.updatedAt).fromNow()}
                         </span>
                       </div>
                       <div className='flex items-end w-full justify-end gap-3 '>
@@ -519,7 +519,7 @@ export const Reports = () => {
                         </span>
                         <span>
                           Last Modified:{' '}
-                          {moment(obj?.updatedAt).startOf('day').fromNow()}
+                          {moment(obj?.updatedAt).fromNow()}
                         </span>
                       </div>
                       <div className='flex items-end w-full justify-end gap-3 '>
@@ -544,7 +544,7 @@ export const Reports = () => {
                       </span>
                       <span>
                         Last Modified:{' '}
-                        {moment(obj?.updatedAt).startOf('day').fromNow()}
+                        {moment(obj?.updatedAt).fromNow()}
                       </span>
                     </div>
                     <div className='flex items-end w-full justify-end gap-3 '>
@@ -573,7 +573,7 @@ export const Reports = () => {
                   </span>
                   <span>
                     Last Modified:{' '}
-                    {moment(obj?.updatedAt).startOf('day').fromNow()}
+                    {moment(obj?.updatedAt).fromNow()}
                   </span>
                 </div>
                 <div className='flex items-end w-full justify-end gap-3 '>

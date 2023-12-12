@@ -78,5 +78,3 @@ export const reverseDataFormat = (data) => {
   });
   return obj;
 };
-
-
