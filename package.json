@@ -21,8 +21,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": " react-scripts start ",
-    "dev": "npx tailwindcss -i ./src/app.css -o ./src/index.css --watch && react-scripts start ",
+    "start": "react-scripts start",
+    "dev": "concurrently \"npx tailwindcss -i ./src/app.css -o ./src/index.css --watch\" \"react-scripts start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -47,6 +47,7 @@
     ]
   },
   "devDependencies": {
+    "concurrently": "^8.2.2",
     "daisyui": "^3.9.4",
     "tailwindcss": "^3.3.5"
   }

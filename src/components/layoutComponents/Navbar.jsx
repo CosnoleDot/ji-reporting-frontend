@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Notifications } from './Notifications';
-import { FaUserPlus } from 'react-icons/fa';
+import { FaBell, FaUserPlus } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import instance from '../../api/instrance';
@@ -42,6 +42,24 @@ export const Navbar = ({ title }) => {
           </span>
         </div>
         <div className='flex-none'>
+          <div className='relative dropdown dropdown-end'>
+            <div
+              tabIndex={0}
+              role='button'
+              className='btn btn-ghost btn-circle'
+              onClick={() => {
+                showRequests(!requests);
+                showProfileTab(false);
+              }}
+            >
+              <div className='indicator'>
+                <FaBell className='text-xl' />
+                <span className='badge badge-sm indicator-item z-10'>
+                  {userRequests.length}
+                </span>
+              </div>
+            </div>
+          </div>
           {localStorage.getItem('@type') !== 'halqa' && (
             <div className='relative dropdown dropdown-end'>
               <div

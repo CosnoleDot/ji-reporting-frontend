@@ -313,7 +313,12 @@ export const Comparision = () => {
         <div className='flex items-center justify-start lg:justify-center xl:justify-center gap-3 border-b border-t py-3 overflow-hidden overflow-x-scroll inlineQ'>
           <select
             value={reportType}
-            onChange={(e) => setReportType(e.target.value)}
+            onChange={(e) => {
+              setReportType(e.target.value);
+              if (reportType === 'self') {
+                setAreaId(me.userAreaId._id);
+              }
+            }}
             className='select select-bordered'
           >
             <option value='' disabled>
@@ -326,21 +331,24 @@ export const Comparision = () => {
                 <option value='division'>Division</option>
               </>
             )}
+            <option value='self'>Self Compare</option>
           </select>
-          <select
-            value={areaId}
-            onChange={(e) => setAreaId(e.target.value)}
-            className='select select-bordered'
-          >
-            <option value='' disabled>
-              Area
-            </option>
-            {areas[reportType]?.map((i, index) => (
-              <option key={index} value={i?._id}>
-                {i?.name}
+          {reportType !== 'self' && (
+            <select
+              value={areaId}
+              onChange={(e) => setAreaId(e.target.value)}
+              className='select select-bordered'
+            >
+              <option value='' disabled>
+                Area
               </option>
-            ))}
-          </select>
+              {areas[reportType]?.map((i, index) => (
+                <option key={index} value={i?._id}>
+                  {i?.name}
+                </option>
+              ))}
+            </select>
+          )}
           <select
             defaultValue={''}
             className='select select-bordered'
