@@ -10,12 +10,17 @@ import { useToastState } from '../context';
 export const Dashboard = () => {
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [loadingNazim, setLoadingNazim] = useState(false);
+  const [loadingMaqams, setLoadingMaqams] = useState(false);
+  const [loadingDivision, setLoadingDivision] = useState(false);
+  const [loadingUnits, setLoadingUnits] = useState(false);
   const [nazim, setNazim] = useState([]);
   const [maqam, setMaqam] = useState([]);
   const [division, setDivision] = useState([]);
   const [unit, setUnit] = useState([]);
   const { dispatch } = useToastState();
   const getNazim = async () => {
+    setLoadingNazim(true);
     try {
       const req = await instance.get('/user/nazim', {
         headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
@@ -28,8 +33,10 @@ export const Dashboard = () => {
       });
       console.log(err);
     }
+    setLoadingNazim(false);
   };
   const getMaqam = async () => {
+    setLoadingMaqams(true);
     try {
       const req = await instance.get('/locations/maqam', {
         headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
@@ -41,8 +48,10 @@ export const Dashboard = () => {
         payload: err?.response?.data?.message || err?.message,
       });
     }
+    setLoadingMaqams(false);
   };
   const getUnit = async () => {
+    setLoadingUnits(true);
     try {
       const req = await instance.get('/locations/halqa', {
         headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
@@ -54,8 +63,10 @@ export const Dashboard = () => {
         payload: err?.response?.data?.message || err?.message,
       });
     }
+    setLoadingUnits(false);
   };
   const getDivision = async () => {
+    setLoadingDivision(true);
     try {
       const req = await instance.get('/locations/division', {
         headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
@@ -67,6 +78,7 @@ export const Dashboard = () => {
         payload: err?.response?.data?.message || err?.message,
       });
     }
+    setLoadingDivision(false);
   };
   const getAllReports = async () => {
     setLoading(true);
@@ -140,7 +152,7 @@ export const Dashboard = () => {
             <div className='px-4 text-gray-700'>
               <h3 className='text-sm tracking-wider'>Total Nazims</h3>
               <p className='text-3xl'>
-                {loading ? (
+                {loadingNazim ? (
                   <span className='loading loading-bars loading-md'></span>
                 ) : (
                   nazim.length
@@ -183,7 +195,7 @@ export const Dashboard = () => {
             <div className='px-4 text-gray-700'>
               <h3 className='text-sm tracking-wider'>Total Maqams</h3>
               <p className='text-3xl'>
-                {loading ? (
+                {loadingMaqams ? (
                   <span className='loading loading-bars loading-md'></span>
                 ) : (
                   maqam?.length
@@ -198,7 +210,7 @@ export const Dashboard = () => {
             <div className='px-4 text-gray-700'>
               <h3 className='text-sm tracking-wider'>Total Division</h3>
               <p className='text-3xl'>
-                {loading ? (
+                {loadingDivision ? (
                   <span className='loading loading-bars loading-md'></span>
                 ) : (
                   division?.length
@@ -213,7 +225,7 @@ export const Dashboard = () => {
             <div className='px-4 text-gray-700'>
               <h3 className='text-sm tracking-wider'>Total Units</h3>
               <p className='text-3xl'>
-                {loading ? (
+                {loadingUnits ? (
                   <span className='loading loading-bars loading-md'></span>
                 ) : (
                   unit?.length

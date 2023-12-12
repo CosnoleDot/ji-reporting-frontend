@@ -87,7 +87,7 @@ export const Halqa = () => {
     setLoading(false);
   };
   useEffect(() => {
-    getMe();
+    getMe(setMe, dispatch);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const getData = async () => {
