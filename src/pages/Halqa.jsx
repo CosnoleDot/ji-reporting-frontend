@@ -111,6 +111,7 @@ export const Halqa = () => {
   useEffect(() => {
     getData();
   }, [id]);
+  
   useEffect(() => {
     Object.keys(data).forEach((i) => {
       const elem = document.getElementById(i);
@@ -139,7 +140,7 @@ export const Halqa = () => {
           dir="rtl"
         >
           <GeneralInfo me={me} />
-          <IfradiKuwat />
+          <IfradiKuwat data={data} />
           <Activity />
           <OtherActivities />
           <ToseeDawat />

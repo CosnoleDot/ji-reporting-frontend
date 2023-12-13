@@ -28,7 +28,7 @@ export const CentralActivitiesMaqam = ({ view }) => {
   return (
     <div className="w-full max-w-full overflow-x-scroll " dir="rtl">
       <fieldset className="border p-3">
-        <legend className="text-xl font-bold">ﻣرﮐزی طﮯ ﺷدھ ﺳرﮔرﻣﯾﺎں</legend>
+        <legend className="text-xl font-bold">ﻣرﮐزی طﮯ ﺷدہ ﺳرﮔرﻣﯾﺎں</legend>
         <table className="w-full table">
           <thead>
             <tr className="flex w-full items-start justify-between bg-gray-100">
