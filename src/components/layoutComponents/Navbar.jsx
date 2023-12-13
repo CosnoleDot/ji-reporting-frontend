@@ -71,17 +71,17 @@ export const Navbar = ({ title }) => {
       }
     }
   };
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      getAllRequests();
-      getAllNotifications();
-      getAllReports();
-    }, 2000); // 2000 milliseconds = 2 seconds
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     getAllRequests();
+  //     getAllNotifications();
+  //     getAllReports();
+  //   }, 2000); // 2000 milliseconds = 2 seconds
 
-    // Cleanup the interval on component unmount
-    return () => clearInterval(intervalId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  //   // Cleanup the interval on component unmount
+  //   return () => clearInterval(intervalId);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
   return (
     <>
       <div className='navbar bg-blue-500 text-white'>

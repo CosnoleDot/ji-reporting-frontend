@@ -1,16 +1,20 @@
-import { useEffect, useState } from 'react';
-import { useToastState } from '../../context';
+import { useContext, useEffect, useState } from 'react';
+import {
+  HalqaContext,
+  MaqamContext,
+  ProvinceContext,
+  useToastState,
+} from '../../context';
 import { Link, useLocation } from 'react-router-dom';
 import instance from '../../api/instrance';
 import { FaEdit } from 'react-icons/fa';
 
-export const LocationMaqam = ({ me, setLoading0 }) => {
-  const [provinces, setProvinces] = useState([]);
-  const [maqams, setMaqams] = useState([]);
-  const [halqas, setHalqas] = useState([]);
+export const LocationMaqam = () => {
+  const provinces = useContext(ProvinceContext);
+  const maqams = useContext(MaqamContext);
+  const halqas = useContext(HalqaContext);
   const [editMode, setEditMode] = useState(false);
   const [id, setId] = useState('');
-  const [loading, setLoading] = useState(false);
   const { dispatch } = useToastState();
   const [view, setView] = useState(
     ['province'].includes(localStorage.getItem('@type')) ? 'maqam' : 'halqa'
@@ -41,53 +45,7 @@ export const LocationMaqam = ({ me, setLoading0 }) => {
     parentId: '',
     parentType: 'Maqam',
   });
-  const getProvinces = async () => {
-    try {
-      const req = await instance.get('/locations/province', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
-      });
-      setProvinces(req.data.data);
-    } catch (err) {
-      console.log(err.response.data.message);
-    }
-  };
-  const getMaqams = async () => {
-    try {
-      const req = await instance.get('/locations/maqam', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
-      });
-      if (localStorage.getItem('@type') === 'province') {
-        setMaqams(req.data.data);
-      } else if (localStorage.getItem('@type') === 'maqam') {
-        setMaqams(
-          [...req.data.data].filter((i) => i?._id === me?.userAreaId?._id)
-        );
-      }
-    } catch (err) {
-      console.log(err.response.data.message);
-    }
-  };
-  const getHalqas = async () => {
-    try {
-      const req = await instance.get('/locations/halqa', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
-      });
-      if (localStorage.getItem('@type') === 'province') {
-        setHalqas(req.data.data);
-      } else if (localStorage.getItem('@type') === 'maqam') {
-        setHalqas(
-          [...req.data.data].filter(
-            (i) => i?.parentId?._id === me?.userAreaId?._id
-          )
-        );
-      }
-    } catch (err) {
-      console.log(err.response.data.message);
-    }
-  };
   const handleSubmit = async () => {
-    setLoading(true);
-    setLoading0(true);
     try {
       const req = await instance.post('/locations/maqam', form, {
         headers: {
@@ -100,16 +58,11 @@ export const LocationMaqam = ({ me, setLoading0 }) => {
         name: '',
         province: '',
       });
-      getMaqams();
     } catch (err) {
       dispatch({ type: 'ERROR', payload: err.response.data.message });
     }
-    setLoading(false);
-    setLoading0(false);
   };
   const handleSubmitHalqa = async () => {
-    setLoading(true);
-    setLoading0(true);
     try {
       const req = await instance.post('/locations/halqa', formHalqa, {
         headers: {
@@ -123,16 +76,11 @@ export const LocationMaqam = ({ me, setLoading0 }) => {
         parentId: '',
         parentType: 'Maqam',
       });
-      getHalqas();
     } catch (err) {
       dispatch({ type: 'ERROR', payload: err.response.data.message });
     }
-    setLoading(false);
-    setLoading0(false);
   };
   const handleSubmitEdit = async () => {
-    setLoading(true);
-    setLoading0(true);
     try {
       const req = await instance.put('/locations/maqam/' + id, form, {
         headers: {
@@ -141,16 +89,11 @@ export const LocationMaqam = ({ me, setLoading0 }) => {
         },
       });
       dispatch({ type: 'SUCCESS', payload: req.data?.message });
-      getMaqams();
     } catch (err) {
       dispatch({ type: 'ERROR', payload: err.response.data.message });
     }
-    setLoading(false);
-    setLoading0(false);
   };
   const handleSubmitHalqaEdit = async () => {
-    setLoading(true);
-    setLoading0(true);
     try {
       const req = await instance.put('/locations/halqa/' + id, formHalqa, {
         headers: {
@@ -159,42 +102,24 @@ export const LocationMaqam = ({ me, setLoading0 }) => {
         },
       });
       dispatch({ type: 'SUCCESS', payload: req.data?.message });
-      getHalqas();
     } catch (err) {
       dispatch({ type: 'ERROR', payload: err.response.data.message });
     }
-    setLoading(false);
-    setLoading0(false);
   };
-  const getAll = () => {
-    setLoading0(true);
-    getProvinces();
-    getMaqams();
-  };
-  useEffect(() => {
-    const fn = async () => {
-      if (maqams.length > 0) {
-        await getHalqas();
-        setLoading0(false);
-      }
-    };
-    fn();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [maqams]);
-  useEffect(() => {
-    getAll();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [me]);
-  const handleDisable = (id, disabled) => {
-    instance.patch(
-      `/locations/${view}/disable-location/${id}`,
-      { disabled },
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('@token')}`,
-        },
-      }
-    );
+  const handleDisable = async (id, disabled) => {
+    try {
+      await instance.patch(
+        `/locations/${view}/disable-location/${id}`,
+        { disabled },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('@token')}`,
+          },
+        }
+      );
+    } catch (err) {
+      dispatch({ type: 'ERROR', payload: err.response.data.message });
+    }
   };
   return (
     <>
@@ -397,25 +322,17 @@ export const LocationMaqam = ({ me, setLoading0 }) => {
           </div>
           <div className='modal-action'>
             {editMode ? (
-              <button
-                disabled={loading}
-                className='btn'
-                onClick={handleSubmitEdit}
-              >
+              <button className='btn' onClick={handleSubmitEdit}>
                 Update
               </button>
             ) : (
-              <button disabled={loading} className='btn' onClick={handleSubmit}>
+              <button className='btn' onClick={handleSubmit}>
                 Add
               </button>
             )}
             <form method='dialog'>
               {/* if there is a button in form, it will close the modal */}
-              <button
-                disabled={loading}
-                id='close-maqam-modal'
-                className='btn ms-3'
-              >
+              <button id='close-maqam-modal' className='btn ms-3'>
                 Close
               </button>
             </form>
@@ -470,29 +387,17 @@ export const LocationMaqam = ({ me, setLoading0 }) => {
           </div>
           <div className='modal-action'>
             {editMode ? (
-              <button
-                disabled={loading}
-                className='btn'
-                onClick={handleSubmitHalqaEdit}
-              >
+              <button className='btn' onClick={handleSubmitHalqaEdit}>
                 Update
               </button>
             ) : (
-              <button
-                disabled={loading}
-                className='btn'
-                onClick={handleSubmitHalqa}
-              >
+              <button className='btn' onClick={handleSubmitHalqa}>
                 Add
               </button>
             )}
             <form method='dialog'>
               {/* if there is a button in form, it will close the modal */}
-              <button
-                disabled={loading}
-                id='close-maqam-modal'
-                className='btn ms-3'
-              >
+              <button id='close-maqam-modal' className='btn ms-3'>
                 Close
               </button>
             </form>
