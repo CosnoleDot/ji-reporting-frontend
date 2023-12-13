@@ -82,40 +82,42 @@ export const Dashboard = () => {
   };
   const getAllReports = async () => {
     setLoading(true);
-    if (localStorage.getItem('@token')) {
-      if (localStorage.getItem('@type') !== 'province') {
-        const req = await instance.get(
-          `/reports/${localStorage.getItem('@type')}`,
-          {
+    try {
+      if (localStorage.getItem('@token')) {
+        if (localStorage.getItem('@type') !== 'province') {
+          const req = await instance.get(
+            `/reports/${localStorage.getItem('@type')}`,
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem('@token')}`,
+              },
+            }
+          );
+          setCount(req.data.data.length);
+        } else {
+          const halqa = await instance.get(`/reports/halqa`, {
             headers: {
               Authorization: `Bearer ${localStorage.getItem('@token')}`,
             },
-          }
-        );
-        setCount(req.data.data.length);
-      } else {
-        const halqa = await instance.get(`/reports/halqa`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('@token')}`,
-          },
-        });
-        const maqam = await instance.get(`/reports/maqam`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('@token')}`,
-          },
-        });
-        const division = await instance.get(`/reports/division`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('@token')}`,
-          },
-        });
-        setCount(
-          halqa.data.data.length +
-            maqam.data.data.length +
-            division.data.data.length
-        );
+          });
+          const maqam = await instance.get(`/reports/maqam`, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('@token')}`,
+            },
+          });
+          const division = await instance.get(`/reports/division`, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('@token')}`,
+            },
+          });
+          setCount(
+            halqa.data.data.length +
+              maqam.data.data.length +
+              division.data.data.length
+          );
+        }
       }
-    }
+    } catch (err) {}
     setLoading(false);
   };
   useEffect(() => {

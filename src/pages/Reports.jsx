@@ -1,8 +1,8 @@
 import { FaEdit, FaEye, FaPlus } from "react-icons/fa";
 import { GeneralLayout, Loader } from "../components";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router";
-import { useToastState } from "../context";
+import { MeContext, useToastState } from "../context";
 import instance from "../api/instrance";
 import moment from "moment/moment";
 import { Link } from "react-router-dom";
@@ -77,7 +77,7 @@ export const Reports = () => {
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("2023");
   const [filerData, setFilterData] = useState([]);
-  const [me, setMe] = useState({});
+  const me = useContext(MeContext);
   const { dispatch } = useToastState();
   const [tab, setTab] = useState("maqam");
   const [active, setActive] = useState("province");
@@ -128,22 +128,6 @@ export const Reports = () => {
     // Call the function when the component mounts or when the location changes
     getQueryParams();
   }, [params]);
-  const getMe = async () => {
-    const req = await instance.get("/user/me", {
-      headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
-    });
-    if (req) {
-      setMe(req.data.data);
-    }
-    try {
-    } catch (err) {
-      dispatch({ type: "ERROR", payload: err?.response?.data?.message });
-    }
-  };
-  useEffect(() => {
-    if (localStorage.getItem("@token")) getMe();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const toggleSearch = () => {
     showSearch(!search);

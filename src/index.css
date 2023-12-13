@@ -3308,12 +3308,22 @@ html {
   margin-bottom: 1rem;
 }
 
+.me-5 {
+  -webkit-margin-end: 1.25rem;
+          margin-inline-end: 1.25rem;
+}
+
 .ml-3 {
   margin-left: 0.75rem;
 }
 
 .ml-auto {
   margin-left: auto;
+}
+
+.ms-2 {
+  -webkit-margin-start: 0.5rem;
+          margin-inline-start: 0.5rem;
 }
 
 .ms-3 {
@@ -3339,16 +3349,6 @@ html {
 
 .mt-8 {
   margin-top: 2rem;
-}
-
-.ms-2 {
-  -webkit-margin-start: 0.5rem;
-          margin-inline-start: 0.5rem;
-}
-
-.me-5 {
-  -webkit-margin-end: 1.25rem;
-          margin-inline-end: 1.25rem;
 }
 
 .block {
@@ -3696,12 +3696,12 @@ html {
   border-bottom-width: 1px;
 }
 
-.border-t {
-  border-top-width: 1px;
-}
-
 .border-b-2 {
   border-bottom-width: 2px;
+}
+
+.border-t {
+  border-top-width: 1px;
 }
 
 .border-dashed {
@@ -3859,19 +3859,9 @@ html {
   padding-bottom: 0.75rem;
 }
 
-.px-5 {
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
-}
-
 .py-5 {
   padding-top: 1.25rem;
   padding-bottom: 1.25rem;
-}
-
-.px-2 {
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
 }
 
 .pl-3 {
@@ -4289,10 +4279,6 @@ html {
 @media (min-width: 640px) {
   .sm\:grid-cols-4 {
     grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
-  .sm\:grid-cols-1 {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
   }
 
   .sm\:flex-col {
