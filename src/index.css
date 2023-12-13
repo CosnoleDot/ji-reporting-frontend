@@ -3313,6 +3313,11 @@ html {
           margin-inline-end: 1.25rem;
 }
 
+.me-5 {
+  -webkit-margin-end: 1.25rem;
+          margin-inline-end: 1.25rem;
+}
+
 .ml-3 {
   margin-left: 0.75rem;
 }

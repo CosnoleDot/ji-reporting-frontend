@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { GeneralLayout, Loader } from '../components';
-import { useToastState } from '../context';
+import { MeContext, useToastState } from '../context';
 import instance from '../api/instrance';
 import { useEffect } from 'react';
 import { ReportChart } from '../components/ReportChart';
@@ -134,7 +134,7 @@ const Dates = ({
 export const Comparision = () => {
   const [loading, setLoading] = useState(true);
   const [durationMonths, setDurationMonths] = useState([]);
-  const [me, setMe] = useState(null);
+  const me = useContext(MeContext);
   const [selectedProperty, setSelectedProperty] = useState('');
   const [durationType, setDurationType] = useState('');
   const [reportType, setReportType] = useState('');
@@ -151,21 +151,6 @@ export const Comparision = () => {
   });
 
   const { dispatch } = useToastState();
-  const getMe = async () => {
-    setLoading(true);
-    try {
-      const req = await instance.get('/user/me', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
-      });
-      setMe(req?.data?.data);
-    } catch (err) {
-      dispatch({ type: 'ERROR', payload: err.response?.data.message });
-    }
-  };
-  useEffect(() => {
-    getMe();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
   const getHalqas = async () => {
     try {
       const req = await instance('/locations/halqa', {
