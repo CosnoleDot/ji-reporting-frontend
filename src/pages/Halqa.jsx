@@ -10,7 +10,7 @@ import {
   RozOShabDiary,
   ToseeDawat,
 } from "../components";
-import { useToastState } from "../context";
+import { MeContext, useToastState } from "../context";
 import {
   convertDataFormat,
   handleReportSubmit,
@@ -18,12 +18,11 @@ import {
   toJson,
 } from "../utils";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { type } from "@testing-library/user-event/dist/type";
 
 export const Halqa = () => {
   
   const { dispatch } = useToastState();
-  const [me, setMe] = useState(null);
+  const me = useContext(MeContext);
   const [id, setId] = useState(null);
   const [view, setView] = useState(false);
   const [data, setData] = useState({});
@@ -32,20 +31,6 @@ export const Halqa = () => {
   const params = useParams();
   let navigate = useNavigate();
   const isViewPage= location.pathname?.split("/")[2];
-  
-  const getMe = async () => {
-    try {
-      const req = await instance.get("/user/me", {
-        headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
-      });
-      setMe(req.data.data);
-    } catch (err) {
-      dispatch({
-        type: "ERROR",
-        payload: err?.response?.data?.message || err?.data?.message,
-      });
-    }
-  };
   useEffect(() => {
     const l = location.pathname?.split("/")[2];
     if (l === "view") {
@@ -87,10 +72,6 @@ export const Halqa = () => {
     }
     setLoading(false);
   };
-  useEffect(() => {
-    getMe(setMe, dispatch);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
   const getData = async () => {
     if (id) {
       setLoading(true);
@@ -140,7 +121,7 @@ export const Halqa = () => {
           onSubmit={handleReportSubmit}
           dir="rtl"
         >
-          <GeneralInfo me={me} />
+          <GeneralInfo me={me} area={"حلقہ"}/>
           <IfradiKuwat data={data} />
           <Activity />
           <OtherActivities />
@@ -148,7 +129,7 @@ export const Halqa = () => {
           <Library />
           <RozOShabDiary />
           <div className="w-full flex p-2">
-            <label htmlFor="comments">تبصرھ</label>
+            <label htmlFor="comments">تبصرہ</label>
             <input
               type="text"
               name="comments"
@@ -168,7 +149,7 @@ export const Halqa = () => {
               />
             </div>
           </div>
-          {isViewPage !== "view" && <button type="submit">Submit</button>}
+          {isViewPage !== "view" && <button type="submit" className="btn">Submit</button>}
         </form>
       </div>
     </GeneralLayout>

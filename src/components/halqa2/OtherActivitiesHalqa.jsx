@@ -15,7 +15,7 @@ const arr = [
     key: "hadithCircle",
   },
   {
-    title: "نظام الصلٰتہ",
+    title: "نظام الصلوٰۃ",
     key: "nizamSalah",
   },
   {

@@ -1,13 +1,16 @@
-import React from 'react'
-import { Box } from "./IfradiKuwat"
+import React from "react";
+import { Box } from "../halqa";
 
-const ZailiActivities = () => {
+
+
+
+export const MarkaziActivities = () => {
   return (
     <div className="relative w-full overflow-auto">
       <table className="w-full table">
         <thead>
           <tr>
-            <Box type={"heading"}>ذیلی طے شدہ سرگرمیاں</Box>
+            <Box type={"heading"}>مرکزی طے شدہ سرگرمیاں</Box>
             <Box>طے شدہ</Box>
             <Box>منعقدہ</Box>
             <Box>اوسط حاضری</Box>
@@ -16,28 +19,28 @@ const ZailiActivities = () => {
         </thead>
         <tbody>
           <tr>
-            <Box>اجتماع رفقا </Box>
+            <Box>ڈویژنل مشاورات</Box>
             <Box>
               <input
                 type="number"
-                name={`ijtRafaqa-decided`}
-                id={`ijtRafaqa-decided`}
+                name={`divMushawarat-decided`}
+                id={`divMushawarat-decided`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 type="number"
-                name={`ijtRafaqa-done`}
-                id={`ijtRafaqa-done`}
+                name={`divMushawarat-done`}
+                id={`divMushawarat-done`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 type="number"
-                name={`ijtRafaqa-averageAttendance`}
-                id={`ijtRafaqa-averageAttendance`}
+                name={`divMushawarat-averageAttendance`}
+                id={`divMushawarat-averageAttendance`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
@@ -46,34 +49,34 @@ const ZailiActivities = () => {
               <input
                 type="checkbox"
                 className="p-1 text-center min-w-full checkbox"
-                name={`ijtRafaqa-registered`}
-                id={`ijtRafaqa-registered`}
+                name={`divMushawarat-registered`}
+                id={`divMushawarat-registered`}
               />
             </Box>
           </tr>
           <tr>
-            <Box> سٹڈی سرکل</Box>
+            <Box>اجتماع ارکان</Box>
             <Box>
               <input
                 type="number"
-                name={`studyCircleMentioned-decided`}
-                id={`studyCircleMentioned-decided`}
+                name={`ijtArkan-decided`}
+                id={`ijtArkan-decided`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 type="number"
-                name={`studyCircleMentioned-done`}
-                id={`studyCircleMentioned-done`}
+                name={`ijtArkan-done`}
+                id={`ijtArkan-done`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 type="number"
-                name={`studyCircleMentioned-averageAttendance`}
-                id={`studyCircleMentioned-averageAttendance`}
+                name={`ijtArkan-averageAttendance`}
+                id={`ijtArkan-averageAttendance`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
@@ -82,34 +85,34 @@ const ZailiActivities = () => {
               <input
                 type="checkbox"
                 className="p-1 text-center min-w-full checkbox"
-                name={`studyCircleMentioned-registered`}
-                id={`studyCircleMentioned-registered`}
+                name={`ijtArkan-registered`}
+                id={`ijtArkan-registered`}
               />
             </Box>
           </tr>
           <tr>
-            <Box>اجتماع کارکنان</Box>
+            <Box>سٹڈی سرکل</Box>
             <Box>
               <input
                 type="number"
-                name={`ijtKarkunan-decided`}
-                id={`ijtKarkunan-decided`}
+                name={`studyCircle-decided`}
+                id={`studyCircle-decided`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 type="number"
-                name={`ijtKarkunan-done`}
-                id={`ijtKarkunan-done`}
+                name={`studyCircle-done`}
+                id={`studyCircle-done`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 type="number"
-                name={`ijtKarkunan-averageAttendance`}
-                id={`ijtKarkunan-averageAttendance`}
+                name={`studyCircle-averageAttendance`}
+                id={`studyCircle-averageAttendance`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
@@ -118,34 +121,34 @@ const ZailiActivities = () => {
               <input
                 type="checkbox"
                 className="p-1 text-center min-w-full checkbox"
-                name={`ijtKarkunan-registered`}
-                id={`ijtKarkunan-registered`}
+                name={`studyCircle-registered`}
+                id={`studyCircle-registered`}
               />
             </Box>
           </tr>
           <tr>
-            <Box>درس قرآن </Box>
+            <Box>اجتماع ناظمین</Box>
             <Box>
               <input
                 type="number"
-                name={`darseQuran-decided`}
-                id={`darseQuran-decided`}
+                name={`sadurMeeting-decided`}
+                id={`sadurMeeting-decided`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 type="number"
-                name={`darseQuran-done`}
-                id={`darseQuran-done`}
+                name={`sadurMeeting-done`}
+                id={`sadurMeeting-done`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 type="number"
-                name={`darseQuran-averageAttendance`}
-                id={`darseQuran-averageAttendance`}
+                name={`sadurMeeting-averageAttendance`}
+                id={`sadurMeeting-averageAttendance`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
@@ -154,34 +157,34 @@ const ZailiActivities = () => {
               <input
                 type="checkbox"
                 className="p-1 text-center min-w-full checkbox"
-                name={`darseQuran-registered`}
-                id={`darseQuran-registered`}
+                name={`sadurMeeting-registered`}
+                id={`sadurMeeting-registered`}
               />
             </Box>
           </tr>
           <tr>
-            <Box>شاہین میٹنگ</Box>
+            <Box>اجتماع امیدواران</Box>
             <Box>
               <input
                 type="number"
-                name={`shaheenMeeting-decided`}
-                id={`shaheenMeeting-decided`}
+                name={`ijtUmeedwaran-decided`}
+                id={`ijtUmeedwaran-decided`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 type="number"
-                name={`shaheenMeeting-done`}
-                id={`shaheenMeeting-done`}
+                name={`ijtUmeedwaran-done`}
+                id={`ijtUmeedwaran-done`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 type="number"
-                name={`shaheenMeeting-averageAttendance`}
-                id={`shaheenMeeting-averageAttendance`}
+                name={`ijtUmeedwaran-averageAttendance`}
+                id={`ijtUmeedwaran-averageAttendance`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
@@ -190,34 +193,34 @@ const ZailiActivities = () => {
               <input
                 type="checkbox"
                 className="p-1 text-center min-w-full checkbox"
-                name={`shaheenMeeting-registered`}
-                id={`shaheenMeeting-registered`}
+                name={`ijtUmeedwaran-registered`}
+                id={`ijtUmeedwaran-registered`}
               />
             </Box>
           </tr>
           <tr>
-            <Box>پیغام محفل</Box>
+            <Box>صدورمیٹینگ</Box>
             <Box>
               <input
                 type="number"
-                name={`paighamEvent-decided`}
-                id={`paighamEvent-decided`}
+                name={`sadurMeeting-decided`}
+                id={`sadurMeeting-decided`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 type="number"
-                name={`paighamEvent-done`}
-                id={`paighamEvent-done`}
+                name={`sadurMeeting-done`}
+                id={`sadurMeeting-done`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 type="number"
-                name={`paighamEvent-averageAttendance`}
-                id={`paighamEvent-averageAttendance`}
+                name={`sadurMeeting-averageAttendance`}
+                id={`sadurMeeting-averageAttendance`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
@@ -226,16 +229,14 @@ const ZailiActivities = () => {
               <input
                 type="checkbox"
                 className="p-1 text-center min-w-full checkbox"
-                name={`paighamEvent-registered`}
-                id={`paighamEvent-registered`}
+                name={`sadurMeeting-registered`}
+                id={`sadurMeeting-registered`}
               />
             </Box>
           </tr>
+          
         </tbody>
       </table>
     </div>
-
-  )
-}
-
-export default ZailiActivities
+  );
+};

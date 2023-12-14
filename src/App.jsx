@@ -15,6 +15,7 @@ import {
   Locations,
   Maqam,
   Province,
+ 
 } from './pages';
 import { useEffect, useState } from 'react';
 import instance from './api/instrance';
@@ -250,7 +251,7 @@ function App() {
                             <Maqam />
                           ) : localStorage.getItem('@type') === 'division' ? (
                             <Division />
-                          ) : (
+                          ) : localStorage.getItem('@type') === 'province' ? <Province/>: (
                             <Halqa />
                           )
                         }
@@ -279,7 +280,7 @@ function App() {
                           ) : localStorage.getItem('@type') === 'division' ? (
                             <Division />
                           ) : localStorage.getItem('@type') === 'province' ? (
-                            <Province />
+                            <Province/>
                           ) : (
                             <Halqa />
                           )

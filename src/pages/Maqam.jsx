@@ -10,13 +10,14 @@ import {
   EveningDiaryMaqam,
   TanzeemMaqam,
   CentralActivitiesMaqam,
+  GeneralInfo,
 } from "../components";
 import { convertDataFormat, reverseDataFormat, toJson } from "../utils";
 import instance from "../api/instrance";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useEffect } from "react";
-import { useToastState } from "../context";
+import { HalqaContext, MeContext, useToastState } from "../context";
 import { InputWithLabel } from "../components/InputWithLabel";
 import { Tanzeem } from "../components/maqamReport/Tanzeem";
 import { IfradiKuwat } from "../components/maqamReport/IfradiKuwat";
@@ -30,7 +31,7 @@ import { RozOShabDiary } from "../components/maqamReport/RozOShabDiary";
 
 export const getData = async (path, id, setData, dispatch, setLoading) => {
   setLoading(true);
-  
+
   try {
     const req = await instance(`/reports/${path}/${id}`, {
       headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
@@ -53,59 +54,26 @@ export const Maqam = () => {
   const [loading, setLoading] = useState(true);
   const [view, setView] = useState(false);
   const location = useLocation();
+  const me = useContext(MeContext);
   const navigate = useNavigate();
   const [rawabit, setRawabit] = useState({});
-  const [allHalqas, setAllHalqas]=useState();
-  const[me,setMe]=useState();
-  const getProfile = async () => {
-    try {
-      const req = await instance.get('/user/me', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
-      });
-      setMe(req.data.data);
-    } catch (err) {
-      dispatch({ type: 'ERROR', payload: err.response.data.message });
-    }
-  };
-   const getAllHalqas= async ()=>{
-    setLoading(true);
-    
-    try {
-      const req = await instance(`/reports/halqa/`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
-      });
-      if (req) {
-        
-        setAllHalqas(req?.data?.data);
-      }
-    } catch (err) {
-      dispatch({ type: "ERROR", payload: err?.response?.data?.message });
-    }
-    setLoading(false);
-  }
-  useEffect(()=>{
-    getAllHalqas();
-    getProfile();
-  },[])
-  
-  const currMaqamHalqas = Array.isArray(allHalqas)
-  ? allHalqas
-      .filter((i) => i?.halqaAreaId === me?._id)
-      .filter((curr) => {
-        const [dataMonth, dataYear] = [
-          curr?.month.split("-")[1],
-          curr?.month.split("-")[0],
-        ];
-        const [givenMonth, givenYear] = [
-          id?.split("-")[1],
-          id?.split("-")[0],
-        ];
-        return dataMonth == givenMonth && dataYear == givenYear;
-      })
-  : [];
-  
+  const allHalqas = useContext(HalqaContext);
 
-  
+  const currMaqamHalqas = Array.isArray(allHalqas)
+    ? allHalqas
+        .filter((curr) => {
+          const [dataMonth, dataYear] = [
+            curr?.month?.split("-")[1],
+            curr?.month?.split("-")[0],
+          ];
+          const [givenMonth, givenYear] = [
+            id?.split("-")[1],
+            id?.split("-")[0],
+          ];
+          return dataMonth == givenMonth && dataYear == givenYear;
+        })
+    : [];
+  console.log(currMaqamHalqas)
   useEffect(() => {
     const l = location.pathname?.split("/")[2];
     if (l === "view") {
@@ -179,9 +147,12 @@ export const Maqam = () => {
         >
           <h2 className="text-2xl">جا ئزءکارکردگی رپورٹ (براے مقام)</h2>
           <div className="w-full p-4">
+          <div>
+              <GeneralInfo me={me} area={"مقام"} />
+            </div>
             <div className="mb-4">
               {/* <TanzeemMaqam view={view} /> */}
-              <Tanzeem />
+              <Tanzeem data={data} />
             </div>
             <div className="mb-4">
               {/* <MenTableMaqam
@@ -189,7 +160,7 @@ export const Maqam = () => {
                 rawabit={rawabit}
                 setRawabit={setRawabit}
               /> */}
-              <IfradiKuwat />
+              <IfradiKuwat data={data}/>
             </div>
             <div className="mb-4">
               {/* <CentralActivitiesMaqam view={view} /> */}

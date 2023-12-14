@@ -1,11 +1,11 @@
 import { InputWithLabel } from "../InputWithLabel";
 
 export const TanzeemProvince = ({ view }) => {
-  const headings = ["", "آغازمیں", "اِضافہ", "کمی", "اختتام", "فعال", "غیرفعال"];
+  const headings = ["", "آغازمیں", "اِضافہ", "کمی", "اختتام پر", "فعال", "غیرفعال"];
   const rows = [
     {
       key: "rehaishHalqay",
-      label: "رھاشی حلقے",
+      label: "رہائشی حلقے",
     },
     {
       key: "taleemHalqay",

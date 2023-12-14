@@ -12,7 +12,7 @@ const arr = [
   },
 
   {
-    title: "نظام الصلٰتہ",
+    title: "نظام الصلوٰۃ",
     key: "nizamSalah",
   },
   {

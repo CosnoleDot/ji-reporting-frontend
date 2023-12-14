@@ -1,14 +1,15 @@
 import React from "react";
+import { Box } from "../halqa";
 
-import { InputWithLabel } from "../InputWithLabel";
-import { Box } from "./IfradiKuwat";
 
-export const Tanzeem = ({ view , data}) => {
+
+export const Tanzeem = ({ view ,data}) => {
+  
   const calcultate= (v)=>{
     // (start + increase)- decrease
-    const s = parseInt(data[`${v}-start`]);
-    const i = parseInt(data[`${v}-increase`]);
-    const d = parseInt(data[`${v}-decrease`]);
+    const s = parseInt(data?.[`${v}-start`]);
+    const i = parseInt(data?.[`${v}-increase`]);
+    const d = parseInt(data?.[`${v}-decrease`]);
     return (s+i)-d;
   }
 
@@ -21,7 +22,7 @@ export const Tanzeem = ({ view , data}) => {
             <Box>آغازمیں</Box>
             <Box>اِضافہ</Box>
             <Box>کمی</Box>
-            <Box>اختتام پر</Box>
+            <Box>اختتام پر </Box>
             <Box>فعال</Box>
             <Box>غیرفعال</Box>
           </tr>
@@ -184,7 +185,7 @@ export const Tanzeem = ({ view , data}) => {
             </Box>
           </tr>
           <tr>
-            <Box>رہاشی زیلی حلقے</Box>
+            <Box>رہائشی زیلی حلقے</Box>
             <Box>
               <input
                 type="number"
@@ -392,7 +393,7 @@ export const Tanzeem = ({ view , data}) => {
             </Box>
           </tr>
           <tr>
-            <Box>بزم کےرہاشی یونٹس</Box>
+            <Box>بزم کے رہائشی یونٹس</Box>
             <Box>
               <input
                 type="number"

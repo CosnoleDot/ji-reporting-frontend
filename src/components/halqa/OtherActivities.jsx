@@ -16,7 +16,7 @@ export const OtherActivities = () => {
           <input type='number' name="hadithCircle" id="hadithCircle" className='border-b-2 text-center border-dashed' />
         </div>
         <div className='flex py-2'>
-          <label className='block'>نظام الصلٰتہ:</label>
+          <label className='block'>نظام الصلوٰۃ:</label>
           <input type='number' name="nizamSalah" id="nizamSalah" className='border-b-2 text-center border-dashed' />
         </div>
         <div className='flex py-2'>

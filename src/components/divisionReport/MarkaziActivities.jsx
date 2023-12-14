@@ -1,86 +1,92 @@
-import { Box } from "./IfradiKuwat";
+import React from "react";
+import { Box } from "../halqa";
 
-export const Activity = () => {
+
+
+
+export const MarkaziActivities = () => {
   return (
     <div className="relative w-full overflow-auto">
       <table className="w-full table">
         <thead>
           <tr>
-            <Box type={"heading"}>طے شدہ سرگرمیاں</Box>
-            <Box>طےشدہ</Box>
+            <Box type={"heading"}>مرکزی طے شدہ سرگرمیاں</Box>
+            <Box>طے شدہ</Box>
             <Box>منعقدہ</Box>
-            <Box>حاضری</Box>
-            <Box>عنوان</Box>
+            <Box>اوسط حاضری</Box>
+            <Box>مرتب</Box>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <Box>احتمع رفقا</Box>
+            <Box>اجتماع ناظمین</Box>
             <Box>
               <input
                 type="number"
-                name={`ijtRafaqa-decided`}
-                id={`ijtRafaqa-decided`}
+                name={`ijtNazmeen-decided`}
+                id={`ijtNazmeen-decided`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 type="number"
-                name={`ijtRafaqa-completed`}
-                id={`ijtRafaqa-completed`}
+                name={`ijtNazmeen-done`}
+                id={`ijtNazmeen-done`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 type="number"
-                name={`ijtRafaqa-attendance`}
-                id={`ijtRafaqa-attendance`}
+                name={`ijtNazmeen-averageAttendance`}
+                id={`ijtNazmeen-averageAttendance`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
+
             <Box>
               <input
-                type="text"
-                name={`ijtRafaqa-title`}
-                id={`ijtRafaqa-title`}
-                className="p-1 min-w-full"
+                type="checkbox"
+                className="p-1 text-center min-w-full checkbox"
+                name={`ijtNazmeen-registered`}
+                id={`ijtNazmeen-registered`}
               />
             </Box>
           </tr>
           <tr>
-            <Box>اجتماع کارکنان</Box>
+            <Box>اجتماع امیدواران</Box>
             <Box>
               <input
                 type="number"
-                name={`ijtKarkunan-decided`}
-                id={`ijtKarkunan-decided`}
+                name={`ijtUmeedwaran-decided`}
+                id={`ijtUmeedwaran-decided`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 type="number"
-                name={`ijtKarkunan-completed`}
-                id={`ijtKarkunan-completed`}
+                name={`ijtUmeedwaran-done`}
+                id={`ijtUmeedwaran-done`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 type="number"
-                name={`ijtKarkunan-attendance`}
-                id={`ijtKarkunan-attendance`}
+                name={`ijtUmeedwaran-averageAttendance`}
+                id={`ijtUmeedwaran-averageAttendance`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
+
             <Box>
               <input
-                type="text"
-                name={`ijtKarkunan-title`}
-                id={`ijtKarkunan-title`}
-                className="p-1 min-w-full"
+                type="checkbox"
+                className="p-1 text-center min-w-full checkbox"
+                name={`ijtUmeedwaran-registered`}
+                id={`ijtUmeedwaran-registered`}
               />
             </Box>
           </tr>
@@ -97,63 +103,66 @@ export const Activity = () => {
             <Box>
               <input
                 type="number"
-                name={`studyCircle-completed`}
-                id={`studyCircle-completed`}
+                name={`studyCircle-done`}
+                id={`studyCircle-done`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 type="number"
-                name={`studyCircle-attendance`}
-                id={`studyCircle-attendance`}
+                name={`studyCircle-averageAttendance`}
+                id={`studyCircle-averageAttendance`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
+
             <Box>
               <input
-                type="text"
-                name={`studyCircle-title`}
-                id={`studyCircle-title`}
-                className="p-1 min-w-full"
+                type="checkbox"
+                className="p-1 text-center min-w-full checkbox"
+                name={`studyCircle-registered`}
+                id={`studyCircle-registered`}
               />
             </Box>
           </tr>
           <tr>
-            <Box>درس قُرآن</Box>
+            <Box>صدورمیٹینگ</Box>
             <Box>
               <input
                 type="number"
-                name={`darseQuran-decided`}
-                id={`darseQuran-decided`}
+                name={`sadurMeeting-decided`}
+                id={`sadurMeeting-decided`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 type="number"
-                name={`darseQuran-completed`}
-                id={`darseQuran-completed`}
+                name={`sadurMeeting-done`}
+                id={`sadurMeeting-done`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 type="number"
-                name={`darseQuran-attendance`}
-                id={`darseQuran-attendance`}
+                name={`sadurMeeting-averageAttendance`}
+                id={`sadurMeeting-averageAttendance`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
+
             <Box>
               <input
-                type="text"
-                name={`darseQuran-title`}
-                id={`darseQuran-title`}
-                className="p-1 min-w-full"
+                type="checkbox"
+                className="p-1 text-center min-w-full checkbox"
+                name={`sadurMeeting-registered`}
+                id={`sadurMeeting-registered`}
               />
             </Box>
           </tr>
+          
         </tbody>
       </table>
     </div>

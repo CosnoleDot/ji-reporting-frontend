@@ -1,14 +1,16 @@
 import React from "react";
 
 import { InputWithLabel } from "../InputWithLabel";
-import { Box } from "./IfradiKuwat";
+import { Box } from "../halqa";
 
-export const Tanzeem = ({ view , data}) => {
+
+export const Tanzeem = ({ view ,data}) => {
+  
   const calcultate= (v)=>{
     // (start + increase)- decrease
-    const s = parseInt(data[`${v}-start`]);
-    const i = parseInt(data[`${v}-increase`]);
-    const d = parseInt(data[`${v}-decrease`]);
+    const s = parseInt(data?.[`${v}-start`]);
+    const i = parseInt(data?.[`${v}-increase`]);
+    const d = parseInt(data?.[`${v}-decrease`]);
     return (s+i)-d;
   }
 

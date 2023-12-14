@@ -1,25 +1,27 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   GeneralLayout,
   Loader,
-  TanzeemDivision,
-  MenTableDivision,
-  ZailiActivitesDivision,
-  CentralActivitiesDivision,
-  OtherActivitiesDivision,
-  ExpandPartyDivision,
-  LibraryDivision,
-  MessageDigestDivision,
-  EveningDiaryDivision,
+  GeneralInfo,
 } from "../components";
 import { convertDataFormat, toJson } from "../utils";
 import instance from "../api/instrance";
 import { InputWithLabel } from "../components/InputWithLabel";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
-import { useToastState } from "../context";
+import { MeContext, useToastState } from "../context";
 import { useEffect } from "react";
 import { getData } from "./Maqam";
+import { Tanzeem } from "../components/divisionReport/Tanzeem";
+import { IfradiKuwat } from "../components/divisionReport/IfradiKuwat";
+import { MarkaziActivities } from "../components/divisionReport/MarkaziActivities";
+import ZailiActivities from "../components/divisionReport/ZailiActivities";
+import { OtherActivities } from "../components/divisionReport/OtherActivities";
+import { ToseeDawat } from "../components/divisionReport/ToseeDawat";
+import { Library } from "../components/divisionReport/Library";
+import { PaighamDigest } from "../components/divisionReport/PaighamDigest";
+import { RozOShabDiary } from "../components/divisionReport/RozOShabDiary";
+
 
 export const Division = () => {
   // EDIT CODE START
@@ -29,6 +31,7 @@ export const Division = () => {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
   const [view, setView] = useState(false);
+  const me = useContext(MeContext);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -104,7 +107,7 @@ export const Division = () => {
       placeholder: "Input 1",
     },
     {
-      title: "نظام الصلٰتہ",
+      title: "نظام الصلوٰۃ",
 
       placeholder: "Input 1",
     },
@@ -131,31 +134,43 @@ export const Division = () => {
           <h2 className="text-2xl mb-4">جا ئزءکارکردگی رپورٹ (براے ڈویژن)</h2>
           <div className="w-full">
             <div>
-              <TanzeemDivision view={view} />
+              <GeneralInfo me={me} area={"ڈویژن"} />
+            </div>
+            <div>
+              {/* <TanzeemDivision view={view} /> */}
+              <Tanzeem data={data}/>
             </div>
             <div className="mb-4">
-              <MenTableDivision view={view} />
+              {/* <MenTableDivision view={view} /> */}
+              <IfradiKuwat data={data}/>
             </div>
             <div className="mb-4">
-              <CentralActivitiesDivision view={view} />
+              {/* <CentralActivitiesDivision view={view} /> */}
+              <MarkaziActivities/>
             </div>
             <div className="mb-4">
-              <ZailiActivitesDivision view={view} />
+              {/* <ZailiActivitesDivision view={view} /> */}
+              <ZailiActivities/>
             </div>
             <div className=" mb-4">
-              <OtherActivitiesDivision arr={arr} view={view} />
+              {/* <OtherActivitiesDivision arr={arr} view={view} /> */}
+              <OtherActivities/>
             </div>
             <div className=" mb-4">
-              <ExpandPartyDivision view={view} />
+              {/* <ExpandPartyDivision view={view} /> */}
+              <ToseeDawat/>
             </div>
             <div className=" mb-4">
-              <LibraryDivision view={view} />
+              {/* <LibraryDivision view={view} /> */}
+              <Library/>
             </div>
             <div className=" mb-4">
-              <MessageDigestDivision view={view} />
+              {/* <MessageDigestDivision view={view} /> */}
+              <PaighamDigest/>
             </div>
             <div className=" mb-4">
-              <EveningDiaryDivision view={view} />
+              {/* <EveningDiaryDivision view={view} /> */}
+              <RozOShabDiary/>
             </div>
           </div>
           <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
@@ -164,8 +179,8 @@ export const Division = () => {
                 readOnly={view}
                 type={"textarea"}
                 required={true}
-                placeholder={" تبصرھ"}
-                label={" تبصرھ"}
+                placeholder={" تبصرہ"}
+                label={" تبصرہ"}
                 id={"comments"}
                 name={"comments"}
               />
@@ -174,7 +189,7 @@ export const Division = () => {
               <InputWithLabel
                 readOnly={view}
                 required={true}
-                label={"براے ماھ"}
+                label={"برائے ماہ"}
                 type={"month"}
                 id={"month"}
                 name={"month"}

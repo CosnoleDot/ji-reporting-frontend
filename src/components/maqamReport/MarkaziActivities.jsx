@@ -9,7 +9,7 @@ export const MarkaziActivities = () => {
       <table className="w-full table">
         <thead>
           <tr>
-            <Box type={"heading"}>ﻣرﮐزی طﮯ ﺷدہ ﺳرﮔرﻣﯾﺎں</Box>
+            <Box type={"heading"}>مرکزی طے شدہ سرگرمیاں</Box>
             <Box>طے شدہ</Box>
             <Box>منعقدہ</Box>
             <Box>اوسط حاضری</Box>
@@ -18,7 +18,7 @@ export const MarkaziActivities = () => {
         </thead>
         <tbody>
           <tr>
-            <Box>اجتمع ارکان</Box>
+            <Box>اجتماع ارکان</Box>
             <Box>
               <input
                 type="number"
@@ -90,7 +90,7 @@ export const MarkaziActivities = () => {
             </Box>
           </tr>
           <tr>
-            <Box>اجتمع ناظمین</Box>
+            <Box>اجتماع ناظمین</Box>
             <Box>
               <input
                 type="number"
@@ -126,7 +126,7 @@ export const MarkaziActivities = () => {
             </Box>
           </tr>
           <tr>
-            <Box>اجتمع امیدواران</Box>
+            <Box>اجتماع امیدواران</Box>
             <Box>
               <input
                 type="number"

@@ -121,8 +121,8 @@ export const Halqa = () => {
                 readOnly={view}
                 type={"textarea"}
                 required={true}
-                placeholder={" تبصرھ"}
-                label={" تبصرھ"}
+                placeholder={" تبصرہ"}
+                label={" تبصرہ"}
                 id={"comments"}
                 name={"comments"}
               />
@@ -131,8 +131,8 @@ export const Halqa = () => {
               <InputWithLabel
                 readOnly={view}
                 required={true}
-                label={"براے ماھ"}
-                placeholder={"براے ماھ"}
+                label={"برائے ماہ"}
+                placeholder={"برائے ماہ"}
                 type={"month"}
                 id={"month"}
                 name={"month"}

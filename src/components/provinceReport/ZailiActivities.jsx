@@ -1,5 +1,6 @@
 import React from 'react'
-import { Box } from "./IfradiKuwat"
+import { Box } from '../halqa'
+
 
 const ZailiActivities = () => {
   return (

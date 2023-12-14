@@ -12,7 +12,7 @@ export const ActivityTableHalqa = ({ view }) => {
       key: "studyCircle",
       title: "سٹڈی سرکل",
     },
-    { key: "ijtKarkunan", title: "اجتمع کارکنان" },
+    { key: "ijtKarkunan", title: "اجتماع کارکنان" },
     { key: "darseQuran", title: " درس قُرآن" },
     { key: "registered" },
   ];

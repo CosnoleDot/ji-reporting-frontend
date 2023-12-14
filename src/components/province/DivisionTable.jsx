@@ -14,7 +14,7 @@ export const DivisionTable = ({ view }) => {
       key: "ijtArkan",
     },
     {
-      title: " ﺳﭨڈی ﺳرﮐل",
+      title: " سٹڈی سرکل",
       key: "studyCircle",
     },
     {

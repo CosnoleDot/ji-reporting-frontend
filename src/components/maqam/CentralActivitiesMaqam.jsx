@@ -3,7 +3,7 @@ import { InputWithLabel } from "../InputWithLabel";
 const headings = ["", "طے شدہ", "منعقدہ", "اوسط حاضری", "مرتب"];
 const rows = [
   {
-    title: "اجتمع ارکان",
+    title: "اجتماع ارکان",
     key: "ijtArkan",
   },
   {
@@ -11,11 +11,11 @@ const rows = [
     key: "studyCircle",
   },
   {
-    title: "اجتمع ناظمین",
+    title: "اجتماع ناظمین",
     key: "ijtNazmeen",
   },
   {
-    title: "اجتمع امیدواران",
+    title: "اجتماع امیدواران",
     key: "ijtUmeedwaran",
   },
   {
@@ -28,7 +28,7 @@ export const CentralActivitiesMaqam = ({ view }) => {
   return (
     <div className="w-full max-w-full overflow-x-scroll " dir="rtl">
       <fieldset className="border p-3">
-        <legend className="text-xl font-bold">ﻣرﮐزی طﮯ ﺷدہ ﺳرﮔرﻣﯾﺎں</legend>
+        <legend className="text-xl font-bold">مرکزی طے شدہ سرگرمیاں</legend>
         <table className="w-full table">
           <thead>
             <tr className="flex w-full items-start justify-between bg-gray-100">

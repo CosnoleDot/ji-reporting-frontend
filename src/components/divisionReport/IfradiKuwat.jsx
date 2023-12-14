@@ -1,20 +1,11 @@
-export const Box = ({ children, type }) => {
-    return (
-      <td
-        className={`border text-center p-2 ${
-          type === "heading" ? "text-lg text-black" : ""
-        }`}
-      >
-        {children}
-      </td>
-    );
-  };
+import { Box } from "../halqa";
+
   export const IfradiKuwat = ({data}) => {
     const calcultate= (v)=>{
       // (start + increase)- decrease
-      const s = parseInt(data[`${v}-start`]);
-      const i = parseInt(data[`${v}-increase`]);
-      const d = parseInt(data[`${v}-decrease`]);
+      const s = parseInt(data?.[`${v}-start`]);
+      const i = parseInt(data?.[`${v}-increase`]);
+      const d = parseInt(data?.[`${v}-decrease`]);
       return (s+i)-d;
     }
     return (
@@ -26,7 +17,7 @@ export const Box = ({ children, type }) => {
               <Box>آغاز میں</Box>
               <Box>اضافہ</Box>
               <Box>کمی</Box>
-              <Box>اختاتام</Box>
+              <Box>اختتام پر</Box>
               <Box>سالانہ ہدف</Box>
               <Box>مرتب</Box>
             </tr>

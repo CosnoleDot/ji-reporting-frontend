@@ -422,12 +422,12 @@ export const Reports = () => {
             </div>
           </div>
           <div className="flex justify-end items-center gap-4">
-            {localStorage.getItem("@type") !== "province" && (
+            
               <button className="btn " onClick={handleReport}>
                 <FaPlus />
                 <span className="hidden lg:block xl:block">New Report</span>
               </button>
-            )}
+          
             {!isMobileView && active !== "province" && (
               <button
                 onClick={sendNotification}

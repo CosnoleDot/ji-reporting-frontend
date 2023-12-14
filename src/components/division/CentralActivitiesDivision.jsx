@@ -3,11 +3,11 @@ import { InputWithLabel } from "../InputWithLabel";
 const headings = ["", "طﮯﺷدھ", "ﻣﻧﻌﻘدھ", "اوﺳط ﺣﺎﺿری", "مرتب"];
 const rows = [
   {
-    title: "اجتمع ناظمین",
+    title: "اجتماع ناظمین",
     key: "ijtNazmeen",
   },
   {
-    title: "اجتمع امیدواران",
+    title: "اجتماع امیدواران",
     key: "ijtUmeedwaran",
   },
   {
