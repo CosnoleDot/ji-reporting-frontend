@@ -1,15 +1,17 @@
 import { FaCheck, FaTimes } from 'react-icons/fa';
 import instance from '../../api/instrance';
 import { useToastState } from '../../context';
-import { useState } from 'react';
+import { useContext } from 'react';
 import { Loader } from '../Loader';
 import { FaBell } from 'react-icons/fa6';
 import moment from 'moment';
 import { months } from '../../pages/Reports';
+import { UIContext } from '../../context/ui';
 
-export const Notifications = ({ userRequests, getAllRequests, type }) => {
-  const [loading, setLoading] = useState(false);
+export const Notifications = ({ userRequests, type }) => {
+  const { loading, setLoading } = useContext(UIContext);
   const { dispatch } = useToastState();
+  const { getAllRequests } = useContext(UIContext);
   const update = async (id, status) => {
     setLoading(true);
     try {
@@ -102,7 +104,10 @@ export const Notifications = ({ userRequests, getAllRequests, type }) => {
                   </div>
                   <div className='flex flex-col px-3'>
                     <span className='font-semibold'>{req?.content}</span>
-                    <span>{months[moment(req?.createdAt).month()].title}, {moment(req?.createdAt).year()}</span>
+                    <span>
+                      {months[moment(req?.createdAt).month()].title},{' '}
+                      {moment(req?.createdAt).year()}
+                    </span>
                   </div>
                 </div>
               </div>

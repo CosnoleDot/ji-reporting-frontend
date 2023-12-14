@@ -21,10 +21,14 @@ import instance from './api/instrance';
 import {
   DistrictContext,
   DivisionContext,
+  DivisionReportContext,
   HalqaContext,
+  HalqaReportContext,
   MaqamContext,
+  MaqamReportContext,
   MeContext,
   ProvinceContext,
+  ProvinceReportContext,
   TehsilContext,
   useToastState,
 } from './context';
@@ -42,6 +46,12 @@ function App() {
   const [districts, setDistricts] = useState([]);
   const [tehsils, setTehsils] = useState([]);
   const [halqas, setHalqas] = useState([]);
+  const [nazim, setNazim] = useState([]);
+  const [provinceReports, setProvinceReports] = useState([]);
+  const [maqamReports, setMaqamReports] = useState([]);
+  const [divisionReports, setDivisionReports] = useState([]);
+  const [halqaReports, setHalqaReports] = useState([]);
+  const [userRequests, setUserRequests] = useState([]);
   const getMe = async () => {
     try {
       const req = await instance.get('/user/me', {
@@ -196,6 +206,94 @@ function App() {
       });
     }
   };
+  const getProvinceReports = async () => {
+    try {
+      const req = await instance.get('/reports/province', {
+        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
+      });
+      if (req) {
+        setProvinceReports(req.data.data);
+      }
+    } catch (err) {
+      dispatch({
+        type: 'ERROR',
+        payload: err?.response?.data?.message || err?.message,
+      });
+    }
+  };
+  const getMaqamReports = async () => {
+    try {
+      const req = await instance.get('/reports/maqam', {
+        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
+      });
+      if (req) {
+        setMaqamReports(req.data.data);
+      }
+    } catch (err) {
+      dispatch({
+        type: 'ERROR',
+        payload: err?.response?.data?.message || err?.message,
+      });
+    }
+  };
+  const getDivisionReports = async () => {
+    try {
+      const req = await instance.get('/reports/division', {
+        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
+      });
+      if (req) {
+        setDivisionReports(req.data.data);
+      }
+    } catch (err) {
+      dispatch({
+        type: 'ERROR',
+        payload: err?.response?.data?.message || err?.message,
+      });
+    }
+  };
+  const getHalqaReports = async () => {
+    try {
+      const req = await instance.get('/reports/halqa', {
+        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
+      });
+      if (req) {
+        setHalqaReports(req.data.data);
+      }
+    } catch (err) {
+      dispatch({
+        type: 'ERROR',
+        payload: err?.response?.data?.message || err?.message,
+      });
+    }
+  };
+  const getNazim = async () => {
+    try {
+      const req = await instance.get('/user/nazim', {
+        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
+      });
+      if (req) setNazim(req?.data?.data);
+    } catch (err) {
+      dispatch({
+        type: 'ERROR',
+        payload: err?.response?.data?.message || err?.message,
+      });
+      console.log(err);
+    }
+  };
+  const getAllRequests = async () => {
+    if (localStorage.getItem('@token')) {
+      try {
+        const req = await instance.get('/user/user-requests', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('@token')}`,
+          },
+        });
+        setUserRequests(req.data?.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
   useEffect(() => {
     if (localStorage.getItem('@token')) {
       setLoadingStart(true);
@@ -209,6 +307,12 @@ function App() {
       getProvinces();
       getMaqams();
       getDivisions();
+      getProvinceReports();
+      getMaqamReports();
+      getDivisionReports();
+      getHalqaReports();
+      getNazim();
+      getAllRequests();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [me]);
@@ -251,98 +355,135 @@ function App() {
   return (
     <MeContext.Provider value={me}>
       <ProvinceContext.Provider value={provinces}>
-        <MaqamContext.Provider value={maqams}>
-          <DivisionContext.Provider value={divisions}>
-            <DistrictContext.Provider value={districts}>
-              <TehsilContext.Provider value={tehsils}>
-                <HalqaContext.Provider value={halqas}>
-                  <UIContext.Provider
-                    value={{
-                      loading,
-                      setLoading,
-                      getMe,
-                      getProvinces,
-                      getMaqams,
-                      getDivisions,
-                      getDistricts,
-                      getTehsils,
-                      getHalqas,
-                    }}
-                  >
-                    <div className='flex flex-col'>
-                      <BrowserRouter>
-                        <Routes>
-                          <Route path='/signup' element={<Signup />} />
-                          <Route path='/login' element={<Login />} />
-                          <Route path='/' element={<Dashboard />} />
-                          <Route path='/reset-password' element={<Forget />} />
-                          <Route
-                            path='change-password'
-                            element={<ChangePassword />}
-                          />
-                          <Route path='/comparison' element={<Comparision />} />
-                          <Route path='/chart' element={<ReportChart />} />
-                          <Route path='/reports' element={<Reports />} />
-                          <Route
-                            path='/reports/create'
-                            element={
-                              localStorage.getItem('@type') === 'maqam' ? (
-                                <Maqam />
-                              ) : localStorage.getItem('@type') ===
-                                'division' ? (
-                                <Division />
-                              ) : (
-                                <Halqa />
-                              )
-                            }
-                          />
-                          <Route
-                            path='/reports/edit/:id'
-                            element={
-                              localStorage.getItem('@type') === 'maqam' ? (
-                                <Maqam />
-                              ) : localStorage.getItem('@type') ===
-                                'division' ? (
-                                <Division />
-                              ) : (
-                                <Halqa />
-                              )
-                            }
-                          />
-                          <Route
-                            path={
-                              localStorage.getItem('@type') !== 'province'
-                                ? '/reports/view/:id'
-                                : '/reports/view/date/:date'
-                            }
-                            element={
-                              localStorage.getItem('@type') === 'maqam' ? (
-                                <Maqam />
-                              ) : localStorage.getItem('@type') ===
-                                'division' ? (
-                                <Division />
-                              ) : localStorage.getItem('@type') ===
-                                'province' ? (
-                                <Province />
-                              ) : (
-                                <Halqa />
-                              )
-                            }
-                          />
-                          <Route path='/profile' element={<EditProfile />} />
-                          <Route path='/locations' element={<Locations />} />
-                        </Routes>
-                      </BrowserRouter>
-                      {loading && <Loader />}
-                      {loadingStart && <Loader />}
-                      <Toast />
-                    </div>
-                  </UIContext.Provider>
-                </HalqaContext.Provider>
-              </TehsilContext.Provider>
-            </DistrictContext.Provider>
-          </DivisionContext.Provider>
-        </MaqamContext.Provider>
+        <ProvinceReportContext.Provider value={provinceReports}>
+          <MaqamContext.Provider value={maqams}>
+            <MaqamReportContext.Provider value={maqamReports}>
+              <DivisionContext.Provider value={divisions}>
+                <DivisionReportContext.Provider value={divisionReports}>
+                  <DistrictContext.Provider value={districts}>
+                    <TehsilContext.Provider value={tehsils}>
+                      <HalqaContext.Provider value={halqas}>
+                        <HalqaReportContext.Provider value={halqaReports}>
+                          <UIContext.Provider
+                            value={{
+                              userRequests,
+                              nazim,
+                              loading,
+                              setLoading,
+                              getMe,
+                              getProvinces,
+                              getMaqams,
+                              getDivisions,
+                              getDistricts,
+                              getTehsils,
+                              getHalqas,
+                              getProvinceReports,
+                              getMaqamReports,
+                              getDivisionReports,
+                              getHalqaReports,
+                              getAllRequests,
+                            }}
+                          >
+                            <div className='flex flex-col'>
+                              <BrowserRouter>
+                                <Routes>
+                                  <Route path='/signup' element={<Signup />} />
+                                  <Route path='/login' element={<Login />} />
+                                  <Route path='/' element={<Dashboard />} />
+                                  <Route
+                                    path='/reset-password'
+                                    element={<Forget />}
+                                  />
+                                  <Route
+                                    path='change-password'
+                                    element={<ChangePassword />}
+                                  />
+                                  <Route
+                                    path='/comparison'
+                                    element={<Comparision />}
+                                  />
+                                  <Route
+                                    path='/chart'
+                                    element={<ReportChart />}
+                                  />
+                                  <Route
+                                    path='/reports'
+                                    element={<Reports />}
+                                  />
+                                  <Route
+                                    path='/reports/create'
+                                    element={
+                                      localStorage.getItem('@type') ===
+                                      'maqam' ? (
+                                        <Maqam />
+                                      ) : localStorage.getItem('@type') ===
+                                        'division' ? (
+                                        <Division />
+                                      ) : (
+                                        <Halqa />
+                                      )
+                                    }
+                                  />
+                                  <Route
+                                    path='/reports/edit/:id'
+                                    element={
+                                      localStorage.getItem('@type') ===
+                                      'maqam' ? (
+                                        <Maqam />
+                                      ) : localStorage.getItem('@type') ===
+                                        'division' ? (
+                                        <Division />
+                                      ) : (
+                                        <Halqa />
+                                      )
+                                    }
+                                  />
+                                  <Route
+                                    path={
+                                      localStorage.getItem('@type') !==
+                                      'province'
+                                        ? '/reports/view/:id'
+                                        : '/reports/view/date/:date'
+                                    }
+                                    element={
+                                      localStorage.getItem('@type') ===
+                                      'maqam' ? (
+                                        <Maqam />
+                                      ) : localStorage.getItem('@type') ===
+                                        'division' ? (
+                                        <Division />
+                                      ) : localStorage.getItem('@type') ===
+                                        'province' ? (
+                                        <Province />
+                                      ) : (
+                                        <Halqa />
+                                      )
+                                    }
+                                  />
+                                  <Route
+                                    path='/profile'
+                                    element={<EditProfile />}
+                                  />
+                                  <Route
+                                    path='/locations'
+                                    element={<Locations />}
+                                  />
+                                </Routes>
+                              </BrowserRouter>
+                              {loading && <Loader />}
+                              {loadingStart && <Loader />}
+                              <Toast />
+                            </div>
+                          </UIContext.Provider>
+                        </HalqaReportContext.Provider>
+                      </HalqaContext.Provider>
+                    </TehsilContext.Provider>
+                  </DistrictContext.Provider>
+                </DivisionReportContext.Provider>
+              </DivisionContext.Provider>
+            </MaqamReportContext.Provider>
+          </MaqamContext.Provider>
+        </ProvinceReportContext.Provider>
       </ProvinceContext.Provider>
     </MeContext.Provider>
   );

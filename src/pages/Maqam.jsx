@@ -14,10 +14,11 @@ import {
 import { convertDataFormat, reverseDataFormat, toJson } from "../utils";
 import instance from "../api/instrance";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useEffect } from "react";
 import { useToastState } from "../context";
 import { InputWithLabel } from "../components/InputWithLabel";
+import { UIContext } from "../context/ui";
 
 export const getData = async (path, id, setData, dispatch, setLoading) => {
   setLoading(true);
@@ -40,7 +41,7 @@ export const Maqam = () => {
   const [id, setId] = useState(null);
   const { dispatch } = useToastState();
   const [data, setData] = useState({});
-  const [loading, setLoading] = useState(true);
+  const { loading, setLoading } = useContext(UIContext);
   const [view, setView] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -52,12 +53,14 @@ export const Maqam = () => {
       setView(true);
     }
     setId(params?.id);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
   useEffect(() => {
     if (id) getData("maqam", id, setData, dispatch, setLoading);
     else {
       setLoading(false);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
   useEffect(() => {
     Object.keys(data).forEach((i) => {
