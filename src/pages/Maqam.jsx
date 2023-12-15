@@ -29,7 +29,7 @@ export const getData = async (path, id, setData, data) => {
   const obj = arr.filter((i) => i?._id?.toString() === id?.toString());
   // if (req) {
   setData(reverseDataFormat(obj[0]));
-  console.log(obj[0]);
+ 
   // }F
 };
 
@@ -59,7 +59,7 @@ export const Maqam = () => {
         return dataMonth === givenMonth && dataYear === givenYear;
       })
     : [];
-  console.log(currMaqamHalqas);
+  
   useEffect(() => {
     const l = location.pathname?.split('/')[2];
     if (l === 'view') {

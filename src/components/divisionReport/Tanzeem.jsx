@@ -2,10 +2,13 @@ import React from "react";
 
 import { InputWithLabel } from "../InputWithLabel";
 import { Box } from "../halqa";
+import { useLocation } from "react-router-dom";
 
 
 export const Tanzeem = ({ view ,data}) => {
-  
+  const location = useLocation();
+  const page = location.pathname?.split('/')[2];
+  console.log(page)
   const calcultate= (v)=>{
     // (start + increase)- decrease
     const s = parseInt(data?.[`${v}-start`]);

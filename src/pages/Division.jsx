@@ -1,12 +1,14 @@
 import React, { useContext } from 'react';
 import { GeneralLayout, Loader, GeneralInfo } from '../components';
-import { convertDataFormat, toJson } from '../utils';
+import { convertDataFormat, sumIntValues, toJson } from '../utils';
 import instance from '../api/instrance';
 import { InputWithLabel } from '../components/InputWithLabel';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import {
+  DivisionContext,
   DivisionReportContext,
+  HalqaContext,
   HalqaReportContext,
   MaqamReportContext,
   MeContext,
@@ -39,7 +41,10 @@ export const Division = () => {
   const me = useContext(MeContext);
   const location = useLocation();
   const navigate = useNavigate();
-
+  const halqaReports = useContext(HalqaReportContext);
+  
+  console.log(sumIntValues(halqaReports));
+  
   useEffect(() => {
     const l = location.pathname?.split('/')[2];
     if (l === 'view') {

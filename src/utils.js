@@ -78,3 +78,32 @@ export const reverseDataFormat = (data) => {
   });
   return obj;
 };
+export const sumIntValues = (objects)=> {
+  const resultObject = {};
+
+  function processObject(obj, target) {
+    
+    Object.keys(obj).forEach(key => {
+      
+      if (typeof obj[key] === 'object' && obj[key] !== null) {
+        target[key] = target[key] || {};
+        processObject(obj[key], target[key]);
+      } else {
+      
+        const value = parseInt(obj[key]);
+        if (!isNaN(value)) {
+          if (!target.hasOwnProperty(key)) {
+            target[key] = value;
+          } else {
+            target[key] += value;
+          }
+        }
+      }
+    });
+  }
+  objects.forEach(obj => {
+    processObject(obj, resultObject);
+  });
+
+  return resultObject;
+}
