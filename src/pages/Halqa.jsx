@@ -13,7 +13,6 @@ import {
 import { MeContext, useToastState } from "../context";
 import {
   convertDataFormat,
-  handleReportSubmit,
   reverseDataFormat,
   toJson,
 } from "../utils";
