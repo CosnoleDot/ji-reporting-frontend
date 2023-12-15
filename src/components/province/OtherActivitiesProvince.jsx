@@ -12,8 +12,8 @@ const arr = [
   },
 
   {
-    title: "نظام الصلٰتہ",
-    key: "nazimSalah",
+    title: "نظام الصلوٰۃ",
+    key: "nizamSalah",
   },
   {
     title: "شب بیداری",

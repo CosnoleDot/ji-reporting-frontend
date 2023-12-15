@@ -6,16 +6,16 @@ export const ZailiActivitesMaqam = ({ view }) => {
   const rows = [
     {
       key: "ijtRafaqa",
-      label: "اﺟﺗﻣﻊ رﻓﻘﺎ",
+      label: "اجتماع رفقا",
     },
     {
       key: "studyCircleMentioned",
-      label: " ﺳﭨڈی ﺳرﮐل",
+      label: " سٹڈی سرکل",
     },
     { key: "ijtKarkunan", label: "اﺟﺗﻣﻊ ﮐﺎرﮐﻧﺎن" },
-    { key: "darseQuran", label: "درس ﻗرآن " },
-    { key: "shaheenMeeting", label: " ﺷﺎﮨﯾن ﻣﯾﭨﻧﮓ" },
-    { key: "paighamEvent", label: "ﭘﯾﻐﺎم ﻣﺣﻔل" },
+    { key: "darseQuran", label: "درس قرآن " },
+    { key: "shaheenMeeting", label: " شاہین میٹنگ" },
+    { key: "paighamEvent", label: "پیغام محفل" },
   ];
   return (
     <div className="w-full max-w-full overflow-x-scroll " dir="rtl">

@@ -6,13 +6,13 @@ export const ZailiActivitesProvince = ({ view }) => {
   const rows = [
     {
       key: "ijtRafaqa",
-      label: "اجتمع رفقا",
+      label: "اجتماع رفقا",
     },
     {
       key: "studyCircleMentioned",
       label: "سٹڈی سرکل",
     },
-    { key: "ijtKarkunan", label: "اجتمع کرکنان" },
+    { key: "ijtKarkunan", label: "اجتماع کرکنان" },
     { key: "darseQuran", label: "درس قرآن" },
     { key: "shaheenMeeting", label: "شاہین میٹنگ" },
     { key: "paighamEvent", label: "پیغام محفل" },

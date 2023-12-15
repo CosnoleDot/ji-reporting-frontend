@@ -6,3 +6,4 @@ export * from './maqam';
 export * from './division';
 export * from './province';
 export * from './locations';
+export * from "./maqamReport"

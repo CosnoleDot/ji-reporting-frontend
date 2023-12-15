@@ -1,9 +1,11 @@
 import { useContext, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { MeContext, useToastState } from "../context";
 import {
   CentralActivitiesProvince,
   EveningDiaryProvince,
   ExpandPartyProvince,
+  GeneralInfo,
   GeneralLayout,
   LibraryProvince,
   Loader,
@@ -18,6 +20,15 @@ import { InputWithLabel } from "../components/InputWithLabel";
 import instance from "../api/instrance";
 import { reverseDataFormat } from "../utils";
 import { UIContext } from "../context/ui";
+import { Tanzeem } from "../components/provinceReport/Tanzeem";
+import { IfradiKuwat } from "../components/provinceReport/IfradiKuwat";
+import { MarkaziActivities } from "../components/provinceReport/MarkaziActivities";
+import ZailiActivities from "../components/provinceReport/ZailiActivities";
+import { OtherActivities } from "../components/provinceReport/OtherActivities";
+import { ToseeDawat } from "../components/provinceReport/ToseeDawat";
+import { Library } from "../components/provinceReport/Library";
+import { PaighamDigest } from "../components/provinceReport/PaighamDigest";
+import { RozOShabDiary } from "../components/provinceReport/RozOShabDiary";
 
 export const Province = () => {
   // EDIT CODE START
@@ -26,6 +37,8 @@ export const Province = () => {
   const { loading, setLoading } = useContext(UIContext);
   const [view, setView] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const me = useContext(MeContext);
   const [allReports, setAllReports] = useState([]);
   const [userType, setUserType] = useState("");
   useEffect(() => {
@@ -237,37 +250,49 @@ export const Province = () => {
     <GeneralLayout>
       <div className="reports h-[calc(100vh-64.4px-64px)] overflow-hidden overflow-y-scroll w-full">
         <form
-          className="flex w-full flex-col justify-center items-center p-4"
+          className="flex w-full flex-col justify-center items-center p-4 gap-4"
           dir="rtl"
         >
-          <h2 className="text-2xl mb-4">جائزہ کارکردگی رپورٹ برأے صوبہ</h2>
-          <div className="w-full">
+          <h2 className="text-2xl mb-4">جائزہ کارکردگی رپورٹ برائے صوبہ</h2>
+          <div className="w-full p-4">
             <div>
-              <TanzeemProvince view={view} />
+              <GeneralInfo me={me} area={"صوبہ"} />
+            </div>
+            <div>
+              {/* <TanzeemProvince view={view} /> */}
+              <Tanzeem/>
             </div>
             <div className="mb-4">
-              <MenTableProvince view={view} />
+              {/* <MenTableProvince view={view} /> */}
+              <IfradiKuwat/>
             </div>
             <div className="mb-4">
-              <CentralActivitiesProvince view={view} />
+              {/* <CentralActivitiesProvince view={view} /> */}
+              <MarkaziActivities/>
             </div>
             <div className="mb-4">
-              <ZailiActivitesProvince view={view} />
+              {/* <ZailiActivitesProvince view={view} /> */}
+              <ZailiActivities/>
             </div>
             <div className=" mb-4">
-              <OtherActivitiesProvince view={view} />
+              {/* <OtherActivitiesProvince view={view} /> */}
+              <OtherActivities/>
             </div>
             <div className=" mb-4">
-              <ExpandPartyProvince view={view} />
+              {/* <ExpandPartyProvince view={view} /> */}
+              <ToseeDawat/>
             </div>
             <div className=" mb-4">
-              <LibraryProvince view={view} />
+              {/* <LibraryProvince view={view} /> */}
+              <Library/>
             </div>
             <div className=" mb-4">
-              <MessageDigestProvince view={view} />
+              {/* <MessageDigestProvince view={view} /> */}
+              <PaighamDigest/>
             </div>
             <div className=" mb-4">
-              <EveningDiaryProvince view={view} />
+              {/* <EveningDiaryProvince view={view} /> */}
+              <RozOShabDiary/>
             </div>
           </div>
           <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
@@ -276,8 +301,8 @@ export const Province = () => {
                 readOnly={view}
                 type={"textarea"}
                 required={true}
-                placeholder={" تبصرھ"}
-                label={" تبصرھ"}
+                placeholder={" تبصرہ"}
+                label={" تبصرہ"}
                 id={"comments"}
                 name={"comments"}
               />
@@ -286,7 +311,7 @@ export const Province = () => {
               <InputWithLabel
                 readOnly={view}
                 required={true}
-                label={"براے ماھ"}
+                label={"برائے ماہ"}
                 type={"month"}
                 id={"month"}
                 name={"month"}

@@ -7,7 +7,7 @@ const rows = [
     key: "divMushawarat",
   },
   {
-    title: "اجتمع ارکان",
+    title: "اجتماع ارکان",
     key: "ijtArkan",
   },
   {
@@ -15,11 +15,11 @@ const rows = [
     key: "studyCircle",
   },
   {
-    title: "اجتمع ناظمین",
+    title: "اجتماع ناظمین",
     key: "ijtNazmeen",
   },
   {
-    title: "اجتمع امیدواران",
+    title: "اجتماع امیدواران",
     key: "ijtUmeedwaran",
   },
   {

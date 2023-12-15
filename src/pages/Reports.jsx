@@ -411,14 +411,14 @@ export const Reports = () => {
               )}
             </div>
           </div>
-          <div className='flex justify-end items-center gap-4'>
-            {localStorage.getItem('@type') !== 'province' && (
-              <button className='btn ' onClick={handleReport}>
+          <div className="flex justify-end items-center gap-4">
+            
+              <button className="btn " onClick={handleReport}>
                 <FaPlus />
                 <span className='hidden lg:block xl:block'>New Report</span>
               </button>
-            )}
-            {!isMobileView && active !== 'province' && (
+          
+            {!isMobileView && active !== "province" && (
               <button
                 onClick={sendNotification}
                 className={`btn ${!isMobileView ? 'join-item' : 'ms-3'}`}
@@ -525,7 +525,7 @@ export const Reports = () => {
                         </span>
                         <span>
                           Last Modified:{' '}
-                          {moment(obj?.updatedAt).startOf('day').fromNow()}
+                          {moment(obj?.updatedAt).fromNow()}
                         </span>
                       </div>
                       <div className='flex items-end w-full justify-end gap-3 '>
@@ -551,7 +551,7 @@ export const Reports = () => {
                         </span>
                         <span>
                           Last Modified:{' '}
-                          {moment(obj?.updatedAt).startOf('day').fromNow()}
+                          {moment(obj?.updatedAt).fromNow()}
                         </span>
                       </div>
                       <div className='flex items-end w-full justify-end gap-3 '>
@@ -576,7 +576,7 @@ export const Reports = () => {
                       </span>
                       <span>
                         Last Modified:{' '}
-                        {moment(obj?.updatedAt).startOf('day').fromNow()}
+                        {moment(obj?.updatedAt).fromNow()}
                       </span>
                     </div>
                     <div className='flex items-end w-full justify-end gap-3 '>
@@ -605,7 +605,7 @@ export const Reports = () => {
                   </span>
                   <span>
                     Last Modified:{' '}
-                    {moment(obj?.updatedAt).startOf('day').fromNow()}
+                    {moment(obj?.updatedAt).fromNow()}
                   </span>
                 </div>
                 <div className='flex items-end w-full justify-end gap-3 '>

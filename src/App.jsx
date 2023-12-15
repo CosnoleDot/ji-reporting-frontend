@@ -15,6 +15,7 @@ import {
   Locations,
   Maqam,
   Province,
+ 
 } from './pages';
 import { useEffect, useState } from 'react';
 import instance from './api/instrance';

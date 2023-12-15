@@ -16,6 +16,40 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useToastState } from "../context";
 import { getData } from "./Maqam";
 
+export const handleSubmit = async (e, type, ) => {
+  e.preventDefault();
+  const formData = new FormData(e.currentTarget);
+  const jsonData = convertDataFormat(toJson(formData));
+  setLoading(true);
+  try {
+    if (id) {
+      const req = await instance.put(`/reports/${type}/${id}`, jsonData, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("@token")}`,
+        },
+      });
+      dispatch({ type: "SUCCESS", payload: req?.data?.message });
+      navigate("/reports");
+    } else {
+      const req = await instance.post("/reports/halqa", jsonData, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("@token")}`,
+        },
+      });
+      dispatch({ type: "SUCCESS", payload: req.data?.message });
+      navigate("/reports");
+    }
+
+    e.target.reset();
+  } catch (err) {
+    dispatch({ type: "ERROR", payload: err.response.data.message });
+    navigate("/reports");
+  }
+  setLoading(false);
+};
+
 export const Halqa = () => {
   // EDIT CODE START
   const params = useParams();
@@ -60,39 +94,7 @@ export const Halqa = () => {
   }, [data]);
   // EDIT CODE END
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const jsonData = convertDataFormat(toJson(formData));
-    setLoading(true);
-    try {
-      if (id) {
-        const req = await instance.put(`/reports/halqa/${id}`, jsonData, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("@token")}`,
-          },
-        });
-        dispatch({ type: "SUCCESS", payload: req?.data?.message });
-        navigate("/reports");
-      } else {
-        const req = await instance.post("/reports/halqa", jsonData, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("@token")}`,
-          },
-        });
-        dispatch({ type: "SUCCESS", payload: req.data?.message });
-        navigate("/reports");
-      }
-
-      e.target.reset();
-    } catch (err) {
-      dispatch({ type: "ERROR", payload: err.response.data.message });
-      navigate("/reports");
-    }
-    setLoading(false);
-  };
+  
 
   return (
     <GeneralLayout>
@@ -119,8 +121,8 @@ export const Halqa = () => {
                 readOnly={view}
                 type={"textarea"}
                 required={true}
-                placeholder={" تبصرھ"}
-                label={" تبصرھ"}
+                placeholder={" تبصرہ"}
+                label={" تبصرہ"}
                 id={"comments"}
                 name={"comments"}
               />
@@ -129,8 +131,8 @@ export const Halqa = () => {
               <InputWithLabel
                 readOnly={view}
                 required={true}
-                label={"براے ماھ"}
-                placeholder={"براے ماھ"}
+                label={"برائے ماہ"}
+                placeholder={"برائے ماہ"}
                 type={"month"}
                 id={"month"}
                 name={"month"}

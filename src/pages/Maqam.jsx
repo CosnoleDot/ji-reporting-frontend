@@ -10,18 +10,29 @@ import {
   EveningDiaryMaqam,
   TanzeemMaqam,
   CentralActivitiesMaqam,
+  GeneralInfo,
 } from "../components";
 import { convertDataFormat, reverseDataFormat, toJson } from "../utils";
 import instance from "../api/instrance";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useContext, useState } from "react";
 import { useEffect } from "react";
-import { useToastState } from "../context";
+import { HalqaContext, MeContext, useToastState } from "../context";
 import { InputWithLabel } from "../components/InputWithLabel";
 import { UIContext } from "../context/ui";
+import { Tanzeem } from "../components/maqamReport/Tanzeem";
+import { IfradiKuwat } from "../components/maqamReport/IfradiKuwat";
+import { MarkaziActivities } from "../components/maqamReport/MarkaziActivities";
+import ZailiActivities from "../components/maqamReport/ZailiActivities";
+import { OtherActivities } from "../components/maqamReport/OtherActivities";
+import { ToseeDawat } from "../components/maqamReport/ToseeDawat";
+import { Library } from "../components/maqamReport/Library";
+import { PaighamDigest } from "../components/maqamReport/PaighamDigest";
+import { RozOShabDiary } from "../components/maqamReport/RozOShabDiary";
 
 export const getData = async (path, id, setData, dispatch, setLoading) => {
   setLoading(true);
+
   try {
     const req = await instance(`/reports/${path}/${id}`, {
       headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
@@ -44,9 +55,26 @@ export const Maqam = () => {
   const { loading, setLoading } = useContext(UIContext);
   const [view, setView] = useState(false);
   const location = useLocation();
+  const me = useContext(MeContext);
   const navigate = useNavigate();
   const [rawabit, setRawabit] = useState({});
+  const allHalqas = useContext(HalqaContext);
 
+  const currMaqamHalqas = Array.isArray(allHalqas)
+    ? allHalqas
+        .filter((curr) => {
+          const [dataMonth, dataYear] = [
+            curr?.month?.split("-")[1],
+            curr?.month?.split("-")[0],
+          ];
+          const [givenMonth, givenYear] = [
+            id?.split("-")[1],
+            id?.split("-")[0],
+          ];
+          return dataMonth == givenMonth && dataYear == givenYear;
+        })
+    : [];
+  console.log(currMaqamHalqas)
   useEffect(() => {
     const l = location.pathname?.split("/")[2];
     if (l === "view") {
@@ -122,36 +150,48 @@ export const Maqam = () => {
         >
           <h2 className="text-2xl">جا ئزءکارکردگی رپورٹ (براے مقام)</h2>
           <div className="w-full p-4">
-            <div className="mb-4">
-              <TanzeemMaqam view={view} />
+          <div>
+              <GeneralInfo me={me} area={"مقام"} />
             </div>
             <div className="mb-4">
-              <MenTableMaqam
+              {/* <TanzeemMaqam view={view} /> */}
+              <Tanzeem data={data} />
+            </div>
+            <div className="mb-4">
+              {/* <MenTableMaqam
                 view={view}
                 rawabit={rawabit}
                 setRawabit={setRawabit}
-              />
+              /> */}
+              <IfradiKuwat data={data}/>
             </div>
             <div className="mb-4">
-              <CentralActivitiesMaqam view={view} />
+              {/* <CentralActivitiesMaqam view={view} /> */}
+              <MarkaziActivities />
             </div>
             <div className="mb-4">
-              <ZailiActivitesMaqam />
+              {/* <ZailiActivitesMaqam /> */}
+              <ZailiActivities />
             </div>
             <div className=" mb-4">
-              <OtherActivitiesMaqam view={view} />
+              {/* <OtherActivitiesMaqam view={view} /> */}
+              <OtherActivities />
             </div>
             <div className=" mb-4">
-              <ExpandPartyMaqam view={view} />
+              {/* <ExpandPartyMaqam view={view} /> */}
+              <ToseeDawat />
             </div>
             <div className=" mb-4">
-              <LibraryMaqam view={view} />
+              {/* <LibraryMaqam view={view} /> */}
+              <Library />
             </div>
             <div className=" mb-4">
-              <MessageDigestMaqam view={view} />
+              {/* <MessageDigestMaqam view={view} /> */}
+              <PaighamDigest />
             </div>
             <div className=" mb-4">
-              <EveningDiaryMaqam view={view} />
+              {/* <EveningDiaryMaqam view={view} /> */}
+              <RozOShabDiary />
             </div>
             <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
               <div className="w-full md:pr-0 mb-2">
@@ -159,8 +199,8 @@ export const Maqam = () => {
                   readOnly={view}
                   type={"textarea"}
                   required={true}
-                  placeholder={" تبصرھ"}
-                  label={" تبصرھ"}
+                  placeholder={"تبصرہ"}
+                  label={" تبصرہ"}
                   id={"comments"}
                   name={"comments"}
                 />
@@ -169,8 +209,8 @@ export const Maqam = () => {
                 <InputWithLabel
                   readOnly={view}
                   required={true}
-                  label={"براے ماھ"}
-                  placeholder={"براے ماھ"}
+                  label={"برائے  ماہ"}
+                  placeholder={"برائے  ماہ"}
                   type={"month"}
                   id={"month"}
                   name={"month"}

@@ -6,14 +6,14 @@ export const TanzeemDivision = ({ view }) => {
     "آغازمیں",
     "اِضافہ",
     "کمی",
-    "اختتام",
+    "اختتام پر",
     "فعال",
     "غیرفعال",
   ];
   const rows = [
     {
       key: "rehaishHalqay",
-      label: "رھاشی حلقے",
+      label: "رہائشی حلقے",
     },
     {
       key: "taleemHalqay",

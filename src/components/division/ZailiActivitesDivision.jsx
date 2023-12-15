@@ -6,13 +6,13 @@ export const ZailiActivitesDivision = ({ view }) => {
   const rows = [
     {
       key: "ijtRafaqa",
-      label: "اجتمع رفقا",
+      label: "اجتماع رفقا",
     },
     {
       key: "studyCircleMentioned",
       label: "سٹڈی سرکل",
     },
-    { key: "ijtKarkunan", label: "اجتمعِ کارکنان" },
+    { key: "ijtKarkunan", label: "اجتماعِ کارکنان" },
     { key: "darseQuran", label: "درس قُران" },
     { key: "shaheenMeeting", label: "شاہین میٹینگ" },
     { key: "paighamEvent", label: "پیغام محفل" },
