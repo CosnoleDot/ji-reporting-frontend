@@ -79,7 +79,7 @@ export const Halqa = () => {
     setLoading(false);
   };
   useEffect(() => {
-    getData('halqa', id, setData, { halqa, maqam, division });
+    if (id) getData('halqa', id, setData, { halqa, maqam, division });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
