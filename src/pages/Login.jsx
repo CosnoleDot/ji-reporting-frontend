@@ -2,13 +2,14 @@ import instance from '../api/instrance';
 import { useNavigate, Link } from 'react-router-dom';
 import { toJson } from '../utils';
 import { useToastState } from '../context';
-import { useState } from 'react';
+import { useContext } from 'react';
 import { Loader } from '../components';
+import { UIContext } from '../context/ui';
 
 export const Login = () => {
   const navigate = useNavigate();
   const { dispatch } = useToastState();
-  const [loading, setLoading] = useState(false);
+  const { loading, setLoading } = useContext(UIContext);
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);

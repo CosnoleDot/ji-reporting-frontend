@@ -1,6 +1,13 @@
-import { useState } from 'react';
-import { GeneralLayout, Loader } from '../components';
-import { useToastState } from '../context';
+import { useContext, useState } from 'react';
+import { GeneralLayout } from '../components';
+import {
+  DistrictContext,
+  DivisionContext,
+  HalqaContext,
+  MaqamContext,
+  MeContext,
+  useToastState,
+} from '../context';
 import instance from '../api/instrance';
 import { useEffect } from 'react';
 import { ReportChart } from '../components/ReportChart';
@@ -132,9 +139,8 @@ const Dates = ({
 };
 
 export const Comparision = () => {
-  const [loading, setLoading] = useState(true);
   const [durationMonths, setDurationMonths] = useState([]);
-  const [me, setMe] = useState(null);
+  const me = useContext(MeContext);
   const [selectedProperty, setSelectedProperty] = useState('');
   const [durationType, setDurationType] = useState('');
   const [reportType, setReportType] = useState('');
@@ -142,6 +148,10 @@ export const Comparision = () => {
   const [areaId, setAreaId] = useState('');
   const [response, setResponse] = useState(null);
   const [durationYears, setDurationYears] = useState([]);
+  const maqams = useContext(MaqamContext);
+  const divisions = useContext(DivisionContext);
+  const halqas = useContext(HalqaContext);
+  const districts = useContext(DistrictContext);
 
   const [areas, setAreas] = useState({
     maqam: [],
@@ -150,132 +160,18 @@ export const Comparision = () => {
     district: [],
   });
 
+  useEffect(() => {
+    setAreas({
+      ...areas,
+      maqam: maqams,
+      division: divisions,
+      halqa: halqas,
+      district: districts,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [maqams, divisions, halqas, districts]);
+
   const { dispatch } = useToastState();
-  const getMe = async () => {
-    setLoading(true);
-    try {
-      const req = await instance.get('/user/me', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
-      });
-      setMe(req?.data?.data);
-    } catch (err) {
-      dispatch({ type: 'ERROR', payload: err.response?.data.message });
-    }
-  };
-  useEffect(() => {
-    getMe();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  const getHalqas = async () => {
-    try {
-      const req = await instance('/locations/halqa', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
-      });
-      if (req) {
-        setTimeout(() => {
-          setAreas((prev) => ({
-            ...prev,
-            halqa:
-              localStorage.getItem('@type') === 'province'
-                ? [...req.data?.data]
-                : localStorage.getItem('@type') === 'maqam'
-                ? [...req.data?.data]
-                    .filter((i) => i?.parentType === 'Maqam')
-                    .filter((i) =>
-                      areas.maqam
-                        .map((i) => i?._id?.toString())
-                        .includes(i?.parentId?._id.toString())
-                    )
-                    .sort((a, b) => a?.name?.localeCompare(b?.name))
-                : [...req.data?.data]
-                    .filter((i) => i?.parentType === 'Tehsil')
-                    .filter((i) =>
-                      areas.district.includes(i?.parentId?.district.toString())
-                    )
-                    .sort((a, b) => a?.name?.localeCompare(b?.name)),
-          }));
-        }, 1000);
-      }
-    } catch (err) {
-      dispatch({ type: 'ERROR', payload: err.response?.data.message });
-    }
-  };
-  const getMaqams = async () => {
-    try {
-      const req = await instance('/locations/maqam', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
-      });
-      if (req) {
-        localStorage.getItem('@type') === 'province'
-          ? setAreas((prev) => ({ ...prev, maqam: [...req.data?.data] }))
-          : setAreas((prev) => ({
-              ...prev,
-              maqam: [...req.data?.data].filter(
-                (i) => i?._id === me?.userAreaId?._id
-              ),
-            }));
-      }
-    } catch (err) {
-      dispatch({ type: 'ERROR', payload: err.response.data.message });
-    }
-  };
-  const getDivisions = async () => {
-    try {
-      const req = await instance('/locations/division', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
-      });
-      if (req) {
-        setAreas((prev) => ({ ...prev, division: [...req.data?.data] }));
-      }
-    } catch (err) {
-      dispatch({ type: 'ERROR', payload: err.response.data.message });
-    }
-  };
-  const getDistricts = async () => {
-    try {
-      const req = await instance('/locations/district', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
-      });
-      if (req) {
-        setAreas((prev) => ({
-          ...prev,
-          district: [...req.data?.data]
-            .filter((i) => i?.division?._id === me?.userAreaId?._id)
-            .map((i) => i?._id?.toString()),
-        }));
-      }
-    } catch (err) {
-      dispatch({ type: 'ERROR', payload: err.response.data.message });
-    }
-  };
-  const getAll = async () => {
-    getDivisions();
-    getDistricts();
-    getMaqams();
-    getHalqas();
-  };
-  useEffect(() => {
-    // eslint-disable-next-line eqeqeq
-    if (me) getAll();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [me]);
-  useEffect(() => {
-    const fn = async () => {
-      if (
-        (localStorage.getItem('@type') === 'division' &&
-          areas.district.length > 0) ||
-        (localStorage.getItem('@type') === 'maqam' && areas.maqam.length > 0) ||
-        (localStorage.getItem('@type') === 'province' &&
-          areas.maqam.length > 0 &&
-          areas.district.length)
-      ) {
-        await getHalqas();
-        setLoading(false);
-      }
-    };
-    fn();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [areas.district, areas.division, areas.maqam, reportType]);
   const transformedArray = durationMonths.map((item) => {
     return {
       month: item.value,
@@ -406,7 +302,6 @@ export const Comparision = () => {
           getData={getData}
         />
       )}
-      {loading && <Loader />}
     </GeneralLayout>
   );
 };

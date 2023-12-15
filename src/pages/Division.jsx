@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   GeneralLayout,
   Loader,
@@ -20,6 +20,7 @@ import { useState } from "react";
 import { useToastState } from "../context";
 import { useEffect } from "react";
 import { getData } from "./Maqam";
+import { UIContext } from "../context/ui";
 
 export const Division = () => {
   // EDIT CODE START
@@ -27,7 +28,7 @@ export const Division = () => {
   const [id, setId] = useState(null);
   const { dispatch } = useToastState();
   const [data, setData] = useState({});
-  const [loading, setLoading] = useState(true);
+  const { loading, setLoading } = useContext(UIContext);
   const [view, setView] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -38,12 +39,14 @@ export const Division = () => {
       setView(true);
     }
     setId(params?.id);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
   useEffect(() => {
     if (id) getData("division", id, setData, dispatch, setLoading);
     else {
       setLoading(false);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
   useEffect(() => {
     Object.keys(data).forEach((i) => {

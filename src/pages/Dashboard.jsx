@@ -1,133 +1,38 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { GeneralLayout } from '../components';
-import instance from '../api/instrance';
 import { useEffect } from 'react';
 import { FaLocationDot } from 'react-icons/fa6';
 import { CiLocationOn } from 'react-icons/ci';
 import { FaLocationArrow } from 'react-icons/fa';
-import { useToastState } from '../context';
+import {
+  DivisionContext,
+  DivisionReportContext,
+  HalqaContext,
+  HalqaReportContext,
+  MaqamContext,
+  MaqamReportContext,
+} from '../context';
+import { UIContext } from '../context/ui';
 
 export const Dashboard = () => {
   const [count, setCount] = useState(0);
-  const [loading, setLoading] = useState(false);
-  const [loadingNazim, setLoadingNazim] = useState(false);
-  const [loadingMaqams, setLoadingMaqams] = useState(false);
-  const [loadingDivision, setLoadingDivision] = useState(false);
-  const [loadingUnits, setLoadingUnits] = useState(false);
-  const [nazim, setNazim] = useState([]);
-  const [maqam, setMaqam] = useState([]);
-  const [division, setDivision] = useState([]);
-  const [unit, setUnit] = useState([]);
-  const { dispatch } = useToastState();
-  const getNazim = async () => {
-    setLoadingNazim(true);
-    try {
-      const req = await instance.get('/user/nazim', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
-      });
-      if (req) setNazim(req?.data?.data);
-    } catch (err) {
-      dispatch({
-        type: 'ERROR',
-        payload: err?.response?.data?.message || err?.message,
-      });
-      console.log(err);
-    }
-    setLoadingNazim(false);
-  };
-  const getMaqam = async () => {
-    setLoadingMaqams(true);
-    try {
-      const req = await instance.get('/locations/maqam', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
-      });
-      if (req) setMaqam(req?.data?.data);
-    } catch (err) {
-      dispatch({
-        type: 'ERROR',
-        payload: err?.response?.data?.message || err?.message,
-      });
-    }
-    setLoadingMaqams(false);
-  };
-  const getUnit = async () => {
-    setLoadingUnits(true);
-    try {
-      const req = await instance.get('/locations/halqa', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
-      });
-      if (req) setUnit(req?.data?.data);
-    } catch (err) {
-      dispatch({
-        type: 'ERROR',
-        payload: err?.response?.data?.message || err?.message,
-      });
-    }
-    setLoadingUnits(false);
-  };
-  const getDivision = async () => {
-    setLoadingDivision(true);
-    try {
-      const req = await instance.get('/locations/division', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
-      });
-      if (req) setDivision(req?.data?.data);
-    } catch (err) {
-      dispatch({
-        type: 'ERROR',
-        payload: err?.response?.data?.message || err?.message,
-      });
-    }
-    setLoadingDivision(false);
-  };
-  const getAllReports = async () => {
-    setLoading(true);
-    if (localStorage.getItem('@token')) {
-      if (localStorage.getItem('@type') !== 'province') {
-        const req = await instance.get(
-          `/reports/${localStorage.getItem('@type')}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('@token')}`,
-            },
-          }
-        );
-        setCount(req.data.data.length);
-      } else {
-        const halqa = await instance.get(`/reports/halqa`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('@token')}`,
-          },
-        });
-        const maqam = await instance.get(`/reports/maqam`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('@token')}`,
-          },
-        });
-        const division = await instance.get(`/reports/division`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('@token')}`,
-          },
-        });
-        setCount(
-          halqa.data.data.length +
-            maqam.data.data.length +
-            division.data.data.length
-        );
-      }
-    }
-    setLoading(false);
-  };
+  const { nazim } = useContext(UIContext);
+  const maqam = useContext(MaqamContext);
+  const division = useContext(DivisionContext);
+  const unit = useContext(HalqaContext);
+  const maqamReports = useContext(MaqamReportContext);
+  const divisionReports = useContext(DivisionReportContext);
+  const halqaReports = useContext(HalqaReportContext);
+
   useEffect(() => {
-    if (localStorage.getItem('@token')) {
-      getAllReports();
-      getNazim();
-      getDivision();
-      getMaqam();
-      getUnit();
-    }
+    try {
+      setCount(
+        maqamReports?.length + divisionReports?.length + halqaReports?.length
+      );
+    } catch (err) {}
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [maqamReports, divisionReports, halqaReports]);
+
   return (
     <GeneralLayout title={'Dashboard'} active={'dashboard'}>
       <div className='relative flex w-full gap-3 items-center p-5 justify-center h-[calc(100vh-65.6px-64px)] overflow-hidden overflow-y-scroll bg-blue-50'>
@@ -151,13 +56,7 @@ export const Dashboard = () => {
             </div>
             <div className='px-4 text-gray-700'>
               <h3 className='text-sm tracking-wider'>Total Nazims</h3>
-              <p className='text-3xl'>
-                {loadingNazim ? (
-                  <span className='loading loading-bars loading-md'></span>
-                ) : (
-                  nazim.length
-                )}
-              </p>
+              <p className='text-3xl'>{nazim.length}</p>
             </div>
           </div>
           <div className='flex items-center bg-white border rounded-sm overflow-hidden shadow'>
@@ -180,11 +79,12 @@ export const Dashboard = () => {
             <div className='px-4 text-gray-700'>
               <h3 className='text-sm tracking-wider'>Total Reports</h3>
               <p className='text-3xl'>
-                {loading ? (
+                {/* {loading ? (
                   <span className='loading loading-bars loading-md'></span>
                 ) : (
                   count
-                )}
+                )} */}
+                {count}
               </p>
             </div>
           </div>
@@ -194,13 +94,7 @@ export const Dashboard = () => {
             </div>
             <div className='px-4 text-gray-700'>
               <h3 className='text-sm tracking-wider'>Total Maqams</h3>
-              <p className='text-3xl'>
-                {loadingMaqams ? (
-                  <span className='loading loading-bars loading-md'></span>
-                ) : (
-                  maqam?.length
-                )}
-              </p>
+              <p className='text-3xl'>{maqam?.length}</p>
             </div>
           </div>
           <div className='flex items-center bg-white border rounded-sm overflow-hidden shadow'>
@@ -209,13 +103,7 @@ export const Dashboard = () => {
             </div>
             <div className='px-4 text-gray-700'>
               <h3 className='text-sm tracking-wider'>Total Division</h3>
-              <p className='text-3xl'>
-                {loadingDivision ? (
-                  <span className='loading loading-bars loading-md'></span>
-                ) : (
-                  division?.length
-                )}
-              </p>
+              <p className='text-3xl'>{division?.length}</p>
             </div>
           </div>
           <div className='flex items-center bg-white border rounded-sm overflow-hidden shadow'>
@@ -224,13 +112,7 @@ export const Dashboard = () => {
             </div>
             <div className='px-4 text-gray-700'>
               <h3 className='text-sm tracking-wider'>Total Units</h3>
-              <p className='text-3xl'>
-                {loadingUnits ? (
-                  <span className='loading loading-bars loading-md'></span>
-                ) : (
-                  unit?.length
-                )}
-              </p>
+              <p className='text-3xl'>{unit?.length}</p>
             </div>
           </div>
         </div>

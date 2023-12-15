@@ -1,12 +1,13 @@
-import { useState } from 'react';
+import { useContext } from 'react';
 import instance from '../api/instrance';
 import { useToastState } from '../context';
 import { Link } from 'react-router-dom';
 import { Loader } from '../components';
+import { UIContext } from '../context/ui';
 
 export const Forget = () => {
   const { dispatch } = useToastState();
-  const [loading, setLoading] = useState(false);
+  const { loading, setLoading } = useContext(UIContext);
   const handleForget = async (e) => {
     setLoading(true);
     e.preventDefault();
