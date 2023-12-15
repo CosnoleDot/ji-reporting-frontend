@@ -1,25 +1,30 @@
-import { useEffect, useState } from 'react';
-import { useToastState } from '../../context';
+import { useContext, useEffect, useState } from 'react';
+import {
+  DistrictContext,
+  DivisionContext,
+  HalqaContext,
+  ProvinceContext,
+  TehsilContext,
+  useToastState,
+} from '../../context';
 import { Link, useLocation } from 'react-router-dom';
 import instance from '../../api/instrance';
 import { FaEdit } from 'react-icons/fa';
 
-export const LocationDivision = ({ me, setLoading0 }) => {
-  const [provinces, setProvinces] = useState([]);
-  const [tehsils, setTehsils] = useState([]);
-  const [divisions, setDivisions] = useState([]);
-  const [halqas, setHalqas] = useState([]);
-  const [districts, setDistricts] = useState([]);
+export const LocationDivision = () => {
+  const provinces = useContext(ProvinceContext);
+  const tehsils = useContext(TehsilContext);
+  const divisions = useContext(DivisionContext);
+  const halqas = useContext(HalqaContext);
+  const districts = useContext(DistrictContext);
   const [editMode, setEditMode] = useState(false);
   const [id, setId] = useState('');
-  const [loading, setLoading] = useState(false);
   const { dispatch } = useToastState();
   const [view, setView] = useState(
     ['province', 'maqam'].includes(localStorage.getItem('@type'))
       ? 'halqa'
       : 'district'
   );
-  const [validHalqa, setValidHalqas] = useState([]);
   const params = useLocation();
   useEffect(() => {
     // Function to parse query parameters
@@ -54,94 +59,7 @@ export const LocationDivision = ({ me, setLoading0 }) => {
     parentId: '',
     parentType: 'Tehsil',
   });
-  const getProvinces = async () => {
-    try {
-      const req = await instance.get('/locations/province', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
-      });
-      setProvinces(req.data.data);
-    } catch (err) {
-      console.log(err.response.data.message);
-    }
-  };
-  const getTehsils = async () => {
-    try {
-      const req = await instance.get('/locations/tehsil', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
-      });
-      if (localStorage.getItem('@type') === 'province') {
-        setTehsils(req.data.data);
-      } else if (localStorage.getItem('@type') === 'division') {
-        setTehsils(
-          [...req.data.data].filter(
-            (i) => i?.district?.division?._id === me?.userAreaId?._id
-          )
-        );
-        setValidHalqas(
-          [...req.data.data]
-            .filter((i) => i?.district?.division?._id === me?.userAreaId?._id)
-            .map((i) => i?._id.toString())
-        );
-      }
-    } catch (err) {
-      console.log(err.response.data.message);
-    }
-  };
-  const getDivisions = async () => {
-    try {
-      const req = await instance.get('/locations/division', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
-      });
-      if (localStorage.getItem('@type') === 'province') {
-        setDivisions(req.data.data);
-      } else if (localStorage.getItem('@type') === 'division') {
-        setDivisions(
-          req.data.data.filter((i) => i?._id === me?.userAreaId?._id)
-        );
-      }
-    } catch (err) {
-      console.log(err.response.data.message);
-    }
-  };
-  const getDistricts = async () => {
-    try {
-      const req = await instance.get('/locations/district', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
-      });
-      if (localStorage.getItem('@type') === 'province') {
-        setDistricts(req.data.data);
-      } else if (localStorage.getItem('@type') === 'division') {
-        setDistricts(
-          [...req.data.data].filter(
-            (i) => i?.division?._id === me?.userAreaId?._id
-          )
-        );
-      }
-    } catch (err) {
-      console.log(err.response.data.message);
-    }
-  };
-  const getHalqas = async () => {
-    try {
-      const req = await instance.get('/locations/halqa', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
-      });
-      if (localStorage.getItem('@type') === 'province') {
-        setHalqas(req.data.data);
-      } else if (localStorage.getItem('@type') === 'division') {
-        setHalqas(
-          [...req.data.data].filter((i) =>
-            validHalqa.includes(i?.parentId?._id.toString())
-          )
-        );
-      }
-    } catch (err) {
-      console.log(err.response.data.message);
-    }
-  };
   const handleSubmit = async () => {
-    setLoading(true);
-    setLoading0(true);
     try {
       const req = await instance.post('/locations/division', form, {
         headers: {
@@ -154,16 +72,11 @@ export const LocationDivision = ({ me, setLoading0 }) => {
         name: '',
         province: '',
       });
-      getDivisions();
     } catch (err) {
       dispatch({ type: 'ERROR', payload: err.response.data.message });
     }
-    setLoading(false);
-    setLoading0(false);
   };
   const handleSubmitDistrict = async () => {
-    setLoading(true);
-    setLoading0(true);
     try {
       const req = await instance.post('/locations/district', formDistrict, {
         headers: {
@@ -176,16 +89,11 @@ export const LocationDivision = ({ me, setLoading0 }) => {
         name: '',
         division: '',
       });
-      getDistricts();
     } catch (err) {
       dispatch({ type: 'ERROR', payload: err.response.data.message });
     }
-    setLoading(false);
-    setLoading0(false);
   };
   const handleSubmitTehsil = async () => {
-    setLoading(true);
-    setLoading0(true);
     try {
       const req = await instance.post('/locations/tehsil', formTehsil, {
         headers: {
@@ -198,16 +106,11 @@ export const LocationDivision = ({ me, setLoading0 }) => {
         name: '',
         district: '',
       });
-      getTehsils();
     } catch (err) {
       dispatch({ type: 'ERROR', payload: err.response.data.message });
     }
-    setLoading(false);
-    setLoading0(false);
   };
   const handleSubmitHalqa = async () => {
-    setLoading(true);
-    setLoading0(true);
     try {
       const req = await instance.post('/locations/halqa', formHalqa, {
         headers: {
@@ -221,16 +124,11 @@ export const LocationDivision = ({ me, setLoading0 }) => {
         parentId: '',
         parentType: 'Tehsil',
       });
-      getHalqas();
     } catch (err) {
       dispatch({ type: 'ERROR', payload: err.response.data.message });
     }
-    setLoading(false);
-    setLoading0(false);
   };
   const handleSubmitEdit = async () => {
-    setLoading(true);
-    setLoading0(true);
     try {
       const req = await instance.put('/locations/division/' + id, form, {
         headers: {
@@ -239,16 +137,11 @@ export const LocationDivision = ({ me, setLoading0 }) => {
         },
       });
       dispatch({ type: 'SUCCESS', payload: req.data?.message });
-      getDivisions();
     } catch (err) {
       dispatch({ type: 'ERROR', payload: err.response.data.message });
     }
-    setLoading(false);
-    setLoading0(false);
   };
   const handleSubmitDistrictEdit = async () => {
-    setLoading(true);
-    setLoading0(true);
     try {
       const req = await instance.put(
         '/locations/district/' + id,
@@ -261,16 +154,11 @@ export const LocationDivision = ({ me, setLoading0 }) => {
         }
       );
       dispatch({ type: 'SUCCESS', payload: req.data?.message });
-      getDistricts();
     } catch (err) {
       dispatch({ type: 'ERROR', payload: err.response.data.message });
     }
-    setLoading(false);
-    setLoading0(false);
   };
   const handleSubmitTehsilEdit = async () => {
-    setLoading(true);
-    setLoading0(true);
     try {
       const req = await instance.put('/locations/tehsil/' + id, formTehsil, {
         headers: {
@@ -279,16 +167,11 @@ export const LocationDivision = ({ me, setLoading0 }) => {
         },
       });
       dispatch({ type: 'SUCCESS', payload: req.data?.message });
-      getTehsils();
     } catch (err) {
       dispatch({ type: 'ERROR', payload: err.response.data.message });
     }
-    setLoading(false);
-    setLoading0(false);
   };
   const handleSubmitHalqaEdit = async () => {
-    setLoading(true);
-    setLoading0(true);
     try {
       const req = await instance.put('/locations/halqa/' + id, formHalqa, {
         headers: {
@@ -297,21 +180,10 @@ export const LocationDivision = ({ me, setLoading0 }) => {
         },
       });
       dispatch({ type: 'SUCCESS', payload: req.data?.message });
-      getHalqas();
     } catch (err) {
       dispatch({ type: 'ERROR', payload: err.response.data.message });
     }
-    setLoading(false);
-    setLoading0(false);
   };
-  const getAll = async () => {
-    setLoading0(true);
-    getProvinces();
-    getDivisions();
-    getTehsils();
-    getDistricts();
-  };
-
   const handleDisable = (id, disabled) => {
     instance.patch(
       `/locations/${view}/disable-location/${id}`,
@@ -323,21 +195,6 @@ export const LocationDivision = ({ me, setLoading0 }) => {
       }
     );
   };
-
-  useEffect(() => {
-    getAll();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [me]);
-  useEffect(() => {
-    const fn = async () => {
-      if (divisions.length > 0) {
-        await getHalqas();
-        setLoading0(false);
-      }
-    };
-    fn();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [divisions]);
   return (
     <>
       <div
@@ -677,25 +534,17 @@ export const LocationDivision = ({ me, setLoading0 }) => {
           </div>
           <div className='modal-action'>
             {editMode ? (
-              <button
-                disabled={loading}
-                className='btn'
-                onClick={handleSubmitEdit}
-              >
+              <button className='btn' onClick={handleSubmitEdit}>
                 Update
               </button>
             ) : (
-              <button disabled={loading} className='btn' onClick={handleSubmit}>
+              <button className='btn' onClick={handleSubmit}>
                 Add
               </button>
             )}
             <form method='dialog'>
               {/* if there is a button in form, it will close the modal */}
-              <button
-                disabled={loading}
-                id='close-division-modal'
-                className='btn ms-3'
-              >
+              <button id='close-division-modal' className='btn ms-3'>
                 Close
               </button>
             </form>
@@ -750,29 +599,17 @@ export const LocationDivision = ({ me, setLoading0 }) => {
           </div>
           <div className='modal-action'>
             {editMode ? (
-              <button
-                disabled={loading}
-                className='btn'
-                onClick={handleSubmitDistrictEdit}
-              >
+              <button className='btn' onClick={handleSubmitDistrictEdit}>
                 Update
               </button>
             ) : (
-              <button
-                disabled={loading}
-                className='btn'
-                onClick={handleSubmitDistrict}
-              >
+              <button className='btn' onClick={handleSubmitDistrict}>
                 Add
               </button>
             )}
             <form method='dialog'>
               {/* if there is a button in form, it will close the modal */}
-              <button
-                disabled={loading}
-                id='close-district-modal'
-                className='btn ms-3'
-              >
+              <button id='close-district-modal' className='btn ms-3'>
                 Close
               </button>
             </form>
@@ -827,29 +664,17 @@ export const LocationDivision = ({ me, setLoading0 }) => {
           </div>
           <div className='modal-action'>
             {editMode ? (
-              <button
-                disabled={loading}
-                className='btn'
-                onClick={handleSubmitTehsilEdit}
-              >
+              <button className='btn' onClick={handleSubmitTehsilEdit}>
                 Update
               </button>
             ) : (
-              <button
-                disabled={loading}
-                className='btn'
-                onClick={handleSubmitTehsil}
-              >
+              <button className='btn' onClick={handleSubmitTehsil}>
                 Add
               </button>
             )}
             <form method='dialog'>
               {/* if there is a button in form, it will close the modal */}
-              <button
-                disabled={loading}
-                id='close-tehsil-modal'
-                className='btn ms-3'
-              >
+              <button id='close-tehsil-modal' className='btn ms-3'>
                 Close
               </button>
             </form>
@@ -904,29 +729,17 @@ export const LocationDivision = ({ me, setLoading0 }) => {
           </div>
           <div className='modal-action'>
             {editMode ? (
-              <button
-                disabled={loading}
-                className='btn'
-                onClick={handleSubmitHalqaEdit}
-              >
+              <button className='btn' onClick={handleSubmitHalqaEdit}>
                 Update
               </button>
             ) : (
-              <button
-                disabled={loading}
-                className='btn'
-                onClick={handleSubmitHalqa}
-              >
+              <button className='btn' onClick={handleSubmitHalqa}>
                 Add
               </button>
             )}
             <form method='dialog'>
               {/* if there is a button in form, it will close the modal */}
-              <button
-                disabled={loading}
-                id='close-division-modal'
-                className='btn ms-3'
-              >
+              <button id='close-division-modal' className='btn ms-3'>
                 Close
               </button>
             </form>

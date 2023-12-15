@@ -12,6 +12,7 @@ import { useState } from "react";
 import { MeContext, useToastState } from "../context";
 import { useEffect } from "react";
 import { getData } from "./Maqam";
+import { UIContext } from "../context/ui";
 import { Tanzeem } from "../components/divisionReport/Tanzeem";
 import { IfradiKuwat } from "../components/divisionReport/IfradiKuwat";
 import { MarkaziActivities } from "../components/divisionReport/MarkaziActivities";
@@ -29,7 +30,7 @@ export const Division = () => {
   const [id, setId] = useState(null);
   const { dispatch } = useToastState();
   const [data, setData] = useState({});
-  const [loading, setLoading] = useState(true);
+  const { loading, setLoading } = useContext(UIContext);
   const [view, setView] = useState(false);
   const me = useContext(MeContext);
   const location = useLocation();
@@ -41,12 +42,14 @@ export const Division = () => {
       setView(true);
     }
     setId(params?.id);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
   useEffect(() => {
     if (id) getData("division", id, setData, dispatch, setLoading);
     else {
       setLoading(false);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
   useEffect(() => {
     Object.keys(data).forEach((i) => {

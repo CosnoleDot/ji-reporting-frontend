@@ -19,6 +19,7 @@ import { useContext, useState } from "react";
 import { useEffect } from "react";
 import { HalqaContext, MeContext, useToastState } from "../context";
 import { InputWithLabel } from "../components/InputWithLabel";
+import { UIContext } from "../context/ui";
 import { Tanzeem } from "../components/maqamReport/Tanzeem";
 import { IfradiKuwat } from "../components/maqamReport/IfradiKuwat";
 import { MarkaziActivities } from "../components/maqamReport/MarkaziActivities";
@@ -51,7 +52,7 @@ export const Maqam = () => {
   const [id, setId] = useState(null);
   const { dispatch } = useToastState();
   const [data, setData] = useState({});
-  const [loading, setLoading] = useState(true);
+  const { loading, setLoading } = useContext(UIContext);
   const [view, setView] = useState(false);
   const location = useLocation();
   const me = useContext(MeContext);
@@ -80,12 +81,14 @@ export const Maqam = () => {
       setView(true);
     }
     setId(params?.id);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
   useEffect(() => {
     if (id) getData("maqam", id, setData, dispatch, setLoading);
     else {
       setLoading(false);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
   useEffect(() => {
     Object.keys(data).forEach((i) => {

@@ -1,13 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import instance from '../api/instrance';
 import { useToastState } from '../context';
 import { Loader } from '../components';
 import { Link, useNavigate } from 'react-router-dom';
+import { UIContext } from '../context/ui';
 
 export const Signup = () => {
   const [userAreaType, setUserAreaType] = useState('Division');
   const [areas, setAreas] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const { loading, setLoading } = useContext(UIContext);
   const { dispatch } = useToastState();
   const navigate = useNavigate();
   const handleSubmit = async (e) => {

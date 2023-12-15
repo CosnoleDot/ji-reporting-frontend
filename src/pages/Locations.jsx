@@ -1,23 +1,14 @@
-import { useContext, useState } from 'react';
-import {
-  GeneralLayout,
-  Loader,
-  LocationDivision,
-  LocationMaqam,
-} from '../components';
+import { useState } from 'react';
+import { GeneralLayout, LocationDivision, LocationMaqam } from '../components';
 import { Link, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
-import instance from '../api/instrance';
-import { MeContext, useToastState } from '../context';
 
 export const Locations = () => {
-  const [loading, setLoading] = useState(true);
   const [active, setActive] = useState(
     ['province', 'maqam'].includes(localStorage.getItem('@type'))
       ? 'maqam'
       : 'division'
   );
-  const me = useContext(MeContext);
   const params = useLocation();
   useEffect(() => {
     // Function to parse query parameters
@@ -64,15 +55,10 @@ export const Locations = () => {
           )}
         </div>
         <div className='relative w-full flex flex-col gap-3 items-center justify-start h-[calc(100vh-65.6px-64px-32px)]'>
-          {active === 'maqam' && (
-            <LocationMaqam me={me} setLoading0={setLoading} />
-          )}
-          {active === 'division' && (
-            <LocationDivision me={me} setLoading0={setLoading} />
-          )}
+          {active === 'maqam' && <LocationMaqam />}
+          {active === 'division' && <LocationDivision />}
         </div>
       </div>
-      {loading && <Loader />}
     </GeneralLayout>
   );
 };

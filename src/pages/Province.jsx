@@ -18,7 +18,8 @@ import {
 import { useEffect } from "react";
 import { InputWithLabel } from "../components/InputWithLabel";
 import instance from "../api/instrance";
-import { convertDataFormat, reverseDataFormat } from "../utils";
+import { reverseDataFormat } from "../utils";
+import { UIContext } from "../context/ui";
 import { Tanzeem } from "../components/provinceReport/Tanzeem";
 import { IfradiKuwat } from "../components/provinceReport/IfradiKuwat";
 import { MarkaziActivities } from "../components/provinceReport/MarkaziActivities";
@@ -33,16 +34,13 @@ export const Province = () => {
   // EDIT CODE START
   const params = useParams();
   const [id, setId] = useState(null);
-  const { dispatch } = useToastState();
-  const [loading, setLoading] = useState(false);
+  const { loading, setLoading } = useContext(UIContext);
   const [view, setView] = useState(false);
-  const [data, setData] = useState({});
   const location = useLocation();
   const navigate = useNavigate();
   const me = useContext(MeContext);
   const [allReports, setAllReports] = useState([]);
   const [userType, setUserType] = useState("");
-  const [sum, setSum] = useState({ maqam: {}, division: {}, halqa: {} });
   useEffect(() => {
     setUserType(localStorage.getItem("@type"));
     const l = location.pathname?.split("/")[2];
@@ -50,6 +48,7 @@ export const Province = () => {
       setView(true);
     }
     setId(params?.date);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
 
   const fetchReports = async () => {
@@ -80,7 +79,7 @@ export const Province = () => {
             id?.split("-")[1],
             id?.split("-")[0],
           ];
-          return dataMonth == givenMonth && dataYear == givenYear;
+          return dataMonth === givenMonth && dataYear === givenYear;
         });
         const hal = h?.data?.data?.filter((curr) => {
           const [dataMonth, dataYear] = [
@@ -91,7 +90,7 @@ export const Province = () => {
             id?.split("-")[1],
             id?.split("-")[0],
           ];
-          return dataMonth == givenMonth && dataYear == givenYear;
+          return dataMonth === givenMonth && dataYear === givenYear;
         });
         const divi = d?.data?.data?.filter((curr) => {
           const [dataMonth, dataYear] = [
@@ -102,7 +101,7 @@ export const Province = () => {
             id?.split("-")[1],
             id?.split("-")[0],
           ];
-          return dataMonth == givenMonth && dataYear == givenYear;
+          return dataMonth === givenMonth && dataYear === givenYear;
         });
 
         const maq = {};
@@ -181,6 +180,7 @@ export const Province = () => {
   };
   useEffect(() => {
     fetchReports();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   useEffect(() => {
