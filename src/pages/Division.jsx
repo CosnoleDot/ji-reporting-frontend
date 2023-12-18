@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
-import { GeneralLayout, Loader, GeneralInfo } from '../components';
-import { convertDataFormat, toJson } from '../utils';
+import { GeneralLayout, Loader, GeneralInfo, calcultate } from '../components';
+import { convertDataFormat, reverseDataFormat, toJson } from '../utils';
 import instance from '../api/instrance';
-import { InputWithLabel } from '../components/InputWithLabel';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import {
@@ -34,11 +33,81 @@ export const Division = () => {
   const [id, setId] = useState(null);
   const { dispatch } = useToastState();
   const [data, setData] = useState({});
-  const { loading, setLoading } = useContext(UIContext);
+  const { loading, setLoading, getDivisionReports } = useContext(UIContext);
   const [view, setView] = useState(false);
+  const [month, setMonth] = useState('');
   const me = useContext(MeContext);
   const location = useLocation();
   const navigate = useNavigate();
+  const autoFill = () => {
+    const halq = {};
+    document.getElementById('totalLibraries').value = halqa.filter((i) =>
+      i?.month.includes(month)
+    ).length;
+    halqa
+      .filter((i) => i?.month.includes(month))
+      .forEach((i) => {
+        const sim = reverseDataFormat(i);
+        Object.keys(sim)?.forEach((j) => {
+          if (halq?.[j]) {
+            try {
+              halq[j] += parseInt(sim[j]) || 0;
+            } catch {
+              halq[j] += sim[j] || 0;
+            }
+          } else {
+            try {
+              halq[j] = parseInt(sim[j]) || 0;
+            } catch {
+              halq[j] = sim[j] || 0;
+            }
+          }
+        });
+      });
+    Object.keys(halq).forEach((i) => {
+      let j;
+      if (i === 'studyCircle-decided') {
+        j = 'studyCircleMentioned-decided';
+      } else if (i === 'studyCircle-completed') {
+        j = 'studyCircleMentioned-done';
+      } else if (i === 'studyCircle-attendance') {
+        j = 'studyCircleMentioned-averageAttendance';
+      } else {
+        if (i.split('-')[1] === 'completed') {
+          j = i.split('-')[0] + '-done';
+        } else if (i.split('-')[1] === 'attendance') {
+          j = i.split('-')[0] + '-averageAttendance';
+        } else if (i === 'books') {
+          j = 'totalBooks';
+        } else if (i === 'bookRent') {
+          j = 'totalBookRent';
+        } else if (i === 'increase') {
+          j = 'totalIncrease';
+        } else if (i === 'decrease') {
+          j = 'totalDecrease';
+        } else {
+          j = i;
+        }
+      }
+      const elem = document.getElementById(j);
+      if (elem) {
+        if (j === 'month') {
+        } else {
+          if (elem.type === 'checkbox') {
+          }
+          if (j.split('-')[1] === 'attendance') {
+            document.getElementById(
+              `${j.split('-')[0]}-averageAttendance`
+            ).value = halq[i];
+          } else {
+            elem.value = halq[i];
+          }
+        }
+      }
+    });
+    document.getElementById('studyCircle-averageAttendance').value = null;
+    document.getElementById('studyCircle-done').value = null;
+  };
 
   useEffect(() => {
     const l = location.pathname?.split('/')[2];
@@ -56,17 +125,47 @@ export const Division = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
   useEffect(() => {
+    console.log(data, 'DEBUGING');
     Object.keys(data).forEach((i) => {
       const elem = document.getElementById(i);
       if (elem) {
         if (i === 'month') {
           elem.value = data[i]?.split('')?.slice(0, 7)?.join('');
         } else {
-          elem.value = data[i];
+          if (elem.type === 'checkbox') {
+            console.log(elem.id, 'DEBUGING');
+            elem.checked = data[i];
+          } else {
+            elem.value = data[i];
+          }
         }
       }
     });
+    const afd = [
+      'rehaishHalqay',
+      'taleemHalqay',
+      'totalHalqay',
+      'subRehaishHalqay',
+      'subTaleemHalqay',
+      'subTotalHalqay',
+      'busmSchoolUnits',
+      'busmRehaishUnits',
+      'busmTotalUnits',
+      'arkan',
+      'umeedWaran',
+      'rafaqa',
+      'karkunan',
+      'members',
+      'shaheen',
+    ];
+    afd.forEach((i) => {
+      calcultate(i);
+    });
   }, [data]);
+  useEffect(() => {
+    if (!id) autoFill();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id, halqa, month]);
   // EDIT CODE END
 
   const handleSubmit = async (e) => {
@@ -83,6 +182,7 @@ export const Division = () => {
             Authorization: `Bearer ${localStorage.getItem('@token')}`,
           },
         });
+        await getDivisionReports();
         dispatch({ type: 'SUCCESS', payload: req.data?.message });
         navigate('/reports');
       } else {
@@ -92,6 +192,7 @@ export const Division = () => {
             Authorization: `Bearer ${localStorage.getItem('@token')}`,
           },
         });
+        await getDivisionReports();
         dispatch({ type: 'SUCCESS', payload: req.data?.message });
         navigate('/reports');
       }
@@ -113,28 +214,28 @@ export const Division = () => {
           {/* <fieldset disabled={view} className="w-full"> */}
           <h2 className='text-2xl mb-4'>جا ئزءکارکردگی رپورٹ (براے ڈویژن)</h2>
           <div className='w-full'>
-            <div>
-              <GeneralInfo me={me} area={'ڈویژن'} />
+            <div className='mb-4'>
+              <GeneralInfo me={me} setMonth={setMonth} area={'ڈویژن'} />
             </div>
-            <div>
+            <div className='mb-4'>
               {/* <TanzeemDivision view={view} /> */}
-              <Tanzeem data={data} />
+              <Tanzeem view={view} data={data} />
             </div>
             <div className='mb-4'>
               {/* <MenTableDivision view={view} /> */}
-              <IfradiKuwat data={data} />
+              <IfradiKuwat view={view} data={data} />
             </div>
             <div className='mb-4'>
               {/* <CentralActivitiesDivision view={view} /> */}
-              <MarkaziActivities />
+              <MarkaziActivities view={view} />
             </div>
             <div className='mb-4'>
               {/* <ZailiActivitesDivision view={view} /> */}
-              <ZailiActivities />
+              <ZailiActivities view={view} />
             </div>
             <div className=' mb-4'>
               {/* <OtherActivitiesDivision arr={arr} view={view} /> */}
-              <OtherActivities />
+              <OtherActivities view={view} />
             </div>
             <div className=' mb-4'>
               {/* <ExpandPartyDivision view={view} /> */}
@@ -146,39 +247,42 @@ export const Division = () => {
             </div>
             <div className=' mb-4'>
               {/* <MessageDigestDivision view={view} /> */}
-              <PaighamDigest />
+              <PaighamDigest view={view} />
             </div>
             <div className=' mb-4'>
               {/* <EveningDiaryDivision view={view} /> */}
               <RozOShabDiary />
             </div>
           </div>
-          <div className=' w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2'>
-            <div className='w-full md:pr-0 mb-2'>
-              <InputWithLabel
-                readOnly={view}
-                type={'textarea'}
-                required={true}
-                placeholder={' تبصرہ'}
-                label={' تبصرہ'}
-                id={'comments'}
-                name={'comments'}
-              />
-            </div>
-            <div className='w-full mb-2'>
-              <InputWithLabel
-                readOnly={view}
-                required={true}
-                label={'برائے ماہ'}
-                type={'month'}
-                id={'month'}
-                name={'month'}
-                value={'sdfhasdfhas'}
+          <div className='w-full flex p-2'>
+            <label htmlFor='comments'>تبصرہ</label>
+            <input
+              type='text'
+              name='comments'
+              required
+              className='border-b-2 border-dashed w-full'
+              id='comments'
+              readOnly={view}
+            />
+          </div>
+          <div className='w-full flex flex-col items-end gap-3 p-2'>
+            <div>
+              <label htmlFor='nazim'>نام ناظمِ:</label>
+              <input
+                type='text'
+                className='border-b-2 border-dashed text-center'
+                id='nazim'
+                defaultValue={me?.name || ''}
+                readOnly
               />
             </div>
           </div>
           <div className='w-full'>
-            <button className='btn btn-primary' disabled={loading}>
+            <button
+              type='submit'
+              className='btn btn-primary'
+              disabled={loading}
+            >
               {id ? 'Update' : 'Add'}
             </button>
           </div>

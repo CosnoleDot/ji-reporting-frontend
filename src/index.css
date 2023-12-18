@@ -3523,10 +3523,6 @@ html {
   height: 100vh;
 }
 
-.h-24 {
-  height: 6rem;
-}
-
 .max-h-56 {
   max-height: 14rem;
 }
@@ -3581,10 +3577,6 @@ html {
 
 .w-24 {
   width: 6rem;
-}
-
-.w-28 {
-  width: 7rem;
 }
 
 .w-56 {
@@ -3887,10 +3879,6 @@ html {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
-.bg-\[rgba\(0\2c 0\2c 0\2c 0\.6\)\] {
-  background-color: rgba(0,0,0,0.6);
-}
-
 .p-0 {
   padding: 0px;
 }
@@ -4131,11 +4119,6 @@ html {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
-.text-blue-600 {
-  --tw-text-opacity: 1;
-  color: rgb(37 99 235 / var(--tw-text-opacity));
 }
 
 .opacity-0 {

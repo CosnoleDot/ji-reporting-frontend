@@ -215,7 +215,7 @@ export const LocationMaqam = () => {
                 <th></th>
                 <th>Name</th>
                 <th>Province</th>
-                <th className='text-center'>Edit</th>
+                <th className='text-center'>Edit/Disable</th>
               </tr>
             </thead>
             <tbody>
@@ -263,7 +263,7 @@ export const LocationMaqam = () => {
                 <th></th>
                 <th>Name</th>
                 <th>Maqam</th>
-                <th className='text-center'>Edit</th>
+                <th className='text-center'>Edit/Disable</th>
               </tr>
             </thead>
             <tbody>

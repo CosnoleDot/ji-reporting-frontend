@@ -8,6 +8,7 @@ export const RozOShabDiary = () => {
           <input
             readOnly={true}
             type='number'
+            required
             name='arkanFilled'
             id='arkanFilled'
             className='border-b-2 text-center border-dashed'
@@ -18,6 +19,7 @@ export const RozOShabDiary = () => {
           <input
             readOnly={true}
             type='number'
+            required
             name='rafaqaFilled'
             id='rafaqaFilled'
             className='border-b-2 text-center border-dashed'
@@ -28,6 +30,7 @@ export const RozOShabDiary = () => {
           <input
             readOnly={true}
             type='number'
+            required
             name='umeedwaranFilled'
             id='umeedwaranFilled'
             className='border-b-2 text-center border-dashed'
