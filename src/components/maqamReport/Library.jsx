@@ -53,15 +53,7 @@ export const Library = () => {
             className='border-b-2 text-center border-dashed'
           />
         </div>
-        {/* <div className="flex py-2">
-            <label className="block">مرتب:</label>
-            <input readOnly={ true }
-              type="checkbox"
-              name="registeredTosee"
-              id="registeredTosee"
-              className="checkbox ms-2"
-            />
-          </div> */}
+        
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ export const Box = ({ children, type }) => {
   return (
     <td
       className={`border text-center p-2 ${
-        type === 'heading' ? 'text-lg text-black' : ''
+        type === "heading" ? "text-lg text-black" : ""
       }`}
     >
       {children}
@@ -19,11 +19,11 @@ export const calcultate = (v) => {
 };
 export const IfradiKuwat = ({ view }) => {
   return (
-    <div className='relative w-full overflow-auto'>
-      <table className='w-full table'>
+    <div className="relative w-full overflow-auto">
+      <table className="w-full table">
         <thead>
           <tr>
-            <Box type={'heading'}>افرادی قوت</Box>
+            <Box type={"heading"}>افرادی قوت</Box>
             <Box>آغاز میں</Box>
             <Box>اضافہ</Box>
             <Box>کمی</Box>
@@ -38,49 +38,49 @@ export const IfradiKuwat = ({ view }) => {
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 name={`arkan-start`}
                 id={`arkan-start`}
-                onChange={() => calcultate('arkan')}
-                className='p-1 text-center min-w-full'
+                onChange={() => calcultate("arkan")}
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 name={`arkan-increase`}
                 id={`arkan-increase`}
-                onChange={() => calcultate('arkan')}
-                className='p-1 text-center min-w-full'
+                onChange={() => calcultate("arkan")}
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 name={`arkan-decrease`}
                 id={`arkan-decrease`}
-                onChange={() => calcultate('arkan')}
-                className='p-1 text-center min-w-full'
+                onChange={() => calcultate("arkan")}
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly
-                type='number'
+                type="number"
                 name={`arkan-end`}
                 id={`arkan-end`}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 name={`arkan-annual`}
                 id={`arkan-annual`}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>-</Box>
@@ -90,64 +90,64 @@ export const IfradiKuwat = ({ view }) => {
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 name={`umeedWaran-start`}
-                onChange={() => calcultate('umeedWaran')}
+                onChange={() => calcultate("umeedWaran")}
                 id={`umeedWaran-start`}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 name={`umeedWaran-increase`}
-                onChange={() => calcultate('umeedWaran')}
+                onChange={() => calcultate("umeedWaran")}
                 id={`umeedWaran-increase`}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 name={`umeedWaran-decrease`}
-                onChange={() => calcultate('umeedWaran')}
+                onChange={() => calcultate("umeedWaran")}
                 id={`umeedWaran-decrease`}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly
-                type='number'
+                type="number"
                 name={`umeedWaran-end`}
                 id={`umeedWaran-end`}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 name={`umeedWaran-annual`}
                 id={`umeedWaran-annual`}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               {view ? (
                 <input
-                  type='checkbox'
-                  className='p-1 text-center min-w-full checkbox'
+                  type="checkbox"
+                  className="p-1 text-center min-w-full checkbox"
                   disabled
-                  name={`karkunan-registered`}
-                  id={`karkunan-registered`}
+                  name={`umeedWaran-registered`}
+                  id={`umeedWaran-registered`}
                 />
               ) : (
                 <input
-                  type='checkbox'
-                  className='p-1 text-center min-w-full checkbox'
+                  type="checkbox"
+                  className="p-1 text-center min-w-full checkbox"
                   name={`umeedWaran-registered`}
                   id={`umeedWaran-registered`}
                 />
@@ -159,64 +159,64 @@ export const IfradiKuwat = ({ view }) => {
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 name={`rafaqa-start`}
-                onChange={() => calcultate('rafaqa')}
+                onChange={() => calcultate("rafaqa")}
                 id={`rafaqa-start`}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 name={`rafaqa-increase`}
-                onChange={() => calcultate('rafaqa')}
+                onChange={() => calcultate("rafaqa")}
                 id={`rafaqa-increase`}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 name={`rafaqa-decrease`}
-                onChange={() => calcultate('rafaqa')}
+                onChange={() => calcultate("rafaqa")}
                 id={`rafaqa-decrease`}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly
-                type='number'
+                type="number"
                 name={`rafaqa-end`}
                 id={`rafaqa-end`}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 name={`rafaqa-annual`}
                 id={`rafaqa-annual`}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               {view ? (
                 <input
-                  type='checkbox'
-                  className='p-1 text-center min-w-full checkbox'
-                  disabled
-                  name={`karkunan-registered`}
-                  id={`karkunan-registered`}
+                  type="checkbox"
+                  className="p-1 text-center min-w-full checkbox"
+                  disabled={view}
+                  name={`rafaqa-registered`}
+                  id={`rafaqa-registered`}
                 />
               ) : (
                 <input
-                  type='checkbox'
-                  className='p-1 text-center min-w-full checkbox'
+                  type="checkbox"
+                  className="p-1 text-center min-w-full checkbox"
                   name={`rafaqa-registered`}
                   id={`rafaqa-registered`}
                 />
@@ -228,64 +228,64 @@ export const IfradiKuwat = ({ view }) => {
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 name={`karkunan-start`}
-                onChange={() => calcultate('karkunan')}
+                onChange={() => calcultate("karkunan")}
                 id={`karkunan-start`}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 name={`karkunan-increase`}
-                onChange={() => calcultate('karkunan')}
+                onChange={() => calcultate("karkunan")}
                 id={`karkunan-increase`}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 name={`karkunan-decrease`}
-                onChange={() => calcultate('karkunan')}
+                onChange={() => calcultate("karkunan")}
                 id={`karkunan-decrease`}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly
-                type='number'
+                type="number"
                 name={`karkunan-end`}
                 id={`karkunan-end`}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 name={`karkunan-annual`}
                 id={`karkunan-annual`}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               {view ? (
                 <input
-                  type='checkbox'
-                  className='p-1 text-center min-w-full checkbox'
-                  disabled
+                  type="checkbox"
+                  className="p-1 text-center min-w-full checkbox"
+                  disabled={view}
                   name={`karkunan-registered`}
                   id={`karkunan-registered`}
                 />
               ) : (
                 <input
-                  type='checkbox'
-                  className='p-1 text-center min-w-full checkbox'
+                  type="checkbox"
+                  className="p-1 text-center min-w-full checkbox"
                   name={`karkunan-registered`}
                   id={`karkunan-registered`}
                 />
