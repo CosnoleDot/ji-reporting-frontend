@@ -2,14 +2,7 @@ import { useContext, useState } from 'react';
 import { Notifications } from './Notifications';
 import { FaBell, FaUserPlus } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-import instance from '../../api/instrance';
 import { FaRegUserCircle } from 'react-icons/fa';
-import {
-  DivisionReportContext,
-  HalqaReportContext,
-  MaqamReportContext,
-} from '../../context';
 import { UIContext } from '../../context/ui';
 
 export const Navbar = ({ title }) => {
@@ -17,74 +10,9 @@ export const Navbar = ({ title }) => {
   const [requests, showRequests] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [profileTab, showProfileTab] = useState(false);
-  const { userRequests } = useContext(UIContext);
-  const [notifications, setNotifications] = useState([]);
-  const [reports, setReports] = useState([]);
-  const maqamReports = useContext(MaqamReportContext);
-  const divisionReports = useContext(DivisionReportContext);
-  const halqaReports = useContext(HalqaReportContext);
-  const getAllReports = async () => {
-    if (
-      localStorage.getItem('@token') &&
-      localStorage.getItem('@type') !== 'province'
-    ) {
-      try {
-        let req;
-        switch (localStorage.getItem('@type')) {
-          case 'maqam':
-            req = maqamReports;
-            break;
-          case 'division':
-            req = divisionReports;
-            break;
-          case 'halqa':
-            req = halqaReports;
-            break;
-          default:
-            break;
-        }
-        setReports(req);
-      } catch (err) {
-        console.log(err);
-      }
-    }
-  };
-  const getAllNotifications = async () => {
-    if (localStorage.getItem('@token')) {
-      try {
-        const req = await instance.get(
-          '/notifications?type=' + localStorage.getItem('@type').toLowerCase(),
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('@token')}`,
-            },
-          }
-        );
-        setNotifications(
-          req.data?.data.filter((i) => {
-            const months = reports.map((_) =>
-              _.month.split('-').slice(0, 2).join('-')
-            );
-            return months.includes(
-              i.createdAt.split('-').slice(0, 2).join('-')
-            );
-          })
-        );
-      } catch (err) {
-        console.log(err);
-      }
-    }
-  };
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      getAllNotifications();
-      getAllReports();
-    }, 5000); // 5000 milliseconds = 5 seconds
+  const { userRequests, notifications, getAllNotifications } =
+    useContext(UIContext);
 
-    // Cleanup the interval on component unmount
-    return () => clearInterval(intervalId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
   return (
     <>
       <div className='navbar bg-blue-500 text-white'>
@@ -169,7 +97,7 @@ export const Navbar = ({ title }) => {
                   onClick={() => {
                     localStorage.clear();
                     navigate('/login');
-                    window.location.reload()
+                    window.location.reload();
                   }}
                 >
                   Logout

@@ -54,6 +54,10 @@ function App() {
   const [userRequests, setUserRequests] = useState([]);
   const [value, setValue] = useState(null);
   const [count, setCount] = useState(0);
+
+  const [notifications, setNotifications] = useState([]);
+  const [reports, setReports] = useState([]);
+
   const [authenticated, setAuthenticaated] = useState(
     localStorage.getItem('@token')
   );
@@ -300,6 +304,74 @@ function App() {
       }
     }
   };
+  // NOTiFICATIONS CODE
+  const getAllReports = async () => {
+    if (
+      localStorage.getItem('@token') &&
+      localStorage.getItem('@type') !== 'province'
+    ) {
+      try {
+        let req;
+        switch (localStorage.getItem('@type')) {
+          case 'maqam':
+            req = maqamReports;
+            break;
+          case 'division':
+            req = divisionReports;
+            break;
+          case 'halqa':
+            req = halqaReports;
+            break;
+          default:
+            break;
+        }
+        setReports(req);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+  const getAllNotifications = async () => {
+    if (localStorage.getItem('@token')) {
+      try {
+        const req = await instance.get(
+          '/notifications?type=' + localStorage.getItem('@type').toLowerCase(),
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('@token')}`,
+            },
+          }
+        );
+        setNotifications(
+          req.data?.data.filter((i) => {
+            const months = reports.map((_) =>
+              _.month.split('-').slice(0, 2).join('-')
+            );
+            return !months.includes(
+              i.createdAt.split('-').slice(0, 2).join('-')
+            );
+          })
+        );
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      getAllReports();
+    }, 5000); // 5000 milliseconds = 5 seconds
+
+    // Cleanup the interval on component unmount
+    return () => clearInterval(intervalId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  useEffect(() => {
+    getAllNotifications();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reports]);
+
+  // NOTiFICATIONS CODE END
   const hasMounted = useRef(false);
   useEffect(() => {
     if (!hasMounted.current) {
@@ -356,6 +428,7 @@ function App() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [me]);
+
   return (
     <MeContext.Provider value={me}>
       <ProvinceContext.Provider value={provinces}>
@@ -386,6 +459,10 @@ function App() {
                               getDivisionReports,
                               getHalqaReports,
                               getAllRequests,
+                              notifications,
+                              reports,
+                              setReports,
+                              getAllNotifications,
                             }}
                           >
                             <div className='flex flex-col'>

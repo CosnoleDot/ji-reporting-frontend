@@ -94,7 +94,7 @@ export const Halqa = () => {
           elem.value = data[i]?.split('')?.slice(0, 7)?.join('');
         } else {
           if (elem.type === 'checkbox') {
-            elem.defaultChecked = data[i];
+            elem.defaultChecked = data[i] ? true : false;
           } else {
             elem.value = data[i];
           }

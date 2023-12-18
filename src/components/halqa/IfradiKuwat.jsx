@@ -140,7 +140,7 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   type='checkbox'
                   className='p-1 text-center min-w-full checkbox'
-                  checked={view}
+                  disabled
                   name={`karkunan-registered`}
                   id={`karkunan-registered`}
                 />
@@ -209,7 +209,7 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   type='checkbox'
                   className='p-1 text-center min-w-full checkbox'
-                  checked={view}
+                  disabled
                   name={`karkunan-registered`}
                   id={`karkunan-registered`}
                 />
@@ -278,7 +278,7 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   type='checkbox'
                   className='p-1 text-center min-w-full checkbox'
-                  checked={view}
+                  disabled
                   name={`karkunan-registered`}
                   id={`karkunan-registered`}
                 />
