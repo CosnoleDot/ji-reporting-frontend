@@ -10,6 +10,7 @@ export const ToseeDawat = () => {
           <div className="flex py-2">
             <label className="block">طے شدہ:</label>
             <input
+            readOnly={true}
               type="number"
               name="rawabitDecided"
               id="rawabitDecided"
@@ -19,6 +20,7 @@ export const ToseeDawat = () => {
           <div className="flex py-2">
             <label className="block">موجود:</label>
             <input
+            readOnly={true}
               type="number"
               name="current"
               id="current"
@@ -28,6 +30,7 @@ export const ToseeDawat = () => {
           <div className="flex py-2">
             <label className="block">ملاقاتیں:</label>
             <input
+            readOnly={true}
               type="number"
               name="meetings"
               id="meetings"
@@ -37,6 +40,7 @@ export const ToseeDawat = () => {
           <div className="flex py-2">
             <label className="block">تقسیم لٹریچر:</label>
             <input
+            readOnly={true}
               type="number"
               name="literatureDistribution"
               id="literatureDistribution"
@@ -46,6 +50,7 @@ export const ToseeDawat = () => {
           <div className="flex py-2">
             <label className="block">مرتب:</label>
             <input
+            readOnly={true}
               type="checkbox"
               name="registeredTosee"
               id="registeredTosee"
@@ -60,6 +65,7 @@ export const ToseeDawat = () => {
           <div className="flex py-2">
             <label className="block">ملاقاتیں:</label>
             <input
+            readOnly={true}
               type="number"
               name="commonStudentMeetings"
               id="commonStudentMeetings"
@@ -69,6 +75,7 @@ export const ToseeDawat = () => {
           <div className="flex py-2">
             <label className="block">تقسیم لٹریچر:</label>
             <input
+            readOnly={true}
               type="number"
               name="commonLiteratureDistribution"
               id="commonLiteratureDistribution"

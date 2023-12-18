@@ -1,6 +1,4 @@
-import moment from "moment";
-
-export function GeneralInfo({ me,area }) {
+export function GeneralInfo({ setMonth, me, area }) {
   return (
     <div className='grid w-full grid-cols-1 lg:grid-cols-2'>
       <div className='grid grid-cols-2 w-full p-2'>
@@ -10,7 +8,7 @@ export function GeneralInfo({ me,area }) {
           type='text'
           name='halqa_name'
           id='halqa_name'
-          defaultValue={me?.userAreaId?.name || ""}
+          defaultValue={me?.userAreaId?.name || ''}
           readOnly
         />
       </div>
@@ -21,6 +19,7 @@ export function GeneralInfo({ me,area }) {
           type='month'
           name='month'
           id='month'
+          onChange={e => setMonth(e.target.value)}
         />
       </div>
     </div>

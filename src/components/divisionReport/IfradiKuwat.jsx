@@ -1,6 +1,6 @@
 import { Box } from "../halqa";
 
-  export const IfradiKuwat = ({data}) => {
+  export const IfradiKuwat = ({data,view}) => {
     const calcultate= (v)=>{
       // (start + increase)- decrease
       const s = parseInt(data?.[`${v}-start`]);
@@ -27,6 +27,7 @@ import { Box } from "../halqa";
               <Box>ارکان</Box>
               <Box>
                 <input
+                readOnly={true}
                   type="number"
                   name={`arkan-start`}
                   id={`arkan-start`}
@@ -35,6 +36,7 @@ import { Box } from "../halqa";
               </Box>
               <Box>
                 <input
+                readOnly={true}
                   type="number"
                   name={`arkan-increase`}
                   id={`arkan-increase`}
@@ -43,6 +45,7 @@ import { Box } from "../halqa";
               </Box>
               <Box>
                 <input
+                readOnly={true}
                   type="number"
                   name={`arkan-decrease`}
                   id={`arkan-decrease`}
@@ -51,6 +54,7 @@ import { Box } from "../halqa";
               </Box>
               <Box>
                 <input
+                readOnly={true}
                   type="number"
                   name={`arkan-end`}
                   id={`arkan-end`}
@@ -60,6 +64,7 @@ import { Box } from "../halqa";
               </Box>
               <Box>
                 <input
+                readOnly={true}
                   type="number"
                   name={`arkan-annual`}
                   id={`arkan-annual`}
@@ -72,6 +77,7 @@ import { Box } from "../halqa";
               <Box>امیدواران</Box>
               <Box>
                 <input
+                readOnly={true}
                   type="number"
                   name={`umeedWaran-start`}
                   id={`umeedWaran-start`}
@@ -80,6 +86,7 @@ import { Box } from "../halqa";
               </Box>
               <Box>
                 <input
+                readOnly={true}
                   type="number"
                   name={`umeedWaran-increase`}
                   id={`umeedWaran-increase`}
@@ -88,6 +95,7 @@ import { Box } from "../halqa";
               </Box>
               <Box>
                 <input
+                readOnly={true}
                   type="number"
                   name={`umeedWaran-decrease`}
                   id={`umeedWaran-decrease`}
@@ -96,6 +104,7 @@ import { Box } from "../halqa";
               </Box>
               <Box>
                 <input
+                readOnly={true}
                   type="number"
                   name={`umeedWaran-end`}
                   id={`umeedWaran-end`}
@@ -105,6 +114,7 @@ import { Box } from "../halqa";
               </Box>
               <Box>
                 <input
+                readOnly={true}
                   type="number"
                   name={`umeedWaran-annual`}
                   id={`umeedWaran-annual`}
@@ -113,7 +123,9 @@ import { Box } from "../halqa";
               </Box>
               <Box>
                 <input
+                readOnly={true}
                   type="checkbox"
+                  
                   className="p-1 text-center min-w-full checkbox"
                   name={`umeedWaran-registered`}
                   id={`umeedWaran-registered`}
@@ -124,6 +136,7 @@ import { Box } from "../halqa";
               <Box>رفقا</Box>
               <Box>
                 <input
+                readOnly={true}
                   type="number"
                   name={`rafaqa-start`}
                   id={`rafaqa-start`}
@@ -132,6 +145,7 @@ import { Box } from "../halqa";
               </Box>
               <Box>
                 <input
+                readOnly={true}
                   type="number"
                   name={`rafaqa-increase`}
                   id={`rafaqa-increase`}
@@ -140,6 +154,7 @@ import { Box } from "../halqa";
               </Box>
               <Box>
                 <input
+                readOnly={true}
                   type="number"
                   name={`rafaqa-decrease`}
                   id={`rafaqa-decrease`}
@@ -148,6 +163,7 @@ import { Box } from "../halqa";
               </Box>
               <Box>
                 <input
+                readOnly={true}
                   type="number"
                   name={`rafaqa-end`}
                   id={`rafaqa-end`}
@@ -157,6 +173,7 @@ import { Box } from "../halqa";
               </Box>
               <Box>
                 <input
+                readOnly={true}
                   type="number"
                   name={`rafaqa-annual`}
                   id={`rafaqa-annual`}
@@ -165,6 +182,7 @@ import { Box } from "../halqa";
               </Box>
               <Box>
                 <input
+                readOnly={true}
                   type="checkbox"
                   className="p-1 text-center min-w-full checkbox"
                   name={`rafaqa-registered`}
@@ -176,6 +194,7 @@ import { Box } from "../halqa";
               <Box>کارکنان</Box>
               <Box>
                 <input
+                readOnly={true}
                   type="number"
                   name={`karkunan-start`}
                   id={`karkunan-start`}
@@ -184,6 +203,7 @@ import { Box } from "../halqa";
               </Box>
               <Box>
                 <input
+                readOnly={true}
                   type="number"
                   name={`karkunan-increase`}
                   id={`karkunan-increase`}
@@ -192,6 +212,7 @@ import { Box } from "../halqa";
               </Box>
               <Box>
                 <input
+                readOnly={true}
                   type="number"
                   name={`karkunan-decrease`}
                   id={`karkunan-decrease`}
@@ -200,6 +221,7 @@ import { Box } from "../halqa";
               </Box>
               <Box>
                 <input
+                readOnly={true}
                   type="number"
                   name={`karkunan-end`}
                   id={`karkunan-end`}
@@ -209,6 +231,7 @@ import { Box } from "../halqa";
               </Box>
               <Box>
                 <input
+                readOnly={true}
                   type="number"
                   name={`karkunan-annual`}
                   id={`karkunan-annual`}
@@ -217,6 +240,7 @@ import { Box } from "../halqa";
               </Box>
               <Box>
                 <input
+                readOnly={true}
                   type="checkbox"
                   className="p-1 text-center min-w-full checkbox"
                   name={`karkunan-registered`}
@@ -228,6 +252,7 @@ import { Box } from "../halqa";
               <Box>شاہین</Box>
               <Box>
                 <input
+                readOnly={view}
                   type="number"
                   name={`shaheen-start`}
                   id={`shaheen-start`}
@@ -236,6 +261,7 @@ import { Box } from "../halqa";
               </Box>
               <Box>
                 <input
+                readOnly={view}
                   type="number"
                   name={`shaheen-increase`}
                   id={`shaheen-increase`}
@@ -244,6 +270,7 @@ import { Box } from "../halqa";
               </Box>
               <Box>
                 <input
+                readOnly={view}
                   type="number"
                   name={`shaheen-decrease`}
                   id={`shaheen-decrease`}
@@ -252,6 +279,7 @@ import { Box } from "../halqa";
               </Box>
               <Box>
                 <input
+                readOnly={view}
                   type="number"
                   name={`shaheen-end`}
                   id={`shaheen-end`}
@@ -261,6 +289,7 @@ import { Box } from "../halqa";
               </Box>
               <Box>
                 <input
+                readOnly={view}
                   type="number"
                   name={`shaheen-annual`}
                   id={`shaheen-annual`}
@@ -269,6 +298,7 @@ import { Box } from "../halqa";
               </Box>
               <Box>
                 <input
+                readOnly={view}
                   type="checkbox"
                   className="p-1 text-center min-w-full checkbox"
                   name={`shaheen-registered`}
@@ -280,6 +310,7 @@ import { Box } from "../halqa";
               <Box>ممبرز</Box>
               <Box>
                 <input
+                readOnly={view}
                   type="number"
                   name={`members-start`}
                   id={`members-start`}
@@ -288,6 +319,7 @@ import { Box } from "../halqa";
               </Box>
               <Box>
                 <input
+                readOnly={view}
                   type="number"
                   name={`members-increase`}
                   id={`members-increase`}
@@ -296,6 +328,7 @@ import { Box } from "../halqa";
               </Box>
               <Box>
                 <input
+                readOnly={view}
                   type="number"
                   name={`members-decrease`}
                   id={`members-decrease`}
@@ -304,6 +337,7 @@ import { Box } from "../halqa";
               </Box>
               <Box>
                 <input
+                readOnly={view}
                   type="number"
                   name={`members-end`}
                   id={`members-end`}
@@ -313,6 +347,7 @@ import { Box } from "../halqa";
               </Box>
               <Box>
                 <input
+                readOnly={view}
                   type="number"
                   name={`members-annual`}
                   id={`members-annual`}
@@ -321,6 +356,7 @@ import { Box } from "../halqa";
               </Box>
               <Box>
                 <input
+                readOnly={view}
                   type="checkbox"
                   className="p-1 text-center min-w-full checkbox"
                   name={`members-registered`}

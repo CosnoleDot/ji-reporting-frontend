@@ -1,4 +1,4 @@
-export const Library = () => {
+export const Library = ({view}) => {
   return (
     <div className="p-2 py-5 relative w-full overflow-auto">
       <h2 className="text-black py-3 text-lg">لائبریری</h2>
@@ -6,6 +6,7 @@ export const Library = () => {
         <div className="flex py-2">
           <label className="block">تعداد کتب:</label>
           <input
+          readOnly={view}
             type="number"
             name="books"
             id="books"
@@ -15,6 +16,7 @@ export const Library = () => {
         <div className="flex py-2">
           <label className="block">ااضافہ:</label>
           <input
+          readOnly={view}
             type="number"
             name="increase"
             id="increase"
@@ -24,6 +26,7 @@ export const Library = () => {
         <div className="flex py-2">
           <label className="block">کمی:</label>
           <input
+          readOnly={view}
             type="number"
             name="decrease"
             id="decrease"
@@ -33,6 +36,7 @@ export const Library = () => {
         <div className="flex py-2">
           <label className="block">اجرائے کتب:</label>
           <input
+          readOnly={view}
             type="number"
             name="bookRent"
             id="bookRent"
@@ -42,6 +46,7 @@ export const Library = () => {
         <div className="flex py-2">
           <label className="block">مرتب:</label>
           <input
+          readOnly={view}
             type="checkbox"
             name="registeredLibrary"
             id="registeredLibrary"

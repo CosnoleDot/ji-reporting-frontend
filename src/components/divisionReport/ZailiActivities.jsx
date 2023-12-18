@@ -2,7 +2,7 @@ import React from 'react'
 import { Box } from '../halqa'
 
 
-const ZailiActivities = () => {
+const ZailiActivities = ({view}) => {
   return (
     <div className="relative w-full overflow-auto">
       <table className="w-full table">
@@ -20,6 +20,7 @@ const ZailiActivities = () => {
             <Box>اجتماع رفقا </Box>
             <Box>
               <input
+              readOnly={true}
                 type="number"
                 name={`ijtRafaqa-decided`}
                 id={`ijtRafaqa-decided`}
@@ -28,6 +29,7 @@ const ZailiActivities = () => {
             </Box>
             <Box>
               <input
+              readOnly={true}
                 type="number"
                 name={`ijtRafaqa-done`}
                 id={`ijtRafaqa-done`}
@@ -36,6 +38,7 @@ const ZailiActivities = () => {
             </Box>
             <Box>
               <input
+              readOnly={true}
                 type="number"
                 name={`ijtRafaqa-averageAttendance`}
                 id={`ijtRafaqa-averageAttendance`}
@@ -45,6 +48,7 @@ const ZailiActivities = () => {
 
             <Box>
               <input
+              readOnly={true}
                 type="checkbox"
                 className="p-1 text-center min-w-full checkbox"
                 name={`ijtRafaqa-registered`}
@@ -56,6 +60,7 @@ const ZailiActivities = () => {
             <Box> سٹڈی سرکل</Box>
             <Box>
               <input
+              readOnly={true}
                 type="number"
                 name={`studyCircleMentioned-decided`}
                 id={`studyCircleMentioned-decided`}
@@ -64,6 +69,7 @@ const ZailiActivities = () => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`studyCircleMentioned-done`}
                 id={`studyCircleMentioned-done`}
@@ -72,6 +78,7 @@ const ZailiActivities = () => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`studyCircleMentioned-averageAttendance`}
                 id={`studyCircleMentioned-averageAttendance`}
@@ -81,6 +88,7 @@ const ZailiActivities = () => {
 
             <Box>
               <input
+              readOnly={view}
                 type="checkbox"
                 className="p-1 text-center min-w-full checkbox"
                 name={`studyCircleMentioned-registered`}
@@ -92,6 +100,7 @@ const ZailiActivities = () => {
             <Box>اجتماع کارکنان</Box>
             <Box>
               <input
+              readOnly={true}
                 type="number"
                 name={`ijtKarkunan-decided`}
                 id={`ijtKarkunan-decided`}
@@ -100,6 +109,7 @@ const ZailiActivities = () => {
             </Box>
             <Box>
               <input
+              readOnly={true}
                 type="number"
                 name={`ijtKarkunan-done`}
                 id={`ijtKarkunan-done`}
@@ -108,6 +118,7 @@ const ZailiActivities = () => {
             </Box>
             <Box>
               <input
+              readOnly={true}
                 type="number"
                 name={`ijtKarkunan-averageAttendance`}
                 id={`ijtKarkunan-averageAttendance`}
@@ -117,6 +128,7 @@ const ZailiActivities = () => {
 
             <Box>
               <input
+              readOnly={true}
                 type="checkbox"
                 className="p-1 text-center min-w-full checkbox"
                 name={`ijtKarkunan-registered`}
@@ -128,6 +140,7 @@ const ZailiActivities = () => {
             <Box>درس قرآن </Box>
             <Box>
               <input
+              readOnly={true}
                 type="number"
                 name={`darseQuran-decided`}
                 id={`darseQuran-decided`}
@@ -136,6 +149,7 @@ const ZailiActivities = () => {
             </Box>
             <Box>
               <input
+              readOnly={true}
                 type="number"
                 name={`darseQuran-done`}
                 id={`darseQuran-done`}
@@ -144,6 +158,7 @@ const ZailiActivities = () => {
             </Box>
             <Box>
               <input
+              readOnly={true}
                 type="number"
                 name={`darseQuran-averageAttendance`}
                 id={`darseQuran-averageAttendance`}
@@ -153,6 +168,7 @@ const ZailiActivities = () => {
 
             <Box>
               <input
+              readOnly={true}
                 type="checkbox"
                 className="p-1 text-center min-w-full checkbox"
                 name={`darseQuran-registered`}
@@ -164,6 +180,7 @@ const ZailiActivities = () => {
             <Box>شاہین میٹنگ</Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`shaheenMeeting-decided`}
                 id={`shaheenMeeting-decided`}
@@ -172,6 +189,7 @@ const ZailiActivities = () => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`shaheenMeeting-done`}
                 id={`shaheenMeeting-done`}
@@ -180,6 +198,7 @@ const ZailiActivities = () => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`shaheenMeeting-averageAttendance`}
                 id={`shaheenMeeting-averageAttendance`}
@@ -189,6 +208,7 @@ const ZailiActivities = () => {
 
             <Box>
               <input
+              readOnly={view}
                 type="checkbox"
                 className="p-1 text-center min-w-full checkbox"
                 name={`shaheenMeeting-registered`}
@@ -200,6 +220,7 @@ const ZailiActivities = () => {
             <Box>پیغام محفل</Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`paighamEvent-decided`}
                 id={`paighamEvent-decided`}
@@ -208,6 +229,7 @@ const ZailiActivities = () => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`paighamEvent-done`}
                 id={`paighamEvent-done`}
@@ -216,6 +238,7 @@ const ZailiActivities = () => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`paighamEvent-averageAttendance`}
                 id={`paighamEvent-averageAttendance`}
@@ -225,6 +248,7 @@ const ZailiActivities = () => {
 
             <Box>
               <input
+              readOnly={view}
                 type="checkbox"
                 className="p-1 text-center min-w-full checkbox"
                 name={`paighamEvent-registered`}

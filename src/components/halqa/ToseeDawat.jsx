@@ -1,4 +1,4 @@
-export const ToseeDawat = () => {
+export const ToseeDawat = ({view}) => {
   return (
     <div className="p-2 py-5 relative w-full overflow-auto">
       <h2 className="text-black py-3 text-lg">توسیع دعوت</h2>
@@ -6,6 +6,7 @@ export const ToseeDawat = () => {
         <div className="flex py-2">
           <label className="block">روابط:</label>
           <input
+           readOnly={view} 
             type="number"
             name="rawabitDecided"
             id="rawabitDecided"
@@ -15,6 +16,7 @@ export const ToseeDawat = () => {
         <div className="flex py-2">
           <label className="block">موجود:</label>
           <input
+           readOnly={view} 
             type="number"
             name="current"
             id="current"
@@ -24,6 +26,7 @@ export const ToseeDawat = () => {
         <div className="flex py-2">
           <label className="block">ملاقاتیں:</label>
           <input
+           readOnly={view} 
             type="number"
             name="meetings"
             id="meetings"
@@ -33,6 +36,7 @@ export const ToseeDawat = () => {
         <div className="flex py-2">
           <label className="block">تقسیم لٹریچر:</label>
           <input
+           readOnly={view} 
             type="number"
             name="literatureDistribution"
             id="literatureDistribution"
@@ -42,6 +46,7 @@ export const ToseeDawat = () => {
         <div className="flex py-2">
           <label className="block">مرتب:</label>
           <input
+           readOnly={view} 
             type="checkbox"
             name="registeredTosee"
             id="registeredTosee"
@@ -56,6 +61,7 @@ export const ToseeDawat = () => {
         <div className="flex py-2">
           <label className="block">ملاقاتیں:</label>
           <input
+           readOnly={view} 
             type="number"
             name="commonStudentMeetings"
             id="commonStudentMeetings"
@@ -65,6 +71,7 @@ export const ToseeDawat = () => {
         <div className="flex py-2">
           <label className="block">تقسیم لٹریچر:</label>
           <input
+           readOnly={view} 
             type="number"
             name="commonLiteratureDistribution"
             id="commonLiteratureDistribution"

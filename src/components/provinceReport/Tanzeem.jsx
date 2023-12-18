@@ -3,15 +3,16 @@ import { Box } from "../halqa";
 
 
 
-export const Tanzeem = ({ view ,data}) => {
+export const Tanzeem = ({view}) => {
   
-  const calcultate= (v)=>{
+  const calcultate = (v) => {
     // (start + increase)- decrease
-    const s = parseInt(data?.[`${v}-start`]);
-    const i = parseInt(data?.[`${v}-increase`]);
-    const d = parseInt(data?.[`${v}-decrease`]);
-    return (s+i)-d;
-  }
+    const s = document.getElementById(`${v}-start`);
+    const i = document.getElementById(`${v}-increase`);
+    const d = document.getElementById(`${v}-decrease`);
+    document.getElementById(`${v}-end`).value =
+      parseInt(s.value) + parseInt(i.value) - parseInt(d.value);
+  };
 
   return (
     <div className="relative w-full overflow-auto">
@@ -32,6 +33,7 @@ export const Tanzeem = ({ view ,data}) => {
             <Box>رہائشی حلقے</Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`rehaishHalqay-start`}
                 id={`rehaishHalqay-start`}
@@ -40,6 +42,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`rehaishHalqay-increase`}
                 id={`rehaishHalqay-increase`}
@@ -48,6 +51,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`rehaishHalqay-decrease`}
                 id={`rehaishHalqay-decrease`}
@@ -56,6 +60,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`rehaishHalqay-end`}
                 id={`rehaishHalqay-end`}
@@ -65,6 +70,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`rehaishHalqay-continue`}
                 id={`rehaishHalqay-continue`}
@@ -73,6 +79,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`rehaishHalqay-paused`}
                 id={`rehaishHalqay-paused`}
@@ -84,6 +91,7 @@ export const Tanzeem = ({ view ,data}) => {
             <Box>تعلیمی حلقے</Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`taleemHalqay-start`}
                 id={`taleemHalqay-start`}
@@ -92,6 +100,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`taleemHalqay-increase`}
                 id={`taleemHalqay-increase`}
@@ -100,6 +109,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`taleemHalqay-decrease`}
                 id={`taleemHalqay-decrease`}
@@ -108,6 +118,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`taleemHalqay-end`}
                 id={`taleemHalqay-end`}
@@ -117,6 +128,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`taleemHalqay-continue`}
                 id={`taleemHalqay-continue`}
@@ -125,6 +137,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`taleemHalqay-paused`}
                 id={`taleemHalqay-paused`}
@@ -136,6 +149,7 @@ export const Tanzeem = ({ view ,data}) => {
             <Box>کل حلقے</Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`totalHalqay-start`}
                 id={`totalHalqay-start`}
@@ -144,6 +158,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`totalHalqay-increase`}
                 id={`totalHalqay-increase`}
@@ -152,6 +167,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`totalHalqay-decrease`}
                 id={`totalHalqay-decrease`}
@@ -160,6 +176,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`totalHalqay-end`}
                 id={`totalHalqay-end`}
@@ -169,6 +186,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`totalHalqay-continue`}
                 id={`totalHalqay-continue`}
@@ -177,6 +195,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`totalHalqay-paused`}
                 id={`totalHalqay-paused`}
@@ -188,6 +207,7 @@ export const Tanzeem = ({ view ,data}) => {
             <Box>رہائشی زیلی حلقے</Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`subRehaishHalqay-start`}
                 id={`subRehaishHalqay-start`}
@@ -196,6 +216,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`subRehaishHalqay-increase`}
                 id={`subRehaishHalqay-increase`}
@@ -204,6 +225,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`subRehaishHalqay-decrease`}
                 id={`subRehaishHalqay-decrease`}
@@ -212,6 +234,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`subRehaishHalqay-end`}
                 id={`subRehaishHalqay-end`}
@@ -221,6 +244,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`subRehaishHalqay-continue`}
                 id={`subRehaishHalqay-continue`}
@@ -229,6 +253,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`subRehaishHalqay-paused`}
                 id={`subRehaishHalqay-paused`}
@@ -240,6 +265,7 @@ export const Tanzeem = ({ view ,data}) => {
             <Box>تعلیمی ذیلی حلقے</Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`subTaleemHalqay-start`}
                 id={`subTaleemHalqay-start`}
@@ -248,6 +274,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`subTaleemHalqay-increase`}
                 id={`subTaleemHalqay-increase`}
@@ -256,6 +283,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`subTaleemHalqay-decrease`}
                 id={`subTaleemHalqay-decrease`}
@@ -264,6 +292,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`subTaleemHalqay-end`}
                 id={`subTaleemHalqay-end`}
@@ -273,6 +302,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`subTaleemHalqay-continue`}
                 id={`subTaleemHalqay-continue`}
@@ -281,6 +311,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`subTaleemHalqay-paused`}
                 id={`subTaleemHalqay-paused`}
@@ -292,6 +323,7 @@ export const Tanzeem = ({ view ,data}) => {
             <Box>کل ذیلی حلقے</Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`subTotalHalqay-start`}
                 id={`subTotalHalqay-start`}
@@ -300,6 +332,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`subTotalHalqay-increase`}
                 id={`subTotalHalqay-increase`}
@@ -308,6 +341,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`subTotalHalqay-decrease`}
                 id={`subTotalHalqay-decrease`}
@@ -316,6 +350,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`subTotalHalqay-end`}
                 id={`subTotalHalqay-end`}
@@ -325,6 +360,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`subTotalHalqay-continue`}
                 id={`subTotalHalqay-continue`}
@@ -333,6 +369,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`subTotalHalqay-paused`}
                 id={`subTotalHalqay-paused`}
@@ -344,6 +381,7 @@ export const Tanzeem = ({ view ,data}) => {
             <Box>بزم کے سکول یونٹس</Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`busmSchoolUnits-start`}
                 id={`busmSchoolUnits-start`}
@@ -352,6 +390,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`busmSchoolUnits-increase`}
                 id={`busmSchoolUnits-increase`}
@@ -360,6 +399,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`busmSchoolUnits-decrease`}
                 id={`busmSchoolUnits-decrease`}
@@ -368,6 +408,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`busmSchoolUnits-end`}
                 id={`busmSchoolUnits-end`}
@@ -377,6 +418,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`busmSchoolUnits-continue`}
                 id={`busmSchoolUnits-continue`}
@@ -385,6 +427,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`busmSchoolUnits-paused`}
                 id={`busmSchoolUnits-paused`}
@@ -396,6 +439,7 @@ export const Tanzeem = ({ view ,data}) => {
             <Box>بزم کے رہائشی یونٹس</Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`busmRehaishUnits-start`}
                 id={`busmRehaishUnits-start`}
@@ -404,6 +448,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`busmRehaishUnits-increase`}
                 id={`busmRehaishUnits-increase`}
@@ -412,6 +457,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`busmRehaishUnits-decrease`}
                 id={`busmRehaishUnits-decrease`}
@@ -420,6 +466,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`busmRehaishUnits-end`}
                 id={`busmRehaishUnits-end`}
@@ -429,6 +476,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`busmRehaishUnits-continue`}
                 id={`busmRehaishUnits-continue`}
@@ -437,6 +485,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`busmRehaishUnits-paused`}
                 id={`busmRehaishUnits-paused`}
@@ -448,6 +497,7 @@ export const Tanzeem = ({ view ,data}) => {
             <Box>بزم کے کل یونٹس</Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`busmTotalUnits-start`}
                 id={`busmTotalUnits-start`}
@@ -456,6 +506,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`busmTotalUnits-increase`}
                 id={`busmTotalUnits-increase`}
@@ -464,6 +515,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`busmTotalUnits-decrease`}
                 id={`busmTotalUnits-decrease`}
@@ -472,6 +524,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`busmTotalUnits-end`}
                 id={`busmTotalUnits-end`}
@@ -481,6 +534,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`busmTotalUnits-continue`}
                 id={`busmTotalUnits-continue`}
@@ -489,6 +543,7 @@ export const Tanzeem = ({ view ,data}) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`busmTotalUnits-paused`}
                 id={`busmTotalUnits-paused`}

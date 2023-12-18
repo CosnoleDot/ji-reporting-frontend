@@ -7,6 +7,7 @@ export const Library = () => {
           <div className="flex py-2">
             <label className="block"> کل تعداد لائبریریز:</label>
             <input
+            readOnly={true}
               type="number"
               name="totalLibraries"
               id="totalLibraries"
@@ -16,6 +17,7 @@ export const Library = () => {
           <div className="flex py-2">
             <label className="block">کل تعدادکتب:</label>
             <input
+            readOnly={true}
               type="number"
               name="totalBooks"
               id="totalBooks"
@@ -25,6 +27,7 @@ export const Library = () => {
           <div className="flex py-2">
             <label className="block">اضافہ کتب:</label>
             <input
+            readOnly={true}
               type="number"
               name="totalIncrease"
               id="totalIncrease"
@@ -34,6 +37,7 @@ export const Library = () => {
           <div className="flex py-2">
             <label className="block">کمی کتب :</label>
             <input
+            readOnly={true}
               type="number"
               name="totalDecrease"
               id="totalDecrease"
@@ -43,6 +47,7 @@ export const Library = () => {
           <div className="flex py-2">
             <label className="block">کل اجرائے کتب:</label>
             <input
+            readOnly={true}
               type="number"
               name="totalBookRent"
               id="totalBookRent"

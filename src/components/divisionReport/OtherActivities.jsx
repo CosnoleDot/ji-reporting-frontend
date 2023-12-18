@@ -1,4 +1,4 @@
-export const OtherActivities = () => {
+export const OtherActivities = ({view}) => {
   return (
     <div className="p-2 py-5 relative w-full overflow-auto">
       <h2 className="text-black py-3 text-lg">دیگر سرگرمیاں</h2>
@@ -6,6 +6,7 @@ export const OtherActivities = () => {
         <div className="flex py-2">
           <label className="block"> تربیت گاہ:</label>
           <input
+          readOnly={view}
             type="number"
             name="tarbiyatGaah"
             id="tarbiyatGaah"
@@ -15,6 +16,7 @@ export const OtherActivities = () => {
         <div className="flex py-2">
           <label className="block">دعوتی وفود:</label>
           <input
+          readOnly={true}
             type="number"
             name="dawatiWafud"
             id="dawatiWafud"
@@ -24,6 +26,7 @@ export const OtherActivities = () => {
         <div className="flex py-2">
           <label className="block">روابط پارٹیز:</label>
           <input
+          readOnly={true}
             type="number"
             name="rawabitParties"
             id="rawabitParties"
@@ -33,6 +36,7 @@ export const OtherActivities = () => {
         <div className="flex py-2">
           <label className="block">شب بیداری:</label>
           <input
+          readOnly={true}
             type="number"
             name="shabBedari"
             id="shabBedari"
@@ -42,6 +46,7 @@ export const OtherActivities = () => {
         <div className="flex py-2">
           <label className="block">نظام الصلوٰۃ:</label>
           <input
+          readOnly={true}
             type="number"
             name="nizamSalah"
             id="nizamSalah"
@@ -52,6 +57,7 @@ export const OtherActivities = () => {
         <div className="flex py-2">
           <label className="block">کوئ اور سرگرمی:</label>
           <input
+          readOnly={true}
             type="text"
             name="anyOther"
             id="anyOther"

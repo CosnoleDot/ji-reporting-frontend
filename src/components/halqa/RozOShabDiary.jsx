@@ -1,4 +1,4 @@
-export const RozOShabDiary = () => {
+export const RozOShabDiary = ({view}) => {
   return (
     <div className="p-2 py-5 relative w-full overflow-auto">
       <h2 className="text-black py-3 text-lg">روزوشب ڈائری</h2>
@@ -6,6 +6,7 @@ export const RozOShabDiary = () => {
         <div className="flex py-2">
           <label className="block">کتنے ارکان فل کرتے ھیں؟</label>
           <input
+           readOnly={view} 
             type="number"
             name="arkanFilled"
             id="arkanFilled"
@@ -15,6 +16,7 @@ export const RozOShabDiary = () => {
         <div className="flex py-2">
           <label className="block">کتنے رفقا فل کرتے ھیں؟</label>
           <input
+           readOnly={view} 
             type="number"
             name="rafaqaFilled"
             id="rafaqaFilled"
@@ -24,6 +26,7 @@ export const RozOShabDiary = () => {
         <div className="flex py-2">
           <label className="block">کتنے امیدواران فل کرتے ھیں؟</label>
           <input
+           readOnly={view} 
             type="number"
             name="umeedwaranFilled"
             id="umeedwaranFilled"

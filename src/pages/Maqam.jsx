@@ -12,7 +12,6 @@ import {
   MeContext,
   useToastState,
 } from '../context';
-import { InputWithLabel } from '../components/InputWithLabel';
 import { UIContext } from '../context/ui';
 import { Tanzeem } from '../components/maqamReport/Tanzeem';
 import { IfradiKuwat } from '../components/maqamReport/IfradiKuwat';
@@ -38,6 +37,7 @@ export const Maqam = () => {
   const halqa = useContext(HalqaReportContext);
   const maqam = useContext(MaqamReportContext);
   const division = useContext(DivisionReportContext);
+  const [month, setMonth] = useState('');
   const params = useParams();
   const [id, setId] = useState(null);
   const { dispatch } = useToastState();
@@ -47,19 +47,80 @@ export const Maqam = () => {
   const location = useLocation();
   const me = useContext(MeContext);
   const navigate = useNavigate();
-  const allHalqas = useContext(HalqaContext);
+ 
 
-  const currMaqamHalqas = Array.isArray(allHalqas)
-    ? allHalqas.filter((curr) => {
-        const [dataMonth, dataYear] = [
-          curr?.month?.split('-')[1],
-          curr?.month?.split('-')[0],
-        ];
-        const [givenMonth, givenYear] = [id?.split('-')[1], id?.split('-')[0]];
-        return dataMonth === givenMonth && dataYear === givenYear;
-      })
-    : [];
-  
+ 
+  const autoFill = () => {
+    const halq = {};
+    document.getElementById('totalLibraries').value = halqa.filter((i) =>
+      i?.month.includes(month)
+    ).length;
+    halqa
+      .filter((i) => i?.month.includes(month))
+      .forEach((i) => {
+        const sim = reverseDataFormat(i);
+        Object.keys(sim)?.forEach((j) => {
+          if (halq?.[j]) {
+            try {
+              halq[j] += parseInt(sim[j]) || 0;
+            } catch {
+              halq[j] += sim[j] || 0;
+            }
+          } else {
+            try {
+              halq[j] = parseInt(sim[j]) || 0;
+            } catch {
+              halq[j] = sim[j] || 0;
+            }
+          }
+        });
+      });
+      delete halq.comments;
+    Object.keys(halq).forEach((i) => {
+      let j;
+      
+      if (i.split('-')[1] === 'completed') {
+        j = i.split('-')[0] + '-done';
+      } else if (i.split('-')[1] === 'attendance') {
+        j = i.split('-')[0] + '-averageAttendance';
+      } else if (i === 'studyCircle-decided') {
+        j = 'studyCircleMentioned-decided';
+      } else if (i === 'studyCircle-completed') {
+        j = 'studyCircleMentioned-done';
+      } else if (i === 'studyCircle-attendance') {
+        j = 'studyCircleMentioned-averageAttendance';
+      } else if (i === 'books') {
+        j = 'totalBooks';
+      } else if (i === 'bookRent') {
+        j = 'totalBookRent';
+      } else if (i === 'increase') {
+        j = 'totalIncrease';
+      } else if (i === 'decrease') {
+        j = 'totalDecrease';
+      }
+      else if (i === 'nazimSalah') {
+        j = 'nizamSalah';
+      } else {
+        j = i;
+      }
+      const elem = document.getElementById(j);
+      if (elem) {
+        console.log(j, 'TESTING');
+        if (j === 'month') {
+        } else {
+          if (elem.type === 'checkbox') {
+          }
+          if (j.split('-')[1] === 'attendance') {
+            document.getElementById(
+              `${j.split('-')[0]}-averageAttendance`
+            ).value = halq[i];
+          } else {
+            elem.value = halq[i];
+          }
+        }
+      }
+    });
+  };
   useEffect(() => {
     const l = location.pathname?.split('/')[2];
     if (l === 'view') {
@@ -91,6 +152,10 @@ export const Maqam = () => {
       }
     });
   }, [data]);
+  useEffect(() => {
+    if (!id) autoFill();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id, halqa, month]);
   // EDIT CODE END
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -136,22 +201,22 @@ export const Maqam = () => {
           <h2 className='text-2xl'>جا ئزءکارکردگی رپورٹ (براے مقام)</h2>
           <div className='w-full p-4'>
             <div>
-              <GeneralInfo me={me} area={'مقام'} />
+              <GeneralInfo setMonth={setMonth} me={me} area={'مقام'} />
             </div>
             <div className='mb-4'>
-              <Tanzeem data={data} />
+              <Tanzeem view={view} />
             </div>
             <div className='mb-4'>
-              <IfradiKuwat data={data} />
+              <IfradiKuwat view={view} />
             </div>
             <div className='mb-4'>
-              <MarkaziActivities />
+              <MarkaziActivities view={view} />
             </div>
             <div className='mb-4'>
-              <ZailiActivities />
+              <ZailiActivities view={view} />
             </div>
             <div className='mb-4'>
-              <OtherActivities />
+              <OtherActivities view={view} />
             </div>
             <div className='mb-4'>
               <ToseeDawat />
@@ -160,41 +225,41 @@ export const Maqam = () => {
               <Library />
             </div>
             <div className='mb-4'>
-              <PaighamDigest />
+              <PaighamDigest view={view} />
             </div>
             <div className='mb-4'>
               <RozOShabDiary />
             </div>
-            <div className='w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2'>
-              <div className='w-full md:pr-0 mb-2'>
-                <InputWithLabel
-                  readOnly={view}
-                  type={'textarea'}
-                  required={true}
-                  placeholder={'تبصرہ'}
-                  label={'تبصرہ'}
-                  id={'comments'}
-                  name={'comments'}
-                />
-              </div>
-              <div className='w-full mb-2'>
-                <InputWithLabel
-                  readOnly={view}
-                  required={true}
-                  label={'برائے  ماہ'}
-                  placeholder={'برائے  ماہ'}
-                  type={'month'}
-                  id={'month'}
-                  name={'month'}
+            <div className='w-full flex p-2'>
+              <label htmlFor='comments'>تبصرہ</label>
+              <input
+                type='text'
+                name='comments'
+                className='border-b-2 border-dashed w-full'
+                id='comments'
+                readOnly={view}
+              />
+            </div>
+            <div className='w-full flex flex-col items-end gap-3 p-2'>
+              <div>
+                <label htmlFor='nazim'>نام ناظمِ:</label>
+                <input
+                  type='text'
+                  className='border-b-2 border-dashed text-center'
+                  id='nazim'
+                  defaultValue={me?.name || ''}
+                  readOnly
                 />
               </div>
             </div>
           </div>
-          <div className='w-full'>
-            <button disabled={loading} className='btn btn-primary'>
-              {id ? 'Update' : 'Add'}
-            </button>
-          </div>
+          {!view && (
+            <div className='w-full'>
+              <button disabled={loading} className='btn btn-primary'>
+                {id ? 'Update' : 'Add'}
+              </button>
+            </div>
+          )}
         </form>
       </div>
     </GeneralLayout>

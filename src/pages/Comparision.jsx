@@ -274,13 +274,13 @@ export const Comparision = () => {
           </select>
           <button
             onClick={() => {
-              if (
-                durationType !== '' &&
-                reportType !== '' &&
-                areaId !== '' &&
-                selectedProperty !== ''
+              if(reportType==='self' && durationType !== '' && selectedProperty !== '') (
+                showDates(true)
               )
-                showDates(true);
+              else if (durationType !== '' && selectedProperty !== '' && reportType !== '' && areaId !==""){
+                showDates(true)    
+              }
+                
             }}
             className='btn'
           >

@@ -21,6 +21,7 @@ import { convertDataFormat, toJson } from '../utils';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { getData } from './Maqam';
 import { UIContext } from '../context/ui';
+import { GeneralInfoHalqa } from '../components/GeneralInfoHalqa';
 
 export const Halqa = () => {
   const { dispatch } = useToastState();
@@ -79,7 +80,7 @@ export const Halqa = () => {
     setLoading(false);
   };
   useEffect(() => {
-    if(id) getData('halqa', id, setData, { halqa, maqam, division });
+    if (id) getData('halqa', id, setData, { halqa, maqam, division });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
@@ -99,6 +100,7 @@ export const Halqa = () => {
       }
     });
   }, [data]);
+  
   return (
     <GeneralLayout>
       <div className='reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll'>
@@ -110,13 +112,13 @@ export const Halqa = () => {
           onSubmit={handleReportSubmit}
           dir='rtl'
         >
-          <GeneralInfo me={me} area={'حلقہ'} />
-          <IfradiKuwat data={data} />
-          <Activity />
-          <OtherActivities />
-          <ToseeDawat />
-          <Library />
-          <RozOShabDiary />
+          <GeneralInfoHalqa me={me} area={'حلقہ'} />
+          <IfradiKuwat data={data} view={view}/>
+          <Activity view={view}/>
+          <OtherActivities view={view}/>
+          <ToseeDawat view={view}/>
+          <Library view={view}/>
+          <RozOShabDiary view={view}/>
           <div className='w-full flex p-2'>
             <label htmlFor='comments'>تبصرہ</label>
             <input
@@ -138,11 +140,13 @@ export const Halqa = () => {
               />
             </div>
           </div>
-          {isViewPage !== 'view' && (
+          {isViewPage === 'create' ? (
             <button type='submit' className='btn'>
               Submit
             </button>
-          )}
+          ): <button type='submit' className='btn'>
+          Update
+        </button>}
         </form>
       </div>
     </GeneralLayout>

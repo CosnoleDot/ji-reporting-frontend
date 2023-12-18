@@ -7,22 +7,33 @@ export const RozOShabDiary = () => {
           <div className="flex py-2 ml-4">
             <label className="block"> کتنے ارکان فل کرتے ھیں:</label>
             <input
+            readOnly={true}
               type="number"
-              name="umeedwaranFilled"
-              id="umeedwaranFilled"
+              name="arkanFilled"
+              id="arkanFilled"
               className="border-b-2 text-center border-dashed"
             />
           </div>
           <div className="flex py-2 ">
             <label className="block">کتنےرفقافل کرتے ھیں:</label>
             <input
+            readOnly={true}
               type="number"
               name="rafaqaFilled"
               id="rafaqaFilled"
               className="border-b-2 text-center border-dashed"
             />
           </div>
-          
+          <div className="flex py-2">
+          <label className="block">کتنے امیدواران فل کرتے ھیں؟</label>
+          <input
+          readOnly={true}
+            type="number"
+            name="umeedwaranFilled"
+            id="umeedwaranFilled"
+            className="border-b-2 text-center border-dashed"
+          />
+        </div>
         </div>
         
       </div>

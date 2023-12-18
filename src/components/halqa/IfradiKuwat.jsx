@@ -11,12 +11,12 @@ export const Box = ({ children, type }) => {
 };
 export const IfradiKuwat = ({data}) => {
   const calcultate= (v)=>{
-    // (start + increase)- decrease
+    if(data){ // (start + increase)- decrease
     const s = parseInt(data[`${v}-start`]);
     const i = parseInt(data[`${v}-increase`]);
     const d = parseInt(data[`${v}-decrease`]);
     return (s+i)-d;
-  }
+  }}
   return (
     <div className="relative w-full overflow-auto">
       <table className="w-full table">

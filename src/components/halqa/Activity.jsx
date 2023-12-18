@@ -1,6 +1,6 @@
 import { Box } from "./IfradiKuwat";
 
-export const Activity = () => {
+export const Activity = ({view}) => {
   return (
     <div className="relative w-full overflow-auto">
       <table className="w-full table">
@@ -18,6 +18,7 @@ export const Activity = () => {
             <Box>احتمع رفقا</Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`ijtRafaqa-decided`}
                 id={`ijtRafaqa-decided`}
@@ -26,6 +27,7 @@ export const Activity = () => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`ijtRafaqa-completed`}
                 id={`ijtRafaqa-completed`}
@@ -34,6 +36,7 @@ export const Activity = () => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`ijtRafaqa-attendance`}
                 id={`ijtRafaqa-attendance`}
@@ -42,6 +45,7 @@ export const Activity = () => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="text"
                 name={`ijtRafaqa-title`}
                 id={`ijtRafaqa-title`}
@@ -53,6 +57,7 @@ export const Activity = () => {
             <Box>اجتماع کارکنان</Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`ijtKarkunan-decided`}
                 id={`ijtKarkunan-decided`}
@@ -61,6 +66,7 @@ export const Activity = () => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`ijtKarkunan-completed`}
                 id={`ijtKarkunan-completed`}
@@ -69,6 +75,7 @@ export const Activity = () => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`ijtKarkunan-attendance`}
                 id={`ijtKarkunan-attendance`}
@@ -77,6 +84,7 @@ export const Activity = () => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="text"
                 name={`ijtKarkunan-title`}
                 id={`ijtKarkunan-title`}
@@ -88,6 +96,7 @@ export const Activity = () => {
             <Box>سٹڈی سرکل</Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`studyCircle-decided`}
                 id={`studyCircle-decided`}
@@ -96,6 +105,7 @@ export const Activity = () => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`studyCircle-completed`}
                 id={`studyCircle-completed`}
@@ -104,6 +114,7 @@ export const Activity = () => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`studyCircle-attendance`}
                 id={`studyCircle-attendance`}
@@ -112,6 +123,7 @@ export const Activity = () => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="text"
                 name={`studyCircle-title`}
                 id={`studyCircle-title`}
@@ -123,6 +135,7 @@ export const Activity = () => {
             <Box>درس قُرآن</Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`darseQuran-decided`}
                 id={`darseQuran-decided`}
@@ -131,6 +144,7 @@ export const Activity = () => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`darseQuran-completed`}
                 id={`darseQuran-completed`}
@@ -139,6 +153,7 @@ export const Activity = () => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`darseQuran-attendance`}
                 id={`darseQuran-attendance`}
@@ -147,6 +162,7 @@ export const Activity = () => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="text"
                 name={`darseQuran-title`}
                 id={`darseQuran-title`}
