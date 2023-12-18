@@ -19,6 +19,7 @@ export function GeneralInfo({ setMonth, me, area, view }) {
           type="month"
           name="month"
           id="month"
+          defaultValue="2023-12"
           onChange={(e) => (setMonth ? setMonth(e.target.value) : null)}
           disabled={view}
         />

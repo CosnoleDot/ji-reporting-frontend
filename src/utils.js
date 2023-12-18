@@ -80,5 +80,8 @@ export const reverseDataFormat = (data) => {
       obj[i] = data[i];
     }
   });
+  if (!obj.totalLibraries) {
+    obj.totalLibraries = 0;
+  }
   return obj;
 };

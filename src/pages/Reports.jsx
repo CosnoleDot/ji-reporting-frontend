@@ -7,6 +7,7 @@ import {
   HalqaReportContext,
   MaqamReportContext,
   MeContext,
+  ProvinceReportContext,
   useToastState,
 } from '../context';
 import instance from '../api/instrance';
@@ -14,6 +15,7 @@ import moment from 'moment/moment';
 import { Link } from 'react-router-dom';
 import { FaRegFileExcel } from 'react-icons/fa';
 import { AiFillBell } from 'react-icons/ai';
+import { UIContext } from '../context/ui';
 
 const NoReports = () => (
   <div className='card-body flex flex-col items-center justify-center w-full p-5 mb-1 rounded-xl'>
@@ -85,7 +87,7 @@ export const Reports = () => {
   const me = useContext(MeContext);
   const { dispatch } = useToastState();
   const [tab, setTab] = useState('maqam');
-  const [active, setActive] = useState('province');
+  const { active, setActive } = useContext(UIContext);
   const [filterAllData, setFilterAllData] = useState({});
 
   // const [showNotification, setShowNotification] = useState(false);
@@ -93,6 +95,7 @@ export const Reports = () => {
   const maqamReports = useContext(MaqamReportContext);
   const divisionReports = useContext(DivisionReportContext);
   const halqaReports = useContext(HalqaReportContext);
+  const provinceReports = useContext(ProvinceReportContext);
 
   const params = useLocation();
   // GENERATE MONTHS
@@ -121,11 +124,7 @@ export const Reports = () => {
   };
 
   const viewReport = async (id) => {
-    if (userType === 'province') {
-      navigate(`view/date/${id}`);
-    } else {
-      navigate(`view/${id}`);
-    }
+    navigate(`view/${id}`);
   };
   const editReport = (id) => {
     navigate(`edit/${id}`);
@@ -137,19 +136,25 @@ export const Reports = () => {
         const m = maqamReports;
         const h = halqaReports;
         const d = divisionReports;
+        const p = provinceReports;
 
         setAllReports({
           maqam: m,
           halqa: h,
           division: d,
+          province: p,
         });
         setFilterAllData({
           maqam: m,
           halqa: h,
           division: d,
+          province: p,
         });
       } else {
         switch (userType) {
+          case 'province':
+            response = provinceReports;
+            break;
           case 'maqam':
             response = maqamReports;
             break;
@@ -559,6 +564,15 @@ export const Reports = () => {
                       >
                         <FaEye />
                       </button>
+
+                      {active === 'province' && (
+                        <button
+                          className='btn'
+                          onClick={() => editReport(obj?._id)}
+                        >
+                          <FaEdit />
+                        </button>
+                      )}
                     </div>
                   </div>
                 )

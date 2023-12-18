@@ -11,6 +11,7 @@ import {
   HalqaReportContext,
   MaqamContext,
   MaqamReportContext,
+  ProvinceReportContext,
 } from '../context';
 import { UIContext } from '../context/ui';
 
@@ -23,11 +24,15 @@ export const Dashboard = () => {
   const maqamReports = useContext(MaqamReportContext);
   const divisionReports = useContext(DivisionReportContext);
   const halqaReports = useContext(HalqaReportContext);
+  const provinceReports = useContext(ProvinceReportContext);
 
   useEffect(() => {
     try {
       setCount(
-        maqamReports?.length + divisionReports?.length + halqaReports?.length
+        maqamReports?.length +
+          divisionReports?.length +
+          halqaReports?.length +
+          provinceReports?.length
       );
     } catch (err) {}
     // eslint-disable-next-line react-hooks/exhaustive-deps

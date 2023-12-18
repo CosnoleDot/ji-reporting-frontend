@@ -53,11 +53,12 @@ function App() {
   const [halqaReports, setHalqaReports] = useState([]);
   const [userRequests, setUserRequests] = useState([]);
   const [value, setValue] = useState(null);
+  const [active, setActive] = useState('province');
   const [count, setCount] = useState(0);
 
   const [notifications, setNotifications] = useState([]);
   const [reports, setReports] = useState([]);
-
+  let dis;
   const [authenticated, setAuthenticaated] = useState(
     localStorage.getItem('@token')
   );
@@ -168,6 +169,7 @@ function App() {
             i?.division?.province?._id === me?.userAreaId?._id
         );
         setDistricts(validDistricts);
+        dis = validDistricts;
       }
     } catch (err) {
       dispatch({
@@ -195,7 +197,7 @@ function App() {
           );
           setHalqas(validHalqas);
         } else if (type === 'division') {
-          const validDistricts = districts.map((i) => i?._id?.toString());
+          const validDistricts = dis.map((i) => i?._id?.toString());
           const validHalqas = allData.filter(
             (i) =>
               i?.parentType === 'Tehsil' &&
@@ -360,6 +362,7 @@ function App() {
   useEffect(() => {
     const intervalId = setInterval(() => {
       getAllReports();
+      getAllRequests();
     }, 5000); // 5000 milliseconds = 5 seconds
 
     // Cleanup the interval on component unmount
@@ -384,7 +387,7 @@ function App() {
   }, [authenticated]);
   useEffect(() => {
     function sleep(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
+      return new Promise((resolve) => setTimeout(resolve, ms));
     }
     const fetchData = async () => {
       setCount((100 / 14) * 1);
@@ -406,7 +409,7 @@ function App() {
       await getTehsils();
       setCount((100 / 14) * 6);
       setValue('Fetching halqas');
-      await sleep(1000);
+      await sleep(1001);
       await getHalqas();
       setCount((100 / 14) * 7);
       setValue('Fetching province reports');
@@ -431,6 +434,7 @@ function App() {
     };
     if (me) {
       fetchData();
+      setActive(localStorage.getItem('@type'));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [me]);
@@ -469,6 +473,8 @@ function App() {
                               reports,
                               setReports,
                               getAllNotifications,
+                              active,
+                              setActive,
                             }}
                           >
                             <div className='flex flex-col'>
@@ -530,27 +536,22 @@ function App() {
                                       ) : localStorage.getItem('@type') ===
                                         'division' ? (
                                         <Division />
+                                      ) : localStorage.getItem('@type') ===
+                                        'province' ? (
+                                        <Province />
                                       ) : (
                                         <Halqa />
                                       )
                                     }
                                   />
                                   <Route
-                                    path={
-                                      localStorage.getItem('@type') !==
-                                      'province'
-                                        ? '/reports/view/:id'
-                                        : '/reports/view/date/:date'
-                                    }
+                                    path={'/reports/view/:id'}
                                     element={
-                                      localStorage.getItem('@type') ===
-                                      'maqam' ? (
+                                      active === 'maqam' ? (
                                         <Maqam />
-                                      ) : localStorage.getItem('@type') ===
-                                        'division' ? (
+                                      ) : active === 'division' ? (
                                         <Division />
-                                      ) : localStorage.getItem('@type') ===
-                                        'province' ? (
+                                      ) : active === 'province' ? (
                                         <Province />
                                       ) : (
                                         <Halqa />

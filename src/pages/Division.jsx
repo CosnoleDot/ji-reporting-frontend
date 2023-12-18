@@ -125,7 +125,6 @@ export const Division = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
   useEffect(() => {
-    console.log(data, 'DEBUGING');
     Object.keys(data).forEach((i) => {
       const elem = document.getElementById(i);
       if (elem) {
@@ -133,7 +132,6 @@ export const Division = () => {
           elem.value = data[i]?.split('')?.slice(0, 7)?.join('');
         } else {
           if (elem.type === 'checkbox') {
-            console.log(elem.id, 'DEBUGING');
             elem.checked = data[i];
           } else {
             elem.value = data[i];
@@ -277,15 +275,17 @@ export const Division = () => {
               />
             </div>
           </div>
-          <div className='w-full'>
-            <button
-              type='submit'
-              className='btn btn-primary'
-              disabled={loading}
-            >
-              {id ? 'Update' : 'Add'}
-            </button>
-          </div>
+          {!view && (
+            <div className='w-full'>
+              <button
+                type='submit'
+                className='btn btn-primary'
+                disabled={loading}
+              >
+                {id ? 'Update' : 'Add'}
+              </button>
+            </div>
+          )}
           {/* </fieldset> */}
         </form>
       </div>
