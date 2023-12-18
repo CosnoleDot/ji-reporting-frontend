@@ -135,15 +135,7 @@ export const IfradiKuwat = ({ view }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            <Box>
-              <input
-                readOnly={true}
-                type='checkbox'
-                className='p-1 text-center min-w-full checkbox'
-                name={`umeedWaran-registered`}
-                id={`umeedWaran-registered`}
-              />
-            </Box>
+            <Box>-</Box>
           </tr>
           <tr>
             <Box>رفقا</Box>
@@ -195,15 +187,7 @@ export const IfradiKuwat = ({ view }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            <Box>
-              <input
-                readOnly={true}
-                type='checkbox'
-                className='p-1 text-center min-w-full checkbox'
-                name={`rafaqa-registered`}
-                id={`rafaqa-registered`}
-              />
-            </Box>
+            <Box>-</Box>
           </tr>
           <tr>
             <Box>کارکنان</Box>
@@ -255,15 +239,7 @@ export const IfradiKuwat = ({ view }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            <Box>
-              <input
-                readOnly={true}
-                type='checkbox'
-                className='p-1 text-center min-w-full checkbox'
-                name={`karkunan-registered`}
-                id={`karkunan-registered`}
-              />
-            </Box>
+            <Box>-</Box>
           </tr>
           <tr>
             <Box>شاہین</Box>
@@ -316,13 +292,21 @@ export const IfradiKuwat = ({ view }) => {
               />
             </Box>
             <Box>
-              <input
-                readOnly={view}
-                type='checkbox'
-                className='p-1 text-center min-w-full checkbox'
-                name={`shaheen-registered`}
-                id={`shaheen-registered`}
-              />
+              {view ? (
+                <input
+                  type='checkbox'
+                  className='p-1 text-center min-w-full checkbox'
+                  name={`shaheen-registered`}
+                  id={`shaheen-registered`}
+                />
+              ) : (
+                <input
+                  type='checkbox'
+                  className='p-1 text-center min-w-full checkbox'
+                  name={`shaheen-registered`}
+                  id={`shaheen-registered`}
+                />
+              )}
             </Box>
           </tr>
           <tr>
@@ -376,13 +360,21 @@ export const IfradiKuwat = ({ view }) => {
               />
             </Box>
             <Box>
-              <input
-                readOnly={view}
-                type='checkbox'
-                className='p-1 text-center min-w-full checkbox'
-                name={`members-registered`}
-                id={`members-registered`}
-              />
+              {view ? (
+                <input
+                  type='checkbox'
+                  className='p-1 text-center min-w-full checkbox'
+                  name={`members-registered`}
+                  id={`members-registered`}
+                />
+              ) : (
+                <input
+                  type='checkbox'
+                  className='p-1 text-center min-w-full checkbox'
+                  name={`members-registered`}
+                  id={`members-registered`}
+                />
+              )}
             </Box>
           </tr>
         </tbody>

@@ -10,6 +10,7 @@ import {
 import { Link, useLocation } from 'react-router-dom';
 import instance from '../../api/instrance';
 import { FaEdit } from 'react-icons/fa';
+import { UIContext } from '../../context/ui';
 
 export const LocationDivision = () => {
   const provinces = useContext(ProvinceContext);
@@ -17,6 +18,8 @@ export const LocationDivision = () => {
   const divisions = useContext(DivisionContext);
   const halqas = useContext(HalqaContext);
   const districts = useContext(DistrictContext);
+  const { getHalqas, getDivisions, getDistricts, getTehsils } =
+    useContext(UIContext);
   const [editMode, setEditMode] = useState(false);
   const [id, setId] = useState('');
   const { dispatch } = useToastState();
@@ -67,6 +70,7 @@ export const LocationDivision = () => {
           'Content-Type': 'application/json',
         },
       });
+      await getDivisions();
       dispatch({ type: 'SUCCESS', payload: req.data?.message });
       setForm({
         name: '',
@@ -84,6 +88,7 @@ export const LocationDivision = () => {
           'Content-Type': 'application/json',
         },
       });
+      await getDistricts();
       dispatch({ type: 'SUCCESS', payload: req.data?.message });
       setFormDistrict({
         name: '',
@@ -101,6 +106,7 @@ export const LocationDivision = () => {
           'Content-Type': 'application/json',
         },
       });
+      await getTehsils();
       dispatch({ type: 'SUCCESS', payload: req.data?.message });
       setFormTehsil({
         name: '',
@@ -118,6 +124,7 @@ export const LocationDivision = () => {
           'Content-Type': 'application/json',
         },
       });
+      await getHalqas();
       dispatch({ type: 'SUCCESS', payload: req.data?.message });
       setFormHalqa({
         name: '',
@@ -136,6 +143,7 @@ export const LocationDivision = () => {
           'Content-Type': 'application/json',
         },
       });
+      await getDivisions();
       dispatch({ type: 'SUCCESS', payload: req.data?.message });
     } catch (err) {
       dispatch({ type: 'ERROR', payload: err.response.data.message });
@@ -153,6 +161,7 @@ export const LocationDivision = () => {
           },
         }
       );
+      await getDistricts();
       dispatch({ type: 'SUCCESS', payload: req.data?.message });
     } catch (err) {
       dispatch({ type: 'ERROR', payload: err.response.data.message });
@@ -166,6 +175,7 @@ export const LocationDivision = () => {
           'Content-Type': 'application/json',
         },
       });
+      await getTehsils();
       dispatch({ type: 'SUCCESS', payload: req.data?.message });
     } catch (err) {
       dispatch({ type: 'ERROR', payload: err.response.data.message });
@@ -179,21 +189,40 @@ export const LocationDivision = () => {
           'Content-Type': 'application/json',
         },
       });
+      await getHalqas();
       dispatch({ type: 'SUCCESS', payload: req.data?.message });
     } catch (err) {
       dispatch({ type: 'ERROR', payload: err.response.data.message });
     }
   };
-  const handleDisable = (id, disabled) => {
-    instance.patch(
-      `/locations/${view}/disable-location/${id}`,
-      { disabled },
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('@token')}`,
-        },
+  const handleDisable = async (id, disabled) => {
+    try {
+      await instance.patch(
+        `/locations/${view}/disable-location/${id}`,
+        { disabled },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('@token')}`,
+          },
+        }
+      );
+      switch (view) {
+        case 'halqa':
+          getHalqas();
+          break;
+        case 'tehsil':
+          getTehsils();
+          break;
+        case 'district':
+          getDistricts();
+          break;
+        case 'division':
+          getDivisions();
+          break;
+        default:
+          break;
       }
-    );
+    } catch (err) {}
   };
   return (
     <>

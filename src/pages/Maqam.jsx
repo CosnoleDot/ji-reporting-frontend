@@ -1,4 +1,4 @@
-import { GeneralLayout, GeneralInfo } from '../components';
+import { GeneralLayout, GeneralInfo, calcultate } from '../components';
 import { convertDataFormat, reverseDataFormat, toJson } from '../utils';
 import instance from '../api/instrance';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
@@ -27,7 +27,6 @@ export const getData = async (path, id, setData, data) => {
   const obj = arr.filter((i) => i?._id?.toString() === id?.toString());
   // if (req) {
   setData(reverseDataFormat(obj[0]));
-  console.log('REPORT SINGLE', obj[0]);
   // }F
 };
 
@@ -41,7 +40,7 @@ export const Maqam = () => {
   const [id, setId] = useState(null);
   const { dispatch } = useToastState();
   const [data, setData] = useState({});
-  const { loading, setLoading } = useContext(UIContext);
+  const { loading, setLoading, getMaqamReports } = useContext(UIContext);
   const [view, setView] = useState(false);
   const location = useLocation();
   const me = useContext(MeContext);
@@ -73,31 +72,31 @@ export const Maqam = () => {
       });
     Object.keys(halq).forEach((i) => {
       let j;
-      console.log(i)
-      if (i.split('-')[1] === 'completed') {
-        j = i.split('-')[0] + '-done';
-      } else if (i.split('-')[1] === 'attendance') {
-        j = i.split('-')[0] + '-averageAttendance';
-      } else if (i === 'studyCircle-decided') {
+      if (i === 'studyCircle-decided') {
         j = 'studyCircleMentioned-decided';
       } else if (i === 'studyCircle-completed') {
         j = 'studyCircleMentioned-done';
       } else if (i === 'studyCircle-attendance') {
         j = 'studyCircleMentioned-averageAttendance';
-      } else if (i === 'books') {
-        j = 'totalBooks';
-      } else if (i === 'bookRent') {
-        j = 'totalBookRent';
-      } else if (i === 'increase') {
-        j = 'totalIncrease';
-      } else if (i === 'decrease') {
-        j = 'totalDecrease';
       } else {
-        j = i;
+        if (i.split('-')[1] === 'completed') {
+          j = i.split('-')[0] + '-done';
+        } else if (i.split('-')[1] === 'attendance') {
+          j = i.split('-')[0] + '-averageAttendance';
+        } else if (i === 'books') {
+          j = 'totalBooks';
+        } else if (i === 'bookRent') {
+          j = 'totalBookRent';
+        } else if (i === 'increase') {
+          j = 'totalIncrease';
+        } else if (i === 'decrease') {
+          j = 'totalDecrease';
+        } else {
+          j = i;
+        }
       }
       const elem = document.getElementById(j);
       if (elem) {
-        console.log(j, 'TESTING');
         if (j === 'month') {
         } else {
           if (elem.type === 'checkbox') {
@@ -112,6 +111,8 @@ export const Maqam = () => {
         }
       }
     });
+    document.getElementById('studyCircle-averageAttendance').value = null;
+    document.getElementById('studyCircle-done').value = null;
   };
   useEffect(() => {
     const l = location.pathname?.split('/')[2];
@@ -129,6 +130,7 @@ export const Maqam = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
   useEffect(() => {
+    console.log(data, "DEBUGING")
     Object.keys(data).forEach((i) => {
       const elem = document.getElementById(i);
       if (elem) {
@@ -136,12 +138,33 @@ export const Maqam = () => {
           elem.value = data[i]?.split('')?.slice(0, 7)?.join('');
         } else {
           if (elem.type === 'checkbox') {
-            elem.defaultChecked = data[i];
+            console.log(elem.id, "DEBUGING")
+            elem.checked = data[i];
           } else {
             elem.value = data[i];
           }
         }
       }
+    });
+    const afd = [
+      'rehaishHalqay',
+      'taleemHalqay',
+      'totalHalqay',
+      'subRehaishHalqay',
+      'subTaleemHalqay',
+      'subTotalHalqay',
+      'busmSchoolUnits',
+      'busmRehaishUnits',
+      'busmTotalUnits',
+      'arkan',
+      'umeedWaran',
+      'rafaqa',
+      'karkunan',
+      'members',
+      'shaheen',
+    ];
+    afd.forEach((i) => {
+      calcultate(i);
     });
   }, [data]);
   useEffect(() => {
@@ -163,7 +186,7 @@ export const Maqam = () => {
             Authorization: `Bearer ${localStorage.getItem('@token')}`,
           },
         });
-
+        await getMaqamReports();
         dispatch({ type: 'SUCCESS', payload: req?.data?.message });
       } else {
         const req = await instance.post('/reports/maqam', jsonData, {
@@ -172,6 +195,7 @@ export const Maqam = () => {
             Authorization: `Bearer ${localStorage.getItem('@token')}`,
           },
         });
+        await getMaqamReports();
         dispatch({ type: 'SUCCESS', payload: req.data?.message });
       }
       navigate('/reports');
