@@ -383,6 +383,9 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authenticated]);
   useEffect(() => {
+    function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
     const fetchData = async () => {
       setCount((100 / 14) * 1);
       setValue('Fetching provinces');
@@ -395,12 +398,15 @@ function App() {
       await getDivisions();
       setCount((100 / 14) * 4);
       setValue('Fetching districts');
+      await sleep(1000);
       await getDistricts();
       setCount((100 / 14) * 5);
       setValue('Fetching tehsils');
+      await sleep(1000);
       await getTehsils();
       setCount((100 / 14) * 6);
       setValue('Fetching halqas');
+      await sleep(1000);
       await getHalqas();
       setCount((100 / 14) * 7);
       setValue('Fetching province reports');

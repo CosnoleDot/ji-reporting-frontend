@@ -273,6 +273,7 @@ export const Maqam = () => {
               <label htmlFor="comments">تبصرہ</label>
               <input
                 type="text"
+                required
                 name="comments"
                 className="border-b-2 border-dashed w-full"
                 id="comments"

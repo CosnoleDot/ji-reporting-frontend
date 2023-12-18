@@ -330,7 +330,7 @@ export const LocationDivision = () => {
                 <th></th>
                 <th>Name</th>
                 <th>Province</th>
-                <th className='text-center'>Edit</th>
+                <th className='text-center'>Edit/Disable</th>
               </tr>
             </thead>
             <tbody>
@@ -379,7 +379,7 @@ export const LocationDivision = () => {
                 <th></th>
                 <th>Name</th>
                 <th>District</th>
-                <th className='text-center'>Edit</th>
+                <th className='text-center'>Edit/Disable</th>
               </tr>
             </thead>
             <tbody>
@@ -426,7 +426,7 @@ export const LocationDivision = () => {
                 <th></th>
                 <th>Name</th>
                 <th>Division</th>
-                <th className='text-center'>Edit</th>
+                <th className='text-center'>Edit/Disable</th>
               </tr>
             </thead>
             <tbody>
@@ -475,7 +475,7 @@ export const LocationDivision = () => {
                 <th></th>
                 <th>Name</th>
                 <th>Tehsil</th>
-                <th className='text-center'>Edit</th>
+                <th className='text-center'>Edit/Disable</th>
               </tr>
             </thead>
             <tbody>

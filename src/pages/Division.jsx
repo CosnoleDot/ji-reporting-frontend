@@ -259,6 +259,7 @@ export const Division = () => {
             <input
               type='text'
               name='comments'
+              required
               className='border-b-2 border-dashed w-full'
               id='comments'
               readOnly={view}

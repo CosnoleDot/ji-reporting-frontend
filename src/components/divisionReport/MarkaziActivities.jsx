@@ -21,6 +21,7 @@ export const MarkaziActivities = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                required
                 name={`ijtNazmeen-decided`}
                 id={`ijtNazmeen-decided`}
                 className='p-1 text-center min-w-full'
@@ -30,6 +31,7 @@ export const MarkaziActivities = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                required
                 name={`ijtNazmeen-done`}
                 id={`ijtNazmeen-done`}
                 className='p-1 text-center min-w-full'
@@ -39,6 +41,7 @@ export const MarkaziActivities = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                required
                 name={`ijtNazmeen-averageAttendance`}
                 id={`ijtNazmeen-averageAttendance`}
                 className='p-1 text-center min-w-full'
@@ -61,6 +64,7 @@ export const MarkaziActivities = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                required
                 name={`ijtUmeedwaran-decided`}
                 id={`ijtUmeedwaran-decided`}
                 className='p-1 text-center min-w-full'
@@ -70,6 +74,7 @@ export const MarkaziActivities = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                required
                 name={`ijtUmeedwaran-done`}
                 id={`ijtUmeedwaran-done`}
                 className='p-1 text-center min-w-full'
@@ -79,6 +84,7 @@ export const MarkaziActivities = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                required
                 name={`ijtUmeedwaran-averageAttendance`}
                 id={`ijtUmeedwaran-averageAttendance`}
                 className='p-1 text-center min-w-full'
@@ -101,6 +107,7 @@ export const MarkaziActivities = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                required
                 name={`studyCircle-decided`}
                 id={`studyCircle-decided`}
                 className='p-1 text-center min-w-full'
@@ -110,6 +117,7 @@ export const MarkaziActivities = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                required
                 name={`studyCircle-done`}
                 id={`studyCircle-done`}
                 className='p-1 text-center min-w-full'
@@ -119,6 +127,7 @@ export const MarkaziActivities = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                required
                 name={`studyCircle-averageAttendance`}
                 id={`studyCircle-averageAttendance`}
                 className='p-1 text-center min-w-full'
@@ -141,6 +150,7 @@ export const MarkaziActivities = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                required
                 name={`sadurMeeting-decided`}
                 id={`sadurMeeting-decided`}
                 className='p-1 text-center min-w-full'
@@ -150,6 +160,7 @@ export const MarkaziActivities = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                required
                 name={`sadurMeeting-done`}
                 id={`sadurMeeting-done`}
                 className='p-1 text-center min-w-full'
@@ -159,6 +170,7 @@ export const MarkaziActivities = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                required
                 name={`sadurMeeting-averageAttendance`}
                 id={`sadurMeeting-averageAttendance`}
                 className='p-1 text-center min-w-full'

@@ -8,6 +8,7 @@ export const OtherActivities = ({ view }) => {
           <input
             readOnly={view}
             type='number'
+            required
             name='tarbiyatGaah'
             id='tarbiyatGaah'
             className='border-b-2 text-center border-dashed'
@@ -18,6 +19,7 @@ export const OtherActivities = ({ view }) => {
           <input
             readOnly={true}
             type='number'
+            required
             name='dawatiWafud'
             id='dawatiWafud'
             className='border-b-2 text-center border-dashed'
@@ -28,6 +30,7 @@ export const OtherActivities = ({ view }) => {
           <input
             readOnly={true}
             type='number'
+            required
             name='rawabitParties'
             id='rawabitParties'
             className='border-b-2 text-center border-dashed'
@@ -38,6 +41,7 @@ export const OtherActivities = ({ view }) => {
           <input
             readOnly={true}
             type='number'
+            required
             name='shabBedari'
             id='shabBedari'
             className='border-b-2 text-center border-dashed'
@@ -48,6 +52,7 @@ export const OtherActivities = ({ view }) => {
           <input
             readOnly={true}
             type='number'
+            required
             name='nizamSalah'
             id='nizamSalah'
             className='border-b-2 text-center border-dashed'
@@ -59,6 +64,7 @@ export const OtherActivities = ({ view }) => {
           <input
             readOnly={view}
             type='text'
+            required
             name='anyOther'
             id='anyOther'
             className='border-b-2 border-dashed'
