@@ -12,12 +12,12 @@ import {
   Division,
   EditProfile,
   Halqa,
+  LoadingScreen,
   Locations,
   Maqam,
   Province,
- 
 } from './pages';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import instance from './api/instrance';
 import {
   DistrictContext,
@@ -38,7 +38,6 @@ import { Loader } from './components';
 
 function App() {
   const [loading, setLoading] = useState(false);
-  const [loadingStart, setLoadingStart] = useState(false);
   const [me, setMe] = useState(null);
   const { dispatch } = useToastState();
   const [provinces, setProvinces] = useState([]);
@@ -53,8 +52,14 @@ function App() {
   const [divisionReports, setDivisionReports] = useState([]);
   const [halqaReports, setHalqaReports] = useState([]);
   const [userRequests, setUserRequests] = useState([]);
+  const [value, setValue] = useState(null);
+  const [count, setCount] = useState(0);
+  const [authenticated, setAuthenticaated] = useState(
+    localStorage.getItem('@token')
+  );
   const getMe = async () => {
     try {
+      setValue('Fetching user info');
       const req = await instance.get('/user/me', {
         headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
       });
@@ -295,64 +300,62 @@ function App() {
       }
     }
   };
+  const hasMounted = useRef(false);
   useEffect(() => {
-    if (localStorage.getItem('@token')) {
-      setLoadingStart(true);
-      getMe();
-      setLoadingStart(false);
+    if (!hasMounted.current) {
+      if (authenticated) {
+        getMe();
+        hasMounted.current = true;
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [localStorage]);
+  }, [authenticated]);
   useEffect(() => {
+    const fetchData = async () => {
+      setCount((100 / 14) * 1);
+      setValue('Fetching provinces');
+      await getProvinces();
+      setCount((100 / 14) * 2);
+      setValue('Fetching maqams');
+      await getMaqams();
+      setCount((100 / 14) * 3);
+      setValue('Fetching divisions');
+      await getDivisions();
+      setCount((100 / 14) * 4);
+      setValue('Fetching districts');
+      await getDistricts();
+      setCount((100 / 14) * 5);
+      setValue('Fetching tehsils');
+      await getTehsils();
+      setCount((100 / 14) * 6);
+      setValue('Fetching halqas');
+      await getHalqas();
+      setCount((100 / 14) * 7);
+      setValue('Fetching province reports');
+      await getProvinceReports();
+      setCount((100 / 14) * 8);
+      setValue('Fetching maqam reports');
+      await getMaqamReports();
+      setCount((100 / 14) * 9);
+      setValue('Fetching division reports');
+      await getDivisionReports();
+      setCount((100 / 14) * 10);
+      setValue('Fetching halqa reports');
+      await getHalqaReports();
+      setCount((100 / 14) * 11);
+      setValue('Fetching nazims');
+      await getNazim();
+      setCount((100 / 14) * 12);
+      setValue('Fetching user requests');
+      await getAllRequests();
+      setCount((100 / 14) * 13);
+      setValue(null);
+    };
     if (me) {
-      getProvinces();
-      getMaqams();
-      getDivisions();
-      getProvinceReports();
-      getMaqamReports();
-      getDivisionReports();
-      getHalqaReports();
-      getNazim();
-      getAllRequests();
+      fetchData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [me]);
-  useEffect(() => {
-    if (
-      maqams.length > 0 &&
-      ['province', 'maqam'].includes(localStorage.getItem('@type'))
-    ) {
-      getHalqas();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [maqams]);
-  useEffect(() => {
-    if (
-      divisions.length > 0 &&
-      ['province', 'division'].includes(localStorage.getItem('@type'))
-    ) {
-      getDistricts();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [divisions]);
-  useEffect(() => {
-    if (
-      districts.length > 0 &&
-      ['province', 'division'].includes(localStorage.getItem('@type'))
-    ) {
-      getTehsils();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [districts]);
-  useEffect(() => {
-    if (
-      tehsils.length > 0 &&
-      ['province', 'division'].includes(localStorage.getItem('@type'))
-    ) {
-      getHalqas();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tehsils]);
   return (
     <MeContext.Provider value={me}>
       <ProvinceContext.Provider value={provinces}>
@@ -389,7 +392,14 @@ function App() {
                               <BrowserRouter>
                                 <Routes>
                                   <Route path='/signup' element={<Signup />} />
-                                  <Route path='/login' element={<Login />} />
+                                  <Route
+                                    path='/login'
+                                    element={
+                                      <Login
+                                        setAuthenticated={setAuthenticaated}
+                                      />
+                                    }
+                                  />
                                   <Route path='/' element={<Dashboard />} />
                                   <Route
                                     path='/reset-password'
@@ -471,8 +481,8 @@ function App() {
                                   />
                                 </Routes>
                               </BrowserRouter>
+                              <LoadingScreen count={count} value={value} />
                               {loading && <Loader />}
-                              {loadingStart && <Loader />}
                               <Toast />
                             </div>
                           </UIContext.Provider>

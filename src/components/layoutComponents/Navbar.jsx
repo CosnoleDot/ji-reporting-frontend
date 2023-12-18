@@ -169,6 +169,7 @@ export const Navbar = ({ title }) => {
                   onClick={() => {
                     localStorage.clear();
                     navigate('/login');
+                    window.location.reload()
                   }}
                 >
                   Logout

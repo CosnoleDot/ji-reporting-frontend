@@ -6,7 +6,6 @@ import { useContext, useState } from 'react';
 import { useEffect } from 'react';
 import {
   DivisionReportContext,
-  HalqaContext,
   HalqaReportContext,
   MaqamReportContext,
   MeContext,
@@ -47,18 +46,6 @@ export const Maqam = () => {
   const location = useLocation();
   const me = useContext(MeContext);
   const navigate = useNavigate();
-  const allHalqas = useContext(HalqaContext);
-
-  const currMaqamHalqas = Array.isArray(allHalqas)
-    ? allHalqas.filter((curr) => {
-        const [dataMonth, dataYear] = [
-          curr?.month?.split('-')[1],
-          curr?.month?.split('-')[0],
-        ];
-        const [givenMonth, givenYear] = [id?.split('-')[1], id?.split('-')[0]];
-        return dataMonth === givenMonth && dataYear === givenYear;
-      })
-    : [];
   const autoFill = () => {
     const halq = {};
     document.getElementById('totalLibraries').value = halqa.filter((i) =>

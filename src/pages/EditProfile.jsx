@@ -1,25 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { GeneralLayout } from '../components';
 import instance from '../api/instrance';
-import { useToastState } from '../context';
+import { MeContext, useToastState } from '../context';
 
 export const EditProfile = () => {
-  const [data, setData] = useState({});
+  const me = useContext(MeContext);
   const { dispatch } = useToastState();
-  const getProfile = async () => {
-    try {
-      const req = await instance.get('/user/me', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
-      });
-      setData(req.data.data);
-    } catch (err) {
-      dispatch({ type: 'ERROR', payload: err.response.data.message });
-    }
-  };
-  useEffect(() => {
-    getProfile();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -58,7 +44,7 @@ export const EditProfile = () => {
                 placeholder='Full Name'
                 className='w-full input input-bordered input-primary'
                 name='name'
-                defaultValue={data?.name}
+                defaultValue={me?.name}
                 required
               />
             </div>
@@ -71,7 +57,7 @@ export const EditProfile = () => {
                 placeholder='Email Address'
                 className='w-full input input-bordered input-primary'
                 name='email'
-                defaultValue={data?.email}
+                defaultValue={me?.email}
                 required
               />
             </div>
@@ -84,7 +70,7 @@ export const EditProfile = () => {
                 placeholder='Enter Age'
                 name='age'
                 className='w-full input input-bordered input-primary'
-                defaultValue={data?.age}
+                defaultValue={me?.age}
                 required
               />
             </div>

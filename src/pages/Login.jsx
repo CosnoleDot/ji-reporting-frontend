@@ -6,7 +6,7 @@ import { useContext } from 'react';
 import { Loader } from '../components';
 import { UIContext } from '../context/ui';
 
-export const Login = () => {
+export const Login = ({ setAuthenticated }) => {
   const navigate = useNavigate();
   const { dispatch } = useToastState();
   const { loading, setLoading } = useContext(UIContext);
@@ -22,6 +22,7 @@ export const Login = () => {
         { headers: { 'Content-Type': 'application/json' } }
       );
       localStorage.setItem('@token', res?.data?.data?.token);
+      setAuthenticated(res?.data?.data?.token);
       localStorage.setItem('@type', res?.data?.data?.type);
       navigate('/');
     } catch (error) {
