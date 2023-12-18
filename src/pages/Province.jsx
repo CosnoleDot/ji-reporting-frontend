@@ -1,19 +1,10 @@
 import { useContext, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { MeContext, useToastState } from "../context";
+import { useLocation, useParams } from "react-router-dom";
+import { MeContext } from "../context";
 import {
-  CentralActivitiesProvince,
-  EveningDiaryProvince,
-  ExpandPartyProvince,
   GeneralInfo,
   GeneralLayout,
-  LibraryProvince,
   Loader,
-  MenTableProvince,
-  MessageDigestProvince,
-  OtherActivitiesProvince,
-  TanzeemProvince,
-  ZailiActivitesProvince,
 } from "../components";
 import { useEffect } from "react";
 import { InputWithLabel } from "../components/InputWithLabel";
@@ -37,7 +28,6 @@ export const Province = () => {
   const { loading, setLoading } = useContext(UIContext);
   const [view, setView] = useState(false);
   const location = useLocation();
-  const navigate = useNavigate();
   const me = useContext(MeContext);
   const [allReports, setAllReports] = useState([]);
   const [userType, setUserType] = useState("");

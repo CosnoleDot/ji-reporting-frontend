@@ -8,11 +8,13 @@ import {
 import { Link, useLocation } from 'react-router-dom';
 import instance from '../../api/instrance';
 import { FaEdit } from 'react-icons/fa';
+import { UIContext } from '../../context/ui';
 
 export const LocationMaqam = () => {
   const provinces = useContext(ProvinceContext);
   const maqams = useContext(MaqamContext);
   const halqas = useContext(HalqaContext);
+  const { getHalqas, getMaqams, setLoading, loading } = useContext(UIContext);
   const [editMode, setEditMode] = useState(false);
   const [id, setId] = useState('');
   const { dispatch } = useToastState();
@@ -46,6 +48,7 @@ export const LocationMaqam = () => {
     parentType: 'Maqam',
   });
   const handleSubmit = async () => {
+    setLoading(true);
     try {
       const req = await instance.post('/locations/maqam', form, {
         headers: {
@@ -58,11 +61,14 @@ export const LocationMaqam = () => {
         name: '',
         province: '',
       });
+      await getMaqams();
     } catch (err) {
       dispatch({ type: 'ERROR', payload: err.response.data.message });
     }
+    setLoading(false);
   };
   const handleSubmitHalqa = async () => {
+    setLoading(true);
     try {
       const req = await instance.post('/locations/halqa', formHalqa, {
         headers: {
@@ -70,6 +76,7 @@ export const LocationMaqam = () => {
           'Content-Type': 'application/json',
         },
       });
+      await getHalqas();
       dispatch({ type: 'SUCCESS', payload: req.data?.message });
       setFormHalqa({
         name: '',
@@ -79,8 +86,10 @@ export const LocationMaqam = () => {
     } catch (err) {
       dispatch({ type: 'ERROR', payload: err.response.data.message });
     }
+    setLoading(false);
   };
   const handleSubmitEdit = async () => {
+    setLoading(true);
     try {
       const req = await instance.put('/locations/maqam/' + id, form, {
         headers: {
@@ -88,12 +97,15 @@ export const LocationMaqam = () => {
           'Content-Type': 'application/json',
         },
       });
+      await getMaqams();
       dispatch({ type: 'SUCCESS', payload: req.data?.message });
     } catch (err) {
       dispatch({ type: 'ERROR', payload: err.response.data.message });
     }
+    setLoading(false);
   };
   const handleSubmitHalqaEdit = async () => {
+    setLoading(true);
     try {
       const req = await instance.put('/locations/halqa/' + id, formHalqa, {
         headers: {
@@ -101,12 +113,15 @@ export const LocationMaqam = () => {
           'Content-Type': 'application/json',
         },
       });
+      await getHalqas();
       dispatch({ type: 'SUCCESS', payload: req.data?.message });
     } catch (err) {
       dispatch({ type: 'ERROR', payload: err.response.data.message });
     }
+    setLoading(false);
   };
   const handleDisable = async (id, disabled) => {
+    setLoading(true);
     try {
       await instance.patch(
         `/locations/${view}/disable-location/${id}`,
@@ -117,9 +132,20 @@ export const LocationMaqam = () => {
           },
         }
       );
+      switch (view) {
+        case 'halqa':
+          getHalqas();
+          break;
+        case 'maqam':
+          getMaqams();
+          break;
+        default:
+          break;
+      }
     } catch (err) {
       dispatch({ type: 'ERROR', payload: err.response.data.message });
     }
+    setLoading(false);
   };
   return (
     <>
@@ -132,6 +158,7 @@ export const LocationMaqam = () => {
       >
         {['province'].includes(localStorage.getItem('@type')) && (
           <button
+            disabled={loading}
             className='btn'
             onClick={() => {
               setForm({
@@ -146,6 +173,7 @@ export const LocationMaqam = () => {
           </button>
         )}
         <button
+          disabled={loading}
           onClick={() => {
             setFormHalqa({
               name: '',
@@ -198,6 +226,7 @@ export const LocationMaqam = () => {
                   <td>{maqam?.province?.name || '-'}</td>
                   <td className='flex justify-center items-center gap-4'>
                     <button
+                      disabled={loading}
                       onClick={() => {
                         setEditMode(true);
                         setId(maqam?._id);
@@ -247,6 +276,7 @@ export const LocationMaqam = () => {
                     <td>{halqa?.parentId?.name || '-'}</td>
                     <td className='flex  justify-center  items-center gap-4'>
                       <button
+                        disabled={loading}
                         onClick={() => {
                           setEditMode(true);
                           setId(halqa?._id);
@@ -322,17 +352,25 @@ export const LocationMaqam = () => {
           </div>
           <div className='modal-action'>
             {editMode ? (
-              <button className='btn' onClick={handleSubmitEdit}>
+              <button
+                disabled={loading}
+                className='btn'
+                onClick={handleSubmitEdit}
+              >
                 Update
               </button>
             ) : (
-              <button className='btn' onClick={handleSubmit}>
+              <button disabled={loading} className='btn' onClick={handleSubmit}>
                 Add
               </button>
             )}
             <form method='dialog'>
               {/* if there is a button in form, it will close the modal */}
-              <button id='close-maqam-modal' className='btn ms-3'>
+              <button
+                disabled={loading}
+                id='close-maqam-modal'
+                className='btn ms-3'
+              >
                 Close
               </button>
             </form>
@@ -387,17 +425,29 @@ export const LocationMaqam = () => {
           </div>
           <div className='modal-action'>
             {editMode ? (
-              <button className='btn' onClick={handleSubmitHalqaEdit}>
+              <button
+                disabled={loading}
+                className='btn'
+                onClick={handleSubmitHalqaEdit}
+              >
                 Update
               </button>
             ) : (
-              <button className='btn' onClick={handleSubmitHalqa}>
+              <button
+                disabled={loading}
+                className='btn'
+                onClick={handleSubmitHalqa}
+              >
                 Add
               </button>
             )}
             <form method='dialog'>
               {/* if there is a button in form, it will close the modal */}
-              <button id='close-maqam-modal' className='btn ms-3'>
+              <button
+                disabled={loading}
+                id='close-maqam-modal'
+                className='btn ms-3'
+              >
                 Close
               </button>
             </form>

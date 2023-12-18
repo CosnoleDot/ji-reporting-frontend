@@ -191,7 +191,9 @@ export const Comparision = () => {
     setResponse(null);
     try {
       const res = await instance.post(
-        `compare/${reportType}/${selectedProperty}`,
+        `compare/${
+          reportType === 'self' ? localStorage.getItem('@type') : reportType
+        }/${selectedProperty}`,
         data,
         {
           headers: { 'Content-Type': 'application/json' },
@@ -211,7 +213,7 @@ export const Comparision = () => {
             value={reportType}
             onChange={(e) => {
               setReportType(e.target.value);
-              if (reportType === 'self') {
+              if (e.target.value === 'self') {
                 setAreaId(me.userAreaId._id);
               }
             }}
@@ -227,7 +229,7 @@ export const Comparision = () => {
                 <option value='division'>Division</option>
               </>
             )}
-            <option value='self'>Self Compare</option>
+            {/* <option value='self'>Self Compare</option> */}
           </select>
           {reportType !== 'self' && (
             <select
@@ -236,7 +238,7 @@ export const Comparision = () => {
               className='select select-bordered'
             >
               <option value='' disabled>
-                Area
+                Area {reportType}
               </option>
               {areas[reportType]?.map((i, index) => (
                 <option key={index} value={i?._id}>

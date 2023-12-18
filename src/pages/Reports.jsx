@@ -87,7 +87,7 @@ export const Reports = () => {
   const [tab, setTab] = useState('maqam');
   const [active, setActive] = useState('province');
   const [filterAllData, setFilterAllData] = useState({});
-  const [months, setMonths] = useState([]);
+
   // const [showNotification, setShowNotification] = useState(false);
   const [notifyTo, setNotifyTo] = useState('halqa');
   const maqamReports = useContext(MaqamReportContext);
@@ -96,30 +96,6 @@ export const Reports = () => {
 
   const params = useLocation();
   // GENERATE MONTHS
-  const generateMonths = () => {
-    const startMonth = new Date('2023-12-01');
-    const currentDate = new Date(Date.now());
-    const months = [];
-
-    while (startMonth <= currentDate) {
-      const monthName = startMonth.toLocaleString('en-us', { month: 'long' });
-      const year = startMonth.getFullYear();
-
-      months.push({
-        title: `${monthName} ${year}`,
-        value: `${year}-${startMonth.getMonth() + 1}`,
-      });
-
-      startMonth.setMonth(startMonth.getMonth() + 1);
-    }
-
-    return months;
-  };
-
-  useEffect(() => {
-    const generatedMonths = generateMonths();
-    setMonths(generatedMonths);
-  }, []);
   useEffect(() => {
     // Function to parse query parameters
     const getQueryParams = () => {
@@ -411,14 +387,13 @@ export const Reports = () => {
               )}
             </div>
           </div>
-          <div className="flex justify-end items-center gap-4">
-            
-              <button className="btn " onClick={handleReport}>
-                <FaPlus />
-                <span className='hidden lg:block xl:block'>New Report</span>
-              </button>
-          
-            {!isMobileView && active !== "province" && (
+          <div className='flex justify-end items-center gap-4'>
+            <button className='btn ' onClick={handleReport}>
+              <FaPlus />
+              <span className='hidden lg:block xl:block'>New Report</span>
+            </button>
+
+            {!isMobileView && active !== 'province' && (
               <button
                 onClick={sendNotification}
                 className={`btn ${!isMobileView ? 'join-item' : 'ms-3'}`}
@@ -524,8 +499,7 @@ export const Reports = () => {
                           {moment(obj?.month).format('MMMM YYYY')}
                         </span>
                         <span>
-                          Last Modified:{' '}
-                          {moment(obj?.updatedAt).fromNow()}
+                          Last Modified: {moment(obj?.updatedAt).fromNow()}
                         </span>
                       </div>
                       <div className='flex items-end w-full justify-end gap-3 '>
@@ -550,8 +524,7 @@ export const Reports = () => {
                           {moment(obj?.month).format('MMMM YYYY')}
                         </span>
                         <span>
-                          Last Modified:{' '}
-                          {moment(obj?.updatedAt).fromNow()}
+                          Last Modified: {moment(obj?.updatedAt).fromNow()}
                         </span>
                       </div>
                       <div className='flex items-end w-full justify-end gap-3 '>
@@ -575,8 +548,7 @@ export const Reports = () => {
                         {moment(obj?.month).format('MMMM YYYY')}
                       </span>
                       <span>
-                        Last Modified:{' '}
-                        {moment(obj?.updatedAt).fromNow()}
+                        Last Modified: {moment(obj?.updatedAt).fromNow()}
                       </span>
                     </div>
                     <div className='flex items-end w-full justify-end gap-3 '>
@@ -594,30 +566,37 @@ export const Reports = () => {
           ) : filerData?.length < 1 ? (
             <NoReports />
           ) : (
-            filerData?.map((obj) => (
-              <div
-                key={obj?._id}
-                className='card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col'
-              >
-                <div className='flex w-full flex-col items-start justify-center'>
-                  <span className='text-lg font-semibold'>
-                    {moment(obj?.month).format('MMMM YYYY')}
-                  </span>
-                  <span>
-                    Last Modified:{' '}
-                    {moment(obj?.updatedAt).fromNow()}
-                  </span>
+            filerData
+              .sort((a, b) => a.createdAt - b.createdAt)
+              ?.map((obj) => (
+                <div
+                  key={obj?._id}
+                  className='card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col'
+                >
+                  <div className='flex w-full flex-col items-start justify-center'>
+                    <span className='text-lg font-semibold'>
+                      {moment(obj?.month).format('MMMM YYYY')}
+                    </span>
+                    <span>
+                      Last Modified: {moment(obj?.updatedAt).fromNow()}
+                    </span>
+                  </div>
+                  <div className='flex items-end w-full justify-end gap-3 '>
+                    <button
+                      className='btn'
+                      onClick={() => viewReport(obj?._id)}
+                    >
+                      <FaEye />
+                    </button>
+                    <button
+                      className='btn'
+                      onClick={() => editReport(obj?._id)}
+                    >
+                      <FaEdit />
+                    </button>
+                  </div>
                 </div>
-                <div className='flex items-end w-full justify-end gap-3 '>
-                  <button className='btn' onClick={() => viewReport(obj?._id)}>
-                    <FaEye />
-                  </button>
-                  <button className='btn' onClick={() => editReport(obj?._id)}>
-                    <FaEdit />
-                  </button>
-                </div>
-              </div>
-            ))
+              ))
           )}
         </div>
       </div>

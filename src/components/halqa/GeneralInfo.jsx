@@ -19,7 +19,7 @@ export function GeneralInfo({ setMonth, me, area }) {
           type='month'
           name='month'
           id='month'
-          onChange={e => setMonth(e.target.value)}
+          onChange={e => setMonth ? setMonth(e.target.value) : null}
         />
       </div>
     </div>

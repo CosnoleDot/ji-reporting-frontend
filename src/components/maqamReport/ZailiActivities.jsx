@@ -45,15 +45,7 @@ const ZailiActivities = ({ view }) => {
               />
             </Box>
 
-            <Box>
-              <input
-                readOnly={true}
-                type='checkbox'
-                className='p-1 text-center min-w-full checkbox'
-                name={`ijtRafaqa-registered`}
-                id={`ijtRafaqa-registered`}
-              />
-            </Box>
+            <Box>-</Box>
           </tr>
           <tr>
             <Box> سٹڈی سرکل</Box>
@@ -85,15 +77,7 @@ const ZailiActivities = ({ view }) => {
               />
             </Box>
 
-            <Box>
-              <input
-                readOnly={true}
-                type='checkbox'
-                className='p-1 text-center min-w-full checkbox'
-                name={`studyCircleMentioned-registered`}
-                id={`studyCircleMentioned-registered`}
-              />
-            </Box>
+            <Box>-</Box>
           </tr>
           <tr>
             <Box>اجتماع کارکنان</Box>
@@ -125,15 +109,7 @@ const ZailiActivities = ({ view }) => {
               />
             </Box>
 
-            <Box>
-              <input
-                readOnly={true}
-                type='checkbox'
-                className='p-1 text-center min-w-full checkbox'
-                name={`ijtKarkunan-registered`}
-                id={`ijtKarkunan-registered`}
-              />
-            </Box>
+            <Box>-</Box>
           </tr>
           <tr>
             <Box>درس قرآن </Box>
@@ -165,15 +141,7 @@ const ZailiActivities = ({ view }) => {
               />
             </Box>
 
-            <Box>
-              <input
-                readOnly={true}
-                type='checkbox'
-                className='p-1 text-center min-w-full checkbox'
-                name={`darseQuran-registered`}
-                id={`darseQuran-registered`}
-              />
-            </Box>
+            <Box>-</Box>
           </tr>
           <tr>
             <Box>شاہین میٹنگ</Box>

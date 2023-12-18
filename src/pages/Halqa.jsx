@@ -9,6 +9,7 @@ import {
   OtherActivities,
   RozOShabDiary,
   ToseeDawat,
+  calcultate,
 } from '../components';
 import {
   DivisionReportContext,
@@ -33,9 +34,9 @@ export const Halqa = () => {
   const [data, setData] = useState({});
   const { setLoading } = useContext(UIContext);
   const location = useLocation();
+  const { getHalqaReports } = useContext(UIContext);
   const params = useParams();
   let navigate = useNavigate();
-  const isViewPage = location.pathname?.split('/')[2];
   useEffect(() => {
     const l = location.pathname?.split('/')[2];
     if (l === 'view') {
@@ -58,6 +59,7 @@ export const Halqa = () => {
             Authorization: `Bearer ${localStorage.getItem('@token')}`,
           },
         });
+        await getHalqaReports();
         dispatch({ type: 'SUCCESS', payload: req?.data?.message });
         navigate('/reports');
       } else {
@@ -67,6 +69,7 @@ export const Halqa = () => {
             Authorization: `Bearer ${localStorage.getItem('@token')}`,
           },
         });
+        await getHalqaReports();
         dispatch({ type: 'SUCCESS', payload: req.data?.message });
         navigate('/reports');
       }
@@ -74,7 +77,7 @@ export const Halqa = () => {
       e.target.reset();
     } catch (err) {
       dispatch({ type: 'ERROR', payload: err.response.data.message });
-      navigate('/reports');
+      // navigate('/reports');
     }
     setLoading(false);
   };
@@ -98,6 +101,10 @@ export const Halqa = () => {
         }
       }
     });
+    const afd = ['arkan', 'umeedWaran', 'rafaqa', 'karkunan'];
+    afd.forEach((i) => {
+      calcultate(i);
+    });
   }, [data]);
   return (
     <GeneralLayout>
@@ -111,12 +118,12 @@ export const Halqa = () => {
           dir='rtl'
         >
           <GeneralInfo me={me} area={'حلقہ'} />
-          <IfradiKuwat data={data} />
-          <Activity />
-          <OtherActivities />
-          <ToseeDawat />
-          <Library />
-          <RozOShabDiary />
+          <IfradiKuwat view={view} />
+          <Activity view={view} />
+          <OtherActivities view={view} />
+          <ToseeDawat view={view} />
+          <Library view={view} />
+          <RozOShabDiary view={view} />
           <div className='w-full flex p-2'>
             <label htmlFor='comments'>تبصرہ</label>
             <input
@@ -124,6 +131,7 @@ export const Halqa = () => {
               name='comments'
               className='border-b-2 border-dashed w-full'
               id='comments'
+              readOnly={view}
             />
           </div>
           <div className='w-full flex flex-col items-end gap-3 p-2'>
@@ -138,9 +146,9 @@ export const Halqa = () => {
               />
             </div>
           </div>
-          {isViewPage !== 'view' && (
+          {!view && (
             <button type='submit' className='btn'>
-              Submit
+              {id ? 'UPDATE' : 'Submit'}
             </button>
           )}
         </form>
