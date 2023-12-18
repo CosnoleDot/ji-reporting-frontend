@@ -4,7 +4,7 @@ import { Box } from "../halqa";
 
 
 
-export const MarkaziActivities = () => {
+export const MarkaziActivities = ({view}) => {
   return (
     <div className="relative w-full overflow-auto">
       <table className="w-full table">
@@ -22,6 +22,7 @@ export const MarkaziActivities = () => {
             <Box>ڈویژنل مشاورات</Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`divMushawarat-decided`}
                 id={`divMushawarat-decided`}
@@ -30,6 +31,7 @@ export const MarkaziActivities = () => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`divMushawarat-done`}
                 id={`divMushawarat-done`}
@@ -38,6 +40,7 @@ export const MarkaziActivities = () => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`divMushawarat-averageAttendance`}
                 id={`divMushawarat-averageAttendance`}
@@ -47,6 +50,7 @@ export const MarkaziActivities = () => {
 
             <Box>
               <input
+              readOnly={view}
                 type="checkbox"
                 className="p-1 text-center min-w-full checkbox"
                 name={`divMushawarat-registered`}
@@ -58,6 +62,7 @@ export const MarkaziActivities = () => {
             <Box>اجتماع ارکان</Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`ijtArkan-decided`}
                 id={`ijtArkan-decided`}
@@ -66,6 +71,7 @@ export const MarkaziActivities = () => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`ijtArkan-done`}
                 id={`ijtArkan-done`}
@@ -74,6 +80,7 @@ export const MarkaziActivities = () => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`ijtArkan-averageAttendance`}
                 id={`ijtArkan-averageAttendance`}
@@ -83,6 +90,7 @@ export const MarkaziActivities = () => {
 
             <Box>
               <input
+              readOnly={view}
                 type="checkbox"
                 className="p-1 text-center min-w-full checkbox"
                 name={`ijtArkan-registered`}
@@ -94,6 +102,7 @@ export const MarkaziActivities = () => {
             <Box>سٹڈی سرکل</Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`studyCircle-decided`}
                 id={`studyCircle-decided`}
@@ -102,6 +111,7 @@ export const MarkaziActivities = () => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`studyCircle-done`}
                 id={`studyCircle-done`}
@@ -110,6 +120,7 @@ export const MarkaziActivities = () => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`studyCircle-averageAttendance`}
                 id={`studyCircle-averageAttendance`}
@@ -119,6 +130,7 @@ export const MarkaziActivities = () => {
 
             <Box>
               <input
+              readOnly={view}
                 type="checkbox"
                 className="p-1 text-center min-w-full checkbox"
                 name={`studyCircle-registered`}
@@ -130,35 +142,39 @@ export const MarkaziActivities = () => {
             <Box>اجتماع ناظمین</Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
-                name={`sadurMeeting-decided`}
-                id={`sadurMeeting-decided`}
+                name={`ijtNazmeen-decided`}
+                id={`ijtNazmeen-decided`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
-                name={`sadurMeeting-done`}
-                id={`sadurMeeting-done`}
+                name={`ijtNazmeen-done`}
+                id={`ijtNazmeen-done`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
-                name={`sadurMeeting-averageAttendance`}
-                id={`sadurMeeting-averageAttendance`}
+                name={`ijtNazmeen-averageAttendance`}
+                id={`ijtNazmeen-averageAttendance`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
 
             <Box>
               <input
+              readOnly={view}
                 type="checkbox"
                 className="p-1 text-center min-w-full checkbox"
-                name={`sadurMeeting-registered`}
-                id={`sadurMeeting-registered`}
+                name={`ijtNazmeen-registered`}
+                id={`ijtNazmeen-registered`}
               />
             </Box>
           </tr>
@@ -166,6 +182,7 @@ export const MarkaziActivities = () => {
             <Box>اجتماع امیدواران</Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`ijtUmeedwaran-decided`}
                 id={`ijtUmeedwaran-decided`}
@@ -174,6 +191,7 @@ export const MarkaziActivities = () => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`ijtUmeedwaran-done`}
                 id={`ijtUmeedwaran-done`}
@@ -182,6 +200,7 @@ export const MarkaziActivities = () => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`ijtUmeedwaran-averageAttendance`}
                 id={`ijtUmeedwaran-averageAttendance`}
@@ -191,6 +210,7 @@ export const MarkaziActivities = () => {
 
             <Box>
               <input
+              readOnly={view}
                 type="checkbox"
                 className="p-1 text-center min-w-full checkbox"
                 name={`ijtUmeedwaran-registered`}
@@ -202,6 +222,7 @@ export const MarkaziActivities = () => {
             <Box>صدورمیٹینگ</Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`sadurMeeting-decided`}
                 id={`sadurMeeting-decided`}
@@ -210,6 +231,7 @@ export const MarkaziActivities = () => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`sadurMeeting-done`}
                 id={`sadurMeeting-done`}
@@ -218,6 +240,7 @@ export const MarkaziActivities = () => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 name={`sadurMeeting-averageAttendance`}
                 id={`sadurMeeting-averageAttendance`}
@@ -227,6 +250,7 @@ export const MarkaziActivities = () => {
 
             <Box>
               <input
+              readOnly={view}
                 type="checkbox"
                 className="p-1 text-center min-w-full checkbox"
                 name={`sadurMeeting-registered`}

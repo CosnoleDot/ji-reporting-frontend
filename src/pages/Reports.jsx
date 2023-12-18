@@ -414,6 +414,7 @@ export const Reports = () => {
               className={`tab w-full ${
                 active === 'province' ? 'tab-active bg-slate-200' : ''
               }`}
+              onClick={() => setNotifyTo('province')}
             >
               Province
             </Link>

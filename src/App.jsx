@@ -513,6 +513,9 @@ function App() {
                                       ) : localStorage.getItem('@type') ===
                                         'division' ? (
                                         <Division />
+                                      ) : localStorage.getItem('@type') ===
+                                        'province' ? (
+                                        <Province />
                                       ) : (
                                         <Halqa />
                                       )
