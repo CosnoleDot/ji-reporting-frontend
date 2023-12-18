@@ -130,7 +130,7 @@ export const Maqam = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
   useEffect(() => {
-    console.log(data, "DEBUGING")
+   
     Object.keys(data).forEach((i) => {
       const elem = document.getElementById(i);
       if (elem) {
@@ -138,7 +138,7 @@ export const Maqam = () => {
           elem.value = data[i]?.split('')?.slice(0, 7)?.join('');
         } else {
           if (elem.type === 'checkbox') {
-            console.log(elem.id, "DEBUGING")
+            
             elem.checked = data[i];
           } else {
             elem.value = data[i];
