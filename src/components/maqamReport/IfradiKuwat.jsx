@@ -298,6 +298,7 @@ export const IfradiKuwat = ({ view }) => {
                   className='p-1 text-center min-w-full checkbox'
                   name={`shaheen-registered`}
                   id={`shaheen-registered`}
+                  disabled
                 />
               ) : (
                 <input
@@ -366,6 +367,7 @@ export const IfradiKuwat = ({ view }) => {
                   className='p-1 text-center min-w-full checkbox'
                   name={`members-registered`}
                   id={`members-registered`}
+                  disabled
                 />
               ) : (
                 <input
