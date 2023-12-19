@@ -84,6 +84,17 @@ export const Login = ({ setAuthenticated }) => {
             </button>
           </div>
         </form>
+        <div className='w-full flex justify-center items-start gap-3'>
+          <span className='text-slate-800'>Powered By:</span>
+          <a
+            href='https://consoledot.com'
+            target='_blank'
+            rel='noreferrer'
+            className='flex items-center justify-start gap-1'
+          >
+            <img src='/cd.png' alt='CD LOGO' className='w-5 h-5' /> ConsoleDot
+          </a>
+        </div>
       </div>
       {loading && <Loader />}
     </div>

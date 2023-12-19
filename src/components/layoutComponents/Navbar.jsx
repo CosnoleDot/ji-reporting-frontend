@@ -103,6 +103,11 @@ export const Navbar = ({ title }) => {
                   Logout
                 </span>
               </li>
+              <li className='bg-slate-300 flex justify-center w-full'>
+                <a href='https://consoledot.com' target='_blank' rel="noreferrer">
+                  Powered By: <img src='/cd.png' className='w-5 h-5' alt='ConsoleDot' />
+                </a>
+              </li>
             </ul>
           )}
         </div>

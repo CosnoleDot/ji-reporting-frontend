@@ -13,6 +13,12 @@ export const LoadingScreen = ({ value, count }) => {
           <span className='uppercase text-sm'>
             ({parseInt(count)}%) {value}
           </span>
+          <div className='w-full flex justify-center items-start gap-3'>
+            <span className='text-slate-800'>Powered By:</span>
+            <span className='flex items-center justify-start gap-1'>
+              <img src='/cd.png' alt='CD LOGO' className='w-5 h-5' /> ConsoleDot
+            </span>
+          </div>
         </div>
       )}
     </>

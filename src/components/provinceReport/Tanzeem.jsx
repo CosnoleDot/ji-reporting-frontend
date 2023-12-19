@@ -1,6 +1,6 @@
 import { Box } from './IfradiKuwat';
 
-export const Tanzeem = ({ view }) => {
+export const Tanzeem = ({ view, id }) => {
   const calcultate = (v) => {
     // (start + increase)- decrease
     const s = document.getElementById(`${v}-start`);
@@ -20,7 +20,7 @@ export const Tanzeem = ({ view }) => {
             <Box>آغازمیں</Box>
             <Box>اِضافہ</Box>
             <Box>کمی</Box>
-            <Box>اختتام پر</Box>
+            {(view || id) && <Box>اختتام پر</Box>}
             <Box>فعال</Box>
             <Box>غیرفعال</Box>
           </tr>
@@ -61,16 +61,18 @@ export const Tanzeem = ({ view }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            <Box>
-              <input
-                readOnly={true}
-                type='number'
-                required
-                name={`rehaishHalqay-end`}
-                id={`rehaishHalqay-end`}
-                className='p-1 text-center min-w-full'
-              />
-            </Box>
+            {(view || id) && (
+              <Box>
+                <input
+                  readOnly={true}
+                  type='number'
+                  required
+                  name={`rehaishHalqay-end`}
+                  id={`rehaishHalqay-end`}
+                  className='p-1 text-center min-w-full'
+                />
+              </Box>
+            )}
             <Box>
               <input
                 readOnly
@@ -127,16 +129,18 @@ export const Tanzeem = ({ view }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            <Box>
-              <input
-                readOnly={true}
-                type='number'
-                required
-                name={`taleemHalqay-end`}
-                id={`taleemHalqay-end`}
-                className='p-1 text-center min-w-full'
-              />
-            </Box>
+            {(view || id) && (
+              <Box>
+                <input
+                  readOnly={true}
+                  type='number'
+                  required
+                  name={`taleemHalqay-end`}
+                  id={`taleemHalqay-end`}
+                  className='p-1 text-center min-w-full'
+                />
+              </Box>
+            )}
             <Box>
               <input
                 readOnly
@@ -193,16 +197,18 @@ export const Tanzeem = ({ view }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            <Box>
-              <input
-                readOnly={true}
-                type='number'
-                required
-                name={`totalHalqay-end`}
-                id={`totalHalqay-end`}
-                className='p-1 text-center min-w-full'
-              />
-            </Box>
+            {(view || id) && (
+              <Box>
+                <input
+                  readOnly={true}
+                  type='number'
+                  required
+                  name={`totalHalqay-end`}
+                  id={`totalHalqay-end`}
+                  className='p-1 text-center min-w-full'
+                />
+              </Box>
+            )}
             <Box>
               <input
                 readOnly
@@ -259,16 +265,18 @@ export const Tanzeem = ({ view }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            <Box>
-              <input
-                readOnly={true}
-                type='number'
-                required
-                name={`subRehaishHalqay-end`}
-                id={`subRehaishHalqay-end`}
-                className='p-1 text-center min-w-full'
-              />
-            </Box>
+            {(view || id) && (
+              <Box>
+                <input
+                  readOnly={true}
+                  type='number'
+                  required
+                  name={`subRehaishHalqay-end`}
+                  id={`subRehaishHalqay-end`}
+                  className='p-1 text-center min-w-full'
+                />
+              </Box>
+            )}
             <Box>
               <input
                 readOnly
@@ -325,16 +333,18 @@ export const Tanzeem = ({ view }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            <Box>
-              <input
-                readOnly={true}
-                type='number'
-                required
-                name={`subTaleemHalqay-end`}
-                id={`subTaleemHalqay-end`}
-                className='p-1 text-center min-w-full'
-              />
-            </Box>
+            {(view || id) && (
+              <Box>
+                <input
+                  readOnly={true}
+                  type='number'
+                  required
+                  name={`subTaleemHalqay-end`}
+                  id={`subTaleemHalqay-end`}
+                  className='p-1 text-center min-w-full'
+                />
+              </Box>
+            )}
             <Box>
               <input
                 readOnly
@@ -391,16 +401,18 @@ export const Tanzeem = ({ view }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            <Box>
-              <input
-                readOnly={true}
-                type='number'
-                required
-                name={`subTotalHalqay-end`}
-                id={`subTotalHalqay-end`}
-                className='p-1 text-center min-w-full'
-              />
-            </Box>
+            {(view || id) && (
+              <Box>
+                <input
+                  readOnly={true}
+                  type='number'
+                  required
+                  name={`subTotalHalqay-end`}
+                  id={`subTotalHalqay-end`}
+                  className='p-1 text-center min-w-full'
+                />
+              </Box>
+            )}
             <Box>
               <input
                 readOnly
@@ -457,16 +469,18 @@ export const Tanzeem = ({ view }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            <Box>
-              <input
-                readOnly={true}
-                type='number'
-                required
-                name={`busmSchoolUnits-end`}
-                id={`busmSchoolUnits-end`}
-                className='p-1 text-center min-w-full'
-              />
-            </Box>
+            {(view || id) && (
+              <Box>
+                <input
+                  readOnly={true}
+                  type='number'
+                  required
+                  name={`busmSchoolUnits-end`}
+                  id={`busmSchoolUnits-end`}
+                  className='p-1 text-center min-w-full'
+                />
+              </Box>
+            )}
             <Box>
               <input
                 readOnly
@@ -523,16 +537,18 @@ export const Tanzeem = ({ view }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            <Box>
-              <input
-                readOnly={true}
-                type='number'
-                required
-                name={`busmRehaishUnits-end`}
-                id={`busmRehaishUnits-end`}
-                className='p-1 text-center min-w-full'
-              />
-            </Box>
+            {(view || id) && (
+              <Box>
+                <input
+                  readOnly={true}
+                  type='number'
+                  required
+                  name={`busmRehaishUnits-end`}
+                  id={`busmRehaishUnits-end`}
+                  className='p-1 text-center min-w-full'
+                />
+              </Box>
+            )}
             <Box>
               <input
                 readOnly
@@ -589,16 +605,18 @@ export const Tanzeem = ({ view }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            <Box>
-              <input
-                readOnly={true}
-                type='number'
-                required
-                name={`busmTotalUnits-end`}
-                id={`busmTotalUnits-end`}
-                className='p-1 text-center min-w-full'
-              />
-            </Box>
+            {(view || id) && (
+              <Box>
+                <input
+                  readOnly={true}
+                  type='number'
+                  required
+                  name={`busmTotalUnits-end`}
+                  id={`busmTotalUnits-end`}
+                  className='p-1 text-center min-w-full'
+                />
+              </Box>
+            )}
             <Box>
               <input
                 readOnly

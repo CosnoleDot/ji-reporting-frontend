@@ -9,7 +9,7 @@ export const Box = ({ children, type }) => {
     </td>
   );
 };
-export const IfradiKuwat = ({ view }) => {
+export const IfradiKuwat = ({ view, id }) => {
   const calcultate = (v) => {
     // (start + increase)- decrease
     const s = document.getElementById(`${v}-start`);
@@ -27,7 +27,7 @@ export const IfradiKuwat = ({ view }) => {
             <Box>آغاز میں</Box>
             <Box>اضافہ</Box>
             <Box>کمی</Box>
-            <Box>اختاتام</Box>
+            {(view || id) && <Box>اختتام پر</Box>}
             <Box>سالانہ ہدف</Box>
           </tr>
         </thead>
@@ -67,16 +67,18 @@ export const IfradiKuwat = ({ view }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            <Box>
-              <input
-                readOnly
-                type='number'
-                required
-                name={`arkan-end`}
-                id={`arkan-end`}
-                className='p-1 text-center min-w-full'
-              />
-            </Box>
+            {(view || id) && (
+              <Box>
+                <input
+                  readOnly
+                  type='number'
+                  required
+                  name={`arkan-end`}
+                  id={`arkan-end`}
+                  className='p-1 text-center min-w-full'
+                />
+              </Box>
+            )}
             <Box>
               <input
                 readOnly
@@ -87,7 +89,6 @@ export const IfradiKuwat = ({ view }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            
           </tr>
           <tr>
             <Box>امیدواران</Box>
@@ -124,16 +125,18 @@ export const IfradiKuwat = ({ view }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            <Box>
-              <input
-                readOnly
-                type='number'
-                required
-                name={`umeedWaran-end`}
-                id={`umeedWaran-end`}
-                className='p-1 text-center min-w-full'
-              />
-            </Box>
+            {(view || id) && (
+              <Box>
+                <input
+                  readOnly
+                  type='number'
+                  required
+                  name={`umeedWaran-end`}
+                  id={`umeedWaran-end`}
+                  className='p-1 text-center min-w-full'
+                />
+              </Box>
+            )}
             <Box>
               <input
                 readOnly
@@ -144,7 +147,6 @@ export const IfradiKuwat = ({ view }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            
           </tr>
           <tr>
             <Box>رفقا</Box>
@@ -181,16 +183,18 @@ export const IfradiKuwat = ({ view }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            <Box>
-              <input
-                readOnly
-                type='number'
-                required
-                name={`rafaqa-end`}
-                id={`rafaqa-end`}
-                className='p-1 text-center min-w-full'
-              />
-            </Box>
+            {(view || id) && (
+              <Box>
+                <input
+                  readOnly
+                  type='number'
+                  required
+                  name={`rafaqa-end`}
+                  id={`rafaqa-end`}
+                  className='p-1 text-center min-w-full'
+                />
+              </Box>
+            )}
             <Box>
               <input
                 readOnly
@@ -201,7 +205,6 @@ export const IfradiKuwat = ({ view }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            
           </tr>
           <tr>
             <Box>کارکنان</Box>
@@ -238,16 +241,18 @@ export const IfradiKuwat = ({ view }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            <Box>
-              <input
-                readOnly
-                type='number'
-                required
-                name={`karkunan-end`}
-                id={`karkunan-end`}
-                className='p-1 text-center min-w-full'
-              />
-            </Box>
+            {(view || id) && (
+              <Box>
+                <input
+                  readOnly
+                  type='number'
+                  required
+                  name={`karkunan-end`}
+                  id={`karkunan-end`}
+                  className='p-1 text-center min-w-full'
+                />
+              </Box>
+            )}
             <Box>
               <input
                 readOnly
@@ -258,7 +263,6 @@ export const IfradiKuwat = ({ view }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            
           </tr>
           <tr>
             <Box>شاہین</Box>
@@ -295,16 +299,18 @@ export const IfradiKuwat = ({ view }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            <Box>
-              <input
-                readOnly
-                type='number'
-                required
-                name={`shaheen-end`}
-                id={`shaheen-end`}
-                className='p-1 text-center min-w-full'
-              />
-            </Box>
+            {(view || id) && (
+              <Box>
+                <input
+                  readOnly
+                  type='number'
+                  required
+                  name={`shaheen-end`}
+                  id={`shaheen-end`}
+                  className='p-1 text-center min-w-full'
+                />
+              </Box>
+            )}
             <Box>
               <input
                 readOnly
@@ -351,16 +357,18 @@ export const IfradiKuwat = ({ view }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            <Box>
-              <input
-                readOnly
-                type='number'
-                required
-                name={`members-end`}
-                id={`members-end`}
-                className='p-1 text-center min-w-full'
-              />
-            </Box>
+            {(view || id) && (
+              <Box>
+                <input
+                  readOnly
+                  type='number'
+                  required
+                  name={`members-end`}
+                  id={`members-end`}
+                  className='p-1 text-center min-w-full'
+                />
+              </Box>
+            )}
             <Box>
               <input
                 readOnly

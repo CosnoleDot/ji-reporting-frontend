@@ -25,7 +25,6 @@ import { RozOShabDiary } from '../components/maqamReport/RozOShabDiary';
 export const getData = async (path, id, setData, data) => {
   const arr = data[path];
   const obj = arr.filter((i) => i?._id?.toString() === id?.toString());
-  console.log(reverseDataFormat(obj[0]))
   // if (req) {
   setData(reverseDataFormat(obj[0]));
   // }F

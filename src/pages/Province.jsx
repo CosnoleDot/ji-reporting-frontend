@@ -1,4 +1,4 @@
-import { GeneralLayout, GeneralInfo, calcultate } from '../components';
+import { GeneralLayout, GeneralInfo } from '../components';
 import { convertDataFormat, reverseDataFormat, toJson } from '../utils';
 import instance from '../api/instrance';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
@@ -92,7 +92,6 @@ export const Province = () => {
           }
         });
       });
-    console.log(halq, 'DEBUGING');
     Object.keys(halq).forEach((i) => {
       let j = i;
       const elem = document.getElementById(j);
@@ -139,7 +138,7 @@ export const Province = () => {
           elem.value = data[i]?.split('')?.slice(0, 7)?.join('');
         } else {
           if (elem.type === 'checkbox') {
-            elem.checked = data[i];
+            elem.defaultChecked = data[i] ? true : false;
           } else {
             elem.value = data[i];
           }
@@ -163,6 +162,16 @@ export const Province = () => {
       'members',
       'shaheen',
     ];
+    const calcultate = (v) => {
+      // (start + increase)- decrease
+      const s = document.getElementById(`${v}-start`);
+      const i = document.getElementById(`${v}-increase`);
+      const d = document.getElementById(`${v}-decrease`);
+      console.log(s, i, d);
+      if (document.getElementById(`${v}-end`))
+        document.getElementById(`${v}-end`).value =
+          parseInt(s?.value) + parseInt(i?.value) - parseInt(d?.value);
+    };
     afd.forEach((i) => {
       calcultate(i);
     });
@@ -225,10 +234,10 @@ export const Province = () => {
               />
             </div>
             <div className='mb-4'>
-              <Tanzeem view={view} />
+              <Tanzeem view={view} id={id} />
             </div>
             <div className='mb-4'>
-              <IfradiKuwat view={view} />
+              <IfradiKuwat view={view} id={id} />
             </div>
             <div className='mb-4'>
               <MarkaziActivities view={view} />
