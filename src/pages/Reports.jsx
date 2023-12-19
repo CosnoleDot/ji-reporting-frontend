@@ -86,7 +86,11 @@ export const Reports = () => {
   const [filerData, setFilterData] = useState([]);
   const me = useContext(MeContext);
   const { dispatch } = useToastState();
-  const [tab, setTab] = useState('maqam');
+  const [tab, setTab] = useState(
+    ['province', 'maqam'].includes(localStorage.getItem('@type'))
+      ? 'maqam'
+      : 'division'
+  );
   const { active, setActive } = useContext(UIContext);
   const [filterAllData, setFilterAllData] = useState({});
 
@@ -114,6 +118,7 @@ export const Reports = () => {
 
     // Call the function when the component mounts or when the location changes
     getQueryParams();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
 
   const toggleSearch = () => {
@@ -132,7 +137,7 @@ export const Reports = () => {
   const fetchReports = async () => {
     try {
       let response;
-      if (userType === 'province') {
+      if (userType !== 'halqa') {
         const m = maqamReports;
         const h = halqaReports;
         const d = divisionReports;
@@ -187,7 +192,7 @@ export const Reports = () => {
   }, [userType]);
 
   const searchResults = () => {
-    if (userType === 'province') {
+    if (userType !== 'halqa') {
       if (year !== '' && month !== '') {
         const filteredData = { ...allReports };
         filteredData[active] = allReports[active]?.filter((i) => {
@@ -408,11 +413,12 @@ export const Reports = () => {
             )}
           </div>
         </div>
-        {localStorage.getItem('@type') === 'province' && (
-          <div
-            role='tablist'
-            className='w-full flex justify-between items-center'
-          >
+        {/* localStorage.getItem('@type') === 'province' && ( */}
+        <div
+          role='tablist'
+          className='w-full flex justify-between items-center'
+        >
+          {['province'].includes(localStorage.getItem('@type')) && (
             <Link
               to={'?active=province'}
               role='tab'
@@ -423,6 +429,8 @@ export const Reports = () => {
             >
               Province
             </Link>
+          )}
+          {['province', 'division'].includes(localStorage.getItem('@type')) && (
             <Link
               to={'?active=division'}
               role='tab'
@@ -433,7 +441,8 @@ export const Reports = () => {
             >
               Division
             </Link>
-
+          )}
+          {['province', 'maqam'].includes(localStorage.getItem('@type')) && (
             <Link
               to={'?active=maqam'}
               role='tab'
@@ -442,7 +451,9 @@ export const Reports = () => {
             >
               Maqam
             </Link>
+          )}
 
+          {['province', 'maqam', 'division'].includes(localStorage.getItem('@type')) && (
             <Link
               to={'?active=halqa'}
               role='tab'
@@ -451,9 +462,10 @@ export const Reports = () => {
             >
               Halqa
             </Link>
-          </div>
-        )}
-        {active === 'halqa' && (
+          )}
+        </div>
+        {/* )} */}
+        {active === 'halqa' && localStorage.getItem('@type') === 'province' && (
           <div
             role='tablist'
             className='w-full flex justify-between items-center'
@@ -465,7 +477,6 @@ export const Reports = () => {
             >
               Maqam Halqa
             </Link>
-
             <Link
               to={'?active=halqa&tab=division'}
               role='tab'
@@ -476,7 +487,7 @@ export const Reports = () => {
           </div>
         )}
         <div className='relative overflow-y-scroll gap-3 w-full items-center p-5 justify-center h-[calc(100vh-65.6px-64px-48px)]'>
-          {userType === 'province' ? (
+          {userType !== 'halqa' ? (
             filterAllData[active]?.length < 1 ? (
               <NoReports />
             ) : active === 'halqa' &&
@@ -565,7 +576,7 @@ export const Reports = () => {
                         <FaEye />
                       </button>
 
-                      {active === 'province' && (
+                      {active === localStorage.getItem('@type') && (
                         <button
                           className='btn'
                           onClick={() => editReport(obj?._id)}

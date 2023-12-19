@@ -134,7 +134,7 @@ export const Halqa = () => {
               readOnly={view}
             />
           </div>
-          <div className='w-full flex flex-col items-end gap-3 p-2'>
+          {!view && (<div className='w-full flex flex-col items-end gap-3 p-2'>
             <div>
               <label htmlFor='nazim'>نام ناظمِ:</label>
               <input
@@ -145,7 +145,7 @@ export const Halqa = () => {
                 readOnly
               />
             </div>
-          </div>
+          </div>)}
           {!view && (
             <button type='submit' className='btn'>
               {id ? 'UPDATE' : 'Submit'}

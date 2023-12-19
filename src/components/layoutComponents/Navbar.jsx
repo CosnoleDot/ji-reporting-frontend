@@ -4,11 +4,13 @@ import { FaBell, FaUserPlus } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { FaRegUserCircle } from 'react-icons/fa';
 import { UIContext } from '../../context/ui';
+import { MeContext } from '../../context';
 
 export const Navbar = ({ title }) => {
   const navigate = useNavigate();
   const [requests, showRequests] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
+  const me = useContext(MeContext);
   const [profileTab, showProfileTab] = useState(false);
   const { userRequests, notifications, getAllNotifications } =
     useContext(UIContext);
@@ -17,9 +19,7 @@ export const Navbar = ({ title }) => {
     <>
       <div className='navbar bg-blue-500 text-white'>
         <div className='flex-1'>
-          <span className='btn btn-ghost text-xl'>
-            {title || 'JI Reporting'}
-          </span>
+          <span className='text-xl'>{title || 'JI Reporting'}</span>
         </div>
         <div className='flex-none'>
           <div className='relative dropdown dropdown-end'>
@@ -35,7 +35,7 @@ export const Navbar = ({ title }) => {
             >
               <div className='indicator'>
                 <FaBell className='text-xl' />
-                <span className='badge badge-sm indicator-item z-10'>
+                <span className='badge badge-sm absolute -top-2 -right-3 z-0'>
                   {notifications?.length || 0}
                 </span>
               </div>
@@ -55,7 +55,7 @@ export const Navbar = ({ title }) => {
               >
                 <div className='indicator'>
                   <FaUserPlus className='text-xl' />
-                  <span className='badge badge-sm indicator-item z-10'>
+                  <span className='badge badge-sm absolute -top-2 -right-3 z-0'>
                     {userRequests.length}
                   </span>
                 </div>
@@ -80,12 +80,12 @@ export const Navbar = ({ title }) => {
           </div>
           {profileTab && (
             <ul className='text-black fixed right-[10px] top-[60.5px] menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52'>
-              {/* <li>
-              <span className='justify-between'>
-                Profile
-                <span className='badge'>New</span>
-              </span>
-            </li> */}
+              <li className='mb-1'>
+                <span className='bg-slate-200 flex flex-col w-full justify-start items-start gap-0'>
+                  <span className='font-semibold'>{me?.name}</span>
+                  <span className='text-xs'>{me?.email}</span>
+                </span>
+              </li>
               <li onClick={() => navigate('/profile')}>
                 <span>Profile</span>
               </li>

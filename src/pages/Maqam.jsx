@@ -25,6 +25,7 @@ import { RozOShabDiary } from '../components/maqamReport/RozOShabDiary';
 export const getData = async (path, id, setData, data) => {
   const arr = data[path];
   const obj = arr.filter((i) => i?._id?.toString() === id?.toString());
+  console.log(reverseDataFormat(obj[0]))
   // if (req) {
   setData(reverseDataFormat(obj[0]));
   // }F
@@ -280,7 +281,7 @@ export const Maqam = () => {
                 readOnly={view}
               />
             </div>
-            <div className='w-full flex flex-col items-end gap-3 p-2'>
+            {!view && (<div className='w-full flex flex-col items-end gap-3 p-2'>
               <div>
                 <label htmlFor='nazim'>نام ناظمِ:</label>
                 <input
@@ -291,7 +292,7 @@ export const Maqam = () => {
                   readOnly
                 />
               </div>
-            </div>
+            </div>)}
           </div>
           {!view && (
             <div className='w-full'>

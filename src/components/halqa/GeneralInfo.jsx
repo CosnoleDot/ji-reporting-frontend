@@ -6,9 +6,9 @@ export function GeneralInfo({ setMonth, me, area, view }) {
         <input
           className="border-b-2 border-dashed"
           type="text"
-          name="halqa_name"
-          id="halqa_name"
-          defaultValue={me?.userAreaId?.name || ""}
+          name="name"
+          id="name"
+          defaultValue={!view ? me?.userAreaId?.name : ''}
           readOnly
         />
       </div>
