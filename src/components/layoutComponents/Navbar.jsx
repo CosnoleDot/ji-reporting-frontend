@@ -22,7 +22,7 @@ export const Navbar = ({ title }) => {
           <span className='text-xl'>{title || 'JI Reporting'}</span>
         </div>
         <div className='flex-none'>
-          <div className='relative dropdown dropdown-end'>
+          {localStorage.getItem('@type') !== 'province' && (<div className='relative dropdown dropdown-end'>
             <div
               tabIndex={0}
               role='button'
@@ -40,7 +40,7 @@ export const Navbar = ({ title }) => {
                 </span>
               </div>
             </div>
-          </div>
+          </div>)}
           {localStorage.getItem('@type') !== 'halqa' && (
             <div className='relative dropdown dropdown-end'>
               <div
