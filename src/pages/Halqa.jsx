@@ -33,6 +33,7 @@ export const Halqa = () => {
   const [view, setView] = useState(false);
   const [data, setData] = useState({});
   const { setLoading } = useContext(UIContext);
+  const [month, setMonth] = useState('');
   const location = useLocation();
   const { getHalqaReports } = useContext(UIContext);
   const params = useParams();
@@ -117,7 +118,12 @@ export const Halqa = () => {
           onSubmit={handleReportSubmit}
           dir='rtl'
         >
-          <GeneralInfo me={me} area={'حلقہ'} />
+          <GeneralInfo
+            setMonth={setMonth}
+            month={month}
+            me={me}
+            area={'حلقہ'}
+          />
           <IfradiKuwat view={view} />
           <Activity view={view} />
           <OtherActivities view={view} />
@@ -134,18 +140,20 @@ export const Halqa = () => {
               readOnly={view}
             />
           </div>
-          {!view && (<div className='w-full flex flex-col items-end gap-3 p-2'>
-            <div>
-              <label htmlFor='nazim'>نام ناظمِ:</label>
-              <input
-                type='text'
-                className='border-b-2 border-dashed text-center'
-                id='nazim'
-                defaultValue={me?.name || ''}
-                readOnly
-              />
+          {!view && (
+            <div className='w-full flex flex-col items-end gap-3 p-2'>
+              <div>
+                <label htmlFor='nazim'>نام ناظمِ:</label>
+                <input
+                  type='text'
+                  className='border-b-2 border-dashed text-center'
+                  id='nazim'
+                  defaultValue={me?.name || ''}
+                  readOnly
+                />
+              </div>
             </div>
-          </div>)}
+          )}
           {!view && (
             <button type='submit' className='btn'>
               {id ? 'UPDATE' : 'Submit'}

@@ -395,7 +395,7 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
-    if (reports.length > 0) getAllNotifications();
+    if (reports?.length > 0) getAllNotifications();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reports]);
 

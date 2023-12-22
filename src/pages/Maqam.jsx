@@ -47,6 +47,58 @@ export const Maqam = () => {
   const navigate = useNavigate();
   const autoFill = () => {
     const halq = {};
+    document.getElementById('maqam-form').reset();
+    if (halqa.filter((i) => i?.month.includes(month)).length < 1) {
+      [
+        'rafaqa-start',
+        'karkunan-start',
+        'rafaqa-increase',
+        'karkunan-increase',
+        'rafaqa-decrease',
+        'karkunan-decrease',
+        'rafaqa-end',
+        'karkunan-end',
+        'rafaqa-annual',
+        'karkunan-annual',
+        'ijtRafaqa-decided',
+        'ijtRafaqa-done',
+        'ijtRafaqa-averageAttendance',
+        'studyCircleMentioned-decided',
+        'studyCircleMentioned-done',
+        'studyCircleMentioned-averageAttendance',
+        'ijtKarkunan-decided',
+        'ijtKarkunan-done',
+        'ijtKarkunan-averageAttendance',
+        'darseQuran-decided',
+        'darseQuran-done',
+        'darseQuran-averageAttendance',
+        'dawatiWafud',
+        'rawabitParties',
+        'shabBedari',
+        'nizamSalah',
+        'rawabitDecided',
+        'current',
+        'meetings',
+        'literatureDistribution',
+        'commonStudentMeetings',
+        'commonLiteratureDistribution',
+        'totalLibraries',
+        'totalBooks',
+        'meetings',
+        'literatureDistribution',
+        'commonStudentMeetings',
+        'commonLiteratureDistribution',
+        'totalLibraries',
+        'totalBooks',
+        'totalIncrease',
+        'totalDecrease',
+        'totalBookRent',
+        'rafaqaFilled',
+      ].forEach((i) => {
+        document.getElementById(i).value = 0;
+      });
+      document.getElementById('name').value = me?.userAreaId?.name;
+    }
     halqa
       .filter((i) => i?.month.includes(month))
       .forEach((i) => {
@@ -121,6 +173,7 @@ export const Maqam = () => {
       document.getElementById(`${i}-end`).value = null;
       document.getElementById(`${i}-increase`).value = null;
       document.getElementById(`${i}-decrease`).value = null;
+      document.getElementById(`${i}-annual`).value = null;
     });
     // document.getElementById('totalLibraries').value = halqa.filter((i) =>
     //   i?.month.includes(month)
@@ -249,6 +302,7 @@ export const Maqam = () => {
             <div>
               <GeneralInfo
                 setMonth={setMonth}
+                month={month}
                 me={me}
                 area={'مقام'}
                 view={view}
@@ -279,7 +333,7 @@ export const Maqam = () => {
               <PaighamDigest view={view} />
             </div>
             <div className='mb-4'>
-              <RozOShabDiary view={view}/>
+              <RozOShabDiary view={view} />
             </div>
             <div className='w-full flex p-2'>
               <label htmlFor='comments'>تبصرہ</label>

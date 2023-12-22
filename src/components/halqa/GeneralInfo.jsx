@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 
-export function GeneralInfo({ setMonth, me, area, view }) {
+export function GeneralInfo({ setMonth, me, area, view, month }) {
   useEffect(() => {
     if (me && !view) {
       if (document.getElementById('name')) {
         document.getElementById('name').value = me?.userAreaId?.name;
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [me]);
   return (
     <div className='grid w-full grid-cols-1 lg:grid-cols-2'>
@@ -28,8 +28,8 @@ export function GeneralInfo({ setMonth, me, area, view }) {
           type='month'
           name='month'
           id='month'
-          defaultValue='2023-12'
-          onChange={(e) => (setMonth ? setMonth(e.target.value) : null)}
+          value={month}
+          onChange={(e) => setMonth(e.target.value)}
           disabled={view}
         />
       </div>

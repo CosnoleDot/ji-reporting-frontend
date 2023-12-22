@@ -49,9 +49,160 @@ export const Province = () => {
   const navigate = useNavigate();
   const autoFill = () => {
     const halq = {};
-    // document.getElementById('totalLibraries').value =
-    //   maqam.filter((i) => i?.month.includes(month)).length +
-    //   division.filter((i) => i?.month.includes(month)).length;
+    document.getElementById('province-form').reset();
+    if (
+      maqam.filter((i) => i?.month.includes(month)) < 1 &&
+      division.filter((i) => i?.month.includes(month)) < 1
+    ) {
+      [
+        'rafaqa-start',
+        'karkunan-start',
+        'rafaqa-increase',
+        'karkunan-increase',
+        'rafaqa-decrease',
+        'karkunan-decrease',
+        'rafaqa-end',
+        'karkunan-end',
+        'rafaqa-annual',
+        'karkunan-annual',
+        'ijtRafaqa-decided',
+        'ijtRafaqa-done',
+        'ijtRafaqa-averageAttendance',
+        'studyCircleMentioned-decided',
+        'studyCircleMentioned-done',
+        'studyCircleMentioned-averageAttendance',
+        'ijtKarkunan-decided',
+        'ijtKarkunan-done',
+        'ijtKarkunan-averageAttendance',
+        'darseQuran-decided',
+        'darseQuran-done',
+        'darseQuran-averageAttendance',
+        'dawatiWafud',
+        'rawabitParties',
+        'shabBedari',
+        'nizamSalah',
+        'rawabitDecided',
+        'current',
+        'meetings',
+        'literatureDistribution',
+        'commonStudentMeetings',
+        'commonLiteratureDistribution',
+        'totalLibraries',
+        'totalBooks',
+        'meetings',
+        'literatureDistribution',
+        'commonStudentMeetings',
+        'commonLiteratureDistribution',
+        'totalLibraries',
+        'totalBooks',
+        'totalIncrease',
+        'totalDecrease',
+        'totalBookRent',
+        'rafaqaFilled',
+        'tanzeemiRound',
+        'tarbiyatGaah',
+        'shaheenMeeting-decided',
+        'shaheenMeeting-done',
+        'shaheenMeeting-averageAttendance',
+        'paighamEvent-decided',
+        'paighamEvent-done',
+        'paighamEvent-averageAttendance',
+        'ijtArkan-decided',
+        'ijtArkan-done',
+        'ijtArkan-averageAttendance',
+        'studyCircle-decided',
+        'studyCircle-done',
+        'studyCircle-averageAttendance',
+        'ijtNazmeen-decided',
+        'ijtNazmeen-done',
+        'ijtNazmeen-averageAttendance',
+        'ijtUmeedwaran-decided',
+        'ijtUmeedwaran-done',
+        'ijtUmeedwaran-averageAttendance',
+        'sadurMeeting-decided',
+        'sadurMeeting-done',
+        'sadurMeeting-averageAttendance',
+        'arkan-start',
+        'arkan-increase',
+        'arkan-decrease',
+        'arkan-end',
+        'arkan-annual',
+        'umeedWaran-start',
+        'umeedWaran-increase',
+        'umeedWaran-decrease',
+        'umeedWaran-end',
+        'umeedWaran-annual',
+        'shaheen-start',
+        'shaheen-increase',
+        'shaheen-decrease',
+        'shaheen-end',
+        'shaheen-annual',
+        'members-start',
+        'members-increase',
+        'members-decrease',
+        'members-end',
+        'members-annual',
+        'rehaishHalqay-start',
+        'rehaishHalqay-increase',
+        'rehaishHalqay-decrease',
+        'rehaishHalqay-end',
+        'rehaishHalqay-continue',
+        'rehaishHalqay-paused',
+        'taleemHalqay-start',
+        'taleemHalqay-increase',
+        'taleemHalqay-decrease',
+        'taleemHalqay-end',
+        'taleemHalqay-continue',
+        'taleemHalqay-paused',
+        'totalHalqay-start',
+        'totalHalqay-increase',
+        'totalHalqay-decrease',
+        'totalHalqay-end',
+        'totalHalqay-continue',
+        'totalHalqay-paused',
+        'subRehaishHalqay-start',
+        'subRehaishHalqay-increase',
+        'subRehaishHalqay-decrease',
+        'subRehaishHalqay-end',
+        'subRehaishHalqay-continue',
+        'subRehaishHalqay-paused',
+        'subTaleemHalqay-start',
+        'subTaleemHalqay-increase',
+        'subTaleemHalqay-decrease',
+        'subTaleemHalqay-end',
+        'subTaleemHalqay-continue',
+        'subTaleemHalqay-paused',
+        'subTotalHalqay-start',
+        'subTotalHalqay-increase',
+        'subTotalHalqay-decrease',
+        'subTotalHalqay-end',
+        'subTotalHalqay-continue',
+        'subTotalHalqay-paused',
+        'busmSchoolUnits-start',
+        'busmSchoolUnits-increase',
+        'busmSchoolUnits-decrease',
+        'busmSchoolUnits-end',
+        'busmSchoolUnits-continue',
+        'busmSchoolUnits-paused',
+        'busmRehaishUnits-start',
+        'busmRehaishUnits-increase',
+        'busmRehaishUnits-decrease',
+        'busmRehaishUnits-end',
+        'busmRehaishUnits-continue',
+        'busmRehaishUnits-paused',
+        'busmTotalUnits-start',
+        'busmTotalUnits-increase',
+        'busmTotalUnits-decrease',
+        'busmTotalUnits-end',
+        'busmTotalUnits-continue',
+        'busmTotalUnits-paused',
+        'arkanFilled',
+        'umeedwaranFilled',
+      ].forEach((i) => {
+        document.getElementById(i).value = 0;
+      });
+      document.getElementById('name').value = me?.userAreaId?.name;
+    }
     maqam
       .filter((i) => i?.month.includes(month))
       .forEach((i) => {
@@ -214,13 +365,14 @@ export const Province = () => {
           className='flex flex-col justify-center items-center p-4 font-notoUrdu'
           dir='rtl'
           onSubmit={handleSubmit}
-          id='maqam-form'
+          id='province-form'
         >
           <h2 className='text-2xl'>جا ئزءکارکردگی رپورٹ (براے صوبہ)</h2>
           <div className='w-full p-4'>
             <div>
               <GeneralInfo
                 setMonth={setMonth}
+                month={month}
                 me={me}
                 area={'صوبہ'}
                 view={view}

@@ -79,7 +79,7 @@ export const IfradiKuwat = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type='number'
                 required
                 name={`arkan-annual`}
@@ -135,7 +135,7 @@ export const IfradiKuwat = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type='number'
                 required
                 name={`umeedWaran-annual`}

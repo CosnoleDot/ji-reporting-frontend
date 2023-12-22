@@ -41,9 +41,58 @@ export const Division = () => {
   const navigate = useNavigate();
   const autoFill = () => {
     const halq = {};
-    // document.getElementById('totalLibraries').value = halqa.filter((i) =>
-    //   i?.month.includes(month)
-    // ).length;
+    document.getElementById('division-form').reset();
+    if (halqa.filter((i) => i?.month.includes(month)).length < 1) {
+      [
+        'rafaqa-start',
+        'karkunan-start',
+        'rafaqa-increase',
+        'karkunan-increase',
+        'rafaqa-decrease',
+        'karkunan-decrease',
+        'rafaqa-end',
+        'karkunan-end',
+        'rafaqa-annual',
+        'karkunan-annual',
+        'ijtRafaqa-decided',
+        'ijtRafaqa-done',
+        'ijtRafaqa-averageAttendance',
+        'studyCircleMentioned-decided',
+        'studyCircleMentioned-done',
+        'studyCircleMentioned-averageAttendance',
+        'ijtKarkunan-decided',
+        'ijtKarkunan-done',
+        'ijtKarkunan-averageAttendance',
+        'darseQuran-decided',
+        'darseQuran-done',
+        'darseQuran-averageAttendance',
+        'dawatiWafud',
+        'rawabitParties',
+        'shabBedari',
+        'nizamSalah',
+        'rawabitDecided',
+        'current',
+        'meetings',
+        'literatureDistribution',
+        'commonStudentMeetings',
+        'commonLiteratureDistribution',
+        'totalLibraries',
+        'totalBooks',
+        'meetings',
+        'literatureDistribution',
+        'commonStudentMeetings',
+        'commonLiteratureDistribution',
+        'totalLibraries',
+        'totalBooks',
+        'totalIncrease',
+        'totalDecrease',
+        'totalBookRent',
+        'rafaqaFilled',
+      ].forEach((i) => {
+        document.getElementById(i).value = 0;
+      });
+      document.getElementById('name').value = me?.userAreaId?.name;
+    }
     halqa
       .filter((i) => i?.month.includes(month))
       .forEach((i) => {
@@ -152,6 +201,7 @@ export const Division = () => {
       document.getElementById(`${i}-end`).value = null;
       document.getElementById(`${i}-increase`).value = null;
       document.getElementById(`${i}-decrease`).value = null;
+      document.getElementById(`${i}-annual`).value = null;
     });
   };
 
@@ -254,12 +304,18 @@ export const Division = () => {
           className='flex w-full flex-col justify-center items-center p-4 font-notoUrdu'
           dir='rtl'
           onSubmit={handleSubmit}
+          id='division-form'
         >
           {/* <fieldset disabled={view} className="w-full"> */}
           <h2 className='text-2xl mb-4'>جا ئزءکارکردگی رپورٹ (براے ڈویژن)</h2>
           <div className='w-full'>
             <div className='mb-4'>
-              <GeneralInfo me={me} setMonth={setMonth} area={'ڈویژن'} />
+              <GeneralInfo
+                month={month}
+                me={me}
+                setMonth={setMonth}
+                area={'ڈویژن'}
+              />
             </div>
             <div className='mb-4'>
               {/* <TanzeemDivision view={view} /> */}
