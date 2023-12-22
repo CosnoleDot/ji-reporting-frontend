@@ -44,7 +44,7 @@ export const ExpandPartyMaqam = ({ view }) => {
           ))}
         </div>
         <div className="w-full">
-          <h3 className="text-xl mb-3">عام طلبء</h3>
+          <h3 className="text-xl mb-3">عام طلبہ</h3>
         </div>
         <div className=" w-full lg:flex md:flex-row sm:flex-col mb-4 gap-2">
           <div className="w-full md:pr-0 mb-2">

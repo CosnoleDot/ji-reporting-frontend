@@ -41,9 +41,9 @@ export const Division = () => {
   const navigate = useNavigate();
   const autoFill = () => {
     const halq = {};
-    document.getElementById('totalLibraries').value = halqa.filter((i) =>
-      i?.month.includes(month)
-    ).length;
+    // document.getElementById('totalLibraries').value = halqa.filter((i) =>
+    //   i?.month.includes(month)
+    // ).length;
     halqa
       .filter((i) => i?.month.includes(month))
       .forEach((i) => {
@@ -100,31 +100,15 @@ export const Division = () => {
               `${j.split('-')[0]}-averageAttendance`
             ).value = halq[i];
           } else {
-            elem.value = halq[i];
+            if (i === 'name' && !view) {
+              elem.value = me?.userAreaId?.name;
+            } else {
+              elem.value = halq[i];
+            }
           }
         }
       }
     });
-    document.getElementById('studyCircle-averageAttendance').value = null;
-    document.getElementById('studyCircle-done').value = null;
-  };
-
-  useEffect(() => {
-    const l = location.pathname?.split('/')[2];
-    if (l === 'view') {
-      setView(true);
-    }
-    setId(params?.id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params]);
-  useEffect(() => {
-    if (id) getData('division', id, setData, { halqa, maqam, division });
-    else {
-      setLoading(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
-  useEffect(() => {
     Object.keys(data).forEach((i) => {
       const elem = document.getElementById(i);
       if (elem) {
@@ -159,7 +143,33 @@ export const Division = () => {
     afd.forEach((i) => {
       calcultate(i);
     });
-  }, [data]);
+    document.getElementById('studyCircle-averageAttendance').value = null;
+    document.getElementById('studyCircle-done').value = null;
+    document.getElementById('umeedwaranFilled').value = null;
+    document.getElementById('arkanFilled').value = null;
+    ['arkan', 'umeedWaran'].forEach((i) => {
+      document.getElementById(`${i}-start`).value = null;
+      document.getElementById(`${i}-end`).value = null;
+      document.getElementById(`${i}-increase`).value = null;
+      document.getElementById(`${i}-decrease`).value = null;
+    });
+  };
+
+  useEffect(() => {
+    const l = location.pathname?.split('/')[2];
+    if (l === 'view') {
+      setView(true);
+    }
+    setId(params?.id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params]);
+  useEffect(() => {
+    if (id) getData('division', id, setData, { halqa, maqam, division });
+    else {
+      setLoading(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
   useEffect(() => {
     if (!id) autoFill();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -201,6 +211,42 @@ export const Division = () => {
     }
     setLoading(false);
   };
+  useEffect(() => {
+    Object.keys(data).forEach((i) => {
+      const elem = document.getElementById(i);
+      if (elem) {
+        if (i === 'month') {
+          elem.value = data[i]?.split('')?.slice(0, 7)?.join('');
+        } else {
+          if (elem.type === 'checkbox') {
+            elem.checked = data[i];
+          } else {
+            elem.value = data[i];
+          }
+        }
+      }
+    });
+    const afd = [
+      'rehaishHalqay',
+      'taleemHalqay',
+      'totalHalqay',
+      'subRehaishHalqay',
+      'subTaleemHalqay',
+      'subTotalHalqay',
+      'busmSchoolUnits',
+      'busmRehaishUnits',
+      'busmTotalUnits',
+      'arkan',
+      'umeedWaran',
+      'rafaqa',
+      'karkunan',
+      'members',
+      'shaheen',
+    ];
+    afd.forEach((i) => {
+      calcultate(i);
+    });
+  }, [data]);
   return (
     <GeneralLayout>
       <div className='reports h-[calc(100vh-64.4px-64px)] overflow-hidden overflow-y-scroll w-full'>
@@ -249,7 +295,7 @@ export const Division = () => {
             </div>
             <div className=' mb-4'>
               {/* <EveningDiaryDivision view={view} /> */}
-              <RozOShabDiary />
+              <RozOShabDiary view={view} />
             </div>
           </div>
           <div className='w-full flex p-2'>
@@ -263,18 +309,20 @@ export const Division = () => {
               readOnly={view}
             />
           </div>
-          {!view && (<div className='w-full flex flex-col items-end gap-3 p-2'>
-            <div>
-              <label htmlFor='nazim'>نام ناظمِ:</label>
-              <input
-                type='text'
-                className='border-b-2 border-dashed text-center'
-                id='nazim'
-                defaultValue={me?.name || ''}
-                readOnly
-              />
+          {!view && (
+            <div className='w-full flex flex-col items-end gap-3 p-2'>
+              <div>
+                <label htmlFor='nazim'>نام ناظمِ:</label>
+                <input
+                  type='text'
+                  className='border-b-2 border-dashed text-center'
+                  id='nazim'
+                  defaultValue={me?.name || ''}
+                  readOnly
+                />
+              </div>
             </div>
-          </div>)}
+          )}
           {!view && (
             <div className='w-full'>
               <button

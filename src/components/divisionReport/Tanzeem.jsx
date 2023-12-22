@@ -1,4 +1,4 @@
-import { Box } from '../halqa';
+import { Box } from './IfradiKuwat';
 
 export const Tanzeem = ({ view }) => {
   const calcultate = (v) => {
@@ -9,6 +9,42 @@ export const Tanzeem = ({ view }) => {
     document.getElementById(`${v}-end`).value =
       parseInt(s.value) + parseInt(i.value) - parseInt(d.value);
     return parseInt(s.value) + parseInt(i.value) - parseInt(d.value);
+  };
+
+  const calculateTotal = () => {
+    const prefixes = [
+      { 0: { 0: 'rehaishHalqay', 1: 'taleemHalqay' }, 1: 'totalHalqay' },
+      {
+        0: { 0: 'subRehaishHalqay', 1: 'subTaleemHalqay' },
+        1: 'subTotalHalqay',
+      },
+      {
+        0: { 0: 'busmSchoolUnits', 1: 'busmRehaishUnits' },
+        1: 'busmTotalUnits',
+      },
+    ];
+    const postfixes = [
+      'start',
+      'increase',
+      'decrease',
+      'end',
+      'continue',
+      'paused',
+    ];
+    postfixes.forEach((i) => {
+      prefixes.forEach((j) => {
+        // Object.values(j[0]).forEach((k) => {
+        const a = document.getElementById(`${j[0][0]}-${i}`).value;
+        const b = document.getElementById(`${j[0][1]}-${i}`).value;
+        document.getElementById(`${j[1]}-${i}`).value =
+          parseInt(a) + parseInt(b);
+        // });
+      });
+    });
+    document.getElementById('totalLibraries').value =
+      parseInt(document.getElementById('totalHalqay-start').value) +
+      parseInt(document.getElementById('totalHalqay-increase').value) -
+      parseInt(document.getElementById('totalHalqay-decrease').value);
   };
 
   return (
@@ -35,7 +71,10 @@ export const Tanzeem = ({ view }) => {
                 required
                 name={`rehaishHalqay-start`}
                 id={`rehaishHalqay-start`}
-                onChange={() => calcultate('rehaishHalqay')}
+                onChange={() => {
+                  calcultate('rehaishHalqay');
+                  calculateTotal();
+                }}
                 className='p-1 text-center min-w-full'
               />
             </Box>
@@ -46,7 +85,10 @@ export const Tanzeem = ({ view }) => {
                 required
                 name={`rehaishHalqay-increase`}
                 id={`rehaishHalqay-increase`}
-                onChange={() => calcultate('rehaishHalqay')}
+                onChange={() => {
+                  calcultate('rehaishHalqay');
+                  calculateTotal();
+                }}
                 className='p-1 text-center min-w-full'
               />
             </Box>
@@ -57,7 +99,10 @@ export const Tanzeem = ({ view }) => {
                 required
                 name={`rehaishHalqay-decrease`}
                 id={`rehaishHalqay-decrease`}
-                onChange={() => calcultate('rehaishHalqay')}
+                onChange={() => {
+                  calcultate('rehaishHalqay');
+                  calculateTotal();
+                }}
                 className='p-1 text-center min-w-full'
               />
             </Box>
@@ -67,6 +112,7 @@ export const Tanzeem = ({ view }) => {
                 type='number'
                 required
                 name={`rehaishHalqay-end`}
+                onChange={calculateTotal}
                 id={`rehaishHalqay-end`}
                 className='p-1 text-center min-w-full'
               />
@@ -76,6 +122,7 @@ export const Tanzeem = ({ view }) => {
                 readOnly={view}
                 type='number'
                 required
+                onChange={calculateTotal}
                 name={`rehaishHalqay-continue`}
                 id={`rehaishHalqay-continue`}
                 className='p-1 text-center min-w-full'
@@ -86,6 +133,7 @@ export const Tanzeem = ({ view }) => {
                 readOnly={view}
                 type='number'
                 required
+                onChange={calculateTotal}
                 name={`rehaishHalqay-paused`}
                 id={`rehaishHalqay-paused`}
                 className='p-1 text-center min-w-full'
@@ -101,7 +149,10 @@ export const Tanzeem = ({ view }) => {
                 required
                 name={`taleemHalqay-start`}
                 id={`taleemHalqay-start`}
-                onChange={() => calcultate('taleemHalqay')}
+                onChange={() => {
+                  calcultate('taleemHalqay');
+                  calculateTotal();
+                }}
                 className='p-1 text-center min-w-full'
               />
             </Box>
@@ -112,7 +163,10 @@ export const Tanzeem = ({ view }) => {
                 required
                 name={`taleemHalqay-increase`}
                 id={`taleemHalqay-increase`}
-                onChange={() => calcultate('taleemHalqay')}
+                onChange={() => {
+                  calcultate('taleemHalqay');
+                  calculateTotal();
+                }}
                 className='p-1 text-center min-w-full'
               />
             </Box>
@@ -123,7 +177,10 @@ export const Tanzeem = ({ view }) => {
                 required
                 name={`taleemHalqay-decrease`}
                 id={`taleemHalqay-decrease`}
-                onChange={() => calcultate('taleemHalqay')}
+                onChange={() => {
+                  calcultate('taleemHalqay');
+                  calculateTotal();
+                }}
                 className='p-1 text-center min-w-full'
               />
             </Box>
@@ -133,6 +190,7 @@ export const Tanzeem = ({ view }) => {
                 type='number'
                 required
                 name={`taleemHalqay-end`}
+                onChange={calculateTotal}
                 id={`taleemHalqay-end`}
                 className='p-1 text-center min-w-full'
               />
@@ -144,6 +202,7 @@ export const Tanzeem = ({ view }) => {
                 required
                 name={`taleemHalqay-continue`}
                 id={`taleemHalqay-continue`}
+                onChange={calculateTotal}
                 className='p-1 text-center min-w-full'
               />
             </Box>
@@ -154,6 +213,7 @@ export const Tanzeem = ({ view }) => {
                 required
                 name={`taleemHalqay-paused`}
                 id={`taleemHalqay-paused`}
+                onChange={calculateTotal}
                 className='p-1 text-center min-w-full'
               />
             </Box>
@@ -162,34 +222,43 @@ export const Tanzeem = ({ view }) => {
             <Box>کل حلقے</Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type='number'
                 required
                 name={`totalHalqay-start`}
                 id={`totalHalqay-start`}
-                onChange={() => calcultate('totalHalqay')}
+                onChange={() => {
+                  calcultate('totalHalqay');
+                  calculateTotal();
+                }}
                 className='p-1 text-center min-w-full'
               />
             </Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type='number'
                 required
                 name={`totalHalqay-increase`}
                 id={`totalHalqay-increase`}
-                onChange={() => calcultate('totalHalqay')}
+                onChange={() => {
+                  calcultate('totalHalqay');
+                  calculateTotal();
+                }}
                 className='p-1 text-center min-w-full'
               />
             </Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type='number'
                 required
                 name={`totalHalqay-decrease`}
                 id={`totalHalqay-decrease`}
-                onChange={() => calcultate('totalHalqay')}
+                onChange={() => {
+                  calcultate('totalHalqay');
+                  calculateTotal();
+                }}
                 className='p-1 text-center min-w-full'
               />
             </Box>
@@ -199,33 +268,38 @@ export const Tanzeem = ({ view }) => {
                 type='number'
                 required
                 name={`totalHalqay-end`}
+                onChange={(e) => {
+                  calculateTotal();
+                }}
                 id={`totalHalqay-end`}
                 className='p-1 text-center min-w-full'
               />
             </Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type='number'
                 required
                 name={`totalHalqay-continue`}
                 id={`totalHalqay-continue`}
+                onChange={calculateTotal}
                 className='p-1 text-center min-w-full'
               />
             </Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type='number'
                 required
                 name={`totalHalqay-paused`}
                 id={`totalHalqay-paused`}
+                onChange={calculateTotal}
                 className='p-1 text-center min-w-full'
               />
             </Box>
           </tr>
           <tr>
-            <Box>رہاشی زیلی حلقے</Box>
+            <Box>رہاشی ذیلی حلقے</Box>
             <Box>
               <input
                 readOnly={view}
@@ -233,7 +307,10 @@ export const Tanzeem = ({ view }) => {
                 required
                 name={`subRehaishHalqay-start`}
                 id={`subRehaishHalqay-start`}
-                onChange={() => calcultate('subRehaishHalqay')}
+                onChange={() => {
+                  calcultate('subRehaishHalqay');
+                  calculateTotal();
+                }}
                 className='p-1 text-center min-w-full'
               />
             </Box>
@@ -244,7 +321,10 @@ export const Tanzeem = ({ view }) => {
                 required
                 name={`subRehaishHalqay-increase`}
                 id={`subRehaishHalqay-increase`}
-                onChange={() => calcultate('subRehaishHalqay')}
+                onChange={() => {
+                  calcultate('subRehaishHalqay');
+                  calculateTotal();
+                }}
                 className='p-1 text-center min-w-full'
               />
             </Box>
@@ -255,7 +335,10 @@ export const Tanzeem = ({ view }) => {
                 required
                 name={`subRehaishHalqay-decrease`}
                 id={`subRehaishHalqay-decrease`}
-                onChange={() => calcultate('subRehaishHalqay')}
+                onChange={() => {
+                  calcultate('subRehaishHalqay');
+                  calculateTotal();
+                }}
                 className='p-1 text-center min-w-full'
               />
             </Box>
@@ -265,6 +348,7 @@ export const Tanzeem = ({ view }) => {
                 type='number'
                 required
                 name={`subRehaishHalqay-end`}
+                onChange={calculateTotal}
                 id={`subRehaishHalqay-end`}
                 className='p-1 text-center min-w-full'
               />
@@ -274,6 +358,7 @@ export const Tanzeem = ({ view }) => {
                 readOnly={view}
                 type='number'
                 required
+                onChange={calculateTotal}
                 name={`subRehaishHalqay-continue`}
                 id={`subRehaishHalqay-continue`}
                 className='p-1 text-center min-w-full'
@@ -284,6 +369,7 @@ export const Tanzeem = ({ view }) => {
                 readOnly={view}
                 type='number'
                 required
+                onChange={calculateTotal}
                 name={`subRehaishHalqay-paused`}
                 id={`subRehaishHalqay-paused`}
                 className='p-1 text-center min-w-full'
@@ -299,7 +385,10 @@ export const Tanzeem = ({ view }) => {
                 required
                 name={`subTaleemHalqay-start`}
                 id={`subTaleemHalqay-start`}
-                onChange={() => calcultate('subTaleemHalqay')}
+                onChange={() => {
+                  calcultate('subTaleemHalqay');
+                  calculateTotal();
+                }}
                 className='p-1 text-center min-w-full'
               />
             </Box>
@@ -310,7 +399,10 @@ export const Tanzeem = ({ view }) => {
                 required
                 name={`subTaleemHalqay-increase`}
                 id={`subTaleemHalqay-increase`}
-                onChange={() => calcultate('subTaleemHalqay')}
+                onChange={() => {
+                  calcultate('subTaleemHalqay');
+                  calculateTotal();
+                }}
                 className='p-1 text-center min-w-full'
               />
             </Box>
@@ -321,7 +413,10 @@ export const Tanzeem = ({ view }) => {
                 required
                 name={`subTaleemHalqay-decrease`}
                 id={`subTaleemHalqay-decrease`}
-                onChange={() => calcultate('subTaleemHalqay')}
+                onChange={() => {
+                  calcultate('subTaleemHalqay');
+                  calculateTotal();
+                }}
                 className='p-1 text-center min-w-full'
               />
             </Box>
@@ -332,6 +427,7 @@ export const Tanzeem = ({ view }) => {
                 required
                 name={`subTaleemHalqay-end`}
                 id={`subTaleemHalqay-end`}
+                onChange={calculateTotal}
                 className='p-1 text-center min-w-full'
               />
             </Box>
@@ -342,6 +438,7 @@ export const Tanzeem = ({ view }) => {
                 required
                 name={`subTaleemHalqay-continue`}
                 id={`subTaleemHalqay-continue`}
+                onChange={calculateTotal}
                 className='p-1 text-center min-w-full'
               />
             </Box>
@@ -352,6 +449,7 @@ export const Tanzeem = ({ view }) => {
                 required
                 name={`subTaleemHalqay-paused`}
                 id={`subTaleemHalqay-paused`}
+                onChange={calculateTotal}
                 className='p-1 text-center min-w-full'
               />
             </Box>
@@ -360,34 +458,15 @@ export const Tanzeem = ({ view }) => {
             <Box>کل ذیلی حلقے</Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type='number'
                 required
                 name={`subTotalHalqay-start`}
                 id={`subTotalHalqay-start`}
-                onChange={() => calcultate('subTotalHalqay')}
-                className='p-1 text-center min-w-full'
-              />
-            </Box>
-            <Box>
-              <input
-                readOnly={view}
-                type='number'
-                required
-                name={`subTotalHalqay-increase`}
-                id={`subTotalHalqay-increase`}
-                onChange={() => calcultate('subTotalHalqay')}
-                className='p-1 text-center min-w-full'
-              />
-            </Box>
-            <Box>
-              <input
-                readOnly={view}
-                type='number'
-                required
-                name={`subTotalHalqay-decrease`}
-                id={`subTotalHalqay-decrease`}
-                onChange={() => calcultate('subTotalHalqay')}
+                onChange={() => {
+                  calcultate('subTotalHalqay');
+                  calculateTotal();
+                }}
                 className='p-1 text-center min-w-full'
               />
             </Box>
@@ -396,6 +475,35 @@ export const Tanzeem = ({ view }) => {
                 readOnly={true}
                 type='number'
                 required
+                name={`subTotalHalqay-increase`}
+                id={`subTotalHalqay-increase`}
+                onChange={() => {
+                  calcultate('subTotalHalqay');
+                  calculateTotal();
+                }}
+                className='p-1 text-center min-w-full'
+              />
+            </Box>
+            <Box>
+              <input
+                readOnly={true}
+                type='number'
+                required
+                name={`subTotalHalqay-decrease`}
+                id={`subTotalHalqay-decrease`}
+                onChange={() => {
+                  calcultate('subTotalHalqay');
+                  calculateTotal();
+                }}
+                className='p-1 text-center min-w-full'
+              />
+            </Box>
+            <Box>
+              <input
+                readOnly={true}
+                type='number'
+                onChange={calculateTotal}
+                required
                 name={`subTotalHalqay-end`}
                 id={`subTotalHalqay-end`}
                 className='p-1 text-center min-w-full'
@@ -403,7 +511,8 @@ export const Tanzeem = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
+                onChange={calculateTotal}
                 type='number'
                 required
                 name={`subTotalHalqay-continue`}
@@ -413,7 +522,8 @@ export const Tanzeem = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
+                onChange={calculateTotal}
                 type='number'
                 required
                 name={`subTotalHalqay-paused`}
@@ -431,7 +541,10 @@ export const Tanzeem = ({ view }) => {
                 required
                 name={`busmSchoolUnits-start`}
                 id={`busmSchoolUnits-start`}
-                onChange={() => calcultate('busmSchoolUnits')}
+                onChange={() => {
+                  calcultate('busmSchoolUnits');
+                  calculateTotal();
+                }}
                 className='p-1 text-center min-w-full'
               />
             </Box>
@@ -442,7 +555,10 @@ export const Tanzeem = ({ view }) => {
                 required
                 name={`busmSchoolUnits-increase`}
                 id={`busmSchoolUnits-increase`}
-                onChange={() => calcultate('busmSchoolUnits')}
+                onChange={() => {
+                  calcultate('busmSchoolUnits');
+                  calculateTotal();
+                }}
                 className='p-1 text-center min-w-full'
               />
             </Box>
@@ -453,7 +569,10 @@ export const Tanzeem = ({ view }) => {
                 required
                 name={`busmSchoolUnits-decrease`}
                 id={`busmSchoolUnits-decrease`}
-                onChange={() => calcultate('busmSchoolUnits')}
+                onChange={() => {
+                  calcultate('busmSchoolUnits');
+                  calculateTotal();
+                }}
                 className='p-1 text-center min-w-full'
               />
             </Box>
@@ -462,6 +581,7 @@ export const Tanzeem = ({ view }) => {
                 readOnly={true}
                 type='number'
                 required
+                onChange={calculateTotal}
                 name={`busmSchoolUnits-end`}
                 id={`busmSchoolUnits-end`}
                 className='p-1 text-center min-w-full'
@@ -472,6 +592,7 @@ export const Tanzeem = ({ view }) => {
                 readOnly={view}
                 type='number'
                 required
+                onChange={calculateTotal}
                 name={`busmSchoolUnits-continue`}
                 id={`busmSchoolUnits-continue`}
                 className='p-1 text-center min-w-full'
@@ -481,6 +602,7 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                onChange={calculateTotal}
                 required
                 name={`busmSchoolUnits-paused`}
                 id={`busmSchoolUnits-paused`}
@@ -497,7 +619,10 @@ export const Tanzeem = ({ view }) => {
                 required
                 name={`busmRehaishUnits-start`}
                 id={`busmRehaishUnits-start`}
-                onChange={() => calcultate('busmRehaishUnits')}
+                onChange={() => {
+                  calcultate('busmRehaishUnits');
+                  calculateTotal();
+                }}
                 className='p-1 text-center min-w-full'
               />
             </Box>
@@ -508,7 +633,10 @@ export const Tanzeem = ({ view }) => {
                 required
                 name={`busmRehaishUnits-increase`}
                 id={`busmRehaishUnits-increase`}
-                onChange={() => calcultate('busmRehaishUnits')}
+                onChange={() => {
+                  calcultate('busmRehaishUnits');
+                  calculateTotal();
+                }}
                 className='p-1 text-center min-w-full'
               />
             </Box>
@@ -519,7 +647,10 @@ export const Tanzeem = ({ view }) => {
                 required
                 name={`busmRehaishUnits-decrease`}
                 id={`busmRehaishUnits-decrease`}
-                onChange={() => calcultate('busmRehaishUnits')}
+                onChange={() => {
+                  calcultate('busmRehaishUnits');
+                  calculateTotal();
+                }}
                 className='p-1 text-center min-w-full'
               />
             </Box>
@@ -527,6 +658,7 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={true}
                 type='number'
+                onChange={calculateTotal}
                 required
                 name={`busmRehaishUnits-end`}
                 id={`busmRehaishUnits-end`}
@@ -536,6 +668,7 @@ export const Tanzeem = ({ view }) => {
             <Box>
               <input
                 readOnly={view}
+                onChange={calculateTotal}
                 type='number'
                 required
                 name={`busmRehaishUnits-continue`}
@@ -547,6 +680,7 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                onChange={calculateTotal}
                 required
                 name={`busmRehaishUnits-paused`}
                 id={`busmRehaishUnits-paused`}
@@ -558,33 +692,42 @@ export const Tanzeem = ({ view }) => {
             <Box>بزم کے کل یونٹس</Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type='number'
                 required
                 name={`busmTotalUnits-start`}
                 id={`busmTotalUnits-start`}
-                onChange={() => calcultate('busmTotalUnits')}
+                onChange={() => {
+                  calcultate('busmTotalUnits');
+                  calculateTotal();
+                }}
                 className='p-1 text-center min-w-full'
               />
             </Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type='number'
                 required
                 name={`busmTotalUnits-increase`}
-                onChange={() => calcultate('busmTotalUnits')}
+                onChange={() => {
+                  calcultate('busmTotalUnits');
+                  calculateTotal();
+                }}
                 id={`busmTotalUnits-increase`}
                 className='p-1 text-center min-w-full'
               />
             </Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type='number'
                 required
                 name={`busmTotalUnits-decrease`}
-                onChange={() => calcultate('busmTotalUnits')}
+                onChange={() => {
+                  calcultate('busmTotalUnits');
+                  calculateTotal();
+                }}
                 id={`busmTotalUnits-decrease`}
                 className='p-1 text-center min-w-full'
               />
@@ -594,6 +737,7 @@ export const Tanzeem = ({ view }) => {
                 readOnly={true}
                 type='number'
                 required
+                onChange={calculateTotal}
                 name={`busmTotalUnits-end`}
                 id={`busmTotalUnits-end`}
                 className='p-1 text-center min-w-full'
@@ -601,8 +745,9 @@ export const Tanzeem = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type='number'
+                onChange={calculateTotal}
                 required
                 name={`busmTotalUnits-continue`}
                 id={`busmTotalUnits-continue`}
@@ -611,7 +756,8 @@ export const Tanzeem = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
+                onChange={calculateTotal}
                 type='number'
                 required
                 name={`busmTotalUnits-paused`}

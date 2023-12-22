@@ -387,14 +387,24 @@ export const Reports = () => {
               >
                 Clear
               </button>
-              {isMobileView && active !== 'province' && (
-                <button
-                  onClick={sendNotification}
-                  className={`btn ${!isMobileView ? 'join-item' : 'ms-3'}`}
-                >
-                  <AiFillBell />
-                </button>
-              )}
+              {isMobileView &&
+                active !== 'province' &&
+                !(
+                  active === 'maqam' &&
+                  localStorage.getItem('@type') === 'maqam'
+                ) &&
+                !(
+                  active === 'division' &&
+                  localStorage.getItem('@type') === 'division'
+                ) &&
+                localStorage.getItem('@type') !== 'halqa' && (
+                  <button
+                    onClick={sendNotification}
+                    className={`btn ${!isMobileView ? 'join-item' : 'ms-3'}`}
+                  >
+                    <AiFillBell />
+                  </button>
+                )}
             </div>
           </div>
           <div className='flex justify-end items-center gap-4'>
@@ -403,14 +413,23 @@ export const Reports = () => {
               <span className='hidden lg:block xl:block'>New Report</span>
             </button>
 
-            {!isMobileView && active !== 'province' && (
-              <button
-                onClick={sendNotification}
-                className={`btn ${!isMobileView ? 'join-item' : 'ms-3'}`}
-              >
-                <AiFillBell />
-              </button>
-            )}
+            {!isMobileView &&
+              active !== 'province' &&
+              !(
+                active === 'maqam' && localStorage.getItem('@type') === 'maqam'
+              ) &&
+              !(
+                active === 'division' &&
+                localStorage.getItem('@type') === 'division'
+              ) &&
+              localStorage.getItem('@type') !== 'halqa' && (
+                <button
+                  onClick={sendNotification}
+                  className={`btn ${!isMobileView ? 'join-item' : 'ms-3'}`}
+                >
+                  <AiFillBell />
+                </button>
+              )}
           </div>
         </div>
         {/* localStorage.getItem('@type') === 'province' && ( */}
@@ -453,7 +472,9 @@ export const Reports = () => {
             </Link>
           )}
 
-          {['province', 'maqam', 'division'].includes(localStorage.getItem('@type')) && (
+          {['province', 'maqam', 'division'].includes(
+            localStorage.getItem('@type')
+          ) && (
             <Link
               to={'?active=halqa'}
               role='tab'

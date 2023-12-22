@@ -1,4 +1,4 @@
-import { GeneralLayout, GeneralInfo } from '../components';
+import { GeneralLayout, GeneralInfo, calcultate } from '../components';
 import { convertDataFormat, reverseDataFormat, toJson } from '../utils';
 import instance from '../api/instrance';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
@@ -49,9 +49,9 @@ export const Province = () => {
   const navigate = useNavigate();
   const autoFill = () => {
     const halq = {};
-    document.getElementById('totalLibraries').value =
-      maqam.filter((i) => i?.month.includes(month)).length +
-      division.filter((i) => i?.month.includes(month)).length;
+    // document.getElementById('totalLibraries').value =
+    //   maqam.filter((i) => i?.month.includes(month)).length +
+    //   division.filter((i) => i?.month.includes(month)).length;
     maqam
       .filter((i) => i?.month.includes(month))
       .forEach((i) => {
@@ -105,32 +105,15 @@ export const Province = () => {
               `${j.split('-')[0]}-averageAttendance`
             ).value = halq[i];
           } else {
-            elem.value = halq[i];
+            if (i === 'name' && !view) {
+              elem.value = me?.userAreaId?.name;
+            } else {
+              elem.value = halq[i];
+            }
           }
         }
       }
     });
-    if (!id) {
-      document.getElementById('comments').value = null;
-      document.getElementById('anyOther').value = null;
-    }
-  };
-  useEffect(() => {
-    const l = location.pathname?.split('/')[2];
-    if (l === 'view') {
-      setView(true);
-    }
-    setId(params?.id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params]);
-  useEffect(() => {
-    if (id) getData(id, setData, { halqa, maqam, division, province });
-    else {
-      setLoading(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
-  useEffect(() => {
     Object.keys(data).forEach((i) => {
       const elem = document.getElementById(i);
       if (elem) {
@@ -162,20 +145,30 @@ export const Province = () => {
       'members',
       'shaheen',
     ];
-    const calcultate = (v) => {
-      // (start + increase)- decrease
-      const s = document.getElementById(`${v}-start`);
-      const i = document.getElementById(`${v}-increase`);
-      const d = document.getElementById(`${v}-decrease`);
-      console.log(s, i, d);
-      if (document.getElementById(`${v}-end`))
-        document.getElementById(`${v}-end`).value =
-          parseInt(s?.value) + parseInt(i?.value) - parseInt(d?.value);
-    };
     afd.forEach((i) => {
       calcultate(i);
     });
-  }, [data]);
+    if (!id) {
+      document.getElementById('comments').value = null;
+      document.getElementById('anyOther').value = null;
+    }
+  };
+  useEffect(() => {
+    const l = location.pathname?.split('/')[2];
+    if (l === 'view') {
+      setView(true);
+    }
+    setId(params?.id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params]);
+  useEffect(() => {
+    if (id) getData(id, setData, { halqa, maqam, division, province });
+    else {
+      setLoading(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
+  useEffect(() => {}, [data]);
   useEffect(() => {
     if (!id) autoFill();
     // eslint-disable-next-line react-hooks/exhaustive-deps

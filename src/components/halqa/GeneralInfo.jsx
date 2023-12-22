@@ -11,7 +11,7 @@ export function GeneralInfo({ setMonth, me, area, view }) {
   }, [me]);
   return (
     <div className='grid w-full grid-cols-1 lg:grid-cols-2'>
-      <div className='grid grid-cols-2 w-full p-2'>
+      <div className='flex justify-start items-center gap-2 w-full p-2'>
         <label htmlFor='halqa_name'>{`${area} کا نام`}</label>
         <input
           className='border-b-2 border-dashed'
@@ -21,7 +21,7 @@ export function GeneralInfo({ setMonth, me, area, view }) {
           readOnly
         />
       </div>
-      <div className='grid grid-cols-2 w-full p-2'>
+      <div className='flex justify-start items-center gap-2 w-full p-2'>
         <label htmlFor='month'>برائے ماہ</label>
         <input
           className='border-b-2 border-dashed'

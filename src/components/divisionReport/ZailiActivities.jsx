@@ -11,7 +11,7 @@ const ZailiActivities = ({ view }) => {
             <Box>طے شدہ</Box>
             <Box>منعقدہ</Box>
             <Box>اوسط حاضری</Box>
-            <Box>مرتب</Box>
+            {/* <Box>مرتب</Box> */}
           </tr>
         </thead>
         <tbody>
@@ -48,7 +48,7 @@ const ZailiActivities = ({ view }) => {
               />
             </Box>
 
-            <Box>-</Box>
+            {/* <Box>-</Box> */}
           </tr>
           <tr>
             <Box> سٹڈی سرکل</Box>
@@ -83,7 +83,7 @@ const ZailiActivities = ({ view }) => {
               />
             </Box>
 
-            <Box>-</Box>
+            {/* <Box>-</Box> */}
           </tr>
           <tr>
             <Box>اجتماع کارکنان</Box>
@@ -118,7 +118,7 @@ const ZailiActivities = ({ view }) => {
               />
             </Box>
 
-            <Box>-</Box>
+            {/* <Box>-</Box> */}
           </tr>
           <tr>
             <Box>درس قرآن </Box>
@@ -153,7 +153,7 @@ const ZailiActivities = ({ view }) => {
               />
             </Box>
 
-            <Box>-</Box>
+            {/* <Box>-</Box> */}
           </tr>
           <tr>
             <Box>شاہین میٹنگ</Box>
@@ -185,7 +185,7 @@ const ZailiActivities = ({ view }) => {
               />
             </Box>
 
-            <Box>
+            {/* <Box>
               <input
                 disabled={view}
                 type='checkbox'
@@ -193,7 +193,7 @@ const ZailiActivities = ({ view }) => {
                 name={`shaheenMeeting-registered`}
                 id={`shaheenMeeting-registered`}
               />
-            </Box>
+            </Box> */}
           </tr>
           <tr>
             <Box>پیغام محفل</Box>
@@ -225,7 +225,7 @@ const ZailiActivities = ({ view }) => {
               />
             </Box>
 
-            <Box>
+            {/* <Box>
               <input
                 disabled={view}
                 type='checkbox'
@@ -233,7 +233,7 @@ const ZailiActivities = ({ view }) => {
                 name={`paighamEvent-registered`}
                 id={`paighamEvent-registered`}
               />
-            </Box>
+            </Box> */}
           </tr>
         </tbody>
       </table>

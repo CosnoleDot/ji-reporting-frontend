@@ -53,7 +53,7 @@ export const ToseeDawat = () => {
       </div>
       <div className='flex flex-wrap w-full items-center justify-start'>
         <div className='flex py-2 me-5'>
-          <label className='block ml-16 font-bold'>عام طلبء:</label>
+          <label className='block ml-16 font-bold'>عام طلبہ:</label>
         </div>
         <div className='flex py-2'>
           <label className='block'>ملاقاتیں:</label>

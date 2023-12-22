@@ -1,8 +1,10 @@
+import { calculateRawabitDecided } from './ToseeDawat';
+
 export const Box = ({ children, type }) => {
   return (
     <td
       className={`border text-center p-2 ${
-        type === "heading" ? "text-lg text-black" : ""
+        type === 'heading' ? 'text-lg text-black' : ''
       }`}
     >
       {children}
@@ -14,22 +16,23 @@ export const calcultate = (v) => {
   const s = document.getElementById(`${v}-start`);
   const i = document.getElementById(`${v}-increase`);
   const d = document.getElementById(`${v}-decrease`);
+  console.log(s?.value, i?.value, d?.value)
   document.getElementById(`${v}-end`).value =
     parseInt(s.value) + parseInt(i.value) - parseInt(d.value);
 };
 export const IfradiKuwat = ({ view }) => {
   return (
-    <div className="relative w-full overflow-auto">
-      <table className="w-full table">
+    <div className='relative w-full overflow-auto'>
+      <table className='w-full table'>
         <thead>
           <tr>
-            <Box type={"heading"}>افرادی قوت</Box>
+            <Box type={'heading'}>افرادی قوت</Box>
             <Box>آغاز میں</Box>
             <Box>اضافہ</Box>
             <Box>کمی</Box>
             <Box>اختتام پر</Box>
             <Box>سالانہ ہدف</Box>
-            <Box>مرتب</Box>
+            {/* <Box>مرتب</Box> */}
           </tr>
         </thead>
         <tbody>
@@ -38,104 +41,132 @@ export const IfradiKuwat = ({ view }) => {
             <Box>
               <input
                 readOnly={view}
-                type="number"
+                type='number'
+                required
                 name={`arkan-start`}
                 id={`arkan-start`}
-                onChange={() => calcultate("arkan")}
-                className="p-1 text-center min-w-full"
+                onChange={() => {
+                  calcultate('arkan');
+                  calculateRawabitDecided();
+                }}
+                className='p-1 text-center min-w-full'
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type="number"
+                type='number'
+                required
                 name={`arkan-increase`}
                 id={`arkan-increase`}
-                onChange={() => calcultate("arkan")}
-                className="p-1 text-center min-w-full"
+                onChange={() => {
+                  calcultate('arkan');
+                  calculateRawabitDecided();
+                }}
+                className='p-1 text-center min-w-full'
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type="number"
+                type='number'
+                required
                 name={`arkan-decrease`}
                 id={`arkan-decrease`}
-                onChange={() => calcultate("arkan")}
-                className="p-1 text-center min-w-full"
+                onChange={() => {
+                  calcultate('arkan');
+                  calculateRawabitDecided();
+                }}
+                className='p-1 text-center min-w-full'
               />
             </Box>
             <Box>
               <input
                 readOnly
-                type="number"
+                type='number'
+                required
                 name={`arkan-end`}
                 id={`arkan-end`}
-                className="p-1 text-center min-w-full"
+                className='p-1 text-center min-w-full'
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type="number"
+                type='number'
+                required
                 name={`arkan-annual`}
                 id={`arkan-annual`}
-                className="p-1 text-center min-w-full"
+                className='p-1 text-center min-w-full'
               />
             </Box>
-            <Box>-</Box>
+            {/* <Box>-</Box> */}
           </tr>
           <tr>
             <Box>امیدواران</Box>
             <Box>
               <input
                 readOnly={view}
-                type="number"
+                type='number'
+                required
                 name={`umeedWaran-start`}
-                onChange={() => calcultate("umeedWaran")}
+                onChange={() => {
+                  calcultate('umeedWaran');
+                  calculateRawabitDecided();
+                }}
                 id={`umeedWaran-start`}
-                className="p-1 text-center min-w-full"
+                className='p-1 text-center min-w-full'
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type="number"
+                type='number'
+                required
                 name={`umeedWaran-increase`}
-                onChange={() => calcultate("umeedWaran")}
+                onChange={() => {
+                  calcultate('umeedWaran');
+                  calculateRawabitDecided();
+                }}
                 id={`umeedWaran-increase`}
-                className="p-1 text-center min-w-full"
+                className='p-1 text-center min-w-full'
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type="number"
+                type='number'
+                required
                 name={`umeedWaran-decrease`}
-                onChange={() => calcultate("umeedWaran")}
+                onChange={() => {
+                  calcultate('umeedWaran');
+                  calculateRawabitDecided();
+                }}
                 id={`umeedWaran-decrease`}
-                className="p-1 text-center min-w-full"
+                className='p-1 text-center min-w-full'
               />
             </Box>
             <Box>
               <input
                 readOnly
-                type="number"
+                type='number'
+                required
                 name={`umeedWaran-end`}
                 id={`umeedWaran-end`}
-                className="p-1 text-center min-w-full"
+                className='p-1 text-center min-w-full'
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type="number"
+                type='number'
+                required
                 name={`umeedWaran-annual`}
                 id={`umeedWaran-annual`}
-                className="p-1 text-center min-w-full"
+                className='p-1 text-center min-w-full'
               />
             </Box>
-            <Box>
+            {/* <Box>
               {view ? (
                 <input
                   type="checkbox"
@@ -152,59 +183,73 @@ export const IfradiKuwat = ({ view }) => {
                   id={`umeedWaran-registered`}
                 />
               )}
-            </Box>
+            </Box> */}
           </tr>
           <tr>
             <Box>رفقا</Box>
             <Box>
               <input
                 readOnly={view}
-                type="number"
+                type='number'
+                required
                 name={`rafaqa-start`}
-                onChange={() => calcultate("rafaqa")}
+                onChange={() => {
+                  calcultate('rafaqa');
+                  calculateRawabitDecided();
+                }}
                 id={`rafaqa-start`}
-                className="p-1 text-center min-w-full"
+                className='p-1 text-center min-w-full'
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type="number"
+                type='number'
+                required
                 name={`rafaqa-increase`}
-                onChange={() => calcultate("rafaqa")}
+                onChange={() => {
+                  calcultate('rafaqa');
+                  calculateRawabitDecided();
+                }}
                 id={`rafaqa-increase`}
-                className="p-1 text-center min-w-full"
+                className='p-1 text-center min-w-full'
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type="number"
+                type='number'
+                required
                 name={`rafaqa-decrease`}
-                onChange={() => calcultate("rafaqa")}
+                onChange={() => {
+                  calcultate('rafaqa');
+                  calculateRawabitDecided();
+                }}
                 id={`rafaqa-decrease`}
-                className="p-1 text-center min-w-full"
+                className='p-1 text-center min-w-full'
               />
             </Box>
             <Box>
               <input
                 readOnly
-                type="number"
+                type='number'
+                required
                 name={`rafaqa-end`}
                 id={`rafaqa-end`}
-                className="p-1 text-center min-w-full"
+                className='p-1 text-center min-w-full'
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type="number"
+                type='number'
+                required
                 name={`rafaqa-annual`}
                 id={`rafaqa-annual`}
-                className="p-1 text-center min-w-full"
+                className='p-1 text-center min-w-full'
               />
             </Box>
-            <Box>
+            {/* <Box>
               {view ? (
                 <input
                   type="checkbox"
@@ -221,59 +266,64 @@ export const IfradiKuwat = ({ view }) => {
                   id={`rafaqa-registered`}
                 />
               )}
-            </Box>
+            </Box> */}
           </tr>
           <tr>
             <Box>کارکنان</Box>
             <Box>
               <input
                 readOnly={view}
-                type="number"
+                type='number'
+                required
                 name={`karkunan-start`}
-                onChange={() => calcultate("karkunan")}
+                onChange={() => calcultate('karkunan')}
                 id={`karkunan-start`}
-                className="p-1 text-center min-w-full"
+                className='p-1 text-center min-w-full'
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type="number"
+                type='number'
+                required
                 name={`karkunan-increase`}
-                onChange={() => calcultate("karkunan")}
+                onChange={() => calcultate('karkunan')}
                 id={`karkunan-increase`}
-                className="p-1 text-center min-w-full"
+                className='p-1 text-center min-w-full'
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type="number"
+                type='number'
+                required
                 name={`karkunan-decrease`}
-                onChange={() => calcultate("karkunan")}
+                onChange={() => calcultate('karkunan')}
                 id={`karkunan-decrease`}
-                className="p-1 text-center min-w-full"
+                className='p-1 text-center min-w-full'
               />
             </Box>
             <Box>
               <input
                 readOnly
-                type="number"
+                type='number'
+                required
                 name={`karkunan-end`}
                 id={`karkunan-end`}
-                className="p-1 text-center min-w-full"
+                className='p-1 text-center min-w-full'
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type="number"
+                type='number'
+                required
                 name={`karkunan-annual`}
                 id={`karkunan-annual`}
-                className="p-1 text-center min-w-full"
+                className='p-1 text-center min-w-full'
               />
             </Box>
-            <Box>
+            {/* <Box>
               {view ? (
                 <input
                   type="checkbox"
@@ -290,7 +340,7 @@ export const IfradiKuwat = ({ view }) => {
                   id={`karkunan-registered`}
                 />
               )}
-            </Box>
+            </Box> */}
           </tr>
         </tbody>
       </table>

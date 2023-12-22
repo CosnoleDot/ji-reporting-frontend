@@ -2,13 +2,13 @@ import { InputWithLabel } from "../InputWithLabel";
 
 const arr = [
   {
-    title: "کتنے ارکان فل کرتے ھیں",
-    placeholder: "کتنے ارکان فل کرتے ھیں",
+    title: "کتنے ارکان فل کرتے ہیں",
+    placeholder: "کتنے ارکان فل کرتے ہیں",
     key: "umeedwaranFilled",
   },
   {
-    title: "کتنےرفقافل کرتے ھیں",
-    placeholder: "کتنےرفقافل کرتے ھیں",
+    title: "کتنےرفقافل کرتے ہیں",
+    placeholder: "کتنےرفقافل کرتے ہیں",
     key: "rafaqaFilled",
   },
 ];

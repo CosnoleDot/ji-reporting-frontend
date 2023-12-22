@@ -11,7 +11,6 @@ const ZailiActivities = ({ view }) => {
             <Box>طے شدہ</Box>
             <Box>منعقدہ</Box>
             <Box>اوسط حاضری</Box>
-            <Box>مرتب</Box>
           </tr>
         </thead>
         <tbody>
@@ -47,8 +46,6 @@ const ZailiActivities = ({ view }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-
-            <Box>-</Box>
           </tr>
           <tr>
             <Box> سٹڈی سرکل</Box>
@@ -82,8 +79,6 @@ const ZailiActivities = ({ view }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-
-            <Box>-</Box>
           </tr>
           <tr>
             <Box>اجتماع کارکنان</Box>
@@ -117,8 +112,6 @@ const ZailiActivities = ({ view }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-
-            <Box>-</Box>
           </tr>
           <tr>
             <Box>درس قرآن </Box>
@@ -152,8 +145,6 @@ const ZailiActivities = ({ view }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-
-            <Box>-</Box>
           </tr>
           <tr>
             <Box>شاہین میٹنگ</Box>
@@ -187,16 +178,6 @@ const ZailiActivities = ({ view }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-
-            <Box>
-              <input
-                disabled={view}
-                type='checkbox'
-                className='p-1 text-center min-w-full checkbox'
-                name={`shaheenMeeting-registered`}
-                id={`shaheenMeeting-registered`}
-              />
-            </Box>
           </tr>
           <tr>
             <Box>پیغام محفل</Box>
@@ -228,16 +209,6 @@ const ZailiActivities = ({ view }) => {
                 name={`paighamEvent-averageAttendance`}
                 id={`paighamEvent-averageAttendance`}
                 className='p-1 text-center min-w-full'
-              />
-            </Box>
-
-            <Box>
-              <input
-                disabled={view}
-                type='checkbox'
-                className='p-1 text-center min-w-full checkbox'
-                name={`paighamEvent-registered`}
-                id={`paighamEvent-registered`}
               />
             </Box>
           </tr>

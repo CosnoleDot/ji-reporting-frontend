@@ -8,6 +8,7 @@ import { UIContext } from '../context/ui';
 export const Signup = () => {
   const [userAreaType, setUserAreaType] = useState('Division');
   const [areas, setAreas] = useState([]);
+  const [searchArea, setSearchArea] = useState('');
   const { loading, setLoading } = useContext(UIContext);
   const { dispatch } = useToastState();
   const navigate = useNavigate();
@@ -66,6 +67,23 @@ export const Signup = () => {
     getAreas();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAreaType]);
+  const handleEventClick = (e) => {
+    if (e?.target?.id !== 'autocomplete') {
+      if (
+        !document
+          ?.getElementById('autocomplete-list')
+          ?.classList?.contains('hidden')
+      ) {
+        document?.getElementById('autocomplete-list')?.classList?.add('hidden');
+      }
+    }
+  };
+  useEffect(() => {
+    document.addEventListener('click', handleEventClick);
+    return () => {
+      document.removeEventListener('click', handleEventClick);
+    };
+  }, []);
   return (
     <div className='relative flex flex-col justify-center h-screen p-2'>
       <div className='w-full p-6 m-auto bg-white rounded-md shadow-md lg:max-w-lg'>
@@ -140,7 +158,7 @@ export const Signup = () => {
           </div>
           <div>
             <span className='px-1 py-2 block font-semibold'>Nazim Type:</span>
-            <div className='flex items-center justify-between'>
+            <div className='flex items-center justify-between border border-primary p-2 rounded-lg'>
               <div className='form-control'>
                 <label className='label cursor-pointer gap-2'>
                   <input
@@ -149,7 +167,11 @@ export const Signup = () => {
                     className='radio checked:bg-blue-500'
                     checked={userAreaType === 'Division'}
                     value='Division'
-                    onChange={(e) => setUserAreaType(e.target.value)}
+                    onChange={(e) => {
+                      setUserAreaType(e.target.value);
+                      setSearchArea('');
+                      document.getElementById('autocomplete').value = '';
+                    }}
                   />
                   <span className='label-text'>Division</span>
                 </label>
@@ -162,7 +184,11 @@ export const Signup = () => {
                     className='radio checked:bg-blue-500'
                     checked={userAreaType === 'Maqam'}
                     value='Maqam'
-                    onChange={(e) => setUserAreaType(e.target.value)}
+                    onChange={(e) => {
+                      setUserAreaType(e.target.value);
+                      setSearchArea('');
+                      document.getElementById('autocomplete').value = '';
+                    }}
                   />
                   <span className='label-text'>Maqam</span>
                 </label>
@@ -175,34 +201,88 @@ export const Signup = () => {
                     className='radio checked:bg-blue-500'
                     checked={userAreaType === 'Halqa'}
                     value='Halqa'
-                    onChange={(e) => setUserAreaType(e.target.value)}
+                    onChange={(e) => {
+                      setUserAreaType(e.target.value);
+                      setSearchArea('');
+                      document.getElementById('autocomplete').value = '';
+                    }}
                   />
                   <span className='label-text'>Halqa</span>
                 </label>
               </div>
             </div>
           </div>
-          <div>
+          <div className='relative'>
             <span className='px-1 py-2 block font-semibold'>Area:</span>
-            <select
-              className='select select-bordered w-full'
-              defaultValue={''}
-              name='userAreaId'
-              required
+            <input type='hidden' name='userAreaId' id='userAreaId' />
+            <input
+              id='autocomplete'
+              type='text'
+              class='input input-bordered input-primary w-full'
+              placeholder='Select area'
+              onChange={(e) => setSearchArea(e.target.value)}
+              onClick={() => {
+                if (
+                  document
+                    .getElementById('autocomplete-list')
+                    .classList.contains('hidden')
+                ) {
+                  document
+                    .getElementById('autocomplete-list')
+                    .classList.remove('hidden');
+                } else {
+                  document
+                    .getElementById('autocomplete-list')
+                    .classList.add('hidden');
+                }
+              }}
+            />
+            <div
+              id='autocomplete-list'
+              class='absolute z-10 max-h-[100px] overflow-y-scroll bg-white border border-gray-300 w-full mt-1'
             >
-              <option value={''} disabled>
-                Select area
-              </option>
               {areas
                 .sort((a, b) => a?.name?.localeCompare(b?.name))
+                .filter((item) => {
+                  if (searchArea && searchArea !== '') {
+                    if (
+                      item?.name
+                        ?.toString()
+                        ?.toLowerCase()
+                        ?.includes(searchArea?.toString()?.toLowerCase())
+                    ) {
+                      return true;
+                    }
+                    return false;
+                  } else {
+                    return true;
+                  }
+                })
                 .map((area, index) => (
-                  <option value={area?._id} key={index}>
-                    {area?.name}{' '}
-                    {userAreaType === 'Halqa' &&
-                      `- ${area?.parentId?.name} (${area?.parentType})`}
-                  </option>
+                  <div
+                    key={index}
+                    onClick={() => {
+                      document.getElementById('userAreaId').value = area?._id;
+                      document.getElementById('autocomplete').value = `${
+                        area?.name
+                      }${
+                        userAreaType === 'Halqa'
+                          ? ` - ${area?.parentId?.name} (${area?.parentType})`
+                          : ''
+                      }`;
+                      document
+                        .getElementById('autocomplete-list')
+                        .classList.add('hidden');
+                    }}
+                    className='p-2 cursor-pointer hover:bg-gray-100'
+                  >
+                    {area?.name}
+                    {userAreaType === 'Halqa'
+                      ? ` - ${area?.parentId?.name} (${area?.parentType})`
+                      : ''}
+                  </div>
                 ))}
-            </select>
+            </div>
           </div>
           <Link
             to='/'

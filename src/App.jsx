@@ -187,7 +187,21 @@ function App() {
         const allData = req.data.data;
         const type = localStorage.getItem('@type');
         if (type === 'province') {
-          setHalqas(allData);
+          setHalqas(
+            allData.filter((i) => {
+              if (i?.parentType === 'Maqam') {
+                return (
+                  i?.parentId?._id === me?.userAreaId?._id ||
+                  i?.parentId?.province === me?.userAreaId?._id
+                );
+              } else {
+                const validDistricts = dis.map((i) => i?._id?.toString());
+                return validDistricts.includes(
+                  i?.parentId?.district?.toString()
+                );
+              }
+            })
+          );
         } else if (type === 'maqam') {
           const validHalqas = allData.filter(
             (i) =>
@@ -344,11 +358,13 @@ function App() {
             },
           }
         );
+        console.log(req.data.data, 'NOTIFICATIONS');
         setNotifications(
           req.data?.data.filter((i) => {
             const months = reports.map((_) =>
               _.month.split('-').slice(0, 2).join('-')
             );
+            console.log(months);
             return !months.includes(
               i.createdAt.split('-').slice(0, 2).join('-')
             );
@@ -370,7 +386,7 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
-    getAllNotifications();
+    if (reports.length > 0) getAllNotifications();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reports]);
 
@@ -430,6 +446,10 @@ function App() {
       setValue('Fetching user requests');
       await getAllRequests();
       setCount((100 / 14) * 13);
+      setValue(null);
+      setValue('Fetching all notifications');
+      await getAllNotifications();
+      setCount((100 / 14) * 14);
       setValue(null);
     };
     if (me) {

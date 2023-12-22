@@ -27,7 +27,7 @@ export const IfradiKuwat = ({ view, id }) => {
             <Box>آغاز میں</Box>
             <Box>اضافہ</Box>
             <Box>کمی</Box>
-            {(view || id) && <Box>اختتام پر</Box>}
+            {<Box>اختتام پر</Box>}
             <Box>سالانہ ہدف</Box>
           </tr>
         </thead>
@@ -67,7 +67,7 @@ export const IfradiKuwat = ({ view, id }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            {(view || id) && (
+            {
               <Box>
                 <input
                   readOnly
@@ -78,7 +78,7 @@ export const IfradiKuwat = ({ view, id }) => {
                   className='p-1 text-center min-w-full'
                 />
               </Box>
-            )}
+            }
             <Box>
               <input
                 readOnly
@@ -125,7 +125,7 @@ export const IfradiKuwat = ({ view, id }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            {(view || id) && (
+            {
               <Box>
                 <input
                   readOnly
@@ -136,7 +136,7 @@ export const IfradiKuwat = ({ view, id }) => {
                   className='p-1 text-center min-w-full'
                 />
               </Box>
-            )}
+            }
             <Box>
               <input
                 readOnly
@@ -183,7 +183,7 @@ export const IfradiKuwat = ({ view, id }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            {(view || id) && (
+            {
               <Box>
                 <input
                   readOnly
@@ -194,7 +194,7 @@ export const IfradiKuwat = ({ view, id }) => {
                   className='p-1 text-center min-w-full'
                 />
               </Box>
-            )}
+            }
             <Box>
               <input
                 readOnly
@@ -241,7 +241,7 @@ export const IfradiKuwat = ({ view, id }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            {(view || id) && (
+            {
               <Box>
                 <input
                   readOnly
@@ -252,7 +252,7 @@ export const IfradiKuwat = ({ view, id }) => {
                   className='p-1 text-center min-w-full'
                 />
               </Box>
-            )}
+            }
             <Box>
               <input
                 readOnly
@@ -299,7 +299,7 @@ export const IfradiKuwat = ({ view, id }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            {(view || id) && (
+            {
               <Box>
                 <input
                   readOnly
@@ -310,7 +310,7 @@ export const IfradiKuwat = ({ view, id }) => {
                   className='p-1 text-center min-w-full'
                 />
               </Box>
-            )}
+            }
             <Box>
               <input
                 readOnly
@@ -357,7 +357,7 @@ export const IfradiKuwat = ({ view, id }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            {(view || id) && (
+            {
               <Box>
                 <input
                   readOnly
@@ -368,7 +368,7 @@ export const IfradiKuwat = ({ view, id }) => {
                   className='p-1 text-center min-w-full'
                 />
               </Box>
-            )}
+            }
             <Box>
               <input
                 readOnly
