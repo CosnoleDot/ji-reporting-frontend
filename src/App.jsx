@@ -59,6 +59,7 @@ function App() {
   const [notifications, setNotifications] = useState([]);
   const [reports, setReports] = useState([]);
   let dis;
+  let r;
   const [authenticated, setAuthenticaated] = useState(
     localStorage.getItem('@token')
   );
@@ -232,12 +233,14 @@ function App() {
       });
     }
   };
+  let provinceR, maqamR, divisionR, halqaR;
   const getProvinceReports = async () => {
     try {
       const req = await instance.get('/reports/province', {
         headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
       });
       if (req) {
+        provinceR = req.data.data;
         setProvinceReports(req.data.data);
       }
     } catch (err) {
@@ -253,6 +256,7 @@ function App() {
         headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
       });
       if (req) {
+        maqamR = req.data.data;
         setMaqamReports(req.data.data);
       }
     } catch (err) {
@@ -268,6 +272,7 @@ function App() {
         headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
       });
       if (req) {
+        divisionR = req.data.data;
         setDivisionReports(req.data.data);
       }
     } catch (err) {
@@ -283,6 +288,7 @@ function App() {
         headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
       });
       if (req) {
+        halqaR = req.data.data;
         setHalqaReports(req.data.data);
       }
     } catch (err) {
@@ -330,17 +336,18 @@ function App() {
         let req;
         switch (localStorage.getItem('@type')) {
           case 'maqam':
-            req = maqamReports;
+            req = maqamR;
             break;
           case 'division':
-            req = divisionReports;
+            req = divisionR;
             break;
           case 'halqa':
-            req = halqaReports;
+            req = halqaR;
             break;
           default:
             break;
         }
+        r = req;
         setReports(req);
       } catch (err) {
         console.log(err);
@@ -358,13 +365,11 @@ function App() {
             },
           }
         );
-        console.log(req.data.data, 'NOTIFICATIONS');
         setNotifications(
           req.data?.data.filter((i) => {
             const months = reports.map((_) =>
               _.month.split('-').slice(0, 2).join('-')
             );
-            console.log(months);
             return !months.includes(
               i.createdAt.split('-').slice(0, 2).join('-')
             );

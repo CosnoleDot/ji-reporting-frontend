@@ -16,7 +16,6 @@ export const calcultate = (v) => {
   const s = document.getElementById(`${v}-start`);
   const i = document.getElementById(`${v}-increase`);
   const d = document.getElementById(`${v}-decrease`);
-  console.log(s?.value, i?.value, d?.value)
   document.getElementById(`${v}-end`).value =
     parseInt(s.value) + parseInt(i.value) - parseInt(d.value);
 };
