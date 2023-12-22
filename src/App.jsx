@@ -367,7 +367,7 @@ function App() {
         );
         setNotifications(
           req.data?.data.filter((i) => {
-            const months = reports.map((_) =>
+            const months = r.map((_) =>
               _.month.split('-').slice(0, 2).join('-')
             );
             return !months.includes(
