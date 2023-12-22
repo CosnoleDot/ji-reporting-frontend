@@ -11,17 +11,20 @@ export const Activity = ({ view }) => {
             <Box>منعقدہ</Box>
             <Box>حاضری</Box>
             <Box>عنوان</Box>
+            <Box>مرتب</Box>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <Box>احتمع رفقا</Box>
+            <Box>اجتماع رفقا</Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type='number'
+                required
                 name={`ijtRafaqa-decided`}
                 id={`ijtRafaqa-decided`}
+                value={1}
                 className='p-1 text-center min-w-full'
               />
             </Box>
@@ -29,6 +32,7 @@ export const Activity = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                required
                 name={`ijtRafaqa-completed`}
                 id={`ijtRafaqa-completed`}
                 className='p-1 text-center min-w-full'
@@ -38,6 +42,7 @@ export const Activity = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                required
                 name={`ijtRafaqa-attendance`}
                 id={`ijtRafaqa-attendance`}
                 className='p-1 text-center min-w-full'
@@ -52,15 +57,35 @@ export const Activity = ({ view }) => {
                 className='p-1 min-w-full'
               />
             </Box>
+            <Box>
+              {view ? (
+                <input
+                  disabled
+                  type='checkbox'
+                  name='ijtRafaqa-registered'
+                  id='ijtRafaqa-registered'
+                  className='checkbox ms-2'
+                />
+              ) : (
+                <input
+                  type='checkbox'
+                  name='ijtRafaqa-registered'
+                  id='ijtRafaqa-registered'
+                  className='checkbox ms-2'
+                />
+              )}
+            </Box>
           </tr>
           <tr>
             <Box>اجتماع کارکنان</Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type='number'
+                required
                 name={`ijtKarkunan-decided`}
                 id={`ijtKarkunan-decided`}
+                value={1}
                 className='p-1 text-center min-w-full'
               />
             </Box>
@@ -68,6 +93,7 @@ export const Activity = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                required
                 name={`ijtKarkunan-completed`}
                 id={`ijtKarkunan-completed`}
                 className='p-1 text-center min-w-full'
@@ -77,6 +103,7 @@ export const Activity = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                required
                 name={`ijtKarkunan-attendance`}
                 id={`ijtKarkunan-attendance`}
                 className='p-1 text-center min-w-full'
@@ -91,15 +118,18 @@ export const Activity = ({ view }) => {
                 className='p-1 min-w-full'
               />
             </Box>
+            <Box>-</Box>
           </tr>
           <tr>
             <Box>سٹڈی سرکل</Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type='number'
+                required
                 name={`studyCircle-decided`}
                 id={`studyCircle-decided`}
+                value={1}
                 className='p-1 text-center min-w-full'
               />
             </Box>
@@ -107,6 +137,7 @@ export const Activity = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                required
                 name={`studyCircle-completed`}
                 id={`studyCircle-completed`}
                 className='p-1 text-center min-w-full'
@@ -116,6 +147,7 @@ export const Activity = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                required
                 name={`studyCircle-attendance`}
                 id={`studyCircle-attendance`}
                 className='p-1 text-center min-w-full'
@@ -130,15 +162,18 @@ export const Activity = ({ view }) => {
                 className='p-1 min-w-full'
               />
             </Box>
+            <Box>-</Box>
           </tr>
           <tr>
             <Box>درس قُرآن</Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type='number'
+                required
                 name={`darseQuran-decided`}
                 id={`darseQuran-decided`}
+                value={1}
                 className='p-1 text-center min-w-full'
               />
             </Box>
@@ -146,6 +181,7 @@ export const Activity = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                required
                 name={`darseQuran-completed`}
                 id={`darseQuran-completed`}
                 className='p-1 text-center min-w-full'
@@ -155,6 +191,7 @@ export const Activity = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                required
                 name={`darseQuran-attendance`}
                 id={`darseQuran-attendance`}
                 className='p-1 text-center min-w-full'
@@ -169,6 +206,7 @@ export const Activity = ({ view }) => {
                 className='p-1 min-w-full'
               />
             </Box>
+            <Box>-</Box>
           </tr>
         </tbody>
       </table>

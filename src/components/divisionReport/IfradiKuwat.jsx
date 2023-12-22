@@ -27,9 +27,8 @@ export const IfradiKuwat = ({ view }) => {
             <Box>آغاز میں</Box>
             <Box>اضافہ</Box>
             <Box>کمی</Box>
-            <Box>اختتام پر</Box>
+            <Box>اختاتام</Box>
             <Box>سالانہ ہدف</Box>
-            <Box>مرتب</Box>
           </tr>
         </thead>
         <tbody>
@@ -37,7 +36,7 @@ export const IfradiKuwat = ({ view }) => {
             <Box>ارکان</Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type='number'
                 required
                 name={`arkan-start`}
@@ -48,7 +47,7 @@ export const IfradiKuwat = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type='number'
                 required
                 name={`arkan-increase`}
@@ -59,7 +58,7 @@ export const IfradiKuwat = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type='number'
                 required
                 name={`arkan-decrease`}
@@ -88,13 +87,12 @@ export const IfradiKuwat = ({ view }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            <Box>-</Box>
           </tr>
           <tr>
             <Box>امیدواران</Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type='number'
                 required
                 name={`umeedWaran-start`}
@@ -105,7 +103,7 @@ export const IfradiKuwat = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type='number'
                 required
                 onChange={() => calcultate('umeedWaran')}
@@ -116,7 +114,7 @@ export const IfradiKuwat = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type='number'
                 required
                 name={`umeedWaran-decrease`}
@@ -145,7 +143,6 @@ export const IfradiKuwat = ({ view }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            <Box>-</Box>
           </tr>
           <tr>
             <Box>رفقا</Box>
@@ -202,7 +199,6 @@ export const IfradiKuwat = ({ view }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            <Box>-</Box>
           </tr>
           <tr>
             <Box>کارکنان</Box>
@@ -259,7 +255,6 @@ export const IfradiKuwat = ({ view }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            <Box>-</Box>
           </tr>
           <tr>
             <Box>شاہین</Box>
@@ -316,24 +311,6 @@ export const IfradiKuwat = ({ view }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            <Box>
-              {view ? (
-                <input
-                disabled
-                  type='checkbox'
-                  className='p-1 text-center min-w-full checkbox'
-                  name={`shaheen-registered`}
-                  id={`shaheen-registered`}
-                />
-              ) : (
-                <input
-                  type='checkbox'
-                  className='p-1 text-center min-w-full checkbox'
-                  name={`shaheen-registered`}
-                  id={`shaheen-registered`}
-                />
-              )}
-            </Box>
           </tr>
           <tr>
             <Box>ممبرز</Box>
@@ -389,24 +366,6 @@ export const IfradiKuwat = ({ view }) => {
                 id={`members-annual`}
                 className='p-1 text-center min-w-full'
               />
-            </Box>
-            <Box>
-              {view ? (
-                <input
-                  disabled
-                  type='checkbox'
-                  className='p-1 text-center min-w-full checkbox'
-                  name={`members-registered`}
-                  id={`members-registered`}
-                />
-              ) : (
-                <input
-                  type='checkbox'
-                  className='p-1 text-center min-w-full checkbox'
-                  name={`members-registered`}
-                  id={`members-registered`}
-                />
-              )}
             </Box>
           </tr>
         </tbody>

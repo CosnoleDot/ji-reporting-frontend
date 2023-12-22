@@ -19,7 +19,7 @@ export const Navbar = ({ title }) => {
     <>
       <div className='navbar bg-blue-500 text-white'>
         <div className='flex-1'>
-          <span className='text-xl'>{title || 'JI Reporting'}</span>
+          <span className='text-xl'>{title || 'IJT Reporting'}</span>
         </div>
         <div className='flex-none'>
           {localStorage.getItem('@type') !== 'province' && (<div className='relative dropdown dropdown-end'>

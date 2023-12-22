@@ -59,6 +59,7 @@ function App() {
   const [notifications, setNotifications] = useState([]);
   const [reports, setReports] = useState([]);
   let dis;
+  let r;
   const [authenticated, setAuthenticaated] = useState(
     localStorage.getItem('@token')
   );
@@ -187,7 +188,21 @@ function App() {
         const allData = req.data.data;
         const type = localStorage.getItem('@type');
         if (type === 'province') {
-          setHalqas(allData);
+          setHalqas(
+            allData.filter((i) => {
+              if (i?.parentType === 'Maqam') {
+                return (
+                  i?.parentId?._id === me?.userAreaId?._id ||
+                  i?.parentId?.province === me?.userAreaId?._id
+                );
+              } else {
+                const validDistricts = dis.map((i) => i?._id?.toString());
+                return validDistricts.includes(
+                  i?.parentId?.district?.toString()
+                );
+              }
+            })
+          );
         } else if (type === 'maqam') {
           const validHalqas = allData.filter(
             (i) =>
@@ -218,12 +233,14 @@ function App() {
       });
     }
   };
+  let provinceR, maqamR, divisionR, halqaR;
   const getProvinceReports = async () => {
     try {
       const req = await instance.get('/reports/province', {
         headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
       });
       if (req) {
+        provinceR = req.data.data;
         setProvinceReports(req.data.data);
       }
     } catch (err) {
@@ -239,6 +256,7 @@ function App() {
         headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
       });
       if (req) {
+        maqamR = req.data.data;
         setMaqamReports(req.data.data);
       }
     } catch (err) {
@@ -254,6 +272,7 @@ function App() {
         headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
       });
       if (req) {
+        divisionR = req.data.data;
         setDivisionReports(req.data.data);
       }
     } catch (err) {
@@ -269,6 +288,7 @@ function App() {
         headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
       });
       if (req) {
+        halqaR = req.data.data;
         setHalqaReports(req.data.data);
       }
     } catch (err) {
@@ -316,17 +336,18 @@ function App() {
         let req;
         switch (localStorage.getItem('@type')) {
           case 'maqam':
-            req = maqamReports;
+            req = maqamR;
             break;
           case 'division':
-            req = divisionReports;
+            req = divisionR;
             break;
           case 'halqa':
-            req = halqaReports;
+            req = halqaR;
             break;
           default:
             break;
         }
+        r = req;
         setReports(req);
       } catch (err) {
         console.log(err);
@@ -370,7 +391,7 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
-    getAllNotifications();
+    if (reports.length > 0) getAllNotifications();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reports]);
 
@@ -430,6 +451,10 @@ function App() {
       setValue('Fetching user requests');
       await getAllRequests();
       setCount((100 / 14) * 13);
+      setValue(null);
+      setValue('Fetching all notifications');
+      await getAllNotifications();
+      setCount((100 / 14) * 14);
       setValue(null);
     };
     if (me) {

@@ -103,16 +103,28 @@ export const Maqam = () => {
               `${j.split('-')[0]}-averageAttendance`
             ).value = halq[i];
           } else {
-            elem.value = halq[i];
+            if (i === 'name' && !view) {
+              elem.value = me?.userAreaId?.name;
+            } else {
+              elem.value = halq[i];
+            }
           }
         }
       }
     });
     document.getElementById('studyCircle-averageAttendance').value = null;
     document.getElementById('studyCircle-done').value = null;
-    document.getElementById('totalLibraries').value = halqa.filter((i) =>
-      i?.month.includes(month)
-    ).length;
+    document.getElementById('arkanFilled').value = null;
+    document.getElementById('umeedwaranFilled').value = null;
+    ['arkan', 'umeedWaran'].forEach((i) => {
+      document.getElementById(`${i}-start`).value = null;
+      document.getElementById(`${i}-end`).value = null;
+      document.getElementById(`${i}-increase`).value = null;
+      document.getElementById(`${i}-decrease`).value = null;
+    });
+    // document.getElementById('totalLibraries').value = halqa.filter((i) =>
+    //   i?.month.includes(month)
+    // ).length;
     const afd = [
       'rehaishHalqay',
       'taleemHalqay',
@@ -267,7 +279,7 @@ export const Maqam = () => {
               <PaighamDigest view={view} />
             </div>
             <div className='mb-4'>
-              <RozOShabDiary />
+              <RozOShabDiary view={view}/>
             </div>
             <div className='w-full flex p-2'>
               <label htmlFor='comments'>تبصرہ</label>
@@ -280,18 +292,20 @@ export const Maqam = () => {
                 readOnly={view}
               />
             </div>
-            {!view && (<div className='w-full flex flex-col items-end gap-3 p-2'>
-              <div>
-                <label htmlFor='nazim'>نام ناظمِ:</label>
-                <input
-                  type='text'
-                  className='border-b-2 border-dashed text-center'
-                  id='nazim'
-                  defaultValue={me?.name || ''}
-                  readOnly
-                />
+            {!view && (
+              <div className='w-full flex flex-col items-end gap-3 p-2'>
+                <div>
+                  <label htmlFor='nazim'>نام ناظمِ:</label>
+                  <input
+                    type='text'
+                    className='border-b-2 border-dashed text-center'
+                    id='nazim'
+                    defaultValue={me?.name || ''}
+                    readOnly
+                  />
+                </div>
               </div>
-            </div>)}
+            )}
           </div>
           {!view && (
             <div className='w-full'>

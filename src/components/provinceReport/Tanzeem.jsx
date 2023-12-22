@@ -20,7 +20,7 @@ export const Tanzeem = ({ view, id }) => {
             <Box>آغازمیں</Box>
             <Box>اِضافہ</Box>
             <Box>کمی</Box>
-            {(view || id) && <Box>اختتام پر</Box>}
+            {<Box>اختتام پر</Box>}
             <Box>فعال</Box>
             <Box>غیرفعال</Box>
           </tr>
@@ -61,7 +61,7 @@ export const Tanzeem = ({ view, id }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            {(view || id) && (
+            {
               <Box>
                 <input
                   readOnly={true}
@@ -72,7 +72,7 @@ export const Tanzeem = ({ view, id }) => {
                   className='p-1 text-center min-w-full'
                 />
               </Box>
-            )}
+            }
             <Box>
               <input
                 readOnly
@@ -129,7 +129,7 @@ export const Tanzeem = ({ view, id }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            {(view || id) && (
+            {
               <Box>
                 <input
                   readOnly={true}
@@ -140,7 +140,7 @@ export const Tanzeem = ({ view, id }) => {
                   className='p-1 text-center min-w-full'
                 />
               </Box>
-            )}
+            }
             <Box>
               <input
                 readOnly
@@ -197,7 +197,7 @@ export const Tanzeem = ({ view, id }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            {(view || id) && (
+            {
               <Box>
                 <input
                   readOnly={true}
@@ -208,7 +208,7 @@ export const Tanzeem = ({ view, id }) => {
                   className='p-1 text-center min-w-full'
                 />
               </Box>
-            )}
+            }
             <Box>
               <input
                 readOnly
@@ -231,7 +231,7 @@ export const Tanzeem = ({ view, id }) => {
             </Box>
           </tr>
           <tr>
-            <Box>رہاشی زیلی حلقے</Box>
+            <Box>رہاشی ذیلی حلقے</Box>
             <Box>
               <input
                 readOnly
@@ -265,7 +265,7 @@ export const Tanzeem = ({ view, id }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            {(view || id) && (
+            {
               <Box>
                 <input
                   readOnly={true}
@@ -276,7 +276,7 @@ export const Tanzeem = ({ view, id }) => {
                   className='p-1 text-center min-w-full'
                 />
               </Box>
-            )}
+            }
             <Box>
               <input
                 readOnly
@@ -333,7 +333,7 @@ export const Tanzeem = ({ view, id }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            {(view || id) && (
+            {
               <Box>
                 <input
                   readOnly={true}
@@ -344,7 +344,7 @@ export const Tanzeem = ({ view, id }) => {
                   className='p-1 text-center min-w-full'
                 />
               </Box>
-            )}
+            }
             <Box>
               <input
                 readOnly
@@ -401,7 +401,7 @@ export const Tanzeem = ({ view, id }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            {(view || id) && (
+            {
               <Box>
                 <input
                   readOnly={true}
@@ -412,7 +412,7 @@ export const Tanzeem = ({ view, id }) => {
                   className='p-1 text-center min-w-full'
                 />
               </Box>
-            )}
+            }
             <Box>
               <input
                 readOnly
@@ -469,7 +469,7 @@ export const Tanzeem = ({ view, id }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            {(view || id) && (
+            {
               <Box>
                 <input
                   readOnly={true}
@@ -480,7 +480,7 @@ export const Tanzeem = ({ view, id }) => {
                   className='p-1 text-center min-w-full'
                 />
               </Box>
-            )}
+            }
             <Box>
               <input
                 readOnly
@@ -537,7 +537,7 @@ export const Tanzeem = ({ view, id }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            {(view || id) && (
+            {
               <Box>
                 <input
                   readOnly={true}
@@ -548,7 +548,7 @@ export const Tanzeem = ({ view, id }) => {
                   className='p-1 text-center min-w-full'
                 />
               </Box>
-            )}
+            }
             <Box>
               <input
                 readOnly
@@ -605,7 +605,7 @@ export const Tanzeem = ({ view, id }) => {
                 className='p-1 text-center min-w-full'
               />
             </Box>
-            {(view || id) && (
+            {
               <Box>
                 <input
                   readOnly={true}
@@ -616,7 +616,7 @@ export const Tanzeem = ({ view, id }) => {
                   className='p-1 text-center min-w-full'
                 />
               </Box>
-            )}
+            }
             <Box>
               <input
                 readOnly

@@ -19,10 +19,11 @@ export const MarkaziActivities = ({ view }) => {
             <Box>اجتماع ناظمین</Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type='number'
                 required
                 name={`ijtNazmeen-decided`}
+                value={1}
                 id={`ijtNazmeen-decided`}
                 className='p-1 text-center min-w-full'
               />
@@ -62,10 +63,11 @@ export const MarkaziActivities = ({ view }) => {
             <Box>اجتماع امیدواران</Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type='number'
                 required
                 name={`ijtUmeedwaran-decided`}
+                value={1}
                 id={`ijtUmeedwaran-decided`}
                 className='p-1 text-center min-w-full'
               />
@@ -105,10 +107,11 @@ export const MarkaziActivities = ({ view }) => {
             <Box>سٹڈی سرکل</Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type='number'
                 required
                 name={`studyCircle-decided`}
+                value={1}
                 id={`studyCircle-decided`}
                 className='p-1 text-center min-w-full'
               />
@@ -148,10 +151,11 @@ export const MarkaziActivities = ({ view }) => {
             <Box>صدورمیٹینگ</Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type='number'
                 required
                 name={`sadurMeeting-decided`}
+                value={1}
                 id={`sadurMeeting-decided`}
                 className='p-1 text-center min-w-full'
               />

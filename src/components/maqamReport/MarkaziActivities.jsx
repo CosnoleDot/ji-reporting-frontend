@@ -19,17 +19,18 @@ export const MarkaziActivities = ({ view }) => {
             <Box>اجتماع ارکان</Box>
             <Box>
               <input
-                disabled={view}
+                readOnly={true}
                 type='number'
                 required
                 name={`ijtArkan-decided`}
+                value={1}
                 id={`ijtArkan-decided`}
                 className='p-1 text-center min-w-full'
               />
             </Box>
             <Box>
               <input
-                disabled={view}
+                readOnly={view}
                 type='number'
                 required
                 name={`ijtArkan-done`}
@@ -39,7 +40,7 @@ export const MarkaziActivities = ({ view }) => {
             </Box>
             <Box>
               <input
-                disabled={view}
+                readOnly={view}
                 type='number'
                 required
                 name={`ijtArkan-averageAttendance`}
@@ -62,17 +63,18 @@ export const MarkaziActivities = ({ view }) => {
             <Box>سٹڈی سرکل</Box>
             <Box>
               <input
-                disabled={view}
+                readOnly={true}
                 type='number'
                 required
                 name={`studyCircle-decided`}
+                value={1}
                 id={`studyCircle-decided`}
                 className='p-1 text-center min-w-full'
               />
             </Box>
             <Box>
               <input
-                disabled={view}
+                readOnly={view}
                 type='number'
                 required
                 name={`studyCircle-done`}
@@ -82,7 +84,7 @@ export const MarkaziActivities = ({ view }) => {
             </Box>
             <Box>
               <input
-                disabled={view}
+                readOnly={view}
                 type='number'
                 required
                 name={`studyCircle-averageAttendance`}
@@ -105,17 +107,18 @@ export const MarkaziActivities = ({ view }) => {
             <Box>اجتماع ناظمین</Box>
             <Box>
               <input
-                disabled={view}
+                readOnly={true}
                 type='number'
                 required
                 name={`ijtNazmeen-decided`}
+                value={1}
                 id={`ijtNazmeen-decided`}
                 className='p-1 text-center min-w-full'
               />
             </Box>
             <Box>
               <input
-                disabled={view}
+                readOnly={view}
                 type='number'
                 required
                 name={`ijtNazmeen-done`}
@@ -125,7 +128,7 @@ export const MarkaziActivities = ({ view }) => {
             </Box>
             <Box>
               <input
-                disabled={view}
+                readOnly={view}
                 type='number'
                 required
                 name={`ijtNazmeen-averageAttendance`}
@@ -148,17 +151,18 @@ export const MarkaziActivities = ({ view }) => {
             <Box>اجتماع امیدواران</Box>
             <Box>
               <input
-                disabled={view}
+                readOnly={true}
                 type='number'
                 required
                 name={`ijtUmeedwaran-decided`}
+                value={2}
                 id={`ijtUmeedwaran-decided`}
                 className='p-1 text-center min-w-full'
               />
             </Box>
             <Box>
               <input
-                disabled={view}
+                readOnly={view}
                 type='number'
                 required
                 name={`ijtUmeedwaran-done`}
@@ -168,7 +172,7 @@ export const MarkaziActivities = ({ view }) => {
             </Box>
             <Box>
               <input
-                disabled={view}
+                readOnly={view}
                 type='number'
                 required
                 name={`ijtUmeedwaran-averageAttendance`}
@@ -191,17 +195,18 @@ export const MarkaziActivities = ({ view }) => {
             <Box>صدورمیٹینگ</Box>
             <Box>
               <input
-                disabled={view}
+                readOnly={true}
                 type='number'
                 required
                 name={`sadurMeeting-decided`}
+                value={1}
                 id={`sadurMeeting-decided`}
                 className='p-1 text-center min-w-full'
               />
             </Box>
             <Box>
               <input
-                disabled={view}
+                readOnly={view}
                 type='number'
                 required
                 name={`sadurMeeting-done`}
@@ -211,7 +216,7 @@ export const MarkaziActivities = ({ view }) => {
             </Box>
             <Box>
               <input
-                disabled={view}
+                readOnly={view}
                 type='number'
                 required
                 name={`sadurMeeting-averageAttendance`}
