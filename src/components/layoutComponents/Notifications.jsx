@@ -11,6 +11,7 @@ import { UIContext } from '../../context/ui';
 export const Notifications = ({ userRequests, type }) => {
   const { loading, setLoading } = useContext(UIContext);
   const { dispatch } = useToastState();
+  const { getNazim } = useContext(UIContext);
   const { getAllRequests } = useContext(UIContext);
   const update = async (id, status) => {
     setLoading(true);
@@ -28,6 +29,7 @@ export const Notifications = ({ userRequests, type }) => {
         }
       );
       await getAllRequests();
+      getNazim();
       dispatch({ type: 'SUCCESS', payload: req.data?.message });
     } catch (err) {
       dispatch({ type: 'ERROR', payload: err.response.data.message });

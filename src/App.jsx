@@ -9,6 +9,7 @@ import { ReportChart } from './components/ReportChart';
 import { Signup } from './pages/Signup';
 import { Reports } from './pages/Reports';
 import {
+  DeleteUser,
   Division,
   EditProfile,
   Halqa,
@@ -59,7 +60,7 @@ function App() {
   const [notifications, setNotifications] = useState([]);
   const [reports, setReports] = useState([]);
   let dis;
-  let r;
+  let r = [];
   const [authenticated, setAuthenticaated] = useState(
     localStorage.getItem('@token')
   );
@@ -335,6 +336,9 @@ function App() {
       try {
         let req;
         switch (localStorage.getItem('@type')) {
+          case 'province':
+            req = provinceR;
+            break;
           case 'maqam':
             req = maqamR;
             break;
@@ -345,6 +349,7 @@ function App() {
             req = halqaR;
             break;
           default:
+            req = [];
             break;
         }
         r = req;
@@ -367,7 +372,7 @@ function App() {
         );
         setNotifications(
           req.data?.data.filter((i) => {
-            const months = r.map((_) =>
+            const months = r?.map((_) =>
               _.month.split('-').slice(0, 2).join('-')
             );
             return !months.includes(
@@ -391,7 +396,7 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
-    if (reports.length > 0) getAllNotifications();
+    if (reports?.length > 0) getAllNotifications();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reports]);
 
@@ -499,6 +504,7 @@ function App() {
                               setReports,
                               getAllNotifications,
                               active,
+                              getNazim,
                               setActive,
                             }}
                           >
@@ -590,6 +596,10 @@ function App() {
                                   <Route
                                     path='/locations'
                                     element={<Locations />}
+                                  />
+                                  <Route
+                                    path='/user-switch'
+                                    element={<DeleteUser />}
                                   />
                                 </Routes>
                               </BrowserRouter>
