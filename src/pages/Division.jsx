@@ -301,7 +301,7 @@ export const Division = () => {
     <GeneralLayout>
       <div className='reports h-[calc(100vh-64.4px-64px)] overflow-hidden overflow-y-scroll w-full'>
         <form
-          className='flex w-full flex-col justify-center items-center p-4 font-notoUrdu'
+          className='flex w-full flex-col justify-center items-center p-4 font-notoUrdu mb-5'
           dir='rtl'
           onSubmit={handleSubmit}
           id='division-form'

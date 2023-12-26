@@ -9,6 +9,7 @@ import { ReportChart } from './components/ReportChart';
 import { Signup } from './pages/Signup';
 import { Reports } from './pages/Reports';
 import {
+  DeleteUser,
   Division,
   EditProfile,
   Halqa,
@@ -503,6 +504,7 @@ function App() {
                               setReports,
                               getAllNotifications,
                               active,
+                              getNazim,
                               setActive,
                             }}
                           >
@@ -594,6 +596,10 @@ function App() {
                                   <Route
                                     path='/locations'
                                     element={<Locations />}
+                                  />
+                                  <Route
+                                    path='/user-switch'
+                                    element={<DeleteUser />}
                                   />
                                 </Routes>
                               </BrowserRouter>

@@ -114,7 +114,7 @@ export const Halqa = () => {
           کارکردگی رپورٹ براۓ حلقہ
         </h2>
         <form
-          className='flex flex-col items-center justify-start gap-5 p-3 w-full overflow-auto'
+          className='flex flex-col items-center justify-start gap-5 p-3 w-full overflow-auto mb-5'
           onSubmit={handleReportSubmit}
           dir='rtl'
         >

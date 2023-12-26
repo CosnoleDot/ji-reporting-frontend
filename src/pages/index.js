@@ -4,5 +4,6 @@ export * from './Locations';
 export * from './Halqa';
 export * from './Maqam';
 export * from './Province';
+export * from './DeleteUser';
 export * from './Division';
 export * from './LoadingScreen';

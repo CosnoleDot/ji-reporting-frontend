@@ -362,7 +362,7 @@ export const Province = () => {
     <GeneralLayout>
       <div className='reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll'>
         <form
-          className='flex flex-col justify-center items-center p-4 font-notoUrdu'
+          className='flex flex-col justify-center items-center p-4 font-notoUrdu mb-5'
           dir='rtl'
           onSubmit={handleSubmit}
           id='province-form'
