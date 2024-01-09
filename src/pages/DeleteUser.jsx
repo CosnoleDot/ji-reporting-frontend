@@ -265,7 +265,7 @@ export const DeleteUser = () => {
               <div>
                 <label className="label">
                   <span className="text-base label-text">
-                    Year of becoming rukan/umeedwar
+                    Date of becoming rukan/umeedwar
                   </span>
                 </label>
                 <input
@@ -380,6 +380,23 @@ export const DeleteUser = () => {
                         type="radio"
                         name="userAreaType"
                         className="radio checked:bg-blue-500"
+                        checked={userAreaType === "Province"}
+                        value="Province"
+                        onChange={(e) => {
+                          setUserAreaType(e.target.value);
+                          setSearchArea("");
+                          document.getElementById("autocomplete").value = "";
+                        }}
+                      />
+                      <span className="label-text">Province</span>
+                    </label>
+                  </div>
+                  <div className="form-control">
+                    <label className="label cursor-pointer gap-2">
+                      <input
+                        type="radio"
+                        name="userAreaType"
+                        className="radio checked:bg-blue-500"
                         checked={userAreaType === "Division"}
                         value="Division"
                         onChange={(e) => {
@@ -423,23 +440,6 @@ export const DeleteUser = () => {
                         }}
                       />
                       <span className="label-text">Halqa</span>
-                    </label>
-                  </div>
-                  <div className="form-control">
-                    <label className="label cursor-pointer gap-2">
-                      <input
-                        type="radio"
-                        name="userAreaType"
-                        className="radio checked:bg-blue-500"
-                        checked={userAreaType === "Province"}
-                        value="Province"
-                        onChange={(e) => {
-                          setUserAreaType(e.target.value);
-                          setSearchArea("");
-                          document.getElementById("autocomplete").value = "";
-                        }}
-                      />
-                      <span className="label-text">Province</span>
                     </label>
                   </div>
                 </div>
