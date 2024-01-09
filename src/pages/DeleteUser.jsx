@@ -261,22 +261,24 @@ export const DeleteUser = () => {
                     className="w-full input input-bordered input-primary"
                   />
                 </div>
-                <div>
-                  <label className="label">
-                    <span className="text-base label-text">JoiningDate</span>
-                  </label>
-                  <input
-                    type="year"
-                    placeholder="JoiningDate"
-                    name="joiningDate"
-                    className="w-full input input-bordered input-primary"
-                  />
-                </div>
+              </div>
+              <div>
+                <label className="label">
+                  <span className="text-base label-text">
+                    Year of becoming rukan/umeedwar
+                  </span>
+                </label>
+                <input
+                  type="year"
+                  placeholder="JoiningDate"
+                  name="joiningDate"
+                  className="w-full input input-bordered input-primary"
+                />
               </div>
               <div className="flex items-center justify-between">
                 <div>
                   <label className="label">
-                    <span className="text-base label-text">Date of birth</span>
+                    <span className="text-base label-text">Year of birth</span>
                   </label>
                   <input
                     type="date"
@@ -287,7 +289,7 @@ export const DeleteUser = () => {
                 </div>
                 <div>
                   <label className="label">
-                    <span className="text-base label-text">Address</span>
+                    <span className="text-base label-text">City </span>
                   </label>
                   <textarea
                     placeholder="Address"
@@ -369,7 +371,7 @@ export const DeleteUser = () => {
 
               <div>
                 <span className="px-1 py-2 block font-semibold">
-                  Nazim Type:
+                  Organization pocket:
                 </span>
                 <div className="flex items-center justify-between border border-primary p-2 rounded-lg">
                   <div className="form-control">
@@ -423,14 +425,29 @@ export const DeleteUser = () => {
                       <span className="label-text">Halqa</span>
                     </label>
                   </div>
+                  <div className="form-control">
+                    <label className="label cursor-pointer gap-2">
+                      <input
+                        type="radio"
+                        name="userAreaType"
+                        className="radio checked:bg-blue-500"
+                        checked={userAreaType === "Province"}
+                        value="Province"
+                        onChange={(e) => {
+                          setUserAreaType(e.target.value);
+                          setSearchArea("");
+                          document.getElementById("autocomplete").value = "";
+                        }}
+                      />
+                      <span className="label-text">Province</span>
+                    </label>
+                  </div>
                 </div>
               </div>
 
               {/* NAZIM TYPES */}
               <div>
-                <span className="px-1 py-2 block font-semibold">
-                  Nazim status:
-                </span>
+                <span className="px-1 py-2 block font-semibold">Status:</span>
                 <div className="flex items-center justify-between border border-primary p-2 rounded-lg">
                   <div className="form-control">
                     <label className="label cursor-pointer gap-2">
