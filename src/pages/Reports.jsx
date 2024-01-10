@@ -27,33 +27,41 @@ const NoReports = () => (
 export const months = [
   {
     title: "January",
+    title: "January",
     value: 1,
   },
   {
+    title: "February",
     title: "February",
     value: 2,
   },
   {
     title: "March",
+    title: "March",
     value: 3,
   },
   {
+    title: "April",
     title: "April",
     value: 4,
   },
   {
     title: "May",
+    title: "May",
     value: 5,
   },
   {
+    title: "June",
     title: "June",
     value: 6,
   },
   {
     title: "July",
+    title: "July",
     value: 7,
   },
   {
+    title: "August",
     title: "August",
     value: 8,
   },
@@ -83,7 +91,7 @@ export const Reports = () => {
   const [isMobileView, setIsMobileView] = useState(false);
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("2023");
-  const [filerData, setFilterData] = useState([]);
+  const [filterData, setFilterData] = useState([]);
   const me = useContext(MeContext);
   const { dispatch } = useToastState();
   const [tab, setTab] = useState(
@@ -91,6 +99,7 @@ export const Reports = () => {
       ? "maqam"
       : "division"
   );
+  const [id, setId] = useState(null);
   const { active, setActive } = useContext(UIContext);
   const [filterAllData, setFilterAllData] = useState({});
 
@@ -105,6 +114,7 @@ export const Reports = () => {
   const [halqas, setHalqas] = useState([]);
   const [userAreaType, setUserAreaType] = useState("Division");
   const [selectedId, setSelectedId] = useState("");
+  const [selectedMonth, setSelectedMonth] = useState("");
   const params = useLocation();
   const fetchData = async () => {
     const response = await instance.get("/locations/halqa");
@@ -122,10 +132,10 @@ export const Reports = () => {
     const getQueryParams = () => {
       const searchParams = new URLSearchParams(params.search);
       const queryParams = {};
-
       for (let [key, value] of searchParams.entries()) {
         queryParams[key] = value;
       }
+      if (queryParams?.areaId) setId(queryParams.areaId);
       if (queryParams?.active) setActive(queryParams?.active);
       if (queryParams?.tab) setTab(queryParams?.tab);
     };
@@ -134,6 +144,20 @@ export const Reports = () => {
     getQueryParams();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
+  const fetchPersonReports = async (e) => {
+    try {
+      const params = { id, active };
+      const request = await instance.get("/user/reports", {
+        params: params,
+        headers: { "Content-Type": "application/json" },
+      });
+
+      dispatch({ type: "SUCCESS", payload: request.data?.message });
+      e.target.reset();
+    } catch (err) {
+      dispatch({ type: "ERROR", payload: err.response.data.message });
+    }
+  };
 
   const toggleSearch = () => {
     showSearch(!search);
@@ -180,25 +204,112 @@ export const Reports = () => {
         const h = halqaReports;
         const d = divisionReports;
         const p = provinceReports;
-
         setAllReports({
-          maqam: m,
-          halqa: document.getElementById("userAreaId").value
-            ? h.filter(
-                (i) =>
-                  document.getElementById("userAreaId").value ===
-                  i?.i?.maqamAreaId
-              )
-            : m,
-          division: d,
-          province: p,
+          maqam: id ? m.filter((i) => i?.maqamAreaId?._id === id) : m,
+          halqa: id ? h.filter((i) => i?.halqaAreaId?._id === id) : h,
+          division: id ? d.filter((i) => i?.divisionAreaId?._id === id) : d,
+          province: id ? p.filter((i) => i?.provinceAreaId?._id === id) : p,
         });
         setFilterAllData({
-          maqam: m,
-          halqa: h,
-          division: d,
-          province: p,
+          maqam: id ? m.filter((i) => i?.maqamAreaId?._id === id) : m,
+          halqa: id ? h.filter((i) => i?.halqaAreaId?._id === id) : h,
+          division: id ? d.filter((i) => i?.divisionAreaId?._id === id) : d,
+          province: id ? p.filter((i) => i?.provinceAreaId?._id === id) : p,
         });
+        if (selectedId && selectedMonth) {
+          console.log(selectedId, selectedMonth);
+          setAllReports({
+            maqam: selectedId
+              ? m.filter(
+                  (i) =>
+                    i?.maqamAreaId?._id === selectedId &&
+                    parseInt(i?.createdAt.getMonth) === parseInt(selectedMonth)
+                )
+              : m,
+            halqa: selectedId
+              ? h.filter(
+                  (i) =>
+                    i?.halqaAreaId?._id === selectedId &&
+                    parseInt(i?.createdAt.getMonth) === parseInt(selectedMonth)
+                )
+              : h,
+            division: selectedId
+              ? d.filter(
+                  (i) =>
+                    i?.divisionAreaId?._id === selectedId &&
+                    parseInt(i?.createdAt.getMonth) === parseInt(selectedMonth)
+                )
+              : d,
+            province: selectedId
+              ? p.filter(
+                  (i) =>
+                    i?.provinceAreaId?._id === selectedId &&
+                    parseInt(i?.createdAt.getMonth) === parseInt(selectedMonth)
+                )
+              : p,
+          });
+          setFilterAllData({
+            maqam: selectedId
+              ? m.filter(
+                  (i) =>
+                    i?.maqamAreaId?._id === selectedId &&
+                    parseInt(i?.createdAt.getMonth) === parseInt(selectedMonth)
+                )
+              : m,
+            halqa: selectedId
+              ? h.filter(
+                  (i) =>
+                    i?.halqaAreaId?._id === selectedId &&
+                    parseInt(i?.createdAt.getMonth) === parseInt(selectedMonth)
+                )
+              : h,
+            division: selectedId
+              ? d.filter(
+                  (i) =>
+                    i?.divisionAreaId?._id === selectedId &&
+                    parseInt(i?.createdAt.getMonth) === parseInt(selectedMonth)
+                )
+              : d,
+            province: selectedId
+              ? p.filter(
+                  (i) =>
+                    i?.provinceAreaId?._id === selectedId &&
+                    parseInt(i?.createdAt.getMonth) === parseInt(selectedMonth)
+                )
+              : p,
+          });
+        }
+        if (selectedId && !selectedMonth) {
+          console.log(selectedId);
+          setAllReports({
+            maqam: selectedId
+              ? m.filter((i) => i?.maqamAreaId?._id === selectedId)
+              : m,
+            halqa: selectedId
+              ? h.filter((i) => i?.halqaAreaId?._id === selectedId)
+              : h,
+            division: selectedId
+              ? d.filter((i) => i?.divisionAreaId?._id === selectedId)
+              : d,
+            province: selectedId
+              ? p.filter((i) => i?.provinceAreaId?._id === selectedId)
+              : p,
+          });
+          setFilterAllData({
+            maqam: selectedId
+              ? m.filter((i) => i?.maqamAreaId?._id === selectedId)
+              : m,
+            halqa: selectedId
+              ? h.filter((i) => i?.halqaAreaId?._id === selectedId)
+              : h,
+            division: selectedId
+              ? d.filter((i) => i?.divisionAreaId?._id === selectedId)
+              : d,
+            province: selectedId
+              ? p.filter((i) => i?.provinceAreaId?._id === selectedId)
+              : p,
+          });
+        }
       } else {
         switch (userType) {
           case "province":
@@ -224,16 +335,20 @@ export const Reports = () => {
       console.error("Error fetching reports:", error);
     }
   };
+
   const clearFilters = () => {
     setMonth("");
     setYear("2023");
     setFilterAllData(allReports);
     setFilterData(reports);
+    setSelectedId(null);
+    setSelectedMonth("");
+    document.getElementById("autocomplete").value = "";
   };
   useEffect(() => {
     fetchReports();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userType, document.getElementById("userAreaId").value]);
+  }, [userType, id, active, tab, selectedId]);
 
   const searchResults = () => {
     if (userType !== "halqa") {
@@ -301,7 +416,6 @@ export const Reports = () => {
       }
     }
   };
-
   useEffect(() => {
     if (window) {
       if (window.innerWidth < 520) {
@@ -314,12 +428,6 @@ export const Reports = () => {
     setUserType(localStorage.getItem("@type"));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localStorage]);
-  let show = false;
-  useEffect(() => {
-    if (!show) setSelectedId(document.getElementById("userAreaId").value);
-    show = true;
-  }, [document.getElementById("userAreaId").value]);
-  console.log(selectedId);
   const sendNotification = async () => {
     try {
       const req = await instance.post(
@@ -347,20 +455,35 @@ export const Reports = () => {
           <h3 className="font-bold text-xl hidden lg:block xl:block">
             Reports
           </h3>
-          <dialog id="my_modal_3" className="modal ">
+          <dialog id="filter-area-dialog" className="modal">
             <div className="modal-box h-[300px]">
-              <form method="dialog">
-                <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+              <form method="dialog" className="mb-3">
+                <button
+                  id="filter-area-dialog-close-btn"
+                  className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+                  onClick={() => {
+                    if (
+                      !document
+                        .getElementById("autocomplete-list")
+                        .classList.contains("hidden")
+                    ) {
+                      document
+                        .getElementById("autocomplete-list")
+                        .classList.add("hidden");
+                    }
+                  }}
+                >
                   ✕
                 </button>
               </form>
               <div className="relative">
-                <span className="px-1 py-2 block font-semibold">
+                <span className="px-1 py-2 block font-semibold w-[50%]">
                   Select Area:
                 </span>
                 <input type="hidden" name="userAreaId" id="userAreaId" />
                 <input
                   id="autocomplete"
+                  autoComplete="off"
                   type="text"
                   class="input input-bordered input-primary w-full"
                   placeholder={`Select ${active}`}
@@ -383,7 +506,7 @@ export const Reports = () => {
                 />
                 <div
                   id="autocomplete-list"
-                  class="absolute z-10 max-h-[100px] overflow-y-scroll bg-white border border-gray-300 w-full mt-1"
+                  class="absolute z-10 hidden max-h-[100px] overflow-y-scroll bg-white border border-gray-300 w-full mt-1"
                 >
                   {areas
                     .sort((a, b) => a?.name?.localeCompare(b?.name))
@@ -406,8 +529,12 @@ export const Reports = () => {
                       <div
                         key={index}
                         onClick={() => {
+                          document
+                            .getElementById("filter-area-dialog-close-btn")
+                            .click();
                           document.getElementById("userAreaId").value =
                             area?._id;
+                          setSelectedId(area?._id);
                           document.getElementById("autocomplete").value = `${
                             area?.name
                           }${
@@ -418,6 +545,15 @@ export const Reports = () => {
                           document
                             .getElementById("autocomplete-list")
                             .classList.add("hidden");
+                          if (
+                            !document
+                              .getElementById("autocomplete-list")
+                              .classList.contains("hidden")
+                          ) {
+                            document
+                              .getElementById("autocomplete-list")
+                              .classList.add("hidden");
+                          }
                         }}
                         className="p-2 cursor-pointer hover:bg-gray-100"
                       >
@@ -428,16 +564,16 @@ export const Reports = () => {
                       </div>
                     ))}
                 </div>
+                <input
+                  type="month"
+                  name="month"
+                  className="w-full input input-bordered input-primary"
+                  onChange={(e) => setSelectedMonth(e.target.value)}
+                />
               </div>
             </div>
           </dialog>
 
-          <button
-            onClick={() => document.getElementById("my_modal_3").showModal()}
-            className="btn btn-primary border-none"
-          >
-            filter
-          </button>
           <div className="join xs:w-full">
             {!isMobileView && (
               <div className="w-full">
@@ -520,6 +656,14 @@ export const Reports = () => {
                 }
               >
                 Search
+              </button>
+              <button
+                onClick={() =>
+                  document.getElementById("filter-area-dialog").showModal()
+                }
+                className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
+              >
+                filter
               </button>
               <button
                 className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
@@ -750,10 +894,10 @@ export const Reports = () => {
                 )
               )
             )
-          ) : filerData?.length < 1 ? (
+          ) : filterData?.length < 1 ? (
             <NoReports />
           ) : (
-            filerData
+            filterData
               .sort((a, b) => a.createdAt - b.createdAt)
               ?.map((obj) => (
                 <div
