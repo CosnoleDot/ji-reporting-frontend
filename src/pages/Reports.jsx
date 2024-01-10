@@ -1,7 +1,7 @@
-import { FaEdit, FaEye, FaPlus } from 'react-icons/fa';
-import { GeneralLayout } from '../components';
-import { useContext, useEffect, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router';
+import { FaEdit, FaEye, FaPlus } from "react-icons/fa";
+import { GeneralLayout } from "../components";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router";
 import {
   DivisionReportContext,
   HalqaReportContext,
@@ -9,68 +9,68 @@ import {
   MeContext,
   ProvinceReportContext,
   useToastState,
-} from '../context';
-import instance from '../api/instrance';
-import moment from 'moment/moment';
-import { Link } from 'react-router-dom';
-import { FaRegFileExcel } from 'react-icons/fa';
-import { AiFillBell } from 'react-icons/ai';
-import { UIContext } from '../context/ui';
+} from "../context";
+import instance from "../api/instrance";
+import moment from "moment/moment";
+import { Link } from "react-router-dom";
+import { FaRegFileExcel } from "react-icons/fa";
+import { AiFillBell } from "react-icons/ai";
+import { UIContext } from "../context/ui";
 
 const NoReports = () => (
-  <div className='card-body flex flex-col items-center justify-center w-full p-5 mb-1 rounded-xl'>
-    <FaRegFileExcel className='text-gray-300 w-40 h-40' />
-    <span className='text-gray-300 font-bold text-3xl'>No Reports Found!</span>
+  <div className="card-body flex flex-col items-center justify-center w-full p-5 mb-1 rounded-xl">
+    <FaRegFileExcel className="text-gray-300 w-40 h-40" />
+    <span className="text-gray-300 font-bold text-3xl">No Reports Found!</span>
   </div>
 );
 
 export const months = [
   {
-    title: 'January',
+    title: "January",
     value: 1,
   },
   {
-    title: 'February',
+    title: "February",
     value: 2,
   },
   {
-    title: 'March',
+    title: "March",
     value: 3,
   },
   {
-    title: 'April',
+    title: "April",
     value: 4,
   },
   {
-    title: 'May',
+    title: "May",
     value: 5,
   },
   {
-    title: 'June',
+    title: "June",
     value: 6,
   },
   {
-    title: 'July',
+    title: "July",
     value: 7,
   },
   {
-    title: 'August',
+    title: "August",
     value: 8,
   },
   {
-    title: 'September',
+    title: "September",
     value: 9,
   },
   {
-    title: 'October',
+    title: "October",
     value: 10,
   },
   {
-    title: 'November',
+    title: "November",
     value: 11,
   },
   {
-    title: 'December',
+    title: "December",
     value: 12,
   },
 ];
@@ -78,24 +78,25 @@ export const Reports = () => {
   const [reports, setReports] = useState([]);
   const [allReports, setAllReports] = useState([]);
   const navigate = useNavigate();
-  const [userType, setUserType] = useState(localStorage.getItem('@type'));
+  const [userType, setUserType] = useState(localStorage.getItem("@type"));
   const [search, showSearch] = useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
-  const [month, setMonth] = useState('');
-  const [year, setYear] = useState('2023');
-  const [filerData, setFilterData] = useState([]);
+  const [month, setMonth] = useState("");
+  const [year, setYear] = useState("2023");
+  const [filterData, setFilterData] = useState([]);
   const me = useContext(MeContext);
   const { dispatch } = useToastState();
   const [tab, setTab] = useState(
-    ['province', 'maqam'].includes(localStorage.getItem('@type'))
-      ? 'maqam'
-      : 'division'
+    ["province", "maqam"].includes(localStorage.getItem("@type"))
+      ? "maqam"
+      : "division"
   );
+  const [id, setId] = useState(null);
   const { active, setActive } = useContext(UIContext);
   const [filterAllData, setFilterAllData] = useState({});
 
   // const [showNotification, setShowNotification] = useState(false);
-  const [notifyTo, setNotifyTo] = useState('halqa');
+  const [notifyTo, setNotifyTo] = useState("halqa");
   const maqamReports = useContext(MaqamReportContext);
   const divisionReports = useContext(DivisionReportContext);
   const halqaReports = useContext(HalqaReportContext);
@@ -108,10 +109,10 @@ export const Reports = () => {
     const getQueryParams = () => {
       const searchParams = new URLSearchParams(params.search);
       const queryParams = {};
-
       for (let [key, value] of searchParams.entries()) {
         queryParams[key] = value;
       }
+      if (queryParams?.areaId) setId(queryParams.areaId);
       if (queryParams?.active) setActive(queryParams?.active);
       if (queryParams?.tab) setTab(queryParams?.tab);
     };
@@ -120,6 +121,23 @@ export const Reports = () => {
     getQueryParams();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
+  const fetchPersonReports = async (e) => {
+    try {
+      const params = { id, active };
+      const request = await instance.get("/user/reports", {
+        params: params,
+        headers: { "Content-Type": "application/json" },
+      });
+
+      dispatch({ type: "SUCCESS", payload: request.data?.message });
+      e.target.reset();
+    } catch (err) {
+      dispatch({ type: "ERROR", payload: err.response.data.message });
+    }
+  };
+  // useEffect(() => {
+  //   fetchPersonReports();
+  // }, [id]);
 
   const toggleSearch = () => {
     showSearch(!search);
@@ -137,36 +155,35 @@ export const Reports = () => {
   const fetchReports = async () => {
     try {
       let response;
-      if (userType !== 'halqa') {
+      if (userType !== "halqa") {
         const m = maqamReports;
         const h = halqaReports;
         const d = divisionReports;
         const p = provinceReports;
-
         setAllReports({
-          maqam: m,
-          halqa: h,
-          division: d,
-          province: p,
+          maqam: id ? m.filter((i) => i?.halqaAreaId?._id === id) : m,
+          halqa: id ? h.filter((i) => i?.halqaAreaId?._id === id) : h,
+          division: id ? d.filter((i) => i?.halqaAreaId?._id === id) : d,
+          province: id ? p.filter((i) => i?.halqaAreaId?._id === id) : p,
         });
         setFilterAllData({
-          maqam: m,
-          halqa: h,
-          division: d,
-          province: p,
+          maqam: id ? m.filter((i) => i?.halqaAreaId?._id === id) : m,
+          halqa: id ? h.filter((i) => i?.halqaAreaId?._id === id) : h,
+          division: id ? d.filter((i) => i?.halqaAreaId?._id === id) : d,
+          province: id ? p.filter((i) => i?.halqaAreaId?._id === id) : p,
         });
       } else {
         switch (userType) {
-          case 'province':
+          case "province":
             response = provinceReports;
             break;
-          case 'maqam':
+          case "maqam":
             response = maqamReports;
             break;
-          case 'division':
+          case "division":
             response = divisionReports;
             break;
-          case 'halqa':
+          case "halqa":
             response = halqaReports;
             break;
           default:
@@ -177,28 +194,28 @@ export const Reports = () => {
         setFilterData(data);
       }
     } catch (error) {
-      console.error('Error fetching reports:', error);
+      console.error("Error fetching reports:", error);
     }
   };
   const clearFilters = () => {
-    setMonth('');
-    setYear('2023');
+    setMonth("");
+    setYear("2023");
     setFilterAllData(allReports);
     setFilterData(reports);
   };
   useEffect(() => {
     fetchReports();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userType]);
+  }, [userType, id, active, tab]);
 
   const searchResults = () => {
-    if (userType !== 'halqa') {
-      if (year !== '' && month !== '') {
+    if (userType !== "halqa") {
+      if (year !== "" && month !== "") {
         const filteredData = { ...allReports };
         filteredData[active] = allReports[active]?.filter((i) => {
           const [f_year, f_month] = [
-            i?.month?.split('-')[0],
-            i?.month?.split('-')[1],
+            i?.month?.split("-")[0],
+            i?.month?.split("-")[1],
           ];
           return (
             parseInt(year) === parseInt(f_year) &&
@@ -207,28 +224,28 @@ export const Reports = () => {
         });
         showSearch(false);
         setFilterAllData(filteredData);
-      } else if (year !== '' && month === '') {
+      } else if (year !== "" && month === "") {
         const filteredData = { ...allReports };
         filteredData[active] = allReports[active]?.filter((i) => {
-          const f_year = i?.month?.split('-')[0];
+          const f_year = i?.month?.split("-")[0];
           return parseInt(year) === parseInt(f_year);
         });
         showSearch(false);
         setFilterAllData(filteredData);
-      } else if (year === '' && month !== '') {
-        dispatch({ type: 'ERROR', payload: 'Enter year with month' });
+      } else if (year === "" && month !== "") {
+        dispatch({ type: "ERROR", payload: "Enter year with month" });
         setFilterAllData(allReports);
-      } else if (year === '' && month === '') {
-        dispatch({ type: 'ERROR', payload: 'Date is required' });
+      } else if (year === "" && month === "") {
+        dispatch({ type: "ERROR", payload: "Date is required" });
         setFilterAllData(allReports);
       } else {
         setFilterAllData(allReports);
       }
     } else {
-      if (year !== '' && month !== '') {
+      if (year !== "" && month !== "") {
         const filteredData = reports?.reduce((acc, curr) => {
-          const reportYear = parseInt((curr?.month).split('-')[0]);
-          const reportMonth = parseInt((curr?.month).split('-')[1]);
+          const reportYear = parseInt((curr?.month).split("-")[0]);
+          const reportMonth = parseInt((curr?.month).split("-")[1]);
           if (
             reportMonth === parseInt(month) &&
             reportYear === parseInt(year)
@@ -239,25 +256,25 @@ export const Reports = () => {
         }, []);
         showSearch(false);
         setFilterData(filteredData);
-      } else if (year !== '' && month === '') {
+      } else if (year !== "" && month === "") {
         const filteredData = reports?.filter((curr) => {
-          const reportedYear = (curr?.month).split('-')[0];
+          const reportedYear = (curr?.month).split("-")[0];
           return parseInt(reportedYear) === parseInt(year);
         });
         showSearch(false);
         setFilterData(filteredData);
-      } else if (year === '' && month !== '') {
-        dispatch({ type: 'ERROR', payload: 'Enter year with month' });
+      } else if (year === "" && month !== "") {
+        dispatch({ type: "ERROR", payload: "Enter year with month" });
         setFilterData(reports);
-      } else if (year === '' && month === '') {
-        dispatch({ type: 'ERROR', payload: 'Date is required' });
+      } else if (year === "" && month === "") {
+        dispatch({ type: "ERROR", payload: "Date is required" });
         setFilterData(reports);
       } else {
         setFilterData(reports);
       }
     }
   };
-
+  console.log(filterAllData);
   useEffect(() => {
     if (window) {
       if (window.innerWidth < 520) {
@@ -267,46 +284,46 @@ export const Reports = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [window.innerWidth]);
   useEffect(() => {
-    setUserType(localStorage.getItem('@type'));
+    setUserType(localStorage.getItem("@type"));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localStorage]);
 
   const sendNotification = async () => {
     try {
       const req = await instance.post(
-        '/notifications',
-        { created_for: notifyTo, content: 'Please fill your area reports' },
+        "/notifications",
+        { created_for: notifyTo, content: "Please fill your area reports" },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('@token')}`,
-            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+            "Content-Type": "application/json",
           },
         }
       );
-      dispatch({ type: 'SUCCESS', payload: req.data?.message });
+      dispatch({ type: "SUCCESS", payload: req.data?.message });
     } catch (err) {
-      dispatch({ type: 'ERROR', payload: err.response.data.message });
+      dispatch({ type: "ERROR", payload: err.response.data.message });
     }
   };
   return (
     <GeneralLayout
       title={me?.userAreaId?.name.toUpperCase()}
-      active={'reports'}
+      active={"reports"}
     >
-      <div className='relative flex flex-col gap-3 items-center p-5 justify-center h-[calc(100vh-65.6px-64px)]'>
-        <div className='flex w-full items-center justify-between xs:flex-col'>
-          <h3 className='font-bold text-xl hidden lg:block xl:block'>
+      <div className="relative flex flex-col gap-3 items-center p-5 justify-center h-[calc(100vh-65.6px-64px)]">
+        <div className="flex w-full items-center justify-between xs:flex-col">
+          <h3 className="font-bold text-xl hidden lg:block xl:block">
             Reports
           </h3>
-          <div className='join xs:w-full'>
+          <div className="join xs:w-full">
             {!isMobileView && (
-              <div className='w-full'>
+              <div className="w-full">
                 <select
-                  className='select select-bordered join-item'
+                  className="select select-bordered join-item"
                   onChange={(e) => setMonth(e.target.value)}
                   value={month}
                 >
-                  <option value={''}>Month</option>
+                  <option value={""}>Month</option>
                   {months.map((month, index) => (
                     <option value={month?.value} key={index}>
                       {month.title}
@@ -314,11 +331,11 @@ export const Reports = () => {
                   ))}
                 </select>
                 <select
-                  className='select select-bordered join-item'
+                  className="select select-bordered join-item"
                   onChange={(e) => setYear(e.target.value)}
                   value={year}
                 >
-                  <option disabled value={''}>
+                  <option disabled value={""}>
                     Year
                   </option>
                   {Array(10)
@@ -332,15 +349,15 @@ export const Reports = () => {
               </div>
             )}
             {search && (
-              <div className='fixed p-3 z-40 rounded-lg top-[140px] left-[5px] w-[calc(100%-10px)] overflow-hidden bg-white min-h-[100px] border'>
-                <div className='flex flex-col gap-3'>
-                  <div className='w-full flex flex-col'>
+              <div className="fixed p-3 z-40 rounded-lg top-[140px] left-[5px] w-[calc(100%-10px)] overflow-hidden bg-white min-h-[100px] border">
+                <div className="flex flex-col gap-3">
+                  <div className="w-full flex flex-col">
                     <select
-                      className='select select-bordered w-full rounded-none rounded-tl-lg rounded-tr-lg'
+                      className="select select-bordered w-full rounded-none rounded-tl-lg rounded-tr-lg"
                       onChange={(e) => setMonth(e.target.value)}
                       value={month}
                     >
-                      <option value={''}>Month</option>
+                      <option value={""}>Month</option>
                       {months.map((month, index) => (
                         <option value={month?.value} key={index}>
                           {month.title}
@@ -348,11 +365,11 @@ export const Reports = () => {
                       ))}
                     </select>
                     <select
-                      className='select select-bordered w-full rounded-none rounded-bl-lg rounded-br-lg'
+                      className="select select-bordered w-full rounded-none rounded-bl-lg rounded-br-lg"
                       value={year}
                       onChange={(e) => setYear(e.target.value)}
                     >
-                      <option value={''} disabled>
+                      <option value={""} disabled>
                         Year
                       </option>
                       {Array(10)
@@ -364,17 +381,17 @@ export const Reports = () => {
                         ))}
                     </select>
                   </div>
-                  <button className='btn' onClick={searchResults}>
+                  <button className="btn" onClick={searchResults}>
                     Search
                   </button>
                 </div>
               </div>
             )}
 
-            <div className='indicator '>
+            <div className="indicator ">
               {/* <span className='indicator-item badge badge-secondary'>new</span> */}
               <button
-                className={`btn ${!isMobileView ? 'join-item' : ''}`}
+                className={`btn ${!isMobileView ? "join-item" : ""}`}
                 onClick={() =>
                   !isMobileView ? searchResults() : toggleSearch()
                 }
@@ -382,50 +399,50 @@ export const Reports = () => {
                 Search
               </button>
               <button
-                className={`btn ${!isMobileView ? 'join-item' : 'ms-3'}`}
+                className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
                 onClick={clearFilters}
               >
                 Clear
               </button>
               {isMobileView &&
-                active !== 'province' &&
+                active !== "province" &&
                 !(
-                  active === 'maqam' &&
-                  localStorage.getItem('@type') === 'maqam'
+                  active === "maqam" &&
+                  localStorage.getItem("@type") === "maqam"
                 ) &&
                 !(
-                  active === 'division' &&
-                  localStorage.getItem('@type') === 'division'
+                  active === "division" &&
+                  localStorage.getItem("@type") === "division"
                 ) &&
-                localStorage.getItem('@type') !== 'halqa' && (
+                localStorage.getItem("@type") !== "halqa" && (
                   <button
                     onClick={sendNotification}
-                    className={`btn ${!isMobileView ? 'join-item' : 'ms-3'}`}
+                    className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
                   >
                     <AiFillBell />
                   </button>
                 )}
             </div>
           </div>
-          <div className='flex justify-end items-center gap-4'>
-            <button className='btn ' onClick={handleReport}>
+          <div className="flex justify-end items-center gap-4">
+            <button className="btn " onClick={handleReport}>
               <FaPlus />
-              <span className='hidden lg:block xl:block'>New Report</span>
+              <span className="hidden lg:block xl:block">New Report</span>
             </button>
 
             {!isMobileView &&
-              active !== 'province' &&
+              active !== "province" &&
               !(
-                active === 'maqam' && localStorage.getItem('@type') === 'maqam'
+                active === "maqam" && localStorage.getItem("@type") === "maqam"
               ) &&
               !(
-                active === 'division' &&
-                localStorage.getItem('@type') === 'division'
+                active === "division" &&
+                localStorage.getItem("@type") === "division"
               ) &&
-              localStorage.getItem('@type') !== 'halqa' && (
+              localStorage.getItem("@type") !== "halqa" && (
                 <button
                   onClick={sendNotification}
-                  className={`btn ${!isMobileView ? 'join-item' : 'ms-3'}`}
+                  className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
                 >
                   <AiFillBell />
                 </button>
@@ -434,115 +451,115 @@ export const Reports = () => {
         </div>
         {/* localStorage.getItem('@type') === 'province' && ( */}
         <div
-          role='tablist'
-          className='w-full flex justify-between items-center'
+          role="tablist"
+          className="w-full flex justify-between items-center"
         >
-          {['province'].includes(localStorage.getItem('@type')) && (
+          {["province"].includes(localStorage.getItem("@type")) && (
             <Link
-              to={'?active=province'}
-              role='tab'
+              to={"?active=province"}
+              role="tab"
               className={`tab w-full ${
-                active === 'province' ? 'tab-active bg-slate-200' : ''
+                active === "province" ? "tab-active bg-slate-200" : ""
               }`}
-              onClick={() => setNotifyTo('province')}
+              onClick={() => setNotifyTo("province")}
             >
               Province
             </Link>
           )}
-          {['province', 'division'].includes(localStorage.getItem('@type')) && (
+          {["province", "division"].includes(localStorage.getItem("@type")) && (
             <Link
-              to={'?active=division'}
-              role='tab'
+              to={"?active=division"}
+              role="tab"
               className={`tab w-full ${
-                active === 'division' ? 'tab-active' : ''
+                active === "division" ? "tab-active" : ""
               }`}
-              onClick={() => setNotifyTo('division')}
+              onClick={() => setNotifyTo("division")}
             >
               Division
             </Link>
           )}
-          {['province', 'maqam'].includes(localStorage.getItem('@type')) && (
+          {["province", "maqam"].includes(localStorage.getItem("@type")) && (
             <Link
-              to={'?active=maqam'}
-              role='tab'
-              className={`tab w-full ${active === 'maqam' ? 'tab-active' : ''}`}
-              onClick={() => setNotifyTo('maqam')}
+              to={"?active=maqam"}
+              role="tab"
+              className={`tab w-full ${active === "maqam" ? "tab-active" : ""}`}
+              onClick={() => setNotifyTo("maqam")}
             >
               Maqam
             </Link>
           )}
 
-          {['province', 'maqam', 'division'].includes(
-            localStorage.getItem('@type')
+          {["province", "maqam", "division"].includes(
+            localStorage.getItem("@type")
           ) && (
             <Link
-              to={'?active=halqa'}
-              role='tab'
-              className={`tab w-full ${active === 'halqa' ? 'tab-active' : ''}`}
-              onClick={() => setNotifyTo('halqa')}
+              to={"?active=halqa"}
+              role="tab"
+              className={`tab w-full ${active === "halqa" ? "tab-active" : ""}`}
+              onClick={() => setNotifyTo("halqa")}
             >
               Halqa
             </Link>
           )}
         </div>
         {/* )} */}
-        {active === 'halqa' && localStorage.getItem('@type') === 'province' && (
+        {active === "halqa" && localStorage.getItem("@type") === "province" && (
           <div
-            role='tablist'
-            className='w-full flex justify-between items-center'
+            role="tablist"
+            className="w-full flex justify-between items-center"
           >
             <Link
-              to={'?active=halqa&tab=maqam'}
-              role='tab'
-              className={`tab w-full ${tab === 'maqam' ? 'tab-active' : ''}`}
+              to={"?active=halqa&tab=maqam"}
+              role="tab"
+              className={`tab w-full ${tab === "maqam" ? "tab-active" : ""}`}
             >
               Maqam Halqa
             </Link>
             <Link
-              to={'?active=halqa&tab=division'}
-              role='tab'
-              className={`tab w-full ${tab === 'division' ? 'tab-active' : ''}`}
+              to={"?active=halqa&tab=division"}
+              role="tab"
+              className={`tab w-full ${tab === "division" ? "tab-active" : ""}`}
             >
               Division Halqa
             </Link>
           </div>
         )}
-        <div className='relative overflow-y-scroll gap-3 w-full items-center p-5 justify-center h-[calc(100vh-65.6px-64px-48px)]'>
-          {userType !== 'halqa' ? (
+        <div className="relative overflow-y-scroll gap-3 w-full items-center p-5 justify-center h-[calc(100vh-65.6px-64px-48px)]">
+          {userType !== "halqa" ? (
             filterAllData[active]?.length < 1 ? (
               <NoReports />
-            ) : active === 'halqa' &&
-              tab === 'division' &&
+            ) : active === "halqa" &&
+              tab === "division" &&
               filterAllData[active]?.filter(
-                (obj) => obj?.halqaAreaId?.parentType === 'Tehsil'
+                (obj) => obj?.halqaAreaId?.parentType === "Tehsil"
               ).length < 1 ? (
               <NoReports />
-            ) : active === 'halqa' &&
-              tab === 'maqam' &&
+            ) : active === "halqa" &&
+              tab === "maqam" &&
               filterAllData[active]?.filter(
-                (obj) => obj?.halqaAreaId?.parentType === 'Maqam'
+                (obj) => obj?.halqaAreaId?.parentType === "Maqam"
               ).length < 1 ? (
               <NoReports />
             ) : (
               filterAllData[active]?.map((obj) =>
-                active === 'halqa' && tab === 'division' ? (
-                  obj?.halqaAreaId?.parentType === 'Tehsil' && (
+                active === "halqa" && tab === "division" ? (
+                  obj?.halqaAreaId?.parentType === "Tehsil" && (
                     <div
                       key={obj?._id}
-                      className='card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col'
+                      className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
                     >
-                      <div className='flex w-full flex-col items-start justify-center'>
-                        <span className='text-lg font-semibold'>
-                          {obj?.[active + 'AreaId']?.name || 'UNKNOWN'} -{' '}
-                          {moment(obj?.month).format('MMMM YYYY')}
+                      <div className="flex w-full flex-col items-start justify-center">
+                        <span className="text-lg font-semibold">
+                          {obj?.[active + "AreaId"]?.name || "UNKNOWN"} -{" "}
+                          {moment(obj?.month).format("MMMM YYYY")}
                         </span>
                         <span>
                           Last Modified: {moment(obj?.updatedAt).fromNow()}
                         </span>
                       </div>
-                      <div className='flex items-end w-full justify-end gap-3 '>
+                      <div className="flex items-end w-full justify-end gap-3 ">
                         <button
-                          className='btn'
+                          className="btn"
                           onClick={() => viewReport(obj?._id)}
                         >
                           <FaEye />
@@ -550,24 +567,24 @@ export const Reports = () => {
                       </div>
                     </div>
                   )
-                ) : active === 'halqa' && tab === 'maqam' ? (
-                  obj?.halqaAreaId?.parentType === 'Maqam' && (
+                ) : active === "halqa" && tab === "maqam" ? (
+                  obj?.halqaAreaId?.parentType === "Maqam" && (
                     <div
                       key={obj?._id}
-                      className='card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col'
+                      className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
                     >
-                      <div className='flex w-full flex-col items-start justify-center'>
-                        <span className='text-lg font-semibold'>
-                          {obj?.[active + 'AreaId']?.name || 'UNKNOWN'} -{' '}
-                          {moment(obj?.month).format('MMMM YYYY')}
+                      <div className="flex w-full flex-col items-start justify-center">
+                        <span className="text-lg font-semibold">
+                          {obj?.[active + "AreaId"]?.name || "UNKNOWN"} -{" "}
+                          {moment(obj?.month).format("MMMM YYYY")}
                         </span>
                         <span>
                           Last Modified: {moment(obj?.updatedAt).fromNow()}
                         </span>
                       </div>
-                      <div className='flex items-end w-full justify-end gap-3 '>
+                      <div className="flex items-end w-full justify-end gap-3 ">
                         <button
-                          className='btn'
+                          className="btn"
                           onClick={() => viewReport(obj?._id)}
                         >
                           <FaEye />
@@ -578,28 +595,28 @@ export const Reports = () => {
                 ) : (
                   <div
                     key={obj?._id}
-                    className='card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col'
+                    className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
                   >
-                    <div className='flex w-full flex-col items-start justify-center'>
-                      <span className='text-lg font-semibold'>
-                        {obj?.[active + 'AreaId']?.name || 'UNKNOWN'} -{' '}
-                        {moment(obj?.month).format('MMMM YYYY')}
+                    <div className="flex w-full flex-col items-start justify-center">
+                      <span className="text-lg font-semibold">
+                        {obj?.[active + "AreaId"]?.name || "UNKNOWN"} -{" "}
+                        {moment(obj?.month).format("MMMM YYYY")}
                       </span>
                       <span>
                         Last Modified: {moment(obj?.updatedAt).fromNow()}
                       </span>
                     </div>
-                    <div className='flex items-end w-full justify-end gap-3 '>
+                    <div className="flex items-end w-full justify-end gap-3 ">
                       <button
-                        className='btn'
+                        className="btn"
                         onClick={() => viewReport(obj?._id)}
                       >
                         <FaEye />
                       </button>
 
-                      {active === localStorage.getItem('@type') && (
+                      {active === localStorage.getItem("@type") && (
                         <button
-                          className='btn'
+                          className="btn"
                           onClick={() => editReport(obj?._id)}
                         >
                           <FaEdit />
@@ -610,33 +627,33 @@ export const Reports = () => {
                 )
               )
             )
-          ) : filerData?.length < 1 ? (
+          ) : filterData?.length < 1 ? (
             <NoReports />
           ) : (
-            filerData
+            filterData
               .sort((a, b) => a.createdAt - b.createdAt)
               ?.map((obj) => (
                 <div
                   key={obj?._id}
-                  className='card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col'
+                  className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
                 >
-                  <div className='flex w-full flex-col items-start justify-center'>
-                    <span className='text-lg font-semibold'>
-                      {moment(obj?.month).format('MMMM YYYY')}
+                  <div className="flex w-full flex-col items-start justify-center">
+                    <span className="text-lg font-semibold">
+                      {moment(obj?.month).format("MMMM YYYY")}
                     </span>
                     <span>
                       Last Modified: {moment(obj?.updatedAt).fromNow()}
                     </span>
                   </div>
-                  <div className='flex items-end w-full justify-end gap-3 '>
+                  <div className="flex items-end w-full justify-end gap-3 ">
                     <button
-                      className='btn'
+                      className="btn"
                       onClick={() => viewReport(obj?._id)}
                     >
                       <FaEye />
                     </button>
                     <button
-                      className='btn'
+                      className="btn"
                       onClick={() => editReport(obj?._id)}
                     >
                       <FaEdit />

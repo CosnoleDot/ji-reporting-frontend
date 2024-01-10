@@ -417,7 +417,7 @@ export const Signup = () => {
           {/* NAZIM TYPES */}
           <div>
             <span className="px-1 py-2 block font-semibold"> Status:</span>
-            <div className="flex items-center justify-between border border-primary p-2 rounded-lg">
+            <div className="flex  flex-wrap items-center justify-between border border-primary p-2 rounded-lg">
               <div className="form-control">
                 <label className="label cursor-pointer gap-2">
                   <input
@@ -458,6 +458,23 @@ export const Signup = () => {
                     type="radio"
                     name="nazimType"
                     className="radio checked:bg-blue-500"
+                    checked={nazimType === "rukan-nazim"}
+                    value="rukan-nazim"
+                    onChange={(e) => {
+                      setNazimType(e.target.value);
+                      setSearchArea("");
+                      document.getElementById("autocomplete").value = "";
+                    }}
+                  />
+                  <span className="label-text">Rukan-Nazim</span>
+                </label>
+              </div>
+              <div className="form-control">
+                <label className="label cursor-pointer gap-2">
+                  <input
+                    type="radio"
+                    name="nazimType"
+                    className="radio checked:bg-blue-500"
                     checked={nazimType === "umeedwaar"}
                     value="umeedwaar"
                     onChange={(e) => {
@@ -467,6 +484,23 @@ export const Signup = () => {
                     }}
                   />
                   <span className="label-text">Umeedwaar</span>
+                </label>
+              </div>
+              <div className="form-control">
+                <label className="label cursor-pointer gap-2">
+                  <input
+                    type="radio"
+                    name="nazimType"
+                    className="radio checked:bg-blue-500"
+                    checked={nazimType === "umeedwaar-nazim"}
+                    value="umeedwaar-nazim"
+                    onChange={(e) => {
+                      setNazimType(e.target.value);
+                      setSearchArea("");
+                      document.getElementById("autocomplete").value = "";
+                    }}
+                  />
+                  <span className="label-text">Umeedwaar-Nazim</span>
                 </label>
               </div>
             </div>
