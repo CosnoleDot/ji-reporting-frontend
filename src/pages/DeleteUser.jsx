@@ -1,10 +1,10 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import { GeneralLayout } from "../components";
 import { UIContext } from "../context/ui";
-import { FaTrash } from "react-icons/fa";
+import { FaEye, FaTrash } from "react-icons/fa";
 import { MeContext, useToastState } from "../context";
 import instance from "../api/instrance";
-import axios from "axios";
+import { Link } from "react-router-dom";
 
 export const DeleteUser = () => {
   const me = useContext(MeContext);
@@ -47,7 +47,6 @@ export const DeleteUser = () => {
     };
 
     try {
-
       const request = await instance.get("/user/filter", {
         params: params,
         headers: { "Content-Type": "application/json" },
@@ -203,15 +202,30 @@ export const DeleteUser = () => {
                         <div className="badge badge-secondary">deleted</div>
                       )}
                     </td>
-                    <td className="flex justify-center items-center gap-4">
-                      <button
-                        disabled={loading}
-                        className="btn"
-                        onClick={() => deleteUser(maqam)}
-                      >
-                        <FaTrash />
-                      </button>
-                    </td>
+                    <div className="flex row">
+                      <td className="flex justify-center items-center gap-4">
+                        <Link
+                          to={`/reports?active=${maqam?.userAreaType?.toLowerCase()}${
+                            maqam?.userAreaId?.parentType
+                              ? `&tab=${maqam?.userAreaId?.parentType?.toLowerCase()}`
+                              : ""
+                          }&areaId=${maqam?.userAreaId?._id}`}
+                          disabled={loading}
+                          className="btn"
+                        >
+                          <FaEye />
+                        </Link>
+                      </td>
+                      <td className="flex justify-center items-center gap-4">
+                        <button
+                          disabled={loading}
+                          className="btn"
+                          onClick={() => deleteUser(maqam)}
+                        >
+                          <FaTrash />
+                        </button>
+                      </td>
+                    </div>
                   </tr>
                 ))}
             </tbody>
