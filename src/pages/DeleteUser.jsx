@@ -17,9 +17,9 @@ export const DeleteUser = () => {
   const [search, setSearch] = useState("");
   const { dispatch } = useToastState();
   const [years, setYears] = useState([
-    1990, 1992, 1993, 1994, 1995, 1996, 1997,
+    2021, 2022, 2023, 2024, 2025, 2026, 2027,
   ]);
-  const [selectedYear, setSelectedYear] = useState("select year");
+  const [selectedYear, setSelectedYear] = useState();
   const [openYears, setOpenYears] = useState(false);
   //year calender
   const YearCalender = (val) => {
@@ -285,7 +285,7 @@ export const DeleteUser = () => {
                 </label>
                 <input
                   type="text"
-                  placeholder={selectedYear}
+                  placeholder={"Select year"}
                   name="joiningDate"
                   className="w-full select select-bordered select-primary"
                   value={selectedYear}
