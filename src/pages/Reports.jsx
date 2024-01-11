@@ -827,7 +827,10 @@ export const Reports = () => {
                     >
                       <div className="flex w-full flex-col items-start justify-center">
                         <span className="text-lg font-semibold">
-                          {obj?.[active + "AreaId"]?.name || "UNKNOWN"} -{" "}
+                          {obj?.[active + "AreaId"]?.name || "UNKNOWN"}
+                          {" - "}
+                          {obj?.[active + "AreaId"]?.name || "UNKNOWN"}
+                          {" - "}
                           {moment(obj?.month).format("MMMM YYYY")}
                         </span>
                         <span>
@@ -852,7 +855,10 @@ export const Reports = () => {
                     >
                       <div className="flex w-full flex-col items-start justify-center">
                         <span className="text-lg font-semibold">
-                          {obj?.[active + "AreaId"]?.name || "UNKNOWN"} -{" "}
+                          {obj?.[active + "AreaId"]?.name || "UNKNOWN"}
+                          {" - "}
+                          {obj?.[active + "AreaId"]?.name || "UNKNOWN"}
+                          {" - "}
                           {moment(obj?.month).format("MMMM YYYY")}
                         </span>
                         <span>
@@ -876,7 +882,10 @@ export const Reports = () => {
                   >
                     <div className="flex w-full flex-col items-start justify-center">
                       <span className="text-lg font-semibold">
-                        {obj?.[active + "AreaId"]?.name || "UNKNOWN"} -{" "}
+                        {obj?.[active + "AreaId"]?.name || "UNKNOWN"}
+                        {" - "}
+                        {obj?.[active + "AreaId"]?.name || "UNKNOWN"}
+                        {" - "}
                         {moment(obj?.month).format("MMMM YYYY")}
                       </span>
                       <span>
