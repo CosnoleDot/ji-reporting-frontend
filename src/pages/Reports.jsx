@@ -3,11 +3,15 @@ import { GeneralLayout } from "../components";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { useNavigate, useLocation } from "react-router";
 import {
+  DistrictContext,
+  DivisionContext,
   DivisionReportContext,
   HalqaReportContext,
+  MaqamContext,
   MaqamReportContext,
   MeContext,
   ProvinceReportContext,
+  TehsilContext,
   useToastState,
 } from "../context";
 import instance from "../api/instrance";
@@ -109,9 +113,14 @@ export const Reports = () => {
   const divisionReports = useContext(DivisionReportContext);
   const halqaReports = useContext(HalqaReportContext);
   const provinceReports = useContext(ProvinceReportContext);
+  const user = useContext(MeContext);
   const [areas, setAreas] = useState([]);
   const [searchArea, setSearchArea] = useState("");
   const [halqas, setHalqas] = useState([]);
+  const maqams = useContext(MaqamContext);
+  const divisions = useContext(DivisionContext);
+  const districts = useContext(DistrictContext);
+  const tehsils = useContext(TehsilContext);
   const [userAreaType, setUserAreaType] = useState("Division");
   const [selectedId, setSelectedId] = useState("");
   const [selectedMonth, setSelectedMonth] = useState("");
@@ -176,12 +185,13 @@ export const Reports = () => {
     let data;
     switch (active) {
       case "division":
-        data = await instance.get("/locations/division");
-        setAreas(data.data.data);
+        // data = await instance.get("/locations/division");
+        setAreas(divisions);
         break;
       case "maqam":
-        data = await instance.get("/locations/maqam");
-        setAreas(data.data.data);
+        // data = await instance.get("/locations/maqam");
+        console.log(maqams);
+        setAreas(maqams);
         break;
       case "halqa":
         data = memoizedHalqas;
