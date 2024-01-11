@@ -2295,6 +2295,12 @@ html {
   margin-top: 0;
 }
 
+.mockup-phone .display {
+  overflow: hidden;
+  border-radius: 40px;
+  margin-top: -25px;
+}
+
 .mockup-browser .mockup-browser-toolbar .input {
   position: relative;
   margin-left: auto;
@@ -2961,26 +2967,12 @@ html {
   border-top-width: 4px;
 }
 
-.btn-xs {
-  height: 1.5rem;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-  min-height: 1.5rem;
-  font-size: 0.75rem;
-}
-
 .btn-sm {
   height: 2rem;
   padding-left: 0.75rem;
   padding-right: 0.75rem;
   min-height: 2rem;
   font-size: 0.875rem;
-}
-
-.btn-square:where(.btn-xs) {
-  height: 1.5rem;
-  width: 1.5rem;
-  padding: 0px;
 }
 
 .btn-square:where(.btn-sm) {
@@ -3462,10 +3454,6 @@ html {
   margin: auto;
 }
 
-.m-1 {
-  margin: 0.25rem;
-}
-
 .-mx-1 {
   margin-left: -0.25rem;
   margin-right: -0.25rem;
@@ -3585,6 +3573,10 @@ html {
   display: none;
 }
 
+.h-10 {
+  height: 2.5rem;
+}
+
 .h-12 {
   height: 3rem;
 }
@@ -3673,6 +3665,10 @@ html {
   width: 3rem;
 }
 
+.w-20 {
+  width: 5rem;
+}
+
 .w-24 {
   width: 6rem;
 }
@@ -3705,6 +3701,10 @@ html {
   width: 10rem;
 }
 
+.w-\[50\%\] {
+  width: 50%;
+}
+
 .w-\[calc\(100\%-10px\)\] {
   width: calc(100% - 10px);
 }
@@ -3715,10 +3715,6 @@ html {
 
 .w-full {
   width: 100%;
-}
-
-.w-20 {
-  width: 5rem;
 }
 
 .min-w-\[10rem\] {
@@ -3969,6 +3965,16 @@ html {
   border-color: hsl(var(--p) / var(--tw-border-opacity));
 }
 
+.bg-\[\#cacaca\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(202 202 202 / var(--tw-bg-opacity));
+}
+
+.bg-\[\#eee\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(238 238 238 / var(--tw-bg-opacity));
+}
+
 .bg-base-100 {
   --tw-bg-opacity: 1;
   background-color: hsl(var(--b1) / var(--tw-bg-opacity));
@@ -4039,19 +4045,18 @@ html {
   background-color: rgb(203 213 225 / var(--tw-bg-opacity));
 }
 
-.bg-white {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-}
-
 .bg-slate-400 {
   --tw-bg-opacity: 1;
   background-color: rgb(148 163 184 / var(--tw-bg-opacity));
 }
 
-.bg-\[\#eee\] {
+.bg-white {
   --tw-bg-opacity: 1;
-  background-color: rgb(238 238 238 / var(--tw-bg-opacity));
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.bg-none {
+  background-image: none;
 }
 
 .p-0 {
@@ -4129,16 +4134,6 @@ html {
 .py-5 {
   padding-top: 1.25rem;
   padding-bottom: 1.25rem;
-}
-
-.px-2 {
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-}
-
-.px-20 {
-  padding-left: 5rem;
-  padding-right: 5rem;
 }
 
 .pl-3 {
@@ -4311,6 +4306,11 @@ html {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
+.text-primary {
+  --tw-text-opacity: 1;
+  color: hsl(var(--p) / var(--tw-text-opacity));
+}
+
 .opacity-0 {
   opacity: 0;
 }
@@ -4460,6 +4460,11 @@ html {
   background-color: rgb(59 130 246 / var(--tw-bg-opacity));
 }
 
+.hover\:bg-\[\#aaa\]:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(170 170 170 / var(--tw-bg-opacity));
+}
+
 .hover\:bg-gray-100:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
@@ -4478,11 +4483,6 @@ html {
 .hover\:bg-slate-400:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(148 163 184 / var(--tw-bg-opacity));
-}
-
-.hover\:bg-\[\#aaa\]:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(170 170 170 / var(--tw-bg-opacity));
 }
 
 .hover\:text-blue-600:hover {
@@ -4573,6 +4573,10 @@ html {
 }
 
 @media (min-width: 640px) {
+  .sm\:grid-cols-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+
   .sm\:grid-cols-4 {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
