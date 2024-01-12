@@ -324,6 +324,7 @@ export const Reports = () => {
         switch (userType) {
           case "province":
             response = provinceReports;
+            console.log(provinceReports)
             break;
           case "maqam":
             response = maqamReports;
@@ -539,9 +540,6 @@ export const Reports = () => {
                       <div
                         key={index}
                         onClick={() => {
-                          document
-                            .getElementById("filter-area-dialog-close-btn")
-                            .click();
                           document.getElementById("userAreaId").value =
                             area?._id;
                           setSelectedId(area?._id);
@@ -577,9 +575,21 @@ export const Reports = () => {
                 <input
                   type="month"
                   name="month"
-                  className="w-full input input-bordered input-primary"
+                  className="w-full mt-5 mb-5 input input-bordered input-primary"
                   onChange={(e) => setSelectedMonth(e.target.value)}
                 />
+                <div className="w-full flex justify-end items-end">
+                  <button
+                    className="btn"
+                    onClick={() =>
+                      document
+                        .getElementById("filter-area-dialog-close-btn")
+                        .click()
+                    }
+                  >
+                    ok
+                  </button>
+                </div>
               </div>
             </div>
           </dialog>

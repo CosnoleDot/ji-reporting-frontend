@@ -38,18 +38,63 @@ export const Dashboard = () => {
   const [queryDate, setQuerydate] = useState("");
   const getData = async () => {
     try {
-      const req = await instance.get(
-        `/reports/${localStorage.getItem("@type")}/data/filled-unfilled`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("@token")}`,
-          },
-          params: {
-            queryDate: queryDate,
-          },
-        }
+      const headers = {
+        Authorization: `Bearer ${localStorage.getItem("@token")}`,
+      };
+
+      const config = {
+        headers,
+      };
+
+      if (queryDate !== "") {
+        config.params = {
+          queryDate: queryDate,
+        };
+      }
+      const province = await instance.get(
+        `/reports/province/data/filled-unfilled`,
+        config
       );
-      setData(req?.data?.data);
+      const maqam = await instance.get(
+        `/reports/maqam/data/filled-unfilled`,
+        config
+      );
+      const halqa = await instance.get(
+        `/reports/halqa/data/filled-unfilled`,
+        config
+      );
+      const division = await instance.get(
+        `/reports/division/data/filled-unfilled`,
+        config
+      );
+      const provinceData = province?.data?.data?.allProvinces || [];
+      const maqamData = maqam?.data?.data?.allMaqams || [];
+      const halqaData = halqa?.data?.data?.allHalqas || [];
+      const divisionData = division?.data?.data?.allDivisions || [];
+      const temp = {
+        unfilled: null,
+        totalprovince: 1,
+        filled: null,
+        allData: [...provinceData, ...maqamData, ...halqaData, ...divisionData],
+      };
+      temp.unfilled = [
+        ...province?.data?.data?.unfilled,
+        ...maqam?.data?.data?.unfilled,
+        ...halqa?.data?.data?.unfilled,
+        ...division?.data?.data?.unfilled,
+      ];
+      temp.totalprovince =
+        province?.data?.data?.totalprovince +
+        maqam?.data?.data?.totalmaqam +
+        halqa?.data?.data?.totalhalqa +
+        division?.data?.data?.totaldivision;
+
+      const filled = data?.allData?.filter((obj1) => {
+        return !data?.unfilled?.some((obj2) => obj2._id === obj1._id);
+      });
+
+      temp.filled = filled;
+      setData({ ...temp });
     } catch (error) {
       console.log(error);
     }
@@ -57,16 +102,7 @@ export const Dashboard = () => {
   useEffect(() => {
     getData();
   }, []);
-  const unfilledLocations = () => {
-    const filledDivisions = data?.totalDivisions?.filter((divi) => {
-      return !data.unfilled.some((uDivi) => divi._id === uDivi._id);
-    });
 
-    setData((data) => ({ ...data, filled: filledDivisions }));
-  };
-  useEffect(() => {
-    unfilledLocations();
-  }, [data]);
   useEffect(() => {
     try {
       setCount(
@@ -210,12 +246,14 @@ export const Dashboard = () => {
           <div className="w-full">
             <div className="w-full flex gap-2 ">
               <div
+                style={{ backgroundColor: toggle ? "" : "#7a7a7a" }}
                 onClick={() => setToggle(true)}
                 className="flex justify-center items-center h-10 btn bg-[#cacaca] w-[50%] text-center "
               >
                 Filled {data?.filled?.length}
               </div>
               <div
+                style={{ backgroundColor: toggle === false ? "" : "#7a7a7a" }}
                 onClick={() => setToggle(false)}
                 className="flex justify-center items-center h-10 btn bg-[#cacaca] w-[50%] text-center "
               >
@@ -224,7 +262,7 @@ export const Dashboard = () => {
             </div>
             <div className="overflow-x-auto grid grid-cols-1 gap-4 px-4 mt-8 sm:grid-cols-1 sm:px-8 w-full">
               <div className="w-full  flex justify-end items-end ">
-                <button className="btn border-none" onClick={getData}>
+                <button className="btn border-none " onClick={getData}>
                   Filter
                 </button>
                 <label
@@ -244,36 +282,42 @@ export const Dashboard = () => {
                 {/* head */}
                 <thead>
                   <tr>
-                    <th>Name</th>
-                    <th>Status</th>
+                    <th>Area</th>
+                    <th>Nazim</th>
                   </tr>
                 </thead>
                 <tbody>
                   {/* row 1 */}
                   {toggle ? (
                     data?.filled?.length > 0 ? (
-                      data.filled.map((obj, index) => (
-                        <tr key={index}>
-                          <th>{obj.name}</th>
-                          <th>
-                            {obj?.disabled === false ? "Active" : "Inactive"}
-                          </th>
-                        </tr>
-                      ))
+                      data.filled
+                        .filter((i) => !i?.disabled)
+                        .map((obj, index) => (
+                          <tr key={index}>
+                            <td>{obj.name}</td>
+                            <td>
+                              {nazim.find((i) => i?.userAreaId?._id == obj?._id)
+                                ?.name || "UNKNOWN"}
+                            </td>
+                          </tr>
+                        ))
                     ) : (
                       <tr>
                         <td colSpan="2">No one has filled report yet </td>
                       </tr>
                     )
                   ) : data?.unfilled?.length > 0 ? (
-                    data.unfilled.map((obj, index) => (
-                      <tr key={index}>
-                        <th>{obj.name}</th>
-                        <th>
-                          {obj?.disabled === false ? "Active" : "Inactive"}
-                        </th>
-                      </tr>
-                    ))
+                    data.unfilled
+                      .filter((i) => !i?.disabled)
+                      .map((obj, index) => (
+                        <tr key={index}>
+                          <td>{obj.name}</td>
+                          <td>
+                            {nazim.find((i) => i?.userAreaId?._id == obj?._id)
+                              ?.name || "UNKNOWN"}
+                          </td>
+                        </tr>
+                      ))
                   ) : (
                     <tr>
                       <td colSpan="2">All have filled reports</td>

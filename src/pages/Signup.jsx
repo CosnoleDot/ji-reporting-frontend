@@ -1,6 +1,6 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import instance from "../api/instrance";
-import { useToastState } from "../context";
+import { DistrictContext, DivisionContext, MaqamContext, TehsilContext, useToastState } from "../context";
 import { Loader } from "../components";
 import { Link, useNavigate } from "react-router-dom";
 import { UIContext } from "../context/ui";
@@ -12,6 +12,10 @@ export const Signup = () => {
   const { loading, setLoading } = useContext(UIContext);
   const [searchArea, setSearchArea] = useState("");
   const [halqas, setHalqas] = useState([]);
+  const maqams = useContext(MaqamContext);
+  const divisions = useContext(DivisionContext);
+  const districts = useContext(DistrictContext);
+  const tehsils = useContext(TehsilContext);
   const { dispatch } = useToastState();
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
@@ -68,15 +72,10 @@ export const Signup = () => {
     switch (userAreaType) {
       case "Division":
         setLoading(true);
-        data = await instance.get("/locations/division");
-        setLoading(false);
-        setAreas(data.data.data);
+        setAreas(divisions);
         break;
       case "Maqam":
-        setLoading(true);
-        data = await instance.get("/locations/maqam");
-        setLoading(false);
-        setAreas(data.data.data);
+        setAreas(maqams);
         break;
       case "Halqa":
         setLoading(true);
