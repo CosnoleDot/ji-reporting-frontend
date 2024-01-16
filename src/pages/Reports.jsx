@@ -1,6 +1,6 @@
 import { FaEdit, FaEye, FaPlus } from "react-icons/fa";
 import { GeneralLayout } from "../components";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { useNavigate, useLocation } from "react-router";
 import {
   DivisionReportContext,
@@ -27,33 +27,41 @@ const NoReports = () => (
 export const months = [
   {
     title: "January",
+    title: "January",
     value: 1,
   },
   {
+    title: "February",
     title: "February",
     value: 2,
   },
   {
     title: "March",
+    title: "March",
     value: 3,
   },
   {
+    title: "April",
     title: "April",
     value: 4,
   },
   {
     title: "May",
+    title: "May",
     value: 5,
   },
   {
+    title: "June",
     title: "June",
     value: 6,
   },
   {
     title: "July",
+    title: "July",
     value: 7,
   },
   {
+    title: "August",
     title: "August",
     value: 8,
   },
@@ -101,8 +109,23 @@ export const Reports = () => {
   const divisionReports = useContext(DivisionReportContext);
   const halqaReports = useContext(HalqaReportContext);
   const provinceReports = useContext(ProvinceReportContext);
-
+  const [areas, setAreas] = useState([]);
+  const [searchArea, setSearchArea] = useState("");
+  const [halqas, setHalqas] = useState([]);
+  const [userAreaType, setUserAreaType] = useState("Division");
+  const [selectedId, setSelectedId] = useState("");
+  const [selectedMonth, setSelectedMonth] = useState("");
   const params = useLocation();
+  const fetchData = async () => {
+    const response = await instance.get("/locations/halqa");
+
+    setHalqas(response.data.data);
+  };
+  const memoizedHalqas = useMemo(() => halqas, [halqas]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
   // GENERATE MONTHS
   useEffect(() => {
     // Function to parse query parameters
@@ -135,9 +158,6 @@ export const Reports = () => {
       dispatch({ type: "ERROR", payload: err.response.data.message });
     }
   };
-  // useEffect(() => {
-  //   fetchPersonReports();
-  // }, [id]);
 
   const toggleSearch = () => {
     showSearch(!search);
@@ -152,6 +172,30 @@ export const Reports = () => {
   const editReport = (id) => {
     navigate(`edit/${id}`);
   };
+  const getAreas = async () => {
+    let data;
+    switch (active) {
+      case "division":
+        data = await instance.get("/locations/division");
+        setAreas(data.data.data);
+        break;
+      case "maqam":
+        data = await instance.get("/locations/maqam");
+        setAreas(data.data.data);
+        break;
+      case "halqa":
+        data = memoizedHalqas;
+        setAreas(data);
+        break;
+      default:
+        break;
+    }
+  };
+  useEffect(() => {
+    getAreas();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [active]);
+
   const fetchReports = async () => {
     try {
       let response;
@@ -161,17 +205,111 @@ export const Reports = () => {
         const d = divisionReports;
         const p = provinceReports;
         setAllReports({
-          maqam: id ? m.filter((i) => i?.halqaAreaId?._id === id) : m,
+          maqam: id ? m.filter((i) => i?.maqamAreaId?._id === id) : m,
           halqa: id ? h.filter((i) => i?.halqaAreaId?._id === id) : h,
-          division: id ? d.filter((i) => i?.halqaAreaId?._id === id) : d,
-          province: id ? p.filter((i) => i?.halqaAreaId?._id === id) : p,
+          division: id ? d.filter((i) => i?.divisionAreaId?._id === id) : d,
+          province: id ? p.filter((i) => i?.provinceAreaId?._id === id) : p,
         });
         setFilterAllData({
-          maqam: id ? m.filter((i) => i?.halqaAreaId?._id === id) : m,
+          maqam: id ? m.filter((i) => i?.maqamAreaId?._id === id) : m,
           halqa: id ? h.filter((i) => i?.halqaAreaId?._id === id) : h,
-          division: id ? d.filter((i) => i?.halqaAreaId?._id === id) : d,
-          province: id ? p.filter((i) => i?.halqaAreaId?._id === id) : p,
+          division: id ? d.filter((i) => i?.divisionAreaId?._id === id) : d,
+          province: id ? p.filter((i) => i?.provinceAreaId?._id === id) : p,
         });
+        if (selectedId && selectedMonth) {
+          console.log(selectedId, selectedMonth);
+          setAllReports({
+            maqam: selectedId
+              ? m.filter(
+                  (i) =>
+                    i?.maqamAreaId?._id === selectedId &&
+                    parseInt(i?.createdAt.getMonth) === parseInt(selectedMonth)
+                )
+              : m,
+            halqa: selectedId
+              ? h.filter(
+                  (i) =>
+                    i?.halqaAreaId?._id === selectedId &&
+                    parseInt(i?.createdAt.getMonth) === parseInt(selectedMonth)
+                )
+              : h,
+            division: selectedId
+              ? d.filter(
+                  (i) =>
+                    i?.divisionAreaId?._id === selectedId &&
+                    parseInt(i?.createdAt.getMonth) === parseInt(selectedMonth)
+                )
+              : d,
+            province: selectedId
+              ? p.filter(
+                  (i) =>
+                    i?.provinceAreaId?._id === selectedId &&
+                    parseInt(i?.createdAt.getMonth) === parseInt(selectedMonth)
+                )
+              : p,
+          });
+          setFilterAllData({
+            maqam: selectedId
+              ? m.filter(
+                  (i) =>
+                    i?.maqamAreaId?._id === selectedId &&
+                    parseInt(i?.createdAt.getMonth) === parseInt(selectedMonth)
+                )
+              : m,
+            halqa: selectedId
+              ? h.filter(
+                  (i) =>
+                    i?.halqaAreaId?._id === selectedId &&
+                    parseInt(i?.createdAt.getMonth) === parseInt(selectedMonth)
+                )
+              : h,
+            division: selectedId
+              ? d.filter(
+                  (i) =>
+                    i?.divisionAreaId?._id === selectedId &&
+                    parseInt(i?.createdAt.getMonth) === parseInt(selectedMonth)
+                )
+              : d,
+            province: selectedId
+              ? p.filter(
+                  (i) =>
+                    i?.provinceAreaId?._id === selectedId &&
+                    parseInt(i?.createdAt.getMonth) === parseInt(selectedMonth)
+                )
+              : p,
+          });
+        }
+        if (selectedId && !selectedMonth) {
+          console.log(selectedId);
+          setAllReports({
+            maqam: selectedId
+              ? m.filter((i) => i?.maqamAreaId?._id === selectedId)
+              : m,
+            halqa: selectedId
+              ? h.filter((i) => i?.halqaAreaId?._id === selectedId)
+              : h,
+            division: selectedId
+              ? d.filter((i) => i?.divisionAreaId?._id === selectedId)
+              : d,
+            province: selectedId
+              ? p.filter((i) => i?.provinceAreaId?._id === selectedId)
+              : p,
+          });
+          setFilterAllData({
+            maqam: selectedId
+              ? m.filter((i) => i?.maqamAreaId?._id === selectedId)
+              : m,
+            halqa: selectedId
+              ? h.filter((i) => i?.halqaAreaId?._id === selectedId)
+              : h,
+            division: selectedId
+              ? d.filter((i) => i?.divisionAreaId?._id === selectedId)
+              : d,
+            province: selectedId
+              ? p.filter((i) => i?.provinceAreaId?._id === selectedId)
+              : p,
+          });
+        }
       } else {
         switch (userType) {
           case "province":
@@ -197,16 +335,20 @@ export const Reports = () => {
       console.error("Error fetching reports:", error);
     }
   };
+
   const clearFilters = () => {
     setMonth("");
     setYear("2023");
     setFilterAllData(allReports);
     setFilterData(reports);
+    setSelectedId(null);
+    setSelectedMonth("");
+    document.getElementById("autocomplete").value = "";
   };
   useEffect(() => {
     fetchReports();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userType, id, active, tab]);
+  }, [userType, id, active, tab, selectedId]);
 
   const searchResults = () => {
     if (userType !== "halqa") {
@@ -274,7 +416,6 @@ export const Reports = () => {
       }
     }
   };
-  console.log(filterAllData);
   useEffect(() => {
     if (window) {
       if (window.innerWidth < 520) {
@@ -287,7 +428,6 @@ export const Reports = () => {
     setUserType(localStorage.getItem("@type"));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localStorage]);
-
   const sendNotification = async () => {
     try {
       const req = await instance.post(
@@ -315,6 +455,125 @@ export const Reports = () => {
           <h3 className="font-bold text-xl hidden lg:block xl:block">
             Reports
           </h3>
+          <dialog id="filter-area-dialog" className="modal">
+            <div className="modal-box h-[300px]">
+              <form method="dialog" className="mb-3">
+                <button
+                  id="filter-area-dialog-close-btn"
+                  className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+                  onClick={() => {
+                    if (
+                      !document
+                        .getElementById("autocomplete-list")
+                        .classList.contains("hidden")
+                    ) {
+                      document
+                        .getElementById("autocomplete-list")
+                        .classList.add("hidden");
+                    }
+                  }}
+                >
+                  ✕
+                </button>
+              </form>
+              <div className="relative">
+                <span className="px-1 py-2 block font-semibold w-[50%]">
+                  Select Area:
+                </span>
+                <input type="hidden" name="userAreaId" id="userAreaId" />
+                <input
+                  id="autocomplete"
+                  autoComplete="off"
+                  type="text"
+                  class="input input-bordered input-primary w-full"
+                  placeholder={`Select ${active}`}
+                  onChange={(e) => setSearchArea(e.target.value)}
+                  onClick={() => {
+                    if (
+                      document
+                        .getElementById("autocomplete-list")
+                        .classList.contains("hidden")
+                    ) {
+                      document
+                        .getElementById("autocomplete-list")
+                        .classList.remove("hidden");
+                    } else {
+                      document
+                        .getElementById("autocomplete-list")
+                        .classList.add("hidden");
+                    }
+                  }}
+                />
+                <div
+                  id="autocomplete-list"
+                  class="absolute z-10 hidden max-h-[100px] overflow-y-scroll bg-white border border-gray-300 w-full mt-1"
+                >
+                  {areas
+                    .sort((a, b) => a?.name?.localeCompare(b?.name))
+                    .filter((item) => {
+                      if (searchArea && searchArea !== "") {
+                        if (
+                          item?.name
+                            ?.toString()
+                            ?.toLowerCase()
+                            ?.includes(searchArea?.toString()?.toLowerCase())
+                        ) {
+                          return true;
+                        }
+                        return false;
+                      } else {
+                        return true;
+                      }
+                    })
+                    .map((area, index) => (
+                      <div
+                        key={index}
+                        onClick={() => {
+                          document
+                            .getElementById("filter-area-dialog-close-btn")
+                            .click();
+                          document.getElementById("userAreaId").value =
+                            area?._id;
+                          setSelectedId(area?._id);
+                          document.getElementById("autocomplete").value = `${
+                            area?.name
+                          }${
+                            userAreaType === "Halqa"
+                              ? ` - ${area?.parentId?.name} (${area?.parentType})`
+                              : ""
+                          }`;
+                          document
+                            .getElementById("autocomplete-list")
+                            .classList.add("hidden");
+                          if (
+                            !document
+                              .getElementById("autocomplete-list")
+                              .classList.contains("hidden")
+                          ) {
+                            document
+                              .getElementById("autocomplete-list")
+                              .classList.add("hidden");
+                          }
+                        }}
+                        className="p-2 cursor-pointer hover:bg-gray-100"
+                      >
+                        {area?.name}
+                        {userAreaType === "Halqa"
+                          ? ` - ${area?.parentId?.name} (${area?.parentType})`
+                          : ""}
+                      </div>
+                    ))}
+                </div>
+                <input
+                  type="month"
+                  name="month"
+                  className="w-full input input-bordered input-primary"
+                  onChange={(e) => setSelectedMonth(e.target.value)}
+                />
+              </div>
+            </div>
+          </dialog>
+
           <div className="join xs:w-full">
             {!isMobileView && (
               <div className="w-full">
@@ -397,6 +656,14 @@ export const Reports = () => {
                 }
               >
                 Search
+              </button>
+              <button
+                onClick={() =>
+                  document.getElementById("filter-area-dialog").showModal()
+                }
+                className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
+              >
+                filter
               </button>
               <button
                 className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
