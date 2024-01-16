@@ -89,11 +89,10 @@ export const Dashboard = () => {
         halqa?.data?.data?.totalhalqa +
         division?.data?.data?.totaldivision;
 
-      const filled = data?.allData?.filter((obj1) => {
+      const reportFilledBy = data?.allData?.filter((obj1) => {
         return !data?.unfilled?.some((obj2) => obj2._id === obj1._id);
       });
-
-      temp.filled = filled;
+      temp.filled = reportFilledBy;
       setData({ ...temp });
     } catch (error) {
       console.log(error);
@@ -101,8 +100,10 @@ export const Dashboard = () => {
   };
   useEffect(() => {
     getData();
-  }, []);
-
+  }, [data, queryDate]);
+  const clearFilter = () => {
+    setQuerydate("");
+  };
   useEffect(() => {
     try {
       setCount(
@@ -114,10 +115,12 @@ export const Dashboard = () => {
     } catch (err) {}
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [maqamReports, divisionReports, halqaReports]);
-
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
   return (
     <GeneralLayout title={"Dashboard"} active={"dashboard"}>
-      <div className="relative flex flex-col w-full gap-3 items-center p-5 justify-center h-[calc(100vh-65.6px-64px)] overflow-hidden overflow-y-scroll bg-blue-50">
+      <div className="relative flex flex-col w-full gap-3 items-center p-5 justify-start h-[calc(100vh-65.6px-64px)] overflow-hidden overflow-y-scroll bg-blue-50">
         <div className="grid grid-cols-1 gap-4 px-4 mt-8 sm:grid-cols-4 sm:px-8 w-full">
           {["province"].includes(localStorage.getItem("@type")) && (
             <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
@@ -243,28 +246,25 @@ export const Dashboard = () => {
           )}
         </div>
         {localStorage.getItem("@type") !== "halqa" && (
-          <div className="w-full">
-            <div className="w-full flex gap-2 ">
+          <div className=" gap-4 px-4 mt-8  sm:px-8 w-full">
+            <div className="w-full  gap-2 grid grid-cols-2 sm:grid-cols-2">
               <div
                 style={{ backgroundColor: toggle ? "" : "#7a7a7a" }}
                 onClick={() => setToggle(true)}
-                className="flex justify-center items-center h-10 btn bg-[#cacaca] w-[50%] text-center "
+                className="flex justify-center items-center h-10 btn bg-[#cacaca] w-full text-center "
               >
                 Filled {data?.filled?.length}
               </div>
               <div
                 style={{ backgroundColor: toggle === false ? "" : "#7a7a7a" }}
                 onClick={() => setToggle(false)}
-                className="flex justify-center items-center h-10 btn bg-[#cacaca] w-[50%] text-center "
+                className="flex justify-center items-center h-10 btn bg-[#cacaca] w-full text-center "
               >
                 Un filled {data?.unfilled?.length}
               </div>
             </div>
             <div className="overflow-x-auto grid grid-cols-1 gap-4 px-4 mt-8 sm:grid-cols-1 sm:px-8 w-full">
               <div className="w-full  flex justify-end items-end ">
-                <button className="btn border-none " onClick={getData}>
-                  Filter
-                </button>
                 <label
                   className="btn rounded-md bg-none  "
                   htmlFor="filterUnfilled"
@@ -277,25 +277,51 @@ export const Dashboard = () => {
                     onChange={(e) => setQuerydate(e.target.value)}
                   />
                 </label>
+                <div className="flex gap-2">
+                  <button className="btn border-none " onClick={getData}>
+                    Filter
+                  </button>
+                  <button className="btn border-none " onClick={clearFilter}>
+                    Clear
+                  </button>
+                </div>
               </div>
-              <table className="table">
-                {/* head */}
-                <thead>
-                  <tr>
-                    <th>Area</th>
-                    <th>Nazim</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {/* row 1 */}
-                  {toggle ? (
-                    data?.filled?.length > 0 ? (
-                      data.filled
+              <div className="w-full h-[300px] overflow-auto overflow-y-scroll">
+                <table className="table">
+                  {/* head */}
+                  <thead>
+                    <tr>
+                      <th>Area</th>
+                      <th>Nazim</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {toggle ? (
+                      data?.filled?.length > 0 ? (
+                        data.filled
+                          .filter((i) => !i?.disabled)
+                          .map((obj, index) => (
+                            <tr key={index} className="w-full">
+                              <td className="w-full">{obj.name}</td>
+                              <td className="w-full">
+                                {nazim.find(
+                                  (i) => i?.userAreaId?._id == obj?._id
+                                )?.name || "UNKNOWN"}
+                              </td>
+                            </tr>
+                          ))
+                      ) : (
+                        <tr>
+                          <td colSpan="2">No one has filled report yet </td>
+                        </tr>
+                      )
+                    ) : data?.unfilled?.length > 0 ? (
+                      data.unfilled
                         .filter((i) => !i?.disabled)
                         .map((obj, index) => (
-                          <tr key={index}>
-                            <td>{obj.name}</td>
-                            <td>
+                          <tr className="w-full" key={index}>
+                            <td className="w-full">{obj.name}</td>
+                            <td className="w-full">
                               {nazim.find((i) => i?.userAreaId?._id == obj?._id)
                                 ?.name || "UNKNOWN"}
                             </td>
@@ -303,28 +329,12 @@ export const Dashboard = () => {
                         ))
                     ) : (
                       <tr>
-                        <td colSpan="2">No one has filled report yet </td>
+                        <td colSpan="2">All have filled reports</td>
                       </tr>
-                    )
-                  ) : data?.unfilled?.length > 0 ? (
-                    data.unfilled
-                      .filter((i) => !i?.disabled)
-                      .map((obj, index) => (
-                        <tr key={index}>
-                          <td>{obj.name}</td>
-                          <td>
-                            {nazim.find((i) => i?.userAreaId?._id == obj?._id)
-                              ?.name || "UNKNOWN"}
-                          </td>
-                        </tr>
-                      ))
-                  ) : (
-                    <tr>
-                      <td colSpan="2">All have filled reports</td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         )}

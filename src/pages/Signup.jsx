@@ -1,21 +1,18 @@
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import instance from "../api/instrance";
-import { DistrictContext, DivisionContext, MaqamContext, TehsilContext, useToastState } from "../context";
+import { useToastState } from "../context";
 import { Loader } from "../components";
 import { Link, useNavigate } from "react-router-dom";
 import { UIContext } from "../context/ui";
 
 export const Signup = () => {
-  const [userAreaType, setUserAreaType] = useState("Division");
-  const [nazimType, setNazimType] = useState("nazim");
+  const [userAreaType, setUserAreaType] = useState("Province");
   const [areas, setAreas] = useState([]);
-  const { loading, setLoading } = useContext(UIContext);
   const [searchArea, setSearchArea] = useState("");
-  const [halqas, setHalqas] = useState([]);
-  const maqams = useContext(MaqamContext);
-  const divisions = useContext(DivisionContext);
-  const districts = useContext(DistrictContext);
-  const tehsils = useContext(TehsilContext);
+  const { loading, setLoading } = useContext(UIContext);
+  const [selectedSubject, setSelectedSubject] = useState("");
+  const [subject, setSubject] = useState();
+  const [subjects, setSubjects] = useState([]);
   const { dispatch } = useToastState();
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
@@ -42,7 +39,6 @@ export const Signup = () => {
       joiningDate: formData.get("joiningDate"),
       phoneNumber: formData.get("phoneNumber"),
       whatsAppNumber: formData.get("whatsAppNumber"),
-      nazimType: formData.get("nazimType"),
     };
     try {
       const request = await instance.post("/user/signup", data, {
@@ -56,54 +52,71 @@ export const Signup = () => {
     }
     setLoading(false);
   };
-  const fetchData = async () => {
-    setLoading(true);
-    const response = await instance.get("/locations/halqa");
-    setLoading(false);
-    setHalqas(response.data.data);
-  };
-  const memoizedHalqas = useMemo(() => halqas, [halqas]);
+  // FETCH ALL SUBJECTS
 
+  const getSubjects = async () => {
+    try {
+      const request = await instance.get("/subjects", {
+        headers: { "Content-Type": "application/json" },
+      });
+      if (request.status === 200) {
+        setSubjects([...request.data.data]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleSubjectChange = (e) => {
+    const value = e.target.value;
+    setSelectedSubject(value);
+  };
+  // ADD NEW SUBJECT CALL
+  const addNewSubjectCall = async () => {
+    document.getElementById("subject").setAttribute("disabled", true);
+    try {
+      const request = await instance.post("/subjects", {
+        headers: { "Content-Type": "application/json" },
+        title: subject,
+      });
+
+      if (request.status === 201) {
+        await getSubjects();
+        document.getElementById("subject").removeAttribute("disabled");
+      }
+    } catch (error) {
+      console.log(error);
+      document.getElementById("subject").removeAttribute("disabled");
+    }
+  };
   useEffect(() => {
-    fetchData();
+    getSubjects();
   }, []);
   const getAreas = async () => {
     let data;
     switch (userAreaType) {
+      case "Province":
+        setLoading(true);
+        data = await instance.get("/locations/province");
+        setLoading(false);
+        setAreas(data.data.data);
+        break;
       case "Division":
         setLoading(true);
-        setAreas(divisions);
+        data = await instance.get("/locations/division");
+        setLoading(false);
+        setAreas(data.data.data);
         break;
       case "Maqam":
-        setAreas(maqams);
+        setLoading(true);
+        data = await instance.get("/locations/maqam");
+        setLoading(false);
+        setAreas(data.data.data);
         break;
       case "Halqa":
         setLoading(true);
-        data = memoizedHalqas;
+        data = await instance.get("/locations/halqa");
         setLoading(false);
-        setAreas(data);
-        break;
-      default:
-        break;
-    }
-    switch (nazimType) {
-      case "nazim":
-        setLoading(true);
-        data = memoizedHalqas;
-        setLoading(false);
-        setAreas(data);
-        break;
-      case "rukan":
-        setLoading(true);
-        data = memoizedHalqas;
-        setLoading(false);
-        setAreas(data);
-        break;
-      case "umeedwar":
-        setLoading(true);
-        data = memoizedHalqas;
-        setLoading(false);
-        setAreas(data);
+        setAreas(data.data.data);
         break;
       default:
         break;
@@ -113,8 +126,25 @@ export const Signup = () => {
     getAreas();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAreaType]);
+  const handleEventClick = (e) => {
+    if (e?.target?.id !== "autocomplete") {
+      if (
+        !document
+          ?.getElementById("autocomplete-list")
+          ?.classList?.contains("hidden")
+      ) {
+        document?.getElementById("autocomplete-list")?.classList?.add("hidden");
+      }
+    }
+  };
+  useEffect(() => {
+    document.addEventListener("click", handleEventClick);
+    return () => {
+      document.removeEventListener("click", handleEventClick);
+    };
+  }, []);
   return (
-    <div className="relative flex flex-col justify-center h-auto p-2">
+    <div className="relative flex flex-col justify-center min-h-screen p-2">
       <div className="w-full p-6 m-auto bg-white rounded-md shadow-md lg:max-w-lg">
         <div className="w-full flex items-center justify-center">
           <img src="/logo.png" className="text-center w-25 h-20" alt="LOGO" />
@@ -147,7 +177,7 @@ export const Signup = () => {
               />
             </div>
           </div>
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-2">
             <div>
               <label className="label">
                 <span className="text-base label-text">Date of birth</span>
@@ -160,17 +190,17 @@ export const Signup = () => {
                 required
               />
             </div>
-            <div>
+            <div className="w-full">
               <label className="label">
-                <span className="text-base label-text">Home address</span>
+                <span className="label-text text-sm">
+                  Date of becoming rukan/umeedwar
+                </span>
               </label>
-              <textarea
-                placeholder="Address"
-                name="address"
+              <input
+                type="month"
+                placeholder="JoiningDate"
+                name="joiningDate"
                 className="w-full input input-bordered input-primary"
-                required
-                cols="22"
-                rows="2"
               />
             </div>
           </div>
@@ -190,19 +220,36 @@ export const Signup = () => {
                 <option value={"intermediate"}>Intermediate</option>
                 <option value={"bachelors"}>Bachelors</option>
                 <option value={"masters"}>Masters</option>
+                <option value={"phd"}>PHD</option>
               </select>
             </div>
-            <div className="w-full">
+            <div className="w-full relative">
               <label className="label">
                 <span className="text-base label-text">Subject</span>
               </label>
-              <input
-                type="text"
-                placeholder="Subject"
+
+              <select
                 name="subject"
-                className="w-full input input-bordered input-primary"
-                required
-              />
+                id="subject"
+                className="select select-bordered select-primary w-full"
+                value={selectedSubject}
+                onChange={handleSubjectChange}
+              >
+                <option value={""}>Select or Add</option>
+                {subjects?.map((sub) => (
+                  <option value={sub?._id} className="capitalize">
+                    {sub?.title.split("_").join(" ")}
+                  </option>
+                ))}
+              </select>
+              <span
+                className="text-sm absolute top-1 p-1 right-0 text-slate-500 cursor-pointer hover:text-primary hover:font-semibold"
+                onClick={() =>
+                  document.getElementById("add_subject_modal").showModal()
+                }
+              >
+                + Add New
+              </span>
             </div>
           </div>
           <div className="flex items-center justify-between gap-2">
@@ -225,10 +272,15 @@ export const Signup = () => {
                 <option value={"semester 6"}>Semester 6</option>
                 <option value={"semester 7"}>Semester 7</option>
                 <option value={"semester 8"}>Semester 8</option>
+                <option value={"semester 9"}>Semester 9</option>
+                <option value={"semester10"}>Semester10</option>
+                <option value={"semester 11"}>Semester 11</option>
+                <option value={"semester 12"}>Semester 12</option>
                 <option value={"1st year"}>1st Year</option>
-                <option value={"2nd year"}>2dn Year</option>
+                <option value={"2nd year"}>2nd Year</option>
                 <option value={"3rd year"}>3rd Year</option>
                 <option value={"4th year"}>4th Year</option>
+                <option value={"5th year"}>5th Year</option>
               </select>
             </div>
             <div className="w-full">
@@ -325,16 +377,14 @@ export const Signup = () => {
           <div className="flex items-start justify-start">
             <div className="w-full">
               <label className="label">
-                <span className="text-base label-text">
-                  Date of becoming rukan/umeedwar
-                </span>
+                <span className="text-base label-text">Home address</span>
               </label>
-              <input
-                type="text"
-                placeholder="JoiningDate"
-                name="joiningDate"
+              <textarea
+                placeholder="Address"
+                name="address"
                 className="w-full input input-bordered input-primary"
-              />
+                required
+              ></textarea>
             </div>
           </div>
           <div>
@@ -348,13 +398,8 @@ export const Signup = () => {
                     type="radio"
                     name="userAreaType"
                     className="radio checked:bg-blue-500"
-                    checked={userAreaType === "Province"}
                     value="Province"
-                    onChange={(e) => {
-                      setUserAreaType(e.target.value);
-                      setSearchArea("");
-                      document.getElementById("autocomplete").value = "";
-                    }}
+                    onChange={(e) => setUserAreaType(e.target.value)}
                   />
                   <span className="label-text">Province</span>
                 </label>
@@ -365,13 +410,8 @@ export const Signup = () => {
                     type="radio"
                     name="userAreaType"
                     className="radio checked:bg-blue-500"
-                    checked={userAreaType === "Division"}
                     value="Division"
-                    onChange={(e) => {
-                      setUserAreaType(e.target.value);
-                      setSearchArea("");
-                      document.getElementById("autocomplete").value = "";
-                    }}
+                    onChange={(e) => setUserAreaType(e.target.value)}
                   />
                   <span className="label-text">Division</span>
                 </label>
@@ -382,13 +422,8 @@ export const Signup = () => {
                     type="radio"
                     name="userAreaType"
                     className="radio checked:bg-blue-500"
-                    checked={userAreaType === "Maqam"}
                     value="Maqam"
-                    onChange={(e) => {
-                      setUserAreaType(e.target.value);
-                      setSearchArea("");
-                      document.getElementById("autocomplete").value = "";
-                    }}
+                    onChange={(e) => setUserAreaType(e.target.value)}
                   />
                   <span className="label-text">Maqam</span>
                 </label>
@@ -399,13 +434,8 @@ export const Signup = () => {
                     type="radio"
                     name="userAreaType"
                     className="radio checked:bg-blue-500"
-                    checked={userAreaType === "Halqa"}
                     value="Halqa"
-                    onChange={(e) => {
-                      setUserAreaType(e.target.value);
-                      setSearchArea("");
-                      document.getElementById("autocomplete").value = "";
-                    }}
+                    onChange={(e) => setUserAreaType(e.target.value)}
                   />
                   <span className="label-text">Halqa</span>
                 </label>
@@ -423,81 +453,55 @@ export const Signup = () => {
                     type="radio"
                     name="nazimType"
                     className="radio checked:bg-blue-500"
-                    checked={nazimType === "nazim"}
                     value="nazim"
-                    onChange={(e) => {
-                      setNazimType(e.target.value);
-                      setSearchArea("");
-                      document.getElementById("autocomplete").value = "";
-                    }}
                   />
                   <span className="label-text">Nazim</span>
                 </label>
               </div>
+              {userAreaType !== "Halqa" && (
+                <div className="form-control">
+                  <label className="label cursor-pointer gap-2">
+                    <input
+                      type="radio"
+                      name="nazimType"
+                      className="radio checked:bg-blue-500"
+                      value="rukan"
+                    />
+                    <span className="label-text">Rukan</span>
+                  </label>
+                </div>
+              )}
               <div className="form-control">
                 <label className="label cursor-pointer gap-2">
                   <input
                     type="radio"
                     name="nazimType"
                     className="radio checked:bg-blue-500"
-                    checked={nazimType === "rukan"}
-                    value="rukan"
-                    onChange={(e) => {
-                      setNazimType(e.target.value);
-                      setSearchArea("");
-                      document.getElementById("autocomplete").value = "";
-                    }}
-                  />
-                  <span className="label-text">Rukan</span>
-                </label>
-              </div>
-              <div className="form-control">
-                <label className="label cursor-pointer gap-2">
-                  <input
-                    type="radio"
-                    name="nazimType"
-                    className="radio checked:bg-blue-500"
-                    checked={nazimType === "rukan-nazim"}
                     value="rukan-nazim"
-                    onChange={(e) => {
-                      setNazimType(e.target.value);
-                      setSearchArea("");
-                      document.getElementById("autocomplete").value = "";
-                    }}
                   />
                   <span className="label-text">Rukan-Nazim</span>
                 </label>
               </div>
+              {userAreaType !== "Halqa" && (
+                <div className="form-control">
+                  <label className="label cursor-pointer gap-2">
+                    <input
+                      type="radio"
+                      name="nazimType"
+                      className="radio checked:bg-blue-500"
+                      value="umeedwaar"
+                    />
+                    <span className="label-text">Umeedwaar</span>
+                  </label>
+                </div>
+              )}
               <div className="form-control">
                 <label className="label cursor-pointer gap-2">
                   <input
                     type="radio"
                     name="nazimType"
                     className="radio checked:bg-blue-500"
-                    checked={nazimType === "umeedwaar"}
-                    value="umeedwaar"
-                    onChange={(e) => {
-                      setNazimType(e.target.value);
-                      setSearchArea("");
-                      document.getElementById("autocomplete").value = "";
-                    }}
-                  />
-                  <span className="label-text">Umeedwaar</span>
-                </label>
-              </div>
-              <div className="form-control">
-                <label className="label cursor-pointer gap-2">
-                  <input
-                    type="radio"
-                    name="nazimType"
-                    className="radio checked:bg-blue-500"
-                    checked={nazimType === "umeedwaar-nazim"}
                     value="umeedwaar-nazim"
-                    onChange={(e) => {
-                      setNazimType(e.target.value);
-                      setSearchArea("");
-                      document.getElementById("autocomplete").value = "";
-                    }}
                   />
                   <span className="label-text">Umeedwaar-Nazim</span>
                 </label>
@@ -531,7 +535,7 @@ export const Signup = () => {
             />
             <div
               id="autocomplete-list"
-              class="absolute z-10 max-h-[100px] overflow-y-scroll bg-white border border-gray-300 w-full mt-1"
+              class="absolute hidden z-10 max-h-[100px] overflow-y-scroll bg-white border border-gray-300 w-full mt-1"
             >
               {areas
                 .sort((a, b) => a?.name?.localeCompare(b?.name))
@@ -590,6 +594,46 @@ export const Signup = () => {
         </form>
       </div>
       {loading && <Loader />}
+      <dialog id="add_subject_modal" className="modal">
+        <div className="modal-box">
+          <h3 className="font-bold text-lg">Add Subject</h3>
+          <div className="space-y-4">
+            <div>
+              <label className="label">
+                <span className="text-base label-text">Subject</span>
+              </label>
+              <input
+                name="subject"
+                type="text"
+                placeholder="Enter Subject Name"
+                value={subject}
+                onChange={(e) => setSubject(e.target.value)}
+                className="w-full input input-bordered input-primary"
+                required
+              />
+            </div>
+          </div>
+          <div className="modal-action w-full">
+            <form method="dialog" className="w-full">
+              <div className=" w-full flex justify-end gap-3 items-center">
+                <button
+                  id="close-division-modal"
+                  className="p-5 py-3 rounded-md bg-slate-400 text-white font-semibold border ms-3"
+                >
+                  Cancel
+                </button>
+                <button
+                  id="close-division-modal"
+                  className="btn ms-3 capitalize"
+                  onClick={addNewSubjectCall}
+                >
+                  Add
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </dialog>
     </div>
   );
 };

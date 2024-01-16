@@ -1,11 +1,12 @@
 import { FaEdit, FaEye, FaPlus } from "react-icons/fa";
 import { GeneralLayout } from "../components";
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router";
 import {
   DistrictContext,
   DivisionContext,
   DivisionReportContext,
+  HalqaContext,
   HalqaReportContext,
   MaqamContext,
   MaqamReportContext,
@@ -116,25 +117,15 @@ export const Reports = () => {
   const user = useContext(MeContext);
   const [areas, setAreas] = useState([]);
   const [searchArea, setSearchArea] = useState("");
-  const [halqas, setHalqas] = useState([]);
   const maqams = useContext(MaqamContext);
   const divisions = useContext(DivisionContext);
   const districts = useContext(DistrictContext);
   const tehsils = useContext(TehsilContext);
+  const halqas = useContext(HalqaContext);
   const [userAreaType, setUserAreaType] = useState("Division");
   const [selectedId, setSelectedId] = useState("");
   const [selectedMonth, setSelectedMonth] = useState("");
   const params = useLocation();
-  const fetchData = async () => {
-    const response = await instance.get("/locations/halqa");
-
-    setHalqas(response.data.data);
-  };
-  const memoizedHalqas = useMemo(() => halqas, [halqas]);
-
-  useEffect(() => {
-    fetchData();
-  }, []);
   // GENERATE MONTHS
   useEffect(() => {
     // Function to parse query parameters
@@ -167,7 +158,9 @@ export const Reports = () => {
       dispatch({ type: "ERROR", payload: err.response.data.message });
     }
   };
-
+  useEffect(() => {
+    console.log(halqas);
+  }, [halqas]);
   const toggleSearch = () => {
     showSearch(!search);
   };
@@ -190,12 +183,10 @@ export const Reports = () => {
         break;
       case "maqam":
         // data = await instance.get("/locations/maqam");
-        console.log(maqams);
         setAreas(maqams);
         break;
       case "halqa":
-        data = memoizedHalqas;
-        setAreas(data);
+        setAreas(halqas);
         break;
       default:
         break;
@@ -207,6 +198,7 @@ export const Reports = () => {
   }, [active]);
 
   const fetchReports = async () => {
+    console.log(selectedId, selectedMonth);
     try {
       let response;
       if (userType !== "halqa") {
@@ -227,34 +219,35 @@ export const Reports = () => {
           province: id ? p.filter((i) => i?.provinceAreaId?._id === id) : p,
         });
         if (selectedId && selectedMonth) {
-          console.log(selectedId, selectedMonth);
+          console.log(selectedId, selectedMonth, "month , id");
+
           setAllReports({
             maqam: selectedId
               ? m.filter(
                   (i) =>
                     i?.maqamAreaId?._id === selectedId &&
-                    parseInt(i?.createdAt.getMonth) === parseInt(selectedMonth)
+                    i?.month?.split("-").slice(0, 2).join("-") === selectedMonth
                 )
               : m,
             halqa: selectedId
               ? h.filter(
                   (i) =>
-                    i?.halqaAreaId?._id === selectedId &&
-                    parseInt(i?.createdAt.getMonth) === parseInt(selectedMonth)
+                    i?.halqaAreaId?._id.toString() === selectedId.toString() &&
+                    i?.month?.split("-").slice(0, 2).join("-") === selectedMonth
                 )
               : h,
             division: selectedId
               ? d.filter(
                   (i) =>
                     i?.divisionAreaId?._id === selectedId &&
-                    parseInt(i?.createdAt.getMonth) === parseInt(selectedMonth)
+                    i?.month?.split("-").slice(0, 2).join("-") === selectedMonth
                 )
               : d,
             province: selectedId
               ? p.filter(
                   (i) =>
                     i?.provinceAreaId?._id === selectedId &&
-                    parseInt(i?.createdAt.getMonth) === parseInt(selectedMonth)
+                    i?.month?.split("-").slice(0, 2).join("-") === selectedMonth
                 )
               : p,
           });
@@ -263,34 +256,33 @@ export const Reports = () => {
               ? m.filter(
                   (i) =>
                     i?.maqamAreaId?._id === selectedId &&
-                    parseInt(i?.createdAt.getMonth) === parseInt(selectedMonth)
+                    i?.month?.split("-").slice(0, 2).join("-") === selectedMonth
                 )
               : m,
             halqa: selectedId
               ? h.filter(
                   (i) =>
                     i?.halqaAreaId?._id === selectedId &&
-                    parseInt(i?.createdAt.getMonth) === parseInt(selectedMonth)
+                    i?.month?.split("-").slice(0, 2).join("-") === selectedMonth
                 )
               : h,
             division: selectedId
               ? d.filter(
                   (i) =>
                     i?.divisionAreaId?._id === selectedId &&
-                    parseInt(i?.createdAt.getMonth) === parseInt(selectedMonth)
+                    i?.month?.split("-").slice(0, 2).join("-") === selectedMonth
                 )
               : d,
             province: selectedId
               ? p.filter(
                   (i) =>
                     i?.provinceAreaId?._id === selectedId &&
-                    parseInt(i?.createdAt.getMonth) === parseInt(selectedMonth)
+                    i?.month?.split("-").slice(0, 2).join("-") === selectedMonth
                 )
               : p,
           });
         }
-        if (selectedId && !selectedMonth) {
-          console.log(selectedId);
+        if (selectedId && (!selectedMonth || selectedMonth === "")) {
           setAllReports({
             maqam: selectedId
               ? m.filter((i) => i?.maqamAreaId?._id === selectedId)
@@ -324,7 +316,6 @@ export const Reports = () => {
         switch (userType) {
           case "province":
             response = provinceReports;
-            console.log(provinceReports)
             break;
           case "maqam":
             response = maqamReports;
@@ -359,7 +350,7 @@ export const Reports = () => {
   useEffect(() => {
     fetchReports();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userType, id, active, tab, selectedId]);
+  }, [userType, id, active, tab, selectedId, selectedMonth]);
 
   const searchResults = () => {
     if (userType !== "halqa") {
@@ -398,7 +389,7 @@ export const Reports = () => {
       if (year !== "" && month !== "") {
         const filteredData = reports?.reduce((acc, curr) => {
           const reportYear = parseInt((curr?.month).split("-")[0]);
-          const reportMonth = parseInt((curr?.month).split("-")[1]);
+          const reportMonth = parseInt((curr?.month).spit("-")[1]);
           if (
             reportMonth === parseInt(month) &&
             reportYear === parseInt(year)
@@ -576,16 +567,18 @@ export const Reports = () => {
                   type="month"
                   name="month"
                   className="w-full mt-5 mb-5 input input-bordered input-primary"
+                  value={selectedMonth}
                   onChange={(e) => setSelectedMonth(e.target.value)}
                 />
                 <div className="w-full flex justify-end items-end">
                   <button
                     className="btn"
-                    onClick={() =>
+                    onClick={() => {
                       document
                         .getElementById("filter-area-dialog-close-btn")
-                        .click()
-                    }
+                        .click();
+                      fetchReports();
+                    }}
                   >
                     ok
                   </button>
