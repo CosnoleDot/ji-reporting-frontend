@@ -1,22 +1,35 @@
 import { useContext, useEffect, useState, useMemo } from "react";
 import { GeneralLayout } from "../components";
 import { UIContext } from "../context/ui";
-import { FaEye, FaTrash } from "react-icons/fa";
-import { MeContext, useToastState } from "../context";
+import { FaEye, FaFile, FaTrash } from "react-icons/fa";
+import {
+  DivisionContext,
+  HalqaContext,
+  MaqamContext,
+  MeContext,
+  useToastState,
+} from "../context";
 import instance from "../api/instrance";
 import { Link } from "react-router-dom";
+import { MdOutlineUpgrade } from "react-icons/md";
 
 export const DeleteUser = () => {
   const me = useContext(MeContext);
+  const halqas = useContext(HalqaContext);
+  const maqams = useContext(MaqamContext);
+  const divisions = useContext(DivisionContext);
   const { nazim, loading, setLoading, getNazim } = useContext(UIContext);
   const [data, setData] = useState(nazim);
   const [userAreaType, setUserAreaType] = useState("Division");
   const [nazimType, setNazimType] = useState("Nazim");
   const [areas, setAreas] = useState([]);
   const [searchArea, setSearchArea] = useState("");
-  const [halqas, setHalqas] = useState([]);
   const [search, setSearch] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [subjects, setSubjects] = useState([]);
   const { dispatch } = useToastState();
+  const [selectedSubject, setSelectedSubject] = useState("");
+  const [singleUser, setSingleUser] = useState("");
   const [years, setYears] = useState([
     2021, 2022, 2023, 2024, 2025, 2026, 2027,
   ]);
@@ -71,6 +84,9 @@ export const DeleteUser = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(e);
+    setShowModal(false);
+    document.getElementById("categorize-filter").setAttribute("open", "false");
     setLoading(true);
     const formData = new FormData(e.currentTarget);
     const params = {};
@@ -106,7 +122,7 @@ export const DeleteUser = () => {
       params.joiningDate = data.joiningDate;
     if (data.nazimType && data.nazimType !== "")
       params.nazimType = data.nazimType;
-
+    console.log(params);
     try {
       const request = await instance.get("/user/filter", {
         params: params,
@@ -124,17 +140,9 @@ export const DeleteUser = () => {
 
     setLoading(false);
   };
-  const fetchData = async () => {
-    setLoading(true);
-    const response = await instance.get("/locations/halqa");
-    setLoading(false);
-    setHalqas(response.data.data);
-  };
-  const memoizedHalqas = useMemo(() => halqas, [halqas]);
-
   useEffect(() => {
-    fetchData();
-  }, []);
+    console.log(singleUser);
+  }, [singleUser]);
   useEffect(() => {
     getAreas();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -146,19 +154,18 @@ export const DeleteUser = () => {
         setLoading(true);
         data = await instance.get("/locations/division");
         setLoading(false);
-        setAreas(data.data.data);
+        setAreas(divisions);
         break;
       case "Maqam":
         setLoading(true);
         data = await instance.get("/locations/maqam");
         setLoading(false);
-        setAreas(data.data.data);
+        setAreas(maqams);
         break;
       case "Halqa":
         setLoading(true);
-        data = memoizedHalqas;
         setLoading(false);
-        setAreas(data);
+        setAreas(halqas);
         break;
       default:
         break;
@@ -166,27 +173,69 @@ export const DeleteUser = () => {
     switch (nazimType) {
       case "nazim":
         setLoading(true);
-        data = memoizedHalqas;
         setLoading(false);
-        setAreas(data);
+        setAreas(halqas);
         break;
       case "rukan":
         setLoading(true);
-        data = memoizedHalqas;
         setLoading(false);
-        setAreas(data);
+        setAreas(halqas);
         break;
       case "umeedwar":
         setLoading(true);
-        data = memoizedHalqas;
         setLoading(false);
-        setAreas(data);
+        setAreas(halqas);
         break;
       default:
         break;
     }
   };
-
+  useEffect(() => {
+    const handleClickYear = (e) => {
+      if (
+        !["year-of-joining", "plus-year", "minus-year"].includes(e.target.id)
+      ) {
+        setOpenYears(false);
+      }
+      if (e?.target?.id !== "autocomplete") {
+        if (
+          !document
+            ?.getElementById("autocomplete-list")
+            ?.classList?.contains("hidden")
+        ) {
+          document
+            ?.getElementById("autocomplete-list")
+            ?.classList?.add("hidden");
+        }
+      }
+    };
+    document.addEventListener("click", handleClickYear);
+    return () => {
+      document.removeEventListener("click", handleClickYear);
+    };
+  }, []);
+  const getSubjects = async () => {
+    try {
+      const request = await instance.get("/subjects", {
+        headers: { "Content-Type": "application/json" },
+      });
+      if (request.status === 200) {
+        setSubjects([...request.data.data]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getSubjects();
+  }, []);
+  const clearSearchFilters = () => {
+    document.getElementById("filter-form").reset();
+    setSelectedSubject("");
+  };
+  useEffect(() => {
+    console.log(singleUser);
+  }, [singleUser]);
   return (
     <GeneralLayout title={"Delete Users"} active={"user-switch"}>
       <div className="p-5 relative flex flex-col items-center py-3 px-0 pt-0 justify-start h-[calc(100vh-65.6px-64px)]">
@@ -196,16 +245,25 @@ export const DeleteUser = () => {
               type="search"
               name="Search"
               id="search"
-              placeholder="Search User..."
+              placeholder="Search by name..."
               className="input input-bordered"
               value={search}
               onChange={searchUsers}
             />
             <button
-              onClick={() => document.getElementById("my_modal_3").showModal()}
+              onClick={() => {
+                document.getElementById("categorize-filter").showModal();
+                setShowModal(true);
+              }}
               className="btn btn-secondary border-none"
             >
-              Filter
+              More Filters
+            </button>
+            <button
+              onClick={() => clearSearchFilters()}
+              className="btn btn-secondary border-none"
+            >
+              Clear Filters
             </button>
           </div>
           <table className="table table-zebra">
@@ -239,30 +297,53 @@ export const DeleteUser = () => {
                         <div className="badge badge-secondary">deleted</div>
                       )}
                     </td>
-                    <div className="flex row">
-                      <td className="flex justify-center items-center gap-4">
+                    <td className="flex row justify-center items-center gap-3">
+                      <div className="flex justify-center items-center">
                         <Link
                           to={`/reports?active=${maqam?.userAreaType?.toLowerCase()}${
                             maqam?.userAreaId?.parentType
                               ? `&tab=${maqam?.userAreaId?.parentType?.toLowerCase()}`
                               : ""
                           }&areaId=${maqam?.userAreaId?._id}`}
-                          disabled={loading}
+                          readOnly={loading}
+                          className="btn"
+                        >
+                          <FaFile />
+                        </Link>
+                      </div>
+                      <div className="flex justify-center items-center">
+                        <button
+                          onClick={() => {
+                            document
+                              .getElementById("view-details-modal")
+                              .showModal();
+                            setSingleUser(maqam);
+                          }}
+                          readOnly={loading}
                           className="btn"
                         >
                           <FaEye />
-                        </Link>
-                      </td>
-                      <td className="flex justify-center items-center gap-4">
+                        </button>
+                      </div>
+                      <div className="flex justify-center items-center">
                         <button
-                          disabled={loading}
+                          readOnly={loading}
                           className="btn"
                           onClick={() => deleteUser(maqam)}
                         >
                           <FaTrash />
                         </button>
-                      </td>
-                    </div>
+                      </div>
+                      <div className="flex justify-center items-center">
+                        <button
+                          readOnly={loading}
+                          className="btn"
+                          // onClick={updateNazimStatus}
+                        >
+                          <MdOutlineUpgrade />
+                        </button>
+                      </div>
+                    </td>
                   </tr>
                 ))}
             </tbody>
@@ -270,16 +351,26 @@ export const DeleteUser = () => {
         </div>
         {/* You can open the modal using document.getElementById('ID').showModal() method */}
 
-        <dialog id="my_modal_3" className="modal">
+        {/* {showModal && ( */}
+        <dialog id="categorize-filter" className="modal">
           <div className="modal-box">
             <form method="dialog">
               {/* if there is a button in form, it will close the modal */}
-              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+              <button
+                id="filter-area-dialog-close-btn"
+                className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+              >
                 ✕
               </button>
             </form>
-            <form className="space-y-4" onSubmit={handleSubmit}>
-              <h1 className="font-semibold text-2xl">Signup Form</h1>
+            <form
+              autoComplete="off"
+              method="dialog"
+              className="space-y-4"
+              onSubmit={handleSubmit}
+              id="filter-form"
+            >
+              <h1 className="font-semibold text-2xl">Categorize Users</h1>
 
               <div>
                 <label className="label">
@@ -296,11 +387,12 @@ export const DeleteUser = () => {
               <div className="relative">
                 <label className="label">
                   <span className="text-base label-text">
-                    Date of becoming rukan/umeedwar
+                    Year of becoming rukan/umeedwar
                   </span>
                 </label>
                 <input
                   type="text"
+                  id="year-of-joining"
                   placeholder={"Select year"}
                   name="joiningDate"
                   className="w-full select select-bordered select-primary"
@@ -308,13 +400,14 @@ export const DeleteUser = () => {
                   onClick={() => setOpenYears(!openYears)}
                 />
                 {openYears && (
-                  <div className="absolute bg-white border w-20 p-0 right-0">
-                    <button
-                      className="w-full p-1 bg-[#eee] hover:bg-[#aaa]"
+                  <div className="absolute bg-white border w-20 p-0 right-0 select-none">
+                    <span
+                      id="minus-year"
+                      className="w-full p-1 bg-[#eee] hover:bg-[#aaa] block text-center"
                       onClick={() => YearCalender(-1)}
                     >
                       -
-                    </button>
+                    </span>
 
                     {years.map((obj) => (
                       <p
@@ -332,12 +425,13 @@ export const DeleteUser = () => {
                         {obj}
                       </p>
                     ))}
-                    <button
-                      className="w-full p-1 bg-[#eee] hover:bg-[#aaa]"
+                    <span
+                      id="plus-year"
+                      className="w-full p-1 bg-[#eee] hover:bg-[#aaa] block text-center"
                       onClick={() => YearCalender(1)}
                     >
                       +
-                    </button>
+                    </span>
                   </div>
                 )}
               </div>
@@ -353,18 +447,16 @@ export const DeleteUser = () => {
                   className="w-full input input-bordered input-primary min-w-[230px]"
                 />
               </div>
-              <div>
+              {/* <div>
                 <label className="label">
                   <span className="text-base label-text">City </span>
                 </label>
-                <textarea
-                  placeholder="Address"
+                <input
+                  placeholder="City"
                   name="address"
                   className="w-full input input-bordered input-primary"
-                  cols="22"
-                  rows="2"
                 />
-              </div>
+              </div> */}
 
               <div className="w-full">
                 <label className="label">
@@ -375,25 +467,31 @@ export const DeleteUser = () => {
                   className="select select-bordered select-primary w-full"
                 >
                   <button>add</button>
-                  <option disabled selected>
+                  <option value={""} selected>
                     Qualification
                   </option>
                   <option value={"matric"}>Matric</option>
                   <option value={"intermediate"}>Intermediate</option>
                   <option value={"bachelors"}>Bachelors</option>
                   <option value={"masters"}>Masters</option>
+                  <option value={"phd"}>PHD</option>
                 </select>
               </div>
               <div className="w-full">
-                <label className="label">
-                  <span className="text-base label-text">Subject</span>
-                </label>
-                <input
-                  type="text"
-                  placeholder="Subject"
+                <select
                   name="subject"
-                  className="w-full input input-bordered input-primary"
-                />
+                  id="subject"
+                  className="select select-bordered select-primary w-full"
+                  value={selectedSubject}
+                  onChange={(e) => setSelectedSubject(e.target.value)}
+                >
+                  <option value={""}>Select subject</option>
+                  {subjects?.map((sub, index) => (
+                    <option value={sub?._id} key={index} className="capitalize">
+                      {sub?.title?.split("_").join(" ")}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div className="w-full">
@@ -404,7 +502,7 @@ export const DeleteUser = () => {
                   name="semester"
                   className="select select-bordered select-primary w-full "
                 >
-                  <option disabled selected>
+                  <option value={""} selected>
                     Semester/Year
                   </option>
                   <option value={"semester 1"}>Semester 1</option>
@@ -415,10 +513,15 @@ export const DeleteUser = () => {
                   <option value={"semester 6"}>Semester 6</option>
                   <option value={"semester 7"}>Semester 7</option>
                   <option value={"semester 8"}>Semester 8</option>
+                  <option value={"semester 9"}>Semester 9</option>
+                  <option value={"semester10"}>Semester10</option>
+                  <option value={"semester 11"}>Semester 11</option>
+                  <option value={"semester 12"}>Semester 12</option>
                   <option value={"1st year"}>1st Year</option>
-                  <option value={"2nd year"}>2dn Year</option>
+                  <option value={"2nd year"}>2nd Year</option>
                   <option value={"3rd year"}>3rd Year</option>
                   <option value={"4th year"}>4th Year</option>
+                  <option value={"5th year"}>5th Year</option>
                 </select>
               </div>
               <div className="w-full">
@@ -572,7 +675,7 @@ export const DeleteUser = () => {
                 <input
                   id="autocomplete"
                   type="text"
-                  class="input input-bordered input-primary w-full"
+                  className="input input-bordered input-primary w-full"
                   placeholder="Select area"
                   onChange={(e) => setSearchArea(e.target.value)}
                   onClick={() => {
@@ -593,7 +696,7 @@ export const DeleteUser = () => {
                 />
                 <div
                   id="autocomplete-list"
-                  class="absolute z-10 max-h-[100px] overflow-y-scroll bg-white border border-gray-300 w-full mt-1"
+                  className="absolute hidden z-10 max-h-[100px] overflow-y-scroll bg-white border border-gray-300 w-full mt-1"
                 >
                   {areas
                     .sort((a, b) => a?.name?.localeCompare(b?.name))
@@ -639,7 +742,241 @@ export const DeleteUser = () => {
                     ))}
                 </div>
               </div>
-              <button className="btn btn-primary">ok</button>
+              <button
+                type="submit"
+                className="btn btn-primary"
+                onClick={() =>
+                  document
+                    .getElementById("filter-area-dialog-close-btn")
+                    .click()
+                }
+              >
+                Filter
+              </button>
+            </form>
+          </div>
+        </dialog>
+        {/* This is to see the user Details */}
+        <dialog id="view-details-modal" className="modal">
+          <div className="modal-box">
+            <h3 className="font-bold text-2xl">User Details</h3>
+            <hr className="mb-3" />
+            <form className="space-y-4">
+              <div className="flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col">
+                <div className="w-full">
+                  <label className="label">
+                    <span className="text-base label-text">Full Name</span>
+                  </label>
+                  <input
+                    readOnly
+                    type="text"
+                    placeholder="Full Name"
+                    name="name"
+                    className="w-full text-[#7a7a7a]"
+                    defaultValu
+                    defaultValue={singleUser?.name}
+                  />
+                </div>
+                <div className="w-full">
+                  <label className="label">
+                    <span className="text-base label-text">Father Name</span>
+                  </label>
+                  <input
+                    readOnly
+                    type="text"
+                    placeholder="Father name"
+                    name="fatherName"
+                    className="w-full text-[#7a7a7a]"
+                    defaultValu
+                    defaultValue={singleUser?.fatherName}
+                  />
+                </div>
+              </div>
+              <div className="flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col">
+                <div className="w-full">
+                  <label className="label">
+                    <span className="text-base label-text">Date of birth</span>
+                  </label>
+                  <input
+                    readOnly
+                    defaultValue={singleUser?.dob?.split("T")[0]}
+                    type="text"
+                    placeholder="Date of birth"
+                    name="dob"
+                    className=" w-full text-[#7a7a7a] min-w-[230px]"
+                  />
+                </div>
+                <div className="w-full">
+                  <label className="label">
+                    <span className="label-text text-sm">
+                      Date of becoming rukan/umeedwar
+                    </span>
+                  </label>
+                  <input
+                    readOnly
+                    type="text"
+                    placeholder="JoiningDate"
+                    name="joiningDate"
+                    className="w-full text-[#7a7a7a]"
+                    defaultValu
+                    defaultValue={singleUser?.joiningDate?.split("T")[0]}
+                  />
+                </div>
+              </div>
+              <div className="flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col">
+                <div className="w-full">
+                  <label className="label">
+                    <span className="text-base label-text">Qualifications</span>
+                  </label>
+                  <input
+                    readOnly
+                    type="text"
+                    placeholder="Qualification"
+                    name="qualification"
+                    className="w-full text-[#7a7a7a] capitalize "
+                    defaultValu
+                    defaultValue={singleUser?.qualification}
+                  />
+                </div>
+                <div className="w-full relative">
+                  <label className="label">
+                    <span className="text-base label-text">Subject</span>
+                  </label>
+
+                  <input
+                    readOnly
+                    type="text"
+                    placeholder="Subject"
+                    name="subject"
+                    className="w-full   capitalize"
+                    defaultValue={(() => {
+                      const foundSubject = subjects.find(
+                        (subject) => subject._id === singleUser?.subject
+                      );
+                      return foundSubject?.title;
+                    })()}
+                  />
+                </div>
+              </div>
+              <div className="flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col">
+                <div className="w-full">
+                  <label className="label">
+                    <span className="text-base label-text">Semester/Year</span>
+                  </label>
+                  <input
+                    readOnly
+                    type="text"
+                    placeholder="Semester"
+                    name="semester"
+                    className="w-full text-[#7a7a7a]  capitalize "
+                    defaultValu
+                    defaultValue={singleUser?.semester}
+                  />
+                </div>
+                <div className="w-full">
+                  <label className="label">
+                    <span className="text-base label-text">Institution</span>
+                  </label>
+                  <input
+                    readOnly
+                    defaultValue={singleUser?.institution}
+                    type="text"
+                    placeholder="Institution"
+                    name="institution"
+                    className=" w-full text-[#7a7a7a]"
+                  />
+                </div>
+              </div>
+              <div className="flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col">
+                <div className="w-full">
+                  <label className="label">
+                    <span className="text-base label-text">Email</span>
+                  </label>
+                  <input
+                    readOnly
+                    defaultValue={singleUser?.email}
+                    type="email"
+                    placeholder="Email Address"
+                    name="email"
+                    className=" w-full text-[#7a7a7a]"
+                  />
+                </div>
+                <div className="w-full">
+                  <label className="label">
+                    <span className="text-base label-text">Age</span>
+                  </label>
+                  <input
+                    readOnly
+                    defaultValue={singleUser?.age}
+                    type="number"
+                    placeholder="Age"
+                    name="age"
+                    className=" w-full text-[#7a7a7a]"
+                  />
+                </div>
+              </div>
+              <div className="flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col">
+                <div className="w-full">
+                  <label className="label">
+                    <span className="text-base label-text">Phone Number</span>
+                  </label>
+                  <input
+                    readOnly
+                    defaultValue={singleUser?.phoneNumber}
+                    type="text"
+                    placeholder="Phone Number"
+                    name="phoneNumber"
+                    className=" w-full text-[#7a7a7a]"
+                  />
+                </div>
+                <div className="w-full">
+                  <label className="label">
+                    <span className="text-base label-text">
+                      WhatsApp Number
+                    </span>
+                  </label>
+                  <input
+                    readOnly
+                    defaultValue={singleUser?.whatsAppNumber}
+                    type="text"
+                    placeholder="WhatsApp Number"
+                    name="whatsAppNumber"
+                    className=" w-full text-[#7a7a7a]"
+                  />
+                </div>
+              </div>
+              <div className="flex items-start justify-start">
+                <div className="w-full">
+                  <label className="label">
+                    <span className="text-base label-text">Home address</span>
+                  </label>
+                  <textarea
+                    placeholder="Address"
+                    name="address"
+                    className="w-full text-[#7a7a7a]"
+                    required
+                    defaultValue={singleUser?.address}
+                  ></textarea>
+                </div>
+                <div className="w-full">
+                  <label className="label">
+                    <span className="text-base label-text">Area</span>
+                  </label>
+                  <input
+                    readOnly
+                    defaultValue={singleUser?.userAreaId?.name}
+                    type="text"
+                    placeholder="UserArea"
+                    name="userArea"
+                    className=" w-full text-[#7a7a7a]"
+                  />
+                </div>
+              </div>
+            </form>
+            <form method="dialog" className="modal-backdrop">
+              <div className="flex justify-end items-end w-full">
+                <button className="btn rounded-lg ">Close</button>
+              </div>
             </form>
           </div>
         </dialog>

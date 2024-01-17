@@ -1,13 +1,18 @@
 import { FaEdit, FaEye, FaPlus } from "react-icons/fa";
 import { GeneralLayout } from "../components";
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router";
 import {
+  DistrictContext,
+  DivisionContext,
   DivisionReportContext,
+  HalqaContext,
   HalqaReportContext,
+  MaqamContext,
   MaqamReportContext,
   MeContext,
   ProvinceReportContext,
+  TehsilContext,
   useToastState,
 } from "../context";
 import instance from "../api/instrance";
@@ -97,7 +102,7 @@ export const Reports = () => {
   const [tab, setTab] = useState(
     ["province", "maqam"].includes(localStorage.getItem("@type"))
       ? "maqam"
-      : "division"
+      : "maqam"
   );
   const [id, setId] = useState(null);
   const { active, setActive } = useContext(UIContext);
@@ -109,23 +114,18 @@ export const Reports = () => {
   const divisionReports = useContext(DivisionReportContext);
   const halqaReports = useContext(HalqaReportContext);
   const provinceReports = useContext(ProvinceReportContext);
+  const user = useContext(MeContext);
   const [areas, setAreas] = useState([]);
   const [searchArea, setSearchArea] = useState("");
-  const [halqas, setHalqas] = useState([]);
-  const [userAreaType, setUserAreaType] = useState("Division");
+  const maqams = useContext(MaqamContext);
+  const divisions = useContext(DivisionContext);
+  const districts = useContext(DistrictContext);
+  const tehsils = useContext(TehsilContext);
+  const halqas = useContext(HalqaContext);
+  const [userAreaType, setUserAreaType] = useState("halqa");
   const [selectedId, setSelectedId] = useState("");
   const [selectedMonth, setSelectedMonth] = useState("");
   const params = useLocation();
-  const fetchData = async () => {
-    const response = await instance.get("/locations/halqa");
-
-    setHalqas(response.data.data);
-  };
-  const memoizedHalqas = useMemo(() => halqas, [halqas]);
-
-  useEffect(() => {
-    fetchData();
-  }, []);
   // GENERATE MONTHS
   useEffect(() => {
     // Function to parse query parameters
@@ -144,20 +144,6 @@ export const Reports = () => {
     getQueryParams();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
-  const fetchPersonReports = async (e) => {
-    try {
-      const params = { id, active };
-      const request = await instance.get("/user/reports", {
-        params: params,
-        headers: { "Content-Type": "application/json" },
-      });
-
-      dispatch({ type: "SUCCESS", payload: request.data?.message });
-      e.target.reset();
-    } catch (err) {
-      dispatch({ type: "ERROR", payload: err.response.data.message });
-    }
-  };
 
   const toggleSearch = () => {
     showSearch(!search);
@@ -173,29 +159,53 @@ export const Reports = () => {
     navigate(`edit/${id}`);
   };
   const getAreas = async () => {
-    let data;
     switch (active) {
       case "division":
-        data = await instance.get("/locations/division");
-        setAreas(data.data.data);
+        setAreas(divisions);
         break;
       case "maqam":
-        data = await instance.get("/locations/maqam");
-        setAreas(data.data.data);
+        setAreas(maqams);
         break;
       case "halqa":
-        data = memoizedHalqas;
-        setAreas(data);
+        setAreas(
+          halqas.filter((i) => {
+            if (tab === "maqam") {
+              return i?.parentType === "Maqam";
+            } else if (tab === "division") {
+              return i?.parentType === "Tehsil";
+            }
+            return true;
+          })
+        );
         break;
       default:
         break;
     }
   };
-  useEffect(() => {
-    getAreas();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [active]);
-
+  const getAreaWithType = () => {
+    switch (userAreaType) {
+      case "division":
+        setAreas(divisions);
+        break;
+      case "maqam":
+        setAreas(maqams);
+        break;
+      case "halqa":
+        setAreas(
+          halqas.filter((i) => {
+            if (tab === "maqam") {
+              return i?.parentType === "Maqam";
+            } else if (tab === "division") {
+              return i?.parentType === "Tehsil";
+            }
+            return true;
+          })
+        );
+        break;
+      default:
+        break;
+    }
+  };
   const fetchReports = async () => {
     try {
       let response;
@@ -216,35 +226,55 @@ export const Reports = () => {
           division: id ? d.filter((i) => i?.divisionAreaId?._id === id) : d,
           province: id ? p.filter((i) => i?.provinceAreaId?._id === id) : p,
         });
+
+        // SELECT WITH ID & DATE
+
         if (selectedId && selectedMonth) {
-          console.log(selectedId, selectedMonth);
           setAllReports({
             maqam: selectedId
               ? m.filter(
                   (i) =>
                     i?.maqamAreaId?._id === selectedId &&
-                    parseInt(i?.createdAt.getMonth) === parseInt(selectedMonth)
+                    i?.month?.split("-").slice(0, 2).join("-") === selectedMonth
                 )
               : m,
             halqa: selectedId
-              ? h.filter(
-                  (i) =>
+              ? h.filter((i) => {
+                  if (userAreaType === "maqam") {
+                    return (
+                      i?.halqaAreaId?.parentId?._id === selectedId &&
+                      i?.month?.split("-").slice(0, 2).join("-") ===
+                        selectedMonth
+                    );
+                  } else if (userAreaType === "division") {
+                    const district = i?.halqaAreaId?.parentId?.district;
+                    const filteredDistricts = districts
+                      .filter((dis) => dis?.division?._id === selectedId)
+                      .map((div) => div?._id);
+                    return (
+                      filteredDistricts.includes(district) &&
+                      i?.month?.split("-").slice(0, 2).join("-") ===
+                        selectedMonth
+                    );
+                  }
+                  return (
                     i?.halqaAreaId?._id === selectedId &&
-                    parseInt(i?.createdAt.getMonth) === parseInt(selectedMonth)
-                )
+                    i?.month?.split("-").slice(0, 2).join("-") === selectedMonth
+                  );
+                })
               : h,
             division: selectedId
               ? d.filter(
                   (i) =>
                     i?.divisionAreaId?._id === selectedId &&
-                    parseInt(i?.createdAt.getMonth) === parseInt(selectedMonth)
+                    i?.month?.split("-").slice(0, 2).join("-") === selectedMonth
                 )
               : d,
             province: selectedId
               ? p.filter(
                   (i) =>
                     i?.provinceAreaId?._id === selectedId &&
-                    parseInt(i?.createdAt.getMonth) === parseInt(selectedMonth)
+                    i?.month?.split("-").slice(0, 2).join("-") === selectedMonth
                 )
               : p,
           });
@@ -253,40 +283,71 @@ export const Reports = () => {
               ? m.filter(
                   (i) =>
                     i?.maqamAreaId?._id === selectedId &&
-                    parseInt(i?.createdAt.getMonth) === parseInt(selectedMonth)
+                    i?.month?.split("-").slice(0, 2).join("-") === selectedMonth
                 )
               : m,
             halqa: selectedId
-              ? h.filter(
-                  (i) =>
+              ? h.filter((i) => {
+                  if (userAreaType === "maqam") {
+                    return (
+                      i?.halqaAreaId?.parentId?._id === selectedId &&
+                      i?.month?.split("-").slice(0, 2).join("-") ===
+                        selectedMonth
+                    );
+                  } else if (userAreaType === "division") {
+                    const district = i?.halqaAreaId?.parentId?.district;
+                    const filteredDistricts = districts
+                      .filter((dis) => dis?.division?._id === selectedId)
+                      .map((div) => div?._id);
+                    return (
+                      filteredDistricts.includes(district) &&
+                      i?.month?.split("-").slice(0, 2).join("-") ===
+                        selectedMonth
+                    );
+                  }
+                  return (
                     i?.halqaAreaId?._id === selectedId &&
-                    parseInt(i?.createdAt.getMonth) === parseInt(selectedMonth)
-                )
+                    i?.month?.split("-").slice(0, 2).join("-") === selectedMonth
+                  );
+                })
               : h,
             division: selectedId
               ? d.filter(
                   (i) =>
                     i?.divisionAreaId?._id === selectedId &&
-                    parseInt(i?.createdAt.getMonth) === parseInt(selectedMonth)
+                    i?.month?.split("-").slice(0, 2).join("-") === selectedMonth
                 )
               : d,
             province: selectedId
               ? p.filter(
                   (i) =>
                     i?.provinceAreaId?._id === selectedId &&
-                    parseInt(i?.createdAt.getMonth) === parseInt(selectedMonth)
+                    i?.month?.split("-").slice(0, 2).join("-") === selectedMonth
                 )
               : p,
           });
         }
-        if (selectedId && !selectedMonth) {
-          console.log(selectedId);
+
+        // SELECT WITHOUT DATE
+
+        if (selectedId && (!selectedMonth || selectedMonth === "")) {
           setAllReports({
             maqam: selectedId
               ? m.filter((i) => i?.maqamAreaId?._id === selectedId)
               : m,
             halqa: selectedId
-              ? h.filter((i) => i?.halqaAreaId?._id === selectedId)
+              ? h.filter((i) => {
+                  if (userAreaType === "maqam") {
+                    return i?.halqaAreaId?.parentId?._id === selectedId;
+                  } else if (userAreaType === "division") {
+                    const district = i?.halqaAreaId?.parentId?.district;
+                    const filteredDistricts = districts
+                      .filter((dis) => dis?.division?._id === selectedId)
+                      .map((div) => div?._id);
+                    return filteredDistricts.includes(district);
+                  }
+                  return i?.halqaAreaId?._id === selectedId;
+                })
               : h,
             division: selectedId
               ? d.filter((i) => i?.divisionAreaId?._id === selectedId)
@@ -300,7 +361,11 @@ export const Reports = () => {
               ? m.filter((i) => i?.maqamAreaId?._id === selectedId)
               : m,
             halqa: selectedId
-              ? h.filter((i) => i?.halqaAreaId?._id === selectedId)
+              ? h.filter((i) => {
+                  return userAreaType === "maqam"
+                    ? i?.halqaAreaId?.parentId?._id === selectedId
+                    : i?.halqaAreaId?._id === selectedId;
+                })
               : h,
             division: selectedId
               ? d.filter((i) => i?.divisionAreaId?._id === selectedId)
@@ -335,7 +400,6 @@ export const Reports = () => {
       console.error("Error fetching reports:", error);
     }
   };
-
   const clearFilters = () => {
     setMonth("");
     setYear("2023");
@@ -348,7 +412,7 @@ export const Reports = () => {
   useEffect(() => {
     fetchReports();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userType, id, active, tab, selectedId]);
+  }, [userType, id, active, tab, selectedId, selectedMonth]);
 
   const searchResults = () => {
     if (userType !== "halqa") {
@@ -387,7 +451,7 @@ export const Reports = () => {
       if (year !== "" && month !== "") {
         const filteredData = reports?.reduce((acc, curr) => {
           const reportYear = parseInt((curr?.month).split("-")[0]);
-          const reportMonth = parseInt((curr?.month).split("-")[1]);
+          const reportMonth = parseInt((curr?.month).spit("-")[1]);
           if (
             reportMonth === parseInt(month) &&
             reportYear === parseInt(year)
@@ -445,6 +509,13 @@ export const Reports = () => {
       dispatch({ type: "ERROR", payload: err.response.data.message });
     }
   };
+  useEffect(() => {
+    getAreas();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [active]);
+  useEffect(() => {
+    getAreaWithType();
+  }, [userAreaType, tab]);
   return (
     <GeneralLayout
       title={me?.userAreaId?.name.toUpperCase()}
@@ -480,13 +551,60 @@ export const Reports = () => {
                 <span className="px-1 py-2 block font-semibold w-[50%]">
                   Select Area:
                 </span>
+                {active === "halqa" && (
+                  <div className="flex items-center gap-3 justify-start border border-primary p-2 rounded-lg mb-3">
+                    {tab !== "maqam" && (
+                      <div className="form-control">
+                        <label className="label cursor-pointer gap-2">
+                          <input
+                            type="radio"
+                            name="userAreaType"
+                            className="radio checked:bg-blue-500"
+                            value="division"
+                            onChange={(e) => setUserAreaType(e.target.value)}
+                          />
+                          <span className="label-text">Division</span>
+                        </label>
+                      </div>
+                    )}
+                    {tab !== "division" && (
+                      <div className="form-control">
+                        <label className="label cursor-pointer gap-2">
+                          <input
+                            type="radio"
+                            name="userAreaType"
+                            className="radio checked:bg-blue-500"
+                            value="maqam"
+                            onChange={(e) => setUserAreaType(e.target.value)}
+                          />
+                          <span className="label-text">Maqam</span>
+                        </label>
+                      </div>
+                    )}
+                    <div className="form-control">
+                      <label className="label cursor-pointer gap-2">
+                        <input
+                          type="radio"
+                          name="userAreaType"
+                          className="radio checked:bg-blue-500"
+                          value="halqa"
+                          onChange={(e) => setUserAreaType(e.target.value)}
+                          defaultChecked
+                        />
+                        <span className="label-text">Halqa</span>
+                      </label>
+                    </div>
+                  </div>
+                )}
                 <input type="hidden" name="userAreaId" id="userAreaId" />
                 <input
                   id="autocomplete"
                   autoComplete="off"
                   type="text"
                   class="input input-bordered input-primary w-full"
-                  placeholder={`Select ${active}`}
+                  placeholder={`Select ${
+                    active === "halqa" ? userAreaType : active
+                  }`}
                   onChange={(e) => setSearchArea(e.target.value)}
                   onClick={() => {
                     if (
@@ -529,9 +647,6 @@ export const Reports = () => {
                       <div
                         key={index}
                         onClick={() => {
-                          document
-                            .getElementById("filter-area-dialog-close-btn")
-                            .click();
                           document.getElementById("userAreaId").value =
                             area?._id;
                           setSelectedId(area?._id);
@@ -567,9 +682,23 @@ export const Reports = () => {
                 <input
                   type="month"
                   name="month"
-                  className="w-full input input-bordered input-primary"
+                  className="w-full mt-5 mb-5 input input-bordered input-primary"
+                  value={selectedMonth}
                   onChange={(e) => setSelectedMonth(e.target.value)}
                 />
+                <div className="w-full flex justify-end items-end">
+                  <button
+                    className="btn"
+                    onClick={() => {
+                      document
+                        .getElementById("filter-area-dialog-close-btn")
+                        .click();
+                      fetchReports();
+                    }}
+                  >
+                    ok
+                  </button>
+                </div>
               </div>
             </div>
           </dialog>
@@ -817,7 +946,11 @@ export const Reports = () => {
                     >
                       <div className="flex w-full flex-col items-start justify-center">
                         <span className="text-lg font-semibold">
-                          {obj?.[active + "AreaId"]?.name || "UNKNOWN"} -{" "}
+                          {obj?.[active + "AreaId"]?.name || "UNKNOWN"}
+                          {" - "}
+                          {obj?.[active + "AreaId"]?.parentId?.name ||
+                            "UNKNOWN"}
+                          {" - "}
                           {moment(obj?.month).format("MMMM YYYY")}
                         </span>
                         <span>
@@ -842,7 +975,11 @@ export const Reports = () => {
                     >
                       <div className="flex w-full flex-col items-start justify-center">
                         <span className="text-lg font-semibold">
-                          {obj?.[active + "AreaId"]?.name || "UNKNOWN"} -{" "}
+                          {obj?.[active + "AreaId"]?.name || "UNKNOWN"}
+                          {" - "}
+                          {obj?.[active + "AreaId"]?.parentId?.name ||
+                            "UNKNOWN"}
+                          {" - "}
                           {moment(obj?.month).format("MMMM YYYY")}
                         </span>
                         <span>
@@ -866,7 +1003,10 @@ export const Reports = () => {
                   >
                     <div className="flex w-full flex-col items-start justify-center">
                       <span className="text-lg font-semibold">
-                        {obj?.[active + "AreaId"]?.name || "UNKNOWN"} -{" "}
+                        {obj?.[active + "AreaId"]?.name || "UNKNOWN"}
+                        {" - "}
+                        {obj?.[active + "AreaId"]?.province?.name || "UNKNOWN"}
+                        {" - "}
                         {moment(obj?.month).format("MMMM YYYY")}
                       </span>
                       <span>

@@ -49,39 +49,41 @@ export const Notifications = ({ userRequests, type }) => {
             userRequests.map((req, index) => (
               <div
                 key={index}
-                className="p-3 hover:bg-slate-300 flex flex-col lg:flex-row lg:items-center justify-between"
+                className="relative hover:bg-slate-300 flex flex-col lg:flex-col lg:items-center justify-between"
               >
-                <div className="flex items-center justify-start">
-                  <div className="avatar">
-                    <div className="w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/1159/1159740.png"
-                        alt="logo"
-                      />
+                <div className="badge absolute top-1 right-1 capitalize badge-primary">
+                  {req?.nazimType}
+                </div>
+
+                <div className="flex w-full flex-col">
+                  <div className="flex items-center w-full flex-col justify-start">
+                    <div className="flex w-full px-3">
+                      <span className="font-semibold flex gap-1">
+                        {req?.name}
+                      </span>
+                    </div>
+                    <div className="flex w-full px-3">
+                      <span className="font-semibold flex gap-1 text-[#7a7a7a]">
+                        <span>{req?.userAreaId?.name}</span>
+                      </span>
                     </div>
                   </div>
-                  <div className="flex flex-col px-3">
-                    <span className="font-semibold flex gap-1">
-                      {req?.name}({req?.userAreaId?.name})
-                    </span>
-                    <span>{req?.email}</span>
+                  <div className="flex items-end justify-end lg:justify-end gap-3 py-2">
+                    <button
+                      disabled={loading}
+                      onClick={() => update(req?.req_id, "accepted")}
+                      className="p-2 bg-slate-200 rounded-lg"
+                    >
+                      <FaCheck />
+                    </button>
+                    <button
+                      disabled={loading}
+                      onClick={() => update(req?.req_id, "rejected")}
+                      className="p-2 bg-slate-200 rounded-lg"
+                    >
+                      <FaTimes />
+                    </button>
                   </div>
-                </div>
-                <div className="flex items-center justify-end lg:justify-start gap-3 py-2">
-                  <button
-                    disabled={loading}
-                    onClick={() => update(req?.req_id, "accepted")}
-                    className="p-2 bg-slate-200 rounded-lg"
-                  >
-                    <FaCheck />
-                  </button>
-                  <button
-                    disabled={loading}
-                    onClick={() => update(req?.req_id, "rejected")}
-                    className="p-2 bg-slate-200 rounded-lg"
-                  >
-                    <FaTimes />
-                  </button>
                 </div>
               </div>
             ))

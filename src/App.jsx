@@ -1,13 +1,13 @@
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
-import { Login } from './pages/Login';
-import { Forget } from './pages/Forget';
-import { Dashboard } from './pages/Dashboard';
-import { ChangePassword } from './pages/ChangePassword';
-import { Toast } from './components/Toast';
-import { Comparision } from './pages/Comparision';
-import { ReportChart } from './components/ReportChart';
-import { Signup } from './pages/Signup';
-import { Reports } from './pages/Reports';
+import { Routes, Route, useNavigate } from "react-router-dom";
+import { Login } from "./pages/Login";
+import { Forget } from "./pages/Forget";
+import { Dashboard } from "./pages/Dashboard";
+import { ChangePassword } from "./pages/ChangePassword";
+import { Toast } from "./components/Toast";
+import { Comparision } from "./pages/Comparision";
+import { ReportChart } from "./components/ReportChart";
+import { Signup } from "./pages/Signup";
+import { Reports } from "./pages/Reports";
 import {
   DeleteUser,
   Division,
@@ -17,9 +17,9 @@ import {
   Locations,
   Maqam,
   Province,
-} from './pages';
-import { useEffect, useRef, useState } from 'react';
-import instance from './api/instrance';
+} from "./pages";
+import { useEffect, useRef, useState } from "react";
+import instance from "./api/instrance";
 import {
   DistrictContext,
   DivisionContext,
@@ -33,9 +33,9 @@ import {
   ProvinceReportContext,
   TehsilContext,
   useToastState,
-} from './context';
-import { UIContext } from './context/ui';
-import { Loader } from './components';
+} from "./context";
+import { UIContext } from "./context/ui";
+import { Loader } from "./components";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -54,51 +54,73 @@ function App() {
   const [halqaReports, setHalqaReports] = useState([]);
   const [userRequests, setUserRequests] = useState([]);
   const [value, setValue] = useState(null);
-  const [active, setActive] = useState('province');
+  const [active, setActive] = useState("province");
   const [count, setCount] = useState(0);
-
+  const [isCompleted, setIsCompleted] = useState(true);
+  const navigate = useNavigate();
   const [notifications, setNotifications] = useState([]);
   const [reports, setReports] = useState([]);
   let dis;
   let r = [];
   const [authenticated, setAuthenticaated] = useState(
-    localStorage.getItem('@token')
+    localStorage.getItem("@token")
   );
   const getMe = async () => {
     try {
-      setValue('Fetching user info');
-      const req = await instance.get('/user/me', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
+      setValue("Fetching user info");
+      const req = await instance.get("/user/me", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
       });
       if (req) {
+        setIsCompleted(true);
         setMe(req.data.data);
+        const meData = req.data.data;
+        [
+          "email",
+          "fatherName",
+          "name",
+          "age",
+          "dob",
+          "address",
+          "qualification",
+          "subject",
+          "semester",
+          "institution",
+          "joiningDate",
+          "phoneNumber",
+          "whatsAppNumber",
+        ].forEach((i) => {
+          if (!meData?.[i]) {
+            setIsCompleted(false);
+          }
+        });
       }
     } catch (err) {
       dispatch({
-        type: 'ERROR',
+        type: "ERROR",
         payload: err?.response?.data?.message || err?.message,
       });
     }
   };
   const getProvinces = async () => {
     try {
-      const req = await instance.get('/locations/province', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
+      const req = await instance.get("/locations/province", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
       });
       if (req) {
         setProvinces(req.data.data);
       }
     } catch (err) {
       dispatch({
-        type: 'ERROR',
+        type: "ERROR",
         payload: err?.response?.data?.message || err?.message,
       });
     }
   };
   const getMaqams = async () => {
     try {
-      const req = await instance.get('/locations/maqam', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
+      const req = await instance.get("/locations/maqam", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
       });
       if (req) {
         setMaqams(
@@ -111,15 +133,15 @@ function App() {
       }
     } catch (err) {
       dispatch({
-        type: 'ERROR',
+        type: "ERROR",
         payload: err?.response?.data?.message || err?.message,
       });
     }
   };
   const getDivisions = async () => {
     try {
-      const req = await instance.get('/locations/division', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
+      const req = await instance.get("/locations/division", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
       });
       if (req) {
         setDivisions(
@@ -132,15 +154,15 @@ function App() {
       }
     } catch (err) {
       dispatch({
-        type: 'ERROR',
+        type: "ERROR",
         payload: err?.response?.data?.message || err?.message,
       });
     }
   };
   const getTehsils = async () => {
     try {
-      const req = await instance.get('/locations/tehsil', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
+      const req = await instance.get("/locations/tehsil", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
       });
       if (req) {
         const allData = req.data.data;
@@ -153,15 +175,15 @@ function App() {
       }
     } catch (err) {
       dispatch({
-        type: 'ERROR',
+        type: "ERROR",
         payload: err?.response?.data?.message || err?.message,
       });
     }
   };
   const getDistricts = async () => {
     try {
-      const req = await instance.get('/locations/district', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
+      const req = await instance.get("/locations/district", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
       });
       if (req) {
         const allData = req.data.data;
@@ -175,23 +197,23 @@ function App() {
       }
     } catch (err) {
       dispatch({
-        type: 'ERROR',
+        type: "ERROR",
         payload: err?.response?.data?.message || err?.message,
       });
     }
   };
   const getHalqas = async () => {
     try {
-      const req = await instance.get('/locations/halqa', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
+      const req = await instance.get("/locations/halqa", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
       });
       if (req) {
         const allData = req.data.data;
-        const type = localStorage.getItem('@type');
-        if (type === 'province') {
+        const type = localStorage.getItem("@type");
+        if (type === "province") {
           setHalqas(
             allData.filter((i) => {
-              if (i?.parentType === 'Maqam') {
+              if (i?.parentType === "Maqam") {
                 return (
                   i?.parentId?._id === me?.userAreaId?._id ||
                   i?.parentId?.province === me?.userAreaId?._id
@@ -204,19 +226,19 @@ function App() {
               }
             })
           );
-        } else if (type === 'maqam') {
+        } else if (type === "maqam") {
           const validHalqas = allData.filter(
             (i) =>
-              i?.parentType === 'Maqam' &&
+              i?.parentType === "Maqam" &&
               (i?.parentId?._id === me?.userAreaId?._id ||
                 i?.parentId?.province === me?.userAreaId?._id)
           );
           setHalqas(validHalqas);
-        } else if (type === 'division') {
+        } else if (type === "division") {
           const validDistricts = dis.map((i) => i?._id?.toString());
           const validHalqas = allData.filter(
             (i) =>
-              i?.parentType === 'Tehsil' &&
+              i?.parentType === "Tehsil" &&
               validDistricts.includes(i?.parentId?.district?.toString())
           );
           setHalqas(validHalqas);
@@ -229,7 +251,7 @@ function App() {
       }
     } catch (err) {
       dispatch({
-        type: 'ERROR',
+        type: "ERROR",
         payload: err?.response?.data?.message || err?.message,
       });
     }
@@ -237,8 +259,8 @@ function App() {
   let provinceR, maqamR, divisionR, halqaR;
   const getProvinceReports = async () => {
     try {
-      const req = await instance.get('/reports/province', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
+      const req = await instance.get("/reports/province", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
       });
       if (req) {
         provinceR = req.data.data;
@@ -246,15 +268,15 @@ function App() {
       }
     } catch (err) {
       dispatch({
-        type: 'ERROR',
+        type: "ERROR",
         payload: err?.response?.data?.message || err?.message,
       });
     }
   };
   const getMaqamReports = async () => {
     try {
-      const req = await instance.get('/reports/maqam', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
+      const req = await instance.get("/reports/maqam", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
       });
       if (req) {
         maqamR = req.data.data;
@@ -262,15 +284,15 @@ function App() {
       }
     } catch (err) {
       dispatch({
-        type: 'ERROR',
+        type: "ERROR",
         payload: err?.response?.data?.message || err?.message,
       });
     }
   };
   const getDivisionReports = async () => {
     try {
-      const req = await instance.get('/reports/division', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
+      const req = await instance.get("/reports/division", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
       });
       if (req) {
         divisionR = req.data.data;
@@ -278,15 +300,15 @@ function App() {
       }
     } catch (err) {
       dispatch({
-        type: 'ERROR',
+        type: "ERROR",
         payload: err?.response?.data?.message || err?.message,
       });
     }
   };
   const getHalqaReports = async () => {
     try {
-      const req = await instance.get('/reports/halqa', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
+      const req = await instance.get("/reports/halqa", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
       });
       if (req) {
         halqaR = req.data.data;
@@ -294,31 +316,31 @@ function App() {
       }
     } catch (err) {
       dispatch({
-        type: 'ERROR',
+        type: "ERROR",
         payload: err?.response?.data?.message || err?.message,
       });
     }
   };
   const getNazim = async () => {
     try {
-      const req = await instance.get('/user/nazim', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('@token')}` },
+      const req = await instance.get("/user/nazim", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
       });
       if (req) setNazim(req?.data?.data);
     } catch (err) {
       dispatch({
-        type: 'ERROR',
+        type: "ERROR",
         payload: err?.response?.data?.message || err?.message,
       });
       console.log(err);
     }
   };
   const getAllRequests = async () => {
-    if (localStorage.getItem('@token')) {
+    if (localStorage.getItem("@token")) {
       try {
-        const req = await instance.get('/user/user-requests', {
+        const req = await instance.get("/user/user-requests", {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('@token')}`,
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
         setUserRequests(req.data?.data);
@@ -330,22 +352,22 @@ function App() {
   // NOTiFICATIONS CODE
   const getAllReports = async () => {
     if (
-      localStorage.getItem('@token') &&
-      localStorage.getItem('@type') !== 'province'
+      localStorage.getItem("@token") &&
+      localStorage.getItem("@type") !== "province"
     ) {
       try {
         let req;
-        switch (localStorage.getItem('@type')) {
-          case 'province':
+        switch (localStorage.getItem("@type")) {
+          case "province":
             req = provinceR;
             break;
-          case 'maqam':
+          case "maqam":
             req = maqamR;
             break;
-          case 'division':
+          case "division":
             req = divisionR;
             break;
-          case 'halqa':
+          case "halqa":
             req = halqaR;
             break;
           default:
@@ -360,23 +382,23 @@ function App() {
     }
   };
   const getAllNotifications = async () => {
-    if (localStorage.getItem('@token')) {
+    if (localStorage.getItem("@token")) {
       try {
         const req = await instance.get(
-          '/notifications?type=' + localStorage.getItem('@type').toLowerCase(),
+          "/notifications?type=" + localStorage.getItem("@type").toLowerCase(),
           {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem('@token')}`,
+              Authorization: `Bearer ${localStorage.getItem("@token")}`,
             },
           }
         );
         setNotifications(
           req.data?.data.filter((i) => {
             const months = r?.map((_) =>
-              _.month.split('-').slice(0, 2).join('-')
+              _.month.split("-").slice(0, 2).join("-")
             );
             return !months.includes(
-              i.createdAt.split('-').slice(0, 2).join('-')
+              i.createdAt.split("-").slice(0, 2).join("-")
             );
           })
         );
@@ -417,57 +439,65 @@ function App() {
     }
     const fetchData = async () => {
       setCount((100 / 14) * 1);
-      setValue('Fetching provinces');
+      setValue("Fetching provinces");
       await getProvinces();
       setCount((100 / 14) * 2);
-      setValue('Fetching maqams');
+      setValue("Fetching maqams");
       await getMaqams();
       setCount((100 / 14) * 3);
-      setValue('Fetching divisions');
+      setValue("Fetching divisions");
       await getDivisions();
       setCount((100 / 14) * 4);
-      setValue('Fetching districts');
+      setValue("Fetching districts");
       await sleep(1000);
       await getDistricts();
       setCount((100 / 14) * 5);
-      setValue('Fetching tehsils');
+      setValue("Fetching tehsils");
       await sleep(1000);
       await getTehsils();
       setCount((100 / 14) * 6);
-      setValue('Fetching halqas');
+      setValue("Fetching halqas");
       await sleep(1001);
       await getHalqas();
       setCount((100 / 14) * 7);
-      setValue('Fetching province reports');
+      setValue("Fetching province reports");
       await getProvinceReports();
       setCount((100 / 14) * 8);
-      setValue('Fetching maqam reports');
+      setValue("Fetching maqam reports");
       await getMaqamReports();
       setCount((100 / 14) * 9);
-      setValue('Fetching division reports');
+      setValue("Fetching division reports");
       await getDivisionReports();
       setCount((100 / 14) * 10);
-      setValue('Fetching halqa reports');
+      setValue("Fetching halqa reports");
       await getHalqaReports();
       setCount((100 / 14) * 11);
-      setValue('Fetching nazims');
+      setValue("Fetching nazims");
       await getNazim();
       setCount((100 / 14) * 12);
-      setValue('Fetching user requests');
+      setValue("Fetching user requests");
       await getAllRequests();
       setCount((100 / 14) * 13);
       setValue(null);
-      setValue('Fetching all notifications');
+      setValue("Fetching all notifications");
       await getAllNotifications();
       setCount((100 / 14) * 14);
       setValue(null);
     };
     if (me) {
       fetchData();
-      setActive(localStorage.getItem('@type'));
+      setActive(localStorage.getItem("@type"));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [me]);
+  useEffect(() => {
+    if (me) {
+      if (!isCompleted) {
+        dispatch({ type: "ERROR", payload: "Please complete your profile." });
+        navigate("/profile");
+      }
+    }
+  }, [me, isCompleted, navigate]);
 
   return (
     <MeContext.Provider value={me}>
@@ -506,103 +536,99 @@ function App() {
                               active,
                               getNazim,
                               setActive,
+                              setMe,
                             }}
                           >
-                            <div className='flex flex-col'>
-                              <BrowserRouter>
-                                <Routes>
-                                  <Route path='/signup' element={<Signup />} />
-                                  <Route
-                                    path='/login'
-                                    element={
-                                      <Login
-                                        setAuthenticated={setAuthenticaated}
-                                      />
-                                    }
-                                  />
-                                  <Route path='/' element={<Dashboard />} />
-                                  <Route
-                                    path='/reset-password'
-                                    element={<Forget />}
-                                  />
-                                  <Route
-                                    path='change-password'
-                                    element={<ChangePassword />}
-                                  />
-                                  <Route
-                                    path='/comparison'
-                                    element={<Comparision />}
-                                  />
-                                  <Route
-                                    path='/chart'
-                                    element={<ReportChart />}
-                                  />
-                                  <Route
-                                    path='/reports'
-                                    element={<Reports />}
-                                  />
-                                  <Route
-                                    path='/reports/create'
-                                    element={
-                                      localStorage.getItem('@type') ===
-                                      'maqam' ? (
-                                        <Maqam />
-                                      ) : localStorage.getItem('@type') ===
-                                        'division' ? (
-                                        <Division />
-                                      ) : localStorage.getItem('@type') ===
-                                        'province' ? (
-                                        <Province />
-                                      ) : (
-                                        <Halqa />
-                                      )
-                                    }
-                                  />
-                                  <Route
-                                    path='/reports/edit/:id'
-                                    element={
-                                      localStorage.getItem('@type') ===
-                                      'maqam' ? (
-                                        <Maqam />
-                                      ) : localStorage.getItem('@type') ===
-                                        'division' ? (
-                                        <Division />
-                                      ) : localStorage.getItem('@type') ===
-                                        'province' ? (
-                                        <Province />
-                                      ) : (
-                                        <Halqa />
-                                      )
-                                    }
-                                  />
-                                  <Route
-                                    path={'/reports/view/:id'}
-                                    element={
-                                      active === 'maqam' ? (
-                                        <Maqam />
-                                      ) : active === 'division' ? (
-                                        <Division />
-                                      ) : active === 'province' ? (
-                                        <Province />
-                                      ) : (
-                                        <Halqa />
-                                      )
-                                    }
-                                  />
-                                  <Route
-                                    path='/profile'
-                                    element={<EditProfile />}
-                                  />
-                                  <Route
-                                    path='/locations'
-                                    element={<Locations />}
-                                  />
-                                  <Route
-                                    path='/user-switch'
-                                    element={<DeleteUser />}
-                                  />
-                                </Routes>
-                              </BrowserRouter>
+                            <div className="flex flex-col">
+                              <Routes>
+                                <Route path="/signup" element={<Signup />} />
+                                <Route
+                                  path="/login"
+                                  element={
+                                    <Login
+                                      setAuthenticated={setAuthenticaated}
+                                    />
+                                  }
+                                />
+                                <Route path="/" element={<Dashboard />} />
+                                <Route
+                                  path="/reset-password"
+                                  element={<Forget />}
+                                />
+                                <Route
+                                  path="change-password"
+                                  element={<ChangePassword />}
+                                />
+                                <Route
+                                  path="/comparison"
+                                  element={<Comparision />}
+                                />
+                                <Route
+                                  path="/chart"
+                                  element={<ReportChart />}
+                                />
+                                <Route path="/reports" element={<Reports />} />
+                                <Route
+                                  path="/reports/create"
+                                  element={
+                                    localStorage.getItem("@type") ===
+                                    "maqam" ? (
+                                      <Maqam />
+                                    ) : localStorage.getItem("@type") ===
+                                      "division" ? (
+                                      <Division />
+                                    ) : localStorage.getItem("@type") ===
+                                      "province" ? (
+                                      <Province />
+                                    ) : (
+                                      <Halqa />
+                                    )
+                                  }
+                                />
+                                <Route
+                                  path="/reports/edit/:id"
+                                  element={
+                                    localStorage.getItem("@type") ===
+                                    "maqam" ? (
+                                      <Maqam />
+                                    ) : localStorage.getItem("@type") ===
+                                      "division" ? (
+                                      <Division />
+                                    ) : localStorage.getItem("@type") ===
+                                      "province" ? (
+                                      <Province />
+                                    ) : (
+                                      <Halqa />
+                                    )
+                                  }
+                                />
+                                <Route
+                                  path={"/reports/view/:id"}
+                                  element={
+                                    active === "maqam" ? (
+                                      <Maqam />
+                                    ) : active === "division" ? (
+                                      <Division />
+                                    ) : active === "province" ? (
+                                      <Province />
+                                    ) : (
+                                      <Halqa />
+                                    )
+                                  }
+                                />
+                                <Route
+                                  path="/profile"
+                                  element={<EditProfile />}
+                                />
+                                <Route
+                                  path="/locations"
+                                  element={<Locations />}
+                                />
+                                <Route
+                                  path="/user-switch"
+                                  element={<DeleteUser />}
+                                />
+                              </Routes>
                               <LoadingScreen count={count} value={value} />
                               {loading && <Loader />}
                               <Toast />
