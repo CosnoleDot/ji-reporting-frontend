@@ -151,6 +151,17 @@ export const Dashboard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAreaType]);
 
+  const getAreaType = (area) => {
+    if (area?.parentType === "Maqam") {
+      return "Maqam Halqa";
+    } else if (area?.parentType === "Tehsil") {
+      return "Division Halqa";
+    } else if (area?.province) {
+      return maqams.find((i) => i?._id === area?._id) ? "Maqam" : "Division";
+    }
+    return "Province";
+  };
+
   return (
     <GeneralLayout title={"Dashboard"} active={"dashboard"}>
       <div className="relative flex flex-col w-full gap-3 items-center p-5 justify-start h-[calc(100vh-65.6px-64px)] overflow-hidden overflow-y-scroll bg-blue-50">
@@ -311,9 +322,9 @@ export const Dashboard = () => {
                 Clear Filter
               </button>
             </div>
-            <div className="overflow-x-auto grid grid-cols-1 gap-4 px-4 mt-8 sm:grid-cols-1 sm:px-8 w-full">
-              <div className="w-full h-[300px] overflow-auto overflow-y-scroll">
-                <table className="table">
+            <div className="overflow-x-auto grid grid-cols-1 gap-4  mt-8 sm:grid-cols-1 sm:px-8 w-full">
+              <div className="w-full mb-3 h-[300px] overflow-auto overflow-y-scroll">
+                <table className="table mb-7">
                   {/* head */}
                   <thead className="">
                     <tr className="w-full flex">
@@ -332,7 +343,11 @@ export const Dashboard = () => {
                               <td className="w-[50%]">
                                 {nazim.find(
                                   (i) => i?.userAreaId?._id == obj?._id
-                                )?.name || "UNKNOWN"}
+                                )?.name || (
+                                  <span className="text-red-400 font-semibold">
+                                    User Not Registered Yet
+                                  </span>
+                                )}
                               </td>
                             </tr>
                           ))
@@ -346,10 +361,16 @@ export const Dashboard = () => {
                         .filter((i) => !i?.disabled)
                         .map((obj, index) => (
                           <tr className="w-full flex" key={index}>
-                            <td className="w-[50%]">{obj.name}</td>
+                            <td className="w-[50%]">
+                              {obj.name} - {`(${getAreaType(obj)})`}
+                            </td>
                             <td className="w-[50%]">
                               {nazim.find((i) => i?.userAreaId?._id == obj?._id)
-                                ?.name || "UNKNOWN"}
+                                ?.name || (
+                                <span className="text-red-400 font-semibold">
+                                  User Not Registered Yet
+                                </span>
+                              )}
                             </td>
                           </tr>
                         ))

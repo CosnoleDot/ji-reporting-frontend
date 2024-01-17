@@ -84,7 +84,6 @@ export const DeleteUser = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(e);
     setShowModal(false);
     document.getElementById("categorize-filter").setAttribute("open", "false");
     setLoading(true);
@@ -122,7 +121,6 @@ export const DeleteUser = () => {
       params.joiningDate = data.joiningDate;
     if (data.nazimType && data.nazimType !== "")
       params.nazimType = data.nazimType;
-    console.log(params);
     try {
       const request = await instance.get("/user/filter", {
         params: params,
@@ -140,9 +138,6 @@ export const DeleteUser = () => {
 
     setLoading(false);
   };
-  useEffect(() => {
-    console.log(singleUser);
-  }, [singleUser]);
   useEffect(() => {
     getAreas();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -233,14 +228,11 @@ export const DeleteUser = () => {
     document.getElementById("filter-form").reset();
     setSelectedSubject("");
   };
-  useEffect(() => {
-    console.log(singleUser);
-  }, [singleUser]);
   return (
     <GeneralLayout title={"Delete Users"} active={"user-switch"}>
       <div className="p-5 relative flex flex-col items-center py-3 px-0 pt-0 justify-start h-[calc(100vh-65.6px-64px)]">
-        <div className="w-full overflow-x-auto">
-          <div className="flex items-center justify-center gap-2 p-2">
+        <div className="w-full">
+          <div className="flex items-center justify-start md:justify-center gap-2 p-2 overflow-hidden overflow-x-scroll">
             <input
               type="search"
               name="Search"
@@ -266,88 +258,90 @@ export const DeleteUser = () => {
               Clear Filters
             </button>
           </div>
-          <table className="table table-zebra">
-            <thead>
-              <tr>
-                <th></th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>
-                  {localStorage.getItem("@type") === "province"
-                    ? "Area"
-                    : "Halqa"}
-                </th>
-                <th>Status</th>
-                <th className="text-center">Delete</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data
-                .filter((i) => i?.userAreaId?._id !== me?.userAreaId?._id)
-                .map((maqam, index) => (
-                  <tr key={index}>
-                    <th>{index + 1}</th>
-                    <td>{maqam?.name || "-"}</td>
-                    <td>{maqam?.email || "-"}</td>
-                    <td>{maqam?.userAreaId?.name || "-"}</td>
-                    <td>
-                      {!maqam?.isDeleted ? (
-                        <div className="badge badge-accent">active</div>
-                      ) : (
-                        <div className="badge badge-secondary">deleted</div>
-                      )}
-                    </td>
-                    <td className="flex row justify-center items-center gap-3">
-                      <div className="flex justify-center items-center">
-                        <Link
-                          to={`/reports?active=${maqam?.userAreaType?.toLowerCase()}${
-                            maqam?.userAreaId?.parentType
-                              ? `&tab=${maqam?.userAreaId?.parentType?.toLowerCase()}`
-                              : ""
-                          }&areaId=${maqam?.userAreaId?._id}`}
-                          readOnly={loading}
-                          className="btn"
-                        >
-                          <FaFile />
-                        </Link>
-                      </div>
-                      <div className="flex justify-center items-center">
-                        <button
-                          onClick={() => {
-                            document
-                              .getElementById("view-details-modal")
-                              .showModal();
-                            setSingleUser(maqam);
-                          }}
-                          readOnly={loading}
-                          className="btn"
-                        >
-                          <FaEye />
-                        </button>
-                      </div>
-                      <div className="flex justify-center items-center">
-                        <button
-                          readOnly={loading}
-                          className="btn"
-                          onClick={() => deleteUser(maqam)}
-                        >
-                          <FaTrash />
-                        </button>
-                      </div>
-                      <div className="flex justify-center items-center">
-                        <button
-                          readOnly={loading}
-                          className="btn"
-                          // onClick={updateNazimStatus}
-                        >
-                          <MdOutlineUpgrade />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
+          <div className="flex overflow-hidden overflow-x-auto ">
+            <table className="table table-zebra">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>
+                    {localStorage.getItem("@type") === "province"
+                      ? "Area"
+                      : "Halqa"}
+                  </th>
+                  <th>Status</th>
+                  <th className="text-center">Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data
+                  .filter((i) => i?.userAreaId?._id !== me?.userAreaId?._id)
+                  .map((maqam, index) => (
+                    <tr key={index}>
+                      <th>{index + 1}</th>
+                      <td>{maqam?.name || "-"}</td>
+                      <td>{maqam?.email || "-"}</td>
+                      <td>{maqam?.userAreaId?.name || "-"}</td>
+                      <td>
+                        {!maqam?.isDeleted ? (
+                          <div className="badge badge-accent">active</div>
+                        ) : (
+                          <div className="badge badge-secondary">deleted</div>
+                        )}
+                      </td>
+                      <td className="flex row justify-center items-center gap-3">
+                        <div className="flex justify-center items-center">
+                          <Link
+                            to={`/reports?active=${maqam?.userAreaType?.toLowerCase()}${
+                              maqam?.userAreaId?.parentType
+                                ? `&tab=${maqam?.userAreaId?.parentType?.toLowerCase()}`
+                                : ""
+                            }&areaId=${maqam?.userAreaId?._id}`}
+                            readOnly={loading}
+                            className="btn"
+                          >
+                            <FaFile />
+                          </Link>
+                        </div>
+                        <div className="flex justify-center items-center">
+                          <button
+                            onClick={() => {
+                              document
+                                .getElementById("view-details-modal")
+                                .showModal();
+                              setSingleUser(maqam);
+                            }}
+                            readOnly={loading}
+                            className="btn"
+                          >
+                            <FaEye />
+                          </button>
+                        </div>
+                        <div className="flex justify-center items-center">
+                          <button
+                            readOnly={loading}
+                            className="btn"
+                            onClick={() => deleteUser(maqam)}
+                          >
+                            <FaTrash />
+                          </button>
+                        </div>
+                        <div className="flex justify-center items-center">
+                          <button
+                            readOnly={loading}
+                            className="btn"
+                            // onClick={updateNazimStatus}
+                          >
+                            <MdOutlineUpgrade />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
         </div>
         {/* You can open the modal using document.getElementById('ID').showModal() method */}
 
@@ -447,17 +441,6 @@ export const DeleteUser = () => {
                   className="w-full input input-bordered input-primary min-w-[230px]"
                 />
               </div>
-              {/* <div>
-                <label className="label">
-                  <span className="text-base label-text">City </span>
-                </label>
-                <input
-                  placeholder="City"
-                  name="address"
-                  className="w-full input input-bordered input-primary"
-                />
-              </div> */}
-
               <div className="w-full">
                 <label className="label">
                   <span className="text-base label-text">Qualifications</span>
@@ -540,7 +523,7 @@ export const DeleteUser = () => {
                 <span className="px-1 py-2 block font-semibold">
                   Organization pocket:
                 </span>
-                <div className="flex items-center justify-between border border-primary p-2 rounded-lg">
+                <div className="flex flex-wrap items-center justify-start border border-primary p-2 rounded-lg">
                   <div className="form-control">
                     <label className="label cursor-pointer gap-2">
                       <input
@@ -792,7 +775,7 @@ export const DeleteUser = () => {
                   />
                 </div>
               </div>
-              <div className="flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col">
+              <div className="flex w-full items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col">
                 <div className="w-full">
                   <label className="label">
                     <span className="text-base label-text">Date of birth</span>
@@ -803,7 +786,7 @@ export const DeleteUser = () => {
                     type="text"
                     placeholder="Date of birth"
                     name="dob"
-                    className=" w-full text-[#7a7a7a] min-w-[230px]"
+                    className=" w-full text-[#7a7a7a]"
                   />
                 </div>
                 <div className="w-full">
@@ -890,19 +873,6 @@ export const DeleteUser = () => {
               <div className="flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col">
                 <div className="w-full">
                   <label className="label">
-                    <span className="text-base label-text">Email</span>
-                  </label>
-                  <input
-                    readOnly
-                    defaultValue={singleUser?.email}
-                    type="email"
-                    placeholder="Email Address"
-                    name="email"
-                    className=" w-full text-[#7a7a7a]"
-                  />
-                </div>
-                <div className="w-full">
-                  <label className="label">
                     <span className="text-base label-text">Age</span>
                   </label>
                   <input
@@ -945,32 +915,44 @@ export const DeleteUser = () => {
                   />
                 </div>
               </div>
-              <div className="flex items-start justify-start">
-                <div className="w-full">
-                  <label className="label">
-                    <span className="text-base label-text">Home address</span>
-                  </label>
-                  <textarea
-                    placeholder="Address"
-                    name="address"
-                    className="w-full text-[#7a7a7a]"
-                    required
-                    defaultValue={singleUser?.address}
-                  ></textarea>
-                </div>
-                <div className="w-full">
-                  <label className="label">
-                    <span className="text-base label-text">Area</span>
-                  </label>
-                  <input
-                    readOnly
-                    defaultValue={singleUser?.userAreaId?.name}
-                    type="text"
-                    placeholder="UserArea"
-                    name="userArea"
-                    className=" w-full text-[#7a7a7a]"
-                  />
-                </div>
+
+              <div className="w-full">
+                <label className="label">
+                  <span className="text-base label-text">Home address</span>
+                </label>
+                <textarea
+                  placeholder="Address"
+                  name="address"
+                  className="w-full text-[#7a7a7a]"
+                  required
+                  defaultValue={singleUser?.address}
+                ></textarea>
+              </div>
+              <div className="w-full">
+                <label className="label">
+                  <span className="text-base label-text">Area</span>
+                </label>
+                <input
+                  readOnly
+                  defaultValue={singleUser?.userAreaId?.name}
+                  type="text"
+                  placeholder="UserArea"
+                  name="userArea"
+                  className=" w-full text-[#7a7a7a]"
+                />
+              </div>
+              <div className="w-full">
+                <label className="label">
+                  <span className="text-base label-text">Email</span>
+                </label>
+                <input
+                  readOnly
+                  defaultValue={singleUser?.email}
+                  type="email"
+                  placeholder="Email Address"
+                  name="email"
+                  className=" w-full text-[#7a7a7a]"
+                />
               </div>
             </form>
             <form method="dialog" className="modal-backdrop">

@@ -151,8 +151,8 @@ export const Signup = () => {
         </div>
         <form className="space-y-4" onSubmit={handleSubmit}>
           <h1 className="font-semibold text-2xl">Signup Form</h1>
-          <div className="flex items-center justify-between">
-            <div>
+          <div className="flex items-center justify-between flex-wrap">
+            <div className="w-full">
               <label className="label">
                 <span className="text-base label-text">Full Name</span>
               </label>
@@ -164,7 +164,7 @@ export const Signup = () => {
                 required
               />
             </div>
-            <div>
+            <div className="w-full">
               <label className="label">
                 <span className="text-base label-text">Father Name</span>
               </label>
@@ -177,8 +177,8 @@ export const Signup = () => {
               />
             </div>
           </div>
-          <div className="flex items-center justify-between gap-2">
-            <div>
+          <div className="flex items-center justify-between flex-wrap gap-2">
+            <div className="w-full">
               <label className="label">
                 <span className="text-base label-text">Date of birth</span>
               </label>
@@ -204,7 +204,7 @@ export const Signup = () => {
               />
             </div>
           </div>
-          <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center justify-between flex-wrap gap-2">
             <div className="w-full">
               <label className="label">
                 <span className="text-base label-text">Qualifications</span>
@@ -252,7 +252,7 @@ export const Signup = () => {
               </span>
             </div>
           </div>
-          <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center justify-between flex-wrap gap-2">
             <div className="w-full">
               <label className="label">
                 <span className="text-base label-text">Semester/Year</span>
@@ -296,7 +296,7 @@ export const Signup = () => {
               />
             </div>
           </div>
-          <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center justify-between flex-wrap gap-2">
             <div className="w-full">
               <label className="label">
                 <span className="text-base label-text">Email</span>
@@ -322,8 +322,8 @@ export const Signup = () => {
               />
             </div>
           </div>
-          <div className="flex items-center justify-between">
-            <div>
+          <div className="flex items-center justify-between flex-wrap">
+            <div className="w-full">
               <label className="label">
                 <span className="text-base label-text">Phone Number</span>
               </label>
@@ -335,7 +335,7 @@ export const Signup = () => {
                 required
               />
             </div>
-            <div>
+            <div className="w-full">
               <label className="label">
                 <span className="text-base label-text">WhatsApp Number</span>
               </label>
@@ -348,8 +348,8 @@ export const Signup = () => {
             </div>
           </div>
 
-          <div className="flex items-center justify-between">
-            <div>
+          <div className="flex items-center justify-between flex-wrap">
+            <div className="w-full">
               <label className="label">
                 <span className="text-base label-text">Password</span>
               </label>
@@ -361,7 +361,7 @@ export const Signup = () => {
                 required
               />
             </div>
-            <div>
+            <div className="w-full">
               <label className="label">
                 <span className="text-base label-text">Confirm Password</span>
               </label>
@@ -387,11 +387,11 @@ export const Signup = () => {
               ></textarea>
             </div>
           </div>
-          <div>
+          <div className="w-full">
             <span className="px-1 py-2 block font-semibold">
               Organization pocket:
             </span>
-            <div className="flex items-center justify-between border border-primary p-2 rounded-lg">
+            <div className="flex items-center justify-between flex-wrap border border-primary p-2 rounded-lg">
               <div className="form-control">
                 <label className="label cursor-pointer gap-2">
                   <input
@@ -444,9 +444,9 @@ export const Signup = () => {
           </div>
 
           {/* NAZIM TYPES */}
-          <div>
+          <div className="w-full">
             <span className="px-1 py-2 block font-semibold"> Status:</span>
-            <div className="flex  flex-wrap items-center justify-between border border-primary p-2 rounded-lg">
+            <div className="flex  items-center justify-start flex-wrap border border-primary p-2 rounded-lg">
               <div className="form-control">
                 <label className="label cursor-pointer gap-2">
                   <input
@@ -586,7 +586,7 @@ export const Signup = () => {
           >
             Already have an account?
           </Link>
-          <div>
+          <div className="w-full">
             <button type="submit" className="btn btn-primary w-full">
               Sign Up
             </button>
@@ -598,7 +598,7 @@ export const Signup = () => {
         <div className="modal-box">
           <h3 className="font-bold text-lg">Add Subject</h3>
           <div className="space-y-4">
-            <div>
+            <div className="w-full">
               <label className="label">
                 <span className="text-base label-text">Subject</span>
               </label>

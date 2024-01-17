@@ -8,7 +8,7 @@ export const EditProfile = () => {
   const me = useContext(MeContext);
   const { getMe } = useContext(UIContext);
   const [selectedSubject, setSelectedSubject] = useState("");
-  const [subject, setSubject] = useState();
+  const [subject, setSubject] = useState("");
   const [subjects, setSubjects] = useState([]);
   const { dispatch } = useToastState();
   const handleSubmit = async (e) => {
@@ -39,6 +39,7 @@ export const EditProfile = () => {
           },
         }
       );
+      console.log(req, "req");
       await getMe();
       dispatch({ type: "SUCCESS", payload: req.data?.message });
     } catch (err) {
@@ -90,7 +91,7 @@ export const EditProfile = () => {
         <div className="w-full p-6 m-auto bg-white rounded-md lg:max-w-lg ">
           <h3 className="font-bold text-2xl">Edit Profile</h3>
           {me && (
-            <form className="space-y-4" onSubmit={handleSubmit}>
+            <form className="space-y-4 mb-12" onSubmit={handleSubmit}>
               <div className="flex flex-col justify-start items-center w-full">
                 <div className="w-full flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col ">
                   <div className="w-full">
@@ -98,11 +99,12 @@ export const EditProfile = () => {
                       <span className="text-base label-text">Full Name</span>
                     </label>
                     <input
+                      required
                       type="text"
                       placeholder="Full Name"
                       name="name"
                       className="w-full input input-bordered input-primary"
-                      defaultValue={me.name}
+                      defaultValue={me?.name}
                     />
                   </div>
                   <div className="w-full">
@@ -110,6 +112,7 @@ export const EditProfile = () => {
                       <span className="text-base label-text">Father Name</span>
                     </label>
                     <input
+                      required
                       type="text"
                       placeholder="Father name"
                       name="fatherName"
@@ -119,27 +122,29 @@ export const EditProfile = () => {
                   </div>
                 </div>
                 <div className="w-full flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col ">
-                  <div className="w-full">
+                  <div className="w-[50%]">
                     <label className="label">
                       <span className="text-base label-text">
                         Date of birth
                       </span>
                     </label>
                     <input
+                      required
                       type="month"
                       placeholder="Date of birth"
                       name="dob"
-                      className="w-full input input-bordered input-primary min-w-[230px]"
+                      className="w-full input input-bordered input-primary "
                       defaultValue={me?.dob?.split("-").slice(0, 2).join("-")}
                     />
                   </div>
-                  <div className="w-full">
+                  <div className="w-[50%]">
                     <label className="label">
-                      <span className="label-text text-sm">
+                      <span className="label-text text-xs">
                         Date of becoming rukan/umeedwar
                       </span>
                     </label>
                     <input
+                      required
                       type="month"
                       placeholder="JoiningDate"
                       name="joiningDate"
@@ -159,13 +164,12 @@ export const EditProfile = () => {
                       </span>
                     </label>
                     <select
+                      required
                       defaultValue={me?.qualification}
                       name="qualification"
                       className="select select-bordered select-primary w-full"
                     >
-                      <option disabled selected>
-                        Qualification
-                      </option>
+                      <option value={""}>Qualification</option>
                       <option value={"matric"}>Matric</option>
                       <option value={"intermediate"}>Intermediate</option>
                       <option value={"bachelors"}>Bachelors</option>
@@ -179,6 +183,7 @@ export const EditProfile = () => {
                     </label>
 
                     <select
+                      required
                       name="subject"
                       id="subject"
                       className="select select-bordered select-primary w-full"
@@ -187,8 +192,12 @@ export const EditProfile = () => {
                       defaultValue={me?.subject}
                     >
                       <option value={""}>Select or Add</option>
-                      {subjects?.map((sub) => (
-                        <option value={sub?._id} className="capitalize">
+                      {subjects?.map((sub, index) => (
+                        <option
+                          value={sub?._id}
+                          key={index}
+                          className="capitalize"
+                        >
                           {sub?.title.split("_").join(" ")}
                         </option>
                       ))}
@@ -211,13 +220,12 @@ export const EditProfile = () => {
                       </span>
                     </label>
                     <select
+                      required
                       defaultValue={me?.semester}
                       name="semester"
                       className="select select-bordered select-primary w-full "
                     >
-                      <option value={""} selected>
-                        Semester/Year
-                      </option>
+                      <option value={""}>Semester/Year</option>
                       <option value={"semester 1"}>Semester 1</option>
                       <option value={"semester 2"}>Semester 2</option>
                       <option value={"semester 3"}>Semester 3</option>
@@ -242,6 +250,7 @@ export const EditProfile = () => {
                       <span className="text-base label-text">Institution</span>
                     </label>
                     <input
+                      required
                       defaultValue={me?.institution}
                       type="text"
                       placeholder="Institution"
@@ -256,6 +265,7 @@ export const EditProfile = () => {
                       <span className="text-base label-text">Email</span>
                     </label>
                     <input
+                      required
                       defaultValue={me?.email}
                       type="email"
                       placeholder="Email Address"
@@ -268,6 +278,7 @@ export const EditProfile = () => {
                       <span className="text-base label-text">Age</span>
                     </label>
                     <input
+                      required
                       defaultValue={me?.age}
                       type="number"
                       placeholder="Age"
@@ -282,6 +293,7 @@ export const EditProfile = () => {
                       <span className="text-base label-text">Phone Number</span>
                     </label>
                     <input
+                      required
                       defaultValue={me?.phoneNumber}
                       type="text"
                       placeholder="Phone Number"
@@ -296,6 +308,7 @@ export const EditProfile = () => {
                       </span>
                     </label>
                     <input
+                      required
                       defaultValue={me?.whatsAppNumber}
                       type="text"
                       placeholder="WhatsApp Number"
@@ -335,13 +348,13 @@ export const EditProfile = () => {
                 <span className="text-base label-text">Subject</span>
               </label>
               <input
+                required
                 name="subject"
                 type="text"
                 placeholder="Enter Subject Name"
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
                 className="w-full input input-bordered input-primary"
-                required
               />
             </div>
           </div>
