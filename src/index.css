@@ -3635,6 +3635,10 @@ html {
   height: calc(100vh - 64.4px - 64px);
 }
 
+.h-\[calc\(100vh-64px-64px\)\] {
+  height: calc(100vh - 64px - 64px);
+}
+
 .h-\[calc\(100vh-65\.6px-64px\)\] {
   height: calc(100vh - 65.6px - 64px);
 }
@@ -3846,10 +3850,6 @@ html {
 
 .justify-between {
   justify-content: space-between;
-}
-
-.justify-around {
-  justify-content: space-around;
 }
 
 .gap-0 {

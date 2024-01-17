@@ -183,7 +183,7 @@ export const Signup = () => {
                 <span className="text-base label-text">Date of birth</span>
               </label>
               <input
-                type="date"
+                type="month"
                 placeholder="Date of birth"
                 name="dob"
                 className="w-full input input-bordered input-primary min-w-[230px]"

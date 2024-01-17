@@ -2,9 +2,11 @@ import { useContext, useEffect, useState } from "react";
 import { GeneralLayout } from "../components";
 import instance from "../api/instrance";
 import { MeContext, useToastState } from "../context";
+import { UIContext } from "../context/ui";
 
 export const EditProfile = () => {
   const me = useContext(MeContext);
+  const { getMe } = useContext(UIContext);
   const [selectedSubject, setSelectedSubject] = useState("");
   const [subject, setSubject] = useState();
   const [subjects, setSubjects] = useState([]);
@@ -37,6 +39,7 @@ export const EditProfile = () => {
           },
         }
       );
+      await getMe();
       dispatch({ type: "SUCCESS", payload: req.data?.message });
     } catch (err) {
       dispatch({ type: "ERROR", payload: err.response.data.message });
@@ -83,224 +86,237 @@ export const EditProfile = () => {
   }, []);
   return (
     <GeneralLayout>
-      <div className=" flex flex-col justify-center ">
+      <div className=" flex flex-col justify-start h-[calc(100vh-64px-64px)] overflow-hidden overflow-y-scroll">
         <div className="w-full p-6 m-auto bg-white rounded-md lg:max-w-lg ">
           <h3 className="font-bold text-2xl">Edit Profile</h3>
           {me && (
             <form className="space-y-4" onSubmit={handleSubmit}>
-              <div className="flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col">
-                <div className="w-full">
-                  <label className="label">
-                    <span className="text-base label-text">Full Name</span>
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Full Name"
-                    name="name"
-                    className="w-full input input-bordered input-primary"
-                    defaultValue={me.name}
-                  />
+              <div className="flex flex-col justify-start items-center w-full">
+                <div className="w-full flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col ">
+                  <div className="w-full">
+                    <label className="label">
+                      <span className="text-base label-text">Full Name</span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Full Name"
+                      name="name"
+                      className="w-full input input-bordered input-primary"
+                      defaultValue={me.name}
+                    />
+                  </div>
+                  <div className="w-full">
+                    <label className="label">
+                      <span className="text-base label-text">Father Name</span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Father name"
+                      name="fatherName"
+                      className="w-full input input-bordered input-primary"
+                      defaultValue={me?.fatherName}
+                    />
+                  </div>
                 </div>
-                <div className="w-full">
-                  <label className="label">
-                    <span className="text-base label-text">Father Name</span>
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Father name"
-                    name="fatherName"
-                    className="w-full input input-bordered input-primary"
-                    defaultValue={me?.fatherName}
-                  />
+                <div className="w-full flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col ">
+                  <div className="w-full">
+                    <label className="label">
+                      <span className="text-base label-text">
+                        Date of birth
+                      </span>
+                    </label>
+                    <input
+                      type="month"
+                      placeholder="Date of birth"
+                      name="dob"
+                      className="w-full input input-bordered input-primary min-w-[230px]"
+                      defaultValue={me?.dob?.split("-").slice(0, 2).join("-")}
+                    />
+                  </div>
+                  <div className="w-full">
+                    <label className="label">
+                      <span className="label-text text-sm">
+                        Date of becoming rukan/umeedwar
+                      </span>
+                    </label>
+                    <input
+                      type="month"
+                      placeholder="JoiningDate"
+                      name="joiningDate"
+                      className="w-full input input-bordered input-primary"
+                      defaultValue={me?.joiningDate
+                        ?.split("-")
+                        .slice(0, 2)
+                        .join("-")}
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col">
-                <div className="w-full">
-                  <label className="label">
-                    <span className="text-base label-text">Date of birth</span>
-                  </label>
-                  <input
-                    type="date"
-                    placeholder="Date of birth"
-                    name="dob"
-                    className="w-full input input-bordered input-primary min-w-[230px]"
-                  />
-                </div>
-                <div className="w-full">
-                  <label className="label">
-                    <span className="label-text text-sm">
-                      Date of becoming rukan/umeedwar
-                    </span>
-                  </label>
-                  <input
-                    type="month"
-                    placeholder="JoiningDate"
-                    name="joiningDate"
-                    className="w-full input input-bordered input-primary"
-                  />
-                </div>
-              </div>
-              <div className="flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col">
-                <div className="w-full">
-                  <label className="label">
-                    <span className="text-base label-text">Qualifications</span>
-                  </label>
-                  <select
-                    defaultValue={me?.qualification}
-                    name="qualification"
-                    className="select select-bordered select-primary w-full"
-                  >
-                    <option disabled selected>
-                      Qualification
-                    </option>
-                    <option value={"matric"}>Matric</option>
-                    <option value={"intermediate"}>Intermediate</option>
-                    <option value={"bachelors"}>Bachelors</option>
-                    <option value={"masters"}>Masters</option>
-                    <option value={"phd"}>PHD</option>
-                  </select>
-                </div>
-                <div className="w-full relative">
-                  <label className="label">
-                    <span className="text-base label-text">Subject</span>
-                  </label>
-
-                  <select
-                    name="subject"
-                    id="subject"
-                    className="select select-bordered select-primary w-full"
-                    value={selectedSubject}
-                    onChange={handleSubjectChange}
-                    defaultValue={me?.subject}
-                  >
-                    <option value={""}>Select or Add</option>
-                    {subjects?.map((sub) => (
-                      <option value={sub?._id} className="capitalize">
-                        {sub?.title.split("_").join(" ")}
+                <div className="w-full flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col ">
+                  <div className="w-full">
+                    <label className="label">
+                      <span className="text-base label-text">
+                        Qualifications
+                      </span>
+                    </label>
+                    <select
+                      defaultValue={me?.qualification}
+                      name="qualification"
+                      className="select select-bordered select-primary w-full"
+                    >
+                      <option disabled selected>
+                        Qualification
                       </option>
-                    ))}
-                  </select>
-                  <span
-                    className="text-sm absolute top-1 p-1 right-0 text-slate-500 cursor-pointer hover:text-primary hover:font-semibold"
-                    onClick={() =>
-                      document.getElementById("add_subject_modal").showModal()
-                    }
-                  >
-                    + Add New
-                  </span>
-                </div>
-              </div>
-              <div className="flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col">
-                <div className="w-full">
-                  <label className="label">
-                    <span className="text-base label-text">Semester/Year</span>
-                  </label>
-                  <select
-                    defaultValue={me?.semester}
-                    name="semester"
-                    className="select select-bordered select-primary w-full "
-                  >
-                    <option value={""} selected>
-                      Semester/Year
-                    </option>
-                    <option value={"semester 1"}>Semester 1</option>
-                    <option value={"semester 2"}>Semester 2</option>
-                    <option value={"semester 3"}>Semester 3</option>
-                    <option value={"semester 4"}>Semester 4</option>
-                    <option value={"semester 5"}>Semester 5</option>
-                    <option value={"semester 6"}>Semester 6</option>
-                    <option value={"semester 7"}>Semester 7</option>
-                    <option value={"semester 8"}>Semester 8</option>
-                    <option value={"semester 9"}>Semester 9</option>
-                    <option value={"semester10"}>Semester10</option>
-                    <option value={"semester 11"}>Semester 11</option>
-                    <option value={"semester 12"}>Semester 12</option>
-                    <option value={"1st year"}>1st Year</option>
-                    <option value={"2nd year"}>2nd Year</option>
-                    <option value={"3rd year"}>3rd Year</option>
-                    <option value={"4th year"}>4th Year</option>
-                    <option value={"5th year"}>5th Year</option>
-                  </select>
-                </div>
-                <div className="w-full">
-                  <label className="label">
-                    <span className="text-base label-text">Institution</span>
-                  </label>
-                  <input
-                    defaultValue={me?.institution}
-                    type="text"
-                    placeholder="Institution"
-                    name="institution"
-                    className="w-full input input-bordered input-primary"
-                  />
-                </div>
-              </div>
-              <div className="flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col">
-                <div className="w-full">
-                  <label className="label">
-                    <span className="text-base label-text">Email</span>
-                  </label>
-                  <input
-                    defaultValue={me?.email}
-                    type="email"
-                    placeholder="Email Address"
-                    name="email"
-                    className="w-full input input-bordered input-primary"
-                  />
-                </div>
-                <div className="w-full">
-                  <label className="label">
-                    <span className="text-base label-text">Age</span>
-                  </label>
-                  <input
-                    defaultValue={me?.age}
-                    type="number"
-                    placeholder="Age"
-                    name="age"
-                    className="w-full input input-bordered input-primary"
-                  />
-                </div>
-              </div>
-              <div className="flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col">
-                <div className="w-full">
-                  <label className="label">
-                    <span className="text-base label-text">Phone Number</span>
-                  </label>
-                  <input
-                    defaultValue={me?.phoneNumber}
-                    type="text"
-                    placeholder="Phone Number"
-                    name="phoneNumber"
-                    className="w-full input input-bordered input-primary"
-                  />
-                </div>
-                <div className="w-full">
-                  <label className="label">
-                    <span className="text-base label-text">
-                      WhatsApp Number
+                      <option value={"matric"}>Matric</option>
+                      <option value={"intermediate"}>Intermediate</option>
+                      <option value={"bachelors"}>Bachelors</option>
+                      <option value={"masters"}>Masters</option>
+                      <option value={"phd"}>PHD</option>
+                    </select>
+                  </div>
+                  <div className="w-full relative">
+                    <label className="label">
+                      <span className="text-base label-text">Subject</span>
+                    </label>
+
+                    <select
+                      name="subject"
+                      id="subject"
+                      className="select select-bordered select-primary w-full"
+                      value={selectedSubject}
+                      onChange={handleSubjectChange}
+                      defaultValue={me?.subject}
+                    >
+                      <option value={""}>Select or Add</option>
+                      {subjects?.map((sub) => (
+                        <option value={sub?._id} className="capitalize">
+                          {sub?.title.split("_").join(" ")}
+                        </option>
+                      ))}
+                    </select>
+                    <span
+                      className="text-sm absolute top-1 p-1 right-0 text-slate-500 cursor-pointer hover:text-primary hover:font-semibold"
+                      onClick={() =>
+                        document.getElementById("add_subject_modal").showModal()
+                      }
+                    >
+                      + Add New
                     </span>
-                  </label>
-                  <input
-                    defaultValue={me?.whatsAppNumber}
-                    type="text"
-                    placeholder="WhatsApp Number"
-                    name="whatsAppNumber"
-                    className="w-full input input-bordered input-primary"
-                  />
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-start justify-start">
-                <div className="w-full">
-                  <label className="label">
-                    <span className="text-base label-text">Home address</span>
-                  </label>
-                  <textarea
-                    placeholder="Address"
-                    name="address"
-                    className="w-full input input-bordered input-primary"
-                    required
-                    defaultValue={me?.address}
-                  ></textarea>
+                <div className="w-full flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col ">
+                  <div className="w-full">
+                    <label className="label">
+                      <span className="text-base label-text">
+                        Semester/Year
+                      </span>
+                    </label>
+                    <select
+                      defaultValue={me?.semester}
+                      name="semester"
+                      className="select select-bordered select-primary w-full "
+                    >
+                      <option value={""} selected>
+                        Semester/Year
+                      </option>
+                      <option value={"semester 1"}>Semester 1</option>
+                      <option value={"semester 2"}>Semester 2</option>
+                      <option value={"semester 3"}>Semester 3</option>
+                      <option value={"semester 4"}>Semester 4</option>
+                      <option value={"semester 5"}>Semester 5</option>
+                      <option value={"semester 6"}>Semester 6</option>
+                      <option value={"semester 7"}>Semester 7</option>
+                      <option value={"semester 8"}>Semester 8</option>
+                      <option value={"semester 9"}>Semester 9</option>
+                      <option value={"semester10"}>Semester10</option>
+                      <option value={"semester 11"}>Semester 11</option>
+                      <option value={"semester 12"}>Semester 12</option>
+                      <option value={"1st year"}>1st Year</option>
+                      <option value={"2nd year"}>2nd Year</option>
+                      <option value={"3rd year"}>3rd Year</option>
+                      <option value={"4th year"}>4th Year</option>
+                      <option value={"5th year"}>5th Year</option>
+                    </select>
+                  </div>
+                  <div className="w-full">
+                    <label className="label">
+                      <span className="text-base label-text">Institution</span>
+                    </label>
+                    <input
+                      defaultValue={me?.institution}
+                      type="text"
+                      placeholder="Institution"
+                      name="institution"
+                      className="w-full input input-bordered input-primary"
+                    />
+                  </div>
+                </div>
+                <div className="w-full flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col ">
+                  <div className="w-full">
+                    <label className="label">
+                      <span className="text-base label-text">Email</span>
+                    </label>
+                    <input
+                      defaultValue={me?.email}
+                      type="email"
+                      placeholder="Email Address"
+                      name="email"
+                      className="w-full input input-bordered input-primary"
+                    />
+                  </div>
+                  <div className="w-full">
+                    <label className="label">
+                      <span className="text-base label-text">Age</span>
+                    </label>
+                    <input
+                      defaultValue={me?.age}
+                      type="number"
+                      placeholder="Age"
+                      name="age"
+                      className="w-full input input-bordered input-primary"
+                    />
+                  </div>
+                </div>
+                <div className="w-full flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col ">
+                  <div className="w-full">
+                    <label className="label">
+                      <span className="text-base label-text">Phone Number</span>
+                    </label>
+                    <input
+                      defaultValue={me?.phoneNumber}
+                      type="text"
+                      placeholder="Phone Number"
+                      name="phoneNumber"
+                      className="w-full input input-bordered input-primary"
+                    />
+                  </div>
+                  <div className="w-full">
+                    <label className="label">
+                      <span className="text-base label-text">
+                        WhatsApp Number
+                      </span>
+                    </label>
+                    <input
+                      defaultValue={me?.whatsAppNumber}
+                      type="text"
+                      placeholder="WhatsApp Number"
+                      name="whatsAppNumber"
+                      className="w-full input input-bordered input-primary"
+                    />
+                  </div>
+                </div>
+                <div className="w-full flex items-start justify-start">
+                  <div className="w-full">
+                    <label className="label">
+                      <span className="text-base label-text">Home address</span>
+                    </label>
+                    <textarea
+                      placeholder="Address"
+                      name="address"
+                      className="w-full input input-bordered input-primary"
+                      required
+                      defaultValue={me?.address}
+                    ></textarea>
+                  </div>
                 </div>
               </div>
               <div>

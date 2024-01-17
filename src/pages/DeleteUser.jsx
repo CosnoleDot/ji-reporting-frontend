@@ -297,21 +297,21 @@ export const DeleteUser = () => {
                         <div className="badge badge-secondary">deleted</div>
                       )}
                     </td>
-                    <div className="flex row justify-around ">
-                      <td className="flex justify-center items-center gap-4">
+                    <td className="flex row justify-center items-center gap-3">
+                      <div className="flex justify-center items-center">
                         <Link
                           to={`/reports?active=${maqam?.userAreaType?.toLowerCase()}${
                             maqam?.userAreaId?.parentType
                               ? `&tab=${maqam?.userAreaId?.parentType?.toLowerCase()}`
                               : ""
                           }&areaId=${maqam?.userAreaId?._id}`}
-                          disabled={loading}
+                          readOnly={loading}
                           className="btn"
                         >
                           <FaFile />
                         </Link>
-                      </td>
-                      <td className="flex justify-center items-center gap-4">
+                      </div>
+                      <div className="flex justify-center items-center">
                         <button
                           onClick={() => {
                             document
@@ -319,31 +319,31 @@ export const DeleteUser = () => {
                               .showModal();
                             setSingleUser(maqam);
                           }}
-                          disabled={loading}
+                          readOnly={loading}
                           className="btn"
                         >
                           <FaEye />
                         </button>
-                      </td>
-                      <td className="flex justify-center items-center gap-4">
+                      </div>
+                      <div className="flex justify-center items-center">
                         <button
-                          disabled={loading}
+                          readOnly={loading}
                           className="btn"
                           onClick={() => deleteUser(maqam)}
                         >
                           <FaTrash />
                         </button>
-                      </td>
-                      <td className="flex justify-center items-center gap-4">
+                      </div>
+                      <div className="flex justify-center items-center">
                         <button
-                          disabled={loading}
+                          readOnly={loading}
                           className="btn"
                           // onClick={updateNazimStatus}
                         >
                           <MdOutlineUpgrade />
                         </button>
-                      </td>
-                    </div>
+                      </div>
+                    </td>
                   </tr>
                 ))}
             </tbody>
@@ -488,7 +488,7 @@ export const DeleteUser = () => {
                   <option value={""}>Select subject</option>
                   {subjects?.map((sub, index) => (
                     <option value={sub?._id} key={index} className="capitalize">
-                      {sub?.title.split("_").join(" ")}
+                      {sub?.title?.split("_").join(" ")}
                     </option>
                   ))}
                 </select>
@@ -759,12 +759,8 @@ export const DeleteUser = () => {
         {/* This is to see the user Details */}
         <dialog id="view-details-modal" className="modal">
           <div className="modal-box">
-            <form method="dialog" className="modal-backdrop">
-              <div className="flex justify-end items-end w-full">
-                <button className="btn rounded-lg">X</button>
-              </div>
-            </form>
-            <h3 className="font-bold text-lg">User Details</h3>
+            <h3 className="font-bold text-2xl">User Details</h3>
+            <hr className="mb-3" />
             <form className="space-y-4">
               <div className="flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col">
                 <div className="w-full">
@@ -772,13 +768,13 @@ export const DeleteUser = () => {
                     <span className="text-base label-text">Full Name</span>
                   </label>
                   <input
-                    disabled
+                    readOnly
                     type="text"
                     placeholder="Full Name"
                     name="name"
-                    className="w-full input input-bordered input-primary"
+                    className="w-full text-[#7a7a7a]"
                     defaultValu
-                    e={singleUser?.name}
+                    defaultValue={singleUser?.name}
                   />
                 </div>
                 <div className="w-full">
@@ -786,13 +782,13 @@ export const DeleteUser = () => {
                     <span className="text-base label-text">Father Name</span>
                   </label>
                   <input
-                    disabled
+                    readOnly
                     type="text"
                     placeholder="Father name"
                     name="fatherName"
-                    className="w-full input input-bordered input-primary"
+                    className="w-full text-[#7a7a7a]"
                     defaultValu
-                    e={singleUser?.fatherName}
+                    defaultValue={singleUser?.fatherName}
                   />
                 </div>
               </div>
@@ -802,12 +798,12 @@ export const DeleteUser = () => {
                     <span className="text-base label-text">Date of birth</span>
                   </label>
                   <input
-                    disabled
+                    readOnly
                     defaultValue={singleUser?.dob?.split("T")[0]}
                     type="text"
                     placeholder="Date of birth"
                     name="dob"
-                    className=" w-full input input-bordered input-primary min-w-[230px]"
+                    className=" w-full text-[#7a7a7a] min-w-[230px]"
                   />
                 </div>
                 <div className="w-full">
@@ -817,13 +813,13 @@ export const DeleteUser = () => {
                     </span>
                   </label>
                   <input
-                    disabled
+                    readOnly
                     type="text"
                     placeholder="JoiningDate"
                     name="joiningDate"
-                    className="w-full input input-bordered input-primary"
+                    className="w-full text-[#7a7a7a]"
                     defaultValu
-                    e={singleUser?.joiningDate.split("T")[0]}
+                    defaultValue={singleUser?.joiningDate?.split("T")[0]}
                   />
                 </div>
               </div>
@@ -833,13 +829,13 @@ export const DeleteUser = () => {
                     <span className="text-base label-text">Qualifications</span>
                   </label>
                   <input
-                    disabled
+                    readOnly
                     type="text"
                     placeholder="Qualification"
                     name="qualification"
-                    className="w-full input capitalize input-bordered input-primary"
+                    className="w-full text-[#7a7a7a] capitalize "
                     defaultValu
-                    e={singleUser?.qualification}
+                    defaultValue={singleUser?.qualification}
                   />
                 </div>
                 <div className="w-full relative">
@@ -848,18 +844,17 @@ export const DeleteUser = () => {
                   </label>
 
                   <input
-                    disabled
+                    readOnly
                     type="text"
                     placeholder="Subject"
                     name="subject"
-                    className="w-full input input-bordered input-primary"
-                    defaultValue={subjects.filter((i) => {
-                      const obj = i?._id === singleUser?.subject;
-                      if (obj) {
-                        console.log(obj)
-                        return obj?.title;
-                      }
-                    })}
+                    className="w-full   capitalize"
+                    defaultValue={(() => {
+                      const foundSubject = subjects.find(
+                        (subject) => subject._id === singleUser?.subject
+                      );
+                      return foundSubject?.title;
+                    })()}
                   />
                 </div>
               </div>
@@ -869,13 +864,13 @@ export const DeleteUser = () => {
                     <span className="text-base label-text">Semester/Year</span>
                   </label>
                   <input
-                    disabled
+                    readOnly
                     type="text"
                     placeholder="Semester"
                     name="semester"
-                    className="w-full input capitalize input-bordered input-primary"
+                    className="w-full text-[#7a7a7a]  capitalize "
                     defaultValu
-                    e={singleUser?.semester}
+                    defaultValue={singleUser?.semester}
                   />
                 </div>
                 <div className="w-full">
@@ -883,12 +878,12 @@ export const DeleteUser = () => {
                     <span className="text-base label-text">Institution</span>
                   </label>
                   <input
-                    disabled
+                    readOnly
                     defaultValue={singleUser?.institution}
                     type="text"
                     placeholder="Institution"
                     name="institution"
-                    className=" w-full input input-bordered input-primary"
+                    className=" w-full text-[#7a7a7a]"
                   />
                 </div>
               </div>
@@ -898,12 +893,12 @@ export const DeleteUser = () => {
                     <span className="text-base label-text">Email</span>
                   </label>
                   <input
-                    disabled
+                    readOnly
                     defaultValue={singleUser?.email}
                     type="email"
                     placeholder="Email Address"
                     name="email"
-                    className=" w-full input input-bordered input-primary"
+                    className=" w-full text-[#7a7a7a]"
                   />
                 </div>
                 <div className="w-full">
@@ -911,12 +906,12 @@ export const DeleteUser = () => {
                     <span className="text-base label-text">Age</span>
                   </label>
                   <input
-                    disabled
+                    readOnly
                     defaultValue={singleUser?.age}
                     type="number"
                     placeholder="Age"
                     name="age"
-                    className=" w-full input input-bordered input-primary"
+                    className=" w-full text-[#7a7a7a]"
                   />
                 </div>
               </div>
@@ -926,12 +921,12 @@ export const DeleteUser = () => {
                     <span className="text-base label-text">Phone Number</span>
                   </label>
                   <input
-                    disabled
+                    readOnly
                     defaultValue={singleUser?.phoneNumber}
                     type="text"
                     placeholder="Phone Number"
                     name="phoneNumber"
-                    className=" w-full input input-bordered input-primary"
+                    className=" w-full text-[#7a7a7a]"
                   />
                 </div>
                 <div className="w-full">
@@ -941,12 +936,12 @@ export const DeleteUser = () => {
                     </span>
                   </label>
                   <input
-                    disabled
+                    readOnly
                     defaultValue={singleUser?.whatsAppNumber}
                     type="text"
                     placeholder="WhatsApp Number"
                     name="whatsAppNumber"
-                    className=" w-full input input-bordered input-primary"
+                    className=" w-full text-[#7a7a7a]"
                   />
                 </div>
               </div>
@@ -958,14 +953,29 @@ export const DeleteUser = () => {
                   <textarea
                     placeholder="Address"
                     name="address"
-                    className="w-full input input-bordered input-primary"
+                    className="w-full text-[#7a7a7a]"
                     required
                     defaultValue={singleUser?.address}
                   ></textarea>
                 </div>
+                <div className="w-full">
+                  <label className="label">
+                    <span className="text-base label-text">Area</span>
+                  </label>
+                  <input
+                    readOnly
+                    defaultValue={singleUser?.userAreaId?.name}
+                    type="text"
+                    placeholder="UserArea"
+                    name="userArea"
+                    className=" w-full text-[#7a7a7a]"
+                  />
+                </div>
               </div>
-              <div>
-                <button className="btn btn-primary">Save</button>
+            </form>
+            <form method="dialog" className="modal-backdrop">
+              <div className="flex justify-end items-end w-full">
+                <button className="btn rounded-lg ">Close</button>
               </div>
             </form>
           </div>

@@ -18,79 +18,96 @@ import {
 import { UIContext } from "../context/ui";
 import { useNavigate } from "react-router-dom";
 import instance from "../api/instrance";
-import { keyboard } from "@testing-library/user-event/dist/keyboard";
 
 export const Dashboard = () => {
   const [count, setCount] = useState(0);
   const { nazim } = useContext(UIContext);
-  const maqam = useContext(MaqamContext);
-  const division = useContext(DivisionContext);
+  const maqams = useContext(MaqamContext);
+  const divisions = useContext(DivisionContext);
   const unit = useContext(HalqaContext);
-  const district = useContext(DistrictContext);
-  const tehsil = useContext(TehsilContext);
+  const districts = useContext(DistrictContext);
+  const tehsils = useContext(TehsilContext);
   const maqamReports = useContext(MaqamReportContext);
   const divisionReports = useContext(DivisionReportContext);
   const halqaReports = useContext(HalqaReportContext);
   const provinceReports = useContext(ProvinceReportContext);
+  const [userAreaType, setUserAreaType] = useState("All");
+  const [areas, setAreas] = useState([]);
   const [toggle, setToggle] = useState(false);
   const [data, setData] = useState([]);
   const navigate = useNavigate();
   const [queryDate, setQuerydate] = useState("");
+  const [searchArea, setSearchArea] = useState("");
+  const [selectedId, setSelectedId] = useState("");
   const getData = async () => {
     try {
-      const headers = {
-        Authorization: `Bearer ${localStorage.getItem("@token")}`,
+      const getUnfilledReports = async (path) => {
+        const res = await instance.get(
+          `/reports/${path}/data/filled-unfilled`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("@token")}`,
+            },
+            params: queryDate !== "" ? { queryDate: queryDate } : null,
+          }
+        );
+        return res;
       };
+      const province = await getUnfilledReports("province");
+      const maqam = await getUnfilledReports("maqam");
+      const halqa = await getUnfilledReports("halqa");
+      const division = await getUnfilledReports("division");
 
-      const config = {
-        headers,
-      };
-
-      if (queryDate !== "") {
-        config.params = {
-          queryDate: queryDate,
-        };
-      }
-      const province = await instance.get(
-        `/reports/province/data/filled-unfilled`,
-        config
-      );
-      const maqam = await instance.get(
-        `/reports/maqam/data/filled-unfilled`,
-        config
-      );
-      const halqa = await instance.get(
-        `/reports/halqa/data/filled-unfilled`,
-        config
-      );
-      const division = await instance.get(
-        `/reports/division/data/filled-unfilled`,
-        config
-      );
       const provinceData = province?.data?.data?.allProvinces || [];
       const maqamData = maqam?.data?.data?.allMaqams || [];
       const halqaData = halqa?.data?.data?.allHalqas || [];
       const divisionData = division?.data?.data?.allDivisions || [];
+      const getFilteredHalqas = (halqaData) => [
+        ...halqaData.filter((h) => {
+          if (userAreaType === "Maqam") {
+            if (h.parentType === "Maqam" && h?.parentId?._id === selectedId) {
+              return true;
+            }
+            return false;
+          }
+          if (userAreaType === "Tehsil") {
+            if (h.parentType === "Tehsil") {
+              const district = h?.parentId?.district;
+              const filteredDistricts = districts
+                .filter((dis) => dis?.division?._id === selectedId)
+                .map((div) => div?._id);
+              return filteredDistricts.includes(district);
+            }
+            return false;
+          }
+        }),
+      ];
       const temp = {
         unfilled: null,
         totalprovince: 1,
         filled: null,
-        allData: [...provinceData, ...maqamData, ...halqaData, ...divisionData],
+        allData:
+          userAreaType === "All"
+            ? [...provinceData, ...maqamData, ...halqaData, ...divisionData]
+            : getFilteredHalqas(halqaData),
       };
-      temp.unfilled = [
-        ...province?.data?.data?.unfilled,
-        ...maqam?.data?.data?.unfilled,
-        ...halqa?.data?.data?.unfilled,
-        ...division?.data?.data?.unfilled,
-      ];
+      temp.unfilled =
+        userAreaType === "All"
+          ? [
+              ...province?.data?.data?.unfilled,
+              ...maqam?.data?.data?.unfilled,
+              ...halqa?.data?.data?.unfilled,
+              ...division?.data?.data?.unfilled,
+            ]
+          : getFilteredHalqas(halqa?.data?.data?.unfilled);
       temp.totalprovince =
         province?.data?.data?.totalprovince +
         maqam?.data?.data?.totalmaqam +
         halqa?.data?.data?.totalhalqa +
         division?.data?.data?.totaldivision;
 
-      const reportFilledBy = data?.allData?.filter((obj1) => {
-        return !data?.unfilled?.some((obj2) => obj2._id === obj1._id);
+      const reportFilledBy = temp?.allData?.filter((obj1) => {
+        return !temp?.unfilled?.some((obj2) => obj2._id === obj1._id);
       });
       temp.filled = reportFilledBy;
       setData({ ...temp });
@@ -100,9 +117,11 @@ export const Dashboard = () => {
   };
   useEffect(() => {
     getData();
-  }, [data, queryDate]);
+  }, []);
   const clearFilter = () => {
     setQuerydate("");
+    setUserAreaType("All");
+    getData();
   };
   useEffect(() => {
     try {
@@ -114,10 +133,24 @@ export const Dashboard = () => {
       );
     } catch (err) {}
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [maqamReports, divisionReports, halqaReports]);
+  }, [maqamReports, divisionReports, halqaReports, provinceReports]);
+  const getAreas = async () => {
+    switch (userAreaType) {
+      case "Tehsil":
+        setAreas(divisions);
+        break;
+      case "Maqam":
+        setAreas(maqams);
+        break;
+      default:
+        break;
+    }
+  };
   useEffect(() => {
-    console.log(data);
-  }, [data]);
+    getAreas();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userAreaType]);
+
   return (
     <GeneralLayout title={"Dashboard"} active={"dashboard"}>
       <div className="relative flex flex-col w-full gap-3 items-center p-5 justify-start h-[calc(100vh-65.6px-64px)] overflow-hidden overflow-y-scroll bg-blue-50">
@@ -182,7 +215,7 @@ export const Dashboard = () => {
               </div>
               <div className="px-4 text-gray-700">
                 <h3 className="text-sm tracking-wider">Total Maqams</h3>
-                <p className="text-3xl">{maqam?.length}</p>
+                <p className="text-3xl">{maqams?.length}</p>
               </div>
             </div>
           )}
@@ -193,7 +226,7 @@ export const Dashboard = () => {
               </div>
               <div className="px-4 text-gray-700">
                 <h3 className="text-sm tracking-wider">Total Divisions</h3>
-                <p className="text-3xl">{division?.length}</p>
+                <p className="text-3xl">{divisions?.length}</p>
               </div>
             </div>
           )}
@@ -204,7 +237,7 @@ export const Dashboard = () => {
               </div>
               <div className="px-4 text-gray-700">
                 <h3 className="text-sm tracking-wider">Total Districts</h3>
-                <p className="text-3xl">{district?.length}</p>
+                <p className="text-3xl">{districts?.length}</p>
               </div>
             </div>
           )}
@@ -215,7 +248,7 @@ export const Dashboard = () => {
               </div>
               <div className="px-4 text-gray-700">
                 <h3 className="text-sm tracking-wider">Total Tehsils</h3>
-                <p className="text-3xl">{tehsil?.length}</p>
+                <p className="text-3xl">{tehsils?.length}</p>
               </div>
             </div>
           )}
@@ -247,7 +280,7 @@ export const Dashboard = () => {
         </div>
         {localStorage.getItem("@type") !== "halqa" && (
           <div className=" gap-4 px-4 mt-8  sm:px-8 w-full">
-            <div className="w-full  gap-2 grid grid-cols-2 sm:grid-cols-2">
+            <div className="w-full  gap-2 grid grid-cols-2 sm:grid-cols-2 mb-2">
               <div
                 style={{ backgroundColor: toggle ? "" : "#7a7a7a" }}
                 onClick={() => setToggle(true)}
@@ -263,36 +296,29 @@ export const Dashboard = () => {
                 Un filled {data?.unfilled?.length}
               </div>
             </div>
+            <div className="w-full flex justify-end items-center">
+              <button
+                className="btn"
+                onClick={() =>
+                  document
+                    .getElementById("filter_filled_unfilled_modal")
+                    .showModal()
+                }
+              >
+                Filter <FaFilter />
+              </button>
+              <button className="btn" onClick={clearFilter}>
+                Clear Filter
+              </button>
+            </div>
             <div className="overflow-x-auto grid grid-cols-1 gap-4 px-4 mt-8 sm:grid-cols-1 sm:px-8 w-full">
-              <div className="w-full  flex justify-end items-end ">
-                <label
-                  className="btn rounded-md bg-none  "
-                  htmlFor="filterUnfilled"
-                >
-                  <FaFilter />
-                  <input
-                    type="month"
-                    className="text-primary"
-                    id="filterUnfilled"
-                    onChange={(e) => setQuerydate(e.target.value)}
-                  />
-                </label>
-                <div className="flex gap-2">
-                  <button className="btn border-none " onClick={getData}>
-                    Filter
-                  </button>
-                  <button className="btn border-none " onClick={clearFilter}>
-                    Clear
-                  </button>
-                </div>
-              </div>
               <div className="w-full h-[300px] overflow-auto overflow-y-scroll">
                 <table className="table">
                   {/* head */}
-                  <thead>
-                    <tr>
-                      <th>Area</th>
-                      <th>Nazim</th>
+                  <thead className="">
+                    <tr className="w-full flex">
+                      <th className="w-[50%]">Area</th>
+                      <th className="w-[50%]">Nazim</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -301,9 +327,9 @@ export const Dashboard = () => {
                         data.filled
                           .filter((i) => !i?.disabled)
                           .map((obj, index) => (
-                            <tr key={index} className="w-full">
-                              <td className="w-full">{obj.name}</td>
-                              <td className="w-full">
+                            <tr key={index} className="w-full flex">
+                              <td className="w-[50%]">{obj.name}</td>
+                              <td className="w-[50%]">
                                 {nazim.find(
                                   (i) => i?.userAreaId?._id == obj?._id
                                 )?.name || "UNKNOWN"}
@@ -319,9 +345,9 @@ export const Dashboard = () => {
                       data.unfilled
                         .filter((i) => !i?.disabled)
                         .map((obj, index) => (
-                          <tr className="w-full" key={index}>
-                            <td className="w-full">{obj.name}</td>
-                            <td className="w-full">
+                          <tr className="w-full flex" key={index}>
+                            <td className="w-[50%]">{obj.name}</td>
+                            <td className="w-[50%]">
                               {nazim.find((i) => i?.userAreaId?._id == obj?._id)
                                 ?.name || "UNKNOWN"}
                             </td>
@@ -339,6 +365,185 @@ export const Dashboard = () => {
           </div>
         )}
       </div>
+      <dialog id="filter_filled_unfilled_modal" className="modal">
+        <div className="modal-box">
+          <h3 className="font-bold text-lg">Filter Data</h3>
+          <div className="w-full  flex justify-between items-center  flex-wrap">
+            <div className="flex flex-col w-full justify-start items-center gap-3">
+              <div className=" w-full flex items-center justify-start gap-2 border border-primary p-2 rounded-lg">
+                <div className="form-control">
+                  <label className="label cursor-pointer gap-2">
+                    <input
+                      type="radio"
+                      name="userAreaType"
+                      className="radio checked:bg-blue-500"
+                      value="Tehsil"
+                      checked={userAreaType === "Tehsil"}
+                      onChange={(e) => setUserAreaType(e.target.value)}
+                    />
+                    <span className="label-text">Division</span>
+                  </label>
+                </div>
+                <div className="form-control">
+                  <label className="label cursor-pointer gap-2">
+                    <input
+                      type="radio"
+                      name="userAreaType"
+                      className="radio checked:bg-blue-500"
+                      value="Maqam"
+                      checked={userAreaType === "Maqam"}
+                      onChange={(e) => setUserAreaType(e.target.value)}
+                    />
+                    <span className="label-text">Maqam</span>
+                  </label>
+                </div>
+                <div className="form-control">
+                  <label className="label cursor-pointer gap-2">
+                    <input
+                      type="radio"
+                      name="userAreaType"
+                      className="radio checked:bg-blue-500"
+                      value="All"
+                      checked={userAreaType === "All"}
+                      onChange={(e) => setUserAreaType(e.target.value)}
+                    />
+                    <span className="label-text">All</span>
+                  </label>
+                </div>
+              </div>
+              {userAreaType !== "All" && (
+                <div className="relative w-full mb-3">
+                  <input
+                    type="hidden"
+                    name="userAreaId"
+                    id="userAreaId"
+                    className="w-full"
+                    autoComplete="off"
+                  />
+                  <input
+                    id="autocomplete"
+                    type="text"
+                    autoComplete="off"
+                    class="input  input-bordered input-primary w-full"
+                    placeholder="Select area"
+                    onChange={(e) => setSearchArea(e.target.value)}
+                    onClick={() => {
+                      if (
+                        document
+                          .getElementById("autocomplete-list")
+                          .classList.contains("hidden")
+                      ) {
+                        document
+                          .getElementById("autocomplete-list")
+                          .classList.remove("hidden");
+                      } else {
+                        document
+                          .getElementById("autocomplete-list")
+                          .classList.add("hidden");
+                      }
+                    }}
+                  />
+                  <div
+                    id="autocomplete-list"
+                    class="absolute hidden z-10 max-h-[100px] overflow-y-scroll bg-white border border-gray-300 w-full mt-1"
+                  >
+                    {areas
+                      .sort((a, b) => a?.name?.localeCompare(b?.name))
+                      .filter((item) => {
+                        if (searchArea && searchArea !== "") {
+                          if (
+                            item?.name
+                              ?.toString()
+                              ?.toLowerCase()
+                              ?.includes(searchArea?.toString()?.toLowerCase())
+                          ) {
+                            return true;
+                          }
+                          return false;
+                        } else {
+                          return true;
+                        }
+                      })
+                      .map((area, index) => (
+                        <div
+                          key={index}
+                          onClick={() => {
+                            document.getElementById("userAreaId").value =
+                              area?._id;
+                            setSelectedId(area?._id);
+                            document.getElementById("autocomplete").value = `${
+                              area?.name
+                            }${
+                              userAreaType === "Halqa"
+                                ? ` - ${area?.parentId?.name} (${area?.parentType})`
+                                : ""
+                            }`;
+                            document
+                              .getElementById("autocomplete-list")
+                              .classList.add("hidden");
+                          }}
+                          className="p-2 cursor-pointer hover:bg-gray-100"
+                        >
+                          {area?.name}
+                          {userAreaType === "Halqa"
+                            ? ` - ${area?.parentId?.name} (${area?.parentType})`
+                            : ""}
+                        </div>
+                      ))}
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className="w-full flex justify-end">
+              <label
+                className="btn rounded-md bg-none  "
+                htmlFor="filterUnfilled"
+              >
+                <FaFilter />
+                <input
+                  type="month"
+                  className="text-primary"
+                  id="filterUnfilled"
+                  value={queryDate}
+                  onChange={(e) => setQuerydate(e.target.value)}
+                />
+              </label>
+            </div>
+            <div className="modal-action w-full">
+              <form method="dialog" className="w-full">
+                <div className=" w-full flex justify-end gap-3 items-center">
+                  <button
+                    id="close-division-modal"
+                    className="btn ms-3 capitalize"
+                    onClick={() => {
+                      setQuerydate("");
+                      setUserAreaType("All");
+                    }}
+                  >
+                    Clear
+                  </button>
+                  <button
+                    disabled={
+                      !queryDate ||
+                      (queryDate === "" && userAreaType === "All") ||
+                      ((userAreaType === "Tehsil" ||
+                        userAreaType === "Maqam") &&
+                        (!selectedId || selectedId === "")) ||
+                      !queryDate ||
+                      queryDate === ""
+                    }
+                    id="close-division-modal"
+                    className="btn ms-3 capitalize"
+                    onClick={getData}
+                  >
+                    Filter
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </dialog>
     </GeneralLayout>
   );
 };

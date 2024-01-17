@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export function GeneralInfo({ setMonth, me, area, view, month, newMonth }) {
-  console.log(newMonth);
+  const [date, setDate] = useState("");
   useEffect(() => {
     if (me && !view) {
       if (document.getElementById("name")) {
@@ -10,6 +10,14 @@ export function GeneralInfo({ setMonth, me, area, view, month, newMonth }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [me]);
+  const setDateFn = () => {
+    const date0 = new Date();
+    date0.setMonth(date0.getMonth() - 1);
+    setDate(`${date0.getFullYear()}-${date0.getMonth() + 1}`);
+  };
+  useEffect(() => {
+    setDateFn();
+  }, []);
   return (
     <div className="grid w-full grid-cols-1 lg:grid-cols-2">
       <div className="flex justify-start items-center gap-2 w-full p-2">
@@ -30,9 +38,8 @@ export function GeneralInfo({ setMonth, me, area, view, month, newMonth }) {
             type="month"
             name="month"
             id="month"
-            value={month}
-            onChange={(e) => setMonth(e.target.value)}
-            disabled={view}
+            readOnly
+            value={date}
           />
         </div>
       ) : (
