@@ -230,7 +230,7 @@ export const DeleteUser = () => {
   };
   return (
     <GeneralLayout title={"Delete Users"} active={"user-switch"}>
-      <div className="p-5 relative flex flex-col items-center py-3 px-0 pt-0 justify-start h-[calc(100vh-65.6px-64px)]">
+      <div className="p-5 relative flex flex-col items-center py-3 px-0 pt-0 justify-start h-[calc(100vh-65.6px-64px)] overflow-hidden overflow-y-auto">
         <div className="w-full">
           <div className="flex items-center justify-start md:justify-center gap-2 p-2 overflow-hidden overflow-x-scroll">
             <input
@@ -247,18 +247,18 @@ export const DeleteUser = () => {
                 document.getElementById("categorize-filter").showModal();
                 setShowModal(true);
               }}
-              className="btn btn-secondary border-none"
+              className="btn border-none"
             >
               More Filters
             </button>
             <button
               onClick={() => clearSearchFilters()}
-              className="btn btn-secondary border-none"
+              className="btn border-none"
             >
               Clear Filters
             </button>
           </div>
-          <div className="flex overflow-hidden overflow-x-auto ">
+          <div className="flex overflow-hidden overflow-x-scroll overflow-y-scroll  ">
             <table className="table table-zebra">
               <thead>
                 <tr>

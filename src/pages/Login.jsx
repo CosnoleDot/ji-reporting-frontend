@@ -34,8 +34,8 @@ export const Login = ({ setAuthenticated }) => {
   return (
     <div className='relative flex flex-col justify-center min-h-screen overflow-hidden'>
       <div className='w-full p-6 m-auto bg-white rounded-md shadow-md lg:max-w-lg'>
-        <div className='w-full flex items-center justify-center'>
-          <img src='/logo.png' className='text-center' alt='LOGO' />
+        <div className='flex items-center justify-center w-full'>
+          <img src='/logo.png' className='text-center  h-[200px] w-[250px]' alt='LOGO' />
         </div>
         <form className='space-y-4' onSubmit={handleSubmit}>
           <div>

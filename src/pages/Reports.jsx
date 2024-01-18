@@ -11,6 +11,7 @@ import {
   MaqamContext,
   MaqamReportContext,
   MeContext,
+  ProvinceContext,
   ProvinceReportContext,
   TehsilContext,
   useToastState,
@@ -87,6 +88,12 @@ export const months = [
     value: 12,
   },
 ];
+
+export const getDivisionByTehsil = (tehsil, districts) => {
+  const districtId = tehsil?.district;
+  return districts.find((i) => i?._id === districtId)?.division?.name;
+};
+
 export const Reports = () => {
   const [reports, setReports] = useState([]);
   const [allReports, setAllReports] = useState([]);
@@ -120,6 +127,7 @@ export const Reports = () => {
   const maqams = useContext(MaqamContext);
   const divisions = useContext(DivisionContext);
   const districts = useContext(DistrictContext);
+  const provinces = useContext(ProvinceContext);
   const tehsils = useContext(TehsilContext);
   const halqas = useContext(HalqaContext);
   const [userAreaType, setUserAreaType] = useState("halqa");
@@ -160,6 +168,9 @@ export const Reports = () => {
   };
   const getAreas = async () => {
     switch (active) {
+      case "province":
+        setAreas(provinces);
+        break;
       case "division":
         setAreas(divisions);
         break;
@@ -179,11 +190,15 @@ export const Reports = () => {
         );
         break;
       default:
+        setAreas(provinces);
         break;
     }
   };
   const getAreaWithType = () => {
     switch (userAreaType) {
+      case "province":
+        setAreas(provinces);
+        break;
       case "division":
         setAreas(divisions);
         break;
@@ -512,10 +527,10 @@ export const Reports = () => {
   useEffect(() => {
     getAreas();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [active]);
+  }, [active, provinces, maqams, divisions, halqas, tehsils, districts]);
   useEffect(() => {
-    getAreaWithType();
-  }, [userAreaType, tab]);
+    if (active === "halqa") getAreaWithType();
+  }, [userAreaType]);
   return (
     <GeneralLayout
       title={me?.userAreaId?.name.toUpperCase()}
@@ -948,8 +963,10 @@ export const Reports = () => {
                         <span className="text-lg font-semibold">
                           {obj?.[active + "AreaId"]?.name || "UNKNOWN"}
                           {" - "}
-                          {obj?.[active + "AreaId"]?.parentId?.name ||
-                            "UNKNOWN"}
+                          {getDivisionByTehsil(
+                            obj?.[active + "AreaId"]?.parentId,
+                            districts
+                          )}
                           {" - "}
                           {moment(obj?.month).format("MMMM YYYY")}
                         </span>
