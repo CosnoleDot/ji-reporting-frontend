@@ -41,5 +41,10 @@
 }
 
 .reports {
-  font-family: 'Noto Nastaliq Urdu', serif;
+  font-family: "Noto Nastaliq Urdu", serif;
+}
+
+.btn:hover {
+  color: #3b82f6;
+  border: 1px solid #3b82f6;
 }

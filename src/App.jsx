@@ -108,7 +108,9 @@ function App() {
         headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
       });
       if (req) {
-        setProvinces(req.data.data);
+        setProvinces(
+          req.data.data.filter((i) => i?._id === me?.userAreaId?._id)
+        );
       }
     } catch (err) {
       dispatch({
