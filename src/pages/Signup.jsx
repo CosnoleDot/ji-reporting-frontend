@@ -447,17 +447,19 @@ export const Signup = () => {
           <div className="w-full">
             <span className="px-1 py-2 block font-semibold"> Status:</span>
             <div className="flex  items-center justify-start flex-wrap border border-primary p-2 rounded-lg">
-              <div className="form-control">
-                <label className="label cursor-pointer gap-2">
-                  <input
-                    type="radio"
-                    name="nazimType"
-                    className="radio checked:bg-blue-500"
-                    value="nazim"
-                  />
-                  <span className="label-text">Nazim</span>
-                </label>
-              </div>
+              {userAreaType === "Halqa" && (
+                <div className="form-control">
+                  <label className="label cursor-pointer gap-2">
+                    <input
+                      type="radio"
+                      name="nazimType"
+                      className="radio checked:bg-blue-500"
+                      value="nazim"
+                    />
+                    <span className="label-text">Rafeeq-Nazim</span>
+                  </label>
+                </div>
+              )}
               {userAreaType !== "Halqa" && (
                 <div className="form-control">
                   <label className="label cursor-pointer gap-2">

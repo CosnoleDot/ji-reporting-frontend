@@ -7,6 +7,7 @@ import {
   HalqaContext,
   MaqamContext,
   MeContext,
+  ProvinceContext,
   useToastState,
 } from "../context";
 import instance from "../api/instrance";
@@ -17,6 +18,7 @@ export const DeleteUser = () => {
   const me = useContext(MeContext);
   const halqas = useContext(HalqaContext);
   const maqams = useContext(MaqamContext);
+  const provinces = useContext(ProvinceContext);
   const divisions = useContext(DivisionContext);
   const { nazim, loading, setLoading, getNazim } = useContext(UIContext);
   const [data, setData] = useState(nazim);
@@ -30,6 +32,7 @@ export const DeleteUser = () => {
   const { dispatch } = useToastState();
   const [selectedSubject, setSelectedSubject] = useState("");
   const [singleUser, setSingleUser] = useState("");
+  const [selectedId, setSelectedId] = useState("");
   const [years, setYears] = useState([
     2021, 2022, 2023, 2024, 2025, 2026, 2027,
   ]);
@@ -138,52 +141,61 @@ export const DeleteUser = () => {
 
     setLoading(false);
   };
+  const updateStatus = async () => {
+    const data = {
+      nazim: userAreaType,
+      nazimType: nazimType,
+      userAreaId: selectedId,
+      userId: singleUser?._id,
+    };
+
+    try {
+      const req = await instance.put("/user/update-status", data, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("@token")}`,
+        },
+      });
+      dispatch({ type: "SUCCESS", payload: req.data?.message });
+      getNazim();
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     getAreas();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAreaType]);
   const getAreas = async () => {
-    let data;
     switch (userAreaType) {
+      case "Province":
+        setAreas(provinces);
+        break;
       case "Division":
-        setLoading(true);
-        data = await instance.get("/locations/division");
-        setLoading(false);
         setAreas(divisions);
         break;
       case "Maqam":
-        setLoading(true);
-        data = await instance.get("/locations/maqam");
-        setLoading(false);
         setAreas(maqams);
         break;
       case "Halqa":
-        setLoading(true);
-        setLoading(false);
         setAreas(halqas);
         break;
       default:
         break;
     }
-    switch (nazimType) {
-      case "nazim":
-        setLoading(true);
-        setLoading(false);
-        setAreas(halqas);
-        break;
-      case "rukan":
-        setLoading(true);
-        setLoading(false);
-        setAreas(halqas);
-        break;
-      case "umeedwar":
-        setLoading(true);
-        setLoading(false);
-        setAreas(halqas);
-        break;
-      default:
-        break;
-    }
+    // switch (nazimType) {
+    //   case "nazim":
+    //     setAreas(halqas);
+    //     break;
+    //   case "rukan":
+    //     setAreas(halqas);
+    //     break;
+    //   case "umeedwar":
+    //     setAreas(halqas);
+    //     break;
+    //   default:
+    //     break;
+    // }
   };
   useEffect(() => {
     const handleClickYear = (e) => {
@@ -228,6 +240,25 @@ export const DeleteUser = () => {
     document.getElementById("filter-form").reset();
     setSelectedSubject("");
   };
+  const handleEventClick = (e) => {
+    if (e?.target?.id !== "autocomplete0") {
+      if (
+        !document
+          ?.getElementById("autocomplete0-list")
+          ?.classList?.contains("hidden")
+      ) {
+        document
+          ?.getElementById("autocomplete0-list")
+          ?.classList?.add("hidden");
+      }
+    }
+  };
+  useEffect(() => {
+    document.addEventListener("click", handleEventClick);
+    return () => {
+      document.removeEventListener("click", handleEventClick);
+    };
+  }, []);
   return (
     <GeneralLayout title={"Delete Users"} active={"user-switch"}>
       <div className="p-5 relative flex flex-col items-center py-3 px-0 pt-0 justify-start h-[calc(100vh-65.6px-64px)] overflow-hidden overflow-y-auto">
@@ -327,15 +358,23 @@ export const DeleteUser = () => {
                             <FaTrash />
                           </button>
                         </div>
-                        <div className="flex justify-center items-center">
-                          <button
-                            readOnly={loading}
-                            className="btn"
-                            // onClick={updateNazimStatus}
-                          >
-                            <MdOutlineUpgrade />
-                          </button>
-                        </div>
+                        {me?.userAreaType !== "halqa" && (
+                          <div className="flex justify-center items-center">
+                            <button
+                              readOnly={loading}
+                              className="btn"
+                              onClick={() => {
+                                document
+                                  .getElementById("change-status-modal")
+                                  .showModal();
+                                setShowModal(true);
+                                setSingleUser(maqam);
+                              }}
+                            >
+                              <MdOutlineUpgrade />
+                            </button>
+                          </div>
+                        )}
                       </td>
                     </tr>
                   ))}
@@ -343,9 +382,7 @@ export const DeleteUser = () => {
             </table>
           </div>
         </div>
-        {/* You can open the modal using document.getElementById('ID').showModal() method */}
 
-        {/* {showModal && ( */}
         <dialog id="categorize-filter" className="modal">
           <div className="modal-box">
             <form method="dialog">
@@ -958,6 +995,244 @@ export const DeleteUser = () => {
             <form method="dialog" className="modal-backdrop">
               <div className="flex justify-end items-end w-full">
                 <button className="btn rounded-lg ">Close</button>
+              </div>
+            </form>
+          </div>
+        </dialog>
+        {/* {Change user status} */}
+        <dialog id="change-status-modal" className="modal">
+          <div className="modal-box">
+            <h3 className="font-bold text-2xl">Change Status</h3>
+            <hr className="mb-3" />
+            <form className="space-y-4">
+              <div>
+                <span className="px-1 py-2 block font-semibold">
+                  Organization pocket:
+                </span>
+                <div className="flex flex-wrap items-center justify-start border border-primary p-2 rounded-lg">
+                  <div className="form-control">
+                    <label className="label cursor-pointer gap-2">
+                      <input
+                        type="radio"
+                        name="userAreaType"
+                        className="radio checked:bg-blue-500"
+                        checked={userAreaType === "Province"}
+                        value="Province"
+                        onChange={(e) => {
+                          setUserAreaType(e.target.value);
+                          setSearchArea("");
+                          document.getElementById("autocomplete0").value = "";
+                        }}
+                      />
+                      <span className="label-text">Province</span>
+                    </label>
+                  </div>
+                  <div className="form-control">
+                    <label className="label cursor-pointer gap-2">
+                      <input
+                        type="radio"
+                        name="userAreaType"
+                        className="radio checked:bg-blue-500"
+                        checked={userAreaType === "Division"}
+                        value="Division"
+                        onChange={(e) => {
+                          setUserAreaType(e.target.value);
+                          setSearchArea("");
+                          document.getElementById("autocomplete0").value = "";
+                        }}
+                      />
+                      <span className="label-text">Division</span>
+                    </label>
+                  </div>
+                  <div className="form-control">
+                    <label className="label cursor-pointer gap-2">
+                      <input
+                        type="radio"
+                        name="userAreaType"
+                        className="radio checked:bg-blue-500"
+                        checked={userAreaType === "Maqam"}
+                        value="Maqam"
+                        onChange={(e) => {
+                          setUserAreaType(e.target.value);
+                          setSearchArea("");
+                          document.getElementById("autocomplete0").value = "";
+                        }}
+                      />
+                      <span className="label-text">Maqam</span>
+                    </label>
+                  </div>
+                  <div className="form-control">
+                    <label className="label cursor-pointer gap-2">
+                      <input
+                        type="radio"
+                        name="userAreaType"
+                        className="radio checked:bg-blue-500"
+                        checked={userAreaType === "Halqa"}
+                        value="Halqa"
+                        onChange={(e) => {
+                          setUserAreaType(e.target.value);
+                          setSearchArea("");
+                          document.getElementById("autocomplete0").value = "";
+                        }}
+                      />
+                      <span className="label-text">Halqa</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              {/* NAZIM TYPES */}
+              <div className="w-full">
+                <span className="px-1 py-2 block font-semibold">
+                  Change status to:
+                </span>
+                <div className="flex  items-center justify-start flex-wrap border border-primary p-2 rounded-lg">
+                  <div className="form-control">
+                    <label className="label cursor-pointer gap-2">
+                      <input
+                        type="radio"
+                        name="nazimType"
+                        className="radio checked:bg-blue-500"
+                        value="nazim"
+                        onChange={() => setNazimType("nazim")}
+                      />
+                      <span className="label-text">Nazim</span>
+                    </label>
+                  </div>
+                  {userAreaType !== "Halqa" && (
+                    <div className="form-control">
+                      <label className="label cursor-pointer gap-2">
+                        <input
+                          type="radio"
+                          name="nazimType"
+                          className="radio checked:bg-blue-500"
+                          value="rukan"
+                          onChange={() => setNazimType("rukan")}
+                        />
+                        <span className="label-text">Rukan</span>
+                      </label>
+                    </div>
+                  )}
+                  <div className="form-control">
+                    <label className="label cursor-pointer gap-2">
+                      <input
+                        type="radio"
+                        name="nazimType"
+                        className="radio checked:bg-blue-500"
+                        value="rukan-nazim"
+                        onChange={() => setNazimType("rukan-nazim")}
+                      />
+                      <span className="label-text">Rukan-Nazim</span>
+                    </label>
+                  </div>
+                  {userAreaType !== "Halqa" && (
+                    <div className="form-control">
+                      <label className="label cursor-pointer gap-2">
+                        <input
+                          type="radio"
+                          name="nazimType"
+                          className="radio checked:bg-blue-500"
+                          value="umeedwaar"
+                          onChange={() => setNazimType("umeedwaar")}
+                        />
+                        <span className="label-text">Umeedwaar</span>
+                      </label>
+                    </div>
+                  )}
+                  <div className="form-control">
+                    <label className="label cursor-pointer gap-2">
+                      <input
+                        type="radio"
+                        name="nazimType"
+                        className="radio checked:bg-blue-500"
+                        value="umeedwaar-nazim"
+                        onChange={() => setNazimType("umeedwaar-nazim")}
+                      />
+                      <span className="label-text">Umeedwaar-Nazim</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div className="relative">
+                <span className="px-1 py-2 block font-semibold">Area:</span>
+                <input type="hidden" name="userAreaId" id="userAreaId" />
+                <input
+                  id="autocomplete0"
+                  type="text"
+                  className="input input-bordered input-primary w-full"
+                  placeholder="Select area"
+                  onChange={(e) => setSearchArea(e.target.value)}
+                  onClick={() => {
+                    if (
+                      document
+                        .getElementById("autocomplete0-list")
+                        .classList.contains("hidden")
+                    ) {
+                      document
+                        .getElementById("autocomplete0-list")
+                        .classList.remove("hidden");
+                    } else {
+                      document
+                        .getElementById("autocomplete0-list")
+                        .classList.add("hidden");
+                    }
+                  }}
+                />
+                <div
+                  id="autocomplete0-list"
+                  className="absolute hidden z-10 max-h-[100px] overflow-y-scroll bg-white border border-gray-300 w-full mt-1"
+                >
+                  {areas
+                    .sort((a, b) => a?.name?.localeCompare(b?.name))
+                    .filter((item) => {
+                      if (searchArea && searchArea !== "") {
+                        if (
+                          item?.name
+                            ?.toString()
+                            ?.toLowerCase()
+                            ?.includes(searchArea?.toString()?.toLowerCase())
+                        ) {
+                          return true;
+                        }
+                        return false;
+                      } else {
+                        return true;
+                      }
+                    })
+                    .map((area, index) => (
+                      <div
+                        key={index}
+                        onClick={() => {
+                          document.getElementById("userAreaId").value =
+                            area?._id;
+                          setSelectedId(area?._id);
+                          document.getElementById("autocomplete0").value = `${
+                            area?.name
+                          }${
+                            userAreaType === "Halqa"
+                              ? ` - ${area?.parentId?.name} (${area?.parentType})`
+                              : ""
+                          }`;
+                          document
+                            .getElementById("autocomplete0-list")
+                            .classList.add("hidden");
+                        }}
+                        className="p-2 cursor-pointer hover:bg-gray-100"
+                      >
+                        {area?.name}
+                        {userAreaType === "Halqa"
+                          ? ` - ${area?.parentId?.name} (${area?.parentType})`
+                          : ""}
+                      </div>
+                    ))}
+                </div>
+              </div>
+            </form>
+            <form method="dialog" className="modal-backdrop">
+              <div className="flex justify-end items-end w-full">
+                <button className="btn rounded-lg" onClick={updateStatus}>
+                  Update
+                </button>
               </div>
             </form>
           </div>

@@ -117,7 +117,7 @@ export const Dashboard = () => {
   };
   useEffect(() => {
     getData();
-  }, []);
+  }, [queryDate]);
   const clearFilter = () => {
     setQuerydate("");
     setUserAreaType("All");
@@ -318,7 +318,7 @@ export const Dashboard = () => {
               >
                 Filter <FaFilter />
               </button>
-              <button className="btn" onClick={clearFilter}>
+              <button className="btn" onClick={() => clearFilter()}>
                 Clear Filter
               </button>
             </div>
