@@ -290,7 +290,7 @@ export const Comparision = () => {
           </button>
         </div>
         <div className="relative flex flex-col gap-3 h-[calc(100vh-66px-64px-73.6px)] w-full p-3 overflow-scroll">
-          {response && response?.length > 0 ? (
+          {response ? (
             <ReportChart res={response} type={selectedProperty} />
           ) : (
             <div className="flex justify-center items-center top-[50%] relative left-[0%]">
