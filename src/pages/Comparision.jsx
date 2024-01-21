@@ -259,8 +259,14 @@ export const Comparision = () => {
             <option value={"ifradi-kuwat"}>Ifradi Kuwat</option>
             <option value={"library"}>Library</option>
             <option value={"other-activity"}>Other Activity</option>
+            <option value={"tosee-dawat"}>Tosee Dawat</option>
+            <option value={"roz-shab-bedari"}>Shab Bedari</option>
+            <option value={"paigham-digest"}>Paigham Digest</option>
             {["maqam", "division"].includes(reportType) && (
-              <option value={"tanzeem"}>Tanzeem</option>
+              <>
+                <option value={"tanzeem"}>Tanzeem</option>
+                <option value={"mentioned-activities"}>Zaili Activities</option>
+              </>
             )}
           </select>
           <select

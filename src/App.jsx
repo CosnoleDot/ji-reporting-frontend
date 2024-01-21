@@ -36,6 +36,8 @@ import {
 } from "./context";
 import { UIContext } from "./context/ui";
 import { Loader } from "./components";
+import { Temp } from "./Temp";
+
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -630,6 +632,10 @@ function App() {
                                 <Route
                                   path="/user-switch"
                                   element={<DeleteUser />}
+                                />
+                                <Route
+                                  path="/temp"
+                                  element={<Temp />}
                                 />
                               </Routes>
                               <LoadingScreen count={count} value={value} />
