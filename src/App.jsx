@@ -37,7 +37,7 @@ import {
 } from "./context";
 import { UIContext } from "./context/ui";
 import { Loader } from "./components";
-// import { Temp } from "./Temp";
+
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -637,10 +637,7 @@ function App() {
                                   path="/umeedwar-nazim"
                                   element={<UmeedWarNazim />}
                                 />
-                                {/* <Route
-                                  path="/temp"
-                                  element={<Temp />}
-                                /> */}
+                            
                               </Routes>
                               <LoadingScreen count={count} value={value} />
                               {loading && <Loader />}
