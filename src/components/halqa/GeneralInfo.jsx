@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export function GeneralInfo({ setMonth, me, area, view, month, newMonth }) {
+export function GeneralInfo({ me, area, view, newMonth }) {
   const [date, setDate] = useState("");
   useEffect(() => {
     if (me && !view) {

@@ -33,41 +33,33 @@ const NoReports = () => (
 export const months = [
   {
     title: "January",
-    title: "January",
     value: 1,
   },
   {
-    title: "February",
     title: "February",
     value: 2,
   },
   {
     title: "March",
-    title: "March",
     value: 3,
   },
   {
-    title: "April",
     title: "April",
     value: 4,
   },
   {
     title: "May",
-    title: "May",
     value: 5,
   },
   {
-    title: "June",
     title: "June",
     value: 6,
   },
   {
     title: "July",
-    title: "July",
     value: 7,
   },
   {
-    title: "August",
     title: "August",
     value: 8,
   },
@@ -121,7 +113,6 @@ export const Reports = () => {
   const divisionReports = useContext(DivisionReportContext);
   const halqaReports = useContext(HalqaReportContext);
   const provinceReports = useContext(ProvinceReportContext);
-  const user = useContext(MeContext);
   const [areas, setAreas] = useState([]);
   const [searchArea, setSearchArea] = useState("");
   const maqams = useContext(MaqamContext);

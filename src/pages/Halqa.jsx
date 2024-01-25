@@ -33,7 +33,6 @@ export const Halqa = () => {
   const [view, setView] = useState(false);
   const [data, setData] = useState({});
   const { setLoading } = useContext(UIContext);
-  const [month, setMonth] = useState("");
   const location = useLocation();
   const { getHalqaReports } = useContext(UIContext);
   const params = useParams();
@@ -117,13 +116,7 @@ export const Halqa = () => {
           onSubmit={handleReportSubmit}
           dir="rtl"
         >
-          <GeneralInfo
-            setMonth={setMonth}
-            month={month}
-            me={me}
-            area={"حلقہ"}
-            newMonth={data?.month}
-          />
+          <GeneralInfo me={me} area={"حلقہ"} newMonth={data?.month} />
           <IfradiKuwat view={view} />
           <Activity view={view} />
           <OtherActivities view={view} />
