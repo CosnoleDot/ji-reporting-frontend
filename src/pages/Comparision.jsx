@@ -6,6 +6,7 @@ import {
   HalqaContext,
   MaqamContext,
   MeContext,
+  ProvinceContext,
   useToastState,
 } from "../context";
 import instance from "../api/instrance";
@@ -152,12 +153,14 @@ export const Comparision = () => {
   const divisions = useContext(DivisionContext);
   const halqas = useContext(HalqaContext);
   const districts = useContext(DistrictContext);
+  const provinces = useContext(ProvinceContext);
 
   const [areas, setAreas] = useState({
     maqam: [],
     division: [],
     halqa: [],
     district: [],
+    province: [],
   });
 
   useEffect(() => {
@@ -167,6 +170,7 @@ export const Comparision = () => {
       division: divisions,
       halqa: halqas,
       district: districts,
+      province: provinces,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [maqams, divisions, halqas, districts]);
@@ -182,21 +186,24 @@ export const Comparision = () => {
   const data =
     durationType === "month"
       ? {
-          duration: transformedArray,
+          dates: transformedArray,
           duration_type: durationType,
           areaId,
         }
-      : { duration: durationYears, duration_type: durationType, areaId };
+      : { dates: durationYears, duration_type: durationType, areaId };
   const getData = async () => {
     setResponse(null);
     try {
       const res = await instance.post(
-        `compare/${
+        `comparison/${
           reportType === "self" ? localStorage.getItem("@type") : reportType
         }/${selectedProperty}`,
         data,
         {
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
         }
       );
       setResponse(res?.data?.data);
@@ -227,6 +234,7 @@ export const Comparision = () => {
               <>
                 <option value="maqam">Maqam</option>
                 <option value="division">Division</option>
+                <option value="province">Province</option>
               </>
             )}
             {/* <option value='self'>Self Compare</option> */}
@@ -255,12 +263,18 @@ export const Comparision = () => {
             <option value="" disabled>
               Property
             </option>
-            <option value={"activity"}>Activity</option>
-            <option value={"ifradi-kuwat"}>Ifradi Kuwat</option>
+            <option value={"activities"}>Activity</option>
+            <option value={"workerInfo"}>Ifradi Kuwat</option>
             <option value={"library"}>Library</option>
-            <option value={"other-activity"}>Other Activity</option>
-            {["maqam", "division"].includes(reportType) && (
-              <option value={"tanzeem"}>Tanzeem</option>
+            <option value={"otherAcitvity"}>Other Activity</option>
+            <option value={"toseeDawat"}>Tosee Dawat</option>
+            <option value={"rozShabBedari"}>Shab Bedari</option>
+            <option value={"paighamDigest"}>Paigham Digest</option>
+            {["maqam", "division", "province"].includes(reportType) && (
+              <>
+                <option value={"tanzeem"}>Tanzeem</option>
+                <option value={"mentionedActivities"}>Zaili Activities</option>
+              </>
             )}
           </select>
           <select
