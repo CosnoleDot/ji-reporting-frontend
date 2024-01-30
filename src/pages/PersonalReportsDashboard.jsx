@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { GeneralLayout } from "../components";
-import { FaEdit, FaEye } from "react-icons/fa";
+import { FaEdit, FaEye, FaPrint } from "react-icons/fa";
 import moment from "moment";
 import instance from "../api/instrance";
 import { useNavigate } from "react-router-dom";
@@ -29,6 +29,9 @@ export const PersonalReportsDashboard = () => {
   const editReport = (id) => {
     navigate(`edit/${id}`);
   };
+  const printReport = (id) => {
+    navigate(`print/${id}`);
+  };
 
   // useEffect(() => {
   //   console.log(temp, "temp");
@@ -40,13 +43,16 @@ export const PersonalReportsDashboard = () => {
         <div className="w-full flex justify-end items-center mt-5">
           <button
             className="btn btn-primary"
-            onClick={() => navigate("/umeedwar-nazim/create")}
+            onClick={() => navigate("/personalReport/create")}
           >
             + New Report
           </button>
         </div>
         {data?.map((obj, index) => (
-          <div key={index} className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col mt-5">
+          <div
+            key={index}
+            className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col mt-5"
+          >
             <div className="flex w-full flex-col items-start justify-center">
               <span className="text-lg font-semibold" key={index}>
                 {/* {obj?.name || "UNKNOWN"}
@@ -65,6 +71,9 @@ export const PersonalReportsDashboard = () => {
               </button>
               <button className="btn" onClick={() => editReport(obj?._id)}>
                 <FaEdit />
+              </button>
+              <button className="btn" onClick={() => printReport(obj?._id)}>
+                <FaPrint />
               </button>
             </div>
           </div>

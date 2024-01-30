@@ -244,10 +244,9 @@ export const Comparision = () => {
                   "rukan",
                   "umeedwaar-nazim",
                   "rukan-nazim",
-                ].includes(me?.nazimType) ||
-                  (localStorage.getItem("@type") === "province" && (
-                    <option value="personal">Personal</option>
-                  ))}
+                ].includes(me?.nazimType) && (
+                  <option value="personal">Personal</option>
+                )}
               </>
             )}
             {/* <option value='self'>Self Compare</option> */}
@@ -298,14 +297,13 @@ export const Comparision = () => {
             )}
             {["umeedwar", "rukan", "umeedwaar-nazim", "rukan-nazim"].includes(
               me?.nazimType
-            ) ||
-              (localStorage.getItem("@type") === "province" && (
-                <>
-                  <option value={"prayers"}> Prayers</option>
-                  <option value={"studies"}> Mutalajaat</option>
-                  <option value={"toseeDawa"}>ToseeDawat</option>
-                </>
-              ))}
+            ) && (
+              <>
+                <option value={"prayers"}> Prayers</option>
+                <option value={"studies"}> Mutalajaat</option>
+                <option value={"toseeDawa"}>ToseeDawat</option>
+              </>
+            )}
           </select>
           <select
             value={durationType}

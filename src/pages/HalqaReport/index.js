@@ -36,7 +36,7 @@ export const HalqaReport = () => {
         <h4 className="header"> حلقہ کا نام:</h4>
         <h6>
           {data?.halqaAreaId?.name}
-          {data?.halqaAreaId?.parentType}{" "}
+          {data?.halqaAreaId?.parentType}
         </h6>
         <h4 className="header">برآے ماہ:</h4>
         <h6>{data?.month}</h6>
@@ -82,7 +82,6 @@ export const HalqaReport = () => {
           <p>{data?.wiId?.arkan?.increase}</p>
           <p>{data?.wiId?.arkan?.decrease}</p>
           <p>{data?.wiId?.arkan?.annual}</p>
-          {/* <p>{data?.wiId?.arkan?.}</p> */}
         </div>
         <div className="row">
           <p className="header">امیدواران </p>
@@ -90,7 +89,6 @@ export const HalqaReport = () => {
           <p>{data?.wiId?.umeedWaran?.increase}</p>
           <p>{data?.wiId?.umeedWaran?.decrease}</p>
           <p>{data?.wiId?.umeedWaran?.annual}</p>
-          {/* <p>Data 3</p> */}
         </div>
         <div className="row">
           <p className="header">رفقا </p>
@@ -129,8 +127,11 @@ export const HalqaReport = () => {
         <p className="header">
           <strong>اوسط حاضری</strong>
         </p>
-        <p className="header">
-          <strong>اوسط حاضری</strong>
+        <p className="header" style={{ width: "100%" }}>
+          <strong>عنوان </strong>
+        </p>
+        <p className="header" style={{ width: "100%" }}>
+          <strong>مرتب/غیرمرتب </strong>
         </p>
       </div>
       <div
@@ -146,6 +147,9 @@ export const HalqaReport = () => {
           <p>{data?.halqaActivityId?.ijtKarkunan?.decided}</p>
           <p>{data?.halqaActivityId?.ijtKarkunan?.attendance}</p>
           <p>{data?.halqaActivityId?.ijtKarkunan?.title}</p>
+          <p>
+            {data?.halqaActivityId?.ijtKarkunan?.registered ? "ہاں" : "نہیں"}
+          </p>
         </div>
         <div className="row">
           <p className="header">سٹدی سرکل </p>
@@ -153,6 +157,9 @@ export const HalqaReport = () => {
           <p>{data?.halqaActivityId?.studyCircle?.decided}</p>
           <p>{data?.halqaActivityId?.studyCircle?.attendance}</p>
           <p>{data?.halqaActivityId?.studyCircle?.title}</p>
+          <p>
+            {data?.halqaActivityId?.studyCircle?.registered ? "ہاں" : "نہیں"}
+          </p>
         </div>
         <div className="row">
           <p className="header">اجتمعِ رفقا </p>
@@ -160,6 +167,7 @@ export const HalqaReport = () => {
           <p>{data?.halqaActivityId?.ijtRafaqa?.decided}</p>
           <p>{data?.halqaActivityId?.ijtRafaqa?.attendance}</p>
           <p>{data?.halqaActivityId?.ijtRafaqa?.title}</p>
+          <p>{data?.halqaActivityId?.ijtRafaqa?.registered ? "ہاں" : "نہیں"}</p>
         </div>
         <div className="row">
           <p className="header">درسِ قرآن </p>
@@ -167,6 +175,9 @@ export const HalqaReport = () => {
           <p>{data?.halqaActivityId?.darseQuran?.decided}</p>
           <p>{data?.halqaActivityId?.darseQuran?.attendance}</p>
           <p>{data?.halqaActivityId?.darseQuran?.title}</p>
+          <p>
+            {data?.halqaActivityId?.darseQuran?.registered ? "ہاں" : "نہیں"}
+          </p>
         </div>
       </div>
 
@@ -193,7 +204,6 @@ export const HalqaReport = () => {
           شب بیداری:{data?.otherActivityId?.shabBedari}
         </h6>
         <h6 style={{ width: "100%", textAlign: "start" }}>
-          {" "}
           حدیث سرکل:{data?.otherActivityId?.hadithCircle}
         </h6>
         <h6 style={{ width: "100%", textAlign: "start" }}>
@@ -235,19 +245,19 @@ export const HalqaReport = () => {
           }}
         >
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            {" "}
-            طے شدہ:{data?.tdId?.rawabitDecided}{" "}
+            طے شدہ:{data?.tdId?.rawabitDecided}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
             موجودہ :{data?.tdId?.current}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            {" "}
             ملاقاتیں:{data?.tdId?.meetings}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            {" "}
             تقسیم لٹریچر:{data?.tdId?.literatureDistribution}
+          </h6>
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+            روابط رجسٹر مرتب:{data?.tdId?.registered ? "ہاں" : "نہیں"}
           </h6>
         </div>
         <h3 style={{ textAlign: "start", fontWeight: "bold" }}>عام طلبہ</h3>
@@ -261,11 +271,9 @@ export const HalqaReport = () => {
           }}
         >
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            {" "}
             ملاقاتیں:{data?.tdId?.commonStudentMeetings}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            {" "}
             تقسیم لٹریچر:{data?.tdId?.commonLiteratureDistribution}
           </h6>
         </div>
@@ -284,16 +292,16 @@ export const HalqaReport = () => {
           </h6>
 
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            {" "}
             اضافہ :{data?.halqaLibId?.increase}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            {" "}
             کمی :{data?.halqaLibId?.decrease}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            {" "}
             اجرآے کتب :{data?.halqaLibId?.bookRent}
+          </h6>
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+            لائبریری رجسٹر مرتب :{data?.halqaLibId?.registered ? "ہاں" : "نہیں"}
           </h6>
         </div>
 
@@ -331,6 +339,39 @@ export const HalqaReport = () => {
         >
           <h3 style={{ fontWeight: "bolder" }}> تبصرہ </h3>
           <h6>{data?.comments}</h6>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "20px",
+            justifyContent: "flex-start",
+            alignItems: "flex-end",
+            width: "100%",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              gap: "20px",
+              justifyContent: "center",
+              alignItems: "flex-start",
+            }}
+          >
+            <h3 style={{ fontWeight: "bolder" }}>نام ناظم</h3>
+            <h6>{data?.userId?.name}</h6>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              gap: "20px",
+              justifyContent: "flex-start",
+              alignItems: "flex-start",
+            }}
+          >
+            <h3 style={{ fontWeight: "bolder" }}> رپورٹ جمع کروانے کی تاریخ</h3>
+            <h6>{data?.createdAt.split("T")[0]}</h6>
+          </div>
         </div>
       </div>
     </div>

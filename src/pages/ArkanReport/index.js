@@ -5,7 +5,6 @@ import instance from "../../api/instrance";
 import { useParams } from "react-router-dom";
 
 export const ArkanReport = () => {
-  const [printData, setPrintData] = useState();
   const [data, setData] = useState();
   const params = useParams();
   const printReport = async (id) => {
@@ -15,55 +14,21 @@ export const ArkanReport = () => {
         Authorization: `Bearer ${localStorage.getItem("@token")}`,
       },
     });
+    // var print = false;
     if (req.status === 200) {
       setData(req?.data?.data);
-      setTimeout(() => {
-        window.print();
-        window.close();
-      }, 500);
+      // if (!print) {
+      //   setTimeout(() => {
+      //     window.print();
+      //     window.close();
+      //   }, 500);
+      // }
     }
   };
   useEffect(() => {
     if (params?.id) printReport(params?.id);
   }, [params]);
   console.log(data);
-  useEffect(() => {
-    const temp = {};
-    const iterate = (file) => {
-      Object.keys(file).forEach((key) => {
-        if (key === "rawabit") {
-          file[key].map((key1, index) => {
-            Object.keys(key1).forEach((key2) => {
-              temp[`rbt${index + 1}${key2}`] = key1[key2];
-            });
-          });
-        }
-        if (typeof file[key] === "object") {
-          iterate(file[key]);
-        } else {
-          temp[key] = file[key];
-        }
-      });
-    };
-    if (temp) {
-      setPrintData(temp);
-    }
-    if (data && data !== "") {
-      iterate(data);
-    }
-  }, [data]);
-  // if (printData) {
-  //   Object.keys(printData).forEach((key) => {
-  //     const value = printData[key];
-
-  //     const element = document.getElementById(key);
-  //     if (element) {
-  //       element.textContent = value;
-
-  //     }
-  //   });
-  // }
-
   return (
     <div className="containerPrint" dir="rtl">
       <h1>رپورٹ خاکہ</h1>
@@ -835,18 +800,15 @@ export const ArkanReport = () => {
           width: "100%",
         }}
       >
-        <p
-          style={{ border: "none", borderBottom: "1px dotted black" }}
-          readonly
-        ></p>
-        <p
-          style={{ border: "none", borderBottom: "1px dotted black" }}
-          readonly
-        ></p>
-        <p
-          style={{ border: "none", borderBottom: "1px dotted black" }}
-          readonly
-        ></p>
+        {data?.toseeDawaId?.rawabit[0]?.programs?.map((program, index) => (
+          <p
+            key={index}
+            style={{ border: "none", borderBottom: "1px dotted black" }}
+            readonly
+          >
+            {program}
+          </p>
+        ))}
       </div>
       <div
         style={{
@@ -1008,18 +970,15 @@ export const ArkanReport = () => {
           width: "100%",
         }}
       >
-        <p
-          style={{ border: "none", borderBottom: "1px dotted black" }}
-          readonly
-        ></p>
-        <p
-          style={{ border: "none", borderBottom: "1px dotted black" }}
-          readonly
-        ></p>
-        <p
-          style={{ border: "none", borderBottom: "1px dotted black" }}
-          readonly
-        ></p>
+        {data?.toseeDawaId?.rawabit[1]?.programs?.map((program, index) => (
+          <p
+            key={index}
+            style={{ border: "none", borderBottom: "1px dotted black" }}
+            readonly
+          >
+            {program}
+          </p>
+        ))}
       </div>
       <div
         style={{
@@ -1181,18 +1140,15 @@ export const ArkanReport = () => {
           width: "100%",
         }}
       >
-        <p
-          style={{ border: "none", borderBottom: "1px dotted black" }}
-          readonly
-        ></p>
-        <p
-          style={{ border: "none", borderBottom: "1px dotted black" }}
-          readonly
-        ></p>
-        <p
-          style={{ border: "none", borderBottom: "1px dotted black" }}
-          readonly
-        ></p>
+        {data?.toseeDawaId?.rawabit[2]?.programs?.map((program, index) => (
+          <p
+            key={index}
+            style={{ border: "none", borderBottom: "1px dotted black" }}
+            readonly
+          >
+            {program}
+          </p>
+        ))}
       </div>
       <div
         style={{
