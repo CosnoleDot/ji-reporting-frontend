@@ -37,7 +37,10 @@ import {
 } from "./context";
 import { UIContext } from "./context/ui";
 import { Loader } from "./components";
-
+import { MaqamReport } from "./pages/MaqamReport";
+import { HalqaReport } from "./pages/HalqaReport";
+import { DivisionReport } from "./pages/DivisionReport";
+import { ProvinceReport } from "./pages/ProvinceReport";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -637,7 +640,22 @@ function App() {
                                   path="/umeedwar-nazim"
                                   element={<UmeedWarNazim />}
                                 />
-                            
+                                  <Route
+                                    path="/halqa-report/print"
+                                    element={<HalqaReport />}
+                                  />
+                                <Route
+                                  path="/maqam-report/print"
+                                  element={<MaqamReport />}
+                                />
+                                <Route
+                                  path="/division-report/print"
+                                  element={<DivisionReport />}
+                                />
+                                <Route
+                                  path="/province-report/print"
+                                  element={<ProvinceReport />}
+                                />
                               </Routes>
                               <LoadingScreen count={count} value={value} />
                               {loading && <Loader />}
