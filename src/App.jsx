@@ -640,20 +640,20 @@ function App() {
                                   path="/umeedwar-nazim"
                                   element={<UmeedWarNazim />}
                                 />
-                                  <Route
-                                    path="/halqa-report/print"
-                                    element={<HalqaReport />}
-                                  />
                                 <Route
-                                  path="/maqam-report/print"
+                                  path="/halqa-report/print/:id"
+                                  element={<HalqaReport />}
+                                />
+                                <Route
+                                  path="/maqam-report/print/:id"
                                   element={<MaqamReport />}
                                 />
                                 <Route
-                                  path="/division-report/print"
+                                  path="/division-report/print/:id"
                                   element={<DivisionReport />}
                                 />
                                 <Route
-                                  path="/province-report/print"
+                                  path="/province-report/print/:id"
                                   element={<ProvinceReport />}
                                 />
                               </Routes>

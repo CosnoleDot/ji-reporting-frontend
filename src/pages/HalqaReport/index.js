@@ -1,7 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./HalqaReport.css";
+import instance from "../../api/instrance";
+import { useParams } from "react-router-dom";
 export const HalqaReport = () => {
-  const getHalqaReport = () => {};
+  const [data, setData] = useState();
+  const params = useParams();
+  const printReport = async (id) => {
+    const req = await instance.get(`/reports/halqa/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("@token")}`,
+      },
+    });
+    if (req.status === 200) {
+      setData(req?.data?.data);
+    }
+  };
+  useEffect(() => {
+    if (params?.id) printReport(params?.id);
+  }, [params]);
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
   return (
     <div className="table " style={{ marginBottom: "2rem" }} dir="rtl">
       <h3 style={{ textAlign: "center", fontWeight: "bold" }}>
@@ -15,8 +35,12 @@ export const HalqaReport = () => {
           marginBottom: "1rem",
         }}
       >
-        <h4 className="header"> حلقہ کا نام: </h4>
-        <h4 className="header">برآے ماہ:</h4>
+        <h4 className="header">
+          {" "}
+          حلقہ کا نام:{data?.halqaAreaId?.name}
+          {data?.halqaAreaId?.parentType}{" "}
+        </h4>
+        <h4 className="header">برآے ماہ:{data?.month}</h4>
       </div>
 
       <div
@@ -39,9 +63,9 @@ export const HalqaReport = () => {
         <p className="header" style={{ width: "100%" }}>
           <strong>کمی</strong>
         </p>
-        <p className="header" style={{ width: "100%" }}>
+        {/* <p className="header" style={{ width: "100%" }}>
           <strong>اختتام پر</strong>
-        </p>
+        </p> */}
         <p className="header" style={{ width: "100%" }}>
           <strong>سلانہ ہدف</strong>
         </p>
@@ -55,35 +79,35 @@ export const HalqaReport = () => {
       >
         <div className="row">
           <p className="header">ارکان</p>
-          <p>Data 2</p>
-          <p>Data 3</p>
-          <p>Data 3</p>
-          <p>Data 3</p>
-          <p>Data 3</p>
+          <p>{data?.wiId?.arkan?.start}</p>
+          <p>{data?.wiId?.arkan?.increase}</p>
+          <p>{data?.wiId?.arkan?.decrease}</p>
+          <p>{data?.wiId?.arkan?.annual}</p>
+          {/* <p>{data?.wiId?.arkan?.}</p> */}
         </div>
         <div className="row">
           <p className="header">امیدواران </p>
-          <p>Data 2</p>
-          <p>Data 3</p>
-          <p>Data 3</p>
-          <p>Data 3</p>
-          <p>Data 3</p>
+          <p>{data?.wiId?.umeedWaran?.start}</p>
+          <p>{data?.wiId?.umeedWaran?.increase}</p>
+          <p>{data?.wiId?.umeedWaran?.decrease}</p>
+          <p>{data?.wiId?.umeedWaran?.annual}</p>
+          {/* <p>Data 3</p> */}
         </div>
         <div className="row">
           <p className="header">رفقا </p>
-          <p>Data 2</p>
-          <p>Data 3</p>
-          <p>Data 3</p>
-          <p>Data 3</p>
-          <p>Data 3</p>
+          <p>{data?.wiId?.rafaqa?.start}</p>
+          <p>{data?.wiId?.rafaqa?.increase}</p>
+          <p>{data?.wiId?.rafaqa?.decrease}</p>
+          <p>{data?.wiId?.rafaqa?.annual}</p>
+          {/* <p>Data 3</p> */}
         </div>
         <div className="row">
           <p className="header">کارکنان </p>
-          <p>Data 2</p>
-          <p>Data 3</p>
-          <p>Data 3</p>
-          <p>Data 3</p>
-          <p>Data 3</p>
+          <p>{data?.wiId?.karkunan?.start}</p>
+          <p>{data?.wiId?.karkunan?.increase}</p>
+          <p>{data?.wiId?.karkunan?.decrease}</p>
+          <p>{data?.wiId?.karkunan?.annual}</p>
+          {/* <p>Data 3</p> */}
         </div>
       </div>
       <div
@@ -95,13 +119,16 @@ export const HalqaReport = () => {
         }}
       >
         <p className="header" style={{ width: "100%", padding: "8px 5px" }}>
-          <strong>مرکزی طے شدہ سرگرمیاں</strong>
+          <strong> طے شدہ سرگرمیاں</strong>
         </p>
         <p className="header">
           <strong> طے شدہ </strong>
         </p>
         <p className="header">
           <strong>منعقدہ</strong>
+        </p>
+        <p className="header">
+          <strong>اوسط حاضری</strong>
         </p>
         <p className="header">
           <strong>اوسط حاضری</strong>
@@ -116,15 +143,17 @@ export const HalqaReport = () => {
       >
         <div className="row">
           <p className="header">اجتمع کارکنان</p>
-          <p>Data 2</p>
-          <p>Data 3</p>
-          <p>Data 3</p>
+          <p>{data?.halqaActivityId?.ijtKarkunan?.completed}</p>
+          <p>{data?.halqaActivityId?.ijtKarkunan?.decided}</p>
+          <p>{data?.halqaActivityId?.ijtKarkunan?.attendance}</p>
+          <p>{data?.halqaActivityId?.ijtKarkunan?.title}</p>
         </div>
         <div className="row">
           <p className="header">سٹدی سرکل </p>
-          <p>Data 2</p>
-          <p>Data 3</p>
-          <p>Data 3</p>
+          <p>{data?.halqaActivityId?.ijtKarkunan?.completed}</p>
+          <p>{data?.halqaActivityId?.ijtKarkunan?.decided}</p>
+          <p>{data?.halqaActivityId?.ijtKarkunan?.attendance}</p>
+          <p>{data?.halqaActivityId?.ijtKarkunan?.title}</p>
         </div>
         <div className="row">
           <p className="header">اجتمعِ رفقا </p>

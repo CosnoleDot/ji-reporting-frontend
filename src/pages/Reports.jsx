@@ -1,4 +1,4 @@
-import { FaEdit, FaEye, FaPlus } from "react-icons/fa";
+import { FaEdit, FaEye, FaPlus, FaPrint } from "react-icons/fa";
 import { GeneralLayout } from "../components";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router";
@@ -959,6 +959,7 @@ export const Reports = () => {
                             districts
                           )}
                           {" - "}
+                          {obj?.[active + "AreaId"]}
                           {moment(obj?.month).format("MMMM YYYY")}
                         </span>
                         <span>
@@ -985,6 +986,7 @@ export const Reports = () => {
                         <span className="text-lg font-semibold">
                           {obj?.[active + "AreaId"]?.name || "UNKNOWN"}
                           {" - "}
+                          {obj?.[active + "AreaId"]}
                           {obj?.[active + "AreaId"]?.parentId?.name ||
                             "UNKNOWN"}
                           {" - "}
@@ -1013,6 +1015,7 @@ export const Reports = () => {
                       <span className="text-lg font-semibold">
                         {obj?.[active + "AreaId"]?.name || "UNKNOWN"}
                         {" - "}
+                        {obj?.[active + "AreaId"]}
                         {obj?.[active + "AreaId"]?.province?.name || "UNKNOWN"}
                         {" - "}
                         {moment(obj?.month).format("MMMM YYYY")}
@@ -1072,6 +1075,18 @@ export const Reports = () => {
                       onClick={() => editReport(obj?._id)}
                     >
                       <FaEdit />
+                    </button>
+                    <button
+                      className="btn"
+                      onClick={() =>
+                        navigate(
+                          `/${localStorage.getItem("@type")}-report/print/${
+                            obj?._id
+                          }`
+                        )
+                      }
+                    >
+                      <FaPrint />
                     </button>
                   </div>
                 </div>
