@@ -521,6 +521,7 @@ export const Reports = () => {
   }, [active, provinces, maqams, divisions, halqas, tehsils, districts]);
   useEffect(() => {
     if (active === "halqa") getAreaWithType();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAreaType]);
   return (
     <GeneralLayout
@@ -533,7 +534,7 @@ export const Reports = () => {
             Reports
           </h3>
           <dialog id="filter-area-dialog" className="modal">
-            <div className="modal-box h-[300px]">
+            <div className="modal-box min-h-[300px]">
               <form method="dialog" className="mb-3">
                 <button
                   id="filter-area-dialog-close-btn"
@@ -606,8 +607,8 @@ export const Reports = () => {
                 <input
                   id="autocomplete"
                   autoComplete="off"
-                  type="text"
-                  class="input input-bordered input-primary w-full"
+                  type="search"
+                  className="input input-bordered input-primary w-full"
                   placeholder={`Select ${
                     active === "halqa" ? userAreaType : active
                   }`}
@@ -630,7 +631,7 @@ export const Reports = () => {
                 />
                 <div
                   id="autocomplete-list"
-                  class="absolute z-10 hidden max-h-[100px] overflow-y-scroll bg-white border border-gray-300 w-full mt-1"
+                  className="absolute z-10 hidden max-h-[100px] overflow-y-scroll bg-white border border-gray-300 w-full mt-1"
                 >
                   {areas
                     .sort((a, b) => a?.name?.localeCompare(b?.name))
@@ -926,6 +927,18 @@ export const Reports = () => {
             </Link>
           </div>
         )}
+        {["umeedwar", "rukan", "umeedwaar-nazim", "rukan-nazim"].includes(
+          me?.nazimType
+        ) && (
+          <Link
+            to={"/personalReports"}
+            role="tab"
+            className={`tab w-full ${tab === "personal" ? "tab-active" : ""}`}
+            onClick={() => setTab("personal")}
+          >
+            Personal
+          </Link>
+        )}
         <div className="relative overflow-y-scroll gap-3 w-full items-center p-5 justify-center h-[calc(100vh-65.6px-64px-48px)]">
           {userType !== "halqa" ? (
             filterAllData[active]?.length < 1 ? (
@@ -952,7 +965,9 @@ export const Reports = () => {
                     >
                       <div className="flex w-full flex-col items-start justify-center">
                         <span className="text-lg font-semibold">
-                          {obj?.[active + "AreaId"]?.name || "UNKNOWN"}
+                          {(active !== "province" &&
+                            obj?.[active + "AreaId"]?.name) ||
+                            "UNKNOWN"}
                           {" - "}
                           {getDivisionByTehsil(
                             obj?.[active + "AreaId"]?.parentId,
@@ -985,7 +1000,8 @@ export const Reports = () => {
                         <span className="text-lg font-semibold">
                           {obj?.[active + "AreaId"]?.name || "UNKNOWN"}
                           {" - "}
-                          {obj?.[active + "AreaId"]?.parentId?.name ||
+                          {(active !== "province" &&
+                            obj?.[active + "AreaId"]?.parentId?.name) ||
                             "UNKNOWN"}
                           {" - "}
                           {moment(obj?.month).format("MMMM YYYY")}
@@ -1013,7 +1029,9 @@ export const Reports = () => {
                       <span className="text-lg font-semibold">
                         {obj?.[active + "AreaId"]?.name || "UNKNOWN"}
                         {" - "}
-                        {obj?.[active + "AreaId"]?.province?.name || "UNKNOWN"}
+                        {(active !== "province" &&
+                          obj?.[active + "AreaId"]?.province?.name) ||
+                          "UNKNOWN"}
                         {" - "}
                         {moment(obj?.month).format("MMMM YYYY")}
                       </span>

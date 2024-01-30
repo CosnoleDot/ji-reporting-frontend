@@ -23,6 +23,7 @@ export const InputWithLabel = ({
           name={name}
           id={id}
           rows={1}
+          value={value || ""}
         ></textarea>
       </>
     );
