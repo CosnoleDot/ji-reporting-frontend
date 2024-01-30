@@ -11,25 +11,28 @@ export const RegularStudents = () => {
             // readOnly={view}
             placeholder={"..."}
             label={"کتنی عام طلبہ سے ملاقاتیں کیں"}
-            id={"totalStudents"}
-            name={"totalStudents"}
-            type={"text"}
+            id={"genralStudentsCount"}
+            name={"genralStudentsCount"}
+            type={"number"}
+            required={true}
           />
           <InputWithLabel
             // readOnly={view}
             placeholder={"..."}
             label={" عام طلبہ سے کل کتنی ملاقاتیں کیں"}
-            id={"totalMeetups"}
-            name={"totalMeetups"}
-            type={"text"}
+            id={"genralStudentsTotalMeetups"}
+            name={"genralStudentsTotalMeetups"}
+            type={"number"}
+            required={true}
           />
           <InputWithLabel
             // readOnly={view}
             placeholder={"..."}
             label={" عام طلبہ میں کتنا لیٹریچرتقسیم کیا"}
-            id={"totalLitrature"}
-            name={"totalLitrature"}
-            type={"text"}
+            id={"genralStudentsTotalLitratureDivided"}
+            name={"genralStudentsTotalLitratureDivided"}
+            type={"number"}
+            required={true}
           />
         </div>
       </div>

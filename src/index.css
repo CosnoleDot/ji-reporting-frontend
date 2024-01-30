@@ -2262,6 +2262,12 @@ html {
   margin-top: 0;
 }
 
+.mockup-phone .display {
+  overflow: hidden;
+  border-radius: 40px;
+  margin-top: -25px;
+}
+
 .mockup-browser .mockup-browser-toolbar .input {
   position: relative;
   margin-left: auto;
@@ -3644,6 +3650,10 @@ html {
   height: 100vh;
 }
 
+.h-\[350px\] {
+  height: 350px;
+}
+
 .max-h-56 {
   max-height: 14rem;
 }
@@ -3662,6 +3672,10 @@ html {
 
 .min-h-screen {
   min-height: 100vh;
+}
+
+.min-h-\[300px\] {
+  min-height: 300px;
 }
 
 .w-12 {
@@ -3976,9 +3990,19 @@ html {
   border-color: hsl(var(--p) / var(--tw-border-opacity));
 }
 
+.border-slate-600 {
+  --tw-border-opacity: 1;
+  border-color: rgb(71 85 105 / var(--tw-border-opacity));
+}
+
 .bg-\[\#cacaca\] {
   --tw-bg-opacity: 1;
   background-color: rgb(202 202 202 / var(--tw-bg-opacity));
+}
+
+.bg-\[\#ddd\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(221 221 221 / var(--tw-bg-opacity));
 }
 
 .bg-\[\#eee\] {
@@ -4064,6 +4088,31 @@ html {
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.bg-\[\#ffd\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 221 / var(--tw-bg-opacity));
+}
+
+.bg-\[\#00d\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 0 221 / var(--tw-bg-opacity));
+}
+
+.bg-\[\#001\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 0 17 / var(--tw-bg-opacity));
+}
+
+.bg-\[\#c1c1eb\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(193 193 235 / var(--tw-bg-opacity));
+}
+
+.bg-\[\#B2D5FF\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(178 213 255 / var(--tw-bg-opacity));
 }
 
 .bg-none {
@@ -4222,6 +4271,10 @@ html {
   font-weight: 700;
 }
 
+.font-medium {
+  font-weight: 500;
+}
+
 .font-normal {
   font-weight: 400;
 }
@@ -4332,6 +4385,10 @@ html {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
+.underline {
+  text-decoration-line: underline;
+}
+
 .opacity-0 {
   opacity: 0;
 }
@@ -4426,6 +4483,23 @@ html {
 
 .ease-in {
   transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
+}
+
+@font-face {
+  font-family: urdu;
+
+  src: url("../public/fonts/font.ttf");
+}
+
+.containerPrint {
+  width: 210mm;
+  font-family: urdu;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
 }
 
 ::-webkit-scrollbar {
