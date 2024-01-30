@@ -19,9 +19,7 @@ export const HalqaReport = () => {
   useEffect(() => {
     if (params?.id) printReport(params?.id);
   }, [params]);
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+
   return (
     <div className="table " style={{ marginBottom: "2rem" }} dir="rtl">
       <h3 style={{ textAlign: "center", fontWeight: "bold" }}>
@@ -35,12 +33,13 @@ export const HalqaReport = () => {
           marginBottom: "1rem",
         }}
       >
-        <h4 className="header">
-          {" "}
-          حلقہ کا نام:{data?.halqaAreaId?.name}
+        <h4 className="header"> حلقہ کا نام:</h4>
+        <h6>
+          {data?.halqaAreaId?.name}
           {data?.halqaAreaId?.parentType}{" "}
-        </h4>
-        <h4 className="header">برآے ماہ:{data?.month}</h4>
+        </h6>
+        <h4 className="header">برآے ماہ:</h4>
+        <h6>{data?.month}</h6>
       </div>
 
       <div
@@ -150,22 +149,24 @@ export const HalqaReport = () => {
         </div>
         <div className="row">
           <p className="header">سٹدی سرکل </p>
-          <p>{data?.halqaActivityId?.ijtKarkunan?.completed}</p>
-          <p>{data?.halqaActivityId?.ijtKarkunan?.decided}</p>
-          <p>{data?.halqaActivityId?.ijtKarkunan?.attendance}</p>
-          <p>{data?.halqaActivityId?.ijtKarkunan?.title}</p>
+          <p>{data?.halqaActivityId?.studyCircle?.completed}</p>
+          <p>{data?.halqaActivityId?.studyCircle?.decided}</p>
+          <p>{data?.halqaActivityId?.studyCircle?.attendance}</p>
+          <p>{data?.halqaActivityId?.studyCircle?.title}</p>
         </div>
         <div className="row">
           <p className="header">اجتمعِ رفقا </p>
-          <p>Data 2</p>
-          <p>Data 3</p>
-          <p>Data 3</p>
+          <p>{data?.halqaActivityId?.ijtRafaqa?.completed}</p>
+          <p>{data?.halqaActivityId?.ijtRafaqa?.decided}</p>
+          <p>{data?.halqaActivityId?.ijtRafaqa?.attendance}</p>
+          <p>{data?.halqaActivityId?.ijtRafaqa?.title}</p>
         </div>
         <div className="row">
           <p className="header">درسِ قرآن </p>
-          <p>Data 2</p>
-          <p>Data 3</p>
-          <p>Data 3</p>
+          <p>{data?.halqaActivityId?.darseQuran?.completed}</p>
+          <p>{data?.halqaActivityId?.darseQuran?.decided}</p>
+          <p>{data?.halqaActivityId?.darseQuran?.attendance}</p>
+          <p>{data?.halqaActivityId?.darseQuran?.title}</p>
         </div>
       </div>
 
@@ -182,11 +183,22 @@ export const HalqaReport = () => {
           marginBottom: "1rem",
         }}
       >
-        <h6 style={{ width: "100%", textAlign: "start" }}>دعوتی وفود:</h6>
-        <h6 style={{ width: "100%", textAlign: "start" }}>روابط پارٹیز:</h6>
-        <h6 style={{ width: "100%", textAlign: "start" }}>شب بیداری:</h6>
-        <h6 style={{ width: "100%", textAlign: "start" }}> حدیث سرکل:</h6>
-        <h6 style={{ width: "100%", textAlign: "start" }}>نِطام الصلوۃ:</h6>
+        <h6 style={{ width: "100%", textAlign: "start" }}>
+          دعوتی وفود:{data?.otherActivityId?.dawatiWafud}
+        </h6>
+        <h6 style={{ width: "100%", textAlign: "start" }}>
+          روابط پارٹیز:{data?.otherActivityId?.rawabitParties}
+        </h6>
+        <h6 style={{ width: "100%", textAlign: "start" }}>
+          شب بیداری:{data?.otherActivityId?.shabBedari}
+        </h6>
+        <h6 style={{ width: "100%", textAlign: "start" }}>
+          {" "}
+          حدیث سرکل:{data?.otherActivityId?.hadithCircle}
+        </h6>
+        <h6 style={{ width: "100%", textAlign: "start" }}>
+          نِطام الصلوۃ:{data?.otherActivityId?.nizamSalah}
+        </h6>
       </div>
       <div
         style={{
@@ -199,7 +211,7 @@ export const HalqaReport = () => {
         }}
       >
         <h3>کوئی اور سرگرمی</h3>
-        <h6></h6>
+        <h6>{data?.otherActivityId?.anyOther}</h6>
       </div>
       <div
         style={{
@@ -222,10 +234,21 @@ export const HalqaReport = () => {
             width: "100%",
           }}
         >
-          <h6 style={{ width: "100%", textAlign: "start" }}> طے شدہ:</h6>
-          <h6 style={{ width: "100%", textAlign: "start" }}>موجودہ :</h6>
-          <h6 style={{ width: "100%", textAlign: "start" }}> ملاقاتیں:</h6>
-          <h6 style={{ width: "100%", textAlign: "start" }}> تقسیم لٹریچر:</h6>
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+            {" "}
+            طے شدہ:{data?.tdId?.rawabitDecided}{" "}
+          </h6>
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+            موجودہ :{data?.tdId?.current}
+          </h6>
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+            {" "}
+            ملاقاتیں:{data?.tdId?.meetings}
+          </h6>
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+            {" "}
+            تقسیم لٹریچر:{data?.tdId?.literatureDistribution}
+          </h6>
         </div>
         <h3 style={{ textAlign: "start", fontWeight: "bold" }}>عام طلبہ</h3>
         <div
@@ -237,8 +260,14 @@ export const HalqaReport = () => {
             width: "100%",
           }}
         >
-          <h6 style={{ width: "100%", textAlign: "start" }}> ملاقاتیں:</h6>
-          <h6 style={{ width: "100%", textAlign: "start" }}> تقسیم لٹریچر:</h6>
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+            {" "}
+            ملاقاتیں:{data?.tdId?.commonStudentMeetings}
+          </h6>
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+            {" "}
+            تقسیم لٹریچر:{data?.tdId?.commonLiteratureDistribution}
+          </h6>
         </div>
         <h3 style={{ textAlign: "start", fontWeight: "bolder" }}>لائبریری </h3>
         <div
@@ -250,11 +279,22 @@ export const HalqaReport = () => {
             width: "100%",
           }}
         >
-          <h6 style={{ width: "100%", textAlign: "start" }}>تعداد کتب :</h6>
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+            تعداد کتب :{data?.halqaLibId?.books}
+          </h6>
 
-          <h6 style={{ width: "100%", textAlign: "start" }}> اضافہ :</h6>
-          <h6 style={{ width: "100%", textAlign: "start" }}> کمی :</h6>
-          <h6 style={{ width: "100%", textAlign: "start" }}> اجرآے کتب :</h6>
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+            {" "}
+            اضافہ :{data?.halqaLibId?.increase}
+          </h6>
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+            {" "}
+            کمی :{data?.halqaLibId?.decrease}
+          </h6>
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+            {" "}
+            اجرآے کتب :{data?.halqaLibId?.bookRent}
+          </h6>
         </div>
 
         <h3 style={{ textAlign: "start", fontWeight: "bolder" }}>
@@ -270,13 +310,13 @@ export const HalqaReport = () => {
           }}
         >
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            کتنے امیدوران فل کرتے ہیں :
+            کتنے امیدوران فل کرتے ہیں :{data?.rsdId?.umeedwaranFilled}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            کتنے ارکان فل کرتے ہیں :
+            کتنے ارکان فل کرتے ہیں :{data?.rsdId?.arkanFilled}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            کتنےرفقا فل کرتے ہیں :
+            کتنےرفقا فل کرتے ہیں :{data?.rsdId?.rafaqaFilled}
           </h6>
         </div>
         <div
@@ -290,7 +330,7 @@ export const HalqaReport = () => {
           }}
         >
           <h3 style={{ fontWeight: "bolder" }}> تبصرہ </h3>
-          <h6></h6>
+          <h6>{data?.comments}</h6>
         </div>
       </div>
     </div>

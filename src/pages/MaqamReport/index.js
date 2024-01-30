@@ -1,6 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./MaqamReport.css";
+import { useParams } from "react-router-dom";
+import instance from "../../api/instrance";
+
 export const MaqamReport = () => {
+  const [data, setData] = useState();
+  const params = useParams();
+  const printReport = async (id) => {
+    const req = await instance.get(`/reports/maqam/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("@token")}`,
+      },
+    });
+    if (req.status === 200) {
+      setData(req?.data?.data);
+    }
+  };
+  useEffect(() => {
+    if (params?.id) printReport(params?.id);
+  }, [params]);
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
   return (
     <div className="table " style={{ marginBottom: "2rem" }} dir="rtl">
       <h3 style={{ textAlign: "center", fontWeight: "bold" }}>
@@ -14,8 +36,13 @@ export const MaqamReport = () => {
           marginBottom: "1rem",
         }}
       >
-        <h4 className="header">نام: </h4>
+        <h4 className="header"> حلقہ کا نام:</h4>
+        <h6>
+          {data?.halqaAreaId?.name}
+          {data?.halqaAreaId?.parentType}{" "}
+        </h6>
         <h4 className="header">برآے ماہ:</h4>
+        <h6>{data?.month}</h6>
       </div>
       <div
         style={{

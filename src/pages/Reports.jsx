@@ -959,7 +959,6 @@ export const Reports = () => {
                             districts
                           )}
                           {" - "}
-                          {obj?.[active + "AreaId"]}
                           {moment(obj?.month).format("MMMM YYYY")}
                         </span>
                         <span>
@@ -986,7 +985,6 @@ export const Reports = () => {
                         <span className="text-lg font-semibold">
                           {obj?.[active + "AreaId"]?.name || "UNKNOWN"}
                           {" - "}
-                          {obj?.[active + "AreaId"]}
                           {obj?.[active + "AreaId"]?.parentId?.name ||
                             "UNKNOWN"}
                           {" - "}
@@ -1015,7 +1013,6 @@ export const Reports = () => {
                       <span className="text-lg font-semibold">
                         {obj?.[active + "AreaId"]?.name || "UNKNOWN"}
                         {" - "}
-                        {obj?.[active + "AreaId"]}
                         {obj?.[active + "AreaId"]?.province?.name || "UNKNOWN"}
                         {" - "}
                         {moment(obj?.month).format("MMMM YYYY")}
