@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { InputWithLabel } from "../../InputWithLabel";
 const rbt1 = [
   {
@@ -48,7 +48,6 @@ export const Rawabit1 = ({
 
   const handleAddProgram = (e) => {
     e.preventDefault();
-    console.log(rbt1Programs);
     setRbt1Programs([...rbt1Programs, programName1]);
     setProgramName1("");
     document.getElementById("p-dialog").close();
@@ -111,7 +110,7 @@ export const Rawabit1 = ({
               rbt1Programs.length > 0 &&
               rbt1Programs.map((p, index) => (
                 <p
-                  className="input underline underline-bg-slate-200"
+                  className="input underline decoration-dotted underline-bg-slate-200"
                   key={index}
                   readOnly={view}
                 >
@@ -126,6 +125,7 @@ export const Rawabit1 = ({
                 <input
                   key={index}
                   className="input border-slate-600 p-4"
+                  defaultValue={l}
                   placeholder={rbt1Programs[index] || ""}
                   onChange={(e) => {
                     const updatedPrograms = [...rbt1Programs];

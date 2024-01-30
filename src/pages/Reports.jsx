@@ -22,7 +22,6 @@ import { Link } from "react-router-dom";
 import { FaRegFileExcel } from "react-icons/fa";
 import { AiFillBell } from "react-icons/ai";
 import { UIContext } from "../context/ui";
-import { TbReport } from "react-icons/tb";
 
 const NoReports = () => (
   <div className="card-body flex flex-col items-center justify-center w-full p-5 mb-1 rounded-xl">
@@ -522,6 +521,7 @@ export const Reports = () => {
   }, [active, provinces, maqams, divisions, halqas, tehsils, districts]);
   useEffect(() => {
     if (active === "halqa") getAreaWithType();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAreaType]);
   return (
     <GeneralLayout
@@ -534,7 +534,7 @@ export const Reports = () => {
             Reports
           </h3>
           <dialog id="filter-area-dialog" className="modal">
-            <div className="modal-box h-[300px]">
+            <div className="modal-box min-h-[300px]">
               <form method="dialog" className="mb-3">
                 <button
                   id="filter-area-dialog-close-btn"
@@ -607,8 +607,8 @@ export const Reports = () => {
                 <input
                   id="autocomplete"
                   autoComplete="off"
-                  type="text"
-                  class="input input-bordered input-primary w-full"
+                  type="search"
+                  className="input input-bordered input-primary w-full"
                   placeholder={`Select ${
                     active === "halqa" ? userAreaType : active
                   }`}
@@ -631,7 +631,7 @@ export const Reports = () => {
                 />
                 <div
                   id="autocomplete-list"
-                  class="absolute z-10 hidden max-h-[100px] overflow-y-scroll bg-white border border-gray-300 w-full mt-1"
+                  className="absolute z-10 hidden max-h-[100px] overflow-y-scroll bg-white border border-gray-300 w-full mt-1"
                 >
                   {areas
                     .sort((a, b) => a?.name?.localeCompare(b?.name))

@@ -515,7 +515,8 @@ export const Signup = () => {
             <input type="hidden" name="userAreaId" id="userAreaId" />
             <input
               id="autocomplete"
-              type="text"
+              type="search"
+              autoComplete="off"
               class="input input-bordered input-primary w-full"
               placeholder="Select area"
               onChange={(e) => setSearchArea(e.target.value)}

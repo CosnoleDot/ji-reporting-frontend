@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { InputWithLabel } from "../../InputWithLabel";
 const rbt2 = [
   {
@@ -125,6 +125,7 @@ export const Rawabit2 = ({
               programsList?.[1]?.map((l, index) => (
                 <input
                   key={index}
+                  defaultValue={l}
                   className="input border-slate-600 p-4"
                   placeholder={rbt2Programs[index] || ""}
                   onChange={(e) => {
