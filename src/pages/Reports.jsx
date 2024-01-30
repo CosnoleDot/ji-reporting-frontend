@@ -22,6 +22,7 @@ import { Link } from "react-router-dom";
 import { FaRegFileExcel } from "react-icons/fa";
 import { AiFillBell } from "react-icons/ai";
 import { UIContext } from "../context/ui";
+import { TbReport } from "react-icons/tb";
 
 const NoReports = () => (
   <div className="card-body flex flex-col items-center justify-center w-full p-5 mb-1 rounded-xl">
@@ -926,6 +927,18 @@ export const Reports = () => {
             </Link>
           </div>
         )}
+        {["umeedwar", "rukan", "umeedwaar-nazim", "rukan-nazim"].includes(
+          me?.nazimType
+        ) && (
+          <Link
+            to={"/personalReports"}
+            role="tab"
+            className={`tab w-full ${tab === "personal" ? "tab-active" : ""}`}
+            onClick={() => setTab("personal")}
+          >
+            Personal
+          </Link>
+        )}
         <div className="relative overflow-y-scroll gap-3 w-full items-center p-5 justify-center h-[calc(100vh-65.6px-64px-48px)]">
           {userType !== "halqa" ? (
             filterAllData[active]?.length < 1 ? (
@@ -952,7 +965,9 @@ export const Reports = () => {
                     >
                       <div className="flex w-full flex-col items-start justify-center">
                         <span className="text-lg font-semibold">
-                          {obj?.[active + "AreaId"]?.name || "UNKNOWN"}
+                          {(active !== "province" &&
+                            obj?.[active + "AreaId"]?.name) ||
+                            "UNKNOWN"}
                           {" - "}
                           {getDivisionByTehsil(
                             obj?.[active + "AreaId"]?.parentId,
@@ -985,7 +1000,8 @@ export const Reports = () => {
                         <span className="text-lg font-semibold">
                           {obj?.[active + "AreaId"]?.name || "UNKNOWN"}
                           {" - "}
-                          {obj?.[active + "AreaId"]?.parentId?.name ||
+                          {(active !== "province" &&
+                            obj?.[active + "AreaId"]?.parentId?.name) ||
                             "UNKNOWN"}
                           {" - "}
                           {moment(obj?.month).format("MMMM YYYY")}
@@ -1013,7 +1029,9 @@ export const Reports = () => {
                       <span className="text-lg font-semibold">
                         {obj?.[active + "AreaId"]?.name || "UNKNOWN"}
                         {" - "}
-                        {obj?.[active + "AreaId"]?.province?.name || "UNKNOWN"}
+                        {(active !== "province" &&
+                          obj?.[active + "AreaId"]?.province?.name) ||
+                          "UNKNOWN"}
                         {" - "}
                         {moment(obj?.month).format("MMMM YYYY")}
                       </span>

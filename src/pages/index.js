@@ -8,3 +8,4 @@ export * from "./DeleteUser";
 export * from "./Division";
 export * from "./LoadingScreen";
 export * from "./UmeedWarNazim";
+export * from "./PersonalReportsDashboard";

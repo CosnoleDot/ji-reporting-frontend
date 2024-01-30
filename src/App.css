@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: urdu;
+  src: url("../public/fonts/font.ttf");
+}
+
+.containerPrint {
+  width: 210mm;
+  font-family: urdu;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
 ::-webkit-scrollbar {
   width: 5px;
 }

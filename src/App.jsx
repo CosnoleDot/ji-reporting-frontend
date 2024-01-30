@@ -16,6 +16,7 @@ import {
   LoadingScreen,
   Locations,
   Maqam,
+  PersonalReportsDashboard,
   Province,
   UmeedWarNazim,
 } from "./pages";
@@ -37,7 +38,7 @@ import {
 } from "./context";
 import { UIContext } from "./context/ui";
 import { Loader } from "./components";
-
+import { ArkanReport } from "./pages/ArkanReport";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -634,10 +635,25 @@ function App() {
                                   element={<DeleteUser />}
                                 />
                                 <Route
-                                  path="/umeedwar-nazim"
+                                  path="/umeedwar-nazim/create"
                                   element={<UmeedWarNazim />}
                                 />
-                            
+                                <Route
+                                  path="/personalReports/view/:id"
+                                  element={<UmeedWarNazim />}
+                                />
+                                <Route
+                                  path="/personalReports/edit/:id"
+                                  element={<UmeedWarNazim />}
+                                />
+                                <Route
+                                  path="personalReports"
+                                  element={<PersonalReportsDashboard />}
+                                />
+                                <Route
+                                  path="personalReports/print/:id"
+                                  element={<ArkanReport />}
+                                />
                               </Routes>
                               <LoadingScreen count={count} value={value} />
                               {loading && <Loader />}

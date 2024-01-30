@@ -5,6 +5,7 @@ import { CiLocationOn } from "react-icons/ci";
 import { FaUsersGear } from "react-icons/fa6";
 import { useContext } from "react";
 import { UIContext } from "../context/ui";
+import { TbReport } from "react-icons/tb";
 
 export const BottomNav = ({ active }) => {
   const { isCompleted } = useContext(UIContext);

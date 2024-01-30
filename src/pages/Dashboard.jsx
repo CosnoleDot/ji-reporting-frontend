@@ -388,9 +388,9 @@ export const Dashboard = () => {
       </div>
       <dialog id="filter_filled_unfilled_modal" className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Filter Data</h3>
+          <h3 className="font-bold text-lg mb-3">Filter Data</h3>
           <div className="w-full  flex justify-between items-center  flex-wrap">
-            <div className="flex flex-col w-full justify-start items-center gap-3">
+            <div className="flex flex-col w-full justify-start items-center gap-3 mb-3">
               <div className=" w-full flex items-center justify-start gap-2 border border-primary p-2 rounded-lg">
                 <div className="form-control">
                   <label className="label cursor-pointer gap-2">
@@ -445,7 +445,7 @@ export const Dashboard = () => {
                     id="autocomplete"
                     type="text"
                     autoComplete="off"
-                    class="input  input-bordered input-primary w-full"
+                    class="input  input-bordered input-primary w-full  mb-3"
                     placeholder="Select area"
                     onChange={(e) => setSearchArea(e.target.value)}
                     onClick={() => {

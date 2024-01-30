@@ -196,7 +196,11 @@ export const Comparision = () => {
     try {
       const res = await instance.post(
         `comparison/${
-          reportType === "self" ? localStorage.getItem("@type") : reportType
+          reportType === "self"
+            ? localStorage.getItem("@type")
+            : reportType === "personal"
+            ? "personal"
+            : reportType
         }/${selectedProperty}`,
         data,
         {
@@ -235,6 +239,15 @@ export const Comparision = () => {
                 <option value="maqam">Maqam</option>
                 <option value="division">Division</option>
                 <option value="province">Province</option>
+                {[
+                  "umeedwar",
+                  "rukan",
+                  "umeedwaar-nazim",
+                  "rukan-nazim",
+                ].includes(me?.nazimType) ||
+                  (localStorage.getItem("@type") === "province" && (
+                    <option value="personal">Personal</option>
+                  ))}
               </>
             )}
             {/* <option value='self'>Self Compare</option> */}
@@ -263,19 +276,36 @@ export const Comparision = () => {
             <option value="" disabled>
               Property
             </option>
-            <option value={"activities"}>Activity</option>
-            <option value={"workerInfo"}>Ifradi Kuwat</option>
-            <option value={"library"}>Library</option>
-            <option value={"otherAcitvity"}>Other Activity</option>
-            <option value={"toseeDawat"}>Tosee Dawat</option>
-            <option value={"rozShabBedari"}>Shab Bedari</option>
-            <option value={"paighamDigest"}>Paigham Digest</option>
-            {["maqam", "division", "province"].includes(reportType) && (
+            {reportType !== "personal" && (
               <>
-                <option value={"tanzeem"}>Tanzeem</option>
-                <option value={"mentionedActivities"}>Zaili Activities</option>
+                {" "}
+                <option value={"activities"}>Activity</option>
+                <option value={"workerInfo"}>Ifradi Kuwat</option>
+                <option value={"library"}>Library</option>
+                <option value={"otherAcitvity"}>Other Activity</option>
+                <option value={"toseeDawat"}>Tosee Dawat</option>
+                <option value={"rozShabBedari"}>Shab Bedari</option>
+                <option value={"paighamDigest"}>Paigham Digest</option>
+                {["maqam", "division", "province"].includes(reportType) && (
+                  <>
+                    <option value={"tanzeem"}>Tanzeem</option>
+                    <option value={"mentionedActivities"}>
+                      Zaili Activities
+                    </option>
+                  </>
+                )}
               </>
             )}
+            {["umeedwar", "rukan", "umeedwaar-nazim", "rukan-nazim"].includes(
+              me?.nazimType
+            ) ||
+              (localStorage.getItem("@type") === "province" && (
+                <>
+                  <option value={"prayers"}> Prayers</option>
+                  <option value={"studies"}> Mutalajaat</option>
+                  <option value={"toseeDawa"}>ToseeDawat</option>
+                </>
+              ))}
           </select>
           <select
             value={durationType}
@@ -293,7 +323,6 @@ export const Comparision = () => {
               if (
                 durationType !== "" &&
                 reportType !== "" &&
-                areaId !== "" &&
                 selectedProperty !== ""
               )
                 showDates(true);

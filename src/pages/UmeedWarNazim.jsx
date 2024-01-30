@@ -3,7 +3,7 @@ import { ReportUmeedwar } from "../components";
 
 export const UmeedWarNazim = () => {
   return (
-    <div >
+    <div className="w-full">
       <ReportUmeedwar />
     </div>
   );
