@@ -277,16 +277,15 @@ export const Comparision = () => {
             </option>
             {reportType !== "personal" && (
               <>
-                {" "}
                 <option value={"activities"}>Activity</option>
                 <option value={"workerInfo"}>Ifradi Kuwat</option>
                 <option value={"library"}>Library</option>
-                <option value={"otherAcitvity"}>Other Activity</option>
+                <option value={"otherActivity"}>Other Activity</option>
                 <option value={"toseeDawat"}>Tosee Dawat</option>
                 <option value={"rozShabBedari"}>Shab Bedari</option>
-                <option value={"paighamDigest"}>Paigham Digest</option>
                 {["maqam", "division", "province"].includes(reportType) && (
                   <>
+                    <option value={"paighamDigest"}>Paigham Digest</option>
                     <option value={"tanzeem"}>Tanzeem</option>
                     <option value={"mentionedActivities"}>
                       Zaili Activities
@@ -297,13 +296,14 @@ export const Comparision = () => {
             )}
             {["umeedwar", "rukan", "umeedwaar-nazim", "rukan-nazim"].includes(
               me?.nazimType
-            ) && (
-              <>
-                <option value={"prayers"}> Prayers</option>
-                <option value={"studies"}> Mutalajaat</option>
-                <option value={"toseeDawa"}>ToseeDawat</option>
-              </>
-            )}
+            ) &&
+              reportType === "personal" && (
+                <>
+                  <option value={"prayers"}> Prayers</option>
+                  <option value={"studies"}> Mutalajaat</option>
+                  <option value={"toseeDawa"}>ToseeDawat</option>
+                </>
+              )}
           </select>
           <select
             value={durationType}

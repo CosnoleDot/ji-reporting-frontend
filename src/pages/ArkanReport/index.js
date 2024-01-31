@@ -17,18 +17,11 @@ export const ArkanReport = () => {
     // var print = false;
     if (req.status === 200) {
       setData(req?.data?.data);
-      // if (!print) {
-      //   setTimeout(() => {
-      //     window.print();
-      //     window.close();
-      //   }, 500);
-      // }
     }
   };
   useEffect(() => {
     if (params?.id) printReport(params?.id);
   }, [params]);
-  console.log(data);
   return (
     <div className="containerPrint" dir="rtl">
       <h1>رپورٹ خاکہ</h1>
@@ -48,7 +41,7 @@ export const ArkanReport = () => {
           style={{ border: "none", borderBottom: "1px dotted black" }}
           readonly
         >
-          {data?.month}
+          {data?.month.split("T")[0]}
         </p>
       </div>
       <div
@@ -98,7 +91,9 @@ export const ArkanReport = () => {
             readonly
             id="JamiatRelation"
             name="JamiatRelation"
-          ></p>
+          >
+            {data?.JamiatRelation}
+          </p>
         </div>
         <div
           style={{
@@ -796,8 +791,9 @@ export const ArkanReport = () => {
         style={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "space-between",
+          justifyContent: "flex-start",
           width: "100%",
+          gap: "20px",
         }}
       >
         {data?.toseeDawaId?.rawabit[0]?.programs?.map((program, index) => (
@@ -966,8 +962,9 @@ export const ArkanReport = () => {
         style={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "space-between",
+          justifyContent: "flex-start",
           width: "100%",
+          gap: "20px",
         }}
       >
         {data?.toseeDawaId?.rawabit[1]?.programs?.map((program, index) => (
@@ -1136,8 +1133,9 @@ export const ArkanReport = () => {
         style={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "space-between",
+          justifyContent: "flex-start",
           width: "100%",
+          gap: "20px",
         }}
       >
         {data?.toseeDawaId?.rawabit[2]?.programs?.map((program, index) => (
@@ -1266,7 +1264,7 @@ export const ArkanReport = () => {
           style={{ borderBottom: "1px dotted black", width: "200px" }}
           id="month"
         >
-          ...
+          {data?.createdAt.split("T")[0]}
         </p>
       </div>
     </div>

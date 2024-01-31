@@ -16,12 +16,12 @@ export const DivisionReport = () => {
       setData(req?.data?.data);
     }
   };
-  console.log(data);
+
   useEffect(() => {
     if (params?.id) printReport(params?.id);
   }, [params]);
   return (
-    <div className="table " style={{ marginBottom: "2rem" }} dir="rtl">
+    <div className="wrapper" style={{ marginBottom: "2rem" }} dir="rtl">
       <h3 style={{ textAlign: "center", fontWeight: "bold" }}>
         جائزہ کارکردگی رپورت برآے ڈویژن
       </h3>
@@ -32,8 +32,11 @@ export const DivisionReport = () => {
           alignItems: "center",
           marginBottom: "1rem",
         }}
+        className="tableContainer"
       >
-        <h4 className="header">ڈویژن کا نام: </h4>
+        <h4 className="header" style={{ width: "10rem" }}>
+          ڈویژن کا نام:
+        </h4>
         <h6>
           {data?.divisionAreaId?.name}- ({data?.divisionAreaId?.province?.name})
         </h6>
@@ -47,6 +50,7 @@ export const DivisionReport = () => {
           alignItems: "center",
           width: "100%",
         }}
+        className="tableContainer"
       >
         <p className="header" style={{ width: "100%" }}>
           <strong>تنظیم</strong>
@@ -73,6 +77,7 @@ export const DivisionReport = () => {
           flexDirection: "column",
           marginBottom: "2rem",
         }}
+        className="tableContainer"
       >
         <div className="row">
           <p className="header">رہاشی حلقے</p>
@@ -124,9 +129,7 @@ export const DivisionReport = () => {
         </div>
 
         <div className="row">
-          <p className="header" style={{ fontSize: "12px" }}>
-            بزم کے سکول یونٹس
-          </p>
+          <p className="header">بزم کے سکول یونٹس</p>
           <p>{data?.maqamTanzeemId?.busmSchoolUnits?.start}</p>
           <p>{data?.maqamTanzeemId?.busmSchoolUnits?.increase}</p>
           <p>{data?.maqamTanzeemId?.busmSchoolUnits?.decrease}</p>
@@ -157,6 +160,7 @@ export const DivisionReport = () => {
           alignItems: "center",
           width: "100%",
         }}
+        className="tableContainer"
       >
         <p className="header" style={{ width: "100%", padding: "8px 5px" }}>
           <strong>افرادی قوت</strong>
@@ -183,6 +187,7 @@ export const DivisionReport = () => {
           flexDirection: "column",
           marginBottom: "2rem",
         }}
+        className="tableContainer"
       >
         <div className="row">
           <p className="header">ارکان</p>
@@ -263,6 +268,7 @@ export const DivisionReport = () => {
           flexDirection: "column",
           marginBottom: "2rem",
         }}
+        className="tableContainer"
       >
         <div className="row">
           <p className="header">سٹدی سرکل </p>
@@ -334,6 +340,7 @@ export const DivisionReport = () => {
           flexDirection: "column",
           marginBottom: "2rem",
         }}
+        className="tableContainer"
       >
         <div className="row">
           <p className="header">اجتمع رفقا</p>
@@ -384,6 +391,7 @@ export const DivisionReport = () => {
           alignItems: "center",
           marginBottom: "1rem",
         }}
+        className="tableContainer"
       >
         <h6 style={{ width: "100%", textAlign: "start" }}>
           تربیت گاہ:{data?.otherActivityId?.tarbiyatGaah}
@@ -410,6 +418,7 @@ export const DivisionReport = () => {
           flexDirection: "column",
           gap: "10px",
         }}
+        className="tableContainer"
       >
         <h3>کوئی اور سرگرمی:</h3>
         <h6>{data?.otherActivityId?.anyOther}</h6>
@@ -423,6 +432,7 @@ export const DivisionReport = () => {
           flexDirection: "column",
           gap: "10px",
         }}
+        className="tableContainer"
       >
         <h3 style={{ textAlign: "start", fontWeight: "bolder" }}>توسیع دعوت</h3>
         <h3 style={{ textAlign: "start", fontWeight: "bold" }}>روابط</h3>
@@ -541,6 +551,7 @@ export const DivisionReport = () => {
             flexDirection: "column",
             gap: "10px",
           }}
+          className="tableContainer"
         >
           <h3 style={{ fontWeight: "bolder" }}> تبصرہ </h3>
           <h6>{data?.comments} </h6>
