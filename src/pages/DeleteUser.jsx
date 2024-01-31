@@ -35,7 +35,7 @@ export const DeleteUser = () => {
   const [years, setYears] = useState([
     2021, 2022, 2023, 2024, 2025, 2026, 2027,
   ]);
-  const [selectedYear, setSelectedYear] = useState();
+  const [selectedYear, setSelectedYear] = useState(null);
   const [openYears, setOpenYears] = useState(false);
   //year calender
   const YearCalender = (val) => {
@@ -100,7 +100,10 @@ export const DeleteUser = () => {
       userAreaId: formData.get("userAreaId"),
       userAreaType: formData.get("userAreaType"),
       name: formData.get("name"),
-      nazim: formData.get("userAreaType").toLowerCase(),
+      nazim:
+        formData.get("userAreaType") !== ""
+          ? formData.get("userAreaType")?.toLowerCase()
+          : formData.get("userAreaType"),
       dob: formData.get("dob"),
       address: formData.get("address"),
       qualification: formData.get("qualification"),
@@ -188,6 +191,11 @@ export const DeleteUser = () => {
         break;
     }
   };
+  const handleCloseUpdateModel = () => {
+    setUserAreaType("");
+    setNazimType("");
+    document.getElementById("autocomplete0").value = "";
+  };
   useEffect(() => {
     const handleClickYear = (e) => {
       if (
@@ -229,6 +237,7 @@ export const DeleteUser = () => {
   }, []);
   const clearSearchFilters = () => {
     document.getElementById("filter-form").reset();
+    setSelectedYear("");
     setSelectedSubject("");
     setData(nazim);
   };
@@ -549,7 +558,7 @@ export const DeleteUser = () => {
                 />
               </div>
 
-              <div>
+              {/* <div>
                 <span className="px-1 py-2 block font-semibold">
                   Organization pocket:
                 </span>
@@ -623,10 +632,10 @@ export const DeleteUser = () => {
                     </label>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               {/* NAZIM TYPES */}
-              <div>
+              {/* <div>
                 <span className="px-1 py-2 block font-semibold">Status:</span>
                 <div className="flex items-center justify-between border border-primary p-2 rounded-lg">
                   <div className="form-control">
@@ -681,8 +690,8 @@ export const DeleteUser = () => {
                     </label>
                   </div>
                 </div>
-              </div>
-              <div className="relative">
+              </div> */}
+              {/* <div className="relative">
                 <span className="px-1 py-2 block font-semibold">Area:</span>
                 <input type="hidden" name="userAreaId" id="userAreaId" />
                 <input
@@ -754,7 +763,7 @@ export const DeleteUser = () => {
                       </div>
                     ))}
                 </div>
-              </div>
+              </div> */}
               <button
                 type="submit"
                 className="btn btn-primary"
@@ -988,11 +997,11 @@ export const DeleteUser = () => {
           </div>
         </dialog>
         {/* {Change user status} */}
-        <dialog id='change-status-modal' className='modal'>
-          <div className='modal-box'>
-            <h3 className='font-bold text-2xl'>Change Status</h3>
-            <hr className='mb-3' />
-            <form className='space-y-4 mb-3'>
+        <dialog id="change-status-modal" className="modal">
+          <div className="modal-box">
+            <h3 className="font-bold text-2xl">Change Status</h3>
+            <hr className="mb-3" />
+            <form className="space-y-4 mb-3">
               <div>
                 <span className="px-1 py-2 block font-semibold">
                   Organization pocket:
@@ -1082,6 +1091,7 @@ export const DeleteUser = () => {
                         name="nazimType"
                         className="radio checked:bg-blue-500"
                         value="nazim"
+                        checked={nazimType === "nazim"}
                         onChange={() => setNazimType("nazim")}
                       />
                       <span className="label-text">Nazim</span>
@@ -1095,6 +1105,7 @@ export const DeleteUser = () => {
                           name="nazimType"
                           className="radio checked:bg-blue-500"
                           value="rukan"
+                          checked={nazimType === "rukan"}
                           onChange={() => setNazimType("rukan")}
                         />
                         <span className="label-text">Rukan</span>
@@ -1108,6 +1119,7 @@ export const DeleteUser = () => {
                         name="nazimType"
                         className="radio checked:bg-blue-500"
                         value="rukan-nazim"
+                        checked={nazimType === "rukan-nazim"}
                         onChange={() => setNazimType("rukan-nazim")}
                       />
                       <span className="label-text">Rukan-Nazim</span>
@@ -1121,7 +1133,8 @@ export const DeleteUser = () => {
                           name="nazimType"
                           className="radio checked:bg-blue-500"
                           value="umeedwaar"
-                          onChange={() => setNazimType("umeedwaar")}
+                          checked={nazimType === "umeedwar"}
+                          onChange={() => setNazimType("umeedwar")}
                         />
                         <span className="label-text">Umeedwaar</span>
                       </label>
@@ -1146,7 +1159,7 @@ export const DeleteUser = () => {
                 <input type="hidden" name="userAreaId" id="userAreaId" />
                 <input
                   id="autocomplete0"
-                  type="text"
+                  type="search"
                   className="input input-bordered input-primary w-full"
                   placeholder="Select area"
                   onChange={(e) => setSearchArea(e.target.value)}
@@ -1216,12 +1229,15 @@ export const DeleteUser = () => {
                 </div>
               </div>
             </form>
-            <form method='dialog' className='modal-backdrop'>
-              <div className='flex justify-end items-end w-full gap-5'>
-                <button className='btn rounded-lg'>
+            <form method="dialog" className="modal-backdrop">
+              <div className="flex justify-end items-end w-full gap-5">
+                <button
+                  className="btn rounded-lg"
+                  onClick={handleCloseUpdateModel}
+                >
                   Close
                 </button>
-                <button className='btn rounded-lg' onClick={updateStatus}>
+                <button className="btn rounded-lg" onClick={updateStatus}>
                   Update
                 </button>
               </div>

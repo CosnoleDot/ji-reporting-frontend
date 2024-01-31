@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 export const PrintDocument = () => {
   const [print, setPrint] = useState(true);
@@ -6,12 +6,13 @@ export const PrintDocument = () => {
     setPrint(false);
     setTimeout(() => {
       window.print();
+      window.close();
     }, 100);
   };
   return (
     <>
       {print && (
-        <button className='btn' onClick={printDoc}>
+        <button className="btn" onClick={printDoc}>
           Print
         </button>
       )}

@@ -993,7 +993,10 @@ export const Reports = () => {
                         <button
                           className="btn"
                           onClick={() =>
-                            navigate(`/${active}-report/print/${obj?._id}`)
+                            window.open(
+                              `/${active}-report/print/${obj?._id}`,
+                              "blank"
+                            )
                           }
                         >
                           <FaPrint />
@@ -1031,7 +1034,10 @@ export const Reports = () => {
                         <button
                           className="btn"
                           onClick={() =>
-                            navigate(`/${active}-report/print/${obj?._id}`)
+                            window.open(
+                              `/${active}-report/print/${obj?._id}`,
+                              "blank"
+                            )
                           }
                         >
                           <FaPrint />
@@ -1048,10 +1054,9 @@ export const Reports = () => {
                       <span className="text-lg font-semibold">
                         {obj?.[active + "AreaId"]?.name || "UNKNOWN"}
                         {" - "}
-                        {(active !== "province" &&
-                          obj?.[active + "AreaId"]?.province?.name) ||
-                          "UNKNOWN"}
-                        {" - "}
+                        {obj?.[active + "AreaId"]?.province?.name ||
+                          (active !== "province" && "UNKNOWN")}
+                        {obj?.[active + "AreaId"]?.province?.name && " - "}
                         {moment(obj?.month).format("MMMM YYYY")}
                       </span>
                       <span>
@@ -1119,10 +1124,11 @@ export const Reports = () => {
                     <button
                       className="btn"
                       onClick={() =>
-                        navigate(
+                        window.open(
                           `/${localStorage.getItem("@type")}-report/print/${
                             obj?._id
-                          }`
+                          }`,
+                          "blank"
                         )
                       }
                     >

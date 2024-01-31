@@ -30,7 +30,7 @@ export const PersonalReportsDashboard = () => {
     navigate(`edit/${id}`);
   };
   const printReport = (id) => {
-    navigate(`print/${id}`);
+    window.open(`print/${id}`, "blank");
   };
 
   // useEffect(() => {
