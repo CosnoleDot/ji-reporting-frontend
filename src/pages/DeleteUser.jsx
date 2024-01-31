@@ -131,6 +131,7 @@ export const DeleteUser = () => {
       params.joiningDate = data.joiningDate;
     if (data.nazimType && data.nazimType !== "")
       params.nazimType = data.nazimType;
+
     try {
       const request = await instance.get("/user/filter", {
         params: params,
@@ -140,6 +141,7 @@ export const DeleteUser = () => {
         },
       });
       setData(request?.data?.data);
+      document.getElementById("categorize-filter").close();
       dispatch({ type: "SUCCESS", payload: request.data?.message });
       e.target.reset();
     } catch (err) {

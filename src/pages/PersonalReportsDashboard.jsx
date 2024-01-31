@@ -30,12 +30,8 @@ export const PersonalReportsDashboard = () => {
     navigate(`edit/${id}`);
   };
   const printReport = (id) => {
-    window.open(`print/${id}`, "blank");
+    window.open(`personalReport/print/${id}`, "blank");
   };
-
-  // useEffect(() => {
-  //   console.log(temp, "temp");
-  // }, [temp]);
 
   return (
     <GeneralLayout title={"PersonalDashboard"} active={"personalReports"}>

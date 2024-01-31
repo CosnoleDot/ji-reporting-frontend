@@ -39,7 +39,6 @@ export const EditProfile = () => {
           },
         }
       );
-      console.log(req, "req");
       await getMe();
       dispatch({ type: "SUCCESS", payload: req.data?.message });
     } catch (err) {
