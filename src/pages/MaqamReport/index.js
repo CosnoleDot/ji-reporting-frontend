@@ -23,7 +23,7 @@ export const MaqamReport = () => {
   }, [params]);
 
   return (
-    <div className="table " style={{ marginBottom: "2rem" }} dir="rtl">
+    <div className="wrapper " style={{ marginBottom: "2rem" }} dir="rtl">
       <PrintDocument />
       <h3 style={{ textAlign: "center", fontWeight: "bold" }}>
         جائزہ کارکردگی رپورت برآے مقام
@@ -35,6 +35,7 @@ export const MaqamReport = () => {
           alignItems: "center",
           marginBottom: "1rem",
         }}
+        className="tableContainer"
       >
         <h4 className="header"> مقام کا نام:</h4>
         <h6>
@@ -79,6 +80,7 @@ export const MaqamReport = () => {
           flexDirection: "column",
           marginBottom: "2rem",
         }}
+        className="tableContainer"
       >
         <div className="row">
           <p className="header">رہاشی حلقے</p>
@@ -130,9 +132,7 @@ export const MaqamReport = () => {
         </div>
 
         <div className="row">
-          <p className="header" style={{ fontSize: "12px" }}>
-            بزم کے سکول یونٹس
-          </p>
+          <p className="header">بزم کے سکول یونٹس</p>
           <p>{data?.maqamTanzeemId?.busmSchoolUnits?.start}</p>
           <p>{data?.maqamTanzeemId?.busmSchoolUnits?.increase}</p>
           <p>{data?.maqamTanzeemId?.busmSchoolUnits?.decrease}</p>
@@ -163,6 +163,7 @@ export const MaqamReport = () => {
           alignItems: "center",
           width: "100%",
         }}
+        className="tableContainer"
       >
         <p className="header" style={{ width: "100%", padding: "8px 5px" }}>
           <strong>افرادی قوت</strong>
@@ -189,6 +190,7 @@ export const MaqamReport = () => {
           flexDirection: "column",
           marginBottom: "2rem",
         }}
+        className="tableContainer"
       >
         <div className="row">
           <p className="header">ارکان</p>
@@ -269,6 +271,7 @@ export const MaqamReport = () => {
           flexDirection: "column",
           marginBottom: "2rem",
         }}
+        className="tableContainer"
       >
         <div className="row">
           <p className="header">اجتمع ارکان</p>
@@ -341,6 +344,7 @@ export const MaqamReport = () => {
           flexDirection: "column",
           marginBottom: "2rem",
         }}
+        className="tableContainer"
       >
         <div className="row">
           <p className="header">اجتمع رفقا</p>
@@ -391,6 +395,7 @@ export const MaqamReport = () => {
           alignItems: "center",
           marginBottom: "1rem",
         }}
+        className="tableContainer"
       >
         <h6 style={{ width: "100%", textAlign: "start" }}>
           دعوتی وفود:{data?.otherActivityId?.dawatiWafud}
@@ -417,6 +422,7 @@ export const MaqamReport = () => {
           flexDirection: "column",
           gap: "10px",
         }}
+        className="tableContainer"
       >
         <h3>کوئی اور سرگرمی:</h3>
         <h6>{data?.otherActivityId?.anyOther}</h6>
@@ -430,6 +436,7 @@ export const MaqamReport = () => {
           flexDirection: "column",
           gap: "10px",
         }}
+        className="tableContainer"
       >
         <h3 style={{ textAlign: "start", fontWeight: "bolder" }}>توسیع دعوت</h3>
         <h3 style={{ textAlign: "start", fontWeight: "bold" }}>روابط</h3>
@@ -441,6 +448,7 @@ export const MaqamReport = () => {
             marginBottom: "1rem",
             width: "100%",
           }}
+          className="tableContainer"
         >
           <h6 style={{ width: "100%", textAlign: "start" }}>
             طے شدہ:{data?.tdId?.rawabitDecided}
@@ -548,6 +556,7 @@ export const MaqamReport = () => {
             flexDirection: "column",
             gap: "10px",
           }}
+          className="tableContainer"
         >
           <h3 style={{ fontWeight: "bolder" }}> تبصرہ </h3>
           <h6>{data?.comments}</h6>

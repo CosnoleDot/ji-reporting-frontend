@@ -22,7 +22,7 @@ export const HalqaReport = () => {
   }, [params]);
 
   return (
-    <div className="table " style={{ marginBottom: "2rem" }} dir="rtl">
+    <div className="wrapper " style={{ marginBottom: "2rem" }} dir="rtl">
       <PrintDocument />
       <h3 style={{ textAlign: "center", fontWeight: "bold" }}>
         جائزہ کارکردگی رپورت برآے حلقہ
@@ -34,8 +34,12 @@ export const HalqaReport = () => {
           alignItems: "center",
           marginBottom: "1rem",
         }}
+        className="tableContainer"
       >
-        <h4 className="header"> حلقہ کا نام:</h4>
+        <h4 className="header" style={{ width: "10rem" }}>
+          {" "}
+          حلقہ کا نام:
+        </h4>
         <h6>
           {data?.halqaAreaId?.name}
           {data?.halqaAreaId?.parentType}
@@ -77,6 +81,7 @@ export const HalqaReport = () => {
           flexDirection: "column",
           marginBottom: "2rem",
         }}
+        className="tableContainer"
       >
         <div className="row">
           <p className="header">ارکان</p>
@@ -142,6 +147,7 @@ export const HalqaReport = () => {
           flexDirection: "column",
           marginBottom: "2rem",
         }}
+        className="tableContainer"
       >
         <div className="row">
           <p className="header">اجتمع کارکنان</p>
@@ -195,6 +201,7 @@ export const HalqaReport = () => {
           alignItems: "center",
           marginBottom: "1rem",
         }}
+        className="tableContainer"
       >
         <h6 style={{ width: "100%", textAlign: "start" }}>
           دعوتی وفود:{data?.otherActivityId?.dawatiWafud}
@@ -221,6 +228,7 @@ export const HalqaReport = () => {
           flexDirection: "column",
           gap: "10px",
         }}
+        className="tableContainer"
       >
         <h3>کوئی اور سرگرمی</h3>
         <h6>{data?.otherActivityId?.anyOther}</h6>
@@ -234,6 +242,7 @@ export const HalqaReport = () => {
           flexDirection: "column",
           gap: "10px",
         }}
+        className="tableContainer"
       >
         <h3 style={{ textAlign: "start", fontWeight: "bolder" }}>توسیع دعوت</h3>
         <h3 style={{ textAlign: "start", fontWeight: "bold" }}>روابط</h3>
@@ -338,6 +347,7 @@ export const HalqaReport = () => {
             flexDirection: "column",
             gap: "10px",
           }}
+          className="tableContainer"
         >
           <h3 style={{ fontWeight: "bolder" }}> تبصرہ </h3>
           <h6>{data?.comments}</h6>

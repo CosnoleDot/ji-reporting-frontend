@@ -21,7 +21,7 @@ export const ProvinceReport = () => {
   }, [params]);
 
   return (
-    <div className="table " style={{ marginBottom: "2rem" }} dir="rtl">
+    <div className="wrapper " style={{ marginBottom: "2rem" }} dir="rtl">
       <h3 style={{ textAlign: "center", fontWeight: "bold" }}>
         جائزہ کارکردگی رپورت برآے صوبہ
       </h3>
@@ -32,6 +32,7 @@ export const ProvinceReport = () => {
           alignItems: "center",
           marginBottom: "1rem",
         }}
+        className="tableContainer"
       >
         <h4 className="header">صوبے کا نام: </h4>
         <h6>{data?.provinceAreaId?.name}</h6>
@@ -71,6 +72,7 @@ export const ProvinceReport = () => {
           flexDirection: "column",
           marginBottom: "2rem",
         }}
+        className="tableContainer"
       >
         <div className="row">
           <p className="header">رہاشی حلقے</p>
@@ -122,9 +124,7 @@ export const ProvinceReport = () => {
         </div>
 
         <div className="row">
-          <p className="header" style={{ fontSize: "12px" }}>
-            بزم کے سکول یونٹس
-          </p>
+          <p className="header">بزم کے سکول یونٹس</p>
           <p>{data?.provinceTanzeemId?.busmSchoolUnits?.start}</p>
           <p>{data?.provinceTanzeemId?.busmSchoolUnits?.increase}</p>
           <p>{data?.provinceTanzeemId?.busmSchoolUnits?.decrease}</p>
@@ -181,6 +181,7 @@ export const ProvinceReport = () => {
           flexDirection: "column",
           marginBottom: "2rem",
         }}
+        className="tableContainer"
       >
         <div className="row">
           <p className="header">ارکان</p>
@@ -258,6 +259,7 @@ export const ProvinceReport = () => {
           flexDirection: "column",
           marginBottom: "2rem",
         }}
+        className="tableContainer"
       >
         <div className="row">
           <p className="header"> ڈویژنل مشاورات</p>
@@ -323,6 +325,7 @@ export const ProvinceReport = () => {
           flexDirection: "column",
           marginBottom: "2rem",
         }}
+        className="tableContainer"
       >
         <div className="row">
           <p className="header">اجتمع رفقا</p>
@@ -373,6 +376,7 @@ export const ProvinceReport = () => {
           alignItems: "center",
           marginBottom: "1rem",
         }}
+        className="tableContainer"
       >
         <h6 style={{ width: "100%", textAlign: "start" }}>
           تربیت گاہ:{data?.otherActivityId?.tarbiyatGaah}
@@ -403,6 +407,7 @@ export const ProvinceReport = () => {
           gap: "10px",
           marginBottom: "1rem",
         }}
+        className="tableContainer"
       >
         <h3>کوئی اور سرگرمی</h3>
         <h6>{data?.otherActivityId?.anyOther}</h6>
@@ -416,6 +421,7 @@ export const ProvinceReport = () => {
           flexDirection: "column",
           gap: "10px",
         }}
+        className="tableContainer"
       >
         <h3 style={{ textAlign: "start", fontWeight: "bolder" }}>توسیع دعوت</h3>
         <h3 style={{ textAlign: "start", fontWeight: "bold" }}>روابط</h3>

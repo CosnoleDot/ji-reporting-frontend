@@ -664,15 +664,15 @@ function App() {
                                   element={<ArkanReport />}
                                 />
                                 <Route
-                                  path="/reports/province-report/print/:id"
+                                  path="/province-report/print/:id"
                                   element={<ProvinceReport />}
                                 />
                                 <Route
-                                  path="/reports/division-report/print/:id"
+                                  path="/division-report/print/:id"
                                   element={<DivisionReport />}
                                 />
                                 <Route
-                                  path="/reports/maqam-report/print/:id"
+                                  path="/maqam-report/print/:id"
                                   element={<MaqamReport />}
                                 />
                                 <Route

@@ -144,7 +144,7 @@ export const Reports = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
   const handlePrint = (id) => {
-    navigate(`${active}-report/print/${id}`);
+    window.open(`${active}-report/print/${id}`, "blank");
   };
   const toggleSearch = () => {
     showSearch(!search);
