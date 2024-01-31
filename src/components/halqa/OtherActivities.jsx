@@ -8,6 +8,7 @@ export const OtherActivities = ({ view }) => {
           <input
             readOnly={view}
             type='number'
+            defaultValue={0}
             required
             name='dawatiWafud'
             id='dawatiWafud'
@@ -19,6 +20,7 @@ export const OtherActivities = ({ view }) => {
           <input
             readOnly={view}
             type='number'
+            defaultValue={0}
             required
             name='rawabitParties'
             id='rawabitParties'
@@ -30,6 +32,7 @@ export const OtherActivities = ({ view }) => {
           <input
             readOnly={view}
             type='number'
+            defaultValue={0}
             required
             name='hadithCircle'
             id='hadithCircle'
@@ -41,6 +44,7 @@ export const OtherActivities = ({ view }) => {
           <input
             readOnly={view}
             type='number'
+            defaultValue={0}
             required
             name='nizamSalah'
             id='nizamSalah'
@@ -52,6 +56,7 @@ export const OtherActivities = ({ view }) => {
           <input
             readOnly={view}
             type='number'
+            defaultValue={0}
             required
             name='shabBedari'
             id='shabBedari'

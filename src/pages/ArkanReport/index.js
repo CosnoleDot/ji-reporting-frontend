@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import instance from "../../api/instrance";
 import { useParams } from "react-router-dom";
+import { PrintDocument } from "../../components";
 
 export const ArkanReport = () => {
   const [data, setData] = useState();
@@ -14,15 +15,8 @@ export const ArkanReport = () => {
         Authorization: `Bearer ${localStorage.getItem("@token")}`,
       },
     });
-    // var print = false;
     if (req.status === 200) {
       setData(req?.data?.data);
-      // if (!print) {
-      //   setTimeout(() => {
-      //     window.print();
-      //     window.close();
-      //   }, 500);
-      // }
     }
   };
   useEffect(() => {
@@ -31,6 +25,7 @@ export const ArkanReport = () => {
   console.log(data);
   return (
     <div className="containerPrint" dir="rtl">
+      <PrintDocument />
       <h1>رپورٹ خاکہ</h1>
       <div
         style={{

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./MaqamReport.css";
 import { useParams } from "react-router-dom";
 import instance from "../../api/instrance";
+import { PrintDocument } from "../../components";
 
 export const MaqamReport = () => {
   const [data, setData] = useState();
@@ -23,6 +24,7 @@ export const MaqamReport = () => {
 
   return (
     <div className="table " style={{ marginBottom: "2rem" }} dir="rtl">
+      <PrintDocument />
       <h3 style={{ textAlign: "center", fontWeight: "bold" }}>
         جائزہ کارکردگی رپورت برآے مقام
       </h3>

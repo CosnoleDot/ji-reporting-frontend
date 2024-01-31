@@ -18,7 +18,6 @@ import {
   Maqam,
   PersonalReportsDashboard,
   Province,
-  UmeedWarNazim,
 } from "./pages";
 import { useEffect, useRef, useState } from "react";
 import instance from "./api/instrance";
@@ -37,7 +36,7 @@ import {
   useToastState,
 } from "./context";
 import { UIContext } from "./context/ui";
-import { Loader, ReportUmeedwar } from "./components";
+import { DoubleScrollLeftRefresh, Loader, ReportUmeedwar } from "./components";
 import { ArkanReport } from "./pages/ArkanReport";
 import { ProvinceReport } from "./pages/ProvinceReport";
 import { DivisionReport } from "./pages/DivisionReport";
@@ -515,6 +514,7 @@ function App() {
 
   return (
     <MeContext.Provider value={me}>
+      <DoubleScrollLeftRefresh />
       <ProvinceContext.Provider value={provinces}>
         <ProvinceReportContext.Provider value={provinceReports}>
           <MaqamContext.Provider value={maqams}>

@@ -990,7 +990,7 @@ export const DeleteUser = () => {
           <div className='modal-box'>
             <h3 className='font-bold text-2xl'>Change Status</h3>
             <hr className='mb-3' />
-            <form className='space-y-4'>
+            <form className='space-y-4 mb-3'>
               <div>
                 <span className='px-1 py-2 block font-semibold'>
                   Organization pocket:
@@ -1215,7 +1215,10 @@ export const DeleteUser = () => {
               </div>
             </form>
             <form method='dialog' className='modal-backdrop'>
-              <div className='flex justify-end items-end w-full'>
+              <div className='flex justify-end items-end w-full gap-5'>
+                <button className='btn rounded-lg'>
+                  Close
+                </button>
                 <button className='btn rounded-lg' onClick={updateStatus}>
                   Update
                 </button>

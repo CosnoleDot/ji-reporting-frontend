@@ -8,10 +8,11 @@ export const OtherActivities = ({ view }) => {
           <input
             readOnly
             type='number'
-            required
+            defaultValue={0}
             name='tarbiyatGaah'
             id='tarbiyatGaah'
             className='border-b-2 text-center border-dashed'
+            required
           />
         </div>
         <div className='flex py-2'>
@@ -19,10 +20,11 @@ export const OtherActivities = ({ view }) => {
           <input
             readOnly={view}
             type='number'
-            required
+            defaultValue={0}
             name='tanzeemiRound'
             id='tanzeemiRound'
             className='border-b-2 text-center border-dashed'
+            required
           />
         </div>
         <div className='flex py-2'>
@@ -30,10 +32,11 @@ export const OtherActivities = ({ view }) => {
           <input
             readOnly={true}
             type='number'
-            required
+            defaultValue={0}
             name='dawatiWafud'
             id='dawatiWafud'
             className='border-b-2 text-center border-dashed'
+            required
           />
         </div>
         <div className='flex py-2'>
@@ -41,10 +44,11 @@ export const OtherActivities = ({ view }) => {
           <input
             readOnly={true}
             type='number'
-            required
+            defaultValue={0}
             name='rawabitParties'
             id='rawabitParties'
             className='border-b-2 text-center border-dashed'
+            required
           />
         </div>
         <div className='flex py-2'>
@@ -52,10 +56,11 @@ export const OtherActivities = ({ view }) => {
           <input
             readOnly={true}
             type='number'
-            required
+            defaultValue={0}
             name='shabBedari'
             id='shabBedari'
             className='border-b-2 text-center border-dashed'
+            required
           />
         </div>
         <div className='flex py-2'>
@@ -63,10 +68,11 @@ export const OtherActivities = ({ view }) => {
           <input
             readOnly={true}
             type='number'
-            required
+            defaultValue={0}
             name='nizamSalah'
             id='nizamSalah'
             className='border-b-2 text-center border-dashed'
+            required
           />
         </div>
 
@@ -75,10 +81,10 @@ export const OtherActivities = ({ view }) => {
           <input
             readOnly={view}
             type='text'
-            required
             name='anyOther'
             id='anyOther'
             className='border-b-2 border-dashed'
+            required
           />
         </div>
       </div>

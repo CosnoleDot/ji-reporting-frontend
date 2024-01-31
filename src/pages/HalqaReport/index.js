@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./HalqaReport.css";
 import instance from "../../api/instrance";
 import { useParams } from "react-router-dom";
+import { PrintDocument } from "../../components";
 export const HalqaReport = () => {
   const [data, setData] = useState();
   const params = useParams();
@@ -22,6 +23,7 @@ export const HalqaReport = () => {
 
   return (
     <div className="table " style={{ marginBottom: "2rem" }} dir="rtl">
+      <PrintDocument />
       <h3 style={{ textAlign: "center", fontWeight: "bold" }}>
         جائزہ کارکردگی رپورت برآے حلقہ
       </h3>

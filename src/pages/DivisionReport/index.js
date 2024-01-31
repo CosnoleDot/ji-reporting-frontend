@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./DivisionReport.css";
 import { useParams } from "react-router-dom";
 import instance from "../../api/instrance";
+import { PrintDocument } from "../../components";
 export const DivisionReport = () => {
   const [data, setData] = useState();
   const params = useParams();
@@ -22,6 +23,7 @@ export const DivisionReport = () => {
   }, [params]);
   return (
     <div className="table " style={{ marginBottom: "2rem" }} dir="rtl">
+      <PrintDocument />
       <h3 style={{ textAlign: "center", fontWeight: "bold" }}>
         جائزہ کارکردگی رپورت برآے ڈویژن
       </h3>
