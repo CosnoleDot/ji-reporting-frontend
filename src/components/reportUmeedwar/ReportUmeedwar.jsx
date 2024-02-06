@@ -95,7 +95,13 @@ export const ReportUmeedwar = () => {
   const setDateFn = () => {
     const date0 = new Date();
     date0.setMonth(date0.getMonth() - 1);
-    setDate(`${date0.getFullYear()}-${date0.getMonth() + 1}`);
+    setDate(
+      `${date0.getFullYear()}-${
+        date0.getMonth() + 1 > 9
+          ? date0.getMonth() + 1
+          : '0' + (date0.getMonth() + 1)
+      }`
+    );
   };
 
   useEffect(() => {
@@ -190,12 +196,12 @@ export const ReportUmeedwar = () => {
   return (
     <GeneralLayout>
       <div dir='rtl' className='p-4'>
-        <h2 className='block w-full text-center p-3'>
+        <h2 className='block w-full text-center p-3 reports'>
           کارکردگی رپورٹ براۓ حلقہ
         </h2>
 
         <form
-          className='flex w-full flex-col items-center justify-end gap-5 p-3 overflow-auto mb-5'
+          className='flex w-full flex-col items-center justify-end gap-5 p-3 overflow-auto mb-5 reports'
           dir='rtl'
           onSubmit={handleSubmit}
         >
@@ -211,9 +217,9 @@ export const ReportUmeedwar = () => {
                 value={date}
               />
             </div>
-            <h3 className=''>
-              "اس ماہ میں کوئ خصوصی مصروفیت جس کی وجہ سے آپ کئ روٹین متاثر ہوئ
-              ہو"
+            <h3 className='mb-5'>
+              اس ماہ میں کوئ خصوصی مصروفیت جس کی وجہ سے آپ کئ روٹین متاثر ہوئ
+              ہو
             </h3>
             <textarea
               className='inptut border rounded-md pr-2 w-full'
