@@ -324,7 +324,7 @@ export const Dashboard = () => {
               >
                 Filter <FaFilter />
               </button>
-              <button className='btn' onClick={() => clearFilter()}>
+              <button className='btn' onClick={clearFilter}>
                 Clear Filter
               </button>
             </div>
@@ -376,8 +376,9 @@ export const Dashboard = () => {
                               {obj.name} - {`(${getAreaType(obj)})`}
                             </td>
                             <td className='w-[50%]'>
-                              {nazim.find((i) => i?.userAreaId?._id === obj?._id)
-                                ?.name || (
+                              {nazim.find(
+                                (i) => i?.userAreaId?._id === obj?._id
+                              )?.name || (
                                 <span className='text-red-400 font-semibold'>
                                   User Not Registered Yet
                                 </span>
@@ -456,7 +457,7 @@ export const Dashboard = () => {
                     id='autocomplete'
                     type='search'
                     autoComplete='off'
-                    class='input  input-bordered input-primary w-full  mb-3'
+                    className='input  input-bordered input-primary w-full  mb-3'
                     placeholder='Select area'
                     onChange={(e) => setSearchArea(e.target.value)}
                     onClick={() => {
@@ -477,7 +478,7 @@ export const Dashboard = () => {
                   />
                   <div
                     id='autocomplete-list'
-                    class='absolute hidden z-10 max-h-[100px] overflow-y-scroll bg-white border border-gray-300 w-full mt-1'
+                    className='absolute hidden z-10 max-h-[100px] overflow-y-scroll bg-white border border-gray-300 w-full mt-1'
                   >
                     {areas
                       .sort((a, b) => a?.name?.localeCompare(b?.name))

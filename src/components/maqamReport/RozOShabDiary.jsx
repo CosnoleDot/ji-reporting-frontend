@@ -8,6 +8,7 @@ export const RozOShabDiary = ({ view }) => {
           <input
             readOnly={view}
             type='number'
+            defaultValue={0}
             required
             name='arkanFilled'
             id='arkanFilled'
@@ -19,6 +20,7 @@ export const RozOShabDiary = ({ view }) => {
           <input
             readOnly={view}
             type='number'
+            defaultValue={0}
             required
             name='umeedwaranFilled'
             id='umeedwaranFilled'
@@ -30,6 +32,7 @@ export const RozOShabDiary = ({ view }) => {
           <input
             readOnly={true}
             type='number'
+            defaultValue={0}
             required
             name='rafaqaFilled'
             id='rafaqaFilled'

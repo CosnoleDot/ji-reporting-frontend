@@ -143,7 +143,7 @@ export const LocationMaqam = () => {
           break;
       }
     } catch (err) {
-      dispatch({ type: 'ERROR', payload: err.response.data.message });
+      // dispatch({ type: 'ERROR', payload: err.response.data.message });
     }
     setLoading(false);
   };

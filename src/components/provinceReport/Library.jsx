@@ -8,6 +8,7 @@ export const Library = () => {
           <input
             readOnly={true}
             type='number'
+            defaultValue={0}
             required
             name='totalLibraries'
             id='totalLibraries'
@@ -19,6 +20,7 @@ export const Library = () => {
           <input
             readOnly={true}
             type='number'
+            defaultValue={0}
             required
             name='totalBooks'
             id='totalBooks'
@@ -30,6 +32,7 @@ export const Library = () => {
           <input
             readOnly={true}
             type='number'
+            defaultValue={0}
             required
             name='totalIncrease'
             id='totalIncrease'
@@ -41,6 +44,7 @@ export const Library = () => {
           <input
             readOnly={true}
             type='number'
+            defaultValue={0}
             required
             name='totalDecrease'
             id='totalDecrease'
@@ -52,6 +56,7 @@ export const Library = () => {
           <input
             readOnly={true}
             type='number'
+            defaultValue={0}
             required
             name='totalBookRent'
             id='totalBookRent'

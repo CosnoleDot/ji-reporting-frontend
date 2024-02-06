@@ -21,6 +21,7 @@ export const Activity = ({ view }) => {
               <input
                 readOnly={true}
                 type='number'
+                defaultValue={0}
                 required
                 name={`ijtRafaqa-decided`}
                 id={`ijtRafaqa-decided`}
@@ -32,6 +33,7 @@ export const Activity = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                defaultValue={0}
                 required
                 name={`ijtRafaqa-completed`}
                 id={`ijtRafaqa-completed`}
@@ -42,6 +44,7 @@ export const Activity = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                defaultValue={0}
                 required
                 name={`ijtRafaqa-attendance`}
                 id={`ijtRafaqa-attendance`}
@@ -82,6 +85,7 @@ export const Activity = ({ view }) => {
               <input
                 readOnly={true}
                 type='number'
+                defaultValue={0}
                 required
                 name={`ijtKarkunan-decided`}
                 id={`ijtKarkunan-decided`}
@@ -93,6 +97,7 @@ export const Activity = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                defaultValue={0}
                 required
                 name={`ijtKarkunan-completed`}
                 id={`ijtKarkunan-completed`}
@@ -103,6 +108,7 @@ export const Activity = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                defaultValue={0}
                 required
                 name={`ijtKarkunan-attendance`}
                 id={`ijtKarkunan-attendance`}
@@ -126,6 +132,7 @@ export const Activity = ({ view }) => {
               <input
                 readOnly={true}
                 type='number'
+                defaultValue={0}
                 required
                 name={`studyCircle-decided`}
                 id={`studyCircle-decided`}
@@ -137,6 +144,7 @@ export const Activity = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                defaultValue={0}
                 required
                 name={`studyCircle-completed`}
                 id={`studyCircle-completed`}
@@ -147,6 +155,7 @@ export const Activity = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                defaultValue={0}
                 required
                 name={`studyCircle-attendance`}
                 id={`studyCircle-attendance`}
@@ -170,6 +179,7 @@ export const Activity = ({ view }) => {
               <input
                 readOnly={true}
                 type='number'
+                defaultValue={0}
                 required
                 name={`darseQuran-decided`}
                 id={`darseQuran-decided`}
@@ -181,6 +191,7 @@ export const Activity = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                defaultValue={0}
                 required
                 name={`darseQuran-completed`}
                 id={`darseQuran-completed`}
@@ -191,6 +202,7 @@ export const Activity = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                defaultValue={0}
                 required
                 name={`darseQuran-attendance`}
                 id={`darseQuran-attendance`}

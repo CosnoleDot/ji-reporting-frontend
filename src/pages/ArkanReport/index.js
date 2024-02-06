@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import instance from "../../api/instrance";
 import { useParams } from "react-router-dom";
+import { PrintDocument } from "../../components";
 
 export const ArkanReport = () => {
-  const [printData, setPrintData] = useState();
   const [data, setData] = useState();
   const params = useParams();
   const printReport = async (id) => {
@@ -22,46 +22,9 @@ export const ArkanReport = () => {
   useEffect(() => {
     if (params?.id) printReport(params?.id);
   }, [params]);
-  console.log(data);
-  useEffect(() => {
-    const temp = {};
-    const iterate = (file) => {
-      Object.keys(file).forEach((key) => {
-        if (key === "rawabit") {
-          file[key].map((key1, index) => {
-            Object.keys(key1).forEach((key2) => {
-              temp[`rbt${index + 1}${key2}`] = key1[key2];
-            });
-          });
-        }
-        if (typeof file[key] === "object") {
-          iterate(file[key]);
-        } else {
-          temp[key] = file[key];
-        }
-      });
-    };
-    if (temp) {
-      setPrintData(temp);
-    }
-    if (data && data !== "") {
-      iterate(data);
-    }
-  }, [data]);
-  // if (printData) {
-  //   Object.keys(printData).forEach((key) => {
-  //     const value = printData[key];
-
-  //     const element = document.getElementById(key);
-  //     if (element) {
-  //       element.textContent = value;
-
-  //     }
-  //   });
-  // }
-
   return (
     <div className="containerPrint" dir="rtl">
+      <PrintDocument />
       <h1>رپورٹ خاکہ</h1>
       <div
         style={{
@@ -79,7 +42,7 @@ export const ArkanReport = () => {
           style={{ border: "none", borderBottom: "1px dotted black" }}
           readonly
         >
-          {data?.month}
+          {data?.month.split("T")[0]}
         </p>
       </div>
       <div
@@ -129,7 +92,9 @@ export const ArkanReport = () => {
             readonly
             id="JamiatRelation"
             name="JamiatRelation"
-          ></p>
+          >
+            {data?.JamiatRelation}
+          </p>
         </div>
         <div
           style={{
@@ -827,22 +792,20 @@ export const ArkanReport = () => {
         style={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "space-between",
+          justifyContent: "flex-start",
           width: "100%",
+          gap: "20px",
         }}
       >
-        <p
-          style={{ border: "none", borderBottom: "1px dotted black" }}
-          readonly
-        ></p>
-        <p
-          style={{ border: "none", borderBottom: "1px dotted black" }}
-          readonly
-        ></p>
-        <p
-          style={{ border: "none", borderBottom: "1px dotted black" }}
-          readonly
-        ></p>
+        {data?.toseeDawaId?.rawabit[0]?.programs?.map((program, index) => (
+          <p
+            key={index}
+            style={{ border: "none", borderBottom: "1px dotted black" }}
+            readonly
+          >
+            {program}
+          </p>
+        ))}
       </div>
       <div
         style={{
@@ -1000,22 +963,20 @@ export const ArkanReport = () => {
         style={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "space-between",
+          justifyContent: "flex-start",
           width: "100%",
+          gap: "20px",
         }}
       >
-        <p
-          style={{ border: "none", borderBottom: "1px dotted black" }}
-          readonly
-        ></p>
-        <p
-          style={{ border: "none", borderBottom: "1px dotted black" }}
-          readonly
-        ></p>
-        <p
-          style={{ border: "none", borderBottom: "1px dotted black" }}
-          readonly
-        ></p>
+        {data?.toseeDawaId?.rawabit[1]?.programs?.map((program, index) => (
+          <p
+            key={index}
+            style={{ border: "none", borderBottom: "1px dotted black" }}
+            readonly
+          >
+            {program}
+          </p>
+        ))}
       </div>
       <div
         style={{
@@ -1173,22 +1134,20 @@ export const ArkanReport = () => {
         style={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "space-between",
+          justifyContent: "flex-start",
           width: "100%",
+          gap: "20px",
         }}
       >
-        <p
-          style={{ border: "none", borderBottom: "1px dotted black" }}
-          readonly
-        ></p>
-        <p
-          style={{ border: "none", borderBottom: "1px dotted black" }}
-          readonly
-        ></p>
-        <p
-          style={{ border: "none", borderBottom: "1px dotted black" }}
-          readonly
-        ></p>
+        {data?.toseeDawaId?.rawabit[2]?.programs?.map((program, index) => (
+          <p
+            key={index}
+            style={{ border: "none", borderBottom: "1px dotted black" }}
+            readonly
+          >
+            {program}
+          </p>
+        ))}
       </div>
       <div
         style={{
@@ -1306,7 +1265,7 @@ export const ArkanReport = () => {
           style={{ borderBottom: "1px dotted black", width: "200px" }}
           id="month"
         >
-          ...
+          {data?.createdAt.split("T")[0]}
         </p>
       </div>
     </div>

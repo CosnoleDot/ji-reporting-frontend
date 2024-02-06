@@ -7,6 +7,7 @@ export const PaighamDigest = ({ view }) => {
           <label className='block'> کل پرنٹ کردہ::</label>
           <input
             type='number'
+            defaultValue={0}
             required
             readOnly={view}
             name='totalPrinted'
@@ -18,6 +19,7 @@ export const PaighamDigest = ({ view }) => {
           <label className='block'>کل فروخت کردہ (تنظیمی):</label>
           <input
             type='number'
+            defaultValue={0}
             required
             readOnly={view}
             name='totalSoldTanzeemi'
@@ -29,6 +31,7 @@ export const PaighamDigest = ({ view }) => {
           <label className='block'>کل فروخت کردہ (مارکیٹ):</label>
           <input
             type='number'
+            defaultValue={0}
             required
             readOnly={view}
             name='totalSoldMarket'
@@ -40,6 +43,7 @@ export const PaighamDigest = ({ view }) => {
           <label className='block'>گفٹ:</label>
           <input
             type='number'
+            defaultValue={0}
             required
             readOnly={view}
             name='gift'

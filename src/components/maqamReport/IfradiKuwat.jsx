@@ -38,6 +38,7 @@ export const IfradiKuwat = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                defaultValue={0}
                 required
                 name={`arkan-start`}
                 id={`arkan-start`}
@@ -49,6 +50,7 @@ export const IfradiKuwat = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                defaultValue={0}
                 required
                 name={`arkan-increase`}
                 id={`arkan-increase`}
@@ -60,6 +62,7 @@ export const IfradiKuwat = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                defaultValue={0}
                 required
                 name={`arkan-decrease`}
                 id={`arkan-decrease`}
@@ -71,6 +74,7 @@ export const IfradiKuwat = ({ view }) => {
               <input
                 readOnly={true}
                 type='number'
+                defaultValue={0}
                 required
                 name={`arkan-end`}
                 id={`arkan-end`}
@@ -81,6 +85,7 @@ export const IfradiKuwat = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                defaultValue={0}
                 required
                 name={`arkan-annual`}
                 id={`arkan-annual`}
@@ -94,6 +99,7 @@ export const IfradiKuwat = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                defaultValue={0}
                 required
                 name={`umeedWaran-start`}
                 id={`umeedWaran-start`}
@@ -105,6 +111,7 @@ export const IfradiKuwat = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                defaultValue={0}
                 required
                 onChange={() => calcultate('umeedWaran')}
                 name={`umeedWaran-increase`}
@@ -116,6 +123,7 @@ export const IfradiKuwat = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                defaultValue={0}
                 required
                 name={`umeedWaran-decrease`}
                 id={`umeedWaran-decrease`}
@@ -127,6 +135,7 @@ export const IfradiKuwat = ({ view }) => {
               <input
                 readOnly={true}
                 type='number'
+                defaultValue={0}
                 required
                 name={`umeedWaran-end`}
                 id={`umeedWaran-end`}
@@ -137,6 +146,7 @@ export const IfradiKuwat = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                defaultValue={0}
                 required
                 name={`umeedWaran-annual`}
                 id={`umeedWaran-annual`}
@@ -150,6 +160,7 @@ export const IfradiKuwat = ({ view }) => {
               <input
                 readOnly={true}
                 type='number'
+                defaultValue={0}
                 required
                 name={`rafaqa-start`}
                 onChange={() => calcultate('rafaqa')}
@@ -161,6 +172,7 @@ export const IfradiKuwat = ({ view }) => {
               <input
                 readOnly={true}
                 type='number'
+                defaultValue={0}
                 required
                 name={`rafaqa-increase`}
                 id={`rafaqa-increase`}
@@ -172,6 +184,7 @@ export const IfradiKuwat = ({ view }) => {
               <input
                 readOnly={true}
                 type='number'
+                defaultValue={0}
                 required
                 name={`rafaqa-decrease`}
                 onChange={() => calcultate('rafaqa')}
@@ -183,6 +196,7 @@ export const IfradiKuwat = ({ view }) => {
               <input
                 readOnly={true}
                 type='number'
+                defaultValue={0}
                 required
                 name={`rafaqa-end`}
                 id={`rafaqa-end`}
@@ -193,6 +207,7 @@ export const IfradiKuwat = ({ view }) => {
               <input
                 readOnly={true}
                 type='number'
+                defaultValue={0}
                 required
                 name={`rafaqa-annual`}
                 id={`rafaqa-annual`}
@@ -206,6 +221,7 @@ export const IfradiKuwat = ({ view }) => {
               <input
                 readOnly={true}
                 type='number'
+                defaultValue={0}
                 required
                 name={`karkunan-start`}
                 id={`karkunan-start`}
@@ -217,6 +233,7 @@ export const IfradiKuwat = ({ view }) => {
               <input
                 readOnly={true}
                 type='number'
+                defaultValue={0}
                 required
                 name={`karkunan-increase`}
                 onChange={() => calcultate('karkunan')}
@@ -228,6 +245,7 @@ export const IfradiKuwat = ({ view }) => {
               <input
                 readOnly={true}
                 type='number'
+                defaultValue={0}
                 required
                 name={`karkunan-decrease`}
                 id={`karkunan-decrease`}
@@ -239,6 +257,7 @@ export const IfradiKuwat = ({ view }) => {
               <input
                 readOnly={true}
                 type='number'
+                defaultValue={0}
                 required
                 name={`karkunan-end`}
                 id={`karkunan-end`}
@@ -249,6 +268,7 @@ export const IfradiKuwat = ({ view }) => {
               <input
                 readOnly={true}
                 type='number'
+                defaultValue={0}
                 required
                 name={`karkunan-annual`}
                 id={`karkunan-annual`}
@@ -262,6 +282,7 @@ export const IfradiKuwat = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                defaultValue={0}
                 required
                 name={`shaheen-start`}
                 onChange={() => calcultate('shaheen')}
@@ -274,6 +295,7 @@ export const IfradiKuwat = ({ view }) => {
                 readOnly={view}
                 onChange={() => calcultate('shaheen')}
                 type='number'
+                defaultValue={0}
                 required
                 name={`shaheen-increase`}
                 id={`shaheen-increase`}
@@ -284,6 +306,7 @@ export const IfradiKuwat = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                defaultValue={0}
                 required
                 name={`shaheen-decrease`}
                 id={`shaheen-decrease`}
@@ -295,6 +318,7 @@ export const IfradiKuwat = ({ view }) => {
               <input
                 readOnly={true}
                 type='number'
+                defaultValue={0}
                 required
                 name={`shaheen-end`}
                 id={`shaheen-end`}
@@ -305,6 +329,7 @@ export const IfradiKuwat = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                defaultValue={0}
                 required
                 name={`shaheen-annual`}
                 id={`shaheen-annual`}
@@ -318,6 +343,7 @@ export const IfradiKuwat = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                defaultValue={0}
                 required
                 name={`members-start`}
                 onChange={() => calcultate('members')}
@@ -329,6 +355,7 @@ export const IfradiKuwat = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                defaultValue={0}
                 required
                 name={`members-increase`}
                 onChange={() => calcultate('members')}
@@ -340,6 +367,7 @@ export const IfradiKuwat = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                defaultValue={0}
                 required
                 name={`members-decrease`}
                 onChange={() => calcultate('members')}
@@ -351,6 +379,7 @@ export const IfradiKuwat = ({ view }) => {
               <input
                 readOnly={true}
                 type='number'
+                defaultValue={0}
                 required
                 name={`members-end`}
                 id={`members-end`}
@@ -361,6 +390,7 @@ export const IfradiKuwat = ({ view }) => {
               <input
                 readOnly={view}
                 type='number'
+                defaultValue={0}
                 required
                 name={`members-annual`}
                 id={`members-annual`}

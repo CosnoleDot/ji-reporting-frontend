@@ -8,6 +8,7 @@ export const PaighamDigest = ({ view }) => {
           <input
             readOnly={view}
             type='number'
+            defaultValue={0}
             required
             name='totalReceived'
             id='totalReceived'
@@ -19,6 +20,7 @@ export const PaighamDigest = ({ view }) => {
           <input
             readOnly={view}
             type='number'
+            defaultValue={0}
             required
             name='totalSold'
             id='totalSold'

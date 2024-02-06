@@ -1,4 +1,4 @@
-import { FaEdit, FaEye, FaPlus } from "react-icons/fa";
+import { FaEdit, FaEye, FaPlus, FaPrint } from "react-icons/fa";
 import { GeneralLayout } from "../components";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router";
@@ -143,7 +143,9 @@ export const Reports = () => {
     getQueryParams();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
-
+  const handlePrint = (id) => {
+    window.open(`${active}-report/print/${id}`, "blank");
+  };
   const toggleSearch = () => {
     showSearch(!search);
   };
@@ -185,6 +187,7 @@ export const Reports = () => {
         break;
     }
   };
+
   const getAreaWithType = () => {
     switch (userAreaType) {
       case "province":
@@ -521,7 +524,7 @@ export const Reports = () => {
   }, [active, provinces, maqams, divisions, halqas, tehsils, districts]);
   useEffect(() => {
     if (active === "halqa") getAreaWithType();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAreaType]);
   return (
     <GeneralLayout
@@ -931,7 +934,7 @@ export const Reports = () => {
           me?.nazimType
         ) && (
           <Link
-            to={"/personalReports"}
+            to={"/personalReport"}
             role="tab"
             className={`tab w-full ${tab === "personal" ? "tab-active" : ""}`}
             onClick={() => setTab("personal")}
@@ -987,6 +990,17 @@ export const Reports = () => {
                         >
                           <FaEye />
                         </button>
+                        <button
+                          className="btn"
+                          onClick={() =>
+                            window.open(
+                              `/${active}-report/print/${obj?._id}`,
+                              "blank"
+                            )
+                          }
+                        >
+                          <FaPrint />
+                        </button>
                       </div>
                     </div>
                   )
@@ -1017,6 +1031,17 @@ export const Reports = () => {
                         >
                           <FaEye />
                         </button>
+                        <button
+                          className="btn"
+                          onClick={() =>
+                            window.open(
+                              `/${active}-report/print/${obj?._id}`,
+                              "blank"
+                            )
+                          }
+                        >
+                          <FaPrint />
+                        </button>
                       </div>
                     </div>
                   )
@@ -1029,10 +1054,9 @@ export const Reports = () => {
                       <span className="text-lg font-semibold">
                         {obj?.[active + "AreaId"]?.name || "UNKNOWN"}
                         {" - "}
-                        {(active !== "province" &&
-                          obj?.[active + "AreaId"]?.province?.name) ||
-                          "UNKNOWN"}
-                        {" - "}
+                        {obj?.[active + "AreaId"]?.province?.name ||
+                          (active !== "province" && "UNKNOWN")}
+                        {obj?.[active + "AreaId"]?.province?.name && " - "}
                         {moment(obj?.month).format("MMMM YYYY")}
                       </span>
                       <span>
@@ -1055,6 +1079,12 @@ export const Reports = () => {
                           <FaEdit />
                         </button>
                       )}
+                      <button
+                        className="btn"
+                        onClick={() => handlePrint(obj?._id)}
+                      >
+                        <FaPrint />
+                      </button>
                     </div>
                   </div>
                 )
@@ -1090,6 +1120,19 @@ export const Reports = () => {
                       onClick={() => editReport(obj?._id)}
                     >
                       <FaEdit />
+                    </button>
+                    <button
+                      className="btn"
+                      onClick={() =>
+                        window.open(
+                          `/${localStorage.getItem("@type")}-report/print/${
+                            obj?._id
+                          }`,
+                          "blank"
+                        )
+                      }
+                    >
+                      <FaPrint />
                     </button>
                   </div>
                 </div>

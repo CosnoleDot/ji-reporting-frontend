@@ -11,6 +11,7 @@ export const ToseeDawat = () => {
           <input
             readOnly={true}
             type='number'
+            defaultValue={0}
             required
             name='rawabitDecided'
             id='rawabitDecided'
@@ -22,6 +23,7 @@ export const ToseeDawat = () => {
           <input
             readOnly={true}
             type='number'
+            defaultValue={0}
             required
             name='current'
             id='current'
@@ -33,6 +35,7 @@ export const ToseeDawat = () => {
           <input
             readOnly={true}
             type='number'
+            defaultValue={0}
             required
             name='meetings'
             id='meetings'
@@ -44,6 +47,7 @@ export const ToseeDawat = () => {
           <input
             readOnly={true}
             type='number'
+            defaultValue={0}
             required
             name='literatureDistribution'
             id='literatureDistribution'
@@ -60,6 +64,7 @@ export const ToseeDawat = () => {
           <input
             readOnly={true}
             type='number'
+            defaultValue={0}
             required
             name='commonStudentMeetings'
             id='commonStudentMeetings'
@@ -71,6 +76,7 @@ export const ToseeDawat = () => {
           <input
             readOnly={true}
             type='number'
+            defaultValue={0}
             required
             name='commonLiteratureDistribution'
             id='commonLiteratureDistribution'
