@@ -1213,7 +1213,11 @@ export const DeleteUser = () => {
                             area?.name
                           }${
                             userAreaType === 'Halqa'
-                              ? ` - ${area?.parentId?.name} (${area?.parentType})`
+                              ? ` - ${area?.parentId?.name} (${
+                                  area?.parentType === 'Maqam'
+                                    ? 'Maqam'
+                                    : 'Division'
+                                })`
                               : ''
                           }`;
                           document
