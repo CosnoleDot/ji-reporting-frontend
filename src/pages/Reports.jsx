@@ -518,6 +518,19 @@ export const Reports = () => {
       dispatch({ type: "ERROR", payload: err.response.data.message });
     }
   };
+  // To get Divisions
+  const getAreaType = (area) => {
+    if (area?.parentType === "Maqam") {
+      const name = maqams.find((i) => i?._id === area?.parentId?._id);
+      return `${name?.name}(Maqam)`;
+    } else if (area?.parentType === "Tehsil") {
+      const name = getDivisionByTehsil(area?.parentId, districts);
+      return `${name}(Division)`;
+    } else if (area?.province) {
+      return maqams.find((i) => i?._id === area?._id) ? "Maqam" : "Division";
+    }
+    return "Province";
+  };
   useEffect(() => {
     getAreas();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -543,6 +556,7 @@ export const Reports = () => {
                   id="filter-area-dialog-close-btn"
                   className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
                   onClick={() => {
+                    setUserAreaType("");
                     if (
                       !document
                         .getElementById("autocomplete-list")
@@ -571,6 +585,7 @@ export const Reports = () => {
                             name="userAreaType"
                             className="radio checked:bg-blue-500"
                             value="division"
+                            checked={userAreaType === "division"}
                             onChange={(e) => setUserAreaType(e.target.value)}
                           />
                           <span className="label-text">Division</span>
@@ -585,6 +600,7 @@ export const Reports = () => {
                             name="userAreaType"
                             className="radio checked:bg-blue-500"
                             value="maqam"
+                            checked={userAreaType === "maqam"}
                             onChange={(e) => setUserAreaType(e.target.value)}
                           />
                           <span className="label-text">Maqam</span>
@@ -598,6 +614,7 @@ export const Reports = () => {
                           name="userAreaType"
                           className="radio checked:bg-blue-500"
                           value="halqa"
+                          checked={userAreaType === "halqa"}
                           onChange={(e) => setUserAreaType(e.target.value)}
                           defaultChecked
                         />
@@ -663,7 +680,7 @@ export const Reports = () => {
                           document.getElementById("autocomplete").value = `${
                             area?.name
                           }${
-                            userAreaType === "Halqa"
+                            userAreaType === "halqa"
                               ? ` - ${area?.parentId?.name} (${area?.parentType})`
                               : ""
                           }`;
@@ -683,9 +700,7 @@ export const Reports = () => {
                         className="p-2 cursor-pointer hover:bg-gray-100"
                       >
                         {area?.name}
-                        {userAreaType === "Halqa"
-                          ? ` - ${area?.parentId?.name} (${area?.parentType})`
-                          : ""}
+                        {active === "halqa" ? "-" + getAreaType(area) : ""}
                       </div>
                     ))}
                 </div>
@@ -797,9 +812,10 @@ export const Reports = () => {
                 Search
               </button>
               <button
-                onClick={() =>
-                  document.getElementById("filter-area-dialog").showModal()
-                }
+                onClick={() => {
+                  setUserAreaType("halqa");
+                  document.getElementById("filter-area-dialog").showModal();
+                }}
                 className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
               >
                 filter

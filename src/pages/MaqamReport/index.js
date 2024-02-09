@@ -23,7 +23,7 @@ export const MaqamReport = () => {
   }, [params]);
 
   return (
-    <div className="wrapper " style={{ marginBottom: "2rem" }} dir="rtl">
+    <div className="wrapper reports" style={{ marginBottom: "2rem" }} dir="rtl">
       <PrintDocument />
       <h3 style={{ textAlign: "center", fontWeight: "bold" }}>
         جائزہ کارکردگی رپورت برآے مقام

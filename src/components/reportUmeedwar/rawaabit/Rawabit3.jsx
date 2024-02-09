@@ -62,7 +62,6 @@ export const Rawabit3 = ({
             <InputWithLabel
               key={index}
               readOnly={view}
-              placeholder={"Type..|"}
               label={obj.title}
               id={obj?.key}
               name={obj?.key}
