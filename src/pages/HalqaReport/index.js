@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./HalqaReport.css";
 import instance from "../../api/instrance";
 import { useParams } from "react-router-dom";
 import { PrintDocument } from "../../components";
+import { MaqamContext, TehsilContext } from "../../context";
 export const HalqaReport = () => {
   const [data, setData] = useState();
   const params = useParams();
+  const maqams = useContext(MaqamContext);
+  const tehsils = useContext(TehsilContext);
   const printReport = async (id) => {
     const req = await instance.get(`/reports/halqa/${id}`, {
       headers: {
@@ -21,10 +24,29 @@ export const HalqaReport = () => {
     if (params?.id) printReport(params?.id);
   }, [params]);
 
+  const getAreaType = (area) => {
+    if (area?.parentType === "Maqam") {
+      const name = maqams.find((i) => i?._id === area?.parentId);
+      return `Maqam - ${name?.name}`;
+    } else if (area?.parentType === "Tehsil") {
+      const tehsil = tehsils?.find((teh) => teh?._id === area?.parentId);
+      const districtId = tehsil?.district;
+      return `Division-${districtId?.division?.name}`;
+    } else if (area?.province) {
+      return maqams.find((i) => i?._id === area?._id) ? "Maqam" : "Division";
+    }
+    return "UNKNOWN";
+  };
   return (
-    <div className="wrapper " style={{ marginBottom: "2rem" }} dir="rtl">
+    <div className="wrapper reports" style={{ marginBottom: "2rem" }} dir="rtl">
       <PrintDocument />
-      <h3 style={{ textAlign: "center", fontWeight: "bold" }}>
+      <h3
+        style={{
+          textAlign: "center",
+          fontWeight: "bold",
+          marginBottom: "2rem",
+        }}
+      >
         جائزہ کارکردگی رپورت برآے حلقہ
       </h3>
       <div
@@ -37,15 +59,14 @@ export const HalqaReport = () => {
         className="tableContainer"
       >
         <h4 className="header" style={{ width: "10rem" }}>
-          {" "}
           حلقہ کا نام:
         </h4>
         <h6>
-          {data?.halqaAreaId?.name}
-          {data?.halqaAreaId?.parentType}
+          {data?.halqaAreaId?.name}( {getAreaType(data?.halqaAreaId)})
         </h6>
+
         <h4 className="header">برآے ماہ:</h4>
-        <h6>{data?.month}</h6>
+        <h6>{data?.month.split("T")[0]}</h6>
       </div>
 
       <div

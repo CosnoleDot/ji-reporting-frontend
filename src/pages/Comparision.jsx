@@ -8,12 +8,12 @@ import {
   MeContext,
   ProvinceContext,
   useToastState,
-} from '../context';
-import instance from '../api/instrance';
-import { useEffect } from 'react';
-import { ReportChart } from '../components/ReportChart';
-import { FaTimes, FaChevronCircleRight, FaTimesCircle } from 'react-icons/fa';
-import { months } from './Reports';
+} from "../context";
+import instance from "../api/instrance";
+import { useEffect } from "react";
+import { ReportChart } from "../components/ReportChart";
+import { FaTimes, FaChevronCircleRight, FaTimesCircle } from "react-icons/fa";
+import { getDivisionByTehsil, months } from "./Reports";
 
 const Dates = ({
   durationMonths,
@@ -216,6 +216,19 @@ export const Comparision = () => {
       dispatch({ type: 'ERROR', payload: error?.response?.data?.message });
     }
   };
+  const getAreaType = (area) => {
+    if (area?.parentType === "Maqam") {
+      const name = maqams.find((i) => i?._id === area?.parentId?._id);
+      return `${name?.name}(Maqam)`;
+    } else if (area?.parentType === "Tehsil") {
+      const name = getDivisionByTehsil(area?.parentId, districts);
+      return `${name}(Division)`;
+    } else if (area?.province) {
+      return maqams.find((i) => i?._id === area?._id) ? "Maqam" : "Division";
+    }
+    return "Province";
+  };
+
   return (
     <GeneralLayout title={'Comparison'} active={'comparison'}>
       <div className='relative flex flex-col gap-3 h-[calc(100vh-66px-64px)] w-full p-3'>
@@ -257,10 +270,7 @@ export const Comparision = () => {
               </option>
               {areas[reportType]?.map((i, index) => (
                 <option key={index} value={i?._id}>
-                  {i?.name}{' '}
-                  {/* ADD DIVISION LOGIC */}
-                  {reportType === 'halqa' &&
-                    `- ${i?.parentId?.name} (${i?.parentType})`}
+                  {i?.name} - {getAreaType(i)}
                 </option>
               ))}
             </select>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { InputWithLabel } from "../InputWithLabel";
 const fajarNamaz = [
   {
@@ -24,6 +24,17 @@ const fajarNamaz = [
   },
 ];
 export const FajarNamaz = ({ view }) => {
+  const [days, setDays] = useState("");
+  const getTotalDaysInPreviousMonth = () => {
+    const date = new Date();
+    date.setMonth(date.getMonth() - 1); // Move to previous month
+    date.setDate(0); // Set to the last day of the previous month
+    setDays(date.getDate());
+  };
+
+  useEffect(() => {
+    getTotalDaysInPreviousMonth();
+  }, []);
   return (
     <div className="w-full">
       <h3 className="block w-full text-start font-medium text-sm p-3">
@@ -33,13 +44,14 @@ export const FajarNamaz = ({ view }) => {
         {fajarNamaz.map((obj, index) => (
           <div className="w-full md:pr-0 mb-2" key={index}>
             <InputWithLabel
-              readOnly={view}
+              readOnly={view || obj?.key === "fajarTotal"}
               placeholder={obj.title}
               label={obj.title}
               id={obj?.key}
               name={obj?.key}
               type={obj?.type}
               required={true}
+              value={obj?.key === "fajarTotal" ? days : ""}
             />
           </div>
         ))}

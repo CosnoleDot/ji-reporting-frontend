@@ -84,6 +84,10 @@ export const EditProfile = () => {
   useEffect(() => {
     getSubjects();
   }, []);
+  useEffect(() => {
+    const sub = subjects.find((f) => f?._id === me?.subject);
+    setSubject(sub?.title);
+  }, [me?.subject, subjects]);
   return (
     <GeneralLayout>
       <div className=" flex flex-col justify-start h-[calc(100vh-64px-64px)] overflow-hidden overflow-y-scroll">
@@ -113,7 +117,7 @@ export const EditProfile = () => {
                     <input
                       required
                       type="text"
-                      placeholder="Father name"
+                      placeholder="No data"
                       name="fatherName"
                       className="w-full input input-bordered input-primary"
                       defaultValue={me?.fatherName}
@@ -130,7 +134,7 @@ export const EditProfile = () => {
                     <input
                       required
                       type="month"
-                      placeholder="Date of birth"
+                      placeholder="No data"
                       name="dob"
                       className="w-full input input-bordered input-primary "
                       defaultValue={me?.dob?.split("-").slice(0, 2).join("-")}
@@ -145,7 +149,7 @@ export const EditProfile = () => {
                     <input
                       required
                       type="month"
-                      placeholder="JoiningDate"
+                      placeholder="No data"
                       name="joiningDate"
                       className="w-full input input-bordered input-primary"
                       defaultValue={me?.joiningDate
@@ -188,9 +192,9 @@ export const EditProfile = () => {
                       className="select select-bordered select-primary w-full"
                       value={selectedSubject}
                       onChange={handleSubjectChange}
-                      defaultValue={me?.subject}
+                      defaultValue={subject}
                     >
-                      <option value={""}>Select or Add</option>
+                      <option value={""}>{subject}</option>
                       {subjects?.map((sub, index) => (
                         <option
                           value={sub?._id}
@@ -252,7 +256,7 @@ export const EditProfile = () => {
                       required
                       defaultValue={me?.institution}
                       type="text"
-                      placeholder="Institution"
+                      placeholder="No data"
                       name="institution"
                       className="w-full input input-bordered input-primary"
                     />
@@ -267,7 +271,7 @@ export const EditProfile = () => {
                       required
                       defaultValue={me?.email}
                       type="email"
-                      placeholder="Email Address"
+                      placeholder="No data"
                       name="email"
                       className="w-full input input-bordered input-primary"
                     />
@@ -280,7 +284,7 @@ export const EditProfile = () => {
                       required
                       defaultValue={me?.age}
                       type="number"
-                      placeholder="Age"
+                      placeholder="No data"
                       name="age"
                       className="w-full input input-bordered input-primary"
                     />
@@ -295,7 +299,7 @@ export const EditProfile = () => {
                       required
                       defaultValue={me?.phoneNumber}
                       type="text"
-                      placeholder="Phone Number"
+                      placeholder="No data"
                       name="phoneNumber"
                       className="w-full input input-bordered input-primary"
                     />
@@ -310,7 +314,7 @@ export const EditProfile = () => {
                       required
                       defaultValue={me?.whatsAppNumber}
                       type="text"
-                      placeholder="WhatsApp Number"
+                      placeholder="No data "
                       name="whatsAppNumber"
                       className="w-full input input-bordered input-primary"
                     />
@@ -322,7 +326,7 @@ export const EditProfile = () => {
                       <span className="text-base label-text">Home address</span>
                     </label>
                     <textarea
-                      placeholder="Address"
+                      placeholder="No data"
                       name="address"
                       className="w-full input input-bordered input-primary"
                       required
