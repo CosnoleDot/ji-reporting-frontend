@@ -479,6 +479,17 @@ export const Signup = () => {
                     type="radio"
                     name="nazimType"
                     className="radio checked:bg-blue-500"
+                    value="umeedwaar-nazim"
+                  />
+                  <span className="label-text">Umeedwaar-Nazim</span>
+                </label>
+              </div>
+              <div className="form-control">
+                <label className="label cursor-pointer gap-2">
+                  <input
+                    type="radio"
+                    name="nazimType"
+                    className="radio checked:bg-blue-500"
                     value="rukan-nazim"
                   />
                   <span className="label-text">Rukan-Nazim</span>
@@ -497,17 +508,6 @@ export const Signup = () => {
                   </label>
                 </div>
               )}
-              <div className="form-control">
-                <label className="label cursor-pointer gap-2">
-                  <input
-                    type="radio"
-                    name="nazimType"
-                    className="radio checked:bg-blue-500"
-                    value="umeedwaar-nazim"
-                  />
-                  <span className="label-text">Umeedwaar-Nazim</span>
-                </label>
-              </div>
             </div>
           </div>
           <div className="relative">
