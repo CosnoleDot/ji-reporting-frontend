@@ -88,6 +88,9 @@ export const EditProfile = () => {
     const sub = subjects.find((f) => f?._id === me?.subject);
     setSubject(sub?.title);
   }, [me?.subject, subjects]);
+  useEffect(() => {
+    setSelectedSubject(me?.subject);
+  }, [me]);
   return (
     <GeneralLayout>
       <div className=" flex flex-col justify-start h-[calc(100vh-64px-64px)] overflow-hidden overflow-y-scroll">
@@ -189,21 +192,31 @@ export const EditProfile = () => {
                       required
                       name="subject"
                       id="subject"
-                      className="select select-bordered select-primary w-full"
-                      value={selectedSubject}
+                      className="select select-bordered select-primary w-full capitalize"
                       onChange={handleSubjectChange}
-                      defaultValue={subject}
+                      defaultValue={selectedSubject}
                     >
-                      <option value={""}>{subject}</option>
-                      {subjects?.map((sub, index) => (
-                        <option
-                          value={sub?._id}
-                          key={index}
-                          className="capitalize"
-                        >
-                          {sub?.title.split("_").join(" ")}
+                      {me?.subject ? (
+                        <option className="capitalize" value={me?.subject}>
+                          {subjects
+                            ?.find((i) => i?._id === me?.subject)
+                            ?.title.split("_")
+                            ?.join(" ")}
                         </option>
-                      ))}
+                      ) : (
+                        <option value={""}>Select Subject</option>
+                      )}
+                      {subjects
+                        ?.filter((i) => i?._id !== me?.subject)
+                        ?.map((sub, index) => (
+                          <option
+                            value={sub?._id}
+                            key={index}
+                            className="capitalize"
+                          >
+                            {sub?.title.split("_").join(" ")}
+                          </option>
+                        ))}
                     </select>
                     <span
                       className="text-sm absolute top-1 p-1 right-0 text-slate-500 cursor-pointer hover:text-primary hover:font-semibold"

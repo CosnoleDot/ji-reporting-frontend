@@ -23,7 +23,7 @@ import { getDivisionByTehsil } from "./Reports";
 
 export const Dashboard = () => {
   const [count, setCount] = useState(0);
-  const { nazim } = useContext(UIContext);
+  const { nazim, setLoading } = useContext(UIContext);
   const maqams = useContext(MaqamContext);
   const divisions = useContext(DivisionContext);
   const unit = useContext(HalqaContext);
@@ -43,6 +43,7 @@ export const Dashboard = () => {
   const [searchArea, setSearchArea] = useState("");
   const [selectedId, setSelectedId] = useState("");
   const getData = async () => {
+    setLoading(true);
     try {
       const getUnfilledReports = async (path) => {
         const res = await instance.get(
@@ -118,13 +119,14 @@ export const Dashboard = () => {
     } catch (error) {
       console.log(error);
     }
+    setLoading(false);
   };
   useEffect(() => {
     if (me) {
       getData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [queryDate, me]);
+  }, [me]);
   const clearFilter = () => {
     setQuerydate("");
     setUserAreaType("All");
@@ -348,9 +350,7 @@ export const Dashboard = () => {
                           .filter((i) => !i?.disabled)
                           .map((obj, index) => (
                             <tr key={index} className="w-full flex">
-                              <td className="w-[50%]">
-                                {obj.name} {obj}
-                              </td>
+                              <td className="w-[50%]">{obj.name}</td>
                               <td className="w-[50%]">
                                 {nazim.find(
                                   (i) => i?.userAreaId?._id === obj?._id

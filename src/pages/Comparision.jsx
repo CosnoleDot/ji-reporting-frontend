@@ -8,12 +8,13 @@ import {
   MeContext,
   ProvinceContext,
   useToastState,
-} from '../context';
-import instance from '../api/instrance';
-import { useEffect } from 'react';
-import { ReportChart } from '../components/ReportChart';
-import { FaTimes, FaChevronCircleRight, FaTimesCircle } from 'react-icons/fa';
-import { getDivisionByTehsil, months } from './Reports';
+} from "../context";
+import instance from "../api/instrance";
+import { useEffect } from "react";
+import { ReportChart } from "../components/ReportChart";
+import { FaTimes, FaChevronCircleRight, FaTimesCircle } from "react-icons/fa";
+import { getDivisionByTehsil, months } from "./Reports";
+import { UIContext } from "../context/ui";
 
 const Dates = ({
   durationMonths,
@@ -25,6 +26,7 @@ const Dates = ({
   getData,
 }) => {
   const [year, setYear] = useState(2023);
+
   return (
     <div className="fixed top-0 left-0 z-1 w-full h-screen bg-white">
       <div className="flex z-50 w-full p-3 items-center border-b justify-between">
@@ -154,6 +156,8 @@ export const Comparision = () => {
   const halqas = useContext(HalqaContext);
   const districts = useContext(DistrictContext);
   const provinces = useContext(ProvinceContext);
+  const nazims = useContext(UIContext);
+  const [searchArea, setSearchArea] = useState("");
 
   const [areas, setAreas] = useState({
     maqam: [],
@@ -163,7 +167,6 @@ export const Comparision = () => {
     province: [],
     all: [],
   });
-
   useEffect(() => {
     setAreas({
       ...areas,
@@ -176,7 +179,6 @@ export const Comparision = () => {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [maqams, divisions, halqas, districts]);
-
   const { dispatch } = useToastState();
   const transformedArray = durationMonths.map((item) => {
     return {
@@ -501,22 +503,43 @@ export const Comparision = () => {
     }
   };
   const getAreaType = (area) => {
-    if (area?.parentType === 'Maqam') {
+    if (area?.parentType === "Maqam") {
       const name = maqams.find((i) => i?._id === area?.parentId?._id);
       return `${name?.name} (Maqam)`;
-    } else if (area?.parentType === 'Tehsil') {
+    } else if (area?.parentType === "Tehsil") {
       const name = getDivisionByTehsil(area?.parentId, districts);
       return `${name} (Division)`;
     } else if (area?.province) {
-      return maqams.find((i) => i?._id === area?._id) ? 'Maqam' : 'Division';
+      return maqams.find((i) => i?._id === area?._id) ? "Maqam" : "Division";
     }
-    return 'Province';
+    return "Province";
   };
-
+  const handleEventClick = (e) => {
+    if (e?.target?.id !== "autocomplete0") {
+      if (
+        !document
+          ?.getElementById("autocomplete0-list")
+          ?.classList?.contains("hidden")
+      ) {
+        document
+          ?.getElementById("autocomplete0-list")
+          ?.classList?.add("hidden");
+      }
+    }
+  };
+  useEffect(() => {
+    document.addEventListener("click", handleEventClick);
+    return () => {
+      document.removeEventListener("click", handleEventClick);
+    };
+  }, []);
   return (
     <GeneralLayout title={"Comparison"} active={"comparison"}>
       <div className="relative flex flex-col gap-3 h-[calc(100vh-66px-64px)] w-full p-3">
-        <div className="flex items-center justify-start lg:justify-center xl:justify-center gap-3 border-b border-t py-3 overflow-hidden overflow-x-scroll inlineQ">
+        <div
+          style={{ overflow: "visible" }}
+          className="flex items-center justify-start lg:justify-center xl:justify-center gap-3 border-b border-t py-3 overflow-visible overflow-x-scroll inlineQ"
+        >
           <select
             value={reportType}
             onChange={(e) => {
@@ -543,7 +566,7 @@ export const Comparision = () => {
             ) && <option value="personal">Personal</option>}
             {/* <option value='self'>Self Compare</option> */}
           </select>
-          {reportType !== "self" && (
+          {reportType !== "self" && reportType !== "personal" && (
             <select
               value={areaId}
               onChange={(e) => setAreaId(e.target.value)}
@@ -558,6 +581,80 @@ export const Comparision = () => {
                 </option>
               ))}
             </select>
+          )}
+
+          {reportType === "personal" && (
+            <div className="relative ">
+              <input type="hidden" name="userAreaId" id="userAreaId" />
+              <input
+                id="autocomplete0"
+                type="search"
+                className="input input-bordered input-primary w-full"
+                placeholder="Select area"
+                onChange={(e) => setSearchArea(e.target.value)}
+                onClick={() => {
+                  if (
+                    document
+                      .getElementById("autocomplete0-list")
+                      .classList.contains("hidden")
+                  ) {
+                    document
+                      .getElementById("autocomplete0-list")
+                      .classList.remove("hidden");
+                  } else {
+                    document
+                      .getElementById("autocomplete0-list")
+                      .classList.add("hidden");
+                  }
+                }}
+              />
+              <div
+                id="autocomplete0-list"
+                className="absolute hidden z-10 max-h-[100px] overflow-y-scroll bg-white border border-gray-300 w-full mt-1"
+              >
+                {nazims?.nazim
+                  .sort((a, b) =>
+                    a?.userAreaId?.name?.localeCompare(b?.userAreaId?.name)
+                  )
+                  .filter((item) => {
+                    if (searchArea && searchArea !== "") {
+                      if (
+                        item?.userAreaId?.name
+                          ?.toString()
+                          ?.toLowerCase()
+                          ?.includes(searchArea?.toString()?.toLowerCase()) ||
+                        item?.name
+                          ?.toString()
+                          ?.toLowerCase()
+                          ?.includes(searchArea?.toString()?.toLowerCase())
+                      ) {
+                        return true;
+                      }
+                      return false;
+                    } else {
+                      return true;
+                    }
+                  })
+                  .map((area, index) => (
+                    <div
+                      key={index}
+                      onClick={() => {
+                        document.getElementById("userAreaId").value = area?._id;
+                        setAreaId(area?._id);
+                        document.getElementById(
+                          "autocomplete0"
+                        ).value = `${area?.userAreaId?.name} - ${area?.name} `;
+                        document
+                          .getElementById("autocomplete0-list")
+                          .classList.add("hidden");
+                      }}
+                      className="p-2 cursor-pointer hover:bg-gray-100"
+                    >
+                      {area?.userAreaId?.name} - {area?.name}
+                    </div>
+                  ))}
+              </div>
+            </div>
           )}
           <select
             value={selectedProperty}

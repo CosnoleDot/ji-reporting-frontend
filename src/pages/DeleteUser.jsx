@@ -38,7 +38,9 @@ export const DeleteUser = () => {
     2021, 2022, 2023, 2024, 2025, 2026, 2027,
   ]);
   const [selectedYear, setSelectedYear] = useState(null);
+  const [birthYear, setBirthYear] = useState(null);
   const [openYears, setOpenYears] = useState(false);
+  const [openBirthYears, setOpenBirthYears] = useState(false);
   //year calender
   const YearCalender = (val) => {
     setYears((prevYears) => {
@@ -52,8 +54,8 @@ export const DeleteUser = () => {
       setData(
         nazim.filter(
           (i) =>
-            i.email.toLowerCase().includes(e.target.value) ||
-            i.name.toLowerCase().includes(e.target.value)
+            i.email.toLowerCase().includes(e.target.value.toLowerCase()) ||
+            i.name.toLowerCase().includes(e.target.value.toLowerCase())
         )
       );
     } else {
@@ -452,7 +454,7 @@ export const DeleteUser = () => {
                   onClick={() => setOpenYears(!openYears)}
                 />
                 {openYears && (
-                  <div className="absolute bg-white border w-20 p-0 right-0 select-none">
+                  <div className="absolute bg-white border w-20 p-0 right-0 select-none z-10">
                     <span
                       id="minus-year"
                       className="w-full p-1 bg-[#eee] hover:bg-[#aaa] block text-center"
@@ -468,11 +470,12 @@ export const DeleteUser = () => {
                           obj === selectedYear ? "bg-slate-400" : ""
                         }`}
                         data-year={obj}
-                        onClick={(e) =>
+                        onClick={(e) => {
                           setSelectedYear(
                             parseInt(e.currentTarget.getAttribute("data-year"))
-                          )
-                        }
+                          );
+                          setOpenYears(false);
+                        }}
                       >
                         {obj}
                       </p>
@@ -487,17 +490,55 @@ export const DeleteUser = () => {
                   </div>
                 )}
               </div>
-
-              <div>
+              <div className="relative">
                 <label className="label">
                   <span className="text-base label-text">Year of birth</span>
                 </label>
                 <input
-                  type="date"
-                  placeholder="Date of birth"
+                  type="text"
+                  id="year-of-joining"
+                  placeholder={"Select year"}
                   name="dob"
-                  className="w-full input input-bordered input-primary min-w-[230px]"
+                  className="w-full select select-bordered select-primary"
+                  value={birthYear}
+                  onClick={() => setOpenBirthYears(!openBirthYears)}
                 />
+                {openBirthYears && (
+                  <div className="absolute bg-white border w-20 p-0 right-0 select-none">
+                    <span
+                      id="minus-year"
+                      className="w-full p-1 bg-[#eee] hover:bg-[#aaa] block text-center"
+                      onClick={() => YearCalender(-1)}
+                    >
+                      -
+                    </span>
+
+                    {years.map((obj) => (
+                      <p
+                        key={obj}
+                        className={`year-item hover:bg-slate-400 w-full flex justify-start px-4 items-center cursor-pointer ${
+                          obj === birthYear ? "bg-slate-400" : ""
+                        }`}
+                        data-year={obj}
+                        onClick={(e) => {
+                          setBirthYear(
+                            parseInt(e.currentTarget.getAttribute("data-year"))
+                          );
+                          setOpenBirthYears(false);
+                        }}
+                      >
+                        {obj}
+                      </p>
+                    ))}
+                    <span
+                      id="plus-year"
+                      className="w-full p-1 bg-[#eee] hover:bg-[#aaa] block text-center"
+                      onClick={() => YearCalender(1)}
+                    >
+                      +
+                    </span>
+                  </div>
+                )}
               </div>
               <div className="w-full">
                 <label className="label">
