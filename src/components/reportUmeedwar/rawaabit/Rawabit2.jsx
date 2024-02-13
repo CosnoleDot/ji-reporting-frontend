@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { InputWithLabel } from "../../InputWithLabel";
+import { MdOutlineCancel } from "react-icons/md";
 const rbt2 = [
   {
     title: "نام",
@@ -18,7 +19,7 @@ const rbt2 = [
   },
 
   {
-    title: "اس ماہ کونسی کتاب پڑھاہی ",
+    title: "اس ماہ کونسی کتاب پڑھائ ",
     type: "text",
     key: "rbt2BookRead",
   },
@@ -55,7 +56,7 @@ export const Rawabit2 = ({
 
   return (
     <div>
-      <h2 className="block w-full text-center font-bold mb-3">ربط نمر۲</h2>
+      <h2 className="block w-full text-center font-bold mb-3">ربط نمبر۲</h2>
       <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
         <div className="w-full md:pr-0 mb-2 flex flex-col flex-wrap">
           {rbt2.map((obj, index) => (
@@ -70,10 +71,10 @@ export const Rawabit2 = ({
             />
           ))}
           <h3 className="mb-2">
-            اس ماہ جمیعت کے کون کون سے پروگرامات میں شریک کروایا
+            اس ماہ جمعیت کے کون کون سے پروگرامات میں شریک کروایا
           </h3>
 
-          <div className="w-full flex justify-end items-center">
+          <div className="w-full flex justify-start gap-3 flex-row-reverse items-center">
             {!view && (
               <button
                 className="btn btn-primary mb-3 max-w-[10rem]"
@@ -105,18 +106,29 @@ export const Rawabit2 = ({
                 Done
               </button>
             </dialog>
-          </div>
-          <div className="flex justify-start items-center mb-3">
-            {rbt2Programs &&
-              rbt2Programs.length > 0 &&
-              rbt2Programs.map((p, index) => (
-                <p
-                  className="input underline underline-bg-slate-200"
-                  key={index}
-                >
-                  {p}
-                </p>
-              ))}
+            <div className="flex w-full justify-start items-center mb-3 min-h-[30px] border rounded-md border-slate-300">
+              {rbt2Programs &&
+                rbt2Programs.length > 0 &&
+                rbt2Programs.map((p, index) => (
+                  <p
+                    className="relative input p-2 m-2 border border-slate-200 underline  underline-bg-slate-100"
+                    key={index}
+                    readOnly={view}
+                  >
+                    {p}
+                    {!view && (
+                      <MdOutlineCancel
+                        onClick={() => {
+                          const temp = [...rbt2Programs];
+                          temp.splice(index, 1);
+                          setRbt2Programs([...temp]);
+                        }}
+                        className="absolute -top-2 -left-2 cursor-pointer"
+                      />
+                    )}
+                  </p>
+                ))}
+            </div>
           </div>
           <div className="flex justify-start items-center gap-2">
             {!view &&

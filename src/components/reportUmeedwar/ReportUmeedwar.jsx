@@ -22,7 +22,7 @@ const intro = [
     key: "name",
   },
   {
-    title: "جمیعت سے تعلق",
+    title: "جمعیت سے تعلق",
     type: "text",
     key: "JamiatRelation",
   },

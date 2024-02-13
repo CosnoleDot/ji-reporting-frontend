@@ -2,12 +2,12 @@ import React from "react";
 import { InputWithLabel } from "../InputWithLabel";
 const ahdees = [
   {
-    title: "کل کتنےدن پڑہی",
+    title: "کل کتنےدن پڑھی",
     type: "number",
     key: "ahdeesTotalDays",
   },
   {
-    title: "کون سی کتاب پڑہی",
+    title: "کون سی کتاب پڑھی",
     type: "text",
     key: "ahdeesBook",
   },

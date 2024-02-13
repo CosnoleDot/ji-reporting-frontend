@@ -10,7 +10,7 @@ export const RegularStudents = () => {
           <InputWithLabel
             // readOnly={view}
             placeholder={"..."}
-            label={"کتنی عام طلبہ سے ملاقاتیں کیں"}
+            label={"کتنے عام طلبہ سے ملاقاتیں کیں"}
             id={"genralStudentsCount"}
             name={"genralStudentsCount"}
             type={"number"}

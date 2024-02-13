@@ -2,17 +2,17 @@ import React from "react";
 import { InputWithLabel } from "../InputWithLabel";
 const tafseerQuran = [
   {
-    title: "کل کتنےدن پڑہی",
+    title: "کل کتنےدن پڑھی",
     type: "number",
     key: "tafseerTotalDays",
   },
   {
-    title: "کون سی سورۃپڑہی",
+    title: "کون سی سورۃپڑھی",
     type: "text",
     key: "tafseerSurah",
   },
   {
-    title: "کل کتنے رکوع پڑہے",
+    title: "کل کتنے رکوع پڑھے",
     type: "number",
     key: "tafseerTotalRakoo",
   },

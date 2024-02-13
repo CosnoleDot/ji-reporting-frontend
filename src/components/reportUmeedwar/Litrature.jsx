@@ -2,12 +2,12 @@ import React from "react";
 import { InputWithLabel } from "../InputWithLabel";
 const litrature = [
   {
-    title: "کل کتنےدن پڑہا",
+    title: "کل کتنےدن پڑھا",
     type: "number",
     key: "litratureTotalDays",
   },
   {
-    title: "کون سی کتاب پڑہی",
+    title: "کون سی کتاب پڑھی",
     type: "text",
     key: "litratureBook",
   },

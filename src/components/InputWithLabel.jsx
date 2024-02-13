@@ -36,7 +36,7 @@ export const InputWithLabel = ({
       <input
         type={type || "number"}
         readOnly={readOnly}
-        className="w-full border p-2 rounded-lg mb-2"
+        className="w-full border p-2 rounded-lg mb-3"
         placeholder={value || placeholder || label}
         required={required || true}
         name={name}
