@@ -104,6 +104,7 @@ export const Maqam = () => {
       .forEach((i) => {
         const sim = reverseDataFormat(i);
         Object.keys(sim)?.forEach((j) => {
+          console.log(sim)
           if (halq?.[j]) {
             try {
               halq[j] += parseInt(sim[j]) || 0;
@@ -164,16 +165,16 @@ export const Maqam = () => {
         }
       }
     });
-    document.getElementById('studyCircle-averageAttendance').value = null;
-    document.getElementById('studyCircle-done').value = null;
-    document.getElementById('arkanFilled').value = null;
-    document.getElementById('umeedwaranFilled').value = null;
+    document.getElementById('studyCircle-averageAttendance').value = 0;
+    document.getElementById('studyCircle-done').value = 0;
+    document.getElementById('arkanFilled').value = 0;
+    document.getElementById('umeedwaranFilled').value = 0;
     ['arkan', 'umeedWaran'].forEach((i) => {
-      document.getElementById(`${i}-start`).value = null;
-      document.getElementById(`${i}-end`).value = null;
-      document.getElementById(`${i}-increase`).value = null;
-      document.getElementById(`${i}-decrease`).value = null;
-      document.getElementById(`${i}-annual`).value = null;
+      document.getElementById(`${i}-start`).value = 0;
+      document.getElementById(`${i}-end`).value = 0;
+      document.getElementById(`${i}-increase`).value = 0;
+      document.getElementById(`${i}-decrease`).value = 0;
+      document.getElementById(`${i}-annual`).value = 0;
     });
     // document.getElementById('totalLibraries').value = halqa.filter((i) =>
     //   i?.month.includes(month)

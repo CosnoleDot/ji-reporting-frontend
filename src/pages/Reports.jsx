@@ -419,6 +419,9 @@ export const Reports = () => {
     document.getElementById("autocomplete").value = "";
   };
   useEffect(() => {
+    console.log(halqaReports);
+  }, [tab, active, id, userType]);
+  useEffect(() => {
     fetchReports();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userType, id, active, tab, selectedId, selectedMonth]);
@@ -811,15 +814,17 @@ export const Reports = () => {
               >
                 Search
               </button>
-              <button
-                onClick={() => {
-                  setUserAreaType("halqa");
-                  document.getElementById("filter-area-dialog").showModal();
-                }}
-                className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
-              >
-                filter
-              </button>
+              {me?.userAreaType !== "Halqa" && (
+                <button
+                  onClick={() => {
+                    setUserAreaType("halqa");
+                    document.getElementById("filter-area-dialog").showModal();
+                  }}
+                  className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
+                >
+                  filter
+                </button>
+              )}
               <button
                 className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
                 onClick={clearFilters}

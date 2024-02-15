@@ -1,9 +1,9 @@
-import { GeneralLayout, GeneralInfo, calcultate } from '../components';
-import { convertDataFormat, reverseDataFormat, toJson } from '../utils';
-import instance from '../api/instrance';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useContext, useState } from 'react';
-import { useEffect } from 'react';
+import { GeneralLayout, GeneralInfo, calcultate } from "../components";
+import { convertDataFormat, reverseDataFormat, toJson } from "../utils";
+import instance from "../api/instrance";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useContext, useState } from "react";
+import { useEffect } from "react";
 import {
   DivisionReportContext,
   HalqaReportContext,
@@ -11,20 +11,20 @@ import {
   MeContext,
   ProvinceReportContext,
   useToastState,
-} from '../context';
-import { UIContext } from '../context/ui';
-import { Tanzeem } from '../components/provinceReport/Tanzeem';
-import { IfradiKuwat } from '../components/provinceReport/IfradiKuwat';
-import { MarkaziActivities } from '../components/provinceReport/MarkaziActivities';
-import ZailiActivities from '../components/provinceReport/ZailiActivities';
-import { OtherActivities } from '../components/provinceReport/OtherActivities';
-import { ToseeDawat } from '../components/provinceReport/ToseeDawat';
-import { Library } from '../components/provinceReport/Library';
-import { PaighamDigest } from '../components/provinceReport/PaighamDigest';
-import { RozOShabDiary } from '../components/provinceReport/RozOShabDiary';
+} from "../context";
+import { UIContext } from "../context/ui";
+import { Tanzeem } from "../components/provinceReport/Tanzeem";
+import { IfradiKuwat } from "../components/provinceReport/IfradiKuwat";
+import { MarkaziActivities } from "../components/provinceReport/MarkaziActivities";
+import ZailiActivities from "../components/provinceReport/ZailiActivities";
+import { OtherActivities } from "../components/provinceReport/OtherActivities";
+import { ToseeDawat } from "../components/provinceReport/ToseeDawat";
+import { Library } from "../components/provinceReport/Library";
+import { PaighamDigest } from "../components/provinceReport/PaighamDigest";
+import { RozOShabDiary } from "../components/provinceReport/RozOShabDiary";
 
 const getData = async (id, setData, data) => {
-  const maqam = data['province'];
+  const maqam = data["province"];
   const obj = maqam.filter((i) => i?._id?.toString() === id?.toString());
   // if (req) {
   setData(reverseDataFormat(obj[0]));
@@ -37,7 +37,7 @@ export const Province = () => {
   const maqam = useContext(MaqamReportContext);
   const division = useContext(DivisionReportContext);
   const province = useContext(ProvinceReportContext);
-  const [month, setMonth] = useState('');
+  const [month, setMonth] = useState("");
   const params = useParams();
   const [id, setId] = useState(null);
   const { dispatch } = useToastState();
@@ -47,161 +47,163 @@ export const Province = () => {
   const location = useLocation();
   const me = useContext(MeContext);
   const navigate = useNavigate();
+  console.log(maqam);
+  console.log(month);
   const autoFill = () => {
     const halq = {};
-    document.getElementById('province-form').reset();
+    document.getElementById("province-form").reset();
     if (
-      maqam.filter((i) => i?.month.includes(month)) < 1 &&
-      division.filter((i) => i?.month.includes(month)) < 1
+      maqam.filter((i) => i?.month.includes(month))?.length < 1 &&
+      division.filter((i) => i?.month.includes(month))?.length < 1
     ) {
       [
-        'rafaqa-start',
-        'karkunan-start',
-        'rafaqa-increase',
-        'karkunan-increase',
-        'rafaqa-decrease',
-        'karkunan-decrease',
-        'rafaqa-end',
-        'karkunan-end',
-        'rafaqa-annual',
-        'karkunan-annual',
-        'ijtRafaqa-decided',
-        'ijtRafaqa-done',
-        'ijtRafaqa-averageAttendance',
-        'studyCircleMentioned-decided',
-        'studyCircleMentioned-done',
-        'studyCircleMentioned-averageAttendance',
-        'ijtKarkunan-decided',
-        'ijtKarkunan-done',
-        'ijtKarkunan-averageAttendance',
-        'darseQuran-decided',
-        'darseQuran-done',
-        'darseQuran-averageAttendance',
-        'dawatiWafud',
-        'rawabitParties',
-        'shabBedari',
-        'nizamSalah',
-        'rawabitDecided',
-        'current',
-        'meetings',
-        'literatureDistribution',
-        'commonStudentMeetings',
-        'commonLiteratureDistribution',
-        'totalLibraries',
-        'totalBooks',
-        'meetings',
-        'literatureDistribution',
-        'commonStudentMeetings',
-        'commonLiteratureDistribution',
-        'totalLibraries',
-        'totalBooks',
-        'totalIncrease',
-        'totalDecrease',
-        'totalBookRent',
-        'rafaqaFilled',
-        'tanzeemiRound',
-        'tarbiyatGaah',
-        'shaheenMeeting-decided',
-        'shaheenMeeting-done',
-        'shaheenMeeting-averageAttendance',
-        'paighamEvent-decided',
-        'paighamEvent-done',
-        'paighamEvent-averageAttendance',
-        'ijtArkan-decided',
-        'ijtArkan-done',
-        'ijtArkan-averageAttendance',
-        'studyCircle-decided',
-        'studyCircle-done',
-        'studyCircle-averageAttendance',
-        'ijtNazmeen-decided',
-        'ijtNazmeen-done',
-        'ijtNazmeen-averageAttendance',
-        'ijtUmeedwaran-decided',
-        'ijtUmeedwaran-done',
-        'ijtUmeedwaran-averageAttendance',
-        'sadurMeeting-decided',
-        'sadurMeeting-done',
-        'sadurMeeting-averageAttendance',
-        'arkan-start',
-        'arkan-increase',
-        'arkan-decrease',
-        'arkan-end',
-        'arkan-annual',
-        'umeedWaran-start',
-        'umeedWaran-increase',
-        'umeedWaran-decrease',
-        'umeedWaran-end',
-        'umeedWaran-annual',
-        'shaheen-start',
-        'shaheen-increase',
-        'shaheen-decrease',
-        'shaheen-end',
-        'shaheen-annual',
-        'members-start',
-        'members-increase',
-        'members-decrease',
-        'members-end',
-        'members-annual',
-        'rehaishHalqay-start',
-        'rehaishHalqay-increase',
-        'rehaishHalqay-decrease',
-        'rehaishHalqay-end',
-        'rehaishHalqay-continue',
-        'rehaishHalqay-paused',
-        'taleemHalqay-start',
-        'taleemHalqay-increase',
-        'taleemHalqay-decrease',
-        'taleemHalqay-end',
-        'taleemHalqay-continue',
-        'taleemHalqay-paused',
-        'totalHalqay-start',
-        'totalHalqay-increase',
-        'totalHalqay-decrease',
-        'totalHalqay-end',
-        'totalHalqay-continue',
-        'totalHalqay-paused',
-        'subRehaishHalqay-start',
-        'subRehaishHalqay-increase',
-        'subRehaishHalqay-decrease',
-        'subRehaishHalqay-end',
-        'subRehaishHalqay-continue',
-        'subRehaishHalqay-paused',
-        'subTaleemHalqay-start',
-        'subTaleemHalqay-increase',
-        'subTaleemHalqay-decrease',
-        'subTaleemHalqay-end',
-        'subTaleemHalqay-continue',
-        'subTaleemHalqay-paused',
-        'subTotalHalqay-start',
-        'subTotalHalqay-increase',
-        'subTotalHalqay-decrease',
-        'subTotalHalqay-end',
-        'subTotalHalqay-continue',
-        'subTotalHalqay-paused',
-        'busmSchoolUnits-start',
-        'busmSchoolUnits-increase',
-        'busmSchoolUnits-decrease',
-        'busmSchoolUnits-end',
-        'busmSchoolUnits-continue',
-        'busmSchoolUnits-paused',
-        'busmRehaishUnits-start',
-        'busmRehaishUnits-increase',
-        'busmRehaishUnits-decrease',
-        'busmRehaishUnits-end',
-        'busmRehaishUnits-continue',
-        'busmRehaishUnits-paused',
-        'busmTotalUnits-start',
-        'busmTotalUnits-increase',
-        'busmTotalUnits-decrease',
-        'busmTotalUnits-end',
-        'busmTotalUnits-continue',
-        'busmTotalUnits-paused',
-        'arkanFilled',
-        'umeedwaranFilled',
+        "rafaqa-start",
+        "karkunan-start",
+        "rafaqa-increase",
+        "karkunan-increase",
+        "rafaqa-decrease",
+        "karkunan-decrease",
+        "rafaqa-end",
+        "karkunan-end",
+        "rafaqa-annual",
+        "karkunan-annual",
+        "ijtRafaqa-decided",
+        "ijtRafaqa-done",
+        "ijtRafaqa-averageAttendance",
+        "studyCircleMentioned-decided",
+        "studyCircleMentioned-done",
+        "studyCircleMentioned-averageAttendance",
+        "ijtKarkunan-decided",
+        "ijtKarkunan-done",
+        "ijtKarkunan-averageAttendance",
+        "darseQuran-decided",
+        "darseQuran-done",
+        "darseQuran-averageAttendance",
+        "dawatiWafud",
+        "rawabitParties",
+        "shabBedari",
+        "nizamSalah",
+        "rawabitDecided",
+        "current",
+        "meetings",
+        "literatureDistribution",
+        "commonStudentMeetings",
+        "commonLiteratureDistribution",
+        "totalLibraries",
+        "totalBooks",
+        "meetings",
+        "literatureDistribution",
+        "commonStudentMeetings",
+        "commonLiteratureDistribution",
+        "totalLibraries",
+        "totalBooks",
+        "totalIncrease",
+        "totalDecrease",
+        "totalBookRent",
+        "rafaqaFilled",
+        "tanzeemiRound",
+        "tarbiyatGaah",
+        "shaheenMeeting-decided",
+        "shaheenMeeting-done",
+        "shaheenMeeting-averageAttendance",
+        "paighamEvent-decided",
+        "paighamEvent-done",
+        "paighamEvent-averageAttendance",
+        "ijtArkan-decided",
+        "ijtArkan-done",
+        "ijtArkan-averageAttendance",
+        "studyCircle-decided",
+        "studyCircle-done",
+        "studyCircle-averageAttendance",
+        "ijtNazmeen-decided",
+        "ijtNazmeen-done",
+        "ijtNazmeen-averageAttendance",
+        "ijtUmeedwaran-decided",
+        "ijtUmeedwaran-done",
+        "ijtUmeedwaran-averageAttendance",
+        "sadurMeeting-decided",
+        "sadurMeeting-done",
+        "sadurMeeting-averageAttendance",
+        "arkan-start",
+        "arkan-increase",
+        "arkan-decrease",
+        "arkan-end",
+        "arkan-annual",
+        "umeedWaran-start",
+        "umeedWaran-increase",
+        "umeedWaran-decrease",
+        "umeedWaran-end",
+        "umeedWaran-annual",
+        "shaheen-start",
+        "shaheen-increase",
+        "shaheen-decrease",
+        "shaheen-end",
+        "shaheen-annual",
+        "members-start",
+        "members-increase",
+        "members-decrease",
+        "members-end",
+        "members-annual",
+        "rehaishHalqay-start",
+        "rehaishHalqay-increase",
+        "rehaishHalqay-decrease",
+        "rehaishHalqay-end",
+        "rehaishHalqay-continue",
+        "rehaishHalqay-paused",
+        "taleemHalqay-start",
+        "taleemHalqay-increase",
+        "taleemHalqay-decrease",
+        "taleemHalqay-end",
+        "taleemHalqay-continue",
+        "taleemHalqay-paused",
+        "totalHalqay-start",
+        "totalHalqay-increase",
+        "totalHalqay-decrease",
+        "totalHalqay-end",
+        "totalHalqay-continue",
+        "totalHalqay-paused",
+        "subRehaishHalqay-start",
+        "subRehaishHalqay-increase",
+        "subRehaishHalqay-decrease",
+        "subRehaishHalqay-end",
+        "subRehaishHalqay-continue",
+        "subRehaishHalqay-paused",
+        "subTaleemHalqay-start",
+        "subTaleemHalqay-increase",
+        "subTaleemHalqay-decrease",
+        "subTaleemHalqay-end",
+        "subTaleemHalqay-continue",
+        "subTaleemHalqay-paused",
+        "subTotalHalqay-start",
+        "subTotalHalqay-increase",
+        "subTotalHalqay-decrease",
+        "subTotalHalqay-end",
+        "subTotalHalqay-continue",
+        "subTotalHalqay-paused",
+        "busmSchoolUnits-start",
+        "busmSchoolUnits-increase",
+        "busmSchoolUnits-decrease",
+        "busmSchoolUnits-end",
+        "busmSchoolUnits-continue",
+        "busmSchoolUnits-paused",
+        "busmRehaishUnits-start",
+        "busmRehaishUnits-increase",
+        "busmRehaishUnits-decrease",
+        "busmRehaishUnits-end",
+        "busmRehaishUnits-continue",
+        "busmRehaishUnits-paused",
+        "busmTotalUnits-start",
+        "busmTotalUnits-increase",
+        "busmTotalUnits-decrease",
+        "busmTotalUnits-end",
+        "busmTotalUnits-continue",
+        "busmTotalUnits-paused",
+        "arkanFilled",
+        "umeedwaranFilled",
       ].forEach((i) => {
         document.getElementById(i).value = 0;
       });
-      document.getElementById('name').value = me?.userAreaId?.name;
+      document.getElementById("name").value = me?.userAreaId?.name;
     }
     maqam
       .filter((i) => i?.month.includes(month))
@@ -247,16 +249,16 @@ export const Province = () => {
       let j = i;
       const elem = document.getElementById(j);
       if (elem) {
-        if (j === 'month') {
+        if (j === "month") {
         } else {
-          if (elem.type === 'checkbox') {
+          if (elem.type === "checkbox") {
           }
-          if (j.split('-')[1] === 'attendance') {
+          if (j.split("-")[1] === "attendance") {
             document.getElementById(
-              `${j.split('-')[0]}-averageAttendance`
+              `${j.split("-")[0]}-averageAttendance`
             ).value = halq[i];
           } else {
-            if (i === 'name' && !view) {
+            if (i === "name" && !view) {
               elem.value = me?.userAreaId?.name;
             } else {
               elem.value = halq[i];
@@ -268,10 +270,10 @@ export const Province = () => {
     Object.keys(data).forEach((i) => {
       const elem = document.getElementById(i);
       if (elem) {
-        if (i === 'month') {
-          elem.value = data[i]?.split('')?.slice(0, 7)?.join('');
+        if (i === "month") {
+          elem.value = data[i]?.split("")?.slice(0, 7)?.join("");
         } else {
-          if (elem.type === 'checkbox') {
+          if (elem.type === "checkbox") {
             elem.defaultChecked = data[i] ? true : false;
           } else {
             elem.value = data[i];
@@ -280,33 +282,33 @@ export const Province = () => {
       }
     });
     const afd = [
-      'rehaishHalqay',
-      'taleemHalqay',
-      'totalHalqay',
-      'subRehaishHalqay',
-      'subTaleemHalqay',
-      'subTotalHalqay',
-      'busmSchoolUnits',
-      'busmRehaishUnits',
-      'busmTotalUnits',
-      'arkan',
-      'umeedWaran',
-      'rafaqa',
-      'karkunan',
-      'members',
-      'shaheen',
+      "rehaishHalqay",
+      "taleemHalqay",
+      "totalHalqay",
+      "subRehaishHalqay",
+      "subTaleemHalqay",
+      "subTotalHalqay",
+      "busmSchoolUnits",
+      "busmRehaishUnits",
+      "busmTotalUnits",
+      "arkan",
+      "umeedWaran",
+      "rafaqa",
+      "karkunan",
+      "members",
+      "shaheen",
     ];
     afd.forEach((i) => {
       calcultate(i);
     });
     if (!id) {
-      document.getElementById('comments').value = null;
-      document.getElementById('anyOther').value = null;
+      document.getElementById("comments").value = null;
+      document.getElementById("anyOther").value = null;
     }
   };
   useEffect(() => {
-    const l = location.pathname?.split('/')[2];
-    if (l === 'view') {
+    const l = location.pathname?.split("/")[2];
+    if (l === "view") {
       setView(true);
     }
     setId(params?.id);
@@ -335,104 +337,104 @@ export const Province = () => {
       if (id) {
         const req = await instance.put(`/reports/province/${id}`, jsonData, {
           headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('@token')}`,
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
         await getProvinceReports();
-        dispatch({ type: 'SUCCESS', payload: req?.data?.message });
+        dispatch({ type: "SUCCESS", payload: req?.data?.message });
       } else {
-        const req = await instance.post('/reports/province', jsonData, {
+        const req = await instance.post("/reports/province", jsonData, {
           headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('@token')}`,
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
         await getProvinceReports();
-        dispatch({ type: 'SUCCESS', payload: req.data?.message });
+        dispatch({ type: "SUCCESS", payload: req.data?.message });
       }
-      navigate('/reports');
+      navigate("/reports");
     } catch (error) {
-      dispatch({ type: 'ERROR', payload: error?.response?.data?.message });
+      dispatch({ type: "ERROR", payload: error?.response?.data?.message });
     }
     setLoading(false);
   };
 
   return (
     <GeneralLayout>
-      <div className='reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll'>
+      <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">
         <form
-          className='flex flex-col justify-center items-center p-4 font-notoUrdu mb-5'
-          dir='rtl'
+          className="flex flex-col justify-center items-center p-4 font-notoUrdu mb-5"
+          dir="rtl"
           onSubmit={handleSubmit}
-          id='province-form'
+          id="province-form"
         >
-          <h2 className='text-2xl'>جا ئزءکارکردگی رپورٹ (براے صوبہ)</h2>
-          <div className='w-full p-4'>
+          <h2 className="text-2xl">جا ئزءکارکردگی رپورٹ (براے صوبہ)</h2>
+          <div className="w-full p-4">
             <div>
               <GeneralInfo
                 setMonth={setMonth}
                 month={month}
                 me={me}
-                area={'صوبہ'}
+                area={"صوبہ"}
                 view={view}
               />
             </div>
-            <div className='mb-4'>
+            <div className="mb-4">
               <Tanzeem view={view} id={id} />
             </div>
-            <div className='mb-4'>
+            <div className="mb-4">
               <IfradiKuwat view={view} id={id} />
             </div>
-            <div className='mb-4'>
+            <div className="mb-4">
               <MarkaziActivities view={view} />
             </div>
-            <div className='mb-4'>
+            <div className="mb-4">
               <ZailiActivities view={view} />
             </div>
-            <div className='mb-4'>
+            <div className="mb-4">
               <OtherActivities view={view} />
             </div>
-            <div className='mb-4'>
+            <div className="mb-4">
               <ToseeDawat />
             </div>
-            <div className='mb-4'>
+            <div className="mb-4">
               <Library />
             </div>
-            <div className='mb-4'>
+            <div className="mb-4">
               <PaighamDigest view={view} />
             </div>
-            <div className='mb-4'>
+            <div className="mb-4">
               <RozOShabDiary />
             </div>
-            <div className='w-full flex p-2'>
-              <label htmlFor='comments'>تبصرہ</label>
+            <div className="w-full flex p-2">
+              <label htmlFor="comments">تبصرہ</label>
               <input
-                type='text'
+                type="text"
                 required
-                name='comments'
-                className='border-b-2 border-dashed w-full'
-                id='comments'
+                name="comments"
+                className="border-b-2 border-dashed w-full"
+                id="comments"
                 readOnly={view}
               />
             </div>
-            <div className='w-full flex flex-col items-end gap-3 p-2'>
+            <div className="w-full flex flex-col items-end gap-3 p-2">
               <div>
-                <label htmlFor='nazim'>نام ناظمِ:</label>
+                <label htmlFor="nazim">نام ناظمِ:</label>
                 <input
-                  type='text'
-                  className='border-b-2 border-dashed text-center'
-                  id='nazim'
-                  defaultValue={me?.name || ''}
+                  type="text"
+                  className="border-b-2 border-dashed text-center"
+                  id="nazim"
+                  defaultValue={me?.name || ""}
                   readOnly
                 />
               </div>
             </div>
           </div>
           {!view && (
-            <div className='w-full'>
-              <button disabled={loading} className='btn btn-primary'>
-                {id ? 'Update' : 'Add'}
+            <div className="w-full">
+              <button disabled={loading} className="btn btn-primary">
+                {id ? "Update" : "Add"}
               </button>
             </div>
           )}
