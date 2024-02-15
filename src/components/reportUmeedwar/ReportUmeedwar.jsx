@@ -71,9 +71,6 @@ export const ReportUmeedwar = () => {
     jsonData["rbt1Programs"] = rbt1Programs;
     jsonData["rbt2Programs"] = rbt2Programs;
     jsonData["rbt3Programs"] = rbt3Programs;
-    jsonData["organizationRelation"] = me.userAreaType;
-    jsonData["JamiatRelation"] = me.nazimType;
-    jsonData["name"] = me.name;
     jsonData["fajarTotal"] = prayers;
     jsonData["otherPrayersTotal"] = otherprayers;
     jsonData["month"] = date;
@@ -204,6 +201,7 @@ export const ReportUmeedwar = () => {
     }
 
     autoFillForm(singleFile);
+    console.log(singleFile);
   }, [singleFile]);
   useEffect(() => {
     if (id && id !== undefined) {
@@ -256,26 +254,16 @@ export const ReportUmeedwar = () => {
                     obj?.key === "JamiatRelation" ||
                     obj?.key === "name"
                   }
-                  placeholder={
+                  value={
                     obj?.key === "name"
-                      ? me?.name
+                      ? singleFile?.userId?.name
                       : obj?.key === "JamiatRelation"
-                      ? me?.nazimType
-                      : obj?.title
+                      ? singleFile?.userId?.nazimType
+                      : singleFile?.userId?.nazim
                   }
                   label={obj.title}
-                  id={obj?.key}
                   name={obj?.key}
                   type={obj?.type}
-                  value={
-                    obj?.key === "organizationRelation"
-                      ? me?.userAreaType
-                      : obj?.key === "name"
-                      ? me?.name
-                      : obj?.key === "JamiatRelation"
-                      ? me?.nazimType
-                      : ""
-                  }
                 />
               </div>
             ))}
@@ -382,7 +370,7 @@ export const ReportUmeedwar = () => {
               </div>
             </div>
             <div className="flex w-full  flex-col justify-start items-start">
-              <h2 className="block w-full p-3">عنات</h2>
+              <h2 className="block w-full p-3">اعانت ادا کی</h2>
               <div className="flex flex-wrap items-center justify-start border border-primary p-2 rounded-lg">
                 <div className="form-control">
                   <label className="label cursor-pointer gap-2">
