@@ -1,15 +1,9 @@
 import { useContext, useState } from "react";
 import { GeneralLayout } from "../components";
-import { useEffect } from "react";
 import { FaLocationDot } from "react-icons/fa6";
 import { CiLocationOn } from "react-icons/ci";
 import { FaFilter, FaLocationArrow, FaPlus } from "react-icons/fa";
-import { useContext, useState } from "react";
-import { GeneralLayout } from "../components";
 import { useEffect } from "react";
-import { FaLocationDot } from "react-icons/fa6";
-import { CiLocationOn } from "react-icons/ci";
-import { FaFilter, FaLocationArrow, FaPlus } from "react-icons/fa";
 import {
   DistrictContext,
   DivisionContext,
@@ -185,7 +179,6 @@ export const Dashboard = () => {
         break;
     }
   };
-  console.log(data);
   useEffect(() => {
     getAreas();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -222,104 +215,59 @@ export const Dashboard = () => {
   // filter PERSONAL REPORTS
 
   const handlePersonalFilledReports = () => {
-    let currentMonth = new Date();
-    if (queryDate && queryDate !== "") {
-      currentMonth = new Date(queryDate);
-    }
+    // Set currentMonth based on queryDate or default to current month
+    let currentMonth =
+      queryDate && queryDate !== "" ? new Date(queryDate) : new Date();
+
+    // Set firstDayOfCurrentMonth to the 1st of the current month
     const firstDayOfCurrentMonth = new Date(
       currentMonth.getFullYear(),
-      currentMonth.getMonth(),
-      1
+      currentMonth.getMonth() + 1
     );
-    // Get the first day of the previous month
-    const firstDayOfPreviousMonth = new Date(
+
+    // Set firstDayOfPreviousMonth to the 1st of the previous month
+    const previousMonth = new Date(
       currentMonth.getFullYear(),
-      currentMonth.getMonth() - 1,
-      1
+      currentMonth.getMonth() 
     );
-
-    // Convert dates to Unix timestamps
-    const firstDayOfCurrentMonthTimestamp = firstDayOfCurrentMonth.getTime();
-    const firstDayOfPreviousMonthTimestamp = firstDayOfPreviousMonth.getTime();
-    const requiredUmeedwarReports = umeedwarReports?.reduce((acc, curr) => {
-      const reportDate = new Date(curr?.month);
-
-      // Check if reportDate is a valid date object
-      if (!isNaN(reportDate.getTime())) {
-        const dateInNumbers = reportDate.getTime();
-
-        if (
-          dateInNumbers >= firstDayOfPreviousMonthTimestamp &&
-          dateInNumbers < firstDayOfCurrentMonthTimestamp
-        ) {
-          acc.push(curr);
-        }
-      }
-      return acc;
-    }, []);
-
-    // GET THE RUKAN WHO ARE NOT NAZIM
-
-    const validNazim = nazim.filter((obj) => {
-      if (obj?.nazimType && obj?.nazimType !== "nazim") {
-        return true;
-      }
-      return false;
+    // Filter out reports within the previous month
+    const requiredUmeedwarReports = umeedwarReports.filter((report) => {
+      const reportDate = new Date(report?.month);
+      return reportDate >= previousMonth && reportDate < firstDayOfCurrentMonth;
     });
-    setUmeedwars(validNazim);
-    const validNazimIds = validNazim.map((nazim) => nazim?._id);
 
-    // USER WHO HAS FILLED PERSONAL REPORT
-
-    const nazimFilledPersonalIds = requiredUmeedwarReports.map(
-      (obj) => obj?.userId?._id
+    // Filter out nazim who are not of type "nazim"
+    const validNazim = nazim.filter(
+      (n) => n?.nazimType && n?.nazimType !== "nazim"
     );
-    if (validNazim.length > 0) {
-      const newIds = [...validNazimIds, ...nazimFilledPersonalIds];
-      const unfilled = newIds.filter((item, index) => {
-        newIds.splice(index, 1);
-        const unique = !newIds.includes(item);
-        newIds.splice(index, 0, item);
-        return unique;
-      });
-      // Check if validNazim and unfilled are defined and have elements
-      if (
-        validNazim &&
-        validNazim.length > 0 &&
-        unfilled &&
-        unfilled.length > 0
-      ) {
-        const unFilledNazims = validNazim?.reduce(
-          (acc, curr) => {
-            let exist = false;
-            // Check if curr._id is defined before accessing it
-            if (curr._id) {
-              for (let i = 0; i < unfilled.length; i++) {
-                if (unfilled[i] === curr._id) {
-                  acc.unfilled.push(curr);
-                  exist = true;
-                  break;
-                }
-              }
-            }
-            if (!exist) {
-              acc.filled.push(curr);
-            }
-            return acc;
-          },
-          { filled: [], unfilled: [] }
-        );
-        setPersonalFilled(unFilledNazims.filled);
-        setPersonalUnfilled(unFilledNazims.unfilled);
-      } else {
-        console.log("validNazim or unfilled is undefined or empty.");
-      }
-    }
+
+    // Get IDs of validNazim
+    const validNazimIds = validNazim.map((n) => n?._id);
+
+    // Get IDs of nazim who have filled personal reports
+    const nazimFilledPersonalIds = requiredUmeedwarReports.map(
+      (report) => report?.userId?._id
+    );
+
+    // Get IDs of unfilled nazim
+    const unfilledIds = validNazimIds.filter(
+      (id) => !nazimFilledPersonalIds.includes(id)
+    );
+
+    // Separate filled and unfilled nazim
+    const filledNazim = validNazim.filter((n) =>
+      nazimFilledPersonalIds.includes(n?._id)
+    );
+    const unfilledNazim = validNazim.filter((n) =>
+      unfilledIds.includes(n?._id)
+    );
+
+    // Set the state variables
+    setUmeedwars(validNazim);
+    setPersonalFilled(filledNazim);
+    setPersonalUnfilled(unfilledNazim);
   };
-  useEffect(() => {
-    console.log(personalFilled);
-    console.log(personalUnfilled);
-  }, [personalFilled, personalUnfilled]);
+
   useEffect(() => {
     handlePersonalFilledReports();
   }, [umeedwarReports, nazim]);

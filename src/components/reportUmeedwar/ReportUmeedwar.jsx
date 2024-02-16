@@ -261,6 +261,13 @@ export const ReportUmeedwar = () => {
                       ? singleFile?.userId?.nazimType
                       : singleFile?.userId?.nazim
                   }
+                  placeholder={
+                    obj?.key === "name"
+                      ? me?.name
+                      : obj?.key === "JamiatRelation"
+                      ? me?.nazimType
+                      : me?.userAreaType
+                  }
                   label={obj.title}
                   name={obj?.key}
                   type={obj?.type}

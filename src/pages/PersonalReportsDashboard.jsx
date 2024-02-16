@@ -48,7 +48,7 @@ export const PersonalReportsDashboard = () => {
       },
     });
     const d = req?.data?.data?.map((obj) => ({
-      title: getAreaType(obj?.areaId) + " " + `${obj?.name}`,
+      title: `${obj?.userId?.name}` + " " + getAreaType(obj?.areaId),
       ...obj,
     }));
 
@@ -177,8 +177,6 @@ export const PersonalReportsDashboard = () => {
           >
             <div className="flex w-full flex-col items-start justify-center">
               <span className="text-lg font-semibold" key={index}>
-                {obj?.userId?.name || "UNKNOWN"}
-                {" - "}
                 {`${obj?.title.split("(")[0]} - `}
                 {moment(obj?.month).format("MMMM YYYY")}
               </span>
