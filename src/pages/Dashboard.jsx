@@ -4,6 +4,12 @@ import { useEffect } from "react";
 import { FaLocationDot } from "react-icons/fa6";
 import { CiLocationOn } from "react-icons/ci";
 import { FaFilter, FaLocationArrow, FaPlus } from "react-icons/fa";
+import { useContext, useState } from "react";
+import { GeneralLayout } from "../components";
+import { useEffect } from "react";
+import { FaLocationDot } from "react-icons/fa6";
+import { CiLocationOn } from "react-icons/ci";
+import { FaFilter, FaLocationArrow, FaPlus } from "react-icons/fa";
 import {
   DistrictContext,
   DivisionContext,
@@ -179,6 +185,7 @@ export const Dashboard = () => {
         break;
     }
   };
+  console.log(data);
   useEffect(() => {
     getAreas();
     // eslint-disable-next-line react-hooks/exhaustive-deps

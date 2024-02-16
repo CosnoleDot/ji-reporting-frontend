@@ -102,7 +102,9 @@ export const Reports = () => {
   const [tab, setTab] = useState(
     ["province", "maqam"].includes(localStorage.getItem("@type"))
       ? "maqam"
-      : "maqam"
+      : ["province", "maqam"].includes(localStorage.getItem("@type"))
+      ? "division"
+      : "halqa"
   );
   const [id, setId] = useState(null);
   const { active, setActive } = useContext(UIContext);
@@ -461,7 +463,7 @@ export const Reports = () => {
       if (year !== "" && month !== "") {
         const filteredData = reports?.reduce((acc, curr) => {
           const reportYear = parseInt((curr?.month).split("-")[0]);
-          const reportMonth = parseInt((curr?.month).spit("-")[1]);
+          const reportMonth = parseInt((curr?.month).split("-")[1]);
           if (
             reportMonth === parseInt(month) &&
             reportYear === parseInt(year)
@@ -812,15 +814,17 @@ export const Reports = () => {
               >
                 Search
               </button>
-              <button
-                onClick={() => {
-                  setUserAreaType("halqa");
-                  document.getElementById("filter-area-dialog").showModal();
-                }}
-                className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
-              >
-                filter
-              </button>
+              {me?.userAreaType !== "Halqa" && (
+                <button
+                  onClick={() => {
+                    setUserAreaType("halqa");
+                    document.getElementById("filter-area-dialog").showModal();
+                  }}
+                  className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
+                >
+                  filter
+                </button>
+              )}
               <button
                 className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
                 onClick={clearFilters}
@@ -985,8 +989,9 @@ export const Reports = () => {
                     >
                       <div className="flex w-full flex-col items-start justify-center">
                         <span className="text-lg font-semibold">
-                          {(active !== "province" &&
-                            obj?.[active + "AreaId"]?.name) ||
+                          {active !== "province" ||
+                            (active !== "halqa" &&
+                              obj?.[active + "AreaId"]?.name) ||
                             "UNKNOWN"}
                           {" - "}
                           {getDivisionByTehsil(
@@ -1072,7 +1077,7 @@ export const Reports = () => {
                         {obj?.[active + "AreaId"]?.name || "UNKNOWN"}
                         {" - "}
                         {obj?.[active + "AreaId"]?.province?.name ||
-                          (active !== "province" && "UNKNOWN")}
+                          (active !== "province" && active !== "halqa" && "UNKNOWN")}
                         {obj?.[active + "AreaId"]?.province?.name && " - "}
                         {moment(obj?.month).format("MMMM YYYY")}
                       </span>
