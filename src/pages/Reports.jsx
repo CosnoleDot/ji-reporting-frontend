@@ -101,7 +101,7 @@ export const Reports = () => {
   const [tab, setTab] = useState(
     ["province", "maqam"].includes(localStorage.getItem("@type"))
       ? "maqam"
-      : "maqam"
+      : "halqa"
   );
   const [id, setId] = useState(null);
   const { active, setActive } = useContext(UIContext);
@@ -419,9 +419,6 @@ export const Reports = () => {
     document.getElementById("autocomplete").value = "";
   };
   useEffect(() => {
-    console.log(halqaReports);
-  }, [tab, active, id, userType]);
-  useEffect(() => {
     fetchReports();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userType, id, active, tab, selectedId, selectedMonth]);
@@ -463,7 +460,7 @@ export const Reports = () => {
       if (year !== "" && month !== "") {
         const filteredData = reports?.reduce((acc, curr) => {
           const reportYear = parseInt((curr?.month).split("-")[0]);
-          const reportMonth = parseInt((curr?.month).spit("-")[1]);
+          const reportMonth = parseInt((curr?.month).split("-")[1]);
           if (
             reportMonth === parseInt(month) &&
             reportYear === parseInt(year)
