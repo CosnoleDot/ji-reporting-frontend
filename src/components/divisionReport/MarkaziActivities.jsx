@@ -157,7 +157,7 @@ export const MarkaziActivities = ({ view }) => {
             </Box>
           </tr>
           <tr>
-            <Box>صدورمیٹینگ</Box>
+            <Box>صدورمیٹنگ</Box>
             <Box>
               <input
                 readOnly={true}

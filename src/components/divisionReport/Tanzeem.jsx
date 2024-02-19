@@ -317,7 +317,7 @@ export const Tanzeem = ({ view }) => {
             </Box>
           </tr>
           <tr>
-            <Box>رہاشی ذیلی حلقے</Box>
+            <Box>رہائشی ذیلی حلقے</Box>
             <Box>
               <input
                 readOnly={view}
@@ -653,7 +653,7 @@ export const Tanzeem = ({ view }) => {
             </Box>
           </tr>
           <tr>
-            <Box>بزم کےرہاشی یونٹس</Box>
+            <Box>بزم کے رہائشی یونٹس</Box>
             <Box>
               <input
                 readOnly={view}

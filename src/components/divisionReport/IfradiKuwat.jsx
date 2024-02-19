@@ -27,7 +27,7 @@ export const IfradiKuwat = ({ view }) => {
             <Box>آغاز میں</Box>
             <Box>اضافہ</Box>
             <Box>کمی</Box>
-            <Box>اختاتام</Box>
+            <Box>اختتام</Box>
             <Box>سالانہ ہدف</Box>
           </tr>
         </thead>

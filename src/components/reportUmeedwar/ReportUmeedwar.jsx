@@ -382,7 +382,7 @@ export const ReportUmeedwar = () => {
               </div>
             </div>
             <div className="flex w-full  flex-col justify-start items-start">
-              <h2 className="block w-full p-3">عنات</h2>
+              <h2 className="block w-full p-3">اعانت</h2>
               <div className="flex flex-wrap items-center justify-start border border-primary p-2 rounded-lg">
                 <div className="form-control">
                   <label className="label cursor-pointer gap-2">
