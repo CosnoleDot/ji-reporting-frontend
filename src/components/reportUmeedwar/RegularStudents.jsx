@@ -28,7 +28,7 @@ export const RegularStudents = () => {
           <InputWithLabel
             // readOnly={view}
             placeholder={"..."}
-            label={" عام طلبہ میں کتنا لیٹریچرتقسیم کیا"}
+            label={" عام طلبہ میں کتنا لٹریچر تقسیم کیا"}
             id={"genralStudentsTotalLitratureDivided"}
             name={"genralStudentsTotalLitratureDivided"}
             type={"number"}
