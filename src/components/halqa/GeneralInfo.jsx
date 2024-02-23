@@ -37,6 +37,7 @@ export function GeneralInfo({ me, area, view, newMonth, setMonth }) {
       <div className="flex justify-start items-center gap-2 w-full p-2">
         <label htmlFor="halqa_name">{`${area} کا نام`}</label>
         <input
+          required
           className="border-b-2 border-dashed"
           type="text"
           name="name"
@@ -48,6 +49,7 @@ export function GeneralInfo({ me, area, view, newMonth, setMonth }) {
         <div className="flex justify-start items-center gap-2 w-full p-2">
           <label htmlFor="month">برائے ماہ</label>
           <input
+            required
             className="border-b-2 border-dashed"
             type="month"
             name="month"
@@ -60,6 +62,7 @@ export function GeneralInfo({ me, area, view, newMonth, setMonth }) {
         <div className="flex justify-start items-center gap-2 w-full p-2">
           <label htmlFor="month">برائے ماہ</label>
           <input
+            required
             className="border-b-2 border-dashed"
             type="text"
             value={newMonth.split("T")[0]}

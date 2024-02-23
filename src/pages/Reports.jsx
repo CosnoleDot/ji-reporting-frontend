@@ -82,6 +82,7 @@ export const months = [
 ];
 
 export const getDivisionByTehsil = (tehsil, districts) => {
+  console.log(tehsil);
   const districtId = tehsil?.district;
   return districts.find((i) => i?._id === districtId)?.division?.name;
 };
@@ -101,6 +102,8 @@ export const Reports = () => {
   const [tab, setTab] = useState(
     ["province", "maqam"].includes(localStorage.getItem("@type"))
       ? "maqam"
+      : ["province", "maqam"].includes(localStorage.getItem("@type"))
+      ? "division"
       : "halqa"
   );
   const [id, setId] = useState(null);
@@ -986,7 +989,7 @@ export const Reports = () => {
                     >
                       <div className="flex w-full flex-col items-start justify-center">
                         <span className="text-lg font-semibold">
-                          {(active !== "province" &&
+                          {((active !== "province" || active !== "halqa") &&
                             obj?.[active + "AreaId"]?.name) ||
                             "UNKNOWN"}
                           {" - "}
@@ -1073,7 +1076,9 @@ export const Reports = () => {
                         {obj?.[active + "AreaId"]?.name || "UNKNOWN"}
                         {" - "}
                         {obj?.[active + "AreaId"]?.province?.name ||
-                          (active !== "province" && "UNKNOWN")}
+                          (active !== "province" &&
+                            active !== "halqa" &&
+                            "UNKNOWN")}
                         {obj?.[active + "AreaId"]?.province?.name && " - "}
                         {moment(obj?.month).format("MMMM YYYY")}
                       </span>

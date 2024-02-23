@@ -126,6 +126,7 @@ export const Halqa = () => {
           <div className="w-full flex p-2">
             <label htmlFor="comments">تبصرہ</label>
             <input
+              required
               type="text"
               name="comments"
               className="border-b-2 border-dashed w-full"
@@ -138,6 +139,7 @@ export const Halqa = () => {
               <div>
                 <label htmlFor="nazim">نام ناظمِ:</label>
                 <input
+                  required
                   type="text"
                   className="border-b-2 border-dashed text-center"
                   id="nazim"
