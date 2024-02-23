@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { GeneralLayout } from "../components";
-import { FaEdit, FaEye, FaPrint } from "react-icons/fa";
+import { FaClosedCaptioning, FaEdit, FaEye, FaPrint } from "react-icons/fa";
 import moment from "moment";
 import instance from "../api/instrance";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +11,7 @@ import {
   MaqamContext,
 } from "../context";
 import { getDivisionByTehsil, months } from "./Reports";
+import { MdCancel } from "react-icons/md";
 // import { ProvinceContext } from "../context";
 
 export const PersonalReportsDashboard = () => {
@@ -105,8 +106,8 @@ export const PersonalReportsDashboard = () => {
   return (
     <GeneralLayout title={"PersonalDashboard"} active={"personalReports"}>
       <div className="w-full flex flex-col justify-start items-center mt-5 p-5">
-        <div className="w-full flex gap-2 justify-center items-center mt-5">
-          <div className="flex items-center justify-start md:justify-center gap-2 p-2 ">
+        <div className="w-full overflow-hidden overflow-x-scroll flex gap-2 justify-center items-center mt-5">
+          <div className="flex items-center justify-start md:justify-center gap-2  ">
             <input
               type="search"
               name="Search"
@@ -156,9 +157,22 @@ export const PersonalReportsDashboard = () => {
                       ))}
                   </select>
                 </div>
-                <button className="btn" onClick={searchResults}>
-                  Search
-                </button>
+                <div className="w-full flex justify-center items-center gap-2">
+                  <button className="btn" onClick={searchResults}>
+                    Search
+                  </button>
+                  <button
+                    className="btn"
+                    onClick={() => {
+                      setMonth("");
+                      setYear("2023");
+                      setToggle(false);
+                    }}
+                  >
+                    <MdCancel />
+                    Cancel
+                  </button>
+                </div>
               </div>
             </div>
           )}
@@ -169,32 +183,33 @@ export const PersonalReportsDashboard = () => {
             + New Report
           </button>
         </div>
-
-        {filteredData?.map((obj, index) => (
-          <div
-            key={index}
-            className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col mt-5"
-          >
-            <div className="flex w-full flex-col items-start justify-center">
-              <span className="text-lg font-semibold" key={index}>
-                {`${obj?.title.split("(")[0]} - `}
-                {moment(obj?.month).format("MMMM YYYY")}
-              </span>
-              <span>Last Modified: {moment(obj?.updatedAt).fromNow()}</span>
+        <div className="w-full overflow-hidden overflow-y-scroll h-[calc(100vh-64px-64px-54px-76px)] flex flex-col justify-start items-start">
+          {filteredData?.map((obj, index) => (
+            <div
+              key={index}
+              className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col mt-5"
+            >
+              <div className="flex w-full flex-col items-start justify-center">
+                <span className="text-lg font-semibold" key={index}>
+                  {`${obj?.title.split("(")[0]} - `}
+                  {moment(obj?.month).format("MMMM YYYY")}
+                </span>
+                <span>Last Modified: {moment(obj?.updatedAt).fromNow()}</span>
+              </div>
+              <div className="flex items-center w-full justify-end gap-3 ">
+                <button className="btn" onClick={() => viewReport(obj?._id)}>
+                  <FaEye />
+                </button>
+                <button className="btn" onClick={() => editReport(obj?._id)}>
+                  <FaEdit />
+                </button>
+                <button className="btn" onClick={() => printReport(obj?._id)}>
+                  <FaPrint />
+                </button>
+              </div>
             </div>
-            <div className="flex items-end w-full justify-end gap-3 ">
-              <button className="btn" onClick={() => viewReport(obj?._id)}>
-                <FaEye />
-              </button>
-              <button className="btn" onClick={() => editReport(obj?._id)}>
-                <FaEdit />
-              </button>
-              <button className="btn" onClick={() => printReport(obj?._id)}>
-                <FaPrint />
-              </button>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </GeneralLayout>
   );

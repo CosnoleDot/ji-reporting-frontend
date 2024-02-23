@@ -377,7 +377,7 @@ export const ReportUmeedwar = () => {
               </div>
             </div>
             <div className="flex w-full  flex-col justify-start items-start">
-              <h2 className="block w-full p-3">اعانت ادا کی</h2>
+              <h2 className="block w-full p-3">اعانت ادا </h2>
               <div className="flex flex-wrap items-center justify-start border border-primary p-2 rounded-lg">
                 <div className="form-control">
                   <label className="label cursor-pointer gap-2">
@@ -448,6 +448,7 @@ export const ReportUmeedwar = () => {
             name={"comments"}
             type={"textarea"}
             disabled={view}
+            required
           ></textarea>
           <div className="w-full flex justify-end items-center mb-5">
             {fileMode !== "view" && (

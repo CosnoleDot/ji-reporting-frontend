@@ -321,7 +321,7 @@ export const DeleteUser = () => {
                       : "Halqa"}
                   </th>
                   <th>Status</th>
-                  <th className="text-center">Delete</th>
+                  <th className="text-center">Actions</th>
                 </tr>
               </thead>
               <tbody>
