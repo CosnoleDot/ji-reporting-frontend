@@ -21,6 +21,51 @@ export const DivisionReport = () => {
   useEffect(() => {
     if (params?.id) printReport(params?.id);
   }, [params]);
+  const calcultate = (v) => {
+    // (start + increase)- decrease
+    const s = document.getElementById(`${v}-start`);
+    const i = document.getElementById(`${v}-increase`);
+    const d = document.getElementById(`${v}-decrease`);
+    document.getElementById(`${v}-end`).value =
+      parseInt(s.value) + parseInt(i.value) - parseInt(d.value);
+    return parseInt(s.value) + parseInt(i.value) - parseInt(d.value);
+  };
+
+  const calculateTotal = () => {
+    const prefixes = [
+      { 0: { 0: "rehaishHalqay", 1: "taleemHalqay" }, 1: "totalHalqay" },
+      {
+        0: { 0: "subRehaishHalqay", 1: "subTaleemHalqay" },
+        1: "subTotalHalqay",
+      },
+      {
+        0: { 0: "busmSchoolUnits", 1: "busmRehaishUnits" },
+        1: "busmTotalUnits",
+      },
+    ];
+    const postfixes = [
+      "start",
+      "increase",
+      "decrease",
+      "end",
+      "continue",
+      "paused",
+    ];
+    postfixes.forEach((i) => {
+      prefixes.forEach((j) => {
+        // Object.values(j[0]).forEach((k) => {
+        const a = document.getElementById(`${j[0][0]}-${i}`).value;
+        const b = document.getElementById(`${j[0][1]}-${i}`).value;
+        document.getElementById(`${j[1]}-${i}`).value =
+          parseInt(a) + parseInt(b);
+        // });
+      });
+    });
+    document.getElementById("totalLibraries").value =
+      parseInt(document.getElementById("totalHalqay-start").value) +
+      parseInt(document.getElementById("totalHalqay-increase").value) -
+      parseInt(document.getElementById("totalHalqay-decrease").value);
+  };
   return (
     <div className="wrapper reports" style={{ marginBottom: "2rem" }} dir="rtl">
       <PrintDocument />
@@ -67,6 +112,9 @@ export const DivisionReport = () => {
           <strong>کمی</strong>
         </p>
         <p className="header" style={{ width: "100%" }}>
+          <strong>اختتام</strong>
+        </p>
+        <p className="header" style={{ width: "100%" }}>
           <strong>غیرفعال</strong>
         </p>
         <p className="header" style={{ width: "100%" }}>
@@ -82,10 +130,15 @@ export const DivisionReport = () => {
         className="tableContainer"
       >
         <div className="row">
-          <p className="header">رہاشی حلقے</p>
+          <p className="header">رہائشی حلقے</p>
           <p>{data?.maqamTanzeemId?.rehaishHalqay?.start}</p>
           <p>{data?.maqamTanzeemId?.rehaishHalqay?.increase}</p>
           <p>{data?.maqamTanzeemId?.rehaishHalqay?.decrease}</p>
+          <p>
+            {data?.maqamTanzeemId?.rehaishHalqay?.increase +
+              data?.maqamTanzeemId?.rehaishHalqay?.start -
+              data?.maqamTanzeemId?.rehaishHalqay?.decrease}
+          </p>
           <p>{data?.maqamTanzeemId?.rehaishHalqay?.paused}</p>
           <p>{data?.maqamTanzeemId?.rehaishHalqay?.continue}</p>
         </div>
@@ -94,6 +147,11 @@ export const DivisionReport = () => {
           <p>{data?.maqamTanzeemId?.taleemHalqay?.start}</p>
           <p>{data?.maqamTanzeemId?.taleemHalqay?.increase}</p>
           <p>{data?.maqamTanzeemId?.taleemHalqay?.decrease}</p>
+          <p>
+            {data?.maqamTanzeemId?.taleemHalqay?.increase +
+              data?.maqamTanzeemId?.taleemHalqay?.start -
+              data?.maqamTanzeemId?.taleemHalqay?.decrease}
+          </p>
           <p>{data?.maqamTanzeemId?.taleemHalqay?.paused}</p>
           <p>{data?.maqamTanzeemId?.taleemHalqay?.continue}</p>
         </div>
@@ -102,14 +160,24 @@ export const DivisionReport = () => {
           <p>{data?.maqamTanzeemId?.totalHalqay?.start}</p>
           <p>{data?.maqamTanzeemId?.totalHalqay?.increase}</p>
           <p>{data?.maqamTanzeemId?.totalHalqay?.decrease}</p>
+          <p>
+            {data?.maqamTanzeemId?.totalHalqay?.increase +
+              data?.maqamTanzeemId?.totalHalqay?.start -
+              data?.maqamTanzeemId?.totalHalqay?.decrease}
+          </p>
           <p>{data?.maqamTanzeemId?.totalHalqay?.paused}</p>
           <p>{data?.maqamTanzeemId?.totalHalqay?.continue}</p>
         </div>
         <div className="row">
-          <p className="header">رہاشی زیلی حلقے</p>
+          <p className="header">رہائشی زیلی حلقے</p>
           <p>{data?.maqamTanzeemId?.subRehaishHalqay?.start}</p>
           <p>{data?.maqamTanzeemId?.subRehaishHalqay?.increase}</p>
           <p>{data?.maqamTanzeemId?.subRehaishHalqay?.decrease}</p>
+          <p>
+            {data?.maqamTanzeemId?.subRehaishHalqay?.increase +
+              data?.maqamTanzeemId?.subRehaishHalqay?.start -
+              data?.maqamTanzeemId?.subRehaishHalqay?.decrease}
+          </p>
           <p>{data?.maqamTanzeemId?.subRehaishHalqay?.paused}</p>
           <p>{data?.maqamTanzeemId?.subRehaishHalqay?.continue}</p>
         </div>
@@ -118,6 +186,11 @@ export const DivisionReport = () => {
           <p>{data?.maqamTanzeemId?.subTaleemHalqay?.start}</p>
           <p>{data?.maqamTanzeemId?.subTaleemHalqay?.increase}</p>
           <p>{data?.maqamTanzeemId?.subTaleemHalqay?.decrease}</p>
+          <p>
+            {data?.maqamTanzeemId?.subTaleemHalqay?.increase +
+              data?.maqamTanzeemId?.subTaleemHalqay?.start -
+              data?.maqamTanzeemId?.subTaleemHalqay?.decrease}
+          </p>
           <p>{data?.maqamTanzeemId?.subTaleemHalqay?.paused}</p>
           <p>{data?.maqamTanzeemId?.subTaleemHalqay?.continue}</p>
         </div>
@@ -126,6 +199,11 @@ export const DivisionReport = () => {
           <p>{data?.maqamTanzeemId?.subTotalHalqay?.start}</p>
           <p>{data?.maqamTanzeemId?.subTotalHalqay?.increase}</p>
           <p>{data?.maqamTanzeemId?.subTotalHalqay?.decrease}</p>
+          <p>
+            {data?.maqamTanzeemId?.subTotalHalqay?.increase +
+              data?.maqamTanzeemId?.subTotalHalqay?.start -
+              data?.maqamTanzeemId?.subTotalHalqay?.decrease}
+          </p>
           <p>{data?.maqamTanzeemId?.subTotalHalqay?.paused}</p>
           <p>{data?.maqamTanzeemId?.subTotalHalqay?.continue}</p>
         </div>
@@ -135,14 +213,24 @@ export const DivisionReport = () => {
           <p>{data?.maqamTanzeemId?.busmSchoolUnits?.start}</p>
           <p>{data?.maqamTanzeemId?.busmSchoolUnits?.increase}</p>
           <p>{data?.maqamTanzeemId?.busmSchoolUnits?.decrease}</p>
+          <p>
+            {data?.maqamTanzeemId?.busmSchoolUnits?.increase +
+              data?.maqamTanzeemId?.busmSchoolUnits?.start -
+              data?.maqamTanzeemId?.busmSchoolUnits?.decrease}
+          </p>
           <p>{data?.maqamTanzeemId?.busmSchoolUnits?.paused}</p>
           <p>{data?.maqamTanzeemId?.busmSchoolUnits?.continue}</p>
         </div>
         <div className="row">
-          <p className="header">بزم کے رہاشی یونٹس</p>
+          <p className="header">بزم کے رہائشی یونٹس</p>
           <p>{data?.maqamTanzeemId?.busmRehaishUnits?.start}</p>
           <p>{data?.maqamTanzeemId?.busmRehaishUnits?.increase}</p>
           <p>{data?.maqamTanzeemId?.busmRehaishUnits?.decrease}</p>
+          <p>
+            {data?.maqamTanzeemId?.busmRehaishUnits?.increase +
+              data?.maqamTanzeemId?.busmRehaishUnits?.start -
+              data?.maqamTanzeemId?.busmRehaishUnits?.decrease}
+          </p>
           <p>{data?.maqamTanzeemId?.busmRehaishUnits?.paused}</p>
           <p>{data?.maqamTanzeemId?.busmRehaishUnits?.continue}</p>
         </div>
@@ -151,6 +239,11 @@ export const DivisionReport = () => {
           <p>{data?.maqamTanzeemId?.busmTotalUnits?.start}</p>
           <p>{data?.maqamTanzeemId?.busmTotalUnits?.increase}</p>
           <p>{data?.maqamTanzeemId?.busmTotalUnits?.decrease}</p>
+          <p>
+            {data?.maqamTanzeemId?.busmTotalUnits?.increase +
+              data?.maqamTanzeemId?.busmTotalUnits?.start -
+              data?.maqamTanzeemId?.busmTotalUnits?.decrease}
+          </p>
           <p>{data?.maqamTanzeemId?.busmTotalUnits?.paused}</p>
           <p>{data?.maqamTanzeemId?.busmTotalUnits?.continue}</p>
         </div>
@@ -176,9 +269,9 @@ export const DivisionReport = () => {
         <p className="header" style={{ width: "100%" }}>
           <strong>کمی</strong>
         </p>
-        {/* <p className="header" style={{ width: "100%" }}>
+        <p className="header" style={{ width: "100%" }}>
           <strong>اختتام پر</strong>
-        </p> */}
+        </p>
         <p className="header" style={{ width: "100%" }}>
           <strong>سلانہ ہدف</strong>
         </p>
@@ -196,6 +289,11 @@ export const DivisionReport = () => {
           <p>{data?.wiId?.arkan?.start}</p>
           <p>{data?.wiId?.arkan?.increase}</p>
           <p>{data?.wiId?.arkan?.decrease}</p>
+          <p>
+            {data?.wiId?.arkan?.start +
+              data?.wiId?.arkan?.increase -
+              data?.wiId?.arkan?.decrease}
+          </p>
           <p>{data?.wiId?.arkan?.annual}</p>
           {/* <p>{data?.wiId?.arkan?.}</p> */}
         </div>
@@ -204,6 +302,11 @@ export const DivisionReport = () => {
           <p>{data?.wiId?.umeedWaran?.start}</p>
           <p>{data?.wiId?.umeedWaran?.increase}</p>
           <p>{data?.wiId?.umeedWaran?.decrease}</p>
+          <p>
+            {data?.wiId?.umeedWaran?.start +
+              data?.wiId?.umeedWaran?.increase -
+              data?.wiId?.umeedWaran?.decrease}
+          </p>
           <p>{data?.wiId?.umeedWaran?.annual}</p>
           {/* <p>Data 3</p> */}
         </div>
@@ -212,6 +315,11 @@ export const DivisionReport = () => {
           <p>{data?.wiId?.rafaqa?.start}</p>
           <p>{data?.wiId?.rafaqa?.increase}</p>
           <p>{data?.wiId?.rafaqa?.decrease}</p>
+          <p>
+            {data?.wiId?.rafaqa?.start +
+              data?.wiId?.rafaqa?.increase -
+              data?.wiId?.rafaqa?.decrease}
+          </p>
           <p>{data?.wiId?.rafaqa?.annual}</p>
           {/* <p>Data 3</p> */}
         </div>
@@ -220,6 +328,11 @@ export const DivisionReport = () => {
           <p>{data?.wiId?.karkunan?.start}</p>
           <p>{data?.wiId?.karkunan?.increase}</p>
           <p>{data?.wiId?.karkunan?.decrease}</p>
+          <p>
+            {data?.wiId?.karkunan?.start +
+              data?.wiId?.karkunan?.increase -
+              data?.wiId?.karkunan?.decrease}
+          </p>
           <p>{data?.wiId?.karkunan?.annual}</p>
           {/* <p>Data 3</p> */}
         </div>
@@ -228,6 +341,11 @@ export const DivisionReport = () => {
           <p>{data?.wiId?.shaheen?.start}</p>
           <p>{data?.wiId?.shaheen?.increase}</p>
           <p>{data?.wiId?.shaheen?.decrease}</p>
+          <p>
+            {data?.wiId?.shaheen?.start +
+              data?.wiId?.shaheen?.increase -
+              data?.wiId?.shaheen?.decrease}
+          </p>
           <p>{data?.wiId?.shaheen?.annual}</p>
           {/* <p>Data 3</p> */}
         </div>
@@ -236,6 +354,11 @@ export const DivisionReport = () => {
           <p>{data?.wiId?.members?.start}</p>
           <p>{data?.wiId?.members?.increase}</p>
           <p>{data?.wiId?.members?.decrease}</p>
+          <p>
+            {data?.wiId?.members?.start +
+              data?.wiId?.members?.increase -
+              data?.wiId?.members?.decrease}
+          </p>
           <p>{data?.wiId?.members?.annual}</p>
           {/* <p>Data 3</p> */}
         </div>
@@ -282,7 +405,7 @@ export const DivisionReport = () => {
           </p>
         </div>
         <div className="row">
-          <p className="header">اجتمعِ ناظمیں </p>
+          <p className="header">اجتماع ناظمین </p>
           <p>{data?.divisionActivityId?.ijtNazmeen?.decided}</p>
           <p>{data?.divisionActivityId?.ijtNazmeen?.done}</p>
           <p>{data?.divisionActivityId?.ijtNazmeen?.averageAttendance}</p>
@@ -293,7 +416,7 @@ export const DivisionReport = () => {
           </p>
         </div>
         <div className="row">
-          <p className="header">اجتمعِ امیدوران </p>
+          <p className="header">اجتماع امیدوران </p>
           <p>{data?.divisionActivityId?.ijtUmeedwaran?.decided}</p>
           <p>{data?.divisionActivityId?.ijtUmeedwaran?.done}</p>
           <p>{data?.divisionActivityId?.ijtUmeedwaran?.averageAttendance}</p>
@@ -357,7 +480,7 @@ export const DivisionReport = () => {
           <p>{data?.mentionedActivityId?.studyCircle?.averageAttendance}</p>
         </div>
         <div className="row">
-          <p className="header">اجتمعِ کارکنان </p>
+          <p className="header">اجتماع کارکنان </p>
           <p>{data?.mentionedActivityId?.ijtKarkunan?.decided}</p>
           <p>{data?.mentionedActivityId?.ijtKarkunan?.done}</p>
           <p>{data?.mentionedActivityId?.ijtKarkunan?.averageAttendance}</p>

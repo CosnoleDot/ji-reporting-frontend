@@ -3553,14 +3553,6 @@ html {
   margin-top: 2rem;
 }
 
-.ml-7 {
-  margin-left: 1.75rem;
-}
-
-.ml-10 {
-  margin-left: 2.5rem;
-}
-
 .block {
   display: block;
 }
@@ -3771,10 +3763,6 @@ html {
 
 .max-w-xs {
   max-width: 20rem;
-}
-
-.max-w-md {
-  max-width: 28rem;
 }
 
 .flex-1 {
@@ -4208,22 +4196,6 @@ html {
 
 .pt-0 {
   padding-top: 0px;
-}
-
-.pl-10 {
-  padding-left: 2.5rem;
-}
-
-.pl-9 {
-  padding-left: 2.25rem;
-}
-
-.pl-11 {
-  padding-left: 2.75rem;
-}
-
-.pl-16 {
-  padding-left: 4rem;
 }
 
 .text-left {
@@ -4746,10 +4718,6 @@ html {
 
   .md\:pr-0 {
     padding-right: 0px;
-  }
-
-  .md\:pl-0 {
-    padding-left: 0px;
   }
 }
 

@@ -167,6 +167,7 @@ export const DeleteUser = () => {
 
     setLoading(false);
   };
+  console.log(singleUser);
   const updateStatus = async () => {
     const data = {
       nazim: userAreaType,
@@ -259,6 +260,7 @@ export const DeleteUser = () => {
     setSelectedYear("");
     setSelectedSubject("");
     setData(nazim);
+    setBirthYear("");
   };
   const handleEventClick = (e) => {
     if (e?.target?.id !== "autocomplete0") {
@@ -973,6 +975,24 @@ export const DeleteUser = () => {
                     type="number"
                     placeholder="Age"
                     name="age"
+                    className=" w-full text-[#7a7a7a]"
+                  />
+                </div>
+                <div className="w-full">
+                  <label className="label">
+                    <span className="text-base label-text">Nazim Type</span>
+                  </label>
+                  <input
+                    readOnly
+                    defaultValue={singleUser?.nazimType}
+                    type="number"
+                    placeholder={singleUser?.nazimType
+                      ?.split("-")
+                      .map(
+                        (word) => word.charAt(0).toUpperCase() + word.slice(1)
+                      )
+                      .join(" ")}
+                    name="nazimType"
                     className=" w-full text-[#7a7a7a]"
                   />
                 </div>
