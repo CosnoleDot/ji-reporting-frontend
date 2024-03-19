@@ -167,7 +167,6 @@ export const DeleteUser = () => {
 
     setLoading(false);
   };
-  console.log(singleUser);
   const updateStatus = async () => {
     const data = {
       nazim: userAreaType,

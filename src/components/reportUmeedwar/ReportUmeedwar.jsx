@@ -200,8 +200,7 @@ export const ReportUmeedwar = () => {
       });
     }
 
-    autoFillForm(singleFile);
-    console.log(singleFile);
+    autoFillForm(singleFile);;
   }, [singleFile]);
   useEffect(() => {
     if (id && id !== undefined) {

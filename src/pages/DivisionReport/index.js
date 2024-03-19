@@ -21,51 +21,6 @@ export const DivisionReport = () => {
   useEffect(() => {
     if (params?.id) printReport(params?.id);
   }, [params]);
-  const calcultate = (v) => {
-    // (start + increase)- decrease
-    const s = document.getElementById(`${v}-start`);
-    const i = document.getElementById(`${v}-increase`);
-    const d = document.getElementById(`${v}-decrease`);
-    document.getElementById(`${v}-end`).value =
-      parseInt(s.value) + parseInt(i.value) - parseInt(d.value);
-    return parseInt(s.value) + parseInt(i.value) - parseInt(d.value);
-  };
-
-  const calculateTotal = () => {
-    const prefixes = [
-      { 0: { 0: "rehaishHalqay", 1: "taleemHalqay" }, 1: "totalHalqay" },
-      {
-        0: { 0: "subRehaishHalqay", 1: "subTaleemHalqay" },
-        1: "subTotalHalqay",
-      },
-      {
-        0: { 0: "busmSchoolUnits", 1: "busmRehaishUnits" },
-        1: "busmTotalUnits",
-      },
-    ];
-    const postfixes = [
-      "start",
-      "increase",
-      "decrease",
-      "end",
-      "continue",
-      "paused",
-    ];
-    postfixes.forEach((i) => {
-      prefixes.forEach((j) => {
-        // Object.values(j[0]).forEach((k) => {
-        const a = document.getElementById(`${j[0][0]}-${i}`).value;
-        const b = document.getElementById(`${j[0][1]}-${i}`).value;
-        document.getElementById(`${j[1]}-${i}`).value =
-          parseInt(a) + parseInt(b);
-        // });
-      });
-    });
-    document.getElementById("totalLibraries").value =
-      parseInt(document.getElementById("totalHalqay-start").value) +
-      parseInt(document.getElementById("totalHalqay-increase").value) -
-      parseInt(document.getElementById("totalHalqay-decrease").value);
-  };
   return (
     <div className="wrapper reports" style={{ marginBottom: "2rem" }} dir="rtl">
       <PrintDocument />

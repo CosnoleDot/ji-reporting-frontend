@@ -104,7 +104,6 @@ export const Maqam = () => {
       .forEach((i) => {
         const sim = reverseDataFormat(i);
         Object.keys(sim)?.forEach((j) => {
-          console.log(sim)
           if (halq?.[j]) {
             try {
               halq[j] += parseInt(sim[j]) || 0;
