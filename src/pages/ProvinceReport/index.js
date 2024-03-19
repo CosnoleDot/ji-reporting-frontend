@@ -353,7 +353,7 @@ export const ProvinceReport = () => {
           <p>{data?.provinceActivityId?.ijtArkan?.averageAttendance}</p>
         </div>
         <div className="row">
-          <p className="header">اجتمعِ ناظمیں </p>
+          <p className="header">اجتمعِ ناظمین </p>
           <p>{data?.provinceActivityId?.ijtNazmeen?.decided}</p>
           <p>{data?.provinceActivityId?.ijtNazmeen?.done}</p>
           <p>{data?.provinceActivityId?.ijtNazmeen?.averageAttendance}</p>
