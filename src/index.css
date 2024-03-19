@@ -3621,8 +3621,8 @@ html {
   height: calc(100vh - 64px - 64px);
 }
 
-.h-\[calc\(100vh-64px-64px-54px-32px\)\] {
-  height: calc(100vh - 64px - 64px - 54px - 32px);
+.h-\[calc\(100vh-64px-64px-54px-76px\)\] {
+  height: calc(100vh - 64px - 64px - 54px - 76px);
 }
 
 .h-\[calc\(100vh-65\.6px-64px\)\] {
@@ -3655,18 +3655,6 @@ html {
 
 .h-screen {
   height: 100vh;
-}
-
-.h-\[calc\(100vh-64px-64px-54px-64px\)\] {
-  height: calc(100vh - 64px - 64px - 54px - 64px);
-}
-
-.h-\[calc\(100vh-64px-64px-54px-84px\)\] {
-  height: calc(100vh - 64px - 64px - 54px - 84px);
-}
-
-.h-\[calc\(100vh-64px-64px-54px-76px\)\] {
-  height: calc(100vh - 64px - 64px - 54px - 76px);
 }
 
 .max-h-56 {
@@ -4714,6 +4702,14 @@ html {
 
   .md\:flex-row {
     flex-direction: row;
+  }
+
+  .md\:items-center {
+    align-items: center;
+  }
+
+  .md\:justify-start {
+    justify-content: flex-start;
   }
 
   .md\:justify-center {

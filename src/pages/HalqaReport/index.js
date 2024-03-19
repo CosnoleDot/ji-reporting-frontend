@@ -89,9 +89,9 @@ export const HalqaReport = () => {
         <p className="header" style={{ width: "100%" }}>
           <strong>کمی</strong>
         </p>
-        {/* <p className="header" style={{ width: "100%" }}>
+        <p className="header" style={{ width: "100%" }}>
           <strong>اختتام پر</strong>
-        </p> */}
+        </p>
         <p className="header" style={{ width: "100%" }}>
           <strong>سلانہ ہدف</strong>
         </p>
@@ -109,6 +109,11 @@ export const HalqaReport = () => {
           <p>{data?.wiId?.arkan?.start}</p>
           <p>{data?.wiId?.arkan?.increase}</p>
           <p>{data?.wiId?.arkan?.decrease}</p>
+          <p>
+            {data?.wiId?.arkan?.start +
+              data?.wiId?.arkan?.increase -
+              data?.wiId?.arkan?.decrease}
+          </p>
           <p>{data?.wiId?.arkan?.annual}</p>
         </div>
         <div className="row">
@@ -116,6 +121,11 @@ export const HalqaReport = () => {
           <p>{data?.wiId?.umeedWaran?.start}</p>
           <p>{data?.wiId?.umeedWaran?.increase}</p>
           <p>{data?.wiId?.umeedWaran?.decrease}</p>
+          <p>
+            {data?.wiId?.umeedWaran?.start +
+              data?.wiId?.umeedWaran?.increase -
+              data?.wiId?.umeedWaran?.decrease}
+          </p>
           <p>{data?.wiId?.umeedWaran?.annual}</p>
         </div>
         <div className="row">
@@ -123,6 +133,11 @@ export const HalqaReport = () => {
           <p>{data?.wiId?.rafaqa?.start}</p>
           <p>{data?.wiId?.rafaqa?.increase}</p>
           <p>{data?.wiId?.rafaqa?.decrease}</p>
+          <p>
+            {data?.wiId?.rafaqa?.start +
+              data?.wiId?.rafaqa?.increase -
+              data?.wiId?.rafaqa?.decrease}
+          </p>
           <p>{data?.wiId?.rafaqa?.annual}</p>
           {/* <p>Data 3</p> */}
         </div>
@@ -131,6 +146,11 @@ export const HalqaReport = () => {
           <p>{data?.wiId?.karkunan?.start}</p>
           <p>{data?.wiId?.karkunan?.increase}</p>
           <p>{data?.wiId?.karkunan?.decrease}</p>
+          <p>
+            {data?.wiId?.karkunan?.start +
+              data?.wiId?.karkunan?.increase -
+              data?.wiId?.karkunan?.decrease}
+          </p>
           <p>{data?.wiId?.karkunan?.annual}</p>
           {/* <p>Data 3</p> */}
         </div>

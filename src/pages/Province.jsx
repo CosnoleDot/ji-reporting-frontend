@@ -47,8 +47,6 @@ export const Province = () => {
   const location = useLocation();
   const me = useContext(MeContext);
   const navigate = useNavigate();
-  console.log(maqam);
-  console.log(month);
   const autoFill = () => {
     const halq = {};
     document.getElementById("province-form").reset();

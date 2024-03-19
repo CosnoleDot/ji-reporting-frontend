@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/nomib/Documents/GitHub/ji-reporting-frontend/src/pages",
-      "program": "c:/Users/nomib/Documents/GitHub/ji-reporting-frontend/src/pages/build/Debug/outDebug",
+      "cwd": "c:/Users/nomib/Documents/GitHub/ji-reporting-frontend",
+      "program": "c:/Users/nomib/Documents/GitHub/ji-reporting-frontend/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

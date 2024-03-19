@@ -62,6 +62,9 @@ export const ProvinceReport = () => {
           <strong>کمی</strong>
         </p>
         <p className="header" style={{ width: "100%" }}>
+          <strong>اختتام</strong>
+        </p>
+        <p className="header" style={{ width: "100%" }}>
           <strong>غیرفعال</strong>
         </p>
         <p className="header" style={{ width: "100%" }}>
@@ -81,6 +84,11 @@ export const ProvinceReport = () => {
           <p>{data?.provinceTanzeemId?.rehaishHalqay?.start}</p>
           <p>{data?.provinceTanzeemId?.rehaishHalqay?.increase}</p>
           <p>{data?.provinceTanzeemId?.rehaishHalqay?.decrease}</p>
+          <p>
+            {data?.provinceTanzeemId?.rehaishHalqay?.start +
+              data?.provinceTanzeemId?.rehaishHalqay?.increase -
+              data?.provinceTanzeemId?.rehaishHalqay?.decrease}
+          </p>
           <p>{data?.provinceTanzeemId?.rehaishHalqay?.paused}</p>
           <p>{data?.provinceTanzeemId?.rehaishHalqay?.continue}</p>
         </div>
@@ -89,6 +97,11 @@ export const ProvinceReport = () => {
           <p>{data?.provinceTanzeemId?.taleemHalqay?.start}</p>
           <p>{data?.provinceTanzeemId?.taleemHalqay?.increase}</p>
           <p>{data?.provinceTanzeemId?.taleemHalqay?.decrease}</p>
+          <p>
+            {data?.provinceTanzeemId?.taleemHalqay?.start +
+              data?.provinceTanzeemId?.taleemHalqay?.increase -
+              data?.provinceTanzeemId?.taleemHalqay?.decrease}
+          </p>
           <p>{data?.provinceTanzeemId?.taleemHalqay?.paused}</p>
           <p>{data?.provinceTanzeemId?.taleemHalqay?.continue}</p>
         </div>
@@ -97,6 +110,11 @@ export const ProvinceReport = () => {
           <p>{data?.provinceTanzeemId?.totalHalqay?.start}</p>
           <p>{data?.provinceTanzeemId?.totalHalqay?.increase}</p>
           <p>{data?.provinceTanzeemId?.totalHalqay?.decrease}</p>
+          <p>
+            {data?.provinceTanzeemId?.totalHalqay?.start +
+              data?.provinceTanzeemId?.totalHalqay?.increase -
+              data?.provinceTanzeemId?.totalHalqay?.decrease}
+          </p>
           <p>{data?.provinceTanzeemId?.totalHalqay?.paused}</p>
           <p>{data?.provinceTanzeemId?.totalHalqay?.continue}</p>
         </div>
@@ -105,6 +123,11 @@ export const ProvinceReport = () => {
           <p>{data?.provinceTanzeemId?.subRehaishHalqay?.start}</p>
           <p>{data?.provinceTanzeemId?.subRehaishHalqay?.increase}</p>
           <p>{data?.provinceTanzeemId?.subRehaishHalqay?.decrease}</p>
+          <p>
+            {data?.provinceTanzeemId?.subRehaishHalqay?.start +
+              data?.provinceTanzeemId?.subRehaishHalqay?.increase -
+              data?.provinceTanzeemId?.subRehaishHalqay?.decrease}
+          </p>
           <p>{data?.provinceTanzeemId?.subRehaishHalqay?.paused}</p>
           <p>{data?.provinceTanzeemId?.subRehaishHalqay?.continue}</p>
         </div>
@@ -113,6 +136,11 @@ export const ProvinceReport = () => {
           <p>{data?.provinceTanzeemId?.subTaleemHalqay?.start}</p>
           <p>{data?.provinceTanzeemId?.subTaleemHalqay?.increase}</p>
           <p>{data?.provinceTanzeemId?.subTaleemHalqay?.decrease}</p>
+          <p>
+            {data?.provinceTanzeemId?.subTaleemHalqay?.start +
+              data?.provinceTanzeemId?.subTaleemHalqay?.increase -
+              data?.provinceTanzeemId?.subTaleemHalqay?.decrease}
+          </p>
           <p>{data?.provinceTanzeemId?.subTaleemHalqay?.paused}</p>
           <p>{data?.provinceTanzeemId?.subTaleemHalqay?.continue}</p>
         </div>
@@ -121,6 +149,11 @@ export const ProvinceReport = () => {
           <p>{data?.provinceTanzeemId?.subTotalHalqay?.start}</p>
           <p>{data?.provinceTanzeemId?.subTotalHalqay?.increase}</p>
           <p>{data?.provinceTanzeemId?.subTotalHalqay?.decrease}</p>
+          <p>
+            {data?.provinceTanzeemId?.subTotalHalqay?.start +
+              data?.provinceTanzeemId?.subTotalHalqay?.increase -
+              data?.provinceTanzeemId?.subTotalHalqay?.decrease}
+          </p>
           <p>{data?.provinceTanzeemId?.subTotalHalqay?.paused}</p>
           <p>{data?.provinceTanzeemId?.subTotalHalqay?.continue}</p>
         </div>
@@ -130,6 +163,11 @@ export const ProvinceReport = () => {
           <p>{data?.provinceTanzeemId?.busmSchoolUnits?.start}</p>
           <p>{data?.provinceTanzeemId?.busmSchoolUnits?.increase}</p>
           <p>{data?.provinceTanzeemId?.busmSchoolUnits?.decrease}</p>
+          <p>
+            {data?.provinceTanzeemId?.busmSchoolUnits?.start +
+              data?.provinceTanzeemId?.busmSchoolUnits?.increase -
+              data?.provinceTanzeemId?.busmSchoolUnits?.decrease}
+          </p>
           <p>{data?.provinceTanzeemId?.busmSchoolUnits?.paused}</p>
           <p>{data?.provinceTanzeemId?.busmSchoolUnits?.continue}</p>
         </div>
@@ -138,6 +176,11 @@ export const ProvinceReport = () => {
           <p>{data?.provinceTanzeemId?.busmRehaishUnits?.start}</p>
           <p>{data?.provinceTanzeemId?.busmRehaishUnits?.increase}</p>
           <p>{data?.provinceTanzeemId?.busmRehaishUnits?.decrease}</p>
+          <p>
+            {data?.provinceTanzeemId?.busmRehaishUnits?.start +
+              data?.provinceTanzeemId?.busmRehaishUnits?.increase -
+              data?.provinceTanzeemId?.busmRehaishUnits?.decrease}
+          </p>
           <p>{data?.provinceTanzeemId?.busmRehaishUnits?.paused}</p>
           <p>{data?.provinceTanzeemId?.busmRehaishUnits?.continue}</p>
         </div>
@@ -146,6 +189,11 @@ export const ProvinceReport = () => {
           <p>{data?.provinceTanzeemId?.busmTotalUnits?.start}</p>
           <p>{data?.provinceTanzeemId?.busmTotalUnits?.increase}</p>
           <p>{data?.provinceTanzeemId?.busmTotalUnits?.decrease}</p>
+          <p>
+            {data?.provinceTanzeemId?.busmTotalUnits?.start +
+              data?.provinceTanzeemId?.busmTotalUnits?.increase -
+              data?.provinceTanzeemId?.busmTotalUnits?.decrease}
+          </p>
           <p>{data?.provinceTanzeemId?.busmTotalUnits?.paused}</p>
           <p>{data?.provinceTanzeemId?.busmTotalUnits?.continue}</p>
         </div>
@@ -170,9 +218,9 @@ export const ProvinceReport = () => {
         <p className="header" style={{ width: "100%" }}>
           <strong>کمی</strong>
         </p>
-        {/* <p className="header" style={{ width: "100%" }}>
+        <p className="header" style={{ width: "100%" }}>
           <strong>اختتام پر</strong>
-        </p> */}
+        </p>
         <p className="header" style={{ width: "100%" }}>
           <strong>سلانہ ہدف</strong>
         </p>
@@ -190,14 +238,23 @@ export const ProvinceReport = () => {
           <p>{data?.wiId?.arkan?.start}</p>
           <p>{data?.wiId?.arkan?.increase}</p>
           <p>{data?.wiId?.arkan?.decrease}</p>
+          <p>
+            {data?.wiId?.arkan?.start +
+              data?.wiId?.arkan?.increase -
+              data?.wiId?.arkan?.decrease}
+          </p>
           <p>{data?.wiId?.arkan?.annual}</p>
-          {/* <p>{data?.wiId?.arkan?.}</p> */}
         </div>
         <div className="row">
           <p className="header">امیدواران </p>
           <p>{data?.wiId?.umeedWaran?.start}</p>
           <p>{data?.wiId?.umeedWaran?.increase}</p>
           <p>{data?.wiId?.umeedWaran?.decrease}</p>
+          <p>
+            {data?.wiId?.umeedWaran?.start +
+              data?.wiId?.umeedWaran?.increase -
+              data?.wiId?.umeedWaran?.decrease}
+          </p>
           <p>{data?.wiId?.umeedWaran?.annual}</p>
           {/* <p>Data 3</p> */}
         </div>
@@ -206,6 +263,11 @@ export const ProvinceReport = () => {
           <p>{data?.wiId?.rafaqa?.start}</p>
           <p>{data?.wiId?.rafaqa?.increase}</p>
           <p>{data?.wiId?.rafaqa?.decrease}</p>
+          <p>
+            {data?.wiId?.rafaqa?.start +
+              data?.wiId?.rafaqa?.increase -
+              data?.wiId?.rafaqa?.decrease}
+          </p>
           <p>{data?.wiId?.rafaqa?.annual}</p>
           {/* <p>Data 3</p> */}
         </div>
@@ -214,6 +276,11 @@ export const ProvinceReport = () => {
           <p>{data?.wiId?.karkunan?.start}</p>
           <p>{data?.wiId?.karkunan?.increase}</p>
           <p>{data?.wiId?.karkunan?.decrease}</p>
+          <p>
+            {data?.wiId?.karkunan?.start +
+              data?.wiId?.karkunan?.increase -
+              data?.wiId?.karkunan?.decrease}
+          </p>
           <p>{data?.wiId?.karkunan?.annual}</p>
           {/* <p>Data 3</p> */}
         </div>
@@ -222,6 +289,11 @@ export const ProvinceReport = () => {
           <p>{data?.wiId?.shaheen?.start}</p>
           <p>{data?.wiId?.shaheen?.increase}</p>
           <p>{data?.wiId?.shaheen?.decrease}</p>
+          <p>
+            {data?.wiId?.shaheen?.start +
+              data?.wiId?.shaheen?.increase -
+              data?.wiId?.shaheen?.decrease}
+          </p>
           <p>{data?.wiId?.shaheen?.annual}</p>
           {/* <p>Data 3</p> */}
         </div>
@@ -230,6 +302,11 @@ export const ProvinceReport = () => {
           <p>{data?.wiId?.members?.start}</p>
           <p>{data?.wiId?.members?.increase}</p>
           <p>{data?.wiId?.members?.decrease}</p>
+          <p>
+            {data?.wiId?.members?.start +
+              data?.wiId?.members?.increase -
+              data?.wiId?.members?.decrease}
+          </p>
           <p>{data?.wiId?.members?.annual}</p>
           {/* <p>Data 3</p> */}
         </div>
@@ -276,7 +353,7 @@ export const ProvinceReport = () => {
           <p>{data?.provinceActivityId?.ijtArkan?.averageAttendance}</p>
         </div>
         <div className="row">
-          <p className="header">اجتمعِ ناظمیں </p>
+          <p className="header">اجتمعِ ناظمین </p>
           <p>{data?.provinceActivityId?.ijtNazmeen?.decided}</p>
           <p>{data?.provinceActivityId?.ijtNazmeen?.done}</p>
           <p>{data?.provinceActivityId?.ijtNazmeen?.averageAttendance}</p>
