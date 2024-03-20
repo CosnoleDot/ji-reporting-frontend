@@ -106,8 +106,8 @@ export const PersonalReportsDashboard = () => {
   return (
     <GeneralLayout title={"PersonalDashboard"} active={"personalReports"}>
       <div className="w-full flex flex-col justify-start items-center mt-5 p-5">
-        <div className="w-full overflow-hidden overflow-x-scroll flex gap-2 justify-center items-center mt-5">
-          <div className="flex items-center justify-start md:justify-center gap-2  ">
+        <div className="w-full overflow-hidden overflow-x-scroll md:justify-center md:items-center flex gap-2  mt-5">
+          <div className="flex items-center justify-start md:justify-start gap-2 ">
             <input
               type="search"
               name="Search"

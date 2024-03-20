@@ -64,9 +64,9 @@ export const MaqamReport = () => {
         <p className="header" style={{ width: "100%" }}>
           <strong>کمی</strong>
         </p>
-        {/* <p className="header" style={{ width: "100%" }}>
+        <p className="header" style={{ width: "100%" }}>
           <strong>اختتام پر</strong>
-        </p> */}
+        </p>
         <p className="header" style={{ width: "100%" }}>
           <strong>غیرفعال</strong>
         </p>
@@ -83,10 +83,15 @@ export const MaqamReport = () => {
         className="tableContainer"
       >
         <div className="row">
-          <p className="header">رہاشی حلقے</p>
+          <p className="header">رہائشی حلقے</p>
           <p>{data?.maqamTanzeemId?.rehaishHalqay?.start}</p>
           <p>{data?.maqamTanzeemId?.rehaishHalqay?.increase}</p>
           <p>{data?.maqamTanzeemId?.rehaishHalqay?.decrease}</p>
+          <p>
+            {data?.maqamTanzeemId?.rehaishHalqay?.start +
+              data?.maqamTanzeemId?.rehaishHalqay?.increase -
+              data?.maqamTanzeemId?.rehaishHalqay?.decrease}
+          </p>
           <p>{data?.maqamTanzeemId?.rehaishHalqay?.paused}</p>
           <p>{data?.maqamTanzeemId?.rehaishHalqay?.continue}</p>
         </div>
@@ -95,6 +100,11 @@ export const MaqamReport = () => {
           <p>{data?.maqamTanzeemId?.taleemHalqay?.start}</p>
           <p>{data?.maqamTanzeemId?.taleemHalqay?.increase}</p>
           <p>{data?.maqamTanzeemId?.taleemHalqay?.decrease}</p>
+          <p>
+            {data?.maqamTanzeemId?.taleemHalqay?.start +
+              data?.maqamTanzeemId?.taleemHalqay?.increase -
+              data?.maqamTanzeemId?.taleemHalqay?.decrease}
+          </p>
           <p>{data?.maqamTanzeemId?.taleemHalqay?.paused}</p>
           <p>{data?.maqamTanzeemId?.taleemHalqay?.continue}</p>
         </div>
@@ -103,14 +113,24 @@ export const MaqamReport = () => {
           <p>{data?.maqamTanzeemId?.totalHalqay?.start}</p>
           <p>{data?.maqamTanzeemId?.totalHalqay?.increase}</p>
           <p>{data?.maqamTanzeemId?.totalHalqay?.decrease}</p>
+          <p>
+            {data?.maqamTanzeemId?.totalHalqay?.start +
+              data?.maqamTanzeemId?.totalHalqay?.increase -
+              data?.maqamTanzeemId?.totalHalqay?.decrease}
+          </p>
           <p>{data?.maqamTanzeemId?.totalHalqay?.paused}</p>
           <p>{data?.maqamTanzeemId?.totalHalqay?.continue}</p>
         </div>
         <div className="row">
-          <p className="header">رہاشی زیلی حلقے</p>
+          <p className="header">رہائشی زیلی حلقے</p>
           <p>{data?.maqamTanzeemId?.subRehaishHalqay?.start}</p>
           <p>{data?.maqamTanzeemId?.subRehaishHalqay?.increase}</p>
           <p>{data?.maqamTanzeemId?.subRehaishHalqay?.decrease}</p>
+          <p>
+            {data?.maqamTanzeemId?.subRehaishHalqay?.start +
+              data?.maqamTanzeemId?.subRehaishHalqay?.increase -
+              data?.maqamTanzeemId?.subRehaishHalqay?.decrease}
+          </p>
           <p>{data?.maqamTanzeemId?.subRehaishHalqay?.paused}</p>
           <p>{data?.maqamTanzeemId?.subRehaishHalqay?.continue}</p>
         </div>
@@ -119,6 +139,11 @@ export const MaqamReport = () => {
           <p>{data?.maqamTanzeemId?.subTaleemHalqay?.start}</p>
           <p>{data?.maqamTanzeemId?.subTaleemHalqay?.increase}</p>
           <p>{data?.maqamTanzeemId?.subTaleemHalqay?.decrease}</p>
+          <p>
+            {data?.maqamTanzeemId?.subTaleemHalqay?.start +
+              data?.maqamTanzeemId?.subTaleemHalqay?.increase -
+              data?.maqamTanzeemId?.subTaleemHalqay?.decrease}
+          </p>
           <p>{data?.maqamTanzeemId?.subTaleemHalqay?.paused}</p>
           <p>{data?.maqamTanzeemId?.subTaleemHalqay?.continue}</p>
         </div>
@@ -127,6 +152,11 @@ export const MaqamReport = () => {
           <p>{data?.maqamTanzeemId?.subTotalHalqay?.start}</p>
           <p>{data?.maqamTanzeemId?.subTotalHalqay?.increase}</p>
           <p>{data?.maqamTanzeemId?.subTotalHalqay?.decrease}</p>
+          <p>
+            {data?.maqamTanzeemId?.subTotalHalqay?.start +
+              data?.maqamTanzeemId?.subTotalHalqay?.increase -
+              data?.maqamTanzeemId?.subTotalHalqay?.decrease}
+          </p>
           <p>{data?.maqamTanzeemId?.subTotalHalqay?.paused}</p>
           <p>{data?.maqamTanzeemId?.subTotalHalqay?.continue}</p>
         </div>
@@ -136,14 +166,24 @@ export const MaqamReport = () => {
           <p>{data?.maqamTanzeemId?.busmSchoolUnits?.start}</p>
           <p>{data?.maqamTanzeemId?.busmSchoolUnits?.increase}</p>
           <p>{data?.maqamTanzeemId?.busmSchoolUnits?.decrease}</p>
+          <p>
+            {data?.maqamTanzeemId?.busmSchoolUnits?.start +
+              data?.maqamTanzeemId?.busmSchoolUnits?.increase -
+              data?.maqamTanzeemId?.busmSchoolUnits?.decrease}
+          </p>
           <p>{data?.maqamTanzeemId?.busmSchoolUnits?.paused}</p>
           <p>{data?.maqamTanzeemId?.busmSchoolUnits?.continue}</p>
         </div>
         <div className="row">
-          <p className="header">بزم کے رہاشی یونٹس</p>
+          <p className="header">بزم کے رہائشی یونٹس</p>
           <p>{data?.maqamTanzeemId?.busmRehaishUnits?.start}</p>
           <p>{data?.maqamTanzeemId?.busmRehaishUnits?.increase}</p>
           <p>{data?.maqamTanzeemId?.busmRehaishUnits?.decrease}</p>
+          <p>
+            {data?.maqamTanzeemId?.busmRehaishUnits?.start +
+              data?.maqamTanzeemId?.busmRehaishUnits?.increase -
+              data?.maqamTanzeemId?.busmRehaishUnits?.decrease}
+          </p>
           <p>{data?.maqamTanzeemId?.busmRehaishUnits?.paused}</p>
           <p>{data?.maqamTanzeemId?.busmRehaishUnits?.continue}</p>
         </div>
@@ -152,6 +192,11 @@ export const MaqamReport = () => {
           <p>{data?.maqamTanzeemId?.busmTotalUnits?.start}</p>
           <p>{data?.maqamTanzeemId?.busmTotalUnits?.increase}</p>
           <p>{data?.maqamTanzeemId?.busmTotalUnits?.decrease}</p>
+          <p>
+            {data?.maqamTanzeemId?.busmTotalUnits?.start +
+              data?.maqamTanzeemId?.busmTotalUnits?.increase -
+              data?.maqamTanzeemId?.busmTotalUnits?.decrease}
+          </p>
           <p>{data?.maqamTanzeemId?.busmTotalUnits?.paused}</p>
           <p>{data?.maqamTanzeemId?.busmTotalUnits?.continue}</p>
         </div>
@@ -177,9 +222,9 @@ export const MaqamReport = () => {
         <p className="header" style={{ width: "100%" }}>
           <strong>کمی</strong>
         </p>
-        {/* <p className="header" style={{ width: "100%" }}>
+        <p className="header" style={{ width: "100%" }}>
           <strong>اختتام پر</strong>
-        </p> */}
+        </p>
         <p className="header" style={{ width: "100%" }}>
           <strong>سلانہ ہدف</strong>
         </p>
@@ -197,6 +242,11 @@ export const MaqamReport = () => {
           <p>{data?.wiId?.arkan?.start}</p>
           <p>{data?.wiId?.arkan?.increase}</p>
           <p>{data?.wiId?.arkan?.decrease}</p>
+          <p>
+            {data?.wiId?.arkan?.start +
+              data?.wiId?.arkan?.increase -
+              data?.wiId?.arkan?.decrease}
+          </p>
           <p>{data?.wiId?.arkan?.annual}</p>
           {/* <p>{data?.wiId?.arkan?.}</p> */}
         </div>
@@ -205,6 +255,11 @@ export const MaqamReport = () => {
           <p>{data?.wiId?.umeedWaran?.start}</p>
           <p>{data?.wiId?.umeedWaran?.increase}</p>
           <p>{data?.wiId?.umeedWaran?.decrease}</p>
+          <p>
+            {data?.wiId?.umeedWaran?.start +
+              data?.wiId?.umeedWaran?.increase -
+              data?.wiId?.umeedWaran?.decrease}
+          </p>
           <p>{data?.wiId?.umeedWaran?.annual}</p>
           {/* <p>Data 3</p> */}
         </div>
@@ -213,6 +268,11 @@ export const MaqamReport = () => {
           <p>{data?.wiId?.rafaqa?.start}</p>
           <p>{data?.wiId?.rafaqa?.increase}</p>
           <p>{data?.wiId?.rafaqa?.decrease}</p>
+          <p>
+            {data?.wiId?.rafaqa?.start +
+              data?.wiId?.rafaqa?.increase -
+              data?.wiId?.rafaqa?.decrease}
+          </p>
           <p>{data?.wiId?.rafaqa?.annual}</p>
           {/* <p>Data 3</p> */}
         </div>
@@ -221,6 +281,11 @@ export const MaqamReport = () => {
           <p>{data?.wiId?.karkunan?.start}</p>
           <p>{data?.wiId?.karkunan?.increase}</p>
           <p>{data?.wiId?.karkunan?.decrease}</p>
+          <p>
+            {data?.wiId?.karkunan?.start +
+              data?.wiId?.karkunan?.increase -
+              data?.wiId?.karkunan?.decrease}
+          </p>
           <p>{data?.wiId?.karkunan?.annual}</p>
           {/* <p>Data 3</p> */}
         </div>
@@ -229,6 +294,11 @@ export const MaqamReport = () => {
           <p>{data?.wiId?.shaheen?.start}</p>
           <p>{data?.wiId?.shaheen?.increase}</p>
           <p>{data?.wiId?.shaheen?.decrease}</p>
+          <p>
+            {data?.wiId?.shaheen?.start +
+              data?.wiId?.shaheen?.increase -
+              data?.wiId?.shaheen?.decrease}
+          </p>
           <p>{data?.wiId?.shaheen?.annual}</p>
           {/* <p>Data 3</p> */}
         </div>
@@ -237,6 +307,11 @@ export const MaqamReport = () => {
           <p>{data?.wiId?.members?.start}</p>
           <p>{data?.wiId?.members?.increase}</p>
           <p>{data?.wiId?.members?.decrease}</p>
+          <p>
+            {data?.wiId?.members?.start +
+              data?.wiId?.members?.increase -
+              data?.wiId?.members?.decrease}
+          </p>
           <p>{data?.wiId?.members?.annual}</p>
           {/* <p>Data 3</p> */}
         </div>
@@ -274,7 +349,7 @@ export const MaqamReport = () => {
         className="tableContainer"
       >
         <div className="row">
-          <p className="header">اجتمع ارکان</p>
+          <p className="header">اجتماع ارکان</p>
           <p>{data?.maqamActivityId?.ijtArkan?.decided}</p>
           <p>{data?.maqamActivityId?.ijtArkan?.done}</p>
           <p>{data?.maqamActivityId?.ijtArkan?.averageAttendance}</p>
@@ -290,7 +365,7 @@ export const MaqamReport = () => {
           </p>
         </div>
         <div className="row">
-          <p className="header">اجتمعِ ناظمیں </p>
+          <p className="header">اجتماعِ ناظمیں </p>
           <p>{data?.maqamActivityId?.ijtNazmeen?.decided}</p>
           <p>{data?.maqamActivityId?.ijtNazmeen?.done}</p>
           <p>{data?.maqamActivityId?.ijtNazmeen?.averageAttendance}</p>
@@ -299,7 +374,7 @@ export const MaqamReport = () => {
           </p>
         </div>
         <div className="row">
-          <p className="header">اجتمعِ امیدوران </p>
+          <p className="header">اجتماعِ امیدوران </p>
           <p>{data?.maqamActivityId?.ijtUmeedwaran?.decided}</p>
           <p>{data?.maqamActivityId?.ijtUmeedwaran?.done}</p>
           <p>{data?.maqamActivityId?.ijtUmeedwaran?.averageAttendance}</p>
@@ -347,7 +422,7 @@ export const MaqamReport = () => {
         className="tableContainer"
       >
         <div className="row">
-          <p className="header">اجتمع رفقا</p>
+          <p className="header">اجتماع رفقا</p>
           <p>{data?.mentionedActivityId?.ijtRafaqa?.decided}</p>
           <p>{data?.mentionedActivityId?.ijtRafaqa?.done}</p>
           <p>{data?.mentionedActivityId?.ijtRafaqa?.averageAttendance}</p>
@@ -359,7 +434,7 @@ export const MaqamReport = () => {
           <p>{data?.mentionedActivityId?.studyCircle?.averageAttendance}</p>
         </div>
         <div className="row">
-          <p className="header">اجتمعِ کارکنان </p>
+          <p className="header">اجتماعِ کارکنان </p>
           <p>{data?.mentionedActivityId?.ijtKarkunan?.decided}</p>
           <p>{data?.mentionedActivityId?.ijtKarkunan?.done}</p>
           <p>{data?.mentionedActivityId?.ijtKarkunan?.averageAttendance}</p>

@@ -42,6 +42,7 @@ import { ProvinceReport } from "./pages/ProvinceReport";
 import { DivisionReport } from "./pages/DivisionReport";
 import { MaqamReport } from "./pages/MaqamReport";
 import { HalqaReport } from "./pages/HalqaReport";
+import { ResetPassword } from "./pages/ResetPassword";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -569,6 +570,10 @@ function App() {
                                 <Route
                                   path="/reset-password"
                                   element={<Forget />}
+                                />
+                                <Route
+                                  path="/reset"
+                                  element={<ResetPassword />}
                                 />
                                 <Route
                                   path="change-password"
