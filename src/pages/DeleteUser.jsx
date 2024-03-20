@@ -15,6 +15,7 @@ import instance from "../api/instrance";
 import { Link } from "react-router-dom";
 import { MdOutlineUpgrade } from "react-icons/md";
 import { getDivisionByTehsil } from "./Reports";
+import { FaEarDeaf } from "react-icons/fa6";
 export const DeleteUser = () => {
   const me = useContext(MeContext);
   const halqas = useContext(HalqaContext);
@@ -85,18 +86,35 @@ export const DeleteUser = () => {
   const deleteUser = async (user) => {
     setLoading(true);
     try {
-      const isConfirmed = window.confirm(
-        `Are you sure you want to delete ${user?.email}?`
-      );
-      if (isConfirmed) {
-        const req = await instance.delete("/user/" + user?._id, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("@token")}`,
-          },
-        });
-        if (req) {
-          await getNazim();
-          dispatch({ type: "SUCCESS", payload: req.data?.message });
+      if (user?.isDeleted) {
+        let isConfirmed = window.confirm(
+          `Are you sure you want to activate ${user?.email} with the previous rights?`
+        );
+        if (isConfirmed) {
+          const req = await instance.patch("/user/active/" + user?._id, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("@token")}`,
+            },
+          });;
+          if (req) {
+            await getNazim();
+            dispatch({ type: "SUCCESS", payload: req.data?.message });
+          }
+        }
+      } else {
+        let isConfirmed = window.confirm(
+          `Are you sure you want to delete ${user?.email} ?`
+        );
+        if (isConfirmed) {
+          const req = await instance.delete("/user/" + user?._id, {
+            headers: {
+              Authorization:`Bearer ${localStorage.getItem("@token")}`,
+            },
+          });
+          if (req) {
+            await getNazim();
+            dispatch({ type: "SUCCESS", payload: req.data?.message });
+          }
         }
       }
     } catch (err) {
@@ -379,7 +397,7 @@ export const DeleteUser = () => {
                             className="btn"
                             onClick={() => deleteUser(maqam)}
                           >
-                            <FaTrash />
+                            {maqam?.isDeleted ? <FaEarDeaf /> : <FaTrash />}
                           </button>
                         </div>
                         {me?.userAreaType !== "halqa" && (
