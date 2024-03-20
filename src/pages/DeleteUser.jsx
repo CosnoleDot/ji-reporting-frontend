@@ -335,10 +335,10 @@ export const DeleteUser = () => {
                       <td>{maqam?.email || "-"}</td>
                       <td>{maqam?.userAreaId?.name || "-"}</td>
                       <td>
-                        {!maqam?.isDeleted ? (
-                          <div className="badge badge-accent">active</div>
+                        {maqam?.isDeleted ? (
+                          <div className="badge badge-error">inActive</div>
                         ) : (
-                          <div className="badge badge-secondary">deleted</div>
+                          <div className="badge badge-accent">active</div>
                         )}
                       </td>
                       <td className="flex row justify-center items-center gap-3">
