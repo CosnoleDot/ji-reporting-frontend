@@ -365,7 +365,7 @@ export const MaqamReport = () => {
           </p>
         </div>
         <div className="row">
-          <p className="header">اجتماعِ ناظمیں </p>
+          <p className="header">اجتماعِ ناظمین </p>
           <p>{data?.maqamActivityId?.ijtNazmeen?.decided}</p>
           <p>{data?.maqamActivityId?.ijtNazmeen?.done}</p>
           <p>{data?.maqamActivityId?.ijtNazmeen?.averageAttendance}</p>

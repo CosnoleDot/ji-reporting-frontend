@@ -15,7 +15,7 @@ import instance from "../api/instrance";
 import { Link } from "react-router-dom";
 import { MdOutlineUpgrade } from "react-icons/md";
 import { getDivisionByTehsil } from "./Reports";
-import { FaEarDeaf } from "react-icons/fa6";
+import { RiDeviceRecoverFill } from "react-icons/ri";
 export const DeleteUser = () => {
   const me = useContext(MeContext);
   const halqas = useContext(HalqaContext);
@@ -95,7 +95,7 @@ export const DeleteUser = () => {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("@token")}`,
             },
-          });;
+          });
           if (req) {
             await getNazim();
             dispatch({ type: "SUCCESS", payload: req.data?.message });
@@ -108,7 +108,7 @@ export const DeleteUser = () => {
         if (isConfirmed) {
           const req = await instance.delete("/user/" + user?._id, {
             headers: {
-              Authorization:`Bearer ${localStorage.getItem("@token")}`,
+              Authorization: `Bearer ${localStorage.getItem("@token")}`,
             },
           });
           if (req) {
@@ -185,6 +185,7 @@ export const DeleteUser = () => {
 
     setLoading(false);
   };
+  console.log(singleUser);
   const updateStatus = async () => {
     const data = {
       nazim: userAreaType,
@@ -398,7 +399,11 @@ export const DeleteUser = () => {
                             className="btn"
                             onClick={() => deleteUser(maqam)}
                           >
-                            {maqam?.isDeleted ? <FaEarDeaf /> : <FaTrash />}
+                            {maqam?.isDeleted ? (
+                              <RiDeviceRecoverFill />
+                            ) : (
+                              <FaTrash />
+                            )}
                           </button>
                         </div>
                         {me?.userAreaType !== "halqa" && (
@@ -906,7 +911,7 @@ export const DeleteUser = () => {
                 <div className="w-full">
                   <label className="label">
                     <span className="label-text text-sm">
-                      Date of becoming rukan/umeedwar
+                      Month of becoming rukan/umeedwar
                     </span>
                   </label>
                   <input
@@ -915,7 +920,7 @@ export const DeleteUser = () => {
                     placeholder="JoiningDate"
                     name="joiningDate"
                     className="w-full text-[#7a7a7a]"
-                    defaultValue={singleUser?.joiningDate?.split("T")[0]}
+                    defaultValue={singleUser?.joiningDate?.date?.split("T")[0]}
                   />
                 </div>
               </div>

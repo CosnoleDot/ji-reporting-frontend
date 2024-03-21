@@ -80,6 +80,22 @@ function App() {
       });
       if (req) {
         setIsCompleted(true);
+        if (
+          localStorage?.getItem("@nazimType") &&
+          localStorage?.getItem("@type")
+        ) {
+          if (
+            localStorage?.getItem("@nazimType") !==
+              req?.data?.data?.nazimType ||
+            localStorage?.getItem("@type") !== req?.data?.data?.nazim
+          ) {
+            alert(
+              "Your account will be logged out as admin has updated your rights"
+            );
+            localStorage.clear();
+            navigate("/login");
+          }
+        }
         setMe(req.data.data);
         const meData = req.data.data;
         [
