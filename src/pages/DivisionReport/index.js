@@ -423,7 +423,7 @@ export const DivisionReport = () => {
         className="tableContainer"
       >
         <div className="row">
-          <p className="header">اجتمع رفقا</p>
+          <p className="header">اجتماع رفقا</p>
           <p>{data?.mentionedActivityId?.ijtRafaqa?.decided}</p>
           <p>{data?.mentionedActivityId?.ijtRafaqa?.done}</p>
           <p>{data?.mentionedActivityId?.ijtRafaqa?.averageAttendance}</p>

@@ -1,10 +1,10 @@
-import instance from '../api/instrance';
-import { useNavigate, Link } from 'react-router-dom';
-import { toJson } from '../utils';
-import { useToastState } from '../context';
-import { useContext } from 'react';
-import { Loader } from '../components';
-import { UIContext } from '../context/ui';
+import instance from "../api/instrance";
+import { useNavigate, Link } from "react-router-dom";
+import { toJson } from "../utils";
+import { useToastState } from "../context";
+import { useContext } from "react";
+import { Loader } from "../components";
+import { UIContext } from "../context/ui";
 
 export const Login = ({ setAuthenticated }) => {
   const navigate = useNavigate();
@@ -17,59 +17,64 @@ export const Login = ({ setAuthenticated }) => {
     const { email, password } = toJson(formData);
     try {
       const res = await instance.post(
-        '/user/login',
+        "/user/login",
         { email, password },
-        { headers: { 'Content-Type': 'application/json' } }
+        { headers: { "Content-Type": "application/json" } }
       );
-      localStorage.setItem('@token', res?.data?.data?.token);
+      localStorage.setItem("@token", res?.data?.data?.token);
       setAuthenticated(res?.data?.data?.token);
-      localStorage.setItem('@type', res?.data?.data?.type);
-      navigate('/');
+      localStorage.setItem("@type", res?.data?.data?.type);
+      localStorage.setItem("@nazimType", res?.data?.data?.nazimType);
+      navigate("/");
     } catch (error) {
       const message = error?.response?.data?.message;
-      dispatch({ type: 'ERROR', payload: message });
+      dispatch({ type: "ERROR", payload: message });
     }
     setLoading(false);
   };
   return (
-    <div className='relative flex flex-col justify-center min-h-screen overflow-hidden'>
-      <div className='w-full p-6 m-auto bg-white rounded-md shadow-md lg:max-w-lg'>
-        <div className='flex items-center justify-center w-full'>
-          <img src='/logo.png' className='text-center  h-[200px] w-[250px]' alt='LOGO' />
+    <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
+      <div className="w-full p-6 m-auto bg-white rounded-md shadow-md lg:max-w-lg">
+        <div className="flex items-center justify-center w-full">
+          <img
+            src="/logo.png"
+            className="text-center  h-[200px] w-[250px]"
+            alt="LOGO"
+          />
         </div>
-        <form className='space-y-4' onSubmit={handleSubmit}>
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
-            <label className='label'>
-              <span className='text-base label-text'>Email</span>
+            <label className="label">
+              <span className="text-base label-text">Email</span>
             </label>
             <input
-              name='email'
-              type='text'
-              placeholder='Email Address'
-              className='w-full input input-bordered input-primary'
+              name="email"
+              type="text"
+              placeholder="Email Address"
+              className="w-full input input-bordered input-primary"
             />
           </div>
           <div>
-            <label className='label'>
-              <span className='text-base label-text'>Password</span>
+            <label className="label">
+              <span className="text-base label-text">Password</span>
             </label>
             <input
-              name='password'
-              type='password'
-              placeholder='Enter Password'
-              className='w-full input input-bordered input-primary'
+              name="password"
+              type="password"
+              placeholder="Enter Password"
+              className="w-full input input-bordered input-primary"
             />
           </div>
-          <div className='flex justify-between items-center'>
+          <div className="flex justify-between items-center">
             <Link
-              to='/reset-password'
-              className='text-xs text-gray-600 hover:underline hover:text-blue-600'
+              to="/reset-password"
+              className="text-xs text-gray-600 hover:underline hover:text-blue-600"
             >
               Forget Password?
             </Link>
             <Link
-              to='/signup'
-              className='text-xs text-gray-600 hover:underline hover:text-blue-600'
+              to="/signup"
+              className="text-xs text-gray-600 hover:underline hover:text-blue-600"
             >
               Create new account
             </Link>
@@ -77,22 +82,22 @@ export const Login = ({ setAuthenticated }) => {
           <div>
             <button
               disabled={loading}
-              className='btn btn-primary'
-              type='submit'
+              className="btn btn-primary"
+              type="submit"
             >
               Login
             </button>
           </div>
         </form>
-        <div className='w-full flex justify-center items-start gap-3'>
-          <span className='text-slate-800'>Powered By:</span>
+        <div className="w-full flex justify-center items-start gap-3">
+          <span className="text-slate-800">Powered By:</span>
           <a
-            href='https://consoledot.com'
-            target='_blank'
-            rel='noreferrer'
-            className='flex items-center justify-start gap-1'
+            href="https://consoledot.com"
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center justify-start gap-1"
           >
-            <img src='/cd.png' alt='CD LOGO' className='w-5 h-5' /> ConsoleDot
+            <img src="/cd.png" alt="CD LOGO" className="w-5 h-5" /> ConsoleDot
           </a>
         </div>
       </div>
