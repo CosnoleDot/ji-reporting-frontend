@@ -3,8 +3,7 @@ const env = process.env.REACT_APP_ENV || "production";
 const instance = axios.create({
   baseURL:
     env === "production"
-      ? // ? "https://apiv2.jamiatreporting.com/api/v1/"
-        "https://ji-reporting-backend.vercel.app/api/v1"
+      ? "https://apiv2.jamiatreporting.com/api/v1/"
       : "http://localhost:5000/api/v1",
   headers: {
     "Content-Type": "application/json", // Set default headers
