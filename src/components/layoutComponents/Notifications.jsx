@@ -1,7 +1,7 @@
 import { FaCheck, FaTimes } from "react-icons/fa";
 import instance from "../../api/instrance";
 import { useToastState } from "../../context";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Loader } from "../Loader";
 import { FaBell } from "react-icons/fa6";
 import moment from "moment";
@@ -36,6 +36,7 @@ export const Notifications = ({ userRequests, type }) => {
     }
     setLoading(false);
   };
+
   return (
     <div className="card-body max-h-[320px] overflow-y-scroll">
       {type === "request" ? (

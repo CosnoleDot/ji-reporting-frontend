@@ -356,7 +356,7 @@ export const MaqamReport = () => {
           <p>{data?.maqamActivityId?.ijtArkan?.registered ? "ہاں" : "نہیں"}</p>
         </div>
         <div className="row">
-          <p className="header">سٹدی سرکل </p>
+          <p className="header">سٹڈی  سرکل</p>
           <p>{data?.maqamActivityId?.studyCircle?.decided}</p>
           <p>{data?.maqamActivityId?.studyCircle?.done}</p>
           <p>{data?.maqamActivityId?.studyCircle?.averageAttendance}</p>
@@ -428,7 +428,7 @@ export const MaqamReport = () => {
           <p>{data?.mentionedActivityId?.ijtRafaqa?.averageAttendance}</p>
         </div>
         <div className="row">
-          <p className="header">سٹدی سرکل </p>
+          <p className="header">سٹڈی  سرکل </p>
           <p>{data?.mentionedActivityId?.studyCircle?.decided}</p>
           <p>{data?.mentionedActivityId?.studyCircle?.done}</p>
           <p>{data?.mentionedActivityId?.studyCircle?.averageAttendance}</p>

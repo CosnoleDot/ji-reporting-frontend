@@ -157,6 +157,7 @@ export const Rawabit3 = ({
             name={"rbt3NamazCondition"}
             type={"textarea"}
             disabled={view}
+            required
           ></textarea>
         </div>
       </div>

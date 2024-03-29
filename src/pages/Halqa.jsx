@@ -53,6 +53,7 @@ export const Halqa = () => {
     setLoading(true);
     try {
       if (id) {
+        jsonData.month = data?.month;
         const req = await instance.put(`/reports/halqa/${id}`, jsonData, {
           headers: {
             "Content-Type": "application/json",
@@ -82,10 +83,12 @@ export const Halqa = () => {
     setLoading(false);
   };
   useEffect(() => {
-    if (id) getData("halqa", id, setData, { halqa, maqam, division });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
-  useEffect(() => {
+    if (id && Object.keys(data).length <= 2) {
+      getData("halqa", id, setData, { halqa, maqam, division });
+    }
+  }, [id, data]);
+
+  const autoFill = () => {
     Object.keys(data).forEach((i) => {
       const elem = document.getElementById(i);
       if (elem) {
@@ -104,7 +107,13 @@ export const Halqa = () => {
     afd.forEach((i) => {
       calcultate(i);
     });
+  };
+  useEffect(() => {
+    autoFill();
   }, [data]);
+
+
+
   return (
     <GeneralLayout>
       <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">

@@ -26,9 +26,7 @@ import { RozOShabDiary } from "../components/provinceReport/RozOShabDiary";
 const getData = async (id, setData, data) => {
   const maqam = data["province"];
   const obj = maqam.filter((i) => i?._id?.toString() === id?.toString());
-  // if (req) {
   setData(reverseDataFormat(obj[0]));
-  // }F
 };
 
 export const Province = () => {
@@ -48,7 +46,7 @@ export const Province = () => {
   const me = useContext(MeContext);
   const navigate = useNavigate();
   const autoFill = () => {
-    const halq = {};
+    const provinceFinalData = {};
     document.getElementById("province-form").reset();
     if (
       maqam.filter((i) => i?.month.includes(month))?.length < 1 &&
@@ -87,13 +85,8 @@ export const Province = () => {
         "literatureDistribution",
         "commonStudentMeetings",
         "commonLiteratureDistribution",
-        "totalLibraries",
         "totalBooks",
         "meetings",
-        "literatureDistribution",
-        "commonStudentMeetings",
-        "commonLiteratureDistribution",
-        "totalLibraries",
         "totalBooks",
         "totalIncrease",
         "totalDecrease",
@@ -198,6 +191,10 @@ export const Province = () => {
         "busmTotalUnits-paused",
         "arkanFilled",
         "umeedwaranFilled",
+        "totalSoldTanzeemi",
+        "totalSoldMarket",
+        "totalPrinted",
+        "gift",
       ].forEach((i) => {
         document.getElementById(i).value = 0;
       });
@@ -208,17 +205,17 @@ export const Province = () => {
       .forEach((i) => {
         const sim = reverseDataFormat(i);
         Object.keys(sim)?.forEach((j) => {
-          if (halq?.[j]) {
+          if (provinceFinalData?.[j]) {
             try {
-              halq[j] += parseInt(sim[j]) || 0;
+              provinceFinalData[j] += parseInt(sim[j]) || 0;
             } catch {
-              halq[j] += sim[j] || 0;
+              provinceFinalData[j] += sim[j] || 0;
             }
           } else {
             try {
-              halq[j] = parseInt(sim[j]) || 0;
+              provinceFinalData[j] = parseInt(sim[j]) || 0;
             } catch {
-              halq[j] = sim[j] || 0;
+              provinceFinalData[j] = sim[j] || 0;
             }
           }
         });
@@ -228,22 +225,22 @@ export const Province = () => {
       .forEach((i) => {
         const sim = reverseDataFormat(i);
         Object.keys(sim)?.forEach((j) => {
-          if (halq?.[j]) {
+          if (provinceFinalData?.[j]) {
             try {
-              halq[j] += parseInt(sim[j]) || 0;
+              provinceFinalData[j] += parseInt(sim[j]) || 0;
             } catch {
-              halq[j] += sim[j] || 0;
+              provinceFinalData[j] += sim[j] || 0;
             }
           } else {
             try {
-              halq[j] = parseInt(sim[j]) || 0;
+              provinceFinalData[j] = parseInt(sim[j]) || 0;
             } catch {
-              halq[j] = sim[j] || 0;
+              provinceFinalData[j] = sim[j] || 0;
             }
           }
         });
       });
-    Object.keys(halq).forEach((i) => {
+    Object.keys(provinceFinalData).forEach((i) => {
       let j = i;
       const elem = document.getElementById(j);
       if (elem) {
@@ -254,12 +251,12 @@ export const Province = () => {
           if (j.split("-")[1] === "attendance") {
             document.getElementById(
               `${j.split("-")[0]}-averageAttendance`
-            ).value = halq[i];
+            ).value = provinceFinalData[i];
           } else {
             if (i === "name" && !view) {
               elem.value = me?.userAreaId?.name;
             } else {
-              elem.value = halq[i];
+              elem.value = provinceFinalData[i];
             }
           }
         }
@@ -304,6 +301,28 @@ export const Province = () => {
       document.getElementById("anyOther").value = null;
     }
   };
+  const paigham = [
+    "totalSoldMarket",
+    "totalSoldTanzeemi",
+    "totalPrinted",
+    "gift",
+    "comments",
+    "tanzeemiRound",
+    "divMushawarat-decided",
+    "divMushawarat-done",
+    "divMushawarat-averageAttendance",
+  ];
+  useEffect(() => {
+    if (data && id) {
+      paigham.forEach((p) => {
+        if (data[p] !== undefined) {
+          const fieldValue = data[p];
+          document.getElementById(p).value = fieldValue;
+        }
+      });
+    }
+  }, [data]);
+
   useEffect(() => {
     const l = location.pathname?.split("/")[2];
     if (l === "view") {
@@ -319,15 +338,17 @@ export const Province = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
-  useEffect(() => {}, [data]);
   useEffect(() => {
     if (!id) autoFill();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, halqa, month]);
+  }, [id, halqa, month, data]);
+  useEffect(() => {
+    if (location.pathname.split("/")[2] === "edit") autoFill();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [halqa]);
   // EDIT CODE END
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const formData = new FormData(e.currentTarget);
     const jsonData = convertDataFormat(toJson(formData));
     setLoading(true);

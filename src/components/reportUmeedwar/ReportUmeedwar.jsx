@@ -157,50 +157,52 @@ export const ReportUmeedwar = () => {
   };
   useEffect(() => {
     function autoFillForm(obj) {
-      Object.keys(obj).forEach((key) => {
-        const elem = document.getElementById(key);
-        if (key === "toseeDawaId") {
-          obj[key].rawabit.forEach((obj, index) => {
-            Object.keys(obj, index).forEach((innerKey) => {
-              if (innerKey === "programs") {
-                setProgramsList((prevState) => {
-                  return { ...prevState, [index]: obj[innerKey] };
-                });
-              }
-              const formattedKey =
-                innerKey.charAt(0).toUpperCase() + innerKey.slice(1);
-              const elem = document.getElementById(
-                `rbt${index + 1}${formattedKey}`
-              );
-              if (elem) {
-                elem.value = obj[innerKey];
-                if (elem === "attended") {
-                  setAttended(elem.value);
-                } else if (elem === "attendedStudyCircle") {
-                  setStudyCircle(elem.value);
-                } else if (elem === "aanat") {
-                  setAanat(elem.value);
+      if (obj) {
+        Object.keys(obj).forEach((key) => {
+          const elem = document.getElementById(key);
+          if (key === "toseeDawaId") {
+            obj[key].rawabit.forEach((obj, index) => {
+              Object.keys(obj, index).forEach((innerKey) => {
+                if (innerKey === "programs") {
+                  setProgramsList((prevState) => {
+                    return { ...prevState, [index]: obj[innerKey] };
+                  });
                 }
-              }
+                const formattedKey =
+                  innerKey.charAt(0).toUpperCase() + innerKey.slice(1);
+                const elem = document.getElementById(
+                  `rbt${index + 1}${formattedKey}`
+                );
+                if (elem) {
+                  elem.value = obj[innerKey];
+                  if (elem === "attended") {
+                    setAttended(elem.value);
+                  } else if (elem === "attendedStudyCircle") {
+                    setStudyCircle(elem.value);
+                  } else if (elem === "aanat") {
+                    setAanat(elem.value);
+                  }
+                }
+              });
             });
-          });
-        }
+          }
 
-        if (typeof obj[key] === "object") {
-          autoFillForm(obj[key]);
-        } else {
-          if (key === "month") {
-            elem.value = obj[key]?.split("").slice(0, 7).join("");
+          if (typeof obj[key] === "object") {
+            autoFillForm(obj[key]);
           } else {
-            if (elem) {
-              elem.value = obj[key];
+            if (key === "month") {
+              elem.value = obj[key]?.split("").slice(0, 7).join("");
+            } else {
+              if (elem) {
+                elem.value = obj[key];
+              }
             }
           }
-        }
-      });
+        });
+      }
     }
 
-    autoFillForm(singleFile);;
+    autoFillForm(singleFile);
   }, [singleFile]);
   useEffect(() => {
     if (id && id !== undefined) {
@@ -376,7 +378,6 @@ export const ReportUmeedwar = () => {
               </div>
             </div>
             <div className="flex w-full  flex-col justify-start items-start">
-
               <h2 className="block w-full p-3">اعانت ادا </h2>
 
               <div className="flex flex-wrap items-center justify-start border border-primary p-2 rounded-lg">

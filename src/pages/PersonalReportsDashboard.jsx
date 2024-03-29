@@ -187,7 +187,7 @@ export const PersonalReportsDashboard = () => {
           {filteredData?.map((obj, index) => (
             <div
               key={index}
-              className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col mt-5"
+              className="card-body flex items-center max-h-[170px]  justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col mt-5"
             >
               <div className="flex w-full flex-col items-start justify-center">
                 <span className="text-lg font-semibold" key={index}>

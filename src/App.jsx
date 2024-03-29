@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { Login } from "./pages/Login";
 import { Forget } from "./pages/Forget";
 import { Dashboard } from "./pages/Dashboard";
@@ -67,6 +67,7 @@ function App() {
   const navigate = useNavigate();
   const [notifications, setNotifications] = useState([]);
   const [reports, setReports] = useState([]);
+  const location = useLocation();
   let dis;
   let r = [];
   const [authenticated, setAuthenticaated] = useState(
@@ -80,23 +81,25 @@ function App() {
       });
       if (req) {
         setIsCompleted(true);
-        if (
-          localStorage?.getItem("@nazimType") &&
-          localStorage?.getItem("@type")
-        ) {
+        if (isCompleted) {
           if (
-            localStorage?.getItem("@nazimType") !==
-              req?.data?.data?.nazimType ||
-            localStorage?.getItem("@type") !== req?.data?.data?.nazim
+            localStorage?.getItem("@nazimType") &&
+            localStorage?.getItem("@type")
           ) {
-            alert(
-              "Your account will be logged out as admin has updated your rights"
-            );
-            localStorage.clear();
-            navigate("/login");
+            if (
+              localStorage?.getItem("@nazimType") !==
+                req?.data?.data?.nazimType ||
+              localStorage?.getItem("@type") !== req?.data?.data?.nazim
+            ) {
+              alert(
+                "Your account will be logged out as admin has updated your rights"
+              );
+              localStorage.clear();
+              navigate("/login");
+            }
           }
+          setMe(req.data.data);
         }
-        setMe(req.data.data);
         const meData = req.data.data;
         [
           "email",
@@ -109,7 +112,6 @@ function App() {
           "subject",
           "semester",
           "institution",
-          "joiningDate",
           "phoneNumber",
           "whatsAppNumber",
         ].forEach((i) => {
@@ -531,6 +533,11 @@ function App() {
       await getAllNotifications();
       setCount((100 / 14) * 14);
       setValue(null);
+      if (
+        location.pathname?.split("/")[2] === "view" ||
+        location.pathname?.split("/")[2] === "edit"
+      )
+        navigate("/reports");
     };
     if (me) {
       fetchData();
@@ -624,6 +631,10 @@ function App() {
                                 />
                                 <Route path="/reports" element={<Reports />} />
                                 <Route
+                                  path="/personalReport"
+                                  element={<PersonalReportsDashboard />}
+                                />
+                                <Route
                                   path="/reports/create"
                                   element={
                                     localStorage.getItem("@type") ===
@@ -683,10 +694,7 @@ function App() {
                                   path="/user-switch"
                                   element={<DeleteUser />}
                                 />
-                                <Route
-                                  path="/personalReport"
-                                  element={<PersonalReportsDashboard />}
-                                />
+
                                 <Route
                                   path="/personalReport/create"
                                   element={<ReportUmeedwar />}

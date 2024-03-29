@@ -44,27 +44,30 @@ export const Navbar = ({ title }) => {
               </div>
             </div>
           )}
-          {localStorage.getItem("@type") !== "halqa" && (
-            <div className="relative dropdown dropdown-end">
-              <div
-                tabIndex={0}
-                role="button"
-                className="btn btn-ghost btn-circle"
-                onClick={() => {
-                  setShowNotifications(false);
-                  showRequests(!requests);
-                  showProfileTab(false);
-                }}
-              >
-                <div className="indicator">
-                  <FaUserPlus className="text-xl" />
-                  <span className="badge badge-sm absolute -top-2 -right-3 z-0">
-                    {userRequests.length}
-                  </span>
+          {localStorage.getItem("@type") !== "halqa" &&
+            localStorage.getItem("@nazimType") !== "rukan" &&
+            localStorage.getItem("@nazimType") !== "umeedwar" && (
+              <div className="relative dropdown dropdown-end">
+                <div
+                  tabIndex={0}
+                  role="button"
+                  className="btn btn-ghost btn-circle"
+                  onClick={() => {
+                    setShowNotifications(false);
+                    showRequests(!requests);
+                    showProfileTab(false);
+                  }}
+                >
+                  <div className="indicator">
+                    <FaUserPlus className="text-xl" />
+                    <span className="badge badge-sm absolute -top-2 -right-3 z-0">
+                      {userRequests.length}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
+
           <div className="dropdown dropdown-end">
             <div
               tabIndex={0}
@@ -81,6 +84,7 @@ export const Navbar = ({ title }) => {
               </div>
             </div>
           </div>
+
           {profileTab && (
             <ul className="text-black fixed right-[10px] top-[60.5px] menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
               <li className="mb-1">

@@ -3678,6 +3678,10 @@ html {
   max-height: 100px;
 }
 
+.max-h-\[170px\] {
+  max-height: 170px;
+}
+
 .max-h-\[320px\] {
   max-height: 320px;
 }
