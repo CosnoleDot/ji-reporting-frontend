@@ -21,6 +21,7 @@ export const Login = ({ setAuthenticated }) => {
         { email, password },
         { headers: { "Content-Type": "application/json" } }
       );
+
       localStorage.setItem("@token", res?.data?.data?.token);
       setAuthenticated(res?.data?.data?.token);
       localStorage.setItem("@type", res?.data?.data?.type);

@@ -13,12 +13,17 @@ export const Signup = () => {
   const [selectedSubject, setSelectedSubject] = useState("");
   const [subject, setSubject] = useState();
   const [subjects, setSubjects] = useState([]);
+  const [joiningDate, setJoiningDate] = useState({ title: "", date: "" });
   const { dispatch } = useToastState();
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     const formData = new FormData(e.currentTarget);
+    const joiningDate = {
+      date: formData.get("joiningDate"),
+      title: formData.get("joiningType"),
+    };
     const data = {
       userAreaId: formData.get("userAreaId"),
       userAreaType: formData.get("userAreaType"),
@@ -36,7 +41,7 @@ export const Signup = () => {
       subject: formData.get("subject"),
       semester: formData.get("semester"),
       institution: formData.get("institution"),
-      joiningDate: formData.get("joiningDate"),
+      joiningDate: joiningDate,
       phoneNumber: formData.get("phoneNumber"),
       whatsAppNumber: formData.get("whatsAppNumber"),
     };
@@ -190,17 +195,53 @@ export const Signup = () => {
                 required
               />
             </div>
-            <div className="w-full">
-              <label className="label">
-                <span className="label-text text-sm">
-                  Date of becoming rukan/umeedwar
-                </span>
-              </label>
+            <div className="w-[50%] flex items-center justify-between gap-2 flex-col ">
+              <div className="w-full p-1 mt-2 flex justify-start items-center">
+                <div>
+                  <input
+                    type="radio"
+                    id="rukan"
+                    name="joiningType"
+                    value="rukan"
+                    defaultChecked={
+                      joiningDate?.title === "rukan" ? true : false
+                    }
+                  />
+                  <label htmlFor="rukan">Rukan</label>
+                </div>
+                <div>
+                  <input
+                    type="radio"
+                    id="umeedwar"
+                    name="joiningType"
+                    value="umeedwar"
+                    defaultChecked={
+                      joiningDate?.title === "umeedwar" ? true : false
+                    }
+                  />
+                  <label htmlFor="umeedwar">Umeedwar</label>
+                </div>
+                <div>
+                  <input
+                    type="radio"
+                    id="null"
+                    name="joiningType"
+                    value="null"
+                    defaultChecked={joiningDate?.title === "" ? true : false}
+                  />
+                  <label htmlFor="null">Null</label>
+                </div>
+              </div>
               <input
+                required
                 type="month"
-                placeholder="JoiningDate"
+                placeholder="No data"
                 name="joiningDate"
                 className="w-full input input-bordered input-primary"
+                defaultValue={joiningDate?.date
+                  ?.split("-")
+                  .slice(0, 2)
+                  .join("-")}
               />
             </div>
           </div>
@@ -502,7 +543,7 @@ export const Signup = () => {
                       type="radio"
                       name="nazimType"
                       className="radio checked:bg-blue-500"
-                      value="umeedwaar"
+                      value="umeedwar"
                     />
                     <span className="label-text">Umeedwaar</span>
                   </label>

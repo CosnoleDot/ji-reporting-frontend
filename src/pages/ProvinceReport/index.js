@@ -365,7 +365,7 @@ export const ProvinceReport = () => {
           <p>{data?.provinceActivityId?.ijtUmeedwaran?.averageAttendance}</p>
         </div>
         <div className="row">
-          <p className="header">سٹدی سرکل </p>
+          <p className="header">سٹڈی  سرکل </p>
           <p>{data?.provinceActivityId?.studyCircle?.decided}</p>
           <p>{data?.provinceActivityId?.studyCircle?.done}</p>
           <p>{data?.provinceActivityId?.studyCircle?.averageAttendance}</p>
@@ -413,7 +413,7 @@ export const ProvinceReport = () => {
           <p>{data?.mentionedActivityId?.ijtRafaqa?.averageAttendance}</p>
         </div>
         <div className="row">
-          <p className="header">سٹدی سرکل </p>
+          <p className="header">سٹڈی  سرکل </p>
           <p>{data?.mentionedActivityId?.studyCircle?.decided}</p>
           <p>{data?.mentionedActivityId?.studyCircle?.done}</p>
           <p>{data?.mentionedActivityId?.studyCircle?.averageAttendance}</p>

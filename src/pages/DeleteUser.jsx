@@ -213,7 +213,7 @@ export const DeleteUser = () => {
   };
   const handleCloseUpdateModel = () => {
     setUserAreaType("");
-    setNazimType("");
+    setNazimType("nazim");
     document.getElementById("autocomplete0").value = "";
   };
   useEffect(() => {

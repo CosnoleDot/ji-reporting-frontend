@@ -58,6 +58,7 @@ export const Activity = ({ view }) => {
                 name={`ijtRafaqa-title`}
                 id={`ijtRafaqa-title`}
                 className='p-1 min-w-full'
+                required
               />
             </Box>
             <Box>
@@ -122,6 +123,7 @@ export const Activity = ({ view }) => {
                 name={`ijtKarkunan-title`}
                 id={`ijtKarkunan-title`}
                 className='p-1 min-w-full'
+                required
               />
             </Box>
             <Box>-</Box>
@@ -169,6 +171,7 @@ export const Activity = ({ view }) => {
                 name={`studyCircle-title`}
                 id={`studyCircle-title`}
                 className='p-1 min-w-full'
+                required
               />
             </Box>
             <Box>-</Box>
@@ -216,6 +219,7 @@ export const Activity = ({ view }) => {
                 name={`darseQuran-title`}
                 id={`darseQuran-title`}
                 className='p-1 min-w-full'
+                required
               />
             </Box>
             <Box>-</Box>

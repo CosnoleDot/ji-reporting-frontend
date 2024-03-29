@@ -22,6 +22,7 @@ import { Link } from "react-router-dom";
 import { FaRegFileExcel } from "react-icons/fa";
 import { AiFillBell } from "react-icons/ai";
 import { UIContext } from "../context/ui";
+import { PersonalReportsDashboard } from "./PersonalReportsDashboard";
 
 const NoReports = () => (
   <div className="card-body flex flex-col items-center justify-center w-full p-5 mb-1 rounded-xl">
@@ -411,6 +412,7 @@ export const Reports = () => {
       console.error("Error fetching reports:", error);
     }
   };
+  const location = useLocation();
   const clearFilters = () => {
     setMonth("");
     setYear("2023");
@@ -424,7 +426,14 @@ export const Reports = () => {
     fetchReports();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userType, id, active, tab, selectedId, selectedMonth]);
-
+  useEffect(() => {
+    fetchReports();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [active, location, params]);
+  useEffect(() => {
+    fetchReports();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const searchResults = () => {
     if (userType !== "halqa") {
       if (year !== "" && month !== "") {
@@ -880,53 +889,69 @@ export const Reports = () => {
           role="tablist"
           className="w-full flex justify-between items-center"
         >
-          {["province"].includes(localStorage.getItem("@type")) && (
-            <Link
-              to={"?active=province"}
-              role="tab"
-              className={`tab w-full ${
-                active === "province" ? "tab-active bg-slate-200" : ""
-              }`}
-              onClick={() => setNotifyTo("province")}
-            >
-              Province
-            </Link>
-          )}
-          {["province", "division"].includes(localStorage.getItem("@type")) && (
-            <Link
-              to={"?active=division"}
-              role="tab"
-              className={`tab w-full ${
-                active === "division" ? "tab-active" : ""
-              }`}
-              onClick={() => setNotifyTo("division")}
-            >
-              Division
-            </Link>
-          )}
-          {["province", "maqam"].includes(localStorage.getItem("@type")) && (
-            <Link
-              to={"?active=maqam"}
-              role="tab"
-              className={`tab w-full ${active === "maqam" ? "tab-active" : ""}`}
-              onClick={() => setNotifyTo("maqam")}
-            >
-              Maqam
-            </Link>
-          )}
+          {["province"].includes(localStorage.getItem("@type")) &&
+            ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
+              localStorage.getItem("@nazimType")
+            ) && (
+              <Link
+                to={"?active=province"}
+                role="tab"
+                className={`tab w-full ${
+                  active === "province" ? "tab-active bg-slate-200" : ""
+                }`}
+                onClick={() => setNotifyTo("province")}
+              >
+                Province
+              </Link>
+            )}
+          {["province", "division"].includes(localStorage.getItem("@type")) &&
+            ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
+              localStorage.getItem("@nazimType")
+            ) && (
+              <Link
+                to={"?active=division"}
+                role="tab"
+                className={`tab w-full ${
+                  active === "division" ? "tab-active" : ""
+                }`}
+                onClick={() => setNotifyTo("division")}
+              >
+                Division
+              </Link>
+            )}
+          {["province", "maqam"].includes(localStorage.getItem("@type")) &&
+            ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
+              localStorage.getItem("@nazimType")
+            ) && (
+              <Link
+                to={"?active=maqam"}
+                role="tab"
+                className={`tab w-full ${
+                  active === "maqam" ? "tab-active" : ""
+                }`}
+                onClick={() => setNotifyTo("maqam")}
+              >
+                Maqam
+              </Link>
+            )}
 
           {["province", "maqam", "division"].includes(
             localStorage.getItem("@type")
-          ) && (
-            <Link
-              to={"?active=halqa"}
-              role="tab"
-              className={`tab w-full ${active === "halqa" ? "tab-active" : ""}`}
-              onClick={() => setNotifyTo("halqa")}
-            >
-              Halqa
-            </Link>
-          )}
+          ) &&
+            ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
+              localStorage.getItem("@nazimType")
+            ) && (
+              <Link
+                to={"?active=halqa"}
+                role="tab"
+                className={`tab w-full ${
+                  active === "halqa" ? "tab-active" : ""
+                }`}
+                onClick={() => setNotifyTo("halqa")}
+              >
+                Halqa
+              </Link>
+            )}
         </div>
         {/* )} */}
         {active === "halqa" && localStorage.getItem("@type") === "province" && (

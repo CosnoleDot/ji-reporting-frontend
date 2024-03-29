@@ -20,56 +20,80 @@ export const BottomNav = ({ active }) => {
       >
         <FaTachometerAlt className="h-5 w-5" />
       </Link>
-      <Link
-        to={isCompleted ? "/reports" : "/profile"}
-        className={
-          !active || active === "reports"
-            ? "bg-blue-500 text-white"
-            : "bg-blue-50"
-        }
-      >
-        <FaFile className="h-5 w-5" />
-      </Link>
-      {localStorage.getItem("@type") !== "halqa" && (
+      {localStorage.getItem("@nazimType") === "rukan" ||
+      localStorage.getItem("@nazimType") === "umeedwar" ? (
         <Link
-          to={isCompleted ? "/comparison" : "/profile"}
+          to={"/personalReport"}
           className={
-            !active || active === "comparison"
+            !active || active === "personalReport"
               ? "bg-blue-500 text-white"
               : "bg-blue-50"
           }
         >
-          <BsFiles className="h-5 w-5" />
+          <FaFile className="h-5 w-5" />
+        </Link>
+      ) : (
+        <Link
+          to={isCompleted ? "/reports" : "/profile"}
+          className={
+            !active || active === "reports"
+              ? "bg-blue-500 text-white"
+              : "bg-blue-50"
+          }
+        >
+          <FaFile className="h-5 w-5" />
         </Link>
       )}
+
+      {localStorage.getItem("@type") !== "halqa" &&
+        ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
+          localStorage.getItem("@nazimType")
+        ) && (
+          <Link
+            to={isCompleted ? "/comparison" : "/profile"}
+            className={
+              !active || active === "comparison"
+                ? "bg-blue-500 text-white"
+                : "bg-blue-50"
+            }
+          >
+            <BsFiles className="h-5 w-5" />
+          </Link>
+        )}
       {["province", "maqam", "division"].includes(
         localStorage.getItem("@type")
-      ) && (
-        <Link
-          to={isCompleted ? "/locations" : "/profile"}
-          className={
-            !active || active === "locations"
-              ? "bg-blue-500 text-white"
-              : "bg-blue-50"
-          }
-        >
-          <CiLocationOn className="h-5 w-5" />
-        </Link>
-      )}
+      ) &&
+        ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
+          localStorage.getItem("@nazimType")
+        ) && (
+          <Link
+            to={isCompleted ? "/locations" : "/profile"}
+            className={
+              !active || active === "locations"
+                ? "bg-blue-500 text-white"
+                : "bg-blue-50"
+            }
+          >
+            <CiLocationOn className="h-5 w-5" />
+          </Link>
+        )}
       {["province", "maqam", "division"].includes(
         localStorage.getItem("@type")
-      ) && (
-        <Link
-          to={isCompleted ? "/user-switch" : "/profile"}
-          className={
-            !active || active === "user-switch"
-              ? "bg-blue-500 text-white"
-              : "bg-blue-50"
-          }
-        >
-          <FaUsersGear className="h-5 w-5" />
-        </Link>
-      )}
+      ) &&
+        ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
+          localStorage.getItem("@nazimType")
+        ) && (
+          <Link
+            to={isCompleted ? "/user-switch" : "/profile"}
+            className={
+              !active || active === "user-switch"
+                ? "bg-blue-500 text-white"
+                : "bg-blue-50"
+            }
+          >
+            <FaUsersGear className="h-5 w-5" />
+          </Link>
+        )}
     </div>
   );
 };

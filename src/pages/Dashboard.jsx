@@ -156,15 +156,32 @@ export const Dashboard = () => {
     getData();
     handlePersonalFilledReports();
   };
+  const getPsersonalReports = async () => {
+    const req = await instance.get(`/umeedwar`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("@token")}`,
+      },
+    });
+    setCount(req?.data?.data.length);
+  };
   useEffect(() => {
     try {
-      setCount(
-        maqamReports?.length +
-          divisionReports?.length +
-          halqaReports?.length +
-          provinceReports?.length
-      );
+      if (
+        localStorage.getItem("@nazimType") !== "rukan" &&
+        localStorage.getItem("@nazimType") !== "umeedwar"
+      ) {
+        setCount(
+          maqamReports?.length +
+            divisionReports?.length +
+            halqaReports?.length +
+            provinceReports?.length
+        );
+      } else {
+        getPsersonalReports();
+      }
     } catch (err) {}
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [maqamReports, divisionReports, halqaReports, provinceReports]);
   const getAreas = async () => {
@@ -273,11 +290,38 @@ export const Dashboard = () => {
   }, [umeedwarReports, nazim]);
   return (
     <GeneralLayout title={"Dashboard"} active={"dashboard"}>
-      <div className="relative flex flex-col w-full gap-3 items-center p-5 justify-start h-[calc(100vh-65.6px-64px)] overflow-hidden overflow-y-scroll bg-blue-50">
-        <div className="grid grid-cols-1 gap-4 px-4 mt-8 sm:grid-cols-4 sm:px-8 w-full">
-          {["province"].includes(localStorage.getItem("@type")) && (
+      {
+        <div className="relative flex flex-col w-full gap-3 items-center p-5 justify-start h-[calc(100vh-65.6px-64px)] overflow-hidden overflow-y-scroll bg-blue-50">
+          <div className="grid grid-cols-1 gap-4 px-4 mt-8 sm:grid-cols-4 sm:px-8 w-full">
+            {["province"].includes(localStorage.getItem("@type")) &&
+              ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
+                localStorage.getItem("@nazimType")
+              ) && (
+                <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
+                  <div className="p-4 bg-green-400">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-12 w-12 text-white"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div className="px-4 text-gray-700">
+                    <h3 className="text-sm tracking-wider">Total Nazims</h3>
+                    <p className="text-3xl">{nazim.length}</p>
+                  </div>
+                </div>
+              )}
             <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
-              <div className="p-4 bg-green-400">
+              <div className="p-4 bg-blue-400">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-12 w-12 text-white"
@@ -289,316 +333,314 @@ export const Dashboard = () => {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="2"
-                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+                    d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"
                   ></path>
                 </svg>
               </div>
               <div className="px-4 text-gray-700">
-                <h3 className="text-sm tracking-wider">Total Nazims</h3>
-                <p className="text-3xl">{nazim.length}</p>
+                <h3 className="text-sm tracking-wider">Total Reports</h3>
+                <p className="text-3xl">{count}</p>
               </div>
             </div>
-          )}
-          <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
-            <div className="p-4 bg-blue-400">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-12 w-12 text-white"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+            {["province"].includes(localStorage.getItem("@type")) &&
+              ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
+                localStorage.getItem("@nazimType")
+              ) && (
+                <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
+                  <div className="p-4 bg-indigo-400">
+                    <CiLocationOn className="w-12 h-12 text-white" />
+                  </div>
+                  <div className="px-4 text-gray-700">
+                    <h3 className="text-sm tracking-wider">Total Maqams</h3>
+                    <p className="text-3xl">{maqams?.length}</p>
+                  </div>
+                </div>
+              )}
+            {["province"].includes(localStorage.getItem("@type")) &&
+              ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
+                localStorage.getItem("@nazimType")
+              ) && (
+                <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
+                  <div className="p-4 bg-red-400">
+                    <FaLocationDot className="h-12 w-12 text-white" />
+                  </div>
+                  <div className="px-4 text-gray-700">
+                    <h3 className="text-sm tracking-wider">Total Divisions</h3>
+                    <p className="text-3xl">{divisions?.length}</p>
+                  </div>
+                </div>
+              )}
+            {["division"].includes(localStorage.getItem("@type")) &&
+              ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
+                localStorage.getItem("@nazimType")
+              ) && (
+                <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
+                  <div className="p-4 bg-red-400">
+                    <FaLocationDot className="h-12 w-12 text-white" />
+                  </div>
+                  <div className="px-4 text-gray-700">
+                    <h3 className="text-sm tracking-wider">Total Districts</h3>
+                    <p className="text-3xl">{districts?.length}</p>
+                  </div>
+                </div>
+              )}
+            {["division"].includes(localStorage.getItem("@type")) &&
+              ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
+                localStorage.getItem("@nazimType")
+              ) && (
+                <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
+                  <div className="p-4 bg-indigo-400">
+                    <CiLocationOn className="h-12 w-12 text-white" />
+                  </div>
+                  <div className="px-4 text-gray-700">
+                    <h3 className="text-sm tracking-wider">Total Tehsils</h3>
+                    <p className="text-3xl">{tehsils?.length}</p>
+                  </div>
+                </div>
+              )}
+            {localStorage.getItem("@type") !== "halqa" &&
+              ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
+                localStorage.getItem("@nazimType")
+              ) && (
+                <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
+                  <div className="p-4 bg-red-400">
+                    <FaLocationArrow className="w-12 h-12 text-white" />
+                  </div>
+                  <div className="px-4 text-gray-700">
+                    <h3 className="text-sm tracking-wider">Total Units</h3>
+                    <p className="text-3xl">{unit?.length}</p>
+                  </div>
+                </div>
+              )}
+            {localStorage.getItem("@type") === "halqa" && (
+              <div
+                onClick={() => navigate("/reports/create")}
+                className="flex items-center bg-white border rounded-sm overflow-hidden shadow cursor-pointer"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"
-                ></path>
-              </svg>
-            </div>
-            <div className="px-4 text-gray-700">
-              <h3 className="text-sm tracking-wider">Total Reports</h3>
-              <p className="text-3xl">{count}</p>
-            </div>
+                <div className="p-4 bg-red-400">
+                  <FaPlus className="w-12 h-12 text-white" />
+                </div>
+                <div className="px-4 text-gray-700">
+                  {/* <h3 className='text-sm tracking-wider'>Create New Report</h3> */}
+                  <p className="text-2xl">Create New Report</p>
+                </div>
+              </div>
+            )}
           </div>
-          {["province"].includes(localStorage.getItem("@type")) && (
-            <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
-              <div className="p-4 bg-indigo-400">
-                <CiLocationOn className="w-12 h-12 text-white" />
+          {localStorage.getItem("@type") !== "halqa" &&
+            ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
+              localStorage.getItem("@nazimType")
+            ) && (
+              <div className=" gap-4 px-4 mt-8  sm:px-8 w-full">
+                <div className="w-full  gap-2 grid grid-cols-2 sm:grid-cols-2 mb-2">
+                  <div
+                    style={{
+                      backgroundColor: toggle === "pFilled" ? "" : "#7a7a7a",
+                    }}
+                    onClick={() => {
+                      setToggle("pFilled");
+                      setUserAreaType("personal");
+                      setShow(false);
+                    }}
+                    className="flex justify-center items-center h-10 btn bg-[#cacaca] w-full text-center "
+                  >
+                    Personal Filled {personalFilled?.length}
+                  </div>
+                  <div
+                    style={{
+                      backgroundColor: toggle === "pUnFilled" ? "" : "#7a7a7a",
+                    }}
+                    onClick={() => {
+                      setToggle("pUnFilled");
+                      setUserAreaType("personal");
+                      setShow(false);
+                    }}
+                    className="flex justify-center items-center h-10 btn bg-[#cacaca] w-full text-center "
+                  >
+                    Personal Unfilled {personalUnfilled?.length}
+                  </div>
+                </div>
+                <div className="w-full  gap-2 grid grid-cols-2 sm:grid-cols-2 mb-2">
+                  <div
+                    style={{
+                      backgroundColor: toggle === "filled" ? "" : "#7a7a7a",
+                    }}
+                    onClick={() => {
+                      setShow(true);
+                      setToggle("filled");
+                    }}
+                    className="flex justify-center items-center h-10 btn bg-[#cacaca] w-full text-center "
+                  >
+                    Filled {data?.filled?.length}
+                  </div>
+                  <div
+                    style={{
+                      backgroundColor: toggle === "unFilled" ? "" : "#7a7a7a",
+                    }}
+                    onClick={() => {
+                      setShow(true);
+                      setToggle("unFilled");
+                    }}
+                    className="flex justify-center items-center h-10 btn bg-[#cacaca] w-full text-center "
+                  >
+                    Un filled {data?.unfilled?.length}
+                  </div>
+                </div>
+                <div className="w-full flex justify-end items-center">
+                  <button
+                    className="btn"
+                    onClick={() =>
+                      document
+                        .getElementById("filter_filled_unfilled_modal")
+                        .showModal()
+                    }
+                  >
+                    Filter <FaFilter />
+                  </button>
+                  <button className="btn" onClick={clearFilter}>
+                    Clear Filter
+                  </button>
+                </div>
+                <div className="overflow-x-auto grid grid-cols-1 gap-4  mt-8 sm:grid-cols-1 sm:px-8 w-full">
+                  <div className="w-full mb-3 h-[300px] overflow-auto overflow-y-scroll">
+                    {show && (
+                      <table className="table mb-7">
+                        {/* head */}
+                        <thead className="">
+                          <tr className="w-full flex">
+                            <th className="w-[50%]">Area</th>
+                            <th className="w-[50%]">Nazim</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {toggle === "filled" ? (
+                            data?.filled?.length > 0 ? (
+                              data.filled
+                                .filter((i) => !i?.disabled)
+                                .map((obj, index) => (
+                                  <tr
+                                    key={index}
+                                    className={`w-full flex ${
+                                      index % 2 === 0 && "bg-[#B2D5FF]"
+                                    }`}
+                                  >
+                                    <td className="w-[50%]">{obj.name}</td>
+                                    <td className="w-[50%]">
+                                      {nazim.find(
+                                        (i) => i?.userAreaId?._id === obj?._id
+                                      )?.name || (
+                                        <span className="text-red-400 font-semibold">
+                                          User Not Registered Yet
+                                        </span>
+                                      )}
+                                    </td>
+                                  </tr>
+                                ))
+                            ) : (
+                              <tr>
+                                <td colSpan="2">
+                                  No one has filled report yet{" "}
+                                </td>
+                              </tr>
+                            )
+                          ) : data?.unfilled?.length > 0 ? (
+                            data.unfilled
+                              .filter((i) => !i?.disabled)
+                              .map((obj, index) => (
+                                <tr
+                                  className={`w-full flex ${
+                                    index % 2 === 0 && "bg-[#B2D5FF]"
+                                  }`}
+                                  key={index}
+                                >
+                                  <td className="w-[50%]">
+                                    {obj.name} - {`${getAreaType(obj)}`}
+                                  </td>
+                                  <td className="w-[50%]">
+                                    {nazim.find(
+                                      (i) => i?.userAreaId?._id === obj?._id
+                                    )?.name || (
+                                      <span className="text-red-400 font-semibold">
+                                        User Not Registered Yet
+                                      </span>
+                                    )}
+                                  </td>
+                                </tr>
+                              ))
+                          ) : (
+                            <tr>
+                              <td colSpan="2">All have filled reports</td>
+                            </tr>
+                          )}
+                        </tbody>
+                      </table>
+                    )}
+                    {!show && (
+                      <table className="table mb-7">
+                        {/* head */}
+                        <thead className="">
+                          <tr className="w-full flex">
+                            <th className="w-[50%]">Name</th>
+                            <th className="w-[50%]">Area</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {toggle === "pFilled" ? (
+                            personalFilled?.length > 0 ? (
+                              personalFilled
+                                .filter((i) => !i?.disabled)
+                                .map((obj, index) => (
+                                  <tr
+                                    key={index}
+                                    className={`w-full flex ${
+                                      index % 2 === 0 && "bg-[#B2D5FF]"
+                                    }`}
+                                  >
+                                    <td className="w-[50%]">{obj.name}</td>
+                                    <td className="w-[50%]">
+                                      {getUsersAreaDetails(obj)}
+                                    </td>
+                                  </tr>
+                                ))
+                            ) : (
+                              <tr>
+                                <td colSpan="2">
+                                  No one has filled personal report yet{" "}
+                                </td>
+                              </tr>
+                            )
+                          ) : personalUnfilled?.length > 0 ? (
+                            personalUnfilled
+                              .filter((i) => !i?.disabled)
+                              .map((obj, index) => (
+                                <tr
+                                  className={`w-full flex ${
+                                    index % 2 === 0 && "bg-[#B2D5FF]"
+                                  }`}
+                                  key={index}
+                                >
+                                  <td className="w-[50%]">{obj.name}</td>
+                                  <td className="w-[50%]">
+                                    {getUsersAreaDetails(obj)}
+                                  </td>
+                                </tr>
+                              ))
+                          ) : (
+                            <tr>
+                              <td colSpan="2">
+                                All have filled thier personal Reports{" "}
+                              </td>
+                            </tr>
+                          )}
+                        </tbody>
+                      </table>
+                    )}
+                  </div>
+                </div>
               </div>
-              <div className="px-4 text-gray-700">
-                <h3 className="text-sm tracking-wider">Total Maqams</h3>
-                <p className="text-3xl">{maqams?.length}</p>
-              </div>
-            </div>
-          )}
-          {["province"].includes(localStorage.getItem("@type")) && (
-            <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
-              <div className="p-4 bg-red-400">
-                <FaLocationDot className="h-12 w-12 text-white" />
-              </div>
-              <div className="px-4 text-gray-700">
-                <h3 className="text-sm tracking-wider">Total Divisions</h3>
-                <p className="text-3xl">{divisions?.length}</p>
-              </div>
-            </div>
-          )}
-          {["division"].includes(localStorage.getItem("@type")) && (
-            <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
-              <div className="p-4 bg-red-400">
-                <FaLocationDot className="h-12 w-12 text-white" />
-              </div>
-              <div className="px-4 text-gray-700">
-                <h3 className="text-sm tracking-wider">Total Districts</h3>
-                <p className="text-3xl">{districts?.length}</p>
-              </div>
-            </div>
-          )}
-          {["division"].includes(localStorage.getItem("@type")) && (
-            <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
-              <div className="p-4 bg-indigo-400">
-                <CiLocationOn className="h-12 w-12 text-white" />
-              </div>
-              <div className="px-4 text-gray-700">
-                <h3 className="text-sm tracking-wider">Total Tehsils</h3>
-                <p className="text-3xl">{tehsils?.length}</p>
-              </div>
-            </div>
-          )}
-          {localStorage.getItem("@type") !== "halqa" && (
-            <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
-              <div className="p-4 bg-red-400">
-                <FaLocationArrow className="w-12 h-12 text-white" />
-              </div>
-              <div className="px-4 text-gray-700">
-                <h3 className="text-sm tracking-wider">Total Units</h3>
-                <p className="text-3xl">{unit?.length}</p>
-              </div>
-            </div>
-          )}
-          {localStorage.getItem("@type") === "halqa" && (
-            <div
-              onClick={() => navigate("/reports/create")}
-              className="flex items-center bg-white border rounded-sm overflow-hidden shadow cursor-pointer"
-            >
-              <div className="p-4 bg-red-400">
-                <FaPlus className="w-12 h-12 text-white" />
-              </div>
-              <div className="px-4 text-gray-700">
-                {/* <h3 className='text-sm tracking-wider'>Create New Report</h3> */}
-                <p className="text-2xl">Create New Report</p>
-              </div>
-            </div>
-          )}
+            )}
         </div>
-        {localStorage.getItem("@type") !== "halqa" && (
-          <div className=" gap-4 px-4 mt-8  sm:px-8 w-full">
-            <div className="w-full  gap-2 grid grid-cols-2 sm:grid-cols-2 mb-2">
-              <div
-                style={{
-                  backgroundColor: toggle === "pFilled" ? "" : "#7a7a7a",
-                }}
-                onClick={() => {
-                  setToggle("pFilled");
-                  setUserAreaType("personal");
-                  setShow(false);
-                }}
-                className="flex justify-center items-center h-10 btn bg-[#cacaca] w-full text-center "
-              >
-                Personal Filled {personalFilled?.length}
-              </div>
-              <div
-                style={{
-                  backgroundColor: toggle === "pUnFilled" ? "" : "#7a7a7a",
-                }}
-                onClick={() => {
-                  setToggle("pUnFilled");
-                  setUserAreaType("personal");
-                  setShow(false);
-                }}
-                className="flex justify-center items-center h-10 btn bg-[#cacaca] w-full text-center "
-              >
-                Personal Unfilled {personalUnfilled?.length}
-              </div>
-            </div>
-            <div className="w-full  gap-2 grid grid-cols-2 sm:grid-cols-2 mb-2">
-              <div
-                style={{
-                  backgroundColor: toggle === "filled" ? "" : "#7a7a7a",
-                }}
-                onClick={() => {
-                  setShow(true);
-                  setToggle("filled");
-                }}
-                className="flex justify-center items-center h-10 btn bg-[#cacaca] w-full text-center "
-              >
-                Filled {data?.filled?.length}
-              </div>
-              <div
-                style={{
-                  backgroundColor: toggle === "unFilled" ? "" : "#7a7a7a",
-                }}
-                onClick={() => {
-                  setShow(true);
-                  setToggle("unFilled");
-                }}
-                className="flex justify-center items-center h-10 btn bg-[#cacaca] w-full text-center "
-              >
-                Un filled {data?.unfilled?.length}
-              </div>
-            </div>
-            <div className="w-full flex justify-end items-center">
-              <button
-                className="btn"
-                onClick={() =>
-                  document
-                    .getElementById("filter_filled_unfilled_modal")
-                    .showModal()
-                }
-              >
-                Filter <FaFilter />
-              </button>
-              <button className="btn" onClick={clearFilter}>
-                Clear Filter
-              </button>
-            </div>
-            <div className="overflow-x-auto grid grid-cols-1 gap-4  mt-8 sm:grid-cols-1 sm:px-8 w-full">
-              <div className="w-full mb-3 h-[300px] overflow-auto overflow-y-scroll">
-                {show && (
-                  <table className="table mb-7">
-                    {/* head */}
-                    <thead className="">
-                      <tr className="w-full flex">
-                        <th className="w-[50%]">Area</th>
-                        <th className="w-[50%]">Nazim</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {toggle === "filled" ? (
-                        data?.filled?.length > 0 ? (
-                          data.filled
-                            .filter((i) => !i?.disabled)
-                            .map((obj, index) => (
-                              <tr
-                                key={index}
-                                className={`w-full flex ${
-                                  index % 2 === 0 && "bg-[#B2D5FF]"
-                                }`}
-                              >
-                                <td className="w-[50%]">{obj.name}</td>
-                                <td className="w-[50%]">
-                                  {nazim.find(
-                                    (i) => i?.userAreaId?._id === obj?._id
-                                  )?.name || (
-                                    <span className="text-red-400 font-semibold">
-                                      User Not Registered Yet
-                                    </span>
-                                  )}
-                                </td>
-                              </tr>
-                            ))
-                        ) : (
-                          <tr>
-                            <td colSpan="2">No one has filled report yet </td>
-                          </tr>
-                        )
-                      ) : data?.unfilled?.length > 0 ? (
-                        data.unfilled
-                          .filter((i) => !i?.disabled)
-                          .map((obj, index) => (
-                            <tr
-                              className={`w-full flex ${
-                                index % 2 === 0 && "bg-[#B2D5FF]"
-                              }`}
-                              key={index}
-                            >
-                              <td className="w-[50%]">
-                                {obj.name} - {`${getAreaType(obj)}`}
-                              </td>
-                              <td className="w-[50%]">
-                                {nazim.find(
-                                  (i) => i?.userAreaId?._id === obj?._id
-                                )?.name || (
-                                  <span className="text-red-400 font-semibold">
-                                    User Not Registered Yet
-                                  </span>
-                                )}
-                              </td>
-                            </tr>
-                          ))
-                      ) : (
-                        <tr>
-                          <td colSpan="2">All have filled reports</td>
-                        </tr>
-                      )}
-                    </tbody>
-                  </table>
-                )}
-                {!show && (
-                  <table className="table mb-7">
-                    {/* head */}
-                    <thead className="">
-                      <tr className="w-full flex">
-                        <th className="w-[50%]">Name</th>
-                        <th className="w-[50%]">Area</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {toggle === "pFilled" ? (
-                        personalFilled?.length > 0 ? (
-                          personalFilled
-                            .filter((i) => !i?.disabled)
-                            .map((obj, index) => (
-                              <tr
-                                key={index}
-                                className={`w-full flex ${
-                                  index % 2 === 0 && "bg-[#B2D5FF]"
-                                }`}
-                              >
-                                <td className="w-[50%]">{obj.name}</td>
-                                <td className="w-[50%]">
-                                  {getUsersAreaDetails(obj)}
-                                </td>
-                              </tr>
-                            ))
-                        ) : (
-                          <tr>
-                            <td colSpan="2">
-                              No one has filled personal report yet{" "}
-                            </td>
-                          </tr>
-                        )
-                      ) : personalUnfilled?.length > 0 ? (
-                        personalUnfilled
-                          .filter((i) => !i?.disabled)
-                          .map((obj, index) => (
-                            <tr
-                              className={`w-full flex ${
-                                index % 2 === 0 && "bg-[#B2D5FF]"
-                              }`}
-                              key={index}
-                            >
-                              <td className="w-[50%]">{obj.name}</td>
-                              <td className="w-[50%]">
-                                {getUsersAreaDetails(obj)}
-                              </td>
-                            </tr>
-                          ))
-                      ) : (
-                        <tr>
-                          <td colSpan="2">
-                            All have filled thier personal Reports{" "}
-                          </td>
-                        </tr>
-                      )}
-                    </tbody>
-                  </table>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
+      }
       <dialog id="filter_filled_unfilled_modal" className="modal">
         <div className="modal-box">
           <h3 className="font-bold text-lg mb-3">Filter Data</h3>
@@ -607,45 +649,53 @@ export const Dashboard = () => {
               <div className=" w-full flex items-center justify-start gap-2 border border-primary p-2 rounded-lg">
                 {show && (
                   <>
-                    <div className="form-control">
-                      <label className="label cursor-pointer gap-2">
-                        <input
-                          type="radio"
-                          name="userAreaType"
-                          className="radio checked:bg-blue-500"
-                          value="Tehsil"
-                          checked={userAreaType === "Tehsil"}
-                          onChange={(e) => setUserAreaType(e.target.value)}
-                        />
-                        <span className="label-text">Division</span>
-                      </label>
-                    </div>
-                    <div className="form-control">
-                      <label className="label cursor-pointer gap-2">
-                        <input
-                          type="radio"
-                          name="userAreaType"
-                          className="radio checked:bg-blue-500"
-                          value="Maqam"
-                          checked={userAreaType === "Maqam"}
-                          onChange={(e) => setUserAreaType(e.target.value)}
-                        />
-                        <span className="label-text">Maqam</span>
-                      </label>
-                    </div>
-                    <div className="form-control">
-                      <label className="label cursor-pointer gap-2">
-                        <input
-                          type="radio"
-                          name="userAreaType"
-                          className="radio checked:bg-blue-500"
-                          value="All"
-                          checked={userAreaType === "All"}
-                          onChange={(e) => setUserAreaType(e.target.value)}
-                        />
-                        <span className="label-text">All</span>
-                      </label>
-                    </div>
+                    {me?.userAreaType !== "Division" ||
+                      (me?.userAreaType !== "Province" && (
+                        <div className="form-control">
+                          <label className="label cursor-pointer gap-2">
+                            <input
+                              type="radio"
+                              name="userAreaType"
+                              className="radio checked:bg-blue-500"
+                              value="Tehsil"
+                              checked={userAreaType === "Tehsil"}
+                              onChange={(e) => setUserAreaType(e.target.value)}
+                            />
+                            <span className="label-text">Division</span>
+                          </label>
+                        </div>
+                      ))}
+                    {me?.userAreaType !== "Maqam" ||
+                      (me?.userAreaType !== "Province" && (
+                        <div className="form-control">
+                          <label className="label cursor-pointer gap-2">
+                            <input
+                              type="radio"
+                              name="userAreaType"
+                              className="radio checked:bg-blue-500"
+                              value="Maqam"
+                              checked={userAreaType === "Maqam"}
+                              onChange={(e) => setUserAreaType(e.target.value)}
+                            />
+                            <span className="label-text">Maqam</span>
+                          </label>
+                        </div>
+                      ))}
+                    {me?.userAreaType === "Province" && (
+                      <div className="form-control">
+                        <label className="label cursor-pointer gap-2">
+                          <input
+                            type="radio"
+                            name="userAreaType"
+                            className="radio checked:bg-blue-500"
+                            value="All"
+                            checked={userAreaType === "All"}
+                            onChange={(e) => setUserAreaType(e.target.value)}
+                          />
+                          <span className="label-text">All</span>
+                        </label>
+                      </div>
+                    )}
                   </>
                 )}
                 {!show && (

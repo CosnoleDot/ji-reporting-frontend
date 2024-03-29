@@ -351,7 +351,7 @@ export const DivisionReport = () => {
         className="tableContainer"
       >
         <div className="row">
-          <p className="header">سٹدی سرکل </p>
+          <p className="header">سٹڈی  سرکل </p>
           <p>{data?.divisionActivityId?.studyCircle?.decided}</p>
           <p>{data?.divisionActivityId?.studyCircle?.done}</p>
           <p>{data?.divisionActivityId?.studyCircle?.averageAttendance}</p>
@@ -429,7 +429,7 @@ export const DivisionReport = () => {
           <p>{data?.mentionedActivityId?.ijtRafaqa?.averageAttendance}</p>
         </div>
         <div className="row">
-          <p className="header">سٹدی سرکل </p>
+          <p className="header">سٹڈی  سرکل </p>
           <p>{data?.mentionedActivityId?.studyCircle?.decided}</p>
           <p>{data?.mentionedActivityId?.studyCircle?.done}</p>
           <p>{data?.mentionedActivityId?.studyCircle?.averageAttendance}</p>

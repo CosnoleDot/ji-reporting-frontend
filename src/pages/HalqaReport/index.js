@@ -201,7 +201,7 @@ export const HalqaReport = () => {
           </p>
         </div>
         <div className="row">
-          <p className="header">سٹدی سرکل </p>
+          <p className="header">سٹڈی  سرکل </p>
           <p>{data?.halqaActivityId?.studyCircle?.completed}</p>
           <p>{data?.halqaActivityId?.studyCircle?.decided}</p>
           <p>{data?.halqaActivityId?.studyCircle?.attendance}</p>

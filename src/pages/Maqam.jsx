@@ -1,26 +1,26 @@
-import { GeneralLayout, GeneralInfo, calcultate } from '../components';
-import { convertDataFormat, reverseDataFormat, toJson } from '../utils';
-import instance from '../api/instrance';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useContext, useState } from 'react';
-import { useEffect } from 'react';
+import { GeneralLayout, GeneralInfo, calcultate } from "../components";
+import { convertDataFormat, reverseDataFormat, toJson } from "../utils";
+import instance from "../api/instrance";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useContext, useState } from "react";
+import { useEffect } from "react";
 import {
   DivisionReportContext,
   HalqaReportContext,
   MaqamReportContext,
   MeContext,
   useToastState,
-} from '../context';
-import { UIContext } from '../context/ui';
-import { Tanzeem } from '../components/maqamReport/Tanzeem';
-import { IfradiKuwat } from '../components/maqamReport/IfradiKuwat';
-import { MarkaziActivities } from '../components/maqamReport/MarkaziActivities';
-import ZailiActivities from '../components/maqamReport/ZailiActivities';
-import { OtherActivities } from '../components/maqamReport/OtherActivities';
-import { ToseeDawat } from '../components/maqamReport/ToseeDawat';
-import { Library } from '../components/maqamReport/Library';
-import { PaighamDigest } from '../components/maqamReport/PaighamDigest';
-import { RozOShabDiary } from '../components/maqamReport/RozOShabDiary';
+} from "../context";
+import { UIContext } from "../context/ui";
+import { Tanzeem } from "../components/maqamReport/Tanzeem";
+import { IfradiKuwat } from "../components/maqamReport/IfradiKuwat";
+import { MarkaziActivities } from "../components/maqamReport/MarkaziActivities";
+import ZailiActivities from "../components/maqamReport/ZailiActivities";
+import { OtherActivities } from "../components/maqamReport/OtherActivities";
+import { ToseeDawat } from "../components/maqamReport/ToseeDawat";
+import { Library } from "../components/maqamReport/Library";
+import { PaighamDigest } from "../components/maqamReport/PaighamDigest";
+import { RozOShabDiary } from "../components/maqamReport/RozOShabDiary";
 
 export const getData = async (path, id, setData, data) => {
   const arr = data[path];
@@ -35,7 +35,7 @@ export const Maqam = () => {
   const halqa = useContext(HalqaReportContext);
   const maqam = useContext(MaqamReportContext);
   const division = useContext(DivisionReportContext);
-  const [month, setMonth] = useState('');
+  const [month, setMonth] = useState("");
   const params = useParams();
   const [id, setId] = useState(null);
   const { dispatch } = useToastState();
@@ -47,57 +47,57 @@ export const Maqam = () => {
   const navigate = useNavigate();
   const autoFill = () => {
     const halq = {};
-    document.getElementById('maqam-form').reset();
+    document.getElementById("maqam-form").reset();
     if (halqa.filter((i) => i?.month.includes(month)).length < 1) {
       [
-        'rafaqa-start',
-        'karkunan-start',
-        'rafaqa-increase',
-        'karkunan-increase',
-        'rafaqa-decrease',
-        'karkunan-decrease',
-        'rafaqa-end',
-        'karkunan-end',
-        'rafaqa-annual',
-        'karkunan-annual',
-        'ijtRafaqa-decided',
-        'ijtRafaqa-done',
-        'ijtRafaqa-averageAttendance',
-        'studyCircleMentioned-decided',
-        'studyCircleMentioned-done',
-        'studyCircleMentioned-averageAttendance',
-        'ijtKarkunan-decided',
-        'ijtKarkunan-done',
-        'ijtKarkunan-averageAttendance',
-        'darseQuran-decided',
-        'darseQuran-done',
-        'darseQuran-averageAttendance',
-        'dawatiWafud',
-        'rawabitParties',
-        'shabBedari',
-        'nizamSalah',
-        'rawabitDecided',
-        'current',
-        'meetings',
-        'literatureDistribution',
-        'commonStudentMeetings',
-        'commonLiteratureDistribution',
-        'totalLibraries',
-        'totalBooks',
-        'meetings',
-        'literatureDistribution',
-        'commonStudentMeetings',
-        'commonLiteratureDistribution',
-        'totalLibraries',
-        'totalBooks',
-        'totalIncrease',
-        'totalDecrease',
-        'totalBookRent',
-        'rafaqaFilled',
+        "rafaqa-start",
+        "karkunan-start",
+        "rafaqa-increase",
+        "karkunan-increase",
+        "rafaqa-decrease",
+        "karkunan-decrease",
+        "rafaqa-end",
+        "karkunan-end",
+        "rafaqa-annual",
+        "karkunan-annual",
+        "ijtRafaqa-decided",
+        "ijtRafaqa-done",
+        "ijtRafaqa-averageAttendance",
+        "studyCircleMentioned-decided",
+        "studyCircleMentioned-done",
+        "studyCircleMentioned-averageAttendance",
+        "ijtKarkunan-decided",
+        "ijtKarkunan-done",
+        "ijtKarkunan-averageAttendance",
+        "darseQuran-decided",
+        "darseQuran-done",
+        "darseQuran-averageAttendance",
+        "dawatiWafud",
+        "rawabitParties",
+        "shabBedari",
+        "nizamSalah",
+        "rawabitDecided",
+        "current",
+        "meetings",
+        "literatureDistribution",
+        "commonStudentMeetings",
+        "commonLiteratureDistribution",
+        "totalLibraries",
+        "totalBooks",
+        "meetings",
+        "literatureDistribution",
+        "commonStudentMeetings",
+        "commonLiteratureDistribution",
+        "totalLibraries",
+        "totalBooks",
+        "totalIncrease",
+        "totalDecrease",
+        "totalBookRent",
+        "rafaqaFilled",
       ].forEach((i) => {
         document.getElementById(i).value = 0;
       });
-      document.getElementById('name').value = me?.userAreaId?.name;
+      document.getElementById("name").value = me?.userAreaId?.name;
     }
     halqa
       .filter((i) => i?.month.includes(month))
@@ -121,41 +121,41 @@ export const Maqam = () => {
       });
     Object.keys(halq).forEach((i) => {
       let j;
-      if (i === 'studyCircle-decided') {
-        j = 'studyCircleMentioned-decided';
-      } else if (i === 'studyCircle-completed') {
-        j = 'studyCircleMentioned-done';
-      } else if (i === 'studyCircle-attendance') {
-        j = 'studyCircleMentioned-averageAttendance';
+      if (i === "studyCircle-decided") {
+        j = "studyCircleMentioned-decided";
+      } else if (i === "studyCircle-completed") {
+        j = "studyCircleMentioned-done";
+      } else if (i === "studyCircle-attendance") {
+        j = "studyCircleMentioned-averageAttendance";
       } else {
-        if (i.split('-')[1] === 'completed') {
-          j = i.split('-')[0] + '-done';
-        } else if (i.split('-')[1] === 'attendance') {
-          j = i.split('-')[0] + '-averageAttendance';
-        } else if (i === 'books') {
-          j = 'totalBooks';
-        } else if (i === 'bookRent') {
-          j = 'totalBookRent';
-        } else if (i === 'increase') {
-          j = 'totalIncrease';
-        } else if (i === 'decrease') {
-          j = 'totalDecrease';
+        if (i.split("-")[1] === "completed") {
+          j = i.split("-")[0] + "-done";
+        } else if (i.split("-")[1] === "attendance") {
+          j = i.split("-")[0] + "-averageAttendance";
+        } else if (i === "books") {
+          j = "totalBooks";
+        } else if (i === "bookRent") {
+          j = "totalBookRent";
+        } else if (i === "increase") {
+          j = "totalIncrease";
+        } else if (i === "decrease") {
+          j = "totalDecrease";
         } else {
           j = i;
         }
       }
       const elem = document.getElementById(j);
       if (elem) {
-        if (j === 'month') {
+        if (j === "month") {
         } else {
-          if (elem.type === 'checkbox') {
+          if (elem.type === "checkbox") {
           }
-          if (j.split('-')[1] === 'attendance') {
+          if (j.split("-")[1] === "attendance") {
             document.getElementById(
-              `${j.split('-')[0]}-averageAttendance`
+              `${j.split("-")[0]}-averageAttendance`
             ).value = halq[i];
           } else {
-            if (i === 'name' && !view) {
+            if (i === "name" && !view) {
               elem.value = me?.userAreaId?.name;
             } else {
               elem.value = halq[i];
@@ -164,11 +164,11 @@ export const Maqam = () => {
         }
       }
     });
-    document.getElementById('studyCircle-averageAttendance').value = 0;
-    document.getElementById('studyCircle-done').value = 0;
-    document.getElementById('arkanFilled').value = 0;
-    document.getElementById('umeedwaranFilled').value = 0;
-    ['arkan', 'umeedWaran'].forEach((i) => {
+    document.getElementById("studyCircle-averageAttendance").value = 0;
+    document.getElementById("studyCircle-done").value = 0;
+    document.getElementById("arkanFilled").value = 0;
+    document.getElementById("umeedwaranFilled").value = 0;
+    ["arkan", "umeedWaran"].forEach((i) => {
       document.getElementById(`${i}-start`).value = 0;
       document.getElementById(`${i}-end`).value = 0;
       document.getElementById(`${i}-increase`).value = 0;
@@ -179,36 +179,36 @@ export const Maqam = () => {
     //   i?.month.includes(month)
     // ).length;
     const afd = [
-      'rehaishHalqay',
-      'taleemHalqay',
-      'totalHalqay',
-      'subRehaishHalqay',
-      'subTaleemHalqay',
-      'subTotalHalqay',
-      'busmSchoolUnits',
-      'busmRehaishUnits',
-      'busmTotalUnits',
-      'arkan',
-      'umeedWaran',
-      'rafaqa',
-      'karkunan',
-      'members',
-      'shaheen',
+      "rehaishHalqay",
+      "taleemHalqay",
+      "totalHalqay",
+      "subRehaishHalqay",
+      "subTaleemHalqay",
+      "subTotalHalqay",
+      "busmSchoolUnits",
+      "busmRehaishUnits",
+      "busmTotalUnits",
+      "arkan",
+      "umeedWaran",
+      "rafaqa",
+      "karkunan",
+      "members",
+      "shaheen",
     ];
     afd.forEach((i) => {
       calcultate(i);
     });
   };
   useEffect(() => {
-    const l = location.pathname?.split('/')[2];
-    if (l === 'view') {
+    const l = location.pathname?.split("/")[2];
+    if (l === "view") {
       setView(true);
     }
     setId(params?.id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
   useEffect(() => {
-    if (id) getData('maqam', id, setData, { halqa, maqam, division });
+    if (id) getData("maqam", id, setData, { halqa, maqam, division });
     else {
       setLoading(false);
     }
@@ -218,10 +218,10 @@ export const Maqam = () => {
     Object.keys(data).forEach((i) => {
       const elem = document.getElementById(i);
       if (elem) {
-        if (i === 'month') {
-          elem.value = data[i]?.split('')?.slice(0, 7)?.join('');
+        if (i === "month") {
+          elem.value = data[i]?.split("")?.slice(0, 7)?.join("");
         } else {
-          if (elem.type === 'checkbox') {
+          if (elem.type === "checkbox") {
             elem.checked = data[i];
           } else {
             elem.value = data[i];
@@ -230,21 +230,21 @@ export const Maqam = () => {
       }
     });
     const afd = [
-      'rehaishHalqay',
-      'taleemHalqay',
-      'totalHalqay',
-      'subRehaishHalqay',
-      'subTaleemHalqay',
-      'subTotalHalqay',
-      'busmSchoolUnits',
-      'busmRehaishUnits',
-      'busmTotalUnits',
-      'arkan',
-      'umeedWaran',
-      'rafaqa',
-      'karkunan',
-      'members',
-      'shaheen',
+      "rehaishHalqay",
+      "taleemHalqay",
+      "totalHalqay",
+      "subRehaishHalqay",
+      "subTaleemHalqay",
+      "subTotalHalqay",
+      "busmSchoolUnits",
+      "busmRehaishUnits",
+      "busmTotalUnits",
+      "arkan",
+      "umeedWaran",
+      "rafaqa",
+      "karkunan",
+      "members",
+      "shaheen",
     ];
     afd.forEach((i) => {
       calcultate(i);
@@ -260,101 +260,110 @@ export const Maqam = () => {
 
     const formData = new FormData(e.currentTarget);
     const jsonData = convertDataFormat(toJson(formData));
+
+    // Replace null values with zero
+    for (const key in jsonData) {
+      if (jsonData.hasOwnProperty(key) && jsonData[key] === null) {
+        jsonData[key] = 0;
+      }
+    }
+
     setLoading(true);
     try {
       if (id) {
+        jsonData.month = data?.month;
         const req = await instance.put(`/reports/maqam/${id}`, jsonData, {
           headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('@token')}`,
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
         await getMaqamReports();
-        dispatch({ type: 'SUCCESS', payload: req?.data?.message });
+        dispatch({ type: "SUCCESS", payload: req?.data?.message });
       } else {
-        const req = await instance.post('/reports/maqam', jsonData, {
+        const req = await instance.post("/reports/maqam", jsonData, {
           headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('@token')}`,
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
         await getMaqamReports();
-        dispatch({ type: 'SUCCESS', payload: req.data?.message });
+        dispatch({ type: "SUCCESS", payload: req.data?.message });
       }
-      navigate('/reports');
+      navigate("/reports");
     } catch (error) {
-      dispatch({ type: 'ERROR', payload: error?.response?.data?.message });
+      dispatch({ type: "ERROR", payload: error?.response?.data?.message });
     }
     setLoading(false);
   };
 
   return (
     <GeneralLayout>
-      <div className='reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll'>
+      <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">
         <form
-          className='flex flex-col justify-center items-center p-4 font-notoUrdu mb-5'
-          dir='rtl'
+          className="flex flex-col justify-center items-center p-4 font-notoUrdu mb-5"
+          dir="rtl"
           onSubmit={handleSubmit}
-          id='maqam-form'
+          id="maqam-form"
         >
-          <h2 className='text-2xl'>جا ئزءکارکردگی رپورٹ (براے مقام)</h2>
-          <div className='w-full p-4'>
+          <h2 className="text-2xl">جا ئزءکارکردگی رپورٹ (براے مقام)</h2>
+          <div className="w-full p-4">
             <div>
               <GeneralInfo
                 setMonth={setMonth}
                 month={month}
                 me={me}
-                area={'مقام'}
+                area={"مقام"}
                 view={view}
               />
             </div>
-            <div className='mb-4'>
+            <div className="mb-4">
               <Tanzeem view={view} />
             </div>
-            <div className='mb-4'>
+            <div className="mb-4">
               <IfradiKuwat view={view} />
             </div>
-            <div className='mb-4'>
+            <div className="mb-4">
               <MarkaziActivities view={view} />
             </div>
-            <div className='mb-4'>
+            <div className="mb-4">
               <ZailiActivities view={view} />
             </div>
-            <div className='mb-4'>
+            <div className="mb-4">
               <OtherActivities view={view} />
             </div>
-            <div className='mb-4'>
+            <div className="mb-4">
               <ToseeDawat />
             </div>
-            <div className='mb-4'>
+            <div className="mb-4">
               <Library />
             </div>
-            <div className='mb-4'>
+            <div className="mb-4">
               <PaighamDigest view={view} />
             </div>
-            <div className='mb-4'>
+            <div className="mb-4">
               <RozOShabDiary view={view} />
             </div>
-            <div className='w-full flex p-2'>
-              <label htmlFor='comments'>تبصرہ</label>
+            <div className="w-full flex p-2">
+              <label htmlFor="comments">تبصرہ</label>
               <input
-                type='text'
+                type="text"
                 required
-                name='comments'
-                className='border-b-2 border-dashed w-full'
-                id='comments'
+                name="comments"
+                className="border-b-2 border-dashed w-full"
+                id="comments"
                 readOnly={view}
               />
             </div>
             {!view && (
-              <div className='w-full flex flex-col items-end gap-3 p-2'>
+              <div className="w-full flex flex-col items-end gap-3 p-2">
                 <div>
-                  <label htmlFor='nazim'>نام ناظمِ:</label>
+                  <label htmlFor="nazim">نام ناظمِ:</label>
                   <input
-                    type='text'
-                    className='border-b-2 border-dashed text-center'
-                    id='nazim'
-                    defaultValue={me?.name || ''}
+                    type="text"
+                    className="border-b-2 border-dashed text-center"
+                    id="nazim"
+                    defaultValue={me?.name || ""}
                     readOnly
                   />
                 </div>
@@ -362,9 +371,9 @@ export const Maqam = () => {
             )}
           </div>
           {!view && (
-            <div className='w-full'>
-              <button disabled={loading} className='btn btn-primary'>
-                {id ? 'Update' : 'Add'}
+            <div className="w-full">
+              <button disabled={loading} className="btn btn-primary">
+                {id ? "Update" : "Add"}
               </button>
             </div>
           )}
