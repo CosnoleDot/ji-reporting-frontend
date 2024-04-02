@@ -264,7 +264,6 @@ export const Dashboard = () => {
       currentMonth.getMonth() + 1,
       0
     );
-    console.log(firstDayOfCurrentMonth, lastDayOfCurrentMonth);
     // Filter out reports within the current month
     const requiredUmeedwarReports = umeedwarReports.filter((report) => {
       const reportDate = new Date(report?.month);
