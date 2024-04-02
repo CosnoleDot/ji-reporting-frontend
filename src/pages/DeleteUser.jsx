@@ -83,6 +83,18 @@ export const DeleteUser = () => {
     }
     return "Province";
   };
+  const getAreaTypeWithoutName = (area) => {
+    if (area?.parentType === "Maqam") {
+      const name = maqams.find((i) => i?._id === area?.parentId?._id);
+      return `(Maqam)`;
+    } else if (area?.parentType === "Tehsil") {
+      const name = getDivisionByTehsil(area?.parentId, districts);
+      return `(Division)`;
+    } else if (area?.province) {
+      return maqams.find((i) => i?._id === area?._id) ? "Maqam" : "Division";
+    }
+    return "Province";
+  };
   const deleteUser = async (user) => {
     setLoading(true);
     try {
@@ -347,7 +359,9 @@ export const DeleteUser = () => {
                       </td>
 
                       <td>{maqam?.email || "-"}</td>
-                      <td>{maqam?.userAreaId?.name || "-"}</td>
+                      <td>{`${
+                        maqam?.userAreaId?.name
+                      } -${getAreaTypeWithoutName(maqam?.userAreaId)}`}</td>
                       <td>
                         {maqam?.isDeleted ? (
                           <div className="badge badge-error">inActive</div>
@@ -1073,7 +1087,13 @@ export const DeleteUser = () => {
                 </label>
                 <input
                   readOnly
-                  defaultValue={singleUser?.userAreaId?.name}
+                  defaultValue={`${singleUser?.userAreaId?.name}(${
+                    singleUser?.userAreaId?.parentType === "Tehsil"
+                      ? "Division"
+                      : singleUser?.userAreaId?.parentType === "Maqam"
+                      ? "Maqam"
+                      : singleUser?.userAreaType
+                  })`}
                   type="text"
                   placeholder="UserArea"
                   name="userArea"
@@ -1112,23 +1132,25 @@ export const DeleteUser = () => {
                   Organization pocket:
                 </span>
                 <div className="flex flex-wrap items-center justify-start border border-primary p-2 rounded-lg">
-                  <div className="form-control">
-                    <label className="label cursor-pointer gap-2">
-                      <input
-                        type="radio"
-                        name="userAreaType"
-                        className="radio checked:bg-blue-500"
-                        checked={userAreaType === "Province"}
-                        value="Province"
-                        onChange={(e) => {
-                          setUserAreaType(e.target.value);
-                          setSearchArea("");
-                          document.getElementById("autocomplete0").value = "";
-                        }}
-                      />
-                      <span className="label-text">Province</span>
-                    </label>
-                  </div>
+                  {me?.nazim === "Pakistan" && (
+                    <div className="form-control">
+                      <label className="label cursor-pointer gap-2">
+                        <input
+                          type="radio"
+                          name="userAreaType"
+                          className="radio checked:bg-blue-500"
+                          checked={userAreaType === "Province"}
+                          value="Province"
+                          onChange={(e) => {
+                            setUserAreaType(e.target.value);
+                            setSearchArea("");
+                            document.getElementById("autocomplete0").value = "";
+                          }}
+                        />
+                        <span className="label-text">Province</span>
+                      </label>
+                    </div>
+                  )}
                   <div className="form-control">
                     <label className="label cursor-pointer gap-2">
                       <input

@@ -82,13 +82,11 @@ export const Maqam = () => {
         "literatureDistribution",
         "commonStudentMeetings",
         "commonLiteratureDistribution",
-        "totalLibraries",
         "totalBooks",
         "meetings",
         "literatureDistribution",
         "commonStudentMeetings",
         "commonLiteratureDistribution",
-        "totalLibraries",
         "totalBooks",
         "totalIncrease",
         "totalDecrease",
@@ -175,9 +173,6 @@ export const Maqam = () => {
       document.getElementById(`${i}-decrease`).value = 0;
       document.getElementById(`${i}-annual`).value = 0;
     });
-    // document.getElementById('totalLibraries').value = halqa.filter((i) =>
-    //   i?.month.includes(month)
-    // ).length;
     const afd = [
       "rehaishHalqay",
       "taleemHalqay",

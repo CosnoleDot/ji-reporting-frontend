@@ -80,7 +80,7 @@ export const ProvinceReport = () => {
         className="tableContainer"
       >
         <div className="row">
-          <p className="header">رہاشی حلقے</p>
+          <p className="header">رِہائشی حلقے</p>
           <p>{data?.provinceTanzeemId?.rehaishHalqay?.start}</p>
           <p>{data?.provinceTanzeemId?.rehaishHalqay?.increase}</p>
           <p>{data?.provinceTanzeemId?.rehaishHalqay?.decrease}</p>
@@ -119,7 +119,7 @@ export const ProvinceReport = () => {
           <p>{data?.provinceTanzeemId?.totalHalqay?.continue}</p>
         </div>
         <div className="row">
-          <p className="header">رہاشی زیلی حلقے</p>
+          <p className="header">رِہائشی زیلی حلقے</p>
           <p>{data?.provinceTanzeemId?.subRehaishHalqay?.start}</p>
           <p>{data?.provinceTanzeemId?.subRehaishHalqay?.increase}</p>
           <p>{data?.provinceTanzeemId?.subRehaishHalqay?.decrease}</p>
@@ -172,7 +172,7 @@ export const ProvinceReport = () => {
           <p>{data?.provinceTanzeemId?.busmSchoolUnits?.continue}</p>
         </div>
         <div className="row">
-          <p className="header">بزم کے رہاشی یونٹس</p>
+          <p className="header">بزم کے رِہائشی یونٹس</p>
           <p>{data?.provinceTanzeemId?.busmRehaishUnits?.start}</p>
           <p>{data?.provinceTanzeemId?.busmRehaishUnits?.increase}</p>
           <p>{data?.provinceTanzeemId?.busmRehaishUnits?.decrease}</p>
@@ -347,19 +347,19 @@ export const ProvinceReport = () => {
           <p>{data?.provinceActivityId?.divMushawarat?.averageAttendance}</p>
         </div>
         <div className="row">
-          <p className="header">اجتمع ارکان</p>
+          <p className="header">اجتماع ارکان</p>
           <p>{data?.provinceActivityId?.ijtArkan?.decided}</p>
           <p>{data?.provinceActivityId?.ijtArkan?.done}</p>
           <p>{data?.provinceActivityId?.ijtArkan?.averageAttendance}</p>
         </div>
         <div className="row">
-          <p className="header">اجتمعِ ناظمین </p>
+          <p className="header">اجتماع ناظمین </p>
           <p>{data?.provinceActivityId?.ijtNazmeen?.decided}</p>
           <p>{data?.provinceActivityId?.ijtNazmeen?.done}</p>
           <p>{data?.provinceActivityId?.ijtNazmeen?.averageAttendance}</p>
         </div>
         <div className="row">
-          <p className="header">اجتمعِ امیدوران </p>
+          <p className="header">اجتماع امیدوران </p>
           <p>{data?.provinceActivityId?.ijtUmeedwaran?.decided}</p>
           <p>{data?.provinceActivityId?.ijtUmeedwaran?.done}</p>
           <p>{data?.provinceActivityId?.ijtUmeedwaran?.averageAttendance}</p>
@@ -407,7 +407,7 @@ export const ProvinceReport = () => {
         className="tableContainer"
       >
         <div className="row">
-          <p className="header">اجتمع رفقا</p>
+          <p className="header">اجتماع رفقا</p>
           <p>{data?.mentionedActivityId?.ijtRafaqa?.decided}</p>
           <p>{data?.mentionedActivityId?.ijtRafaqa?.done}</p>
           <p>{data?.mentionedActivityId?.ijtRafaqa?.averageAttendance}</p>
@@ -419,7 +419,7 @@ export const ProvinceReport = () => {
           <p>{data?.mentionedActivityId?.studyCircle?.averageAttendance}</p>
         </div>
         <div className="row">
-          <p className="header">اجتمعِ کارکنان </p>
+          <p className="header">اجتماع کارکنان </p>
           <p>{data?.mentionedActivityId?.ijtKarkunan?.decided}</p>
           <p>{data?.mentionedActivityId?.ijtKarkunan?.done}</p>
           <p>{data?.mentionedActivityId?.ijtKarkunan?.averageAttendance}</p>
@@ -566,7 +566,7 @@ export const ProvinceReport = () => {
             کمی کتب :{data?.provinceDivisionLibId?.totalDecrease}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            کل اجرآے کتب :{data?.provinceDivisionLibId?.totalBookRent}
+            کل اجراےَ کتب :{data?.provinceDivisionLibId?.totalBookRent}
           </h6>
         </div>
         <h3 style={{ textAlign: "start", fontWeight: "bolder" }}>
