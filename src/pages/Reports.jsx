@@ -128,6 +128,7 @@ export const Reports = () => {
   const [selectedId, setSelectedId] = useState("");
   const [selectedMonth, setSelectedMonth] = useState("");
   const params = useLocation();
+
   // GENERATE MONTHS
   useEffect(() => {
     // Function to parse query parameters
@@ -412,7 +413,6 @@ export const Reports = () => {
       console.error("Error fetching reports:", error);
     }
   };
-  const location = useLocation();
   const clearFilters = () => {
     setMonth("");
     setYear("2023");
@@ -426,14 +426,6 @@ export const Reports = () => {
     fetchReports();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userType, id, active, tab, selectedId, selectedMonth]);
-  useEffect(() => {
-    fetchReports();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [active, location, params]);
-  useEffect(() => {
-    fetchReports();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
   const searchResults = () => {
     if (userType !== "halqa") {
       if (year !== "" && month !== "") {

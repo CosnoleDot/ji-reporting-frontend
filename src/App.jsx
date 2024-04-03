@@ -83,6 +83,16 @@ function App() {
         setIsCompleted(true);
         if (isCompleted) {
           if (
+            req?.data?.data?.isDeleted ||
+            req?.data?.data?.userAreaId?.disabled
+          ) {
+            alert(
+              "Your account will be logged out as admin has updated your rights"
+            );
+            localStorage.clear();
+            navigate("/login");
+          }
+          if (
             localStorage?.getItem("@nazimType") &&
             localStorage?.getItem("@type")
           ) {
@@ -241,11 +251,11 @@ function App() {
         headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
       });
       if (req) {
-        const allData = req.data.data;
+        const enabledHalqas = req.data.data;
         const type = localStorage.getItem("@type");
         if (type === "country") {
           setHalqas(
-            allData?.filter((halqa) => {
+            enabledHalqas?.filter((halqa) => {
               if (halqa?.parentType === "Maqam") {
                 return (
                   halqa?.parentId?.province?.country === me?.userAreaId?._id
@@ -253,14 +263,14 @@ function App() {
               } else {
                 return (
                   halqa?.parentId?.district?.division?.province?.country ===
-                  me?.userAreaId?._id
+                    me?.userAreaId?._id && halqa?.disabled !== true
                 );
               }
             })
           );
         } else if (type === "province") {
           setHalqas(
-            allData.filter((i) => {
+            enabledHalqas.filter((i) => {
               if (i?.parentType === "Maqam") {
                 return (
                   i?.parentId?._id === me?.userAreaId?._id ||
@@ -275,7 +285,7 @@ function App() {
             })
           );
         } else if (type === "maqam") {
-          const validHalqas = allData.filter(
+          const validHalqas = enabledHalqas.filter(
             (i) =>
               i?.parentType === "Maqam" &&
               (i?.parentId?._id === me?.userAreaId?._id ||
@@ -284,14 +294,14 @@ function App() {
           setHalqas(validHalqas);
         } else if (type === "division") {
           const validDistricts = dis.map((i) => i?._id?.toString());
-          const validHalqas = allData.filter(
+          const validHalqas = enabledHalqas.filter(
             (i) =>
               i?.parentType === "Tehsil" &&
               validDistricts.includes(i?.parentId?.district?.toString())
           );
           setHalqas(validHalqas);
         } else {
-          const validHalqas = allData.filter(
+          const validHalqas = enabledHalqas.filter(
             (i) => i?._id === me?.userAreaId?._id
           );
           setHalqas(validHalqas);
@@ -536,8 +546,11 @@ function App() {
       if (
         location.pathname?.split("/")[2] === "view" ||
         location.pathname?.split("/")[2] === "edit"
-      )
+      ) {
         navigate("/reports");
+      } else if (location.pathname?.includes("reports")) {
+        navigate("/");
+      }
     };
     if (me) {
       fetchData();

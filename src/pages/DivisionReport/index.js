@@ -578,7 +578,7 @@ export const DivisionReport = () => {
             کمی کتب :{data?.maqamDivisionLibId?.totalDecrease}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            کل اجرآے کتب :{data?.maqamDivisionLibId?.totalBookRent}
+            کل اجراےَ کتب :{data?.maqamDivisionLibId?.totalBookRent}
           </h6>
         </div>
         <h3 style={{ textAlign: "start", fontWeight: "bolder" }}>

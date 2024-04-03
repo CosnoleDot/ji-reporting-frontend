@@ -13,17 +13,13 @@ export const Signup = () => {
   const [selectedSubject, setSelectedSubject] = useState("");
   const [subject, setSubject] = useState();
   const [subjects, setSubjects] = useState([]);
-  const [joiningDate, setJoiningDate] = useState({ title: "", date: "" });
+  const [joiningDate, setJoiningDate] = useState({ title: "nazim", date: "" });
   const { dispatch } = useToastState();
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     const formData = new FormData(e.currentTarget);
-    const joiningDate = {
-      date: formData.get("joiningDate"),
-      title: formData.get("joiningType"),
-    };
     const data = {
       userAreaId: formData.get("userAreaId"),
       userAreaType: formData.get("userAreaType"),
@@ -193,55 +189,6 @@ export const Signup = () => {
                 name="dob"
                 className="w-full input input-bordered input-primary min-w-[230px]"
                 required
-              />
-            </div>
-            <div className="w-[50%] flex items-center justify-between gap-2 flex-col ">
-              <div className="w-full p-1 mt-2 flex justify-start items-center">
-                <div>
-                  <input
-                    type="radio"
-                    id="rukan"
-                    name="joiningType"
-                    value="rukan"
-                    defaultChecked={
-                      joiningDate?.title === "rukan" ? true : false
-                    }
-                  />
-                  <label htmlFor="rukan">Rukan</label>
-                </div>
-                <div>
-                  <input
-                    type="radio"
-                    id="umeedwar"
-                    name="joiningType"
-                    value="umeedwar"
-                    defaultChecked={
-                      joiningDate?.title === "umeedwar" ? true : false
-                    }
-                  />
-                  <label htmlFor="umeedwar">Umeedwar</label>
-                </div>
-                <div>
-                  <input
-                    type="radio"
-                    id="null"
-                    name="joiningType"
-                    value="null"
-                    defaultChecked={joiningDate?.title === "" ? true : false}
-                  />
-                  <label htmlFor="null">Null</label>
-                </div>
-              </div>
-              <input
-                required
-                type="month"
-                placeholder="No data"
-                name="joiningDate"
-                className="w-full input input-bordered input-primary"
-                defaultValue={joiningDate?.date
-                  ?.split("-")
-                  .slice(0, 2)
-                  .join("-")}
               />
             </div>
           </div>
@@ -483,12 +430,86 @@ export const Signup = () => {
               </div>
             </div>
           </div>
-
+          <div className="w-full flex items-center justify-between gap-2 flex-col ">
+            <span className="w-full block font-semibold">
+              Month of becoming rukan or umeedwar:
+            </span>
+            <div className="w-full p-1 mt-2 flex justify-between items-center">
+              <div className="form-control">
+                <label className="label cursor-pointer gap-2">
+                  <input
+                    type="radio"
+                    id="rukan"
+                    name="joiningType"
+                    value="rukan"
+                    className="radio checked:bg-blue-500"
+                    defaultChecked={joiningDate?.title === "rukan"}
+                    onChange={(e) =>
+                      setJoiningDate((prev) => ({
+                        ...prev,
+                        title: e.target.value,
+                      }))
+                    }
+                  />
+                  <span className="label-text">Rukan</span>
+                </label>
+              </div>
+              <div className="form-control">
+                <label className="label cursor-pointer gap-2">
+                  <input
+                    type="radio"
+                    id="umeedwar"
+                    name="joiningType"
+                    value="umeedwar"
+                    className="radio checked:bg-blue-500"
+                    defaultChecked={joiningDate?.title === "umeedwar"}
+                    onChange={(e) =>
+                      setJoiningDate((prev) => ({
+                        ...prev,
+                        title: e.target.value,
+                      }))
+                    }
+                  />
+                  <span className="label-text">Umeedwar</span>
+                </label>
+              </div>
+              <div className="form-control">
+                <label className="label cursor-pointer gap-2">
+                  <input
+                    type="radio"
+                    id="joininType"
+                    name="joiningType"
+                    value="nazim"
+                    className="radio checked:bg-blue-500"
+                    defaultChecked={joiningDate?.title === "nazim"}
+                    onChange={(e) =>
+                      setJoiningDate((prev) => ({
+                        ...prev,
+                        title: e.target.value,
+                      }))
+                    }
+                  />
+                  <span className="label-text">Rafeeq</span>
+                </label>
+              </div>
+            </div>
+            <input
+              required
+              type="month"
+              placeholder="No data"
+              name="joiningDate"
+              className="w-full input input-bordered input-primary"
+              defaultValue={joiningDate?.date?.split("-").slice(0, 2).join("-")}
+              onChange={(e) =>
+                setJoiningDate((prev) => ({ ...prev, date: e.target.value }))
+              }
+            />
+          </div>
           {/* NAZIM TYPES */}
           <div className="w-full">
             <span className="px-1 py-2 block font-semibold"> Status:</span>
             <div className="flex  items-center justify-start flex-wrap border border-primary p-2 rounded-lg">
-              {userAreaType === "Halqa" && (
+              {joiningDate?.title === "nazim" && (
                 <div className="form-control">
                   <label className="label cursor-pointer gap-2">
                     <input
@@ -501,53 +522,57 @@ export const Signup = () => {
                   </label>
                 </div>
               )}
-              {userAreaType !== "Halqa" && (
-                <div className="form-control">
-                  <label className="label cursor-pointer gap-2">
-                    <input
-                      type="radio"
-                      name="nazimType"
-                      className="radio checked:bg-blue-500"
-                      value="rukan"
-                    />
-                    <span className="label-text">Rukan</span>
-                  </label>
-                </div>
+              {joiningDate?.title === "rukan" && (
+                <>
+                  <div className="form-control">
+                    <label className="label cursor-pointer gap-2">
+                      <input
+                        type="radio"
+                        name="nazimType"
+                        className="radio checked:bg-blue-500"
+                        value="rukan"
+                      />
+                      <span className="label-text">Rukan</span>
+                    </label>
+                  </div>
+                  <div className="form-control">
+                    <label className="label cursor-pointer gap-2">
+                      <input
+                        type="radio"
+                        name="nazimType"
+                        className="radio checked:bg-blue-500"
+                        value="rukan-nazim"
+                      />
+                      <span className="label-text">Rukan-Nazim</span>
+                    </label>
+                  </div>
+                </>
               )}
-              <div className="form-control">
-                <label className="label cursor-pointer gap-2">
-                  <input
-                    type="radio"
-                    name="nazimType"
-                    className="radio checked:bg-blue-500"
-                    value="umeedwaar-nazim"
-                  />
-                  <span className="label-text">Umeedwaar-Nazim</span>
-                </label>
-              </div>
-              <div className="form-control">
-                <label className="label cursor-pointer gap-2">
-                  <input
-                    type="radio"
-                    name="nazimType"
-                    className="radio checked:bg-blue-500"
-                    value="rukan-nazim"
-                  />
-                  <span className="label-text">Rukan-Nazim</span>
-                </label>
-              </div>
-              {userAreaType !== "Halqa" && (
-                <div className="form-control">
-                  <label className="label cursor-pointer gap-2">
-                    <input
-                      type="radio"
-                      name="nazimType"
-                      className="radio checked:bg-blue-500"
-                      value="umeedwar"
-                    />
-                    <span className="label-text">Umeedwaar</span>
-                  </label>
-                </div>
+              {joiningDate?.title === "umeedwar" && (
+                <>
+                  <div className="form-control">
+                    <label className="label cursor-pointer gap-2">
+                      <input
+                        type="radio"
+                        name="nazimType"
+                        className="radio checked:bg-blue-500"
+                        value="umeedwar"
+                      />
+                      <span className="label-text">Umeedwaar</span>
+                    </label>
+                  </div>
+                  <div className="form-control">
+                    <label className="label cursor-pointer gap-2">
+                      <input
+                        type="radio"
+                        name="nazimType"
+                        className="radio checked:bg-blue-500"
+                        value="umeedwaar-nazim"
+                      />
+                      <span className="label-text">Umeedwaar-Nazim</span>
+                    </label>
+                  </div>
+                </>
               )}
             </div>
           </div>

@@ -3,6 +3,7 @@ import { HalqaContext } from "../../context";
 
 export const Library = () => {
   const halqa = useContext(HalqaContext);
+  const totalHalqas = halqa;
   return (
     <div className="p-2 py-5 relative w-full overflow-auto">
       <h2 className="text-black py-3 text-lg">لائبریری</h2>
@@ -10,9 +11,9 @@ export const Library = () => {
         <div className="flex py-2">
           <label className="block"> کل تعداد لائبریریز:</label>
           <input
-            readOnly={true}
+            // readOnly={true}
             type="number"
-            defaultValue={halqa.length}
+            defaultValue={totalHalqas?.length}
             required
             name="totalLibraries"
             id="totalLibraries"

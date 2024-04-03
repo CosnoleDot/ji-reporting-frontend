@@ -46,7 +46,19 @@ export const Dashboard = () => {
   const [umeedwars, setUmeedwars] = useState([]);
   const [personalUnfilled, setPersonalUnfilled] = useState([]);
   const [personalFilled, setPersonalFilled] = useState([]);
-  const [show, setShow] = useState(false);
+  const [initialData, setInitialData] = useState(null);
+  const [show, setShow] = useState(true);
+  const [month, setMonth] = useState();
+  let date;
+  useEffect(() => {
+    if (queryDate) {
+      date = new Date(queryDate);
+      setMonth(date.toLocaleString("default", { month: "long" }));
+    } else {
+      date = new Date();
+      setMonth(date.toLocaleString("default", { month: "long" }));
+    }
+  }, [queryDate]);
   const getAllReports = async () => {
     const req = await instance.get(`/umeedwar`, {
       headers: {
@@ -59,13 +71,11 @@ export const Dashboard = () => {
   useEffect(() => {
     getAllReports();
   }, []);
-
   const getData = async () => {
     if (userAreaType === "personal" && queryDate !== "") {
       handlePersonalFilledReports();
     } else {
       setLoading(true);
-
       try {
         const getUnfilledReports = async (path) => {
           const res = await instance.get(
@@ -83,8 +93,7 @@ export const Dashboard = () => {
         const maqam = await getUnfilledReports("maqam");
         const halqa = await getUnfilledReports("halqa");
         const division = await getUnfilledReports("division");
-
-        const provinceData = province?.data?.data?.allProvinces || [];
+        const provinceData = province?.data?.data?.allProvince || [];
         const maqamData = maqam?.data?.data?.allMaqams || [];
         const halqaData = halqa?.data?.data?.allHalqas || [];
         const divisionData = division?.data?.data?.allDivisions || [];
@@ -132,12 +141,15 @@ export const Dashboard = () => {
           maqam?.data?.data?.totalmaqam +
           halqa?.data?.data?.totalhalqa +
           division?.data?.data?.totaldivision;
-
         const reportFilledBy = temp?.allData?.filter((obj1) => {
           return !temp?.unfilled?.some((obj2) => obj2._id === obj1._id);
         });
         temp.filled = reportFilledBy;
         setData({ ...temp });
+        // saving the initial data so that on clear filter can set it back
+        if (!initialData?.data) {
+          setInitialData({ ...initialData, data: temp });
+        }
       } catch (error) {
         console.log(error);
       }
@@ -151,10 +163,13 @@ export const Dashboard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [me]);
   const clearFilter = () => {
+    // setting back the data from initial state back to the respective sates
     setQuerydate("");
     setUserAreaType("All");
-    getData();
-    handlePersonalFilledReports();
+    setData(initialData?.data);
+    setPersonalFilled(initialData?.personalF);
+    setPersonalUnfilled(initialData?.personalU);
+    setUmeedwars(initialData?.validNazim);
   };
   const getPsersonalReports = async () => {
     const req = await instance.get(`/umeedwar`, {
@@ -239,18 +254,23 @@ export const Dashboard = () => {
     // Set firstDayOfCurrentMonth to the 1st of the current month
     const firstDayOfCurrentMonth = new Date(
       currentMonth.getFullYear(),
-      currentMonth.getMonth() + 1
+      currentMonth.getMonth(),
+      1
     );
 
-    // Set firstDayOfPreviousMonth to the 1st of the previous month
-    const previousMonth = new Date(
+    // Set lastDayOfCurrentMonth to the last day of the current month
+    const lastDayOfCurrentMonth = new Date(
       currentMonth.getFullYear(),
-      currentMonth.getMonth()
+      currentMonth.getMonth() + 1,
+      0
     );
-    // Filter out reports within the previous month
+    // Filter out reports within the current month
     const requiredUmeedwarReports = umeedwarReports.filter((report) => {
       const reportDate = new Date(report?.month);
-      return reportDate >= previousMonth && reportDate < firstDayOfCurrentMonth;
+      return (
+        reportDate >= firstDayOfCurrentMonth &&
+        reportDate <= lastDayOfCurrentMonth
+      );
     });
 
     // Filter out nazim who are not of type "nazim"
@@ -278,13 +298,24 @@ export const Dashboard = () => {
     const unfilledNazim = validNazim.filter((n) =>
       unfilledIds.includes(n?._id)
     );
-
+    // saving the initial data so that on clear filter can set it back
+    if (
+      !initialData ||
+      !initialData.validNazim ||
+      initialData.validNazim.length === 0
+    ) {
+      setInitialData((prevData) => ({
+        ...prevData,
+        validNazim: validNazim,
+        personalF: filledNazim,
+        personalU: unfilledNazim,
+      }));
+    }
     // Set the state variables
     setUmeedwars(validNazim);
     setPersonalFilled(filledNazim);
     setPersonalUnfilled(unfilledNazim);
   };
-
   useEffect(() => {
     handlePersonalFilledReports();
   }, [umeedwarReports, nazim]);
@@ -316,7 +347,9 @@ export const Dashboard = () => {
                   </div>
                   <div className="px-4 text-gray-700">
                     <h3 className="text-sm tracking-wider">Total Nazims</h3>
-                    <p className="text-3xl">{nazim.length}</p>
+                    <p className="text-3xl">
+                      {nazim?.filter((naz) => naz?.isDeleted == false).length}
+                    </p>
                   </div>
                 </div>
               )}
@@ -352,7 +385,12 @@ export const Dashboard = () => {
                   </div>
                   <div className="px-4 text-gray-700">
                     <h3 className="text-sm tracking-wider">Total Maqams</h3>
-                    <p className="text-3xl">{maqams?.length}</p>
+                    <p className="text-3xl">
+                      {
+                        maqams?.filter((maqam) => maqam?.disabled !== true)
+                          .length
+                      }
+                    </p>
                   </div>
                 </div>
               )}
@@ -366,7 +404,13 @@ export const Dashboard = () => {
                   </div>
                   <div className="px-4 text-gray-700">
                     <h3 className="text-sm tracking-wider">Total Divisions</h3>
-                    <p className="text-3xl">{divisions?.length}</p>
+                    <p className="text-3xl">
+                      {
+                        divisions?.filter(
+                          (division) => division?.disabled !== true
+                        ).length
+                      }
+                    </p>
                   </div>
                 </div>
               )}
@@ -380,7 +424,13 @@ export const Dashboard = () => {
                   </div>
                   <div className="px-4 text-gray-700">
                     <h3 className="text-sm tracking-wider">Total Districts</h3>
-                    <p className="text-3xl">{districts?.length}</p>
+                    <p className="text-3xl">
+                      {
+                        districts?.filter(
+                          (district) => district?.disabled !== true
+                        ).length
+                      }
+                    </p>
                   </div>
                 </div>
               )}
@@ -394,7 +444,12 @@ export const Dashboard = () => {
                   </div>
                   <div className="px-4 text-gray-700">
                     <h3 className="text-sm tracking-wider">Total Tehsils</h3>
-                    <p className="text-3xl">{tehsils?.length}</p>
+                    <p className="text-3xl">
+                      {
+                        tehsils?.filter((tehsil) => tehsil?.disabled !== true)
+                          .length
+                      }
+                    </p>
                   </div>
                 </div>
               )}
@@ -408,7 +463,9 @@ export const Dashboard = () => {
                   </div>
                   <div className="px-4 text-gray-700">
                     <h3 className="text-sm tracking-wider">Total Units</h3>
-                    <p className="text-3xl">{unit?.length}</p>
+                    <p className="text-3xl">
+                      {unit?.filter((unit) => unit?.disabled !== true).length}
+                    </p>
                   </div>
                 </div>
               )}
@@ -489,11 +546,11 @@ export const Dashboard = () => {
                 <div className="w-full flex justify-end items-center">
                   <button
                     className="btn"
-                    onClick={() =>
+                    onClick={() => {
                       document
                         .getElementById("filter_filled_unfilled_modal")
-                        .showModal()
-                    }
+                        .showModal();
+                    }}
                   >
                     Filter <FaFilter />
                   </button>
@@ -503,6 +560,7 @@ export const Dashboard = () => {
                 </div>
                 <div className="overflow-x-auto grid grid-cols-1 gap-4  mt-8 sm:grid-cols-1 sm:px-8 w-full">
                   <div className="w-full mb-3 h-[300px] overflow-auto overflow-y-scroll">
+                    <p className="text-slate-500">Reports of {month}</p>
                     {show && (
                       <table className="table mb-7">
                         {/* head */}

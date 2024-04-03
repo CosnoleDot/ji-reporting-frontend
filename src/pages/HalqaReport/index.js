@@ -191,7 +191,7 @@ export const HalqaReport = () => {
         className="tableContainer"
       >
         <div className="row">
-          <p className="header">اجتمع کارکنان</p>
+          <p className="header">اجتماع کارکنان</p>
           <p>{data?.halqaActivityId?.ijtKarkunan?.completed}</p>
           <p>{data?.halqaActivityId?.ijtKarkunan?.decided}</p>
           <p>{data?.halqaActivityId?.ijtKarkunan?.attendance}</p>
@@ -211,7 +211,7 @@ export const HalqaReport = () => {
           </p>
         </div>
         <div className="row">
-          <p className="header">اجتمعِ رفقا </p>
+          <p className="header">اجتماعِ رفقا </p>
           <p>{data?.halqaActivityId?.ijtRafaqa?.completed}</p>
           <p>{data?.halqaActivityId?.ijtRafaqa?.decided}</p>
           <p>{data?.halqaActivityId?.ijtRafaqa?.attendance}</p>
@@ -350,7 +350,7 @@ export const HalqaReport = () => {
             کمی :{data?.halqaLibId?.decrease}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            اجرآے کتب :{data?.halqaLibId?.bookRent}
+            اجراےَ کتب :{data?.halqaLibId?.bookRent}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
             لائبریری رجسٹر مرتب :{data?.halqaLibId?.registered ? "ہاں" : "نہیں"}
