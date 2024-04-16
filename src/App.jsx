@@ -54,6 +54,7 @@ function App() {
   const [districts, setDistricts] = useState([]);
   const [tehsils, setTehsils] = useState([]);
   const [halqas, setHalqas] = useState([]);
+  const [ilaqas, setIlaqas] = useState([]);
   const [nazim, setNazim] = useState([]);
   const [provinceReports, setProvinceReports] = useState([]);
   const [maqamReports, setMaqamReports] = useState([]);
@@ -156,6 +157,23 @@ function App() {
       });
     }
   };
+  const getIlaqas = async () => {
+    try {
+      const req = await instance.get("/locations/province", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
+      });
+      if (req) {
+        setIlaqas(
+          req.data.data.filter((i) => i?.country === me?.userAreaId?._id)
+        );
+      }
+    } catch (err) {
+      dispatch({
+        type: "ERROR",
+        payload: err?.response?.data?.message || err?.message,
+      });
+    }
+  };
   const getMaqams = async () => {
     try {
       const req = await instance.get("/locations/maqam", {
@@ -245,6 +263,7 @@ function App() {
       });
     }
   };
+
   const getHalqas = async () => {
     try {
       const req = await instance.get("/locations/halqa", {
@@ -256,16 +275,7 @@ function App() {
         if (type === "country") {
           setHalqas(
             enabledHalqas?.filter((halqa) => {
-              if (halqa?.parentType === "Maqam") {
-                return (
-                  halqa?.parentId?.province?.country === me?.userAreaId?._id
-                );
-              } else {
-                return (
-                  halqa?.parentId?.district?.division?.province?.country ===
-                    me?.userAreaId?._id && halqa?.disabled !== true
-                );
-              }
+              return halqa?.disabled !== true;
             })
           );
         } else if (type === "province") {
@@ -274,12 +284,12 @@ function App() {
               if (i?.parentType === "Maqam") {
                 return (
                   i?.parentId?._id === me?.userAreaId?._id ||
-                  i?.parentId?.province === me?.userAreaId?._id
+                  i?.parentId?.province?._id === me?.userAreaId?._id
                 );
               } else {
                 const validDistricts = dis.map((i) => i?._id?.toString());
                 return validDistricts.includes(
-                  i?.parentId?.district?.toString()
+                  i?.parentId?.district?._id.toString()
                 );
               }
             })

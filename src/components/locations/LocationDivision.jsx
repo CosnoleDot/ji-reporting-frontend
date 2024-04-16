@@ -64,6 +64,9 @@ export const LocationDivision = () => {
     parentId: "",
     parentType: "Tehsil",
   });
+  useEffect(() => {
+    console.log(halqas);
+  }, [halqas]);
   const handleSubmit = async () => {
     try {
       const req = await instance.post("/locations/division", form, {
