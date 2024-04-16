@@ -13,6 +13,7 @@ import {
   MaqamContext,
   MaqamReportContext,
   MeContext,
+  ProvinceContext,
   ProvinceReportContext,
   TehsilContext,
 } from "../context";
@@ -26,6 +27,7 @@ export const Dashboard = () => {
   const { nazim, setLoading } = useContext(UIContext);
   const maqams = useContext(MaqamContext);
   const divisions = useContext(DivisionContext);
+  const provinces = useContext(ProvinceContext);
   const unit = useContext(HalqaContext);
   const districts = useContext(DistrictContext);
   const tehsils = useContext(TehsilContext);
@@ -324,7 +326,7 @@ export const Dashboard = () => {
       {
         <div className="relative flex flex-col w-full gap-3 items-center p-5 justify-start h-[calc(100vh-65.6px-64px)] overflow-hidden overflow-y-scroll bg-blue-50">
           <div className="grid grid-cols-1 gap-4 px-4 mt-8 sm:grid-cols-4 sm:px-8 w-full">
-            {["province"].includes(localStorage.getItem("@type")) &&
+            {["province", "country"].includes(localStorage.getItem("@type")) &&
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
               ) && (
@@ -375,7 +377,47 @@ export const Dashboard = () => {
                 <p className="text-3xl">{count}</p>
               </div>
             </div>
-            {["province"].includes(localStorage.getItem("@type")) &&
+            {["country"].includes(localStorage.getItem("@type")) &&
+              ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
+                localStorage.getItem("@nazimType")
+              ) && (
+                <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
+                  <div className="p-4 bg-gray-400">
+                    <CiLocationOn className="w-12 h-12 text-white" />
+                  </div>
+                  <div className="px-4 text-gray-700">
+                    <h3 className="text-sm tracking-wider">Total Provinces</h3>
+                    <p className="text-3xl">
+                      {
+                        provinces?.filter(
+                          (province) => province?.disabled !== true
+                        ).length
+                      }
+                    </p>
+                  </div>
+                </div>
+              )}
+            {["country"].includes(localStorage.getItem("@type")) &&
+              ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
+                localStorage.getItem("@nazimType")
+              ) && (
+                <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
+                  <div className="p-4 bg-slate-600">
+                    <CiLocationOn className="w-12 h-12 text-white" />
+                  </div>
+                  <div className="px-4 text-gray-700">
+                    <h3 className="text-sm tracking-wider">Total Ilaqas</h3>
+                    <p className="text-3xl">
+                      {
+                        provinces?.filter(
+                          (province) => province?.disabled !== true
+                        ).length
+                      }
+                    </p>
+                  </div>
+                </div>
+              )}
+            {["province", "country"].includes(localStorage.getItem("@type")) &&
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
               ) && (
@@ -394,7 +436,7 @@ export const Dashboard = () => {
                   </div>
                 </div>
               )}
-            {["province"].includes(localStorage.getItem("@type")) &&
+            {["province", "country"].includes(localStorage.getItem("@type")) &&
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
               ) && (

@@ -6,3 +6,4 @@ export const DivisionContext = createContext([]);
 export const DistrictContext = createContext([]);
 export const TehsilContext = createContext([]);
 export const HalqaContext = createContext([]);
+export const IlaqaContext = createContext([]);
