@@ -165,7 +165,6 @@ function App() {
       });
       if (req) {
         const enabledIlaqas = req.data.data;
-        console.log(enabledIlaqas);
         const type = localStorage.getItem("@type");
         if (type === "country") {
           setIlaqas(
@@ -176,19 +175,13 @@ function App() {
         } else if (type === "province") {
           setIlaqas(
             enabledIlaqas.filter((i) => {
-              return (
-                i?.parentId?._id === me?.userAreaId?._id ||
-                i?.maqam?.province?._id === me?.userAreaId?._id
-              );
+              return i?.maqam?.province?._id === me?.userAreaId?._id;
             })
           );
         } else if (type === "maqam") {
-          const validIlaqas = enabledIlaqas.filter((i) => {
-            console.log(i?.maqam?._id, me?.userAreaId?._id);
-            i?.maqam === me?.userAreaId?._id ||
-              i?.maqam?._id === me?.userAreaId?._id;
-          });
-          console.log(validIlaqas);
+          const validIlaqas = enabledIlaqas.filter(
+            (i) => i?.maqam?._id === me?.userAreaId?._id
+          );
           setIlaqas(validIlaqas);
         } else {
           const validIlaqas = enabledIlaqas.filter(
@@ -328,11 +321,15 @@ function App() {
             })
           );
         } else if (type === "maqam") {
-          const validHalqas = enabledHalqas.filter(
-            (i) =>
-              i?.parentType === "Maqam" &&
-              i?.parentId?._id === me?.userAreaId?._id
-          );
+          const validHalqas = enabledHalqas.filter((i) => {
+            if (
+              i?.parentType === "Maqam" ||
+              i?.parentType === "Division" ||
+              i?.parentType === "Ilaqa"
+            ) {
+              return i?.parentId?.maqam?._id === me?.userAreaId?._id;
+            }
+          });
           setHalqas(validHalqas);
         } else if (type === "ilaqa") {
           const validHalqas = enabledHalqas.filter(
@@ -365,10 +362,7 @@ function App() {
       });
     }
   };
-  useEffect(() => {
-    console.log(halqas);
-    console.log(ilaqas);
-  }, [halqas, ilaqas]);
+
   let provinceR, maqamR, divisionR, halqaR;
   const getProvinceReports = async () => {
     try {
@@ -633,7 +627,7 @@ function App() {
         <ProvinceReportContext.Provider value={provinceReports}>
           <MaqamContext.Provider value={maqams}>
             <MaqamReportContext.Provider value={maqamReports}>
-              <IlaqaContext.Provider value={maqamReports}>
+              <IlaqaContext.Provider value={ilaqas}>
                 <DivisionContext.Provider value={divisions}>
                   <DivisionReportContext.Provider value={divisionReports}>
                     <DistrictContext.Provider value={districts}>
