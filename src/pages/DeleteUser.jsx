@@ -79,6 +79,7 @@ export const DeleteUser = () => {
     } else if (area?.parentType === "Tehsil") {
       return `${area?.name} - ${area?.parentId?.district?.division?.name}(Division)`;
     } else if (area?.parentType === "Ilaqa") {
+      console.log(area);
       return `${area?.name} - ${area?.parentId?.name}(Ilaqa)`;
     } else if (area?.parentType === "Division") {
       return `${area?.name} - ${area?.parentId?.name}(Division)`;
@@ -231,6 +232,9 @@ export const DeleteUser = () => {
         break;
       case "Halqa":
         setAreas(halqas);
+        break;
+      case "Ilaqa":
+        setAreas(ilaqas);
         break;
       default:
         break;
@@ -1165,6 +1169,7 @@ export const DeleteUser = () => {
                         </label>
                       </div>
                     )}
+
                     <div className="form-control">
                       <label className="label cursor-pointer gap-2">
                         <input
@@ -1182,6 +1187,28 @@ export const DeleteUser = () => {
                         <span className="label-text">Division</span>
                       </label>
                     </div>
+                    {(me?.nazim?.toLowerCase() === "maqam" ||
+                      me?.nazim?.toLowerCase() === "country") && (
+                      <div className="form-control">
+                        <label className="label cursor-pointer gap-2">
+                          <input
+                            type="radio"
+                            name="userAreaType"
+                            className="radio checked:bg-blue-500"
+                            checked={userAreaType === "Ilaqa"}
+                            value="Ilaqa"
+                            onChange={(e) => {
+                              setUserAreaType(e.target.value);
+                              setSearchArea("");
+                              document.getElementById("autocomplete0").value =
+                                "";
+                            }}
+                          />
+                          <span className="label-text">Ilaqa</span>
+                        </label>
+                      </div>
+                    )}
+
                     <div className="form-control">
                       <label className="label cursor-pointer gap-2">
                         <input
@@ -1351,7 +1378,8 @@ export const DeleteUser = () => {
                             document.getElementById("autocomplete0").value = `${
                               area?.name
                             }${
-                              userAreaType === "Halqa"
+                              userAreaType === "Halqa" ||
+                              userAreaType === "Ilaqa"
                                 ? ` - ${area?.parentId?.name} (${area?.parentType})`
                                 : ""
                             }`;
@@ -1361,7 +1389,7 @@ export const DeleteUser = () => {
                           }}
                           className="p-2 cursor-pointer hover:bg-gray-100"
                         >
-                          {userAreaType === "Halqa"
+                          {userAreaType === "Halqa" || userAreaType === "Ilaqa"
                             ? `${getAreaType(area)}`
                             : `${area?.name} ${
                                 area?.province?.name ? area?.province?.name : ""
