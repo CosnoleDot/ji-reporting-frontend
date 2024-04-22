@@ -176,7 +176,7 @@ export const Dashboard = () => {
     setPersonalUnfilled(initialData?.personalU);
     setUmeedwars(initialData?.validNazim);
   };
-  const getPsersonalReports = async () => {
+  const getPsersonalReports = async () => {                                                 
     const req = await instance.get(`/umeedwar`, {
       headers: {
         "Content-Type": "application/json",

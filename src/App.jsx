@@ -286,7 +286,9 @@ function App() {
       });
     }
   };
-
+  useEffect(() => {
+    console.log(halqas);
+  }, [halqas]);
   const getHalqas = async () => {
     try {
       const req = await instance.get("/locations/halqa", {
