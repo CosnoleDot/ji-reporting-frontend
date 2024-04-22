@@ -16,6 +16,7 @@ import {
   ProvinceContext,
   ProvinceReportContext,
   TehsilContext,
+  IlaqaContext,
 } from "../context";
 import { UIContext } from "../context/ui";
 import { useNavigate } from "react-router-dom";
@@ -29,6 +30,7 @@ export const Dashboard = () => {
   const divisions = useContext(DivisionContext);
   const provinces = useContext(ProvinceContext);
   const unit = useContext(HalqaContext);
+  const ilaqa = useContext(IlaqaContext);
   const districts = useContext(DistrictContext);
   const tehsils = useContext(TehsilContext);
   const maqamReports = useContext(MaqamReportContext);
@@ -164,6 +166,7 @@ export const Dashboard = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [me]);
+
   const clearFilter = () => {
     // setting back the data from initial state back to the respective sates
     setQuerydate("");
@@ -397,7 +400,7 @@ export const Dashboard = () => {
                   </div>
                 </div>
               )}
-            {["country"].includes(localStorage.getItem("@type")) &&
+            {["maqam", "country"].includes(localStorage.getItem("@type")) &&
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
               ) && (
@@ -408,11 +411,7 @@ export const Dashboard = () => {
                   <div className="px-4 text-gray-700">
                     <h3 className="text-sm tracking-wider">Total Ilaqas</h3>
                     <p className="text-3xl">
-                      {
-                        provinces?.filter(
-                          (province) => province?.disabled !== true
-                        ).length
-                      }
+                      {ilaqa?.filter((il) => il?.disabled !== true).length}
                     </p>
                   </div>
                 </div>
@@ -781,21 +780,22 @@ export const Dashboard = () => {
                           </label>
                         </div>
                       ))}
-                    {me?.userAreaType === "Province" && (
-                      <div className="form-control">
-                        <label className="label cursor-pointer gap-2">
-                          <input
-                            type="radio"
-                            name="userAreaType"
-                            className="radio checked:bg-blue-500"
-                            value="All"
-                            checked={userAreaType === "All"}
-                            onChange={(e) => setUserAreaType(e.target.value)}
-                          />
-                          <span className="label-text">All</span>
-                        </label>
-                      </div>
-                    )}
+                    {me?.userAreaType === "Province" ||
+                      (me?.userAreaType === "Country" && (
+                        <div className="form-control">
+                          <label className="label cursor-pointer gap-2">
+                            <input
+                              type="radio"
+                              name="userAreaType"
+                              className="radio checked:bg-blue-500"
+                              value="All"
+                              checked={userAreaType === "All"}
+                              onChange={(e) => setUserAreaType(e.target.value)}
+                            />
+                            <span className="label-text">All</span>
+                          </label>
+                        </div>
+                      ))}
                   </>
                 )}
                 {!show && (

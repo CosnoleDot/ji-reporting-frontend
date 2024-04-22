@@ -881,7 +881,7 @@ export const Reports = () => {
           role="tablist"
           className="w-full flex justify-between items-center"
         >
-          {["province"].includes(localStorage.getItem("@type")) &&
+          {["country", "province"].includes(localStorage.getItem("@type")) &&
             ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
               localStorage.getItem("@nazimType")
             ) && (
@@ -896,7 +896,9 @@ export const Reports = () => {
                 Province
               </Link>
             )}
-          {["province", "division"].includes(localStorage.getItem("@type")) &&
+          {["country", "province", "division"].includes(
+            localStorage.getItem("@type")
+          ) &&
             ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
               localStorage.getItem("@nazimType")
             ) && (
@@ -911,7 +913,9 @@ export const Reports = () => {
                 Division
               </Link>
             )}
-          {["province", "maqam"].includes(localStorage.getItem("@type")) &&
+          {["country", "province", "maqam"].includes(
+            localStorage.getItem("@type")
+          ) &&
             ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
               localStorage.getItem("@nazimType")
             ) && (
@@ -926,8 +930,25 @@ export const Reports = () => {
                 Maqam
               </Link>
             )}
+          {["country", "province", "maqam"].includes(
+            localStorage.getItem("@type")
+          ) &&
+            ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
+              localStorage.getItem("@nazimType")
+            ) && (
+              <Link
+                to={"?active=ilaqa"}
+                role="tab"
+                className={`tab w-full ${
+                  active === "ilaqa" ? "tab-active" : ""
+                }`}
+                onClick={() => setNotifyTo("ilaqa")}
+              >
+                Ilaqa
+              </Link>
+            )}
 
-          {["province", "maqam", "division"].includes(
+          {["country", "province", "maqam", "division"].includes(
             localStorage.getItem("@type")
           ) &&
             ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(

@@ -10,6 +10,8 @@ import {
   ProvinceContext,
   DistrictContext,
   useToastState,
+  IlaqaContext,
+  TehsilContext,
 } from "../context";
 import instance from "../api/instrance";
 import { Link } from "react-router-dom";
@@ -19,6 +21,8 @@ import { RiDeviceRecoverFill } from "react-icons/ri";
 export const DeleteUser = () => {
   const me = useContext(MeContext);
   const halqas = useContext(HalqaContext);
+  const tehsils = useContext(TehsilContext);
+  const ilaqas = useContext(IlaqaContext);
   const maqams = useContext(MaqamContext);
   const provinces = useContext(ProvinceContext);
   const divisions = useContext(DivisionContext);
@@ -67,17 +71,17 @@ export const DeleteUser = () => {
     getAreas();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAreaType]);
-  useEffect(() => {
-    setData(nazim);
-  }, [nazim]);
+
   // get Divisions
   const getAreaType = (area) => {
     if (area?.parentType === "Maqam") {
-      const name = maqams.find((i) => i?._id === area?.parentId?._id);
-      return `${name?.name}(Maqam)`;
+      return `${area?.name} - ${area?.parentId?.name}(Maqam)`;
     } else if (area?.parentType === "Tehsil") {
-      const name = getDivisionByTehsil(area?.parentId, districts);
-      return `${name}(Division)`;
+      return `${area?.name} - ${area?.parentId?.district?.division?.name}(Division)`;
+    } else if (area?.parentType === "Ilaqa") {
+      return `${area?.name} - ${area?.parentId?.name}(Ilaqa)`;
+    } else if (area?.parentType === "Division") {
+      return `${area?.name} - ${area?.parentId?.name}(Division)`;
     } else if (area?.province) {
       return maqams.find((i) => i?._id === area?._id) ? "Maqam" : "Division";
     }
@@ -85,15 +89,24 @@ export const DeleteUser = () => {
   };
   const getAreaTypeWithoutName = (area) => {
     if (area?.parentType === "Maqam") {
-      const name = maqams.find((i) => i?._id === area?.parentId?._id);
-      return `(Maqam)`;
+      const maqam = maqams.find((i) => i?._id === area?.parentId);
+      return `${area?.name} Of Maqam ${maqam?.name} (${maqam?.province?.name})`;
     } else if (area?.parentType === "Tehsil") {
-      const name = getDivisionByTehsil(area?.parentId, districts);
-      return `(Division)`;
+      const tehsil = tehsils.find((teh) => teh?._id === area?.parentId);
+      return `${area?.name} Of Division ${tehsil?.district?.division?.name} (${tehsil?.district?.division?.province?.name})`;
+    } else if (area?.parentType === "Ilaqa") {
+      const ilaqa = ilaqas?.find((maq) => maq?._id === area?.parentId);
+      return `${area?.name} Of Maqam ${ilaqa?.maqam?.name}`;
     } else if (area?.province) {
-      return maqams.find((i) => i?._id === area?._id) ? "Maqam" : "Division";
+      return maqams.find((i) => i?._id === area?._id)
+        ? `Maqam Of ${area?.name} - ${
+            maqams.find((i) => i?._id === area?._id).province?.name
+          } `
+        : `Division Of ${area?.name}  ${
+            divisions.find((i) => i?._id === area?._id).province?.name
+          } `;
     }
-    return "Province";
+    return `Province ${area?.name}`;
   };
   const deleteUser = async (user) => {
     setLoading(true);
@@ -274,6 +287,7 @@ export const DeleteUser = () => {
     setData(nazim);
     setBirthYear("");
   };
+
   const handleEventClick = (e) => {
     if (e?.target?.id !== "autocomplete0") {
       if (
@@ -359,9 +373,7 @@ export const DeleteUser = () => {
                       </td>
 
                       <td>{maqam?.email || "-"}</td>
-                      <td>{`${
-                        maqam?.userAreaId?.name
-                      } -${getAreaTypeWithoutName(maqam?.userAreaId)}`}</td>
+                      <td>{`${getAreaTypeWithoutName(maqam?.userAreaId)}`}</td>
                       <td>
                         {maqam?.isDeleted ? (
                           <div className="badge badge-error">inActive</div>
@@ -1123,239 +1135,243 @@ export const DeleteUser = () => {
         </dialog>
         {/* {Change user status} */}
         <dialog id="change-status-modal" className="modal">
-          <div className="modal-box">
-            <h3 className="font-bold text-2xl">Change Status</h3>
-            <hr className="mb-3" />
-            <form className="space-y-4 mb-3">
-              <div>
-                <span className="px-1 py-2 block font-semibold">
-                  Organization pocket:
-                </span>
-                <div className="flex flex-wrap items-center justify-start border border-primary p-2 rounded-lg">
-                  {me?.nazim === "Pakistan" && (
+          <div className="modal-box flex justify-between items-start flex-col h-[600px]">
+            <div>
+              <h3 className="font-bold text-2xl">Change Status</h3>
+              <hr className="mb-3" />
+              <form className="space-y-4 mb-3">
+                <div>
+                  <span className="px-1 py-2 block font-semibold">
+                    Organization pocket:
+                  </span>
+                  <div className="flex flex-wrap items-center justify-start border border-primary p-2 rounded-lg">
+                    {me?.nazim.toLowerCase() === "country" && (
+                      <div className="form-control">
+                        <label className="label cursor-pointer gap-2">
+                          <input
+                            type="radio"
+                            name="userAreaType"
+                            className="radio checked:bg-blue-500"
+                            checked={userAreaType === "Province"}
+                            value="Province"
+                            onChange={(e) => {
+                              setUserAreaType(e.target.value);
+                              setSearchArea("");
+                              document.getElementById("autocomplete0").value =
+                                "";
+                            }}
+                          />
+                          <span className="label-text">Province</span>
+                        </label>
+                      </div>
+                    )}
                     <div className="form-control">
                       <label className="label cursor-pointer gap-2">
                         <input
                           type="radio"
                           name="userAreaType"
                           className="radio checked:bg-blue-500"
-                          checked={userAreaType === "Province"}
-                          value="Province"
+                          checked={userAreaType === "Division"}
+                          value="Division"
                           onChange={(e) => {
                             setUserAreaType(e.target.value);
                             setSearchArea("");
                             document.getElementById("autocomplete0").value = "";
                           }}
                         />
-                        <span className="label-text">Province</span>
+                        <span className="label-text">Division</span>
                       </label>
                     </div>
-                  )}
-                  <div className="form-control">
-                    <label className="label cursor-pointer gap-2">
-                      <input
-                        type="radio"
-                        name="userAreaType"
-                        className="radio checked:bg-blue-500"
-                        checked={userAreaType === "Division"}
-                        value="Division"
-                        onChange={(e) => {
-                          setUserAreaType(e.target.value);
-                          setSearchArea("");
-                          document.getElementById("autocomplete0").value = "";
-                        }}
-                      />
-                      <span className="label-text">Division</span>
-                    </label>
-                  </div>
-                  <div className="form-control">
-                    <label className="label cursor-pointer gap-2">
-                      <input
-                        type="radio"
-                        name="userAreaType"
-                        className="radio checked:bg-blue-500"
-                        checked={userAreaType === "Maqam"}
-                        value="Maqam"
-                        onChange={(e) => {
-                          setUserAreaType(e.target.value);
-                          setSearchArea("");
-                          document.getElementById("autocomplete0").value = "";
-                        }}
-                      />
-                      <span className="label-text">Maqam</span>
-                    </label>
-                  </div>
-                  <div className="form-control">
-                    <label className="label cursor-pointer gap-2">
-                      <input
-                        type="radio"
-                        name="userAreaType"
-                        className="radio checked:bg-blue-500"
-                        checked={userAreaType === "Halqa"}
-                        value="Halqa"
-                        onChange={(e) => {
-                          setUserAreaType(e.target.value);
-                          setSearchArea("");
-                          document.getElementById("autocomplete0").value = "";
-                        }}
-                      />
-                      <span className="label-text">Halqa</span>
-                    </label>
+                    <div className="form-control">
+                      <label className="label cursor-pointer gap-2">
+                        <input
+                          type="radio"
+                          name="userAreaType"
+                          className="radio checked:bg-blue-500"
+                          checked={userAreaType === "Maqam"}
+                          value="Maqam"
+                          onChange={(e) => {
+                            setUserAreaType(e.target.value);
+                            setSearchArea("");
+                            document.getElementById("autocomplete0").value = "";
+                          }}
+                        />
+                        <span className="label-text">Maqam</span>
+                      </label>
+                    </div>
+                    <div className="form-control">
+                      <label className="label cursor-pointer gap-2">
+                        <input
+                          type="radio"
+                          name="userAreaType"
+                          className="radio checked:bg-blue-500"
+                          checked={userAreaType === "Halqa"}
+                          value="Halqa"
+                          onChange={(e) => {
+                            setUserAreaType(e.target.value);
+                            setSearchArea("");
+                            document.getElementById("autocomplete0").value = "";
+                          }}
+                        />
+                        <span className="label-text">Halqa</span>
+                      </label>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* NAZIM TYPES */}
-              <div className="w-full">
-                <span className="px-1 py-2 block font-semibold">
-                  Change status to:
-                </span>
-                <div className="flex  items-center justify-start flex-wrap border border-primary p-2 rounded-lg">
-                  <div className="form-control">
-                    <label className="label cursor-pointer gap-2">
-                      <input
-                        type="radio"
-                        name="nazimType"
-                        className="radio checked:bg-blue-500"
-                        value="nazim"
-                        checked={nazimType === "nazim"}
-                        onChange={() => setNazimType("nazim")}
-                      />
-                      <span className="label-text">Rafiq-Nazim</span>
-                    </label>
-                  </div>
-                  {userAreaType !== "Halqa" && (
+                {/* NAZIM TYPES */}
+                <div className="w-full">
+                  <span className="px-1 py-2 block font-semibold">
+                    Change status to:
+                  </span>
+                  <div className="flex  items-center justify-start flex-wrap border border-primary p-2 rounded-lg">
                     <div className="form-control">
                       <label className="label cursor-pointer gap-2">
                         <input
                           type="radio"
                           name="nazimType"
                           className="radio checked:bg-blue-500"
-                          value="umeedwaar"
-                          checked={nazimType === "umeedwar"}
-                          onChange={() => setNazimType("umeedwar")}
+                          value="nazim"
+                          checked={nazimType === "nazim"}
+                          onChange={() => setNazimType("nazim")}
                         />
-                        <span className="label-text">Umeedwaar</span>
+                        <span className="label-text">Rafiq-Nazim</span>
                       </label>
                     </div>
-                  )}
-                  <div className="form-control">
-                    <label className="label cursor-pointer gap-2">
-                      <input
-                        type="radio"
-                        name="nazimType"
-                        className="radio checked:bg-blue-500"
-                        value="umeedwaar-nazim"
-                        onChange={() => setNazimType("umeedwaar-nazim")}
-                      />
-                      <span className="label-text">Umeedwaar-Nazim</span>
-                    </label>
-                  </div>
-                  {userAreaType !== "Halqa" && (
+                    {userAreaType !== "Halqa" && (
+                      <div className="form-control">
+                        <label className="label cursor-pointer gap-2">
+                          <input
+                            type="radio"
+                            name="nazimType"
+                            className="radio checked:bg-blue-500"
+                            value="umeedwaar"
+                            checked={nazimType === "umeedwar"}
+                            onChange={() => setNazimType("umeedwar")}
+                          />
+                          <span className="label-text">Umeedwaar</span>
+                        </label>
+                      </div>
+                    )}
                     <div className="form-control">
                       <label className="label cursor-pointer gap-2">
                         <input
                           type="radio"
                           name="nazimType"
                           className="radio checked:bg-blue-500"
-                          value="rukan"
-                          checked={nazimType === "rukan"}
-                          onChange={() => setNazimType("rukan")}
+                          value="umeedwaar-nazim"
+                          onChange={() => setNazimType("umeedwaar-nazim")}
                         />
-                        <span className="label-text">Rukan</span>
+                        <span className="label-text">Umeedwaar-Nazim</span>
                       </label>
                     </div>
-                  )}
-                  <div className="form-control">
-                    <label className="label cursor-pointer gap-2">
-                      <input
-                        type="radio"
-                        name="nazimType"
-                        className="radio checked:bg-blue-500"
-                        value="rukan-nazim"
-                        checked={nazimType === "rukan-nazim"}
-                        onChange={() => setNazimType("rukan-nazim")}
-                      />
-                      <span className="label-text">Rukan-Nazim</span>
-                    </label>
+                    {userAreaType !== "Halqa" && (
+                      <div className="form-control">
+                        <label className="label cursor-pointer gap-2">
+                          <input
+                            type="radio"
+                            name="nazimType"
+                            className="radio checked:bg-blue-500"
+                            value="rukan"
+                            checked={nazimType === "rukan"}
+                            onChange={() => setNazimType("rukan")}
+                          />
+                          <span className="label-text">Rukan</span>
+                        </label>
+                      </div>
+                    )}
+                    <div className="form-control">
+                      <label className="label cursor-pointer gap-2">
+                        <input
+                          type="radio"
+                          name="nazimType"
+                          className="radio checked:bg-blue-500"
+                          value="rukan-nazim"
+                          checked={nazimType === "rukan-nazim"}
+                          onChange={() => setNazimType("rukan-nazim")}
+                        />
+                        <span className="label-text">Rukan-Nazim</span>
+                      </label>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="relative">
-                <span className="px-1 py-2 block font-semibold">Area:</span>
-                <input type="hidden" name="userAreaId" id="userAreaId" />
-                <input
-                  id="autocomplete0"
-                  type="search"
-                  className="input input-bordered input-primary w-full"
-                  placeholder="Select area"
-                  onChange={(e) => setSearchArea(e.target.value)}
-                  onClick={() => {
-                    if (
-                      document
-                        .getElementById("autocomplete0-list")
-                        .classList.contains("hidden")
-                    ) {
-                      document
-                        .getElementById("autocomplete0-list")
-                        .classList.remove("hidden");
-                    } else {
-                      document
-                        .getElementById("autocomplete0-list")
-                        .classList.add("hidden");
-                    }
-                  }}
-                />
-                <div
-                  id="autocomplete0-list"
-                  className="absolute hidden z-10 max-h-[100px] overflow-y-scroll bg-white border border-gray-300 w-full mt-1"
-                >
-                  {areas
-                    .sort((a, b) => a?.name?.localeCompare(b?.name))
-                    .filter((item) => {
-                      if (searchArea && searchArea !== "") {
-                        if (
-                          item?.name
-                            ?.toString()
-                            ?.toLowerCase()
-                            ?.includes(searchArea?.toString()?.toLowerCase())
-                        ) {
+                <div className="relative ">
+                  <span className="px-1 py-2 block font-semibold">Area:</span>
+                  <input type="hidden" name="userAreaId" id="userAreaId" />
+                  <input
+                    id="autocomplete0"
+                    type="search"
+                    className="input input-bordered input-primary w-full"
+                    placeholder="Select area"
+                    onChange={(e) => setSearchArea(e.target.value)}
+                    onClick={() => {
+                      if (
+                        document
+                          .getElementById("autocomplete0-list")
+                          .classList.contains("hidden")
+                      ) {
+                        document
+                          .getElementById("autocomplete0-list")
+                          .classList.remove("hidden");
+                      } else {
+                        document
+                          .getElementById("autocomplete0-list")
+                          .classList.add("hidden");
+                      }
+                    }}
+                  />
+                  <div
+                    id="autocomplete0-list"
+                    className="absolute hidden z-10 max-h-[150px] overflow-y-scroll bg-white border border-gray-300 w-full mt-1"
+                  >
+                    {areas
+                      .sort((a, b) => a?.name?.localeCompare(b?.name))
+                      .filter((item) => {
+                        if (searchArea && searchArea !== "") {
+                          if (
+                            item?.name
+                              ?.toString()
+                              ?.toLowerCase()
+                              ?.includes(searchArea?.toString()?.toLowerCase())
+                          ) {
+                            return true;
+                          }
+                          return false;
+                        } else {
                           return true;
                         }
-                        return false;
-                      } else {
-                        return true;
-                      }
-                    })
-                    .map((area, index) => (
-                      <div
-                        key={index}
-                        onClick={() => {
-                          document.getElementById("userAreaId").value =
-                            area?._id;
-                          setSelectedId(area?._id);
-                          document.getElementById("autocomplete0").value = `${
-                            area?.name
-                          }${
-                            userAreaType === "Halqa"
-                              ? ` - ${area?.parentId?.name} (${area?.parentType})`
-                              : ""
-                          }`;
-                          document
-                            .getElementById("autocomplete0-list")
-                            .classList.add("hidden");
-                        }}
-                        className="p-2 cursor-pointer hover:bg-gray-100"
-                      >
-                        {area?.name}
-                        {userAreaType === "Halqa"
-                          ? ` - ${area?.parentId?.name} ${getAreaType(area)}`
-                          : ""}
-                      </div>
-                    ))}
+                      })
+                      .map((area, index) => (
+                        <div
+                          key={index}
+                          onClick={() => {
+                            document.getElementById("userAreaId").value =
+                              area?._id;
+                            setSelectedId(area?._id);
+                            document.getElementById("autocomplete0").value = `${
+                              area?.name
+                            }${
+                              userAreaType === "Halqa"
+                                ? ` - ${area?.parentId?.name} (${area?.parentType})`
+                                : ""
+                            }`;
+                            document
+                              .getElementById("autocomplete0-list")
+                              .classList.add("hidden");
+                          }}
+                          className="p-2 cursor-pointer hover:bg-gray-100"
+                        >
+                          {userAreaType === "Halqa"
+                            ? `${getAreaType(area)}`
+                            : `${area?.name} ${
+                                area?.province?.name ? area?.province?.name : ""
+                              }`}
+                        </div>
+                      ))}
+                  </div>
                 </div>
-              </div>
-            </form>
+              </form>
+            </div>
             <form method="dialog" className="modal-backdrop">
               <div className="flex justify-end items-end w-full gap-5">
                 <button

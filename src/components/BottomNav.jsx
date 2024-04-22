@@ -60,7 +60,7 @@ export const BottomNav = ({ active }) => {
             <BsFiles className="h-5 w-5" />
           </Link>
         )}
-      {["province", "maqam", "division"].includes(
+      {["country", "province", "maqam", "division", "ilaqa"].includes(
         localStorage.getItem("@type")
       ) &&
         ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
@@ -77,7 +77,7 @@ export const BottomNav = ({ active }) => {
             <CiLocationOn className="h-5 w-5" />
           </Link>
         )}
-      {["province", "maqam", "division"].includes(
+      {["country", "province", "maqam", "division", "ilaqa"].includes(
         localStorage.getItem("@type")
       ) &&
         ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(

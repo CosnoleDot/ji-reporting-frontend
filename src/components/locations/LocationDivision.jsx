@@ -20,13 +20,14 @@ export const LocationDivision = () => {
   const divisions = useContext(DivisionContext);
   const halqas = useContext(HalqaContext);
   const districts = useContext(DistrictContext);
+  const [filteredData, setFilteredData] = useState(halqas);
   const { getHalqas, getDivisions, getDistricts, getTehsils } =
     useContext(UIContext);
   const [editMode, setEditMode] = useState(false);
   const [id, setId] = useState("");
   const { dispatch } = useToastState();
   const [view, setView] = useState(
-    ["province", "maqam"].includes(localStorage.getItem("@type"))
+    ["country", "province", "maqam"].includes(localStorage.getItem("@type"))
       ? "halqa"
       : "district"
   );
@@ -40,13 +41,33 @@ export const LocationDivision = () => {
       for (let [key, value] of searchParams.entries()) {
         queryParams[key] = value;
       }
-
-      if (queryParams.view) setView(queryParams.view);
+      if (
+        queryParams.hasOwnProperty !== "halqa" &&
+        Object.keys(queryParams).length == 1
+      ) {
+        setFilteredData(halqas);
+      } else {
+        setView(queryParams.view);
+        if (queryParams.view) {
+          if (queryParams.view === "halqa") {
+            setFilteredData(halqas);
+          }
+          if (queryParams.view === "district") {
+            setFilteredData(districts);
+          }
+          if (queryParams.view === "tehsil") {
+            setFilteredData(tehsils);
+          }
+          if (queryParams.view === "division") {
+            setFilteredData(divisions);
+          }
+        }
+      }
     };
 
     // Call the function when the component mounts or when the location changes
     getQueryParams();
-  }, [params]);
+  }, [params, view]);
   const [form, setForm] = useState({
     name: "",
     province: "",
@@ -64,9 +85,7 @@ export const LocationDivision = () => {
     parentId: "",
     parentType: "Tehsil",
   });
-  useEffect(() => {
-    console.log(halqas);
-  }, [halqas]);
+
   const handleSubmit = async () => {
     try {
       const req = await instance.post("/locations/division", form, {
@@ -229,6 +248,46 @@ export const LocationDivision = () => {
       }
     } catch (err) {}
   };
+  const handleSearch = (value) => {
+    if (view === "halqa") {
+      const filteredHalqa = halqas
+        ?.map((halqa) => halqa)
+        .filter(
+          (hal) =>
+            hal?.name.toLowerCase().includes(value.toLowerCase()) ||
+            hal?.parentId?.name.toLowerCase().includes(value.toLowerCase())
+        );
+      setFilteredData(filteredHalqa);
+    } else if (view === "district") {
+      const filteredDistricts = districts
+        ?.map((district) => district)
+        .filter(
+          (dis) =>
+            dis?.name.toLowerCase().includes(value.toLowerCase()) ||
+            dis?.province?.name.toLowerCase().includes(value.toLowerCase())
+        );
+
+      setFilteredData(filteredDistricts);
+    } else if (view === "tehsil") {
+      const filteredTehsils = tehsils
+        ?.map((tehsil) => tehsil)
+        .filter(
+          (teh) =>
+            teh?.name.toLowerCase().includes(value.toLowerCase()) ||
+            teh?.maqam?.name.toLowerCase().includes(value.toLowerCase())
+        );
+      setFilteredData(filteredTehsils);
+    } else if (view === "division") {
+      const filteredDivisions = divisions
+        ?.map((div) => div)
+        .filter(
+          (div) =>
+            div?.name.toLowerCase().includes(value.toLowerCase()) ||
+            div?.maqam?.name.toLowerCase().includes(value.toLowerCase())
+        );
+      setFilteredData(filteredDivisions);
+    }
+  };
   return (
     <>
       <div
@@ -294,9 +353,28 @@ export const LocationDivision = () => {
           Add Halqa
         </button>
       </div>
-
+      <label className="input input-bordered flex items-center gap-2">
+        <input
+          type="text"
+          className="grow p-2"
+          placeholder="Search"
+          onChange={(e) => handleSearch(e.target.value)}
+        />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 16 16"
+          fill="currentColor"
+          className="w-4 h-4 opacity-70"
+        >
+          <path
+            fillRule="evenodd"
+            d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+            clipRule="evenodd"
+          />
+        </svg>
+      </label>
       <div role="tablist" className="w-full flex justify-between items-center">
-        {["province"].includes(localStorage.getItem("@type")) && (
+        {["country", "province"].includes(localStorage.getItem("@type")) && (
           <Link
             to={"?active=division&view=division"}
             role="tab"
@@ -339,7 +417,7 @@ export const LocationDivision = () => {
               </tr>
             </thead>
             <tbody>
-              {divisions.map((division, index) => (
+              {filteredData.map((division, index) => (
                 <tr key={index}>
                   <th>{index + 1}</th>
                   <td>{division?.name}</td>
@@ -379,21 +457,30 @@ export const LocationDivision = () => {
       {view === "tehsil" && (
         <div className="w-full overflow-x-auto">
           <table className="table table-zebra">
-            <thead>
-              <tr>
-                <th></th>
-                <th>Name</th>
-                <th>District</th>
-                <th className="text-center">Edit/Disable</th>
+            <thead className="h-10">
+              <tr className="fixed mb-2 bg-slate-300 flex w-full justify-between items-start">
+                <th className=" text-start"></th>
+                <th className="w-full text-start">Name</th>
+                <th className="w-full text-start">District</th>
+                <th className="w-full text-center">Edit/Disable</th>
               </tr>
             </thead>
             <tbody>
-              {tehsils.map((tehsil, index) => (
-                <tr key={index}>
+              {filteredData.map((tehsil, index) => (
+                <tr
+                  key={index}
+                  className="flex w-full justify-between items-start"
+                >
                   <th>{index + 1}</th>
-                  <td>{tehsil?.name}</td>
-                  <td>{tehsil?.district?.name || "-"}</td>
-                  <td className="flex justify-center items-center gap-4">
+                  <td className="w-full text-start">{tehsil?.name}</td>
+                  <td className="w-full text-start">{` ${
+                    tehsil?.district?.name
+                  }( District  of ${
+                    tehsil?.district?.division?.name
+                      ? tehsil?.district?.division?.name
+                      : tehsil?.parentId?.name
+                  }) (${tehsil?.district?.division?.province?.name})`}</td>
+                  <td className="flex w-full justify-center items-center gap-4">
                     <button
                       onClick={() => {
                         setEditMode(true);
@@ -426,21 +513,30 @@ export const LocationDivision = () => {
       {view === "district" && (
         <div className="w-full overflow-x-auto">
           <table className="table table-zebra">
-            <thead>
-              <tr>
-                <th></th>
-                <th>Name</th>
-                <th>Division</th>
-                <th className="text-center">Edit/Disable</th>
+            <thead className="h-10">
+              <tr className="fixed mb-2 bg-slate-300 flex w-full justify-between items-start">
+                <th className=" text-start"></th>
+                <th className="w-full text-start">Name</th>
+                <th className="w-full text-start">Division</th>
+                <th className="w-full text-center">Edit/Disable</th>
               </tr>
             </thead>
             <tbody>
-              {districts.map((district, index) => (
-                <tr key={index}>
+              {filteredData.map((district, index) => (
+                <tr
+                  key={index}
+                  className="flex w-full justify-between items-start"
+                >
                   <th>{index + 1}</th>
-                  <td>{district?.name}</td>
-                  <td>{district?.division?.name || "-"}</td>
-                  <td className="flex justify-center items-center gap-4">
+                  <td className="w-full text-start">{district?.name}</td>
+                  <td className="w-full text-start">{` ${
+                    district?.division?.name
+                  }( ${
+                    district?.division?.province?.name
+                      ? district?.division?.province?.name
+                      : district?.parentId?.name
+                  }) `}</td>
+                  <td className="flex w-full justify-center items-center gap-4">
                     <button
                       onClick={() => {
                         setEditMode(true);
@@ -475,23 +571,45 @@ export const LocationDivision = () => {
       {view === "halqa" && (
         <div className="w-full overflow-x-auto">
           <table className="table table-zebra">
-            <thead>
-              <tr>
-                <th></th>
-                <th>Name</th>
-                <th>Tehsil</th>
-                <th className="text-center">Edit/Disable</th>
+            <thead className="h-10">
+              <tr className="fixed mb-2 bg-slate-300 flex w-full justify-between items-start">
+                <th className=" text-start"></th>
+                <th className="w-full text-start">Name</th>
+                <th className="w-full text-center">Tehsil</th>
+                <th className="w-full text-center">Edit/Disable</th>
               </tr>
             </thead>
             <tbody>
-              {halqas
-                .filter((i) => i?.parentType === "Tehsil")
+              {filteredData
+                .filter(
+                  (i) =>
+                    i?.parentType === "Tehsil" || i?.parentType === "Division"
+                )
                 .map((halqa, index) => (
-                  <tr key={index}>
+                  <tr
+                    key={index}
+                    className="flex w-full justify-between items-start"
+                  >
                     <th>{index + 1}</th>
-                    <td>{halqa?.name}</td>
-                    <td>{halqa?.parentId?.name || "-"}</td>
-                    <td className="flex  justify-center items-center gap-4">
+                    <td className="w-full">{halqa?.name}</td>
+                    <td className="w-full">{`${halqa?.parentType} ${
+                      halqa?.parentId?.name.toUpperCase() || "-"
+                    } of ${
+                      halqa?.parentType !== "Division"
+                        ? `Division ${
+                            halqa?.parentId?.district?.division?.name ||
+                            halqa?.parentId?.name ||
+                            "-"
+                          } (${
+                            halqa?.parentId?.district?.division?.province
+                              ?.name ||
+                            halqa?.parentId?.province?.name ||
+                            "-"
+                          })`
+                        : `(${halqa?.parentId?.province?.name})`
+                    }`}</td>
+
+                    <td className="flex w-full justify-center items-center gap-4">
                       <button
                         onClick={() => {
                           setEditMode(true);
