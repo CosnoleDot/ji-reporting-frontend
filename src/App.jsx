@@ -77,6 +77,7 @@ function App() {
   );
   const getMe = async () => {
     try {
+      sessionStorage.removeItem("storedData");
       setValue("Fetching user info");
       const req = await instance.get("/user/me", {
         headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
@@ -286,9 +287,6 @@ function App() {
       });
     }
   };
-  useEffect(() => {
-    console.log(halqas);
-  }, [halqas]);
   const getHalqas = async () => {
     try {
       const req = await instance.get("/locations/halqa", {

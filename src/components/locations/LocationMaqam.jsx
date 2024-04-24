@@ -31,17 +31,16 @@ export const LocationMaqam = () => {
     const getQueryParams = () => {
       const searchParams = new URLSearchParams(params.search);
       const queryParams = {};
-
       for (let [key, value] of searchParams.entries()) {
         queryParams[key] = value;
       }
+      setView(queryParams.view || "halqa");
       if (
         queryParams.hasOwnProperty !== "halqa" &&
         Object.keys(queryParams).length == 1
       ) {
         setFilteredData(halqas);
       } else {
-        setView(queryParams.view);
         if (queryParams.view) {
           if (queryParams.view === "halqa") {
             setFilteredData(halqas);
@@ -204,7 +203,9 @@ export const LocationMaqam = () => {
       setFilteredData(filteredHalqa);
     }
   };
-
+  useEffect(() => {
+    console.log(window.location.href, "view");
+  }, [view]);
   return (
     <>
       <div
@@ -395,9 +396,9 @@ export const LocationMaqam = () => {
                       >
                         <th>{index + 1}</th>
                         <td className="w-full text-start">{halqa?.name}</td>
-                        <td className="w-full text-start">{`${
+                        <td className="w-full text-start">{`Halqa of ${
                           halqa?.parentType
-                        }  Of ${
+                        }  ${
                           halqa?.parentId?.maqam?.name
                             ? halqa?.parentId?.maqam?.name
                             : halqa?.parentId?.name
@@ -463,7 +464,8 @@ export const LocationMaqam = () => {
                   <th>{index + 1}</th>
                   <td className="w-full text-start">{ilaqa?.name}</td>
                   <td className="w-full text-start">
-                   Maqam Of {ilaqa?.maqam?.name || "-"} ( {ilaqa?.maqam?.province?.name})
+                    Maqam Of {ilaqa?.maqam?.name || "-"} ({" "}
+                    {ilaqa?.maqam?.province?.name})
                   </td>
                   <td className="flex  w-full justify-center items-center gap-4">
                     <button

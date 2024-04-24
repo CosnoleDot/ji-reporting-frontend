@@ -32,7 +32,9 @@ export const Locations = () => {
     // Call the function when the component mounts or when the location changes
     getQueryParams();
   }, [params]);
-
+  useEffect(() => {
+    console.log(active);
+  }, [active]);
   return (
     <GeneralLayout title="Locations" active={"locations"}>
       <div className="relative flex flex-col items-center py-3 px-0 pt-0 justify-start h-[calc(100vh-65.6px-64px)]">
