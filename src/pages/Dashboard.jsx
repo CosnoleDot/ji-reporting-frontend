@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import { GeneralLayout } from "../components";
 import { FaLocationDot } from "react-icons/fa6";
 import { CiLocationOn } from "react-icons/ci";
@@ -76,107 +76,132 @@ export const Dashboard = () => {
     getAllReports();
   }, []);
   const getData = async () => {
+    // Check if data is already stored in session storage
     if (userAreaType === "personal" && queryDate !== "") {
       handlePersonalFilledReports();
     } else {
-      setLoading(true);
-      try {
-        const getUnfilledReports = async (path) => {
-          const res = await instance.get(
-            `/reports/${path}/data/filled-unfilled`,
-            {
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("@token")}`,
-              },
-              params: queryDate !== "" ? { queryDate: queryDate } : null,
-            }
-          );
-          return res;
-        };
-        const province = await getUnfilledReports("province");
-        const maqam = await getUnfilledReports("maqam");
-        const halqa = await getUnfilledReports("halqa");
-        const division = await getUnfilledReports("division");
-        const provinceData = province?.data?.data?.allProvince || [];
-        const maqamData = maqam?.data?.data?.allMaqams || [];
-        const halqaData = halqa?.data?.data?.allHalqas || [];
-        const divisionData = division?.data?.data?.allDivisions || [];
-        const getFilteredHalqas = (halqaData) => [
-          ...halqaData.filter((h) => {
-            if (userAreaType === "Maqam") {
-              if (h.parentType === "Maqam" && h?.parentId?._id === selectedId) {
-                return true;
+      const storedData = sessionStorage.getItem("storedData");
+      console.log(storedData, "stored");
+      console.log(queryDate !== "", !storedData);
+      if (queryDate !== "" || !storedData) {
+        console.log("in  if");
+        setLoading(true);
+        try {
+          const getUnfilledReports = async (path) => {
+            const res = await instance.get(
+              `/reports/${path}/data/filled-unfilled`,
+              {
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem("@token")}`,
+                },
+                params: queryDate !== "" ? { queryDate: queryDate } : null,
+              }
+            );
+            return res;
+          };
+          const province = await getUnfilledReports("province");
+          const maqam = await getUnfilledReports("maqam");
+          const halqa = await getUnfilledReports("halqa");
+          const division = await getUnfilledReports("division");
+          const provinceData = province?.data?.data?.allProvince || [];
+          const maqamData = maqam?.data?.data?.allMaqams || [];
+          const halqaData = halqa?.data?.data?.allHalqas || [];
+          const divisionData = division?.data?.data?.allDivisions || [];
+          const getFilteredHalqas = (halqaData) => [
+            ...halqaData.filter((h) => {
+              if (userAreaType === "Maqam") {
+                if (
+                  h.parentType === "Maqam" &&
+                  h?.parentId?._id === selectedId
+                ) {
+                  return true;
+                }
+                return false;
+              }
+              if (userAreaType === "Tehsil") {
+                if (h.parentType === "Tehsil") {
+                  const district = h?.parentId?.district;
+                  const filteredDistricts = districts
+                    .filter((dis) => dis?.division?._id === selectedId)
+                    .map((div) => div?._id);
+                  return filteredDistricts.includes(district);
+                }
+                return false;
               }
               return false;
-            }
-            if (userAreaType === "Tehsil") {
-              if (h.parentType === "Tehsil") {
-                const district = h?.parentId?.district;
-                const filteredDistricts = districts
-                  .filter((dis) => dis?.division?._id === selectedId)
-                  .map((div) => div?._id);
-                return filteredDistricts.includes(district);
-              }
-              return false;
-            }
-            return false;
-          }),
-        ];
-        const temp = {
-          unfilled: null,
-          totalprovince: 1,
-          filled: null,
-          allData:
+            }),
+          ];
+          const temp = {
+            unfilled: null,
+            totalprovince: 1,
+            filled: null,
+            allData:
+              userAreaType === "All"
+                ? [...provinceData, ...maqamData, ...halqaData, ...divisionData]
+                : getFilteredHalqas(halqaData),
+          };
+          temp.unfilled =
             userAreaType === "All"
-              ? [...provinceData, ...maqamData, ...halqaData, ...divisionData]
-              : getFilteredHalqas(halqaData),
-        };
-        temp.unfilled =
-          userAreaType === "All"
-            ? [
-                ...province?.data?.data?.unfilled,
-                ...maqam?.data?.data?.unfilled,
-                ...halqa?.data?.data?.unfilled,
-                ...division?.data?.data?.unfilled,
-              ]
-            : getFilteredHalqas(halqa?.data?.data?.unfilled);
-        temp.totalprovince =
-          province?.data?.data?.totalprovince +
-          maqam?.data?.data?.totalmaqam +
-          halqa?.data?.data?.totalhalqa +
-          division?.data?.data?.totaldivision;
-        const reportFilledBy = temp?.allData?.filter((obj1) => {
-          return !temp?.unfilled?.some((obj2) => obj2._id === obj1._id);
-        });
-        temp.filled = reportFilledBy;
-        setData({ ...temp });
-        // saving the initial data so that on clear filter can set it back
-        if (!initialData?.data) {
-          setInitialData({ ...initialData, data: temp });
+              ? [
+                  ...province?.data?.data?.unfilled,
+                  ...maqam?.data?.data?.unfilled,
+                  ...halqa?.data?.data?.unfilled,
+                  ...division?.data?.data?.unfilled,
+                ]
+              : getFilteredHalqas(halqa?.data?.data?.unfilled);
+          temp.totalprovince =
+            province?.data?.data?.totalprovince +
+            maqam?.data?.data?.totalmaqam +
+            halqa?.data?.data?.totalhalqa +
+            division?.data?.data?.totaldivision;
+          const reportFilledBy = temp?.allData?.filter((obj1) => {
+            return !temp?.unfilled?.some((obj2) => obj2._id === obj1._id);
+          });
+          temp.filled = reportFilledBy;
+          // Save data to session storage
+          const storedData = sessionStorage.getItem("storedData");
+          if (!storedData) {
+            sessionStorage.setItem("storedData", JSON.stringify(temp));
+          }
+          setData({ ...temp });
+
+          // saving the initial data so that on clear filter can set it back
+          if (!initialData?.data) {
+            setInitialData({ ...initialData, data: temp });
+          }
+        } catch (error) {
+          console.log(error);
         }
-      } catch (error) {
-        console.log(error);
+      } else {
+        console.log("else");
+        setData(JSON.parse(storedData));
       }
       setLoading(false);
     }
   };
   useEffect(() => {
-    if (me) {
-      getData();
+    const storedData = sessionStorage.getItem("storedData");
+    if (storedData) {
+      setData(JSON.parse(storedData));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  useEffect(() => {
+    // Fetch data only when 'me' is available and initialData is empty
+    getData();
   }, [me]);
-
   const clearFilter = () => {
     // setting back the data from initial state back to the respective sates
     setQuerydate("");
     setUserAreaType("All");
-    setData(initialData?.data);
+    const storedData = sessionStorage.getItem("storedData");
+    if (storedData) {
+      setData(JSON.parse(storedData));
+    }
     setPersonalFilled(initialData?.personalF);
     setPersonalUnfilled(initialData?.personalU);
     setUmeedwars(initialData?.validNazim);
   };
-  const getPsersonalReports = async () => {                                                 
+  const getPsersonalReports = async () => {
     const req = await instance.get(`/umeedwar`, {
       headers: {
         "Content-Type": "application/json",
@@ -220,7 +245,6 @@ export const Dashboard = () => {
     getAreas();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAreaType]);
-
   const getAreaType = (area) => {
     if (area?.parentType === "Maqam") {
       const name = maqams.find((i) => i?._id === area?.parentId?._id);
@@ -248,7 +272,6 @@ export const Dashboard = () => {
       } (${user?.userAreaType})`;
     }
   };
-
   // filter PERSONAL REPORTS
 
   const handlePersonalFilledReports = () => {
@@ -614,7 +637,7 @@ export const Dashboard = () => {
                         <tbody>
                           {toggle === "filled" ? (
                             data?.filled?.length > 0 ? (
-                              data.filled
+                              data?.filled
                                 .filter((i) => !i?.disabled)
                                 .map((obj, index) => (
                                   <tr
@@ -643,7 +666,7 @@ export const Dashboard = () => {
                               </tr>
                             )
                           ) : data?.unfilled?.length > 0 ? (
-                            data.unfilled
+                            data?.unfilled
                               .filter((i) => !i?.disabled)
                               .map((obj, index) => (
                                 <tr
@@ -748,54 +771,52 @@ export const Dashboard = () => {
               <div className=" w-full flex items-center justify-start gap-2 border border-primary p-2 rounded-lg">
                 {show && (
                   <>
-                    {me?.userAreaType !== "Division" ||
-                      (me?.userAreaType !== "Province" && (
-                        <div className="form-control">
-                          <label className="label cursor-pointer gap-2">
-                            <input
-                              type="radio"
-                              name="userAreaType"
-                              className="radio checked:bg-blue-500"
-                              value="Tehsil"
-                              checked={userAreaType === "Tehsil"}
-                              onChange={(e) => setUserAreaType(e.target.value)}
-                            />
-                            <span className="label-text">Division</span>
-                          </label>
-                        </div>
-                      ))}
-                    {me?.userAreaType !== "Maqam" ||
-                      (me?.userAreaType !== "Province" && (
-                        <div className="form-control">
-                          <label className="label cursor-pointer gap-2">
-                            <input
-                              type="radio"
-                              name="userAreaType"
-                              className="radio checked:bg-blue-500"
-                              value="Maqam"
-                              checked={userAreaType === "Maqam"}
-                              onChange={(e) => setUserAreaType(e.target.value)}
-                            />
-                            <span className="label-text">Maqam</span>
-                          </label>
-                        </div>
-                      ))}
-                    {me?.userAreaType === "Province" ||
-                      (me?.userAreaType === "Country" && (
-                        <div className="form-control">
-                          <label className="label cursor-pointer gap-2">
-                            <input
-                              type="radio"
-                              name="userAreaType"
-                              className="radio checked:bg-blue-500"
-                              value="All"
-                              checked={userAreaType === "All"}
-                              onChange={(e) => setUserAreaType(e.target.value)}
-                            />
-                            <span className="label-text">All</span>
-                          </label>
-                        </div>
-                      ))}
+                    {(me?.userAreaType !== "Division" ||
+                      me?.userAreaType !== "maqam") && (
+                      <div className="form-control">
+                        <label className="label cursor-pointer gap-2">
+                          <input
+                            type="radio"
+                            name="userAreaType"
+                            className="radio checked:bg-blue-500"
+                            value="Tehsil"
+                            checked={userAreaType === "Tehsil"}
+                            onChange={(e) => setUserAreaType(e.target.value)}
+                          />
+                          <span className="label-text">Division</span>
+                        </label>
+                      </div>
+                    )}
+                    {(me?.userAreaType !== "Maqam" ||
+                      me?.userAreaType !== "Division") && (
+                      <div className="form-control">
+                        <label className="label cursor-pointer gap-2">
+                          <input
+                            type="radio"
+                            name="userAreaType"
+                            className="radio checked:bg-blue-500"
+                            value="Maqam"
+                            checked={userAreaType === "Maqam"}
+                            onChange={(e) => setUserAreaType(e.target.value)}
+                          />
+                          <span className="label-text">Maqam</span>
+                        </label>
+                      </div>
+                    )}
+
+                    <div className="form-control">
+                      <label className="label cursor-pointer gap-2">
+                        <input
+                          type="radio"
+                          name="userAreaType"
+                          className="radio checked:bg-blue-500"
+                          value="All"
+                          checked={userAreaType === "All"}
+                          onChange={(e) => setUserAreaType(e.target.value)}
+                        />
+                        <span className="label-text">All</span>
+                      </label>
+                    </div>
                   </>
                 )}
                 {!show && (

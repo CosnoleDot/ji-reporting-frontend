@@ -94,18 +94,25 @@ export const DeleteUser = () => {
       return `${area?.name} Of Maqam ${maqam?.name} (${maqam?.province?.name})`;
     } else if (area?.parentType === "Tehsil") {
       const tehsil = tehsils.find((teh) => teh?._id === area?.parentId);
-      return `${area?.name} Of Division ${tehsil?.district?.division?.name} (${tehsil?.district?.division?.province?.name})`;
+      return `Halqa ${area?.name?.toUpperCase()} Of Division ${
+        tehsil?.district?.division?.name
+      } (${tehsil?.district?.division?.province?.name})`;
     } else if (area?.parentType === "Ilaqa") {
       const ilaqa = ilaqas?.find((maq) => maq?._id === area?.parentId);
       return `${area?.name} Of Maqam ${ilaqa?.maqam?.name}`;
     } else if (area?.province) {
       return maqams.find((i) => i?._id === area?._id)
-        ? `Maqam Of ${area?.name} - ${
+        ? `${area?.name} Maqam Of   ${
             maqams.find((i) => i?._id === area?._id).province?.name
           } `
-        : `Division Of ${area?.name}  ${
+        : `${area?.name} Division Of  ${
             divisions.find((i) => i?._id === area?._id).province?.name
           } `;
+    } else if (area?.maqam && !area?.parentType) {
+      console.log(area);
+      const ilaqa = maqams.find((i) => i?._id === area?.maqam);
+      console.log(ilaqa);
+      return `${area?.name} Ilaqa of ${ilaqa?.name} (${ilaqa?.province?.name})`;
     }
     return `Province ${area?.name}`;
   };
@@ -360,12 +367,12 @@ export const DeleteUser = () => {
               <tbody>
                 {data
                   .filter((i) => i?.userAreaId?._id !== me?.userAreaId?._id)
-                  .map((maqam, index) => (
+                  .map((user, index) => (
                     <tr key={index}>
                       <th>{index + 1}</th>
-                      <td>{maqam?.name || "-"}</td>
+                      <td>{user?.name || "-"}</td>
                       <td className="min-w-[10rem]">
-                        {maqam?.nazimType
+                        {user?.nazimType
                           ?.replace(/-/g, " ") // Replace hyphens with spaces
                           .split(" ") // Split the string into an array of words
                           .map(
@@ -376,10 +383,10 @@ export const DeleteUser = () => {
                           "-"}
                       </td>
 
-                      <td>{maqam?.email || "-"}</td>
-                      <td>{`${getAreaTypeWithoutName(maqam?.userAreaId)}`}</td>
+                      <td>{user?.email || "-"}</td>
+                      <td>{`${getAreaTypeWithoutName(user?.userAreaId)}`}</td>
                       <td>
-                        {maqam?.isDeleted ? (
+                        {user?.isDeleted ? (
                           <div className="badge badge-error">inActive</div>
                         ) : (
                           <div className="badge badge-accent">active</div>
@@ -388,16 +395,16 @@ export const DeleteUser = () => {
                       <td className="flex row justify-center items-center gap-3">
                         <div className="flex justify-center items-center">
                           <Link
-                            to={`/reports?active=${maqam?.userAreaType?.toLowerCase()}${
-                              maqam?.userAreaId?.parentType
+                            to={`/reports?active=${user?.userAreaType?.toLowerCase()}${
+                              user?.userAreaId?.parentType
                                 ? `&tab=${
-                                    maqam?.userAreaId?.parentType?.toLowerCase() ===
+                                    user?.userAreaId?.parentType?.toLowerCase() ===
                                     "maqam"
                                       ? "maqam"
                                       : "division"
                                   }`
                                 : ""
-                            }&areaId=${maqam?.userAreaId?._id}`}
+                            }&areaId=${user?.userAreaId?._id}`}
                             readOnly={loading}
                             className="btn"
                           >
@@ -410,7 +417,7 @@ export const DeleteUser = () => {
                               document
                                 .getElementById("view-details-modal")
                                 .showModal();
-                              setSingleUser(maqam);
+                              setSingleUser(user);
                             }}
                             readOnly={loading}
                             className="btn"
@@ -423,17 +430,17 @@ export const DeleteUser = () => {
                             readOnly={loading}
                             className="btn"
                             onClick={() => {
-                              if (!maqam.isDeleted) {
-                                deleteUser(maqam);
+                              if (!user.isDeleted) {
+                                deleteUser(user);
                               } else {
                                 document
                                   .getElementById("change-status-modal")
                                   .showModal();
-                                setSingleUser(maqam);
+                                setSingleUser(user);
                               }
                             }}
                           >
-                            {maqam?.isDeleted ? (
+                            {user?.isDeleted ? (
                               <RiDeviceRecoverFill />
                             ) : (
                               <FaTrash />
@@ -444,13 +451,13 @@ export const DeleteUser = () => {
                           <div className="flex justify-center items-center">
                             <button
                               readOnly={loading}
-                              disabled={maqam?.isDeleted}
+                              disabled={user?.isDeleted}
                               className="btn"
                               onClick={() => {
                                 document
                                   .getElementById("change-status-modal")
                                   .showModal();
-                                setSingleUser(maqam);
+                                setSingleUser(user);
                               }}
                             >
                               <MdOutlineUpgrade />
@@ -1378,10 +1385,9 @@ export const DeleteUser = () => {
                             document.getElementById("autocomplete0").value = `${
                               area?.name
                             }${
-                              userAreaType === "Halqa" ||
-                              userAreaType === "Ilaqa"
+                              userAreaType === "Halqa"
                                 ? ` - ${area?.parentId?.name} (${area?.parentType})`
-                                : ""
+                                : `${area?.maqam?.name} - (${area?.maqam?.province?.name})`
                             }`;
                             document
                               .getElementById("autocomplete0-list")
@@ -1389,10 +1395,12 @@ export const DeleteUser = () => {
                           }}
                           className="p-2 cursor-pointer hover:bg-gray-100"
                         >
-                          {userAreaType === "Halqa" || userAreaType === "Ilaqa"
+                          {userAreaType === "Halqa"
                             ? `${getAreaType(area)}`
                             : `${area?.name} ${
-                                area?.province?.name ? area?.province?.name : ""
+                                area?.province?.name
+                                  ? area?.province?.name
+                                  : `${area?.maqam?.name} - (${area?.maqam?.province?.name})`
                               }`}
                         </div>
                       ))}
