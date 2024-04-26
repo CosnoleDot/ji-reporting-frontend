@@ -8,6 +8,10 @@ import { UIContext } from "../context/ui";
 
 export const BottomNav = ({ active }) => {
   const { isCompleted } = useContext(UIContext);
+  const user = localStorage.getItem("@type");
+  // const route = {
+  //   division: "/locations?active=division&view=halqa",
+  // };
   return (
     <div className="btm-nav border-none text-gray-300">
       <Link

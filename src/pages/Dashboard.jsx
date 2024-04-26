@@ -81,10 +81,7 @@ export const Dashboard = () => {
       handlePersonalFilledReports();
     } else {
       const storedData = sessionStorage.getItem("storedData");
-      console.log(storedData, "stored");
-      console.log(queryDate !== "", !storedData);
       if (queryDate !== "" || !storedData) {
-        console.log("in  if");
         setLoading(true);
         try {
           const getUnfilledReports = async (path) => {
@@ -173,7 +170,6 @@ export const Dashboard = () => {
           console.log(error);
         }
       } else {
-        console.log("else");
         setData(JSON.parse(storedData));
       }
       setLoading(false);
@@ -241,9 +237,7 @@ export const Dashboard = () => {
         break;
     }
   };
-  useEffect(() => {
-    console.log(maqams);
-  }, [maqams]);
+
   useEffect(() => {
     getAreas();
     // eslint-disable-next-line react-hooks/exhaustive-deps

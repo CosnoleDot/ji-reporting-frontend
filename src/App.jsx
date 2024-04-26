@@ -320,8 +320,12 @@ function App() {
                 const validMaqamHalqas =
                   i?.parentId?.maqam?.province?._id === me?.userAreaId?._id ||
                   i?.parentId?.province?._id === me?.userAreaId?._id;
-                console.log(districts);
-                const validDistrictsId = dis?.map((i) => i?._id?.toString());
+                let validDistrictsId;
+                if (dis?.length > 0) {
+                  validDistrictsId = dis?.map((i) => i?._id?.toString());
+                } else {
+                  validDistrictsId = districts?.map((i) => i?._id?.toString());
+                }
                 if (validDistrictsId) {
                   // Check if the parent type is "Tehsil" or "division" and the district matches one of the valid districts
                   const isParentValid =
@@ -361,8 +365,12 @@ function App() {
           );
           setHalqas(validHalqas);
         } else if (type === "division") {
-          const validDistrictsId = dis.map((i) => i?._id?.toString());
-
+          let validDistrictsId;
+          if (dis?.length > 0) {
+            validDistrictsId = dis?.map((i) => i?._id?.toString());
+          } else {
+            validDistrictsId = districts?.map((i) => i?._id?.toString());
+          }
           const validHalqas = enabledHalqas.filter((halqa) => {
             // Check if the parent type is "Tehsil" or "division" and the district matches one of the valid districts
             const isParentValid =
