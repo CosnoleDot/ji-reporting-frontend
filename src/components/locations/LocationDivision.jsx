@@ -12,6 +12,7 @@ import { Link, useLocation } from "react-router-dom";
 import instance from "../../api/instrance";
 import { FaEdit } from "react-icons/fa";
 import { UIContext } from "../../context/ui";
+import { Loader } from "../Loader";
 
 export const LocationDivision = () => {
   const provinces = useContext(ProvinceContext);
@@ -71,6 +72,7 @@ export const LocationDivision = () => {
         }
       }
     };
+    console.log("2nd");
 
     // Call the function when the component mounts or when the location changes
     getQueryParams();
@@ -289,9 +291,6 @@ export const LocationDivision = () => {
     }
     setLoading(false);
   };
-  useEffect(() => {
-    setFilteredData(halqas);
-  }, [halqas]);
   const handleSearch = (value) => {
     if (view === "halqa") {
       const filteredHalqa = halqas
@@ -511,46 +510,54 @@ export const LocationDivision = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredData.map((tehsil, index) => (
-                <tr
-                  key={index}
-                  className="flex w-full justify-between items-start"
-                >
-                  <th>{index + 1}</th>
-                  <td className="w-full text-start">{tehsil?.name}</td>
-                  <td className="w-full text-start">{` ${
-                    tehsil?.district?.name
-                  }( District  of ${
-                    tehsil?.district?.division?.name
-                      ? tehsil?.district?.division?.name
-                      : tehsil?.parentId?.name
-                  }) (${tehsil?.district?.division?.province?.name})`}</td>
-                  <td className="flex w-full justify-center items-center gap-4">
-                    <button
-                      onClick={() => {
-                        setEditMode(true);
-                        setId(tehsil?._id);
-                        document.getElementById("add_tehsil_modal").showModal();
-                        setFormTehsil({
-                          district: tehsil?.district?._id || "",
-                          name: tehsil?.name || "",
-                        });
-                      }}
-                      className="btn"
-                    >
-                      <FaEdit />
-                    </button>
-                    <input
-                      type="checkbox"
-                      className="toggle toggle-error"
-                      defaultChecked={tehsil?.disabled}
-                      onChange={() => {
-                        handleDisable(tehsil?._id, !tehsil?.disabled);
-                      }}
-                    />
-                  </td>
-                </tr>
-              ))}
+              {filteredData.length > 1 ? (
+                filteredData?.map((tehsil, index) => (
+                  <tr
+                    key={index}
+                    className="flex w-full justify-between items-start"
+                  >
+                    <th>{index + 1}</th>
+                    <td className="w-full text-start">{tehsil?.name}</td>
+                    <td className="w-full text-start">{` ${
+                      tehsil?.district?.name
+                    }( District  of ${
+                      tehsil?.district?.division?.name
+                        ? tehsil?.district?.division?.name
+                        : tehsil?.parentId?.name
+                    }) (${tehsil?.district?.division?.province?.name})`}</td>
+                    <td className="flex w-full justify-center items-center gap-4">
+                      <button
+                        onClick={() => {
+                          setEditMode(true);
+                          setId(tehsil?._id);
+                          document
+                            .getElementById("add_tehsil_modal")
+                            .showModal();
+                          setFormTehsil({
+                            district: tehsil?.district?._id || "",
+                            name: tehsil?.name || "",
+                          });
+                        }}
+                        className="btn"
+                      >
+                        <FaEdit />
+                      </button>
+                      <input
+                        type="checkbox"
+                        className="toggle toggle-error"
+                        defaultChecked={tehsil?.disabled}
+                        onChange={() => {
+                          handleDisable(tehsil?._id, !tehsil?.disabled);
+                        }}
+                      />
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <div>
+                  <Loader />
+                </div>
+              )}
             </tbody>
           </table>
         </div>
@@ -625,65 +632,71 @@ export const LocationDivision = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredData
-                .filter(
-                  (i) =>
-                    i?.parentType === "Tehsil" || i?.parentType === "Division"
-                )
-                .map((halqa, index) => (
-                  <tr
-                    key={index}
-                    className="flex w-full justify-between items-start"
-                  >
-                    <th>{index + 1}</th>
-                    <td className="w-full">{halqa?.name}</td>
-                    <td className="w-full">{`${halqa?.parentType} ${
-                      halqa?.parentId?.name.toUpperCase() || "-"
-                    } of ${
-                      halqa?.parentType !== "Division"
-                        ? `Division ${
-                            halqa?.parentId?.district?.division?.name ||
-                            halqa?.parentId?.name ||
-                            "-"
-                          } (${
-                            halqa?.parentId?.district?.division?.province
-                              ?.name ||
-                            halqa?.parentId?.province?.name ||
-                            "-"
-                          })`
-                        : `(${halqa?.parentId?.province?.name})`
-                    }`}</td>
+              {filteredData.length > 1 ? (
+                filteredData
+                  ?.filter(
+                    (i) =>
+                      i?.parentType === "Tehsil" || i?.parentType === "Division"
+                  )
+                  .map((halqa, index) => (
+                    <tr
+                      key={index}
+                      className="flex w-full justify-between items-start"
+                    >
+                      <th>{index + 1}</th>
+                      <td className="w-full">{halqa?.name}</td>
+                      <td className="w-full">{`${halqa?.parentType} ${
+                        halqa?.parentId?.name.toUpperCase() || "-"
+                      } of ${
+                        halqa?.parentType !== "Division"
+                          ? `Division ${
+                              halqa?.parentId?.district?.division?.name ||
+                              halqa?.parentId?.name ||
+                              "-"
+                            } (${
+                              halqa?.parentId?.district?.division?.province
+                                ?.name ||
+                              halqa?.parentId?.province?.name ||
+                              "-"
+                            })`
+                          : `(${halqa?.parentId?.province?.name})`
+                      }`}</td>
 
-                    <td className="flex w-full justify-center items-center gap-4">
-                      <button
-                        onClick={() => {
-                          setEditMode(true);
-                          setId(halqa?._id);
-                          document
-                            .getElementById("add_halqa_modal")
-                            .showModal();
-                          setFormHalqa({
-                            parentId: halqa?.parentId?._id || "",
-                            name: halqa?.name || "",
-                            parentType: halqa?.parentType || "",
-                            unitType: halqa?.unitType || "",
-                          });
-                        }}
-                        className="btn"
-                      >
-                        <FaEdit />
-                      </button>
-                      <input
-                        type="checkbox"
-                        className="toggle toggle-error"
-                        defaultChecked={halqa?.disabled}
-                        onChange={() => {
-                          handleDisable(halqa?._id, halqa?.disabled);
-                        }}
-                      />
-                    </td>
-                  </tr>
-                ))}
+                      <td className="flex w-full justify-center items-center gap-4">
+                        <button
+                          onClick={() => {
+                            setEditMode(true);
+                            setId(halqa?._id);
+                            document
+                              .getElementById("add_halqa_modal")
+                              .showModal();
+                            setFormHalqa({
+                              parentId: halqa?.parentId?._id || "",
+                              name: halqa?.name || "",
+                              parentType: halqa?.parentType || "",
+                              unitType: halqa?.unitType || "",
+                            });
+                          }}
+                          className="btn"
+                        >
+                          <FaEdit />
+                        </button>
+                        <input
+                          type="checkbox"
+                          className="toggle toggle-error"
+                          defaultChecked={halqa?.disabled}
+                          onChange={() => {
+                            handleDisable(halqa?._id, halqa?.disabled);
+                          }}
+                        />
+                      </td>
+                    </tr>
+                  ))
+              ) : (
+                <div>
+                  <Loader />
+                </div>
+              )}
             </tbody>
           </table>
         </div>

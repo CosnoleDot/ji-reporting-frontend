@@ -10,6 +10,7 @@ import { Link, useLocation } from "react-router-dom";
 import instance from "../../api/instrance";
 import { FaEdit } from "react-icons/fa";
 import { UIContext } from "../../context/ui";
+import { Loader } from "../Loader";
 export const LocationMaqam = () => {
   const provinces = useContext(ProvinceContext);
   const maqams = useContext(MaqamContext);
@@ -262,7 +263,9 @@ export const LocationMaqam = () => {
     <>
       <div
         className={`p-2 grid ${
-          ["province"].includes(localStorage.getItem("@type"))
+          ["province", "country", "division", "maqam"].includes(
+            localStorage.getItem("@type")
+          )
             ? "grid-cols-2"
             : "grid-cols-1"
         }`}
@@ -378,43 +381,51 @@ export const LocationMaqam = () => {
               </tr>
             </thead>
             <tbody className="mt-5">
-              {filteredData.map((maqam, index) => (
-                <tr
-                  key={index}
-                  className="flex w-full justify-between items-start"
-                >
-                  <th>{index + 1}</th>
-                  <td className="w-full text-start">{maqam?.name}</td>
-                  <td className="w-full text-center">
-                    {maqam?.province?.name || "-"}
-                  </td>
-                  <td className="flex  w-full justify-center items-center gap-4">
-                    <button
-                      disabled={loading}
-                      onClick={() => {
-                        setEditMode(true);
-                        setId(maqam?._id);
-                        document.getElementById("add_maqam_modal").showModal();
-                        setForm({
-                          province: maqam?.province?._id || "",
-                          name: maqam?.name || "",
-                        });
-                      }}
-                      className="btn"
-                    >
-                      <FaEdit />
-                    </button>
-                    <input
-                      type="checkbox"
-                      className="toggle toggle-error"
-                      defaultChecked={maqam?.disabled}
-                      onChange={() => {
-                        handleDisable(maqam?._id, !maqam?.disabled);
-                      }}
-                    />
-                  </td>
-                </tr>
-              ))}
+              {filteredData.length > 1 ? (
+                filteredData?.map((maqam, index) => (
+                  <tr
+                    key={index}
+                    className="flex w-full justify-between items-start"
+                  >
+                    <th>{index + 1}</th>
+                    <td className="w-full text-start">{maqam?.name}</td>
+                    <td className="w-full text-center">
+                      {maqam?.province?.name || "-"}
+                    </td>
+                    <td className="flex  w-full justify-center items-center gap-4">
+                      <button
+                        disabled={loading}
+                        onClick={() => {
+                          setEditMode(true);
+                          setId(maqam?._id);
+                          document
+                            .getElementById("add_maqam_modal")
+                            .showModal();
+                          setForm({
+                            province: maqam?.province?._id || "",
+                            name: maqam?.name || "",
+                          });
+                        }}
+                        className="btn"
+                      >
+                        <FaEdit />
+                      </button>
+                      <input
+                        type="checkbox"
+                        className="toggle toggle-error"
+                        defaultChecked={maqam?.disabled}
+                        onChange={() => {
+                          handleDisable(maqam?._id, !maqam?.disabled);
+                        }}
+                      />
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <div>
+                  <Loader />
+                </div>
+              )}
             </tbody>
           </table>
         </div>
@@ -431,44 +442,52 @@ export const LocationMaqam = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredData?.map((ilaqa, index) => (
-                <tr
-                  key={index}
-                  className="flex w-full justify-between items-start"
-                >
-                  <th>{index + 1}</th>
-                  <td className="w-full text-start">{ilaqa?.name}</td>
-                  <td className="w-full text-start">
-                    Maqam Of {ilaqa?.maqam?.name || "-"} ({" "}
-                    {ilaqa?.maqam?.province?.name})
-                  </td>
-                  <td className="flex  w-full justify-center items-center gap-4">
-                    <button
-                      disabled={loading}
-                      onClick={() => {
-                        setEditMode(true);
-                        setId(ilaqa?._id);
-                        document.getElementById("add_ilaqa_modal").showModal();
-                        setIlaqaForm({
-                          maqam: ilaqa?.maqam?._id || "",
-                          name: ilaqa?.name,
-                        });
-                      }}
-                      className="btn"
-                    >
-                      <FaEdit />
-                    </button>
-                    <input
-                      type="checkbox"
-                      className="toggle toggle-error"
-                      defaultChecked={ilaqa?.disabled}
-                      onChange={() => {
-                        handleDisable(ilaqa?._id, !ilaqa?.disabled);
-                      }}
-                    />
-                  </td>
-                </tr>
-              ))}
+              {filteredData.length > 1 ? (
+                filteredData?.map((ilaqa, index) => (
+                  <tr
+                    key={index}
+                    className="flex w-full justify-between items-start"
+                  >
+                    <th>{index + 1}</th>
+                    <td className="w-full text-start">{ilaqa?.name}</td>
+                    <td className="w-full text-start">
+                      Maqam Of {ilaqa?.maqam?.name || "-"} ({" "}
+                      {ilaqa?.maqam?.province?.name})
+                    </td>
+                    <td className="flex  w-full justify-center items-center gap-4">
+                      <button
+                        disabled={loading}
+                        onClick={() => {
+                          setEditMode(true);
+                          setId(ilaqa?._id);
+                          document
+                            .getElementById("add_ilaqa_modal")
+                            .showModal();
+                          setIlaqaForm({
+                            maqam: ilaqa?.maqam?._id || "",
+                            name: ilaqa?.name,
+                          });
+                        }}
+                        className="btn"
+                      >
+                        <FaEdit />
+                      </button>
+                      <input
+                        type="checkbox"
+                        className="toggle toggle-error"
+                        defaultChecked={ilaqa?.disabled}
+                        onChange={() => {
+                          handleDisable(ilaqa?._id, !ilaqa?.disabled);
+                        }}
+                      />
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <div>
+                  <Loader />
+                </div>
+              )}
             </tbody>
           </table>
         </div>
@@ -485,58 +504,65 @@ export const LocationMaqam = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredData
-                .filter(
-                  (i) => i?.parentType === "Maqam" || i?.parentType === "Ilaqa"
-                )
-                .map((halqa, index) => (
-                  <tr
-                    key={index}
-                    className="flex w-full justify-between items-start"
-                  >
-                    <th>{index + 1}</th>
-                    <td className="w-full text-start">{halqa?.name}</td>
-                    <td className="w-full text-start">{`Halqa of ${
-                      halqa?.parentType
-                    }  ${
-                      halqa?.parentId?.ilaqa?.name
-                        ? halqa?.parentId?.ilaqa?.name
-                        : halqa?.parentId?.name
-                    } (${
-                      halqa?.parentId?.maqam?.province?.name
-                        ? halqa?.parentId?.maqam?.province?.name
-                        : halqa?.parentId?.province?.name
-                    })`}</td>
-                    <td className="flex w-full justify-center  items-center gap-4">
-                      <button
-                        disabled={loading}
-                        onClick={() => {
-                          setEditMode(true);
-                          setId(halqa?._id);
-                          document
-                            .getElementById("add_halqa_modal")
-                            .showModal();
-                          setFormHalqa({
-                            parentId: halqa?.parentId?._id || "",
-                            name: halqa?.name || "",
-                            parentType: isIlaqa ? "Ilaqa" : "Maqam",
-                          });
-                        }}
-                        className="btn"
-                      >
-                        <FaEdit />
-                      </button>
-                      <input
-                        type="checkbox"
-                        className="toggle toggle-error"
-                        defaultChecked={halqa?.disabled}
-                        onChange={() => {
-                          handleDisable(halqa?._id, !halqa?.disabled);
-                        }}
-                      />
-                    </td>
-                  </tr>
-                ))}
+              {filteredData.length > 1 ? (
+                filteredData
+                  ?.filter(
+                    (i) =>
+                      i?.parentType === "Maqam" || i?.parentType === "Ilaqa"
+                  )
+                  .map((halqa, index) => (
+                    <tr
+                      key={index}
+                      className="flex w-full justify-between items-start"
+                    >
+                      <th>{index + 1}</th>
+                      <td className="w-full text-start">{halqa?.name}</td>
+                      <td className="w-full text-start">{`Halqa of ${
+                        halqa?.parentType
+                      }  ${
+                        halqa?.parentId?.ilaqa?.name
+                          ? halqa?.parentId?.ilaqa?.name
+                          : halqa?.parentId?.name
+                      } (${
+                        halqa?.parentId?.maqam?.province?.name
+                          ? halqa?.parentId?.maqam?.province?.name
+                          : halqa?.parentId?.province?.name
+                      })`}</td>
+                      <td className="flex w-full justify-center  items-center gap-4">
+                        <button
+                          disabled={loading}
+                          onClick={() => {
+                            setEditMode(true);
+                            setId(halqa?._id);
+                            document
+                              .getElementById("add_halqa_modal")
+                              .showModal();
+                            setFormHalqa({
+                              parentId: halqa?.parentId?._id || "",
+                              name: halqa?.name || "",
+                              parentType: isIlaqa ? "Ilaqa" : "Maqam",
+                            });
+                          }}
+                          className="btn"
+                        >
+                          <FaEdit />
+                        </button>
+                        <input
+                          type="checkbox"
+                          className="toggle toggle-error"
+                          defaultChecked={halqa?.disabled}
+                          onChange={() => {
+                            handleDisable(halqa?._id, !halqa?.disabled);
+                          }}
+                        />
+                      </td>
+                    </tr>
+                  ))
+              ) : (
+                <div>
+                  <Loader />
+                </div>
+              )}
             </tbody>
           </table>
         </div>

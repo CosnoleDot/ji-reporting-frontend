@@ -1,11 +1,5 @@
-import { useContext, useEffect, useState } from "react";
-import {
-  HalqaContext,
-  IlaqaContext,
-  MaqamContext,
-  ProvinceContext,
-  useToastState,
-} from "../../context";
+import { useContext, useState } from "react";
+import { ProvinceContext, useToastState } from "../../context";
 import { Link, useLocation } from "react-router-dom";
 import instance from "../../api/instrance";
 import { FaEdit } from "react-icons/fa";
@@ -13,43 +7,16 @@ import { UIContext } from "../../context/ui";
 
 export const LocationCountry = () => {
   const provinces = useContext(ProvinceContext);
-  const maqams = useContext(MaqamContext);
-  const halqas = useContext(HalqaContext);
-  const ilaqas = useContext(IlaqaContext);
-  const { getHalqas, getMaqams, setLoading, loading, getIlaqas } =
-    useContext(UIContext);
+  const { setLoading, loading } = useContext(UIContext);
   const [editMode, setEditMode] = useState(false);
   const [id, setId] = useState("");
   const { dispatch } = useToastState();
-  const [view, setView] = useState(
-    ["province"].includes(localStorage.getItem("@type")) ? "maqam" : "halqa"
-  );
-  const params = useLocation();
-  useEffect(() => {
-    // Function to parse query parameters
-    const getQueryParams = () => {
-      const searchParams = new URLSearchParams(params.search);
-      const queryParams = {};
 
-      for (let [key, value] of searchParams.entries()) {
-        queryParams[key] = value;
-      }
-
-      if (queryParams.view) setView(queryParams.view);
-    };
-
-    // Call the function when the component mounts or when the location changes
-    getQueryParams();
-  }, [params]);
   const [form, setForm] = useState({
     name: "",
-    province: "",
+    country: "Pakistan",
   });
-  const [formHalqa, setFormHalqa] = useState({
-    name: "",
-    parentId: "",
-    parentType: "Maqam",
-  });
+
   const handleSubmit = async () => {
     setLoading(true);
     try {
@@ -64,28 +31,6 @@ export const LocationCountry = () => {
         name: "",
         province: "",
       });
-      await getMaqams();
-    } catch (err) {
-      dispatch({ type: "ERROR", payload: err.response.data.message });
-    }
-    setLoading(false);
-  };
-  const handleSubmitHalqa = async () => {
-    setLoading(true);
-    try {
-      const req = await instance.post("/locations/halqa", formHalqa, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("@token")}`,
-          "Content-Type": "application/json",
-        },
-      });
-      await getHalqas();
-      dispatch({ type: "SUCCESS", payload: req.data?.message });
-      setFormHalqa({
-        name: "",
-        parentId: "",
-        parentType: "Maqam",
-      });
     } catch (err) {
       dispatch({ type: "ERROR", payload: err.response.data.message });
     }
@@ -94,40 +39,24 @@ export const LocationCountry = () => {
   const handleSubmitEdit = async () => {
     setLoading(true);
     try {
-      const req = await instance.put("/locations/maqam/" + id, form, {
+      const req = await instance.put("/locations/province/" + id, form, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("@token")}`,
           "Content-Type": "application/json",
         },
       });
-      await getMaqams();
       dispatch({ type: "SUCCESS", payload: req.data?.message });
     } catch (err) {
       dispatch({ type: "ERROR", payload: err.response.data.message });
     }
     setLoading(false);
   };
-  const handleSubmitHalqaEdit = async () => {
-    setLoading(true);
-    try {
-      const req = await instance.put("/locations/halqa/" + id, formHalqa, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("@token")}`,
-          "Content-Type": "application/json",
-        },
-      });
-      await getHalqas();
-      dispatch({ type: "SUCCESS", payload: req.data?.message });
-    } catch (err) {
-      dispatch({ type: "ERROR", payload: err.response.data.message });
-    }
-    setLoading(false);
-  };
+
   const handleDisable = async (id, disabled) => {
     setLoading(true);
     try {
       await instance.patch(
-        `/locations/${view}/disable-location/${id}`,
+        `/locations/province/disable-location/${id}`,
         { disabled },
         {
           headers: {
@@ -135,21 +64,9 @@ export const LocationCountry = () => {
           },
         }
       );
-      switch (view) {
-        case "halqa":
-          getHalqas();
-          break;
-        case "maqam":
-          getMaqams();
-          break;
-        case "ilaqa":
-          getIlaqas();
-          break;
-        default:
-          break;
-      }
     } catch (err) {
-      // dispatch({ type: 'ERROR', payload: err.response.data.message });
+      console.log(err);
+      dispatch({ type: "ERROR", payload: err.response.data.message });
     }
     setLoading(false);
   };
@@ -176,7 +93,7 @@ export const LocationCountry = () => {
                     onClick={() => {
                       setEditMode(true);
                       setId(province?._id);
-                      document.getElementById("add_maqam_modal").showModal();
+                      document.getElementById("add_province_modal").showModal();
                       setForm({
                         country: province?.province?._id || "",
                         name: province?.name || "",
@@ -203,39 +120,16 @@ export const LocationCountry = () => {
 
       <dialog id="add_province_modal" className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Add Maqam</h3>
+          <h3 className="font-bold text-lg">Add Province</h3>
           <div className="space-y-4">
             <div>
               <label className="label">
                 <span className="text-base label-text">Province</span>
               </label>
-              <select
-                name="province"
-                required
-                value={form.province}
-                onChange={(e) => setForm({ ...form, province: e.target.value })}
-                className="w-full input input-bordered input-primary"
-              >
-                <option value="" disabled>
-                  Select Province
-                </option>
-                {provinces
-                  .filter((i) => !i?.disabled)
-                  .map((i, index) => (
-                    <option value={i?._id} key={index}>
-                      {i?.name}
-                    </option>
-                  ))}
-              </select>
-            </div>
-            <div>
-              <label className="label">
-                <span className="text-base label-text">Maqam</span>
-              </label>
               <input
                 name="name"
                 type="text"
-                placeholder="Enter Maqam Name"
+                placeholder="Enter Province Name"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
                 className="w-full input input-bordered input-primary"
@@ -261,7 +155,7 @@ export const LocationCountry = () => {
               {/* if there is a button in form, it will close the modal */}
               <button
                 disabled={loading}
-                id="close-maqam-modal"
+                id="close-province-modal"
                 className="btn ms-3"
               >
                 Close
