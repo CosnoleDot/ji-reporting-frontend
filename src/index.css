@@ -3803,6 +3803,10 @@ html {
   max-width: 10rem;
 }
 
+.max-w-full {
+  max-width: 100%;
+}
+
 .max-w-xs {
   max-width: 20rem;
 }
@@ -4596,6 +4600,11 @@ html {
 .checked\:bg-blue-500:checked {
   --tw-bg-opacity: 1;
   background-color: rgb(59 130 246 / var(--tw-bg-opacity));
+}
+
+.checked\:bg-red-500:checked {
+  --tw-bg-opacity: 1;
+  background-color: rgb(239 68 68 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-\[\#aaa\]:hover {

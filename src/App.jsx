@@ -304,30 +304,42 @@ function App() {
         } else if (type === "province") {
           setHalqas(
             enabledHalqas.filter((i) => {
-              if (i?.parentType === "Maqam") {
+              if (
+                i?.parentType === "Maqam" ||
+                i?.parentType === "Ilaqa" ||
+                i?.parentType === "Division" ||
+                i?.parentType === "Tehsil"
+              ) {
+                const validMaqamHalqas =
+                  i?.parentId?.maqam?.province?._id === me?.userAreaId?._id ||
+                  i?.parentId?.province?._id === me?.userAreaId?._id;
+
+                const validDistrictsId = dis.map((i) => i?._id?.toString());
+
+                // Check if the parent type is "Tehsil" or "division" and the district matches one of the valid districts
+                const isParentValid =
+                  (i.parentType === "Tehsil" || i.parentType === "division") &&
+                  validDistrictsId.includes(
+                    i.parentId.district?._id?.toString()
+                  );
+                const isDivisionParentValid =
+                  i.parentType === "division" &&
+                  i.parentId._id.toString() === me?.userAreaId?._id?.toString();
+
+                // Return true if any of the conditions are met
                 return (
-                  i?.parentId?._id === me?.userAreaId?._id ||
-                  i?.parentId?.province?._id === me?.userAreaId?._id
-                );
-              }
-              if (i?.parentType === "Division") {
-                return i?.parentId?._id === me?.userAreaId?._id;
-              } else {
-                const validDistricts = dis.map((i) => i?._id?.toString());
-                return validDistricts.includes(
-                  i?.parentId?.district?._id.toString()
+                  isParentValid || isDivisionParentValid || validMaqamHalqas
                 );
               }
             })
           );
         } else if (type === "maqam") {
           const validHalqas = enabledHalqas.filter((i) => {
-            if (
-              i?.parentType === "Maqam" ||
-              i?.parentType === "Division" ||
-              i?.parentType === "Ilaqa"
-            ) {
-              return i?.parentId?.maqam?._id === me?.userAreaId?._id;
+            if (i?.parentType === "Maqam" || i?.parentType === "Ilaqa") {
+              return (
+                i?.parentId?._id === me?.userAreaId?._id ||
+                i?.parentId?.maqam?._id === me?.userAreaId?._id
+              );
             }
           });
           setHalqas(validHalqas);
@@ -339,12 +351,24 @@ function App() {
           );
           setHalqas(validHalqas);
         } else if (type === "division") {
-          const validDistricts = dis.map((i) => i?._id?.toString());
-          const validHalqas = enabledHalqas.filter(
-            (i) =>
-              i?.parentType === "Tehsil" &&
-              validDistricts.includes(i?.parentId?.district?.toString())
-          );
+          const validDistrictsId = dis.map((i) => i?._id?.toString());
+
+          const validHalqas = enabledHalqas.filter((halqa) => {
+            // Check if the parent type is "Tehsil" or "division" and the district matches one of the valid districts
+            const isParentValid =
+              (halqa.parentType === "Tehsil" ||
+                halqa.parentType === "division") &&
+              validDistrictsId.includes(
+                halqa.parentId.district?._id?.toString()
+              );
+            const isDivisionParentValid =
+              halqa.parentType === "division" &&
+              halqa.parentId._id.toString() === me?.userAreaId?._id?.toString();
+
+            // Return true if any of the conditions are met
+            return isParentValid || isDivisionParentValid;
+          });
+
           setHalqas(validHalqas);
         } else {
           const validHalqas = enabledHalqas.filter(
@@ -651,6 +675,7 @@ function App() {
                                 getDistricts,
                                 getTehsils,
                                 getHalqas,
+                                getIlaqas,
                                 getProvinceReports,
                                 getMaqamReports,
                                 getDivisionReports,
