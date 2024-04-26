@@ -10,8 +10,6 @@ import { Link, useLocation } from "react-router-dom";
 import instance from "../../api/instrance";
 import { FaEdit } from "react-icons/fa";
 import { UIContext } from "../../context/ui";
-import { Loader } from "../Loader";
-
 export const LocationMaqam = () => {
   const provinces = useContext(ProvinceContext);
   const maqams = useContext(MaqamContext);
@@ -38,7 +36,7 @@ export const LocationMaqam = () => {
       setView(queryParams.view || "halqa");
       if (
         queryParams.hasOwnProperty !== "halqa" &&
-        Object.keys(queryParams).length == 1
+        Object.keys(queryParams).length === 1
       ) {
         setFilteredData(halqas);
       } else {
@@ -59,6 +57,7 @@ export const LocationMaqam = () => {
 
     // Call the function when the component mounts or when the location changes
     getQueryParams();
+    // eslint-disable-next-line
   }, [params, view, halqas, maqams, ilaqas]);
 
   const [form, setForm] = useState({

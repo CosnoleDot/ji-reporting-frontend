@@ -22,8 +22,14 @@ export const LocationDivision = () => {
   const districts = useContext(DistrictContext);
   const [filteredData, setFilteredData] = useState(halqas);
   const [isDivision, setIsDivision] = useState(false);
-  const { getHalqas, getDivisions, getDistricts, getTehsils, loading } =
-    useContext(UIContext);
+  const {
+    getHalqas,
+    getDivisions,
+    getDistricts,
+    getTehsils,
+    loading,
+    setLoading,
+  } = useContext(UIContext);
   const [editMode, setEditMode] = useState(false);
   const [id, setId] = useState("");
   const { dispatch } = useToastState();
@@ -44,7 +50,7 @@ export const LocationDivision = () => {
       }
       if (
         queryParams.hasOwnProperty !== "halqa" &&
-        Object.keys(queryParams).length == 1
+        Object.keys(queryParams).length === 1
       ) {
         setFilteredData(halqas);
       } else {
@@ -68,7 +74,7 @@ export const LocationDivision = () => {
 
     // Call the function when the component mounts or when the location changes
     getQueryParams();
-  }, [params, view]);
+  }, [params, view, districts, divisions, halqas, tehsils]);
   const [form, setForm] = useState({
     name: "",
     province: "",
@@ -88,6 +94,7 @@ export const LocationDivision = () => {
     unitType: "",
   });
 
+  // *****************Division***********************
   const handleSubmit = async () => {
     try {
       const req = await instance.post("/locations/division", form, {
@@ -106,6 +113,25 @@ export const LocationDivision = () => {
       dispatch({ type: "ERROR", payload: err.response.data.message });
     }
   };
+  const handleSubmitEdit = async () => {
+    setLoading(true);
+    try {
+      const req = await instance.put("/locations/division/" + id, form, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          "Content-Type": "application/json",
+        },
+      });
+      await getDivisions();
+      dispatch({ type: "SUCCESS", payload: req.data?.message });
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+      dispatch({ type: "ERROR", payload: err.response.data.message });
+    }
+    setLoading(false);
+  };
+  // *********************District**************************
   const handleSubmitDistrict = async () => {
     try {
       const req = await instance.post("/locations/district", formDistrict, {
@@ -124,6 +150,28 @@ export const LocationDivision = () => {
       dispatch({ type: "ERROR", payload: err.response.data.message });
     }
   };
+  const handleSubmitDistrictEdit = async () => {
+    setLoading(true);
+    try {
+      const req = await instance.put(
+        "/locations/district/" + id,
+        formDistrict,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      await getDistricts();
+      dispatch({ type: "SUCCESS", payload: req.data?.message });
+    } catch (err) {
+      console.log(err);
+      dispatch({ type: "ERROR", payload: err.response.data.message });
+    }
+    setLoading(false);
+  };
+  // ***********************Teshsil*************************
   const handleSubmitTehsil = async () => {
     try {
       const req = await instance.post("/locations/tehsil", formTehsil, {
@@ -142,7 +190,27 @@ export const LocationDivision = () => {
       dispatch({ type: "ERROR", payload: err.response.data.message });
     }
   };
+  const handleSubmitTehsilEdit = async () => {
+    setLoading(true);
+    try {
+      const req = await instance.put("/locations/tehsil/" + id, formTehsil, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          "Content-Type": "application/json",
+        },
+      });
+      await getTehsils();
+      dispatch({ type: "SUCCESS", payload: req.data?.message });
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+      dispatch({ type: "ERROR", payload: err.response.data.message });
+    }
+    setLoading(false);
+  };
+  // **************************Halqa******************* *
   const handleSubmitHalqa = async () => {
+    setLoading(true);
     try {
       const req = await instance.post("/locations/halqa", formHalqa, {
         headers: {
@@ -159,56 +227,13 @@ export const LocationDivision = () => {
         unitType: "",
       });
     } catch (err) {
+      setLoading(false);
       dispatch({ type: "ERROR", payload: err.response.data.message });
     }
-  };
-  const handleSubmitEdit = async () => {
-    try {
-      const req = await instance.put("/locations/division/" + id, form, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("@token")}`,
-          "Content-Type": "application/json",
-        },
-      });
-      await getDivisions();
-      dispatch({ type: "SUCCESS", payload: req.data?.message });
-    } catch (err) {
-      dispatch({ type: "ERROR", payload: err.response.data.message });
-    }
-  };
-  const handleSubmitDistrictEdit = async () => {
-    try {
-      const req = await instance.put(
-        "/locations/district/" + id,
-        formDistrict,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("@token")}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      await getDistricts();
-      dispatch({ type: "SUCCESS", payload: req.data?.message });
-    } catch (err) {
-      dispatch({ type: "ERROR", payload: err.response.data.message });
-    }
-  };
-  const handleSubmitTehsilEdit = async () => {
-    try {
-      const req = await instance.put("/locations/tehsil/" + id, formTehsil, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("@token")}`,
-          "Content-Type": "application/json",
-        },
-      });
-      await getTehsils();
-      dispatch({ type: "SUCCESS", payload: req.data?.message });
-    } catch (err) {
-      dispatch({ type: "ERROR", payload: err.response.data.message });
-    }
+    setLoading(false);
   };
   const handleSubmitHalqaEdit = async () => {
+    setLoading(true);
     try {
       const req = await instance.put("/locations/halqa/" + id, formHalqa, {
         headers: {
@@ -217,14 +242,21 @@ export const LocationDivision = () => {
         },
       });
       await getHalqas();
+      setFilteredData(halqas);
       dispatch({ type: "SUCCESS", payload: req.data?.message });
     } catch (err) {
+      console.log(err);
+      setLoading(false);
       dispatch({ type: "ERROR", payload: err.response.data.message });
     }
+    setLoading(false);
   };
-  const handleDisable = async (id, disabled) => {
+  // ************************Disable call *******************
+  const handleDisable = async (id, disable) => {
+    const disabled = !disable;
+    setLoading(true);
     try {
-      await instance.patch(
+      let req = await instance.patch(
         `/locations/${view}/disable-location/${id}`,
         { disabled },
         {
@@ -249,8 +281,17 @@ export const LocationDivision = () => {
         default:
           break;
       }
-    } catch (err) {}
+      dispatch({ type: "SUCCESS", payload: req.data?.message });
+    } catch (err) {
+      setLoading(false);
+      console.log(err);
+      dispatch({ type: "ERROR", payload: err.response.data.message });
+    }
+    setLoading(false);
   };
+  useEffect(() => {
+    setFilteredData(halqas);
+  }, [halqas]);
   const handleSearch = (value) => {
     if (view === "halqa") {
       const filteredHalqa = halqas
@@ -637,7 +678,7 @@ export const LocationDivision = () => {
                         className="toggle toggle-error"
                         defaultChecked={halqa?.disabled}
                         onChange={() => {
-                          handleDisable(halqa?._id, !halqa?.disabled);
+                          handleDisable(halqa?._id, halqa?.disabled);
                         }}
                       />
                     </td>
