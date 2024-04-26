@@ -134,6 +134,7 @@ function App() {
         });
       }
     } catch (err) {
+      console.log(err);
       localStorage.removeItem("@token");
       window.location.reload();
       dispatch({
@@ -153,6 +154,7 @@ function App() {
         );
       }
     } catch (err) {
+      console.log(err);
       dispatch({
         type: "ERROR",
         payload: err?.response?.data?.message || err?.message,
@@ -192,6 +194,7 @@ function App() {
         }
       }
     } catch (err) {
+      console.log(err);
       dispatch({
         type: "ERROR",
         payload: err?.response?.data?.message || err?.message,
@@ -214,6 +217,7 @@ function App() {
         );
       }
     } catch (err) {
+      console.log(err);
       dispatch({
         type: "ERROR",
         payload: err?.response?.data?.message || err?.message,
@@ -236,6 +240,7 @@ function App() {
         );
       }
     } catch (err) {
+      console.log(err);
       dispatch({
         type: "ERROR",
         payload: err?.response?.data?.message || err?.message,
@@ -258,6 +263,7 @@ function App() {
         setTehsils(validTehsils);
       }
     } catch (err) {
+      console.log(err);
       dispatch({
         type: "ERROR",
         payload: err?.response?.data?.message || err?.message,
@@ -281,6 +287,7 @@ function App() {
         dis = validDistricts;
       }
     } catch (err) {
+      console.log(err);
       dispatch({
         type: "ERROR",
         payload: err?.response?.data?.message || err?.message,
@@ -313,23 +320,26 @@ function App() {
                 const validMaqamHalqas =
                   i?.parentId?.maqam?.province?._id === me?.userAreaId?._id ||
                   i?.parentId?.province?._id === me?.userAreaId?._id;
+                console.log(districts);
+                const validDistrictsId = dis?.map((i) => i?._id?.toString());
+                if (validDistrictsId) {
+                  // Check if the parent type is "Tehsil" or "division" and the district matches one of the valid districts
+                  const isParentValid =
+                    (i?.parentType === "Tehsil" ||
+                      i?.parentType === "division") &&
+                    validDistrictsId.includes(
+                      i?.parentId.district?._id?.toString()
+                    );
+                  const isDivisionParentValid =
+                    i?.parentType === "division" &&
+                    i?.parentId._id.toString() ===
+                      me?.userAreaId?._id?.toString();
 
-                const validDistrictsId = dis.map((i) => i?._id?.toString());
-
-                // Check if the parent type is "Tehsil" or "division" and the district matches one of the valid districts
-                const isParentValid =
-                  (i.parentType === "Tehsil" || i.parentType === "division") &&
-                  validDistrictsId.includes(
-                    i.parentId.district?._id?.toString()
+                  // Return true if any of the conditions are met
+                  return (
+                    isParentValid || isDivisionParentValid || validMaqamHalqas
                   );
-                const isDivisionParentValid =
-                  i.parentType === "division" &&
-                  i.parentId._id.toString() === me?.userAreaId?._id?.toString();
-
-                // Return true if any of the conditions are met
-                return (
-                  isParentValid || isDivisionParentValid || validMaqamHalqas
-                );
+                }
               }
             })
           );
@@ -380,6 +390,7 @@ function App() {
         }
       }
     } catch (err) {
+      console.log(err);
       dispatch({
         type: "ERROR",
         payload: err?.response?.data?.message || err?.message,
@@ -398,6 +409,7 @@ function App() {
         setProvinceReports(req.data.data);
       }
     } catch (err) {
+      console.log(err);
       dispatch({
         type: "ERROR",
         payload: err?.response?.data?.message || err?.message,
@@ -414,6 +426,7 @@ function App() {
         setMaqamReports(req.data.data);
       }
     } catch (err) {
+      console.log(err);
       dispatch({
         type: "ERROR",
         payload: err?.response?.data?.message || err?.message,
@@ -430,6 +443,7 @@ function App() {
         setDivisionReports(req.data.data);
       }
     } catch (err) {
+      console.log(err);
       dispatch({
         type: "ERROR",
         payload: err?.response?.data?.message || err?.message,
@@ -446,6 +460,7 @@ function App() {
         setHalqaReports(req.data.data);
       }
     } catch (err) {
+      console.log(err);
       dispatch({
         type: "ERROR",
         payload: err?.response?.data?.message || err?.message,
@@ -459,6 +474,7 @@ function App() {
       });
       if (req) setNazim(req?.data?.data);
     } catch (err) {
+      console.log(err);
       dispatch({
         type: "ERROR",
         payload: err?.response?.data?.message || err?.message,
@@ -476,6 +492,7 @@ function App() {
         });
         setUserRequests(req.data?.data);
       } catch (err) {
+        console.log(err);
         console.log(err);
       }
     }
@@ -509,6 +526,7 @@ function App() {
         setReports(req);
       } catch (err) {
         console.log(err);
+        console.log(err);
       }
     }
   };
@@ -529,11 +547,12 @@ function App() {
               _.month.split("-").slice(0, 2).join("-")
             );
             return !months.includes(
-              i.createdAt.split("-").slice(0, 2).join("-")
+              i?.createdAt.split("-").slice(0, 2).join("-")
             );
           })
         );
       } catch (err) {
+        console.log(err);
         console.log(err);
       }
     }
