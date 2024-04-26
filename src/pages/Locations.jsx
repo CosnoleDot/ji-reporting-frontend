@@ -44,7 +44,7 @@ export const Locations = () => {
             localStorage.getItem("@type")
           ) && (
             <Link
-              to={"?active=maqam"}
+              to={"?active=maqam&view=halqa"}
               role="tab"
               className={`tab w-full ${active === "maqam" ? "tab-active" : ""}`}
             >
@@ -55,7 +55,7 @@ export const Locations = () => {
             localStorage.getItem("@type")
           ) && (
             <Link
-              to={"?active=division&view=halqa"}
+              to={"?active=division&view=tehsil"}
               role="tab"
               className={`tab w-full ${
                 active === "division" ? "tab-active" : ""
