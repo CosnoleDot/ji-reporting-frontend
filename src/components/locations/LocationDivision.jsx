@@ -21,7 +21,8 @@ export const LocationDivision = () => {
   const halqas = useContext(HalqaContext);
   const districts = useContext(DistrictContext);
   const [filteredData, setFilteredData] = useState(halqas);
-  const { getHalqas, getDivisions, getDistricts, getTehsils } =
+  const [isDivision, setIsDivision] = useState(false);
+  const { getHalqas, getDivisions, getDistricts, getTehsils, loading } =
     useContext(UIContext);
   const [editMode, setEditMode] = useState(false);
   const [id, setId] = useState("");
@@ -81,9 +82,10 @@ export const LocationDivision = () => {
     district: "",
   });
   const [formHalqa, setFormHalqa] = useState({
-    name: "",
     parentId: "",
-    parentType: "Tehsil",
+    name: "",
+    parentType: "",
+    unitType: "",
   });
 
   const handleSubmit = async () => {
@@ -151,9 +153,10 @@ export const LocationDivision = () => {
       await getHalqas();
       dispatch({ type: "SUCCESS", payload: req.data?.message });
       setFormHalqa({
-        name: "",
         parentId: "",
-        parentType: "Tehsil",
+        name: "",
+        parentType: "",
+        unitType: "",
       });
     } catch (err) {
       dispatch({ type: "ERROR", payload: err.response.data.message });
@@ -341,9 +344,10 @@ export const LocationDivision = () => {
         <button
           onClick={() => {
             setFormHalqa({
-              name: "",
               parentId: "",
-              parentType: "Tehsil",
+              name: "",
+              parentType: "",
+              unitType: "",
             });
             document.getElementById("add_halqa_modal").showModal();
             setEditMode(false);
@@ -620,7 +624,8 @@ export const LocationDivision = () => {
                           setFormHalqa({
                             parentId: halqa?.parentId?._id || "",
                             name: halqa?.name || "",
-                            parentType: "Tehsil",
+                            parentType: halqa?.parentType || "",
+                            unitType: halqa?.unitType || "",
                           });
                         }}
                         className="btn"
@@ -837,29 +842,103 @@ export const LocationDivision = () => {
         <div className="modal-box">
           <h3 className="font-bold text-lg">Add Halqa</h3>
           <div className="space-y-4">
+            <div className="flex">
+              <label className="label cursor-pointer gap-3">
+                <input
+                  type="radio"
+                  name="radio-10"
+                  className="radio checked:bg-red-500"
+                  checked={isDivision}
+                  onChange={() => {
+                    setIsDivision(!isDivision);
+                    setFormHalqa({ ...formHalqa, parentType: "Division" });
+                  }}
+                />
+                <span className="label-text">Division Halqa</span>
+              </label>
+              <label className="label cursor-pointer gap-3">
+                <input
+                  type="radio"
+                  name="radio-10"
+                  className="radio checked:bg-blue-500"
+                  checked={!isDivision}
+                  onChange={() => {
+                    setIsDivision(!isDivision);
+                    setFormHalqa({ ...formHalqa, parentType: "Tehsil" });
+                  }}
+                />
+                <span className="label-text">Tehsil Halqa</span>
+              </label>
+            </div>
+            {isDivision ? (
+              <div>
+                <label className="label">
+                  <span className="text-base label-text">Division</span>
+                </label>
+                <select
+                  name="division"
+                  required
+                  value={formHalqa.parentId}
+                  onChange={(e) =>
+                    setFormHalqa({ ...formHalqa, parentId: e.target.value })
+                  }
+                  className="w-full input input-bordered input-primary"
+                >
+                  <option value="" disabled>
+                    Select Division
+                  </option>
+                  {divisions
+                    .filter((i) => !i?.disabled)
+                    .map((i, index) => (
+                      <option value={i?._id} key={index}>
+                        {i?.name}
+                      </option>
+                    ))}
+                </select>
+              </div>
+            ) : (
+              <div>
+                <label className="label">
+                  <span className="text-base label-text">Tehsil</span>
+                </label>
+                <select
+                  name="tehsil"
+                  required
+                  value={formHalqa.parentId}
+                  onChange={(e) =>
+                    setFormHalqa({ ...formHalqa, parentId: e.target.value })
+                  }
+                  className="w-full input input-bordered input-primary"
+                >
+                  <option value="" disabled>
+                    Select Tehsil
+                  </option>
+                  {tehsils
+                    .filter((i) => !i?.disabled)
+                    .map((i, index) => (
+                      <option value={i?._id} key={index}>
+                        {i?.name}
+                      </option>
+                    ))}
+                </select>
+              </div>
+            )}
             <div>
               <label className="label">
-                <span className="text-base label-text">Tehsil</span>
+                <span className="text-base label-text">Halqa Type</span>
               </label>
               <select
-                name="parentId"
-                required
-                value={formHalqa.parentId}
-                onChange={(e) =>
-                  setFormHalqa({ ...formHalqa, parentId: e.target.value })
-                }
-                className="w-full input input-bordered input-primary"
+                className="select select-bordered w-full max-w-full"
+                onChange={(e) => {
+                  setFormHalqa({ ...formHalqa, unitType: e.target.value });
+                }}
+                value={formHalqa.unitType}
               >
-                <option value="" disabled>
-                  Select Tehsil
+                <option disabled value="">
+                  Select Unit Type
                 </option>
-                {tehsils
-                  .filter((i) => !i?.disabled)
-                  .map((i, index) => (
-                    <option value={i?._id} key={index}>
-                      {i?.name}
-                    </option>
-                  ))}
+                <option value="Residential">Residential</option>
+                <option value="Educational">Educational</option>
               </select>
             </div>
             <div>
@@ -881,17 +960,28 @@ export const LocationDivision = () => {
           </div>
           <div className="modal-action">
             {editMode ? (
-              <button className="btn" onClick={handleSubmitHalqaEdit}>
+              <button
+                disabled={loading}
+                className="btn"
+                onClick={handleSubmitHalqaEdit}
+              >
                 Update
               </button>
             ) : (
-              <button className="btn" onClick={handleSubmitHalqa}>
+              <button
+                disabled={loading}
+                className="btn"
+                onClick={handleSubmitHalqa}
+              >
                 Add
               </button>
             )}
             <form method="dialog">
-              {/* if there is a button in form, it will close the modal */}
-              <button id="close-division-modal" className="btn ms-3">
+              <button
+                disabled={loading}
+                id="close-maqam-modal"
+                className="btn ms-3"
+              >
                 Close
               </button>
             </form>

@@ -12,8 +12,6 @@ import { FaEdit } from "react-icons/fa";
 import { UIContext } from "../../context/ui";
 
 export const LocationIlaqa = () => {
-  const provinces = useContext(ProvinceContext);
-  const maqams = useContext(MaqamContext);
   const halqas = useContext(HalqaContext);
   const ilaqas = useContext(IlaqaContext);
   const { getHalqas, getMaqams, setLoading, loading, getIlaqas } =
@@ -21,9 +19,7 @@ export const LocationIlaqa = () => {
   const [editMode, setEditMode] = useState(false);
   const [id, setId] = useState("");
   const { dispatch } = useToastState();
-  const [view, setView] = useState(
-    ["province"].includes(localStorage.getItem("@type")) ? "maqam" : "halqa"
-  );
+  const [view, setView] = useState("halqa");
   const params = useLocation();
   useEffect(() => {
     // Function to parse query parameters
@@ -41,35 +37,14 @@ export const LocationIlaqa = () => {
     // Call the function when the component mounts or when the location changes
     getQueryParams();
   }, [params]);
-  const [form, setForm] = useState({
-    name: "",
-    province: "",
-  });
+
   const [formHalqa, setFormHalqa] = useState({
     name: "",
     parentId: "",
-    parentType: "Maqam",
+    unitType: "",
+    parentType: "Ilaqa",
   });
-  const handleSubmit = async () => {
-    setLoading(true);
-    try {
-      const req = await instance.post("/locations/maqam", form, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("@token")}`,
-          "Content-Type": "application/json",
-        },
-      });
-      dispatch({ type: "SUCCESS", payload: req.data?.message });
-      setForm({
-        name: "",
-        province: "",
-      });
-      await getMaqams();
-    } catch (err) {
-      dispatch({ type: "ERROR", payload: err.response.data.message });
-    }
-    setLoading(false);
-  };
+
   const handleSubmitHalqa = async () => {
     setLoading(true);
     try {
@@ -84,29 +59,15 @@ export const LocationIlaqa = () => {
       setFormHalqa({
         name: "",
         parentId: "",
-        parentType: "Maqam",
+        parentType: "Ilaqa",
+        unitType: "",
       });
     } catch (err) {
       dispatch({ type: "ERROR", payload: err.response.data.message });
     }
     setLoading(false);
   };
-  const handleSubmitEdit = async () => {
-    setLoading(true);
-    try {
-      const req = await instance.put("/locations/maqam/" + id, form, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("@token")}`,
-          "Content-Type": "application/json",
-        },
-      });
-      await getMaqams();
-      dispatch({ type: "SUCCESS", payload: req.data?.message });
-    } catch (err) {
-      dispatch({ type: "ERROR", payload: err.response.data.message });
-    }
-    setLoading(false);
-  };
+
   const handleSubmitHalqaEdit = async () => {
     setLoading(true);
     try {
@@ -139,154 +100,92 @@ export const LocationIlaqa = () => {
         case "halqa":
           getHalqas();
           break;
-        case "maqam":
-          getMaqams();
-          break;
-        case "ilaqa":
-          getIlaqas();
-          break;
         default:
           break;
       }
     } catch (err) {
-      // dispatch({ type: 'ERROR', payload: err.response.data.message });
+      dispatch({ type: "ERROR", payload: err.response.data.message });
     }
     setLoading(false);
   };
   return (
     <>
-      <div
-        className={`p-5 grid ${
-          ["province"].includes(localStorage.getItem("@type"))
-            ? "grid-cols-2"
-            : "grid-cols-1"
-        }`}
-      >
-        {["province"].includes(localStorage.getItem("@type")) && (
-          <button
-            disabled={loading}
-            className="btn"
-            onClick={() => {
-              setForm({
-                name: "",
-                province: "",
-              });
-              document.getElementById("add_maqam_modal").showModal();
-              setEditMode(false);
-            }}
-          >
-            Add Maqam
-          </button>
-        )}
-        {["maqam"].includes(localStorage.getItem("@type")) &&
-          view === "ilaqa" && (
-            <button
-              disabled={loading}
-              className="btn"
-              onClick={() => {
-                setForm({
-                  name: "",
-                  maqam: "",
-                });
-                document.getElementById("add_maqam_modal").showModal();
-                setEditMode(false);
-              }}
-            >
-              Add Ilaqa
-            </button>
-          )}
-        {view !== "ilaqa" && (
-          <button
-            disabled={loading}
-            onClick={() => {
-              setFormHalqa({
-                name: "",
-                parentId: "",
-                parentType: "Maqam",
-              });
-              document.getElementById("add_halqa_modal").showModal();
-              setEditMode(false);
-            }}
-            className="btn ms-3"
-          >
-            Add Halqa
-          </button>
-        )}
-      </div>
-
-      <div role="tablist" className="w-full flex justify-between items-center">
-        <Link
-          to={"?active=maqam&view=halqa"}
-          role="tab"
-          className={`tab w-full ${view === "halqa" ? "tab-active" : ""}`}
+      <div className="p-5 grid grid-cols-1">
+        <button
+          disabled={loading}
+          onClick={() => {
+            setFormHalqa({
+              name: "",
+              parentId: "",
+              parentType: "Ilaqa",
+              unitType: "",
+            });
+            document.getElementById("add_halqa_modal").showModal();
+            setEditMode(false);
+          }}
+          className="btn ms-3"
         >
-          Halqa
-        </Link>
+          Add Halqa
+        </button>
       </div>
 
-      {view === "halqa" && (
-        <div className="w-full overflow-x-auto">
-          <table className="table table-zebra">
-            <thead className="h-10">
-              <tr className="fixed mb-2 bg-slate-300 flex w-full justify-between items-start">
-                <th className=" text-start"></th>
-                <th className="w-full text-start">Name</th>
-                <th className="w-full text-start">Ilaqa</th>
-                <th className="w-full text-center">Edit/Disable</th>
-              </tr>
-            </thead>
-            <tbody>
-              {halqas
-                .filter(
-                  (i) =>
-                    i?.parentType === "Maqam" ||
-                    i?.parentType === "Ilaqa" ||
-                    i?.parentType === "Division"
-                )
-                .map((halqa, index) => (
-                  <tr
-                    key={index}
-                    className="flex w-full justify-between items-start"
-                  >
-                    <th>{index + 1}</th>
-                    <td className="w-full text-start">{halqa?.name}</td>
-                    <td className="w-full text-start">
-                      {halqa?.parentId?.name || "-"}
-                    </td>
-                    <td className="flex w-full justify-center  items-center gap-4">
-                      <button
-                        disabled={loading}
-                        onClick={() => {
-                          setEditMode(true);
-                          setId(halqa?._id);
-                          document
-                            .getElementById("add_halqa_modal")
-                            .showModal();
-                          setFormHalqa({
-                            parentId: halqa?.parentId?._id || "",
-                            name: halqa?.name || "",
-                            parentType: "Maqam",
-                          });
-                        }}
-                        className="btn"
-                      >
-                        <FaEdit />
-                      </button>
-                      <input
-                        type="checkbox"
-                        className="toggle toggle-error"
-                        defaultChecked={halqa?.disabled}
-                        onChange={() => {
-                          handleDisable(halqa?._id, !halqa?.disabled);
-                        }}
-                      />
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+      <div className="w-full overflow-x-auto">
+        <table className="table table-zebra">
+          <thead className="h-10">
+            <tr className="fixed mb-2 bg-slate-300 flex w-full justify-between items-start">
+              <th className=" text-start"></th>
+              <th className="w-full text-start">Name</th>
+              <th className="w-full text-start">Ilaqa</th>
+              <th className="w-full text-start">Type</th>
+              <th className="w-full text-center">Edit/Disable</th>
+            </tr>
+          </thead>
+          <tbody>
+            {halqas
+              .filter((i) => i?.parentType === "Ilaqa")
+              .map((halqa, index) => (
+                <tr
+                  key={index}
+                  className="flex w-full justify-between items-start"
+                >
+                  <th>{index + 1}</th>
+                  <td className="w-full text-start">{halqa?.name}</td>
+                  <td className="w-full text-start">
+                    {halqa?.parentId?.name || "-"}
+                  </td>
+                  <td className="w-full text-start">{halqa?.unitType}</td>
+                  <td className="flex w-full justify-center  items-center gap-4">
+                    <button
+                      disabled={loading}
+                      onClick={() => {
+                        setEditMode(true);
+                        setId(halqa?._id);
+                        document.getElementById("add_halqa_modal").showModal();
+                        setFormHalqa({
+                          parentId: halqa?.parentId?._id || "",
+                          name: halqa?.name || "",
+                          parentType: "Ilaqa",
+                          unitType: "",
+                        });
+                      }}
+                      className="btn"
+                    >
+                      <FaEdit />
+                    </button>
+                    <input
+                      type="checkbox"
+                      className="toggle toggle-error"
+                      defaultChecked={halqa?.disabled}
+                      onChange={() => {
+                        handleDisable(halqa?._id, !halqa?.disabled);
+                      }}
+                    />
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      </div>
 
       <dialog id="add_halqa_modal" className="modal">
         <div className="modal-box">
@@ -294,7 +193,7 @@ export const LocationIlaqa = () => {
           <div className="space-y-4">
             <div>
               <label className="label">
-                <span className="text-base label-text">Maqam</span>
+                <span className="text-base label-text">Ilaqa</span>
               </label>
               <select
                 name="maqam"
@@ -319,7 +218,7 @@ export const LocationIlaqa = () => {
             </div>
             <div>
               <label className="label">
-                <span className="text-base label-text">Halqa</span>
+                <span className="text-base label-text">Halqa Name</span>
               </label>
               <input
                 name="name"
@@ -332,6 +231,24 @@ export const LocationIlaqa = () => {
                 className="w-full input input-bordered input-primary"
                 required
               />
+            </div>
+            <div>
+              <label className="label">
+                <span className="text-base label-text">Halqa Type</span>
+              </label>
+              <select
+                className="select select-bordered w-full max-w-full"
+                onChange={(e) => {
+                  setFormHalqa({ ...formHalqa, unitType: e.target.value });
+                }}
+                value={formHalqa.unitType}
+              >
+                <option disabled value="">
+                  Select Unit Type
+                </option>
+                <option value="Residential">Residential</option>
+                <option value="Educational">Educational</option>
+              </select>
             </div>
           </div>
           <div className="modal-action">

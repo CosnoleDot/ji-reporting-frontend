@@ -242,6 +242,9 @@ export const Dashboard = () => {
     }
   };
   useEffect(() => {
+    console.log(maqams);
+  }, [maqams]);
+  useEffect(() => {
     getAreas();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAreaType]);
@@ -252,6 +255,8 @@ export const Dashboard = () => {
     } else if (area?.parentType === "Tehsil") {
       const name = getDivisionByTehsil(area?.parentId, districts);
       return `${name}(Division)`;
+    } else if (area?.parentType === "Ilaqa") {
+      return `Of Ilaqa ${area?.parentId?.name} `;
     } else if (area?.province) {
       return maqams.find((i) => i?._id === area?._id) ? "Maqam" : "Division";
     }
@@ -272,6 +277,7 @@ export const Dashboard = () => {
       } (${user?.userAreaType})`;
     }
   };
+  
   // filter PERSONAL REPORTS
 
   const handlePersonalFilledReports = () => {
@@ -352,7 +358,9 @@ export const Dashboard = () => {
       {
         <div className="relative flex flex-col w-full gap-3 items-center p-5 justify-start h-[calc(100vh-65.6px-64px)] overflow-hidden overflow-y-scroll bg-blue-50">
           <div className="grid grid-cols-1 gap-4 px-4 mt-8 sm:grid-cols-4 sm:px-8 w-full">
-            {["province", "country"].includes(localStorage.getItem("@type")) &&
+            {["province", "country", "maqam", "division"].includes(
+              localStorage.getItem("@type")
+            ) &&
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
               ) && (
@@ -771,8 +779,8 @@ export const Dashboard = () => {
               <div className=" w-full flex items-center justify-start gap-2 border border-primary p-2 rounded-lg">
                 {show && (
                   <>
-                    {(me?.userAreaType !== "Division" ||
-                      me?.userAreaType !== "maqam") && (
+                    {(me?.userAreaType === "Province" ||
+                      me?.userAreaType === "Country") && (
                       <div className="form-control">
                         <label className="label cursor-pointer gap-2">
                           <input
@@ -787,8 +795,8 @@ export const Dashboard = () => {
                         </label>
                       </div>
                     )}
-                    {(me?.userAreaType !== "Maqam" ||
-                      me?.userAreaType !== "Division") && (
+                    {(me?.userAreaType === "Province" ||
+                      me?.userAreaType === "Country") && (
                       <div className="form-control">
                         <label className="label cursor-pointer gap-2">
                           <input
