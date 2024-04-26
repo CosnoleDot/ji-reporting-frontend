@@ -35,8 +35,8 @@ export const LocationDivision = () => {
   const { dispatch } = useToastState();
   const [view, setView] = useState(
     ["country", "province", "maqam"].includes(localStorage.getItem("@type"))
-      ? "halqa"
-      : "district"
+      ? "province"
+      : "halqa"
   );
   const params = useLocation();
   useEffect(() => {

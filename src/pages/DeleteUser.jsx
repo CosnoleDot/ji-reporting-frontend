@@ -79,7 +79,6 @@ export const DeleteUser = () => {
     } else if (area?.parentType === "Tehsil") {
       return `${area?.name} - ${area?.parentId?.district?.division?.name}(Division)`;
     } else if (area?.parentType === "Ilaqa") {
-      console.log(area);
       return `${area?.name} - ${area?.parentId?.name}(Ilaqa)`;
     } else if (area?.parentType === "Division") {
       return `${area?.name} - ${area?.parentId?.name}(Division)`;
@@ -109,9 +108,7 @@ export const DeleteUser = () => {
             divisions.find((i) => i?._id === area?._id).province?.name
           } `;
     } else if (area?.maqam && !area?.parentType) {
-      console.log(area);
       const ilaqa = maqams.find((i) => i?._id === area?.maqam);
-      console.log(ilaqa);
       return `${area?.name} Ilaqa of ${ilaqa?.name} (${ilaqa?.province?.name})`;
     }
     return `Province ${area?.name}`;

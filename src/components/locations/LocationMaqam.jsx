@@ -74,9 +74,7 @@ export const LocationMaqam = () => {
     parentType: isIlaqa ? "Ilaqa" : "Maqam",
     unitType: "",
   });
-  useEffect(() => {
-    console.log(ilaqaForm);
-  }, [ilaqaForm]);
+
   // To handel the add and update of maqam
   const handleSubmit = async () => {
     setLoading(true);
@@ -114,10 +112,6 @@ export const LocationMaqam = () => {
     }
     setLoading(false);
   };
-
-  useEffect(() => {
-    console.log(formHalqa);
-  }, [formHalqa]);
 
   // To handel the add and update of halqa
 
