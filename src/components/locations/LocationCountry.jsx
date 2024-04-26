@@ -1,11 +1,5 @@
-import { useContext, useEffect, useState } from "react";
-import {
-  HalqaContext,
-  IlaqaContext,
-  MaqamContext,
-  ProvinceContext,
-  useToastState,
-} from "../../context";
+import { useContext, useState } from "react";
+import { ProvinceContext, useToastState } from "../../context";
 import { Link, useLocation } from "react-router-dom";
 import instance from "../../api/instrance";
 import { FaEdit } from "react-icons/fa";
