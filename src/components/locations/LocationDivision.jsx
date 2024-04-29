@@ -254,8 +254,7 @@ export const LocationDivision = () => {
     setLoading(false);
   };
   // ************************Disable call *******************
-  const handleDisable = async (id, disable) => {
-    const disabled = !disable;
+  const handleDisable = async (id, disabled) => {
     setLoading(true);
     try {
       let req = await instance.patch(

@@ -1,13 +1,11 @@
 import { useContext, useState } from "react";
 import { ProvinceContext, useToastState } from "../../context";
-import { Link, useLocation } from "react-router-dom";
 import instance from "../../api/instrance";
 import { FaEdit } from "react-icons/fa";
 import { UIContext } from "../../context/ui";
-
 export const LocationCountry = () => {
   const provinces = useContext(ProvinceContext);
-  const { setLoading, loading } = useContext(UIContext);
+  const { setLoading, loading, getProvinces } = useContext(UIContext);
   const [editMode, setEditMode] = useState(false);
   const [id, setId] = useState("");
   const { dispatch } = useToastState();
@@ -20,16 +18,17 @@ export const LocationCountry = () => {
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      const req = await instance.post("/locations/maqam", form, {
+      const req = await instance.post("/locations/province", form, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("@token")}`,
           "Content-Type": "application/json",
         },
       });
+      getProvinces();
       dispatch({ type: "SUCCESS", payload: req.data?.message });
       setForm({
         name: "",
-        province: "",
+        country: "",
       });
     } catch (err) {
       dispatch({ type: "ERROR", payload: err.response.data.message });
@@ -46,24 +45,24 @@ export const LocationCountry = () => {
         },
       });
       dispatch({ type: "SUCCESS", payload: req.data?.message });
+      getProvinces();
     } catch (err) {
       dispatch({ type: "ERROR", payload: err.response.data.message });
     }
     setLoading(false);
   };
 
-  const handleDisable = async (id, disabled) => {
+  const handleDisable = async (id) => {
     setLoading(true);
     try {
-      await instance.patch(
-        `/locations/province/disable-location/${id}`,
-        { disabled },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("@token")}`,
-          },
-        }
-      );
+      const req = await instance.delete(`/locations/province/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          "Content-Type": "application/json",
+        },
+      });
+      dispatch({ type: "SUCCESS", payload: req.data?.message });
+      getProvinces();
     } catch (err) {
       console.log(err);
       dispatch({ type: "ERROR", payload: err.response.data.message });
@@ -72,6 +71,24 @@ export const LocationCountry = () => {
   };
   return (
     <>
+      <div className="p-2 grid grid-cols-1">
+        {["country"].includes(localStorage.getItem("@type")) && (
+          <button
+            disabled={loading}
+            className="btn"
+            onClick={() => {
+              setForm({
+                name: "",
+                country: "Pakistan",
+              });
+              document.getElementById("add_province_modal").showModal();
+              setEditMode(false);
+            }}
+          >
+            Add Province
+          </button>
+        )}
+      </div>
       <div className="w-full overflow-x-auto">
         <table className="table table-zebra">
           <thead>
@@ -95,7 +112,7 @@ export const LocationCountry = () => {
                       setId(province?._id);
                       document.getElementById("add_province_modal").showModal();
                       setForm({
-                        country: province?.province?._id || "",
+                        country: "Pakistan",
                         name: province?.name || "",
                       });
                     }}
@@ -124,6 +141,20 @@ export const LocationCountry = () => {
           <div className="space-y-4">
             <div>
               <label className="label">
+                <span className="text-base label-text">Country</span>
+              </label>
+              <input
+                name="country"
+                type="text"
+                disabled
+                className="w-full input input-bordered input-primary"
+                value={"Pakistan"}
+              />
+            </div>
+          </div>
+          <div className="space-y-4">
+            <div>
+              <label className="label">
                 <span className="text-base label-text">Province</span>
               </label>
               <input
@@ -131,7 +162,13 @@ export const LocationCountry = () => {
                 type="text"
                 placeholder="Enter Province Name"
                 value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                onChange={(e) =>
+                  setForm({
+                    ...form,
+                    name: e.target.value,
+                    country: "Pakistan",
+                  })
+                }
                 className="w-full input input-bordered input-primary"
                 required
               />
