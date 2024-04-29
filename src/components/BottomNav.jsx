@@ -11,7 +11,7 @@ export const BottomNav = ({ active }) => {
   const route = {
     country: "/locations?active=country",
     province: "/locations?active=maqam&view=ilaqa",
-    division: "/locations?active=division&view=tehsil",
+    division: "/locations?active=division&view=halqa",
     maqam: "/locations?active=maqam&view=halqa",
     ilaqa: "/locations?active=ilaqa&view=halqa",
   };

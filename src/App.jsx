@@ -371,17 +371,20 @@ function App() {
           } else {
             validDistrictsId = districts?.map((i) => i?._id?.toString());
           }
+          let isParentValid;
+          let isDivisionParentValid;
           const validHalqas = enabledHalqas.filter((halqa) => {
             // Check if the parent type is "Tehsil" or "division" and the district matches one of the valid districts
-            const isParentValid =
-              (halqa.parentType === "Tehsil" ||
-                halqa.parentType === "division") &&
-              validDistrictsId.includes(
+            if (halqa.parentType === "Tehsil") {
+              return (isParentValid = validDistrictsId.includes(
                 halqa.parentId.district?._id?.toString()
-              );
-            const isDivisionParentValid =
-              halqa.parentType === "division" &&
-              halqa.parentId._id.toString() === me?.userAreaId?._id?.toString();
+              ));
+            }
+            if (halqa.parentType === "Division") {
+              return (isDivisionParentValid =
+                halqa?.parentId?._id.toString() ===
+                me?.userAreaId?._id?.toString());
+            }
 
             // Return true if any of the conditions are met
             return isParentValid || isDivisionParentValid;
@@ -501,7 +504,10 @@ function App() {
         setUserRequests(req.data?.data);
       } catch (err) {
         console.log(err);
-        console.log(err);
+        dispatch({
+          type: "ERROR",
+          payload: err?.response?.data?.message || err?.message,
+        });
       }
     }
   };

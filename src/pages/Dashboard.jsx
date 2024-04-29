@@ -251,6 +251,8 @@ export const Dashboard = () => {
       return `${name}(Division)`;
     } else if (area?.parentType === "Ilaqa") {
       return `Of Ilaqa ${area?.parentId?.name} `;
+    } else if (area?.parentType === "Division") {
+      return `Of Division ${area?.parentId?.name} `;
     } else if (area?.province) {
       return maqams.find((i) => i?._id === area?._id) ? "Maqam" : "Division";
     }
@@ -271,7 +273,7 @@ export const Dashboard = () => {
       } (${user?.userAreaType})`;
     }
   };
-  
+
   // filter PERSONAL REPORTS
 
   const handlePersonalFilledReports = () => {
