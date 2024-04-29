@@ -72,7 +72,6 @@ export const LocationDivision = () => {
         }
       }
     };
-    console.log("2nd");
 
     // Call the function when the component mounts or when the location changes
     getQueryParams();
@@ -336,6 +335,8 @@ export const LocationDivision = () => {
         className={`p-5 grid ${
           ["province"].includes(localStorage.getItem("@type"))
             ? "grid-cols-4"
+            : districts?.length === 0
+            ? "grid-cols-1"
             : "grid-cols-3"
         }`}
       >
@@ -354,32 +355,36 @@ export const LocationDivision = () => {
             Add Division
           </button>
         )}
-        <button
-          className="btn"
-          onClick={() => {
-            setFormDistrict({
-              name: "",
-              division: "",
-            });
-            document.getElementById("add_district_modal").showModal();
-            setEditMode(false);
-          }}
-        >
-          Add District
-        </button>
-        <button
-          className="btn"
-          onClick={() => {
-            setFormTehsil({
-              name: "",
-              district: "",
-            });
-            document.getElementById("add_tehsil_modal").showModal();
-            setEditMode(false);
-          }}
-        >
-          Add Tehsil
-        </button>
+        {districts?.length > 0 && (
+          <button
+            className="btn"
+            onClick={() => {
+              setFormDistrict({
+                name: "",
+                division: "",
+              });
+              document.getElementById("add_district_modal").showModal();
+              setEditMode(false);
+            }}
+          >
+            Add District
+          </button>
+        )}
+        {tehsils?.length > 0 && (
+          <button
+            className="btn"
+            onClick={() => {
+              setFormTehsil({
+                name: "",
+                district: "",
+              });
+              document.getElementById("add_tehsil_modal").showModal();
+              setEditMode(false);
+            }}
+          >
+            Add Tehsil
+          </button>
+        )}
         <button
           onClick={() => {
             setFormHalqa({
@@ -426,20 +431,24 @@ export const LocationDivision = () => {
             Division
           </Link>
         )}
-        <Link
-          to={"?active=division&view=district"}
-          role="tab"
-          className={`tab w-full ${view === "district" ? "tab-active" : ""}`}
-        >
-          District
-        </Link>
-        <Link
-          to={"?active=division&view=tehsil"}
-          role="tab"
-          className={`tab w-full ${view === "tehsil" ? "tab-active" : ""}`}
-        >
-          Tehsil
-        </Link>
+        {districts?.length > 0 && (
+          <Link
+            to={"?active=division&view=district"}
+            role="tab"
+            className={`tab w-full ${view === "district" ? "tab-active" : ""}`}
+          >
+            District
+          </Link>
+        )}
+        {tehsils?.length > 0 && (
+          <Link
+            to={"?active=division&view=tehsil"}
+            role="tab"
+            className={`tab w-full ${view === "tehsil" ? "tab-active" : ""}`}
+          >
+            Tehsil
+          </Link>
+        )}
         <Link
           to={"?active=division&view=halqa"}
           role="tab"
@@ -626,7 +635,9 @@ export const LocationDivision = () => {
               <tr className="fixed mb-2 bg-slate-300 flex w-full justify-between items-start">
                 <th className=" text-start"></th>
                 <th className="w-full text-start">Name</th>
-                <th className="w-full text-center">Tehsil</th>
+                <th className="w-full text-center">
+                  {tehsils?.length > 0 ? "Tehsil" : "Division"}
+                </th>
                 <th className="w-full text-center">Edit/Disable</th>
               </tr>
             </thead>
