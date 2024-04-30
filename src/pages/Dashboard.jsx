@@ -1,4 +1,4 @@
-import { useContext, useMemo, useState } from "react";
+import { useContext, useState } from "react";
 import { GeneralLayout } from "../components";
 import { FaLocationDot } from "react-icons/fa6";
 import { CiLocationOn } from "react-icons/ci";
@@ -184,6 +184,7 @@ export const Dashboard = () => {
   useEffect(() => {
     // Fetch data only when 'me' is available and initialData is empty
     getData();
+    // eslint-disable-next-line
   }, [me]);
   const clearFilter = () => {
     // setting back the data from initial state back to the respective sates
@@ -245,17 +246,25 @@ export const Dashboard = () => {
   const getAreaType = (area) => {
     if (area?.parentType === "Maqam") {
       const name = maqams.find((i) => i?._id === area?.parentId?._id);
-      return `${name?.name}(Maqam)`;
+      return `Of Maqam ${name?.name} Of ${name?.province?.name}`;
     } else if (area?.parentType === "Tehsil") {
       const name = getDivisionByTehsil(area?.parentId, districts);
-      return `${name}(Division)`;
+      const district = districts?.filter(
+        (dis) => dis?._id === area?.parentId?.district
+      );
+      return `${name} Division Of ${district?.division?.name} Of ${district?.division?.province?.name}`;
     } else if (area?.parentType === "Ilaqa") {
-      return `Of Ilaqa ${area?.parentId?.name} `;
+      const maqam = maqams?.find(
+        (maqam) => maqam?._id.toString() === area?.parentId?.maqam.toString()
+      );
+      return `Of Ilaqa ${area?.parentId?.name} Of Maqam ${maqam?.name} of ${maqam?.province?.name}`;
     } else if (area?.parentType === "Division") {
       return `Of Division ${area?.parentId?.name} `;
     } else if (area?.province) {
-      return maqams.find((i) => i?._id === area?._id) ? "Maqam" : "Division";
+      const matchingProvince = provinces.find((p) => p?._id === area?.province);
+      return ` Of ${matchingProvince?.name}`;
     }
+
     return "Province";
   };
   const getUsersAreaDetails = (user) => {
@@ -348,6 +357,7 @@ export const Dashboard = () => {
   };
   useEffect(() => {
     handlePersonalFilledReports();
+    // eslint-disable-next-line
   }, [umeedwarReports, nazim]);
   return (
     <GeneralLayout title={"Dashboard"} active={"dashboard"}>
@@ -427,7 +437,10 @@ export const Dashboard = () => {
                   </div>
                 </div>
               )}
-            {["maqam", "country"].includes(localStorage.getItem("@type")) &&
+            {["maqam", "country", "province"].includes(
+              localStorage.getItem("@type")
+            ) &&
+              ilaqa?.length > 0 &&
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
               ) && (
@@ -483,6 +496,7 @@ export const Dashboard = () => {
                 </div>
               )}
             {["division"].includes(localStorage.getItem("@type")) &&
+              districts?.lentgth > 0 &&
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
               ) && (
@@ -503,6 +517,7 @@ export const Dashboard = () => {
                 </div>
               )}
             {["division"].includes(localStorage.getItem("@type")) &&
+              tehsils?.length > 0 &&
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
               ) && (
@@ -567,7 +582,7 @@ export const Dashboard = () => {
                       setUserAreaType("personal");
                       setShow(false);
                     }}
-                    className="flex justify-center items-center h-10 btn bg-[#cacaca] w-full text-center "
+                    className="flex justify-center capitalize items-center h-10 btn bg-[#cacaca] w-full text-center "
                   >
                     Personal Filled {personalFilled?.length}
                   </div>
@@ -580,7 +595,7 @@ export const Dashboard = () => {
                       setUserAreaType("personal");
                       setShow(false);
                     }}
-                    className="flex justify-center items-center h-10 btn bg-[#cacaca] w-full text-center "
+                    className="flex justify-center capitalize items-center h-10 btn bg-[#cacaca] w-full text-center "
                   >
                     Personal Unfilled {personalUnfilled?.length}
                   </div>
@@ -594,7 +609,7 @@ export const Dashboard = () => {
                       setShow(true);
                       setToggle("filled");
                     }}
-                    className="flex justify-center items-center h-10 btn bg-[#cacaca] w-full text-center "
+                    className="flex justify-center capitalize items-center h-10 btn bg-[#cacaca] w-full text-center "
                   >
                     Filled {data?.filled?.length}
                   </div>
@@ -606,9 +621,9 @@ export const Dashboard = () => {
                       setShow(true);
                       setToggle("unFilled");
                     }}
-                    className="flex justify-center items-center h-10 btn bg-[#cacaca] w-full text-center "
+                    className="flex justify-center capitalize items-center h-10 btn bg-[#cacaca] w-full text-center "
                   >
-                    Un filled {data?.unfilled?.length}
+                    Unfilled {data?.unfilled?.length}
                   </div>
                 </div>
                 <div className="w-full flex justify-end items-center">

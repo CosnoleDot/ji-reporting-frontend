@@ -150,7 +150,7 @@ function App() {
       });
       if (req) {
         setProvinces(
-          req.data.data.filter((i) => i?.country === me?.userAreaId?._id)
+          req.data?.data?.filter((i) => i?.country === me?.userAreaId?._id)
         );
       }
     } catch (err) {
