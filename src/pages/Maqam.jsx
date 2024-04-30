@@ -58,8 +58,8 @@ export const Maqam = () => {
         "karkunan-decrease",
         "rafaqa-end",
         "karkunan-end",
-        "rafaqa-annual",
-        "karkunan-annual",
+        "rafaqa-monthly",
+        "karkunan-monthly",
         "ijtRafaqa-decided",
         "ijtRafaqa-done",
         "ijtRafaqa-averageAttendance",
@@ -171,7 +171,7 @@ export const Maqam = () => {
       document.getElementById(`${i}-end`).value = 0;
       document.getElementById(`${i}-increase`).value = 0;
       document.getElementById(`${i}-decrease`).value = 0;
-      document.getElementById(`${i}-annual`).value = 0;
+      document.getElementById(`${i}-monthly`).value = 0;
     });
     const afd = [
       "rehaishHalqay",
