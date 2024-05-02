@@ -30,7 +30,7 @@ export const IfradiKuwat = ({ view }) => {
             <Box>اضافہ</Box>
             <Box>کمی</Box>
             <Box>اختتام پر</Box>
-            <Box>سالانہ ہدف</Box>
+            <Box>ماہانہ ہدف</Box>
             {/* <Box>مرتب</Box> */}
           </tr>
         </thead>
@@ -99,8 +99,8 @@ export const IfradiKuwat = ({ view }) => {
                 type='number'
                 defaultValue={0}
                 required
-                name={`arkan-annual`}
-                id={`arkan-annual`}
+                name={`arkan-monthly`}
+                id={`arkan-monthly`}
                 className='p-1 text-center min-w-full'
               />
             </Box>
@@ -170,8 +170,8 @@ export const IfradiKuwat = ({ view }) => {
                 type='number'
                 defaultValue={0}
                 required
-                name={`umeedWaran-annual`}
-                id={`umeedWaran-annual`}
+                name={`umeedWaran-monthly`}
+                id={`umeedWaran-monthly`}
                 className='p-1 text-center min-w-full'
               />
             </Box>
@@ -258,8 +258,8 @@ export const IfradiKuwat = ({ view }) => {
                 type='number'
                 defaultValue={0}
                 required
-                name={`rafaqa-annual`}
-                id={`rafaqa-annual`}
+                name={`rafaqa-monthly`}
+                id={`rafaqa-monthly`}
                 className='p-1 text-center min-w-full'
               />
             </Box>
@@ -337,8 +337,8 @@ export const IfradiKuwat = ({ view }) => {
                 type='number'
                 defaultValue={0}
                 required
-                name={`karkunan-annual`}
-                id={`karkunan-annual`}
+                name={`karkunan-monthly`}
+                id={`karkunan-monthly`}
                 className='p-1 text-center min-w-full'
               />
             </Box>
