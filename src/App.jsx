@@ -86,7 +86,25 @@ function App() {
         headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
       });
       if (req) {
-        setIsCompleted(true);
+        const meData = req.data.data;
+        [
+          "email",
+          "fatherName",
+          "name",
+          "age",
+          "dob",
+          "address",
+          "qualification",
+          "subject",
+          "semester",
+          "institution",
+          "phoneNumber",
+          "whatsAppNumber",
+        ].forEach((i) => {
+          if (!meData?.[i]) {
+            setIsCompleted(false);
+          }
+        });
         if (isCompleted) {
           if (
             req?.data?.data?.isDeleted ||
@@ -115,26 +133,9 @@ function App() {
             }
           }
           setMe(req.data.data);
+        } else {
+          setIsCompleted(true);
         }
-        const meData = req.data.data;
-        [
-          "email",
-          "fatherName",
-          "name",
-          "age",
-          "dob",
-          "address",
-          "qualification",
-          "subject",
-          "semester",
-          "institution",
-          "phoneNumber",
-          "whatsAppNumber",
-        ].forEach((i) => {
-          if (!meData?.[i]) {
-            setIsCompleted(false);
-          }
-        });
       }
     } catch (err) {
       console.log(err);
