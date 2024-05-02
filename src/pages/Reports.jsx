@@ -102,8 +102,10 @@ export const Reports = () => {
   const [tab, setTab] = useState(
     ["province", "maqam"].includes(localStorage.getItem("@type"))
       ? "maqam"
-      : ["province", "maqam"].includes(localStorage.getItem("@type"))
+      : ["division"].includes(localStorage.getItem("@type"))
       ? "division"
+      : ["ilaqa"].includes(localStorage.getItem("@type"))
+      ? "ilaqa"
       : "halqa"
   );
   const [id, setId] = useState(null);
@@ -657,8 +659,8 @@ export const Reports = () => {
                   className="absolute z-10 hidden max-h-[100px] overflow-y-scroll bg-white border border-gray-300 w-full mt-1"
                 >
                   {areas
-                    .sort((a, b) => a?.name?.localeCompare(b?.name))
-                    .filter((item) => {
+                    ?.sort((a, b) => a?.name?.localeCompare(b?.name))
+                    ?.filter((item) => {
                       if (searchArea && searchArea !== "") {
                         if (
                           item?.name
@@ -948,7 +950,7 @@ export const Reports = () => {
               </Link>
             )}
 
-          {["country", "province", "maqam", "division"].includes(
+          {["country", "province", "maqam", "division", "ilaqa"].includes(
             localStorage.getItem("@type")
           ) &&
             ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
