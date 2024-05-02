@@ -245,7 +245,7 @@ export const Dashboard = () => {
   }, [userAreaType]);
   const getAreaType = (area) => {
     if (area?.parentType === "Maqam") {
-      const name = maqams.find((i) => i?._id === area?.parentId?._id);
+      const name = maqams?.find((i) => i?._id === area?.parentId?._id);
       return `Of Maqam ${name?.name} Of ${name?.province?.name}`;
     } else if (area?.parentType === "Tehsil") {
       const name = getDivisionByTehsil(area?.parentId, districts);
@@ -261,7 +261,7 @@ export const Dashboard = () => {
     } else if (area?.parentType === "Division") {
       return `Of Division ${area?.parentId?.name} `;
     } else if (area?.province) {
-      const matchingProvince = provinces.find((p) => p?._id === area?.province);
+      const matchingProvince = provinces?.find((p) => p?._id === area?.province);
       return ` Of ${matchingProvince?.name}`;
     }
 
