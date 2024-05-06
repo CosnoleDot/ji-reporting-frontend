@@ -8,6 +8,7 @@ import {
   DivisionReportContext,
   HalqaContext,
   HalqaReportContext,
+  IlaqaReportContext,
   MaqamContext,
   MaqamReportContext,
   MeContext,
@@ -113,6 +114,7 @@ export const Reports = () => {
   // const [showNotification, setShowNotification] = useState(false);
   const [notifyTo, setNotifyTo] = useState("halqa");
   const maqamReports = useContext(MaqamReportContext);
+  const ilaqaReports = useContext(IlaqaReportContext);
   const divisionReports = useContext(DivisionReportContext);
   const halqaReports = useContext(HalqaReportContext);
   const provinceReports = useContext(ProvinceReportContext);
@@ -227,14 +229,17 @@ export const Reports = () => {
         const h = halqaReports;
         const d = divisionReports;
         const p = provinceReports;
+        const i = ilaqaReports;
         setAllReports({
           maqam: id ? m.filter((i) => i?.maqamAreaId?._id === id) : m,
+          ilaqa: id ? m.filter((i) => i?.ilaqaAreaId?._id === id) : i,
           halqa: id ? h.filter((i) => i?.halqaAreaId?._id === id) : h,
           division: id ? d.filter((i) => i?.divisionAreaId?._id === id) : d,
           province: id ? p.filter((i) => i?.provinceAreaId?._id === id) : p,
         });
         setFilterAllData({
           maqam: id ? m.filter((i) => i?.maqamAreaId?._id === id) : m,
+          ilaqa: id ? m.filter((i) => i?.ilaqaAreaId?._id === id) : i,
           halqa: id ? h.filter((i) => i?.halqaAreaId?._id === id) : h,
           division: id ? d.filter((i) => i?.divisionAreaId?._id === id) : d,
           province: id ? p.filter((i) => i?.provinceAreaId?._id === id) : p,
@@ -395,6 +400,9 @@ export const Reports = () => {
             break;
           case "maqam":
             response = maqamReports;
+            break;
+          case "ilaqa":
+            response = ilaqaReports;
             break;
           case "division":
             response = divisionReports;
@@ -657,8 +665,8 @@ export const Reports = () => {
                   className="absolute z-10 hidden max-h-[100px] overflow-y-scroll bg-white border border-gray-300 w-full mt-1"
                 >
                   {areas
-                    .sort((a, b) => a?.name?.localeCompare(b?.name))
-                    .filter((item) => {
+                    ?.sort((a, b) => a?.name?.localeCompare(b?.name))
+                    ?.filter((item) => {
                       if (searchArea && searchArea !== "") {
                         if (
                           item?.name
@@ -930,7 +938,7 @@ export const Reports = () => {
                 Maqam
               </Link>
             )}
-          {["country", "province", "maqam"].includes(
+          {["country", "province", "maqam", "ilaqa"].includes(
             localStorage.getItem("@type")
           ) &&
             ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
@@ -948,7 +956,7 @@ export const Reports = () => {
               </Link>
             )}
 
-          {["country", "province", "maqam", "division"].includes(
+          {["country", "province", "maqam", "division", "ilaqa"].includes(
             localStorage.getItem("@type")
           ) &&
             ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
@@ -1016,10 +1024,60 @@ export const Reports = () => {
                 (obj) => obj?.halqaAreaId?.parentType === "Maqam"
               ).length < 1 ? (
               <NoReports />
+            ) : active === "ilaqa" &&
+              tab === "halqa" &&
+              filterAllData[active]?.filter(
+                (obj) => obj?.halqaAreaId?.parentType === "Ilaqa"
+              ).length < 1 ? (
+              <NoReports />
             ) : (
               filterAllData[active]?.map((obj) =>
                 active === "halqa" && tab === "division" ? (
                   obj?.halqaAreaId?.parentType === "Tehsil" && (
+                    <div
+                      key={obj?._id}
+                      className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
+                    >
+                      <div className="flex w-full flex-col items-start justify-center">
+                        <span className="text-lg font-semibold">
+                          {((active !== "province" || active !== "halqa") &&
+                            obj?.[active + "AreaId"]?.name) ||
+                            "UNKNOWN"}
+                          {" - "}
+                          {getDivisionByTehsil(
+                            obj?.[active + "AreaId"]?.parentId,
+                            districts
+                          )}
+                          {" - "}
+                          {moment(obj?.month).format("MMMM YYYY")}
+                        </span>
+                        <span>
+                          Last Modified: {moment(obj?.updatedAt).fromNow()}
+                        </span>
+                      </div>
+                      <div className="flex items-end w-full justify-end gap-3 ">
+                        <button
+                          className="btn"
+                          onClick={() => viewReport(obj?._id)}
+                        >
+                          <FaEye />
+                        </button>
+                        <button
+                          className="btn"
+                          onClick={() =>
+                            window.open(
+                              `/${active}-report/print/${obj?._id}`,
+                              "blank"
+                            )
+                          }
+                        >
+                          <FaPrint />
+                        </button>
+                      </div>
+                    </div>
+                  )
+                ) : active === "ilaqa" ? (
+                  obj?.halqaAreaId?.parentType === "Maqam" && (
                     <div
                       key={obj?._id}
                       className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
