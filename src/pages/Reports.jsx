@@ -103,8 +103,10 @@ export const Reports = () => {
   const [tab, setTab] = useState(
     ["province", "maqam"].includes(localStorage.getItem("@type"))
       ? "maqam"
-      : ["province", "maqam"].includes(localStorage.getItem("@type"))
+      : ["division"].includes(localStorage.getItem("@type"))
       ? "division"
+      : ["ilaqa"].includes(localStorage.getItem("@type"))
+      ? "ilaqa"
       : "halqa"
   );
   const [id, setId] = useState(null);
@@ -421,6 +423,9 @@ export const Reports = () => {
       console.error("Error fetching reports:", error);
     }
   };
+  // useEffect(() => {
+  //   console.log(filterAllData[active]);
+  // }, [active, filterAllData]);
   const clearFilters = () => {
     setMonth("");
     setYear("2023");
@@ -1077,7 +1082,8 @@ export const Reports = () => {
                     </div>
                   )
                 ) : active === "ilaqa" ? (
-                  obj?.halqaAreaId?.parentType === "Maqam" && (
+                  obj?.ilaqaAreaId?._id.toString() ===
+                    me?.userAreaId?._id.toString() && (
                     <div
                       key={obj?._id}
                       className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"

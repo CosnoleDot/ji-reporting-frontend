@@ -618,10 +618,10 @@ export const Comparision = () => {
                 className="fixed hidden z-50 max-h-[100px] overflow-y-scroll bg-white border border-gray-300 w-full md:max-w-[228px] mt-1 left-0 md:left-[155px]"
               >
                 {nazims?.nazim
-                  .sort((a, b) =>
+                  ?.sort((a, b) =>
                     a?.userAreaId?.name?.localeCompare(b?.userAreaId?.name)
                   )
-                  .filter((item) => {
+                  ?.filter((item) => {
                     if (searchArea && searchArea !== "") {
                       if (
                         item?.userAreaId?.name

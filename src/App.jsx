@@ -13,6 +13,7 @@ import {
   Division,
   EditProfile,
   Halqa,
+  Ilaqa,
   LoadingScreen,
   Locations,
   Maqam,
@@ -85,7 +86,25 @@ function App() {
         headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
       });
       if (req) {
-        setIsCompleted(true);
+        const meData = req.data.data;
+        [
+          "email",
+          "fatherName",
+          "name",
+          "age",
+          "dob",
+          "address",
+          "qualification",
+          "subject",
+          "semester",
+          "institution",
+          "phoneNumber",
+          "whatsAppNumber",
+        ].forEach((i) => {
+          if (!meData?.[i]) {
+            setIsCompleted(false);
+          }
+        });
         if (isCompleted) {
           if (
             req?.data?.data?.isDeleted ||
@@ -106,6 +125,7 @@ function App() {
                 req?.data?.data?.nazimType ||
               localStorage?.getItem("@type") !== req?.data?.data?.nazim
             ) {
+              console.log(req?.data?.data?.nazimType);
               alert(
                 "Your account will be logged out as admin has updated your rights"
               );
@@ -114,26 +134,9 @@ function App() {
             }
           }
           setMe(req.data.data);
+        } else {
+          setIsCompleted(true);
         }
-        const meData = req.data.data;
-        [
-          "email",
-          "fatherName",
-          "name",
-          "age",
-          "dob",
-          "address",
-          "qualification",
-          "subject",
-          "semester",
-          "institution",
-          "phoneNumber",
-          "whatsAppNumber",
-        ].forEach((i) => {
-          if (!meData?.[i]) {
-            setIsCompleted(false);
-          }
-        });
       }
     } catch (err) {
       console.log(err);
@@ -545,6 +548,9 @@ function App() {
           case "maqam":
             req = maqamR;
             break;
+          case "ilaqa":
+            req = ilaqaR;
+            break;
           case "division":
             req = divisionR;
             break;
@@ -623,53 +629,57 @@ function App() {
       return new Promise((resolve) => setTimeout(resolve, ms));
     }
     const fetchData = async () => {
-      setCount((100 / 15) * 1);
+      setCount((100 / 16) * 1);
       setValue("Fetching provinces");
       await getProvinces();
-      setCount((100 / 15) * 2);
+      setCount((100 / 16) * 2);
       setValue("Fetching maqams");
       await getMaqams();
-      setCount((100 / 15) * 3);
+      setCount((100 / 16) * 3);
       setValue("Fetching Ilaqas");
       await getIlaqas();
-      setCount((100 / 15) * 4);
+      setCount((100 / 16) * 4);
       setValue("Fetching divisions");
       await getDivisions();
-      setCount((100 / 15) * 5);
+      setCount((100 / 16) * 5);
       setValue("Fetching districts");
       await sleep(1000);
       await getDistricts();
-      setCount((100 / 15) * 6);
+      setCount((100 / 16) * 6);
       setValue("Fetching tehsils");
       await sleep(1000);
       await getTehsils();
-      setCount((100 / 15) * 7);
+      setCount((100 / 16) * 7);
       setValue("Fetching halqas");
       await sleep(1001);
       await getHalqas();
-      setCount((100 / 15) * 8);
+      setCount((100 / 16) * 8);
       setValue("Fetching province reports");
       await getProvinceReports();
-      setCount((100 / 15) * 9);
+      setCount((100 / 16) * 9);
       setValue("Fetching maqam reports");
       await getMaqamReports();
-      setCount((100 / 15) * 10);
+      setCount((100 / 16) * 10);
       setValue("Fetching division reports");
       await getDivisionReports();
-      setCount((100 / 15) * 11);
+      setCount((100 / 16) * 11);
       setValue("Fetching halqa reports");
       await getHalqaReports();
-      setCount((100 / 15) * 12);
+      setCount((100 / 16) * 12);
       setValue("Fetching nazims");
       await getNazim();
-      setCount((100 / 15) * 13);
+      setCount((100 / 16) * 13);
       setValue("Fetching user requests");
       await getAllRequests();
-      setCount((100 / 15) * 14);
+      setCount((100 / 16) * 14);
       setValue(null);
       setValue("Fetching all notifications");
       await getAllNotifications();
-      setCount((100 / 14) * 15);
+      setCount((100 / 16) * 15);
+      setValue(null);
+      setValue("Fetching all Ilaqa Reports");
+      await getIlaqaReports();
+      setCount((100 / 16) * 16);
       setValue(null);
       if (
         location.pathname?.split("/")[2] === "view" ||
@@ -703,13 +713,13 @@ function App() {
         <ProvinceReportContext.Provider value={provinceReports}>
           <MaqamContext.Provider value={maqams}>
             <MaqamReportContext.Provider value={maqamReports}>
-              <IlaqaReportContext.Provider value={ilaqaReports}>
-                <IlaqaContext.Provider value={ilaqas}>
-                  <DivisionContext.Provider value={divisions}>
-                    <DivisionReportContext.Provider value={divisionReports}>
-                      <DistrictContext.Provider value={districts}>
-                        <TehsilContext.Provider value={tehsils}>
-                          <HalqaContext.Provider value={halqas}>
+              <IlaqaContext.Provider value={ilaqas}>
+                <DivisionContext.Provider value={divisions}>
+                  <DivisionReportContext.Provider value={divisionReports}>
+                    <DistrictContext.Provider value={districts}>
+                      <TehsilContext.Provider value={tehsils}>
+                        <HalqaContext.Provider value={halqas}>
+                          <IlaqaReportContext.Provider value={ilaqaReports}>
                             <HalqaReportContext.Provider value={halqaReports}>
                               <UIContext.Provider
                                 value={{
@@ -731,6 +741,7 @@ function App() {
                                   getIlaqas,
                                   getProvinceReports,
                                   getMaqamReports,
+                                  getIlaqaReports,
                                   getDivisionReports,
                                   getHalqaReports,
                                   getAllRequests,
@@ -796,6 +807,9 @@ function App() {
                                         ) : localStorage.getItem("@type") ===
                                           "province" ? (
                                           <Province />
+                                        ) : localStorage.getItem("@type") ===
+                                          "ilaqa" ? (
+                                          <Ilaqa />
                                         ) : (
                                           <Halqa />
                                         )
@@ -807,6 +821,9 @@ function App() {
                                         localStorage.getItem("@type") ===
                                         "maqam" ? (
                                           <Maqam />
+                                        ) : localStorage.getItem("@type") ===
+                                          "ilaqa" ? (
+                                          <Ilaqa />
                                         ) : localStorage.getItem("@type") ===
                                           "division" ? (
                                           <Division />
@@ -823,6 +840,8 @@ function App() {
                                       element={
                                         active === "maqam" ? (
                                           <Maqam />
+                                        ) : active === "ilaqa" ? (
+                                          <Ilaqa />
                                         ) : active === "division" ? (
                                           <Division />
                                         ) : active === "province" ? (
@@ -844,7 +863,6 @@ function App() {
                                       path="/user-switch"
                                       element={<DeleteUser />}
                                     />
-
                                     <Route
                                       path="/personalReport/create"
                                       element={<ReportUmeedwar />}
@@ -884,13 +902,13 @@ function App() {
                                 </div>
                               </UIContext.Provider>
                             </HalqaReportContext.Provider>
-                          </HalqaContext.Provider>
-                        </TehsilContext.Provider>
-                      </DistrictContext.Provider>
-                    </DivisionReportContext.Provider>
-                  </DivisionContext.Provider>
-                </IlaqaContext.Provider>
-              </IlaqaReportContext.Provider>
+                          </IlaqaReportContext.Provider>
+                        </HalqaContext.Provider>
+                      </TehsilContext.Provider>
+                    </DistrictContext.Provider>
+                  </DivisionReportContext.Provider>
+                </DivisionContext.Provider>
+              </IlaqaContext.Provider>
             </MaqamReportContext.Provider>
           </MaqamContext.Provider>
         </ProvinceReportContext.Provider>

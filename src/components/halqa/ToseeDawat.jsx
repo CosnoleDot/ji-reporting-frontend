@@ -9,15 +9,16 @@ export const calculateRawabitDecided = () => {
   const umI = document.getElementById("umeedWaran-increase")?.value;
   const umD = document.getElementById("umeedWaran-decrease")?.value;
   const totalUmeedwaran = parseInt(umS) + parseInt(umI) - parseInt(umD);
-  const a = (totalArkaan + totalUmeedwaran) * 3;
   const raS = document.getElementById("rafaqa-start")?.value;
   const raI = document.getElementById("rafaqa-increase")?.value;
   const raD = document.getElementById("rafaqa-decrease")?.value;
   const totalRafaqa = parseInt(raS) + parseInt(raI) - parseInt(raD);
-  const b = totalRafaqa * 2;
   if (elem) {
-    elem.value = a + b;
-    rwbMeetings.value = elem.value * 3;
+    console.log(totalArkaan, totalUmeedwaran, totalRafaqa);
+    elem.value = totalArkaan + (totalUmeedwaran * 3 + totalRafaqa * 2);
+    if (rwbMeetings) {
+      rwbMeetings.value = elem.value * 3;
+    }
   }
 };
 
