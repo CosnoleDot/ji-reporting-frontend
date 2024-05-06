@@ -7,15 +7,15 @@ export const MarkaziActivities = ({ view }) => {
       <table className="w-full table">
         <thead>
           <tr>
-            <Box type={"heading"}>مرکزی طے شدہ سرگرمیاں</Box>
+            <Box type={"heading"}>علاقے کی طے شدہ سرگرمیاں</Box>
             <Box>طے شدہ</Box>
             <Box>منعقدہ</Box>
             <Box>اوسط حاضری</Box>
-            <Box>مرتب</Box>
+            {/* <Box>مرتب</Box> */}
           </tr>
         </thead>
         <tbody>
-          <tr>
+          {/* <tr>
             <Box>اجتماع ارکان</Box>
             <Box>
               <input
@@ -59,7 +59,7 @@ export const MarkaziActivities = ({ view }) => {
                 id={`ijtArkan-registered`}
               />
             </Box>
-          </tr>
+          </tr> */}
           <tr>
             <Box>سٹڈی سرکل</Box>
             <Box>
@@ -95,7 +95,7 @@ export const MarkaziActivities = ({ view }) => {
               />
             </Box>
 
-            <Box>
+            {/* <Box>
               <input
                 disabled={view}
                 type="checkbox"
@@ -103,10 +103,10 @@ export const MarkaziActivities = ({ view }) => {
                 name={`studyCircle-registered`}
                 id={`studyCircle-registered`}
               />
-            </Box>
+            </Box> */}
           </tr>
           <tr>
-            <Box>اجتماع ناظمین</Box>
+            <Box>اجتماع ناظمین/تنظیمی کمیٹی</Box>
             <Box>
               <input
                 type="number"
@@ -140,7 +140,7 @@ export const MarkaziActivities = ({ view }) => {
               />
             </Box>
 
-            <Box>
+            {/* <Box>
               <input
                 disabled={view}
                 type="checkbox"
@@ -148,7 +148,7 @@ export const MarkaziActivities = ({ view }) => {
                 name={`ijtNazmeen-registered`}
                 id={`ijtNazmeen-registered`}
               />
-            </Box>
+            </Box> */}
           </tr>
           <tr>
             <Box>اجتماع امیدواران</Box>
@@ -185,7 +185,7 @@ export const MarkaziActivities = ({ view }) => {
               />
             </Box>
 
-            <Box>
+            {/* <Box>
               <input
                 disabled={view}
                 type="checkbox"
@@ -193,7 +193,7 @@ export const MarkaziActivities = ({ view }) => {
                 name={`ijtUmeedwaran-registered`}
                 id={`ijtUmeedwaran-registered`}
               />
-            </Box>
+            </Box> */}
           </tr>
           <tr>
             <Box>صدورمیٹنگ</Box>
@@ -230,7 +230,7 @@ export const MarkaziActivities = ({ view }) => {
               />
             </Box>
 
-            <Box>
+            {/* <Box>
               <input
                 disabled={view}
                 type="checkbox"
@@ -238,7 +238,7 @@ export const MarkaziActivities = ({ view }) => {
                 name={`sadurMeeting-registered`}
                 id={`sadurMeeting-registered`}
               />
-            </Box>
+            </Box> */}
           </tr>
         </tbody>
       </table>

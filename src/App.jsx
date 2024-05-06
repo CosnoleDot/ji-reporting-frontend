@@ -125,6 +125,7 @@ function App() {
                 req?.data?.data?.nazimType ||
               localStorage?.getItem("@type") !== req?.data?.data?.nazim
             ) {
+              console.log(req?.data?.data?.nazimType )
               alert(
                 "Your account will be logged out as admin has updated your rights"
               );

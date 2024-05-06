@@ -113,7 +113,7 @@ export const Ilaqa = () => {
           }
         });
       });
-    // console.log(halq);
+    // console.log(halq,'asd');
     Object.keys(halq).forEach((i) => {
       let j;
       if (i === "studyCircle-decided") {
@@ -251,19 +251,26 @@ export const Ilaqa = () => {
 
     const formData = new FormData(e.currentTarget);
     const jsonData = convertDataFormat(toJson(formData));
+    console.log(jsonData,'asd')
 
     // Replace null values with zero
     for (const key in jsonData) {
       if (jsonData.hasOwnProperty(key) && jsonData[key] === null) {
         jsonData[key] = 0;
       }
+      if(key ==="ijtKarkunan" || key ==="darseQuran"){
+        // console.log(jsonData[key],jsonData[key]['done-sum'],'aaa')
+        jsonData[key].done= jsonData[key]['done-sum'];
+        delete jsonData[key]['done-sum'];
+      }
+      console.log(jsonData,'aaa')
     }
 
     setLoading(true);
     try {
       if (id) {
         jsonData.month = data?.month;
-        const req = await instance.put(`/reports/maqam/${id}`, jsonData, {
+        const req = await instance.put(`/reports/ilaqa/${id}`, jsonData, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
@@ -272,7 +279,7 @@ export const Ilaqa = () => {
         await getMaqamReports();
         dispatch({ type: "SUCCESS", payload: req?.data?.message });
       } else {
-        const req = await instance.post("/reports/maqam", jsonData, {
+        const req = await instance.post("/reports/ilaqa", jsonData, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
