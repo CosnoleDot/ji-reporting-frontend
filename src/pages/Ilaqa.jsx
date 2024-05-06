@@ -34,7 +34,7 @@ export const Ilaqa = () => {
   const [id, setId] = useState(null);
   const { dispatch } = useToastState();
   const [data, setData] = useState({});
-  const { loading, setLoading, getMaqamReports } = useContext(UIContext);
+  const { loading, setLoading, getIlaqaReports } = useContext(UIContext);
   const [view, setView] = useState(false);
   const location = useLocation();
   const me = useContext(MeContext);
@@ -95,8 +95,12 @@ export const Ilaqa = () => {
       .filter((i) => i?.month.includes(month))
       .forEach((i) => {
         const sim = reverseDataFormat(i);
-        Object.keys(sim)?.forEach((j) => {
-          if (halq?.[j]) {
+        Object.keys(sim).forEach((j) => {
+          if (
+            halq?.[j] &&
+            j?.split("-")[1] !== "attendance" &&
+            j?.split("-")[1] !== "monthly"
+          ) {
             try {
               // console.log(sim[j]);
               halq[j] += parseInt(sim[j]) || 0;
@@ -106,14 +110,18 @@ export const Ilaqa = () => {
           } else {
             try {
               // console.log(sim[j]);
-              halq[j] = parseInt(sim[j]) || 0;
+              if (
+                j?.split("-")[1] !== "attendance" &&
+                j?.split("-")[1] !== "monthly"
+              ) {
+                halq[j] = parseInt(sim[j]) || 0;
+              }
             } catch {
               halq[j] = sim[j] || 0;
             }
           }
         });
       });
-    // console.log(halq,'asd');
     Object.keys(halq).forEach((i) => {
       let j;
       if (i === "studyCircle-decided") {
@@ -161,7 +169,6 @@ export const Ilaqa = () => {
     });
     document.getElementById("studyCircle-averageAttendance").value = 0;
     document.getElementById("studyCircle-done").value = 0;
-    document.getElementById("umeedwaranFilled").value = 0;
     ["arkan", "umeedWaran"].forEach((i) => {
       document.getElementById(`${i}-start`).value = 0;
       document.getElementById(`${i}-end`).value = 0;
@@ -251,32 +258,39 @@ export const Ilaqa = () => {
 
     const formData = new FormData(e.currentTarget);
     const jsonData = convertDataFormat(toJson(formData));
-    console.log(jsonData,'asd')
 
     // Replace null values with zero
     for (const key in jsonData) {
+      console.log(key);
       if (jsonData.hasOwnProperty(key) && jsonData[key] === null) {
         jsonData[key] = 0;
       }
-      if(key ==="ijtKarkunan" || key ==="darseQuran"){
-        // console.log(jsonData[key],jsonData[key]['done-sum'],'aaa')
-        jsonData[key].done= jsonData[key]['done-sum'];
-        delete jsonData[key]['done-sum'];
+      if (key === "ijtKarkunan" || key === "darseQuran") {
+        jsonData[key].done = jsonData[key]["done-sum"];
+        delete jsonData[key]["done-sum"];
       }
-      console.log(jsonData,'aaa')
+      if (key === "rafaqaFilled" || key === "umeedwaranFilled") {
+        const rfq = document.getElementById(`${key}-sum`).value;
+        jsonData[key] = rfq;
+        // Set the value of rafaqaFilled-sum as the value of rafaqaFilled
+        jsonData[`${key}-sum`] = jsonData[key];
+        delete jsonData[`${key}-sum`];
+      }
     }
 
     setLoading(true);
     try {
       if (id) {
         jsonData.month = data?.month;
+        console.log(jsonData);
+        return;
         const req = await instance.put(`/reports/ilaqa/${id}`, jsonData, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
-        await getMaqamReports();
+        await getIlaqaReports();
         dispatch({ type: "SUCCESS", payload: req?.data?.message });
       } else {
         const req = await instance.post("/reports/ilaqa", jsonData, {
@@ -285,7 +299,7 @@ export const Ilaqa = () => {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
-        await getMaqamReports();
+        await getIlaqaReports();
         dispatch({ type: "SUCCESS", payload: req.data?.message });
       }
       navigate("/reports");

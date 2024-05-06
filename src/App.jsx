@@ -61,9 +61,9 @@ function App() {
   const [nazim, setNazim] = useState([]);
   const [provinceReports, setProvinceReports] = useState([]);
   const [maqamReports, setMaqamReports] = useState([]);
+  const [ilaqaReports, setIlaqaReports] = useState([]);
   const [divisionReports, setDivisionReports] = useState([]);
   const [halqaReports, setHalqaReports] = useState([]);
-  const [ilaqaReports, setilaqaReports] = useState([]);
   const [userRequests, setUserRequests] = useState([]);
   const [value, setValue] = useState(null);
   const [active, setActive] = useState("province");
@@ -125,7 +125,7 @@ function App() {
                 req?.data?.data?.nazimType ||
               localStorage?.getItem("@type") !== req?.data?.data?.nazim
             ) {
-              console.log(req?.data?.data?.nazimType )
+              console.log(req?.data?.data?.nazimType);
               alert(
                 "Your account will be logged out as admin has updated your rights"
               );
@@ -449,6 +449,23 @@ function App() {
       });
     }
   };
+  const getIlaqaReports = async () => {
+    try {
+      const req = await instance.get("/reports/ilaqa", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
+      });
+      if (req) {
+        ilaqaR = req.data.data;
+        setIlaqaReports(req.data.data);
+      }
+    } catch (err) {
+      console.log(err);
+      dispatch({
+        type: "ERROR",
+        payload: err?.response?.data?.message || err?.message,
+      });
+    }
+  };
   const getDivisionReports = async () => {
     try {
       const req = await instance.get("/reports/division", {
@@ -474,23 +491,6 @@ function App() {
       if (req) {
         halqaR = req.data.data;
         setHalqaReports(req.data.data);
-      }
-    } catch (err) {
-      console.log(err);
-      dispatch({
-        type: "ERROR",
-        payload: err?.response?.data?.message || err?.message,
-      });
-    }
-  };
-  const getIlaqaReports = async () => {
-    try {
-      const req = await instance.get("/reports/ilaqa", {
-        headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
-      });
-      if (req) {
-        ilaqaR = req.data.data;
-        setilaqaReports(req.data.data);
       }
     } catch (err) {
       console.log(err);
@@ -741,6 +741,7 @@ function App() {
                                   getIlaqas,
                                   getProvinceReports,
                                   getMaqamReports,
+                                  getIlaqaReports,
                                   getDivisionReports,
                                   getHalqaReports,
                                   getAllRequests,
@@ -821,6 +822,9 @@ function App() {
                                         "maqam" ? (
                                           <Maqam />
                                         ) : localStorage.getItem("@type") ===
+                                          "ilaqa" ? (
+                                          <Ilaqa />
+                                        ) : localStorage.getItem("@type") ===
                                           "division" ? (
                                           <Division />
                                         ) : localStorage.getItem("@type") ===
@@ -836,6 +840,8 @@ function App() {
                                       element={
                                         active === "maqam" ? (
                                           <Maqam />
+                                        ) : active === "ilaqa" ? (
+                                          <Ilaqa />
                                         ) : active === "division" ? (
                                           <Division />
                                         ) : active === "province" ? (
@@ -857,7 +863,6 @@ function App() {
                                       path="/user-switch"
                                       element={<DeleteUser />}
                                     />
-
                                     <Route
                                       path="/personalReport/create"
                                       element={<ReportUmeedwar />}

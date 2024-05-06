@@ -95,6 +95,7 @@ export const Tanzeem = ({ view }) => {
             <Box>اختتام پر</Box>
             <Box>فعال</Box>
             <Box>غیرفعال</Box>
+            <Box>ماہانہ ہدف</Box>
           </tr>
         </thead>
         <tbody>
@@ -172,6 +173,17 @@ export const Tanzeem = ({ view }) => {
                   );
                 }}
                 id={`rehaishHalqay-end`}
+                className="p-1 text-center min-w-full"
+              />
+            </Box>
+            <Box>
+              <input
+                readOnly={true}
+                type="number"
+                defaultValue={0}
+                required
+                name={`rehaishHalqay-monthly`}
+                id={`rehaishHalqay-monthly`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
@@ -327,6 +339,17 @@ export const Tanzeem = ({ view }) => {
                 className="p-1 text-center min-w-full"
               />
             </Box>
+            <Box>
+              <input
+                readOnly={view}
+                type="number"
+                defaultValue={0}
+                required
+                name={`taleemHalqay-monthly`}
+                id={`taleemHalqay-monthly`}
+                className="p-1 text-center min-w-full"
+              />
+            </Box>
           </tr>
           <tr>
             <Box>کل حلقے</Box>
@@ -393,6 +416,17 @@ export const Tanzeem = ({ view }) => {
                 required
                 name={`totalHalqay-paused`}
                 id={`totalHalqay-paused`}
+                className="p-1 text-center min-w-full"
+              />
+            </Box>
+            <Box>
+              <input
+                readOnly
+                type="number"
+                defaultValue={0}
+                required
+                name={`totalHalqay-monthly`}
+                id={`totalHalqay-monthly`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
@@ -503,6 +537,24 @@ export const Tanzeem = ({ view }) => {
                 className="p-1 text-center min-w-full"
               />
             </Box>
+            <Box>
+              <input
+                readOnly={view}
+                type="number"
+                defaultValue={0}
+                required
+                onChange={() => {
+                  totalCalculate(
+                    "subTaleemHalqay",
+                    "subRehaishHalqay",
+                    "subTotalHalqay-monthly"
+                  );
+                }}
+                name={`subRehaishHalqay-monthly`}
+                id={`subRehaishHalqay-monthly`}
+                className="p-1 text-center min-w-full"
+              />
+            </Box>
           </tr>
           <tr>
             <Box>تعلیمی ذیلی حلقے</Box>
@@ -598,8 +650,6 @@ export const Tanzeem = ({ view }) => {
                 type="number"
                 defaultValue={0}
                 required
-                name={`subTaleemHalqay-paused`}
-                id={`subTaleemHalqay-paused`}
                 onChange={() => {
                   totalCalculate(
                     "subTaleemHalqay",
@@ -607,6 +657,19 @@ export const Tanzeem = ({ view }) => {
                     "subTotalHalqay-paused"
                   );
                 }}
+                name={`subTaleemHalqay-paused`}
+                id={`subTaleemHalqay-paused`}
+                className="p-1 text-center min-w-full"
+              />
+            </Box>
+            <Box>
+              <input
+                readOnly={view}
+                type="number"
+                defaultValue={0}
+                required
+                name={`subTaleemHalqay-monthly`}
+                id={`subTaleemHalqay-monthly`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
@@ -676,6 +739,17 @@ export const Tanzeem = ({ view }) => {
                 required
                 name={`subTotalHalqay-paused`}
                 id={`subTotalHalqay-paused`}
+                className="p-1 text-center min-w-full"
+              />
+            </Box>
+            <Box>
+              <input
+                readOnly={view}
+                type="number"
+                defaultValue={0}
+                required
+                name={`subTotalHalqay-monthly`}
+                id={`subTotalHalqay-monthly`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
@@ -787,6 +861,17 @@ export const Tanzeem = ({ view }) => {
                 className="p-1 text-center min-w-full"
               />
             </Box>
+            <Box>
+              <input
+                readOnly={view}
+                type="number"
+                defaultValue={0}
+                required
+                name={`busmSchoolUnits-monthly`}
+                id={`busmSchoolUnits-monthly`}
+                className="p-1 text-center min-w-full"
+              />
+            </Box>
           </tr>
           <tr>
             <Box>بزم کے رہائشی یونٹس</Box>
@@ -894,6 +979,17 @@ export const Tanzeem = ({ view }) => {
                 className="p-1 text-center min-w-full"
               />
             </Box>
+            <Box>
+              <input
+                readOnly={view}
+                type="number"
+                defaultValue={0}
+                required
+                name={`busmRehaishUnits-monthly`}
+                id={`busmRehaishUnits-monthly`}
+                className="p-1 text-center min-w-full"
+              />
+            </Box>
           </tr>
           <tr>
             <Box>بزم کے کل یونٹس</Box>
@@ -960,6 +1056,17 @@ export const Tanzeem = ({ view }) => {
                 required
                 name={`busmTotalUnits-paused`}
                 id={`busmTotalUnits-paused`}
+                className="p-1 text-center min-w-full"
+              />
+            </Box>
+            <Box>
+              <input
+                readOnly={true}
+                type="number"
+                defaultValue={0}
+                required
+                name={`busmTotalUnits-monthly`}
+                id={`busmTotalUnits-monthly`}
                 className="p-1 text-center min-w-full"
               />
             </Box>

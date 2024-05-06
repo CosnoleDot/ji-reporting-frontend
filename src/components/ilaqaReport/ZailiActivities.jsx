@@ -2,7 +2,6 @@ import React from "react";
 import { Box } from "./IfradiKuwat";
 
 const ZailiActivities = ({ view }) => {
- 
   return (
     <div className="relative w-full overflow-auto">
       <table className="w-full table">
@@ -41,7 +40,6 @@ const ZailiActivities = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
@@ -77,7 +75,6 @@ const ZailiActivities = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
@@ -100,8 +97,7 @@ const ZailiActivities = ({ view }) => {
                 className="p-1 text-center min-w-full"
               />
             </Box>
-            <div style={{display:'flex', width:"30%"}}>
-              
+            <div style={{ display: "flex", width: "30%" }}>
               <input
                 readOnly={true}
                 type="number"
@@ -111,9 +107,8 @@ const ZailiActivities = ({ view }) => {
                 id={`ijtKarkunan-done`}
                 className="p-1 text-center min-w-full"
               />
-             +
-             <input
-               
+              +
+              <input
                 type="number"
                 defaultValue={0}
                 required
@@ -124,19 +119,23 @@ const ZailiActivities = ({ view }) => {
               />
               =
               <input
-               readOnly={true}
+                readOnly={true}
                 type="number"
-                defaultValue={parseInt(document.getElementById('ijtKarkunan-done')?.value) + parseInt(document.getElementById('manual-ijtKarkunan-done')?.value)}
+                defaultValue={
+                  parseInt(document.getElementById("ijtKarkunan-done")?.value) +
+                  parseInt(
+                    document.getElementById("manual-ijtKarkunan-done")?.value
+                  )
+                }
                 required
                 name={`ijtKarkunan-done-sum`}
                 id={`ijtKarkunan-done-sum`}
                 className="p-1 text-center min-w-full"
               />
-             
             </div>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type="number"
                 defaultValue={0}
                 required
@@ -181,9 +180,16 @@ const ZailiActivities = ({ view }) => {
                 />
                 =
                 <input
-                readOnly={true}
+                  readOnly={true}
                   type="number"
-                  defaultValue={parseInt(document.getElementById('darseQuran-done')?.value) + parseInt(document.getElementById('manual-darseQuran-done')?.value) }
+                  defaultValue={
+                    parseInt(
+                      document.getElementById("darseQuran-done")?.value
+                    ) +
+                    parseInt(
+                      document.getElementById("manual-darseQuran-done")?.value
+                    )
+                  }
                   required
                   name={`darseQuran-done-sum`}
                   id={`darseQuran-done-`}
@@ -193,7 +199,7 @@ const ZailiActivities = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type="number"
                 defaultValue={0}
                 required

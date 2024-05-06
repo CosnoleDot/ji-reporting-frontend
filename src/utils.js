@@ -31,11 +31,20 @@ export const convertDataFormat = (data) => {
   const result = {};
 
   Object.keys(data).forEach((key) => {
-    const processedKey = processKey(key);
+    if (
+      key === "umeedwaranFilled-sum" ||
+      key === "manual-umeedwaranFilled" ||
+      key === "rafaqaFilled-sum" ||
+      key === "manual-rafaqaFilled"
+    ) {
+      return;
+    } else {
+      const processedKey = processKey(key);
 
-    // if (processedKey !== null) {
-    result[processedKey] = data?.[key] || null;
-    // }
+      // if (processedKey !== null) {
+      result[processedKey] = data?.[key] || null;
+      // }
+    }
   });
 
   return result;

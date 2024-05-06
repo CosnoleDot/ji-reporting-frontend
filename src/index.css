@@ -3799,6 +3799,10 @@ html {
   min-width: 100%;
 }
 
+.min-w-\[40\%\] {
+  min-width: 40%;
+}
+
 .max-w-\[10rem\] {
   max-width: 10rem;
 }
