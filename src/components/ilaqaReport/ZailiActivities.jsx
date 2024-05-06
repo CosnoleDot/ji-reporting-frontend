@@ -2,6 +2,7 @@ import React from "react";
 import { Box } from "./IfradiKuwat";
 
 const ZailiActivities = ({ view }) => {
+ 
   return (
     <div className="relative w-full overflow-auto">
       <table className="w-full table">
@@ -99,7 +100,8 @@ const ZailiActivities = ({ view }) => {
                 className="p-1 text-center min-w-full"
               />
             </Box>
-            <Box>
+            <div style={{display:'flex', width:"30%"}}>
+              
               <input
                 readOnly={true}
                 type="number"
@@ -109,7 +111,29 @@ const ZailiActivities = ({ view }) => {
                 id={`ijtKarkunan-done`}
                 className="p-1 text-center min-w-full"
               />
-            </Box>
+             +
+             <input
+               
+                type="number"
+                defaultValue={0}
+                required
+                name={`manual-ijtKarkunan-done`}
+                id={`manual-ijtKarkunan-done`}
+                className="p-1 text-center min-w-full"
+                oninput="calculateSum()"
+              />
+              =
+              <input
+               readOnly={true}
+                type="number"
+                defaultValue={parseInt(document.getElementById('ijtKarkunan-done')?.value) + parseInt(document.getElementById('manual-ijtKarkunan-done')?.value)}
+                required
+                name={`ijtKarkunan-done-sum`}
+                id={`ijtKarkunan-done-sum`}
+                className="p-1 text-center min-w-full"
+              />
+             
+            </div>
             <Box>
               <input
                 readOnly={true}
@@ -157,11 +181,12 @@ const ZailiActivities = ({ view }) => {
                 />
                 =
                 <input
+                readOnly={true}
                   type="number"
-                  defaultValue={0}
+                  defaultValue={parseInt(document.getElementById('darseQuran-done')?.value) + parseInt(document.getElementById('manual-darseQuran-done')?.value) }
                   required
-                  name={`darseQuran-done`}
-                  id={`darseQuran-done`}
+                  name={`darseQuran-done-sum`}
+                  id={`darseQuran-done-`}
                   className="p-1 text-center "
                 />
               </div>
