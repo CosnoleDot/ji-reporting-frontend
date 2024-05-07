@@ -76,13 +76,6 @@ export const Tanzeem = ({ view }) => {
     setElementValue(final, calculationSwitch(final.split("-")[1]));
   };
 
-  const calculateTotal = () => {
-    document.getElementById("totalLibraries").value =
-      parseInt(document.getElementById("totalHalqay-start").value) +
-      parseInt(document.getElementById("totalHalqay-increase").value) -
-      parseInt(document.getElementById("totalHalqay-decrease").value);
-  };
-
   return (
     <div className="relative w-full overflow-auto">
       <table className="w-full table">

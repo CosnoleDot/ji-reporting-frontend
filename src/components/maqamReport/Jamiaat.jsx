@@ -41,7 +41,7 @@ export const Jamiaat = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type="number"
                 defaultValue={0}
                 required
@@ -88,7 +88,7 @@ export const Jamiaat = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type="number"
                 defaultValue={0}
                 required
@@ -113,7 +113,7 @@ export const Jamiaat = ({ view }) => {
             <Box>C</Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type="number"
                 defaultValue={0}
                 required
@@ -124,7 +124,7 @@ export const Jamiaat = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type="number"
                 defaultValue={0}
                 required
@@ -135,7 +135,7 @@ export const Jamiaat = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type="number"
                 defaultValue={0}
                 required
@@ -146,7 +146,7 @@ export const Jamiaat = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type="number"
                 defaultValue={0}
                 required
@@ -160,7 +160,7 @@ export const Jamiaat = ({ view }) => {
             <Box>D</Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type="number"
                 defaultValue={0}
                 required
@@ -171,7 +171,7 @@ export const Jamiaat = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type="number"
                 defaultValue={0}
                 required
@@ -182,7 +182,7 @@ export const Jamiaat = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type="number"
                 defaultValue={0}
                 required
@@ -193,7 +193,7 @@ export const Jamiaat = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type="number"
                 defaultValue={0}
                 required
@@ -229,7 +229,7 @@ export const Jamiaat = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type="number"
                 defaultValue={0}
                 required
