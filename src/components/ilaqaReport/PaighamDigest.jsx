@@ -75,6 +75,41 @@ export const PaighamDigest = ({ view }) => {
             />
           </div>
         </div>
+        <div className="flex py-2 ml-4">
+          <label className="block p-1">ڈایجسٹ موصول کرنے کا ماہانہ ہدف:</label>
+          <div className="flex">
+            <input
+              type="number"
+              readOnly={view}
+              placeholder="حلقہ جات"
+              className="border-b-2 p-1 text-center border-dashed"
+              name="halqaMonthlyGoal"
+              id="halqaMonthlyGoal"
+            />
+            +
+            <input
+              readOnly={view}
+              name="halqaZeliMonthlyGoal"
+              id="halqaZeliMonthlyGoal"
+              type="number"
+              placeholder="ذیلی حلقہ جات"
+              className="border-b-2 text-center border-dashed"
+            />
+            =
+            <input
+              readOnly={true}
+              type="number"
+              defaultValue={
+                parseInt(document.getElementById("halqaMonthlyGoal")?.value) +
+                parseInt(document.getElementById("halqaZeliMonthlyGoal")?.value)
+              }
+              required
+              name="totalSold"
+              id="totalSold"
+              className="border-b-2 text-center border-dashed"
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

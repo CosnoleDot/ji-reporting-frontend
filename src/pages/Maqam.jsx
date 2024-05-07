@@ -15,7 +15,7 @@ import { UIContext } from "../context/ui";
 import { Tanzeem } from "../components/maqamReport/Tanzeem";
 import { IfradiKuwat } from "../components/maqamReport/IfradiKuwat";
 import { MarkaziActivities } from "../components/maqamReport/MarkaziActivities";
-import ZailiActivities from "../components/maqamReport/ZailiActivities";
+import { ZailiActivities } from "../components/maqamReport/ZailiActivities";
 import { OtherActivities } from "../components/maqamReport/OtherActivities";
 import { ToseeDawat } from "../components/maqamReport/ToseeDawat";
 import { Library } from "../components/maqamReport/Library";
@@ -79,21 +79,10 @@ export const Maqam = () => {
         "shabBedari",
         "nizamSalah",
         "rawabitDecided",
-        "current",
-        "meetings",
-        "literatureDistribution",
-        "commonStudentMeetings",
-        "commonLiteratureDistribution",
-        "totalBooks",
-        "meetings",
-        "literatureDistribution",
-        "commonStudentMeetings",
-        "commonLiteratureDistribution",
         "totalBooks",
         "totalIncrease",
         "totalDecrease",
         "totalBookRent",
-        "rafaqaFilled",
       ].forEach((i) => {
         document.getElementById(i).value = 0;
       });
@@ -123,6 +112,22 @@ export const Maqam = () => {
       let j;
       if (i === "studyCircle-decided") {
         j = "studyCircleMentioned-decided";
+      } else if (i === "current") {
+        j = "uploadedCurrent";
+      } else if (i === "meetings") {
+        j = "uploadedMeetings";
+      } else if (i === "literatureDistribution") {
+        j = "uploadedLitrature";
+      } else if (i === "commonLiteratureDistribution") {
+        j = "uploadedCommonLiteratureDistribution";
+      } else if (i === "commonStudentMeetings") {
+        j = "uploadedCommonStudentMeetings";
+      } else if (i === "studyCircle-decided") {
+        j = "studyCircleMentioned-decided";
+      } else if (i === "umeedwaranFilled") {
+        j = "uploadedUmeedwaran";
+      } else if (i === "rafaqaFilled") {
+        j = "uploadedRafaqa";
       } else if (i === "studyCircle-completed") {
         j = "studyCircleMentioned-done";
       } else if (i === "studyCircle-attendance") {
@@ -166,8 +171,6 @@ export const Maqam = () => {
     });
     document.getElementById("studyCircle-averageAttendance").value = 0;
     document.getElementById("studyCircle-done").value = 0;
-    document.getElementById("arkanFilled").value = 0;
-    document.getElementById("umeedwaranFilled").value = 0;
     ["arkan", "umeedWaran"].forEach((i) => {
       document.getElementById(`${i}-start`).value = 0;
       document.getElementById(`${i}-end`).value = 0;
@@ -294,6 +297,28 @@ export const Maqam = () => {
     setLoading(false);
   };
 
+  const totalHalqay = parseInt(
+    document.getElementById("totalHalqay-end")?.value
+  );
+  const subTotalHalqay = parseInt(
+    document.getElementById("subTotalHalqay-end")?.value
+  );
+  const busmTotalUnits = parseInt(
+    document.getElementById("busmTotalUnits-end")?.value
+  );
+
+  useEffect(() => {
+    document.getElementById("studyCircleMentioned-decided").value = totalHalqay;
+    document.getElementById("ijtRafaqa-decided").value = totalHalqay;
+    document.getElementById("darseQuran-decided").value = parseFloat(
+      totalHalqay + subTotalHalqay
+    );
+    document.getElementById("ijtKarkunan-decided").value = parseFloat(
+      totalHalqay + subTotalHalqay
+    );
+    document.getElementById("paighamEvent-decided").value = busmTotalUnits;
+    document.getElementById("shaheenMeeting-decided").value = busmTotalUnits;
+  }, [totalHalqay, subTotalHalqay, busmTotalUnits]);
   return (
     <GeneralLayout>
       <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">
