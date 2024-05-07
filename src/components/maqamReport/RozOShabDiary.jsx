@@ -1,3 +1,5 @@
+import { Box } from "../halqa";
+
 export const RozOShabDiary = ({ view }) => {
   return (
     <div className="p-2 py-5 relative w-full overflow-auto">
@@ -24,9 +26,9 @@ export const RozOShabDiary = ({ view }) => {
             type="number"
             defaultValue={0}
             required
-            name={`uploadedUmeedwaran`}
-            id={`uploadedUmeedwaran`}
-            className="p-1 text-center "
+            name={`umeedwaranFilled`}
+            id={`umeedwaranFilled`}
+            className="border-b-2 text-center border-dashed "
           />
           +
           <input
@@ -36,7 +38,7 @@ export const RozOShabDiary = ({ view }) => {
             required
             name={`manualUmeedwaran`}
             id={`manualUmeedwaran`}
-            className="p-1 text-center "
+            className="border-b-2 text-center border-dashed "
             oninput="calculateSum()"
           />
           =
@@ -44,27 +46,29 @@ export const RozOShabDiary = ({ view }) => {
             readOnly={true}
             type="number"
             defaultValue={
-              parseInt(document.getElementById("uploadedUmeedwaran")?.value) +
+              parseInt(document.getElementById("umeedwaranFilled")?.value) +
               parseInt(document.getElementById("manualUmeedwaran")?.value)
             }
             required
             name={`umeedwaranFilledSum`}
             id={`umeedwaranFilledSum`}
-            className="p-1 text-center "
+            className="border-b-2 text-center border-dashed "
           />
         </div>
-        <div style={{ display: "flex" }}>
+        <div style={{ display: "flex", width: "100%" }}>
           <label className="block min-w-[40%]">کتنےرفقافل کرتے ہیں:</label>
+
           <input
             readOnly={true}
             type="number"
             defaultValue={0}
             required
-            name={`uploadedRafaqa`}
-            id={`uploadedRafaqa`}
-            className="p-1 text-center "
+            name={`rafaqaFilled`}
+            id={`rafaqaFilled`}
+            className="border-b-2 text-center border-dashed "
           />
-          +
+
+          {/* +
           <input
             type="number"
             readOnly={view}
@@ -72,7 +76,7 @@ export const RozOShabDiary = ({ view }) => {
             required
             name={`manualRafaqa`}
             id={`manualRafaqa`}
-            className="p-1 text-center "
+            className="border-b-2 text-center border-dashed "
             oninput="calculateSum()"
           />
           =
@@ -86,8 +90,8 @@ export const RozOShabDiary = ({ view }) => {
             required
             name={`rafaqaFilledSum`}
             id={`rafaqaFilledSum`}
-            className="p-1 text-center "
-          />
+            className="border-b-2 text-center border-dashed "
+          /> */}
         </div>
         {/* <div className="flex py-2">
           <label className="block min-w-[40%]">کتنے امیدواران فل کرتے ہیں؟</label>
