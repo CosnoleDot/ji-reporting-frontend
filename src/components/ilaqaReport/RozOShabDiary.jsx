@@ -16,23 +16,26 @@ export const RozOShabDiary = ({ view }) => {
           />
         </div> */}
         <div style={{ display: "flex" }}>
-          <label className="block min-w-[40%]">کتنے امیدواران فل کرتے ہیں؟</label>
+          <label className="block min-w-[40%]">
+            کتنے امیدواران فل کرتے ہیں؟
+          </label>
           <input
             readOnly={true}
             type="number"
             defaultValue={0}
             required
-            name={`umeedwaranFilled`}
-            id={`umeedwaranFilled`}
+            name={`uploadedUmeedwaran`}
+            id={`uploadedUmeedwaran`}
             className="p-1 text-center "
           />
           +
           <input
             type="number"
+            readOnly={view}
             defaultValue={0}
             required
-            name={`manual-umeedwaranFilled`}
-            id={`manual-umeedwaranFilled`}
+            name={`manualUmeedwaran`}
+            id={`manualUmeedwaran`}
             className="p-1 text-center "
             oninput="calculateSum()"
           />
@@ -41,14 +44,12 @@ export const RozOShabDiary = ({ view }) => {
             readOnly={true}
             type="number"
             defaultValue={
-              parseInt(document.getElementById("umeedwaranFilled")?.value) +
-              parseInt(
-                document.getElementById("manual-umeedwaranFilled")?.value
-              )
+              parseInt(document.getElementById("uploadedUmeedwaran")?.value) +
+              parseInt(document.getElementById("manualUmeedwaran")?.value)
             }
             required
-            name={`umeedwaranFilled-sum`}
-            id={`umeedwaranFilled-sum`}
+            name={`umeedwaranFilledSum`}
+            id={`umeedwaranFilledSum`}
             className="p-1 text-center "
           />
         </div>
@@ -59,17 +60,18 @@ export const RozOShabDiary = ({ view }) => {
             type="number"
             defaultValue={0}
             required
-            name={`rafaqaFilled`}
-            id={`rafaqaFilled`}
+            name={`uploadedRafaqa`}
+            id={`uploadedRafaqa`}
             className="p-1 text-center "
           />
           +
           <input
             type="number"
+            readOnly={view}
             defaultValue={0}
             required
-            name={`manual-rafaqaFilled`}
-            id={`manual-rafaqaFilled`}
+            name={`manualRafaqa`}
+            id={`manualRafaqa`}
             className="p-1 text-center "
             oninput="calculateSum()"
           />
@@ -78,12 +80,12 @@ export const RozOShabDiary = ({ view }) => {
             readOnly={true}
             type="number"
             defaultValue={
-              parseInt(document.getElementById("rafaqaFilled")?.value) +
-              parseInt(document.getElementById("manual-rafaqaFilled")?.value)
+              parseInt(document.getElementById("uploadedRafaqa")?.value) +
+              parseInt(document.getElementById("manualRafaqa")?.value)
             }
             required
-            name={`rafaqaFilled-sum`}
-            id={`rafaqaFilled-sum`}
+            name={`rafaqaFilledSum`}
+            id={`rafaqaFilledSum`}
             className="p-1 text-center "
           />
         </div>

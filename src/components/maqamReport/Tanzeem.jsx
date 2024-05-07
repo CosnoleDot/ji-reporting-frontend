@@ -1,4 +1,4 @@
-import { Box } from './IfradiKuwat';
+import { Box } from "./IfradiKuwat";
 
 export const Tanzeem = ({ view }) => {
   const calcultate = (v) => {
@@ -11,55 +11,84 @@ export const Tanzeem = ({ view }) => {
     return parseInt(s.value) + parseInt(i.value) - parseInt(d.value);
   };
 
-  const calculateTotal = () => {
-    const prefixes = [
-      { 0: { 0: 'rehaishHalqay', 1: 'taleemHalqay' }, 1: 'totalHalqay' },
-      {
-        0: { 0: 'subRehaishHalqay', 1: 'subTaleemHalqay' },
-        1: 'subTotalHalqay',
-      },
-      {
-        0: { 0: 'busmSchoolUnits', 1: 'busmRehaishUnits' },
-        1: 'busmTotalUnits',
-      },
-    ];
-    const postfixes = [
-      'start',
-      'increase',
-      'decrease',
-      'end',
-      'continue',
-      'paused',
-    ];
-    postfixes.forEach((i) => {
-      prefixes.forEach((j) => {
-        // Object.values(j[0]).forEach((k) => {
-        const a = document.getElementById(`${j[0][0]}-${i}`).value;
-        const b = document.getElementById(`${j[0][1]}-${i}`).value;
-        document.getElementById(`${j[1]}-${i}`).value =
-          parseInt(a) + parseInt(b);
-        // });
-      });
-    });
+  const totalCalculate = (arg1, arg2, final) => {
+    // Function to safely access and set element value
+    const setElementValue = (id, value) => {
+      const element = document.getElementById(id);
+      if (element) {
+        element.value = value;
+      } else {
+        console.error(`Element with ID '${id}' not found.`);
+      }
+    };
 
-    document.getElementById('totalLibraries').value =
-      parseInt(document.getElementById('totalHalqay-start').value) +
-      parseInt(document.getElementById('totalHalqay-increase').value) -
-      parseInt(document.getElementById('totalHalqay-decrease').value);
+    // Arguments 1
+    const start1 = parseFloat(document.getElementById(`${arg1}-start`).value);
+    const increase1 = parseFloat(
+      document.getElementById(`${arg1}-increase`).value
+    );
+    const decrease1 = parseFloat(
+      document.getElementById(`${arg1}-decrease`).value
+    );
+    const end1 = parseFloat(document.getElementById(`${arg1}-end`).value);
+    const continue1 = parseFloat(
+      document.getElementById(`${arg1}-continue`).value
+    );
+    const paused1 = parseFloat(document.getElementById(`${arg1}-paused`).value);
+
+    // Arguments 2
+    const start2 = parseFloat(document.getElementById(`${arg2}-start`).value);
+    const increase2 = parseFloat(
+      document.getElementById(`${arg2}-increase`).value
+    );
+    const decrease2 = parseFloat(
+      document.getElementById(`${arg2}-decrease`).value
+    );
+    const end2 = parseFloat(document.getElementById(`${arg2}-end`).value);
+    const continue2 = parseFloat(
+      document.getElementById(`${arg2}-continue`).value
+    );
+    const paused2 = parseFloat(document.getElementById(`${arg2}-paused`).value);
+    if (end1 && end2) {
+      document.getElementById(`${final.split("-")[0]}-end`).value = end1 + end2;
+    }
+    // Functionality
+    const calculationSwitch = (key) => {
+      switch (key) {
+        case "start":
+          return start1 + start2;
+        case "increase":
+          return increase1 + increase2;
+        case "decrease":
+          return decrease1 + decrease2;
+        case "end":
+          return end1 + end2;
+        case "continue":
+          return continue1 + continue2;
+        case "paused":
+          return paused1 + paused2;
+        default:
+          break;
+      }
+    };
+
+    // Set the value of the final element if it exists
+    setElementValue(final, calculationSwitch(final.split("-")[1]));
   };
 
   return (
-    <div className='relative w-full overflow-auto'>
-      <table className='w-full table'>
+    <div className="relative w-full overflow-auto">
+      <table className="w-full table">
         <thead>
           <tr>
-            <Box type={'heading'}>تنظیم</Box>
+            <Box type={"heading"}>تنظیم</Box>
             <Box>آغازمیں</Box>
             <Box>اِضافہ</Box>
             <Box>کمی</Box>
             <Box>اختتام پر</Box>
             <Box>فعال</Box>
             <Box>غیرفعال</Box>
+            <Box>ماہانہ ہدف</Box>
           </tr>
         </thead>
         <tbody>
@@ -68,82 +97,125 @@ export const Tanzeem = ({ view }) => {
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
                 name={`rehaishHalqay-start`}
                 id={`rehaishHalqay-start`}
                 onChange={() => {
-                  calcultate('rehaishHalqay');
-                  calculateTotal();
+                  calcultate("rehaishHalqay");
+                  totalCalculate(
+                    "taleemHalqay",
+                    "rehaishHalqay",
+                    "totalHalqay-start"
+                  );
                 }}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
                 name={`rehaishHalqay-increase`}
                 id={`rehaishHalqay-increase`}
                 onChange={() => {
-                  calcultate('rehaishHalqay');
-                  calculateTotal();
+                  calcultate("rehaishHalqay");
+                  totalCalculate(
+                    "taleemHalqay",
+                    "rehaishHalqay",
+                    "totalHalqay-increase"
+                  );
                 }}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
                 name={`rehaishHalqay-decrease`}
                 id={`rehaishHalqay-decrease`}
                 onChange={() => {
-                  calcultate('rehaishHalqay');
-                  calculateTotal();
+                  calcultate("rehaishHalqay");
+                  totalCalculate(
+                    "taleemHalqay",
+                    "rehaishHalqay",
+                    "totalHalqay-decrease"
+                  );
                 }}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={true}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
                 name={`rehaishHalqay-end`}
-                onChange={calculateTotal}
+                onChange={() => {
+                  totalCalculate(
+                    "taleemHalqay",
+                    "rehaishHalqay",
+                    "rehaishHalqay-end"
+                  );
+                }}
                 id={`rehaishHalqay-end`}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
-                onChange={calculateTotal}
+                name={`rehaishHalqay-monthly`}
+                id={`rehaishHalqay-monthly`}
+                className="p-1 text-center min-w-full"
+              />
+            </Box>
+            <Box>
+              <input
+                readOnly={view}
+                type="number"
+                defaultValue={0}
+                required
+                onChange={() => {
+                  calcultate("taleemHalqay");
+                  totalCalculate(
+                    "taleemHalqay",
+                    "rehaishHalqay",
+                    "totalHalqay-continue"
+                  );
+                }}
                 name={`rehaishHalqay-continue`}
                 id={`rehaishHalqay-continue`}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
-                onChange={calculateTotal}
                 name={`rehaishHalqay-paused`}
                 id={`rehaishHalqay-paused`}
-                className='p-1 text-center min-w-full'
+                onChange={() => {
+                  calcultate("taleemHalqay");
+                  totalCalculate(
+                    "taleemHalqay",
+                    "rehaishHalqay",
+                    "totalHalqay-paused"
+                  );
+                }}
+                className="p-1 text-center min-w-full"
               />
             </Box>
           </tr>
@@ -152,82 +224,123 @@ export const Tanzeem = ({ view }) => {
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
                 name={`taleemHalqay-start`}
                 id={`taleemHalqay-start`}
                 onChange={() => {
-                  calcultate('taleemHalqay');
-                  calculateTotal();
+                  calcultate("taleemHalqay");
+                  totalCalculate(
+                    "taleemHalqay",
+                    "rehaishHalqay",
+                    "totalHalqay-start"
+                  );
                 }}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
                 name={`taleemHalqay-increase`}
                 id={`taleemHalqay-increase`}
                 onChange={() => {
-                  calcultate('taleemHalqay');
-                  calculateTotal();
+                  calcultate("taleemHalqay");
+                  totalCalculate(
+                    "taleemHalqay",
+                    "rehaishHalqay",
+                    "totalHalqay-increase"
+                  );
                 }}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
                 name={`taleemHalqay-decrease`}
                 id={`taleemHalqay-decrease`}
                 onChange={() => {
-                  calcultate('taleemHalqay');
-                  calculateTotal();
+                  calcultate("taleemHalqay");
+                  totalCalculate(
+                    "taleemHalqay",
+                    "rehaishHalqay",
+                    "totalHalqay-decrease"
+                  );
                 }}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={true}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
                 name={`taleemHalqay-end`}
-                onChange={calculateTotal}
+                onChange={() => {
+                  totalCalculate(
+                    "taleemHalqay",
+                    "rehaishHalqay",
+                    "totalHalqay-end"
+                  );
+                }}
                 id={`taleemHalqay-end`}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
                 name={`taleemHalqay-continue`}
                 id={`taleemHalqay-continue`}
-                onChange={calculateTotal}
-                className='p-1 text-center min-w-full'
+                onChange={() =>
+                  totalCalculate(
+                    "taleemHalqay",
+                    "rehaishHalqay",
+                    "totalHalqay-continue"
+                  )
+                }
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
                 name={`taleemHalqay-paused`}
                 id={`taleemHalqay-paused`}
-                onChange={calculateTotal}
-                className='p-1 text-center min-w-full'
+                onChange={() =>
+                  totalCalculate(
+                    "taleemHalqay",
+                    "rehaishHalqay",
+                    "totalHalqay-paused"
+                  )
+                }
+                className="p-1 text-center min-w-full"
+              />
+            </Box>
+            <Box>
+              <input
+                readOnly={view}
+                type="number"
+                defaultValue={0}
+                required
+                name={`taleemHalqay-monthly`}
+                id={`taleemHalqay-monthly`}
+                className="p-1 text-center min-w-full"
               />
             </Box>
           </tr>
@@ -235,85 +348,79 @@ export const Tanzeem = ({ view }) => {
             <Box>کل حلقے</Box>
             <Box>
               <input
-                readOnly={true}
-                type='number'
+                readOnly
+                type="number"
                 defaultValue={0}
                 required
                 name={`totalHalqay-start`}
                 id={`totalHalqay-start`}
-                onChange={() => {
-                  calcultate('totalHalqay');
-                  calculateTotal();
-                }}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
-                readOnly={true}
-                type='number'
+                readOnly
+                type="number"
                 defaultValue={0}
                 required
                 name={`totalHalqay-increase`}
                 id={`totalHalqay-increase`}
-                onChange={() => {
-                  calcultate('totalHalqay');
-                  calculateTotal();
-                }}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
-                readOnly={true}
-                type='number'
+                readOnly
+                type="number"
                 defaultValue={0}
                 required
                 name={`totalHalqay-decrease`}
                 id={`totalHalqay-decrease`}
-                onChange={() => {
-                  calcultate('totalHalqay');
-                  calculateTotal();
-                }}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
-                readOnly={true}
-                type='number'
+                readOnly
+                type="number"
                 defaultValue={0}
                 required
                 name={`totalHalqay-end`}
-                onChange={(e) => {
-                  calculateTotal();
-                }}
                 id={`totalHalqay-end`}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
-                readOnly={true}
-                type='number'
+                readOnly
+                type="number"
                 defaultValue={0}
                 required
                 name={`totalHalqay-continue`}
                 id={`totalHalqay-continue`}
-                onChange={calculateTotal}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
-                readOnly={true}
-                type='number'
+                readOnly
+                type="number"
                 defaultValue={0}
                 required
                 name={`totalHalqay-paused`}
                 id={`totalHalqay-paused`}
-                onChange={calculateTotal}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
+              />
+            </Box>
+            <Box>
+              <input
+                readOnly={view}
+                type="number"
+                defaultValue={0}
+                required
+                name={`totalHalqay-monthly`}
+                id={`totalHalqay-monthly`}
+                className="p-1 text-center min-w-full"
               />
             </Box>
           </tr>
@@ -322,82 +429,123 @@ export const Tanzeem = ({ view }) => {
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
                 name={`subRehaishHalqay-start`}
                 id={`subRehaishHalqay-start`}
                 onChange={() => {
-                  calcultate('subRehaishHalqay');
-                  calculateTotal();
+                  calcultate("subRehaishHalqay");
+                  totalCalculate(
+                    "subTaleemHalqay",
+                    "subRehaishHalqay",
+                    "subTotalHalqay-start"
+                  );
                 }}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
                 name={`subRehaishHalqay-increase`}
                 id={`subRehaishHalqay-increase`}
                 onChange={() => {
-                  calcultate('subRehaishHalqay');
-                  calculateTotal();
+                  calcultate("subRehaishHalqay");
+                  totalCalculate(
+                    "subTaleemHalqay",
+                    "subRehaishHalqay",
+                    "subTotalHalqay-increase"
+                  );
                 }}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
                 name={`subRehaishHalqay-decrease`}
                 id={`subRehaishHalqay-decrease`}
                 onChange={() => {
-                  calcultate('subRehaishHalqay');
-                  calculateTotal();
+                  calcultate("subRehaishHalqay");
+                  totalCalculate(
+                    "subTaleemHalqay",
+                    "subRehaishHalqay",
+                    "subTotalHalqay-decrease"
+                  );
                 }}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={true}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
                 name={`subRehaishHalqay-end`}
-                onChange={calculateTotal}
                 id={`subRehaishHalqay-end`}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
-                onChange={calculateTotal}
+                onChange={() => {
+                  totalCalculate(
+                    "subTaleemHalqay",
+                    "subRehaishHalqay",
+                    "subTotalHalqay-continue"
+                  );
+                }}
                 name={`subRehaishHalqay-continue`}
                 id={`subRehaishHalqay-continue`}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
-                onChange={calculateTotal}
+                onChange={() => {
+                  totalCalculate(
+                    "subTaleemHalqay",
+                    "subRehaishHalqay",
+                    "subTotalHalqay-paused"
+                  );
+                }}
                 name={`subRehaishHalqay-paused`}
                 id={`subRehaishHalqay-paused`}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
+              />
+            </Box>
+            <Box>
+              <input
+                readOnly={view}
+                type="number"
+                defaultValue={0}
+                required
+                onChange={() => {
+                  totalCalculate(
+                    "subTaleemHalqay",
+                    "subRehaishHalqay",
+                    "subTotalHalqay-monthly"
+                  );
+                }}
+                name={`subRehaishHalqay-monthly`}
+                id={`subRehaishHalqay-monthly`}
+                className="p-1 text-center min-w-full"
               />
             </Box>
           </tr>
@@ -406,82 +554,116 @@ export const Tanzeem = ({ view }) => {
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
                 name={`subTaleemHalqay-start`}
                 id={`subTaleemHalqay-start`}
                 onChange={() => {
-                  calcultate('subTaleemHalqay');
-                  calculateTotal();
+                  calcultate("subTaleemHalqay");
+                  totalCalculate(
+                    "subTaleemHalqay",
+                    "subRehaishHalqay",
+                    "subTotalHalqay-start"
+                  );
                 }}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
                 name={`subTaleemHalqay-increase`}
                 id={`subTaleemHalqay-increase`}
                 onChange={() => {
-                  calcultate('subTaleemHalqay');
-                  calculateTotal();
+                  calcultate("subTaleemHalqay");
+                  totalCalculate(
+                    "subTaleemHalqay",
+                    "subRehaishHalqay",
+                    "subTotalHalqay-increase"
+                  );
                 }}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
                 name={`subTaleemHalqay-decrease`}
                 id={`subTaleemHalqay-decrease`}
                 onChange={() => {
-                  calcultate('subTaleemHalqay');
-                  calculateTotal();
+                  calcultate("subTaleemHalqay");
+                  totalCalculate(
+                    "subTaleemHalqay",
+                    "subRehaishHalqay",
+                    "subTotalHalqay-decrease"
+                  );
                 }}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={true}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
                 name={`subTaleemHalqay-end`}
                 id={`subTaleemHalqay-end`}
-                onChange={calculateTotal}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
                 name={`subTaleemHalqay-continue`}
                 id={`subTaleemHalqay-continue`}
-                onChange={calculateTotal}
-                className='p-1 text-center min-w-full'
+                onChange={() => {
+                  totalCalculate(
+                    "subTaleemHalqay",
+                    "subRehaishHalqay",
+                    "subTotalHalqay-continue"
+                  );
+                }}
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
+                onChange={() => {
+                  totalCalculate(
+                    "subTaleemHalqay",
+                    "subRehaishHalqay",
+                    "subTotalHalqay-paused"
+                  );
+                }}
                 name={`subTaleemHalqay-paused`}
                 id={`subTaleemHalqay-paused`}
-                onChange={calculateTotal}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
+              />
+            </Box>
+            <Box>
+              <input
+                readOnly={view}
+                type="number"
+                defaultValue={0}
+                required
+                name={`subTaleemHalqay-monthly`}
+                id={`subTaleemHalqay-monthly`}
+                className="p-1 text-center min-w-full"
               />
             </Box>
           </tr>
@@ -490,82 +672,78 @@ export const Tanzeem = ({ view }) => {
             <Box>
               <input
                 readOnly={true}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
                 name={`subTotalHalqay-start`}
                 id={`subTotalHalqay-start`}
-                onChange={() => {
-                  calcultate('subTotalHalqay');
-                  calculateTotal();
-                }}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={true}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
                 name={`subTotalHalqay-increase`}
                 id={`subTotalHalqay-increase`}
-                onChange={() => {
-                  calcultate('subTotalHalqay');
-                  calculateTotal();
-                }}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={true}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
                 name={`subTotalHalqay-decrease`}
                 id={`subTotalHalqay-decrease`}
-                onChange={() => {
-                  calcultate('subTotalHalqay');
-                  calculateTotal();
-                }}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={true}
-                type='number'
+                type="number"
                 defaultValue={0}
-                onChange={calculateTotal}
                 required
                 name={`subTotalHalqay-end`}
                 id={`subTotalHalqay-end`}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={true}
-                onChange={calculateTotal}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
                 name={`subTotalHalqay-continue`}
                 id={`subTotalHalqay-continue`}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={true}
-                onChange={calculateTotal}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
                 name={`subTotalHalqay-paused`}
                 id={`subTotalHalqay-paused`}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
+              />
+            </Box>
+            <Box>
+              <input
+                readOnly={view}
+                type="number"
+                defaultValue={0}
+                required
+                name={`subTotalHalqay-monthly`}
+                id={`subTotalHalqay-monthly`}
+                className="p-1 text-center min-w-full"
               />
             </Box>
           </tr>
@@ -574,82 +752,117 @@ export const Tanzeem = ({ view }) => {
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
                 name={`busmSchoolUnits-start`}
                 id={`busmSchoolUnits-start`}
                 onChange={() => {
-                  calcultate('busmSchoolUnits');
-                  calculateTotal();
+                  calcultate("busmSchoolUnits");
+                  totalCalculate(
+                    "busmSchoolUnits",
+                    "busmRehaishUnits",
+                    "busmTotalUnits-start"
+                  );
                 }}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
                 name={`busmSchoolUnits-increase`}
                 id={`busmSchoolUnits-increase`}
                 onChange={() => {
-                  calcultate('busmSchoolUnits');
-                  calculateTotal();
+                  calcultate("busmSchoolUnits");
+                  totalCalculate(
+                    "busmSchoolUnits",
+                    "busmRehaishUnits",
+                    "busmTotalUnits-increase"
+                  );
                 }}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
                 name={`busmSchoolUnits-decrease`}
                 id={`busmSchoolUnits-decrease`}
                 onChange={() => {
-                  calcultate('busmSchoolUnits');
-                  calculateTotal();
+                  calcultate("busmSchoolUnits");
+                  totalCalculate(
+                    "busmSchoolUnits",
+                    "busmRehaishUnits",
+                    "busmTotalUnits-decrease"
+                  );
                 }}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={true}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
-                onChange={calculateTotal}
                 name={`busmSchoolUnits-end`}
                 id={`busmSchoolUnits-end`}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
-                onChange={calculateTotal}
+                onChange={() => {
+                  totalCalculate(
+                    "busmSchoolUnits",
+                    "busmRehaishUnits",
+                    "busmTotalUnits-continue"
+                  );
+                }}
                 name={`busmSchoolUnits-continue`}
                 id={`busmSchoolUnits-continue`}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 defaultValue={0}
-                onChange={calculateTotal}
+                onChange={() => {
+                  calcultate("busmSchoolUnits");
+                  totalCalculate(
+                    "busmSchoolUnits",
+                    "busmRehaishUnits",
+                    "busmTotalUnits-paused"
+                  );
+                }}
                 required
                 name={`busmSchoolUnits-paused`}
                 id={`busmSchoolUnits-paused`}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
+              />
+            </Box>
+            <Box>
+              <input
+                readOnly={view}
+                type="number"
+                defaultValue={0}
+                required
+                name={`busmSchoolUnits-monthly`}
+                id={`busmSchoolUnits-monthly`}
+                className="p-1 text-center min-w-full"
               />
             </Box>
           </tr>
@@ -658,82 +871,116 @@ export const Tanzeem = ({ view }) => {
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
                 name={`busmRehaishUnits-start`}
                 id={`busmRehaishUnits-start`}
                 onChange={() => {
-                  calcultate('busmRehaishUnits');
-                  calculateTotal();
+                  calcultate("busmRehaishUnits");
+                  totalCalculate(
+                    "busmSchoolUnits",
+                    "busmRehaishUnits",
+                    "busmTotalUnits-start"
+                  );
                 }}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
                 name={`busmRehaishUnits-increase`}
                 id={`busmRehaishUnits-increase`}
                 onChange={() => {
-                  calcultate('busmRehaishUnits');
-                  calculateTotal();
+                  calcultate("busmRehaishUnits");
+                  totalCalculate(
+                    "busmSchoolUnits",
+                    "busmRehaishUnits",
+                    "busmTotalUnits-increase"
+                  );
                 }}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
                 name={`busmRehaishUnits-decrease`}
                 id={`busmRehaishUnits-decrease`}
                 onChange={() => {
-                  calcultate('busmRehaishUnits');
-                  calculateTotal();
+                  calcultate("busmRehaishUnits");
+                  totalCalculate(
+                    "busmSchoolUnits",
+                    "busmRehaishUnits",
+                    "busmTotalUnits-decrease"
+                  );
                 }}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={true}
-                type='number'
+                type="number"
                 defaultValue={0}
-                onChange={calculateTotal}
                 required
                 name={`busmRehaishUnits-end`}
                 id={`busmRehaishUnits-end`}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                onChange={calculateTotal}
-                type='number'
+                onChange={() => {
+                  totalCalculate(
+                    "busmSchoolUnits",
+                    "busmRehaishUnits",
+                    "busmTotalUnits-continue"
+                  );
+                }}
+                type="number"
                 defaultValue={0}
                 required
                 name={`busmRehaishUnits-continue`}
                 id={`busmRehaishUnits-continue`}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
-                type='number'
+                type="number"
                 defaultValue={0}
-                onChange={calculateTotal}
+                onChange={() => {
+                  totalCalculate(
+                    "busmSchoolUnits",
+                    "busmRehaishUnits",
+                    "busmTotalUnits-paused"
+                  );
+                }}
                 required
                 name={`busmRehaishUnits-paused`}
                 id={`busmRehaishUnits-paused`}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
+              />
+            </Box>
+            <Box>
+              <input
+                readOnly={view}
+                type="number"
+                defaultValue={0}
+                required
+                name={`busmRehaishUnits-monthly`}
+                id={`busmRehaishUnits-monthly`}
+                className="p-1 text-center min-w-full"
               />
             </Box>
           </tr>
@@ -742,82 +989,78 @@ export const Tanzeem = ({ view }) => {
             <Box>
               <input
                 readOnly={true}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
                 name={`busmTotalUnits-start`}
                 id={`busmTotalUnits-start`}
-                onChange={() => {
-                  calcultate('busmTotalUnits');
-                  calculateTotal();
-                }}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={true}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
                 name={`busmTotalUnits-increase`}
-                onChange={() => {
-                  calcultate('busmTotalUnits');
-                  calculateTotal();
-                }}
                 id={`busmTotalUnits-increase`}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={true}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
                 name={`busmTotalUnits-decrease`}
-                onChange={() => {
-                  calcultate('busmTotalUnits');
-                  calculateTotal();
-                }}
                 id={`busmTotalUnits-decrease`}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={true}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
-                onChange={calculateTotal}
                 name={`busmTotalUnits-end`}
                 id={`busmTotalUnits-end`}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={true}
-                type='number'
+                type="number"
                 defaultValue={0}
-                onChange={calculateTotal}
                 required
                 name={`busmTotalUnits-continue`}
                 id={`busmTotalUnits-continue`}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={true}
-                onChange={calculateTotal}
-                type='number'
+                type="number"
                 defaultValue={0}
                 required
                 name={`busmTotalUnits-paused`}
                 id={`busmTotalUnits-paused`}
-                className='p-1 text-center min-w-full'
+                className="p-1 text-center min-w-full"
+              />
+            </Box>
+            <Box>
+              <input
+                readOnly={view}
+                type="number"
+                defaultValue={0}
+                required
+                name={`busmTotalUnits-monthly`}
+                id={`busmTotalUnits-monthly`}
+                className="p-1 text-center min-w-full"
               />
             </Box>
           </tr>

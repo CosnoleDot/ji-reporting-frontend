@@ -1,31 +1,30 @@
-import React from "react";
-import { Box } from "./IfradiKuwat";
+import { Box } from "../halqa";
 
-export const MarkaziActivities = ({ view }) => {
+export const Colleges = ({ view }) => {
   return (
     <div className="relative w-full overflow-auto">
+      <h2 className="mb-2 text-lg">کالجز </h2>
       <table className="w-full table">
         <thead>
           <tr>
-            <Box type={"heading"}>مرکزی طے شدہ سرگرمیاں</Box>
-            <Box>طے شدہ</Box>
-            <Box>منعقدہ</Box>
-            <Box>اوسط حاضری</Box>
-            {/* <Box>مرتب</Box> */}
+            <Box type={"heading"}>نام کیٹیگری</Box>
+            <Box>آغاز میں</Box>
+            <Box>اضافہ</Box>
+            <Box>اختتام پر</Box>
+            <Box>ماہانہ ہدف</Box>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <Box>اجتماع ارکان</Box>
+            <Box>A</Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type="number"
                 defaultValue={0}
                 required
-                name={`ijtArkan-decided`}
-                value={1}
-                id={`ijtArkan-decided`}
+                name={`collegesA-start`}
+                id={`collegesA-start`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
@@ -35,8 +34,8 @@ export const MarkaziActivities = ({ view }) => {
                 type="number"
                 defaultValue={0}
                 required
-                name={`ijtArkan-done`}
-                id={`ijtArkan-done`}
+                name={`collegesA-increase`}
+                id={`collegesA-increase`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
@@ -46,33 +45,33 @@ export const MarkaziActivities = ({ view }) => {
                 type="number"
                 defaultValue={0}
                 required
-                name={`ijtArkan-averageAttendance`}
-                id={`ijtArkan-averageAttendance`}
+                name={`collegesA-end`}
+                id={`collegesA-end`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
-
-            {/* <Box>
+            <Box>
               <input
-                disabled={view}
-                type='checkbox'
-                className='p-1 text-center min-w-full checkbox'
-                name={`ijtArkan-registered`}
-                id={`ijtArkan-registered`}
+                readOnly={view}
+                type="number"
+                defaultValue={0}
+                required
+                name={`collegesA-monthly`}
+                id={`collegesA-monthly`}
+                className="p-1 text-center min-w-full"
               />
-            </Box> */}
+            </Box>
           </tr>
           <tr>
-            <Box>سٹڈی سرکل</Box>
+            <Box>B</Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type="number"
                 defaultValue={0}
                 required
-                name={`studyCircle-decided`}
-                value={1}
-                id={`studyCircle-decided`}
+                name={`collegesB-start`}
+                id={`collegesB-start`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
@@ -82,8 +81,8 @@ export const MarkaziActivities = ({ view }) => {
                 type="number"
                 defaultValue={0}
                 required
-                name={`studyCircle-done`}
-                id={`studyCircle-done`}
+                name={`collegesB-increase`}
+                id={`collegesB-increase`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
@@ -93,33 +92,33 @@ export const MarkaziActivities = ({ view }) => {
                 type="number"
                 defaultValue={0}
                 required
-                name={`studyCircle-averageAttendance`}
-                id={`studyCircle-averageAttendance`}
+                name={`collegesB-end`}
+                id={`collegesB-end`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
-
-            {/* <Box>
+            <Box>
               <input
-                disabled={view}
-                type='checkbox'
-                className='p-1 text-center min-w-full checkbox'
-                name={`studyCircle-registered`}
-                id={`studyCircle-registered`}
+                readOnly={view}
+                type="number"
+                defaultValue={0}
+                required
+                name={`collegesB-monthly`}
+                id={`collegesB-monthly`}
+                className="p-1 text-center min-w-full"
               />
-            </Box> */}
+            </Box>
           </tr>
           <tr>
-            <Box>اجتماع ناظمین</Box>
+            <Box>C</Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type="number"
                 defaultValue={0}
                 required
-                name={`ijtNazmeen-decided`}
-                value={1}
-                id={`ijtNazmeen-decided`}
+                name={`collegesC-start`}
+                id={`collegesC-start`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
@@ -129,8 +128,8 @@ export const MarkaziActivities = ({ view }) => {
                 type="number"
                 defaultValue={0}
                 required
-                name={`ijtNazmeen-done`}
-                id={`ijtNazmeen-done`}
+                name={`collegesC-increase`}
+                id={`collegesC-increase`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
@@ -140,33 +139,33 @@ export const MarkaziActivities = ({ view }) => {
                 type="number"
                 defaultValue={0}
                 required
-                name={`ijtNazmeen-averageAttendance`}
-                id={`ijtNazmeen-averageAttendance`}
+                name={`collegesC-end`}
+                id={`collegesC-end`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
-
-            {/* <Box>
+            <Box>
               <input
-                disabled={view}
-                type='checkbox'
-                className='p-1 text-center min-w-full checkbox'
-                name={`ijtNazmeen-registered`}
-                id={`ijtNazmeen-registered`}
+                readOnly={view}
+                type="number"
+                defaultValue={0}
+                required
+                name={`collegesC-monthly`}
+                id={`collegesC-monthly`}
+                className="p-1 text-center min-w-full"
               />
-            </Box> */}
+            </Box>
           </tr>
           <tr>
-            <Box>اجتماع امیدواران</Box>
+            <Box>D</Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type="number"
                 defaultValue={0}
                 required
-                name={`ijtUmeedwaran-decided`}
-                value={2}
-                id={`ijtUmeedwaran-decided`}
+                name={`collegesD-start`}
+                id={`collegesD-start`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
@@ -176,8 +175,8 @@ export const MarkaziActivities = ({ view }) => {
                 type="number"
                 defaultValue={0}
                 required
-                name={`ijtUmeedwaran-done`}
-                id={`ijtUmeedwaran-done`}
+                name={`collegesD-increase`}
+                id={`collegesD-increase`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
@@ -187,33 +186,8 @@ export const MarkaziActivities = ({ view }) => {
                 type="number"
                 defaultValue={0}
                 required
-                name={`ijtUmeedwaran-averageAttendance`}
-                id={`ijtUmeedwaran-averageAttendance`}
-                className="p-1 text-center min-w-full"
-              />
-            </Box>
-
-            {/* <Box>
-              <input
-                disabled={view}
-                type='checkbox'
-                className='p-1 text-center min-w-full checkbox'
-                name={`ijtUmeedwaran-registered`}
-                id={`ijtUmeedwaran-registered`}
-              />
-            </Box> */}
-          </tr>
-          <tr>
-            <Box>صدورمیٹنگ</Box>
-            <Box>
-              <input
-                readOnly={true}
-                type="number"
-                defaultValue={0}
-                required
-                name={`sadurMeeting-decided`}
-                value={1}
-                id={`sadurMeeting-decided`}
+                name={`collegesD-end`}
+                id={`collegesD-end`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
@@ -223,32 +197,11 @@ export const MarkaziActivities = ({ view }) => {
                 type="number"
                 defaultValue={0}
                 required
-                name={`sadurMeeting-done`}
-                id={`sadurMeeting-done`}
+                name={`collegesD-monthly`}
+                id={`collegesD-monthly`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
-            <Box>
-              <input
-                readOnly={view}
-                type="number"
-                defaultValue={0}
-                required
-                name={`sadurMeeting-averageAttendance`}
-                id={`sadurMeeting-averageAttendance`}
-                className="p-1 text-center min-w-full"
-              />
-            </Box>
-
-            {/* <Box>
-              <input
-                disabled={view}
-                type='checkbox'
-                className='p-1 text-center min-w-full checkbox'
-                name={`sadurMeeting-registered`}
-                id={`sadurMeeting-registered`}
-              />
-            </Box> */}
           </tr>
         </tbody>
       </table>

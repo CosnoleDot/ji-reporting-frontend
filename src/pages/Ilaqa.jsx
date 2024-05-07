@@ -71,21 +71,10 @@ export const Ilaqa = () => {
         "shabBedari",
         "nizamSalah",
         "rawabitDecided",
-        "current",
-        "meetings",
-        "literatureDistribution",
-        "commonStudentMeetings",
-        "commonLiteratureDistribution",
-        "totalBooks",
-        "meetings",
-        "literatureDistribution",
-        "commonStudentMeetings",
-        "commonLiteratureDistribution",
         "totalBooks",
         "totalIncrease",
         "totalDecrease",
         "totalBookRent",
-        "rafaqaFilled",
       ].forEach((i) => {
         document.getElementById(i).value = 0;
       });
@@ -126,6 +115,22 @@ export const Ilaqa = () => {
       let j;
       if (i === "studyCircle-decided") {
         j = "studyCircleMentioned-decided";
+      } else if (i === "current") {
+        j = "uploadedCurrent";
+      } else if (i === "meetings") {
+        j = "uploadedMeetings";
+      } else if (i === "literatureDistribution") {
+        j = "uploadedLitrature";
+      } else if (i === "commonLiteratureDistribution") {
+        j = "uploadedCommonLiteratureDistribution";
+      } else if (i === "commonStudentMeetings") {
+        j = "uploadedCommonStudentMeetings";
+      } else if (i === "studyCircle-decided") {
+        j = "studyCircleMentioned-decided";
+      } else if (i === "umeedwaranFilled") {
+        j = "uploadedUmeedwaran";
+      } else if (i === "rafaqaFilled") {
+        j = "uploadedRafaqa";
       } else if (i === "studyCircle-completed") {
         j = "studyCircleMentioned-done";
       } else if (i === "studyCircle-attendance") {
@@ -147,6 +152,7 @@ export const Ilaqa = () => {
           j = i;
         }
       }
+
       const elem = document.getElementById(j);
       if (elem) {
         if (j === "month") {
@@ -261,7 +267,6 @@ export const Ilaqa = () => {
 
     // Replace null values with zero
     for (const key in jsonData) {
-      console.log(key);
       if (jsonData.hasOwnProperty(key) && jsonData[key] === null) {
         jsonData[key] = 0;
       }
@@ -282,8 +287,6 @@ export const Ilaqa = () => {
     try {
       if (id) {
         jsonData.month = data?.month;
-        console.log(jsonData);
-        return;
         const req = await instance.put(`/reports/ilaqa/${id}`, jsonData, {
           headers: {
             "Content-Type": "application/json",
@@ -369,10 +372,10 @@ export const Ilaqa = () => {
               <OtherActivities view={view} />
             </div>
             <div className="mb-4">
-              <ToseeDawat />
+              <ToseeDawat view={view} />
             </div>
             <div className="mb-4">
-              <Library />
+              <Library view={view} />
             </div>
             <div className="mb-4">
               <PaighamDigest view={view} />

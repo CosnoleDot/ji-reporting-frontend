@@ -1117,9 +1117,66 @@ export const Reports = () => {
                       </div>
                     </div>
                   )
+<<<<<<< HEAD
                 ) : active === "halqa" &&
                   tab === "maqam" &&
                   localStorage.getItem("@type") === "maqam" ? (
+=======
+                ) : active === "ilaqa" ? (
+                  obj?.ilaqaAreaId?._id.toString() ===
+                    me?.userAreaId?._id.toString() && (
+                    <div
+                      key={obj?._id}
+                      className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
+                    >
+                      <div className="flex w-full flex-col items-start justify-center">
+                        <span className="text-lg font-semibold">
+                          {((active !== "province" || active !== "halqa") &&
+                            obj?.[active + "AreaId"]?.name) ||
+                            "UNKNOWN"}
+                          {" - "}
+                          {getDivisionByTehsil(
+                            obj?.[active + "AreaId"]?.parentId,
+                            districts
+                          )}
+                          {" - "}
+                          {moment(obj?.month).format("MMMM YYYY")}
+                        </span>
+                        <span>
+                          Last Modified: {moment(obj?.updatedAt).fromNow()}
+                        </span>
+                      </div>
+                      <div className="flex items-end w-full justify-end gap-3 ">
+                        <button
+                          className="btn"
+                          onClick={() => viewReport(obj?._id)}
+                        >
+                          <FaEye />
+                        </button>
+                        {active === localStorage.getItem("@type") && (
+                          <button
+                            className="btn"
+                            onClick={() => editReport(obj?._id)}
+                          >
+                            <FaEdit />
+                          </button>
+                        )}
+                        <button
+                          className="btn"
+                          onClick={() =>
+                            window.open(
+                              `/${active}-report/print/${obj?._id}`,
+                              "blank"
+                            )
+                          }
+                        >
+                          <FaPrint />
+                        </button>
+                      </div>
+                    </div>
+                  )
+                ) : active === "halqa" && tab === "maqam" ? (
+>>>>>>> 95d0abc10a2bcef38bf76459b1b3b8f5b4de544c
                   obj?.halqaAreaId?.parentType === "Maqam" && (
                     <div
                       key={obj?._id}

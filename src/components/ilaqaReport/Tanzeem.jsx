@@ -76,13 +76,6 @@ export const Tanzeem = ({ view }) => {
     setElementValue(final, calculationSwitch(final.split("-")[1]));
   };
 
-  const calculateTotal = () => {
-    document.getElementById("totalLibraries").value =
-      parseInt(document.getElementById("totalHalqay-start").value) +
-      parseInt(document.getElementById("totalHalqay-increase").value) -
-      parseInt(document.getElementById("totalHalqay-decrease").value);
-  };
-
   return (
     <div className="relative w-full overflow-auto">
       <table className="w-full table">
@@ -178,7 +171,7 @@ export const Tanzeem = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type="number"
                 defaultValue={0}
                 required
@@ -421,7 +414,7 @@ export const Tanzeem = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly
+                readOnly={view}
                 type="number"
                 defaultValue={0}
                 required
@@ -1061,7 +1054,7 @@ export const Tanzeem = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type="number"
                 defaultValue={0}
                 required

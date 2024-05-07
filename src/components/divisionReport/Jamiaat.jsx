@@ -1,31 +1,52 @@
-import React from "react";
-import { Box } from "./IfradiKuwat";
+import { Box } from "../halqa";
 
-export const MarkaziActivities = ({ view }) => {
+export const Jamiaat = ({ view }) => {
   return (
     <div className="relative w-full overflow-auto">
+      <h2 className="mb-2 text-lg">جامعات </h2>
       <table className="w-full table">
         <thead>
           <tr>
-            <Box type={"heading"}>مرکزی طے شدہ سرگرمیاں</Box>
-            <Box>طے شدہ</Box>
-            <Box>منعقدہ</Box>
-            <Box>اوسط حاضری</Box>
-            {/* <Box>مرتب</Box> */}
+            <Box type={"heading"}>نام کیٹیگری</Box>
+            <Box>آغاز میں</Box>
+            <Box>اضافہ</Box>
+            <Box>اختتام پر</Box>
+            <Box>ماہانہ ہدف</Box>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <Box>اجتماع ارکان</Box>
+            <Box>A</Box>
+            <Box>
+              <input
+                readOnly={view}
+                type="number"
+                defaultValue={0}
+                required
+                name={`jamiaatA-start`}
+                id={`jamiaatA-start`}
+                className="p-1 text-center min-w-full"
+              />
+            </Box>
+            <Box>
+              <input
+                readOnly={view}
+                type="number"
+                defaultValue={0}
+                required
+                name={`jamiaatA-increase`}
+                id={`jamiaatA-increase`}
+                className="p-1 text-center min-w-full"
+              />
+            </Box>
             <Box>
               <input
                 readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
-                name={`ijtArkan-decided`}
-                value={1}
-                id={`ijtArkan-decided`}
+                name={`jamiaatA-end`}
+                id={`jamiaatA-end`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
@@ -35,44 +56,44 @@ export const MarkaziActivities = ({ view }) => {
                 type="number"
                 defaultValue={0}
                 required
-                name={`ijtArkan-done`}
-                id={`ijtArkan-done`}
+                name={`jamiaatA-monthly`}
+                id={`jamiaatA-monthly`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
-            <Box>
-              <input
-                readOnly={view}
-                type="number"
-                defaultValue={0}
-                required
-                name={`ijtArkan-averageAttendance`}
-                id={`ijtArkan-averageAttendance`}
-                className="p-1 text-center min-w-full"
-              />
-            </Box>
-
-            {/* <Box>
-              <input
-                disabled={view}
-                type='checkbox'
-                className='p-1 text-center min-w-full checkbox'
-                name={`ijtArkan-registered`}
-                id={`ijtArkan-registered`}
-              />
-            </Box> */}
           </tr>
           <tr>
-            <Box>سٹڈی سرکل</Box>
+            <Box>B</Box>
+            <Box>
+              <input
+                readOnly={view}
+                type="number"
+                defaultValue={0}
+                required
+                name={`jamiaatB-start`}
+                id={`jamiaatB-start`}
+                className="p-1 text-center min-w-full"
+              />
+            </Box>
+            <Box>
+              <input
+                readOnly={view}
+                type="number"
+                defaultValue={0}
+                required
+                name={`jamiaatB-increase`}
+                id={`jamiaatB-increase`}
+                className="p-1 text-center min-w-full"
+              />
+            </Box>
             <Box>
               <input
                 readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
-                name={`studyCircle-decided`}
-                value={1}
-                id={`studyCircle-decided`}
+                name={`jamiaatB-end`}
+                id={`jamiaatB-end`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
@@ -82,138 +103,138 @@ export const MarkaziActivities = ({ view }) => {
                 type="number"
                 defaultValue={0}
                 required
-                name={`studyCircle-done`}
-                id={`studyCircle-done`}
+                name={`jamiaatB-monthly`}
+                id={`jamiaatB-monthly`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
-            <Box>
-              <input
-                readOnly={view}
-                type="number"
-                defaultValue={0}
-                required
-                name={`studyCircle-averageAttendance`}
-                id={`studyCircle-averageAttendance`}
-                className="p-1 text-center min-w-full"
-              />
-            </Box>
-
-            {/* <Box>
-              <input
-                disabled={view}
-                type='checkbox'
-                className='p-1 text-center min-w-full checkbox'
-                name={`studyCircle-registered`}
-                id={`studyCircle-registered`}
-              />
-            </Box> */}
           </tr>
           <tr>
-            <Box>اجتماع ناظمین</Box>
+            <Box>C</Box>
             <Box>
               <input
                 readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
-                name={`ijtNazmeen-decided`}
-                value={1}
-                id={`ijtNazmeen-decided`}
+                name={`jamiaatC-start`}
+                id={`jamiaatC-start`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
-                name={`ijtNazmeen-done`}
-                id={`ijtNazmeen-done`}
+                name={`jamiaatC-increase`}
+                id={`jamiaatC-increase`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
-                name={`ijtNazmeen-averageAttendance`}
-                id={`ijtNazmeen-averageAttendance`}
+                name={`jamiaatC-end`}
+                id={`jamiaatC-end`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
-
-            {/* <Box>
+            <Box>
               <input
-                disabled={view}
-                type='checkbox'
-                className='p-1 text-center min-w-full checkbox'
-                name={`ijtNazmeen-registered`}
-                id={`ijtNazmeen-registered`}
+                readOnly={true}
+                type="number"
+                defaultValue={0}
+                required
+                name={`jamiaatC-monthly`}
+                id={`jamiaatC-monthly`}
+                className="p-1 text-center min-w-full"
               />
-            </Box> */}
+            </Box>
           </tr>
           <tr>
-            <Box>اجتماع امیدواران</Box>
+            <Box>D</Box>
             <Box>
               <input
                 readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
-                name={`ijtUmeedwaran-decided`}
-                value={2}
-                id={`ijtUmeedwaran-decided`}
+                name={`jamiaatD-start`}
+                id={`jamiaatD-start`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
-                name={`ijtUmeedwaran-done`}
-                id={`ijtUmeedwaran-done`}
+                name={`jamiaatD-increase`}
+                id={`jamiaatD-increase`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
-                name={`ijtUmeedwaran-averageAttendance`}
-                id={`ijtUmeedwaran-averageAttendance`}
+                name={`jamiaatD-end`}
+                id={`jamiaatD-end`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
-
-            {/* <Box>
+            <Box>
               <input
-                disabled={view}
-                type='checkbox'
-                className='p-1 text-center min-w-full checkbox'
-                name={`ijtUmeedwaran-registered`}
-                id={`ijtUmeedwaran-registered`}
+                readOnly={true}
+                type="number"
+                defaultValue={0}
+                required
+                name={`jamiaatD-monthly`}
+                id={`jamiaatD-monthly`}
+                className="p-1 text-center min-w-full"
               />
-            </Box> */}
+            </Box>
           </tr>
           <tr>
-            <Box>صدورمیٹنگ</Box>
+            <Box>E</Box>
+            <Box>
+              <input
+                readOnly={view}
+                type="number"
+                defaultValue={0}
+                required
+                name={`jamiaatE-start`}
+                id={`jamiaatE-start`}
+                className="p-1 text-center min-w-full"
+              />
+            </Box>
+            <Box>
+              <input
+                readOnly={view}
+                type="number"
+                defaultValue={0}
+                required
+                name={`jamiaatE-increase`}
+                id={`jamiaatE-increase`}
+                className="p-1 text-center min-w-full"
+              />
+            </Box>
             <Box>
               <input
                 readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
-                name={`sadurMeeting-decided`}
-                value={1}
-                id={`sadurMeeting-decided`}
+                name={`jamiaatE-end`}
+                id={`jamiaatE-end`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
@@ -223,32 +244,11 @@ export const MarkaziActivities = ({ view }) => {
                 type="number"
                 defaultValue={0}
                 required
-                name={`sadurMeeting-done`}
-                id={`sadurMeeting-done`}
+                name={`jamiaatE-monthly`}
+                id={`jamiaatE-monthly`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
-            <Box>
-              <input
-                readOnly={view}
-                type="number"
-                defaultValue={0}
-                required
-                name={`sadurMeeting-averageAttendance`}
-                id={`sadurMeeting-averageAttendance`}
-                className="p-1 text-center min-w-full"
-              />
-            </Box>
-
-            {/* <Box>
-              <input
-                disabled={view}
-                type='checkbox'
-                className='p-1 text-center min-w-full checkbox'
-                name={`sadurMeeting-registered`}
-                id={`sadurMeeting-registered`}
-              />
-            </Box> */}
           </tr>
         </tbody>
       </table>
