@@ -61,7 +61,7 @@ const Dates = ({
               value={year}
               onChange={(e) => setYear(e.target.value)}
             />
-            {months.map((i, index) => (
+            {months?.map((i, index) => (
               <div
                 key={index}
                 className="flex p-3 hover:bg-slate-200 items-center justify-between"
@@ -175,8 +175,14 @@ export const Comparision = () => {
       halqa: halqas,
       district: districts,
       province: provinces,
-      all: [...maqams, ...divisions, ...districts, ...provinces],
+      all: [
+        ...maqams,
+        ...divisions,
+        ...districts,
+        ...(provinces?.length > 0 ? provinces : []),
+      ],
     });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [maqams, divisions, halqas, districts]);
   const { dispatch } = useToastState();

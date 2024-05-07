@@ -4,6 +4,7 @@ export const calculateRawabitDecided = () => {
   const arS = document.getElementById("arkan-start")?.value;
   const arI = document.getElementById("arkan-increase")?.value;
   const arD = document.getElementById("arkan-decrease")?.value;
+  console.log(arS,arI,arD)
   const totalArkaan = parseInt(arS) + parseInt(arI) - parseInt(arD);
   const umS = document.getElementById("umeedWaran-start")?.value;
   const umI = document.getElementById("umeedWaran-increase")?.value;
@@ -14,7 +15,6 @@ export const calculateRawabitDecided = () => {
   const raD = document.getElementById("rafaqa-decrease")?.value;
   const totalRafaqa = parseInt(raS) + parseInt(raI) - parseInt(raD);
   if (elem) {
-    console.log(totalArkaan, totalUmeedwaran, totalRafaqa);
     elem.value = totalArkaan + (totalUmeedwaran * 3 + totalRafaqa * 2);
     if (rwbMeetings) {
       rwbMeetings.value = elem.value * 3;

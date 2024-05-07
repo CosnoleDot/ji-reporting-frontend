@@ -1112,6 +1112,14 @@ export const Reports = () => {
                         >
                           <FaEye />
                         </button>
+                        {active === localStorage.getItem("@type") && (
+                          <button
+                            className="btn"
+                            onClick={() => editReport(obj?._id)}
+                          >
+                            <FaEdit />
+                          </button>
+                        )}
                         <button
                           className="btn"
                           onClick={() =>

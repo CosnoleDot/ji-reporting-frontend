@@ -23,6 +23,8 @@ import { ToseeDawat } from "../components/divisionReport/ToseeDawat";
 import { Library } from "../components/divisionReport/Library";
 import { PaighamDigest } from "../components/divisionReport/PaighamDigest";
 import { RozOShabDiary } from "../components/divisionReport/RozOShabDiary";
+import { Jamiaat } from "../components/divisionReport/Jamiaat";
+import { Colleges } from "../components/divisionReport/Colleges";
 
 export const Division = () => {
   // EDIT CODE START
@@ -335,6 +337,12 @@ export const Division = () => {
                 setMonth={setMonth}
                 area={"ڈویژن"}
               />
+            </div>
+            <div className="mb-4">
+              <Jamiaat view={view} />
+            </div>
+            <div className="mb-4">
+              <Colleges view={view} />
             </div>
             <div className="mb-4">
               {/* <TanzeemDivision view={view} /> */}

@@ -3795,12 +3795,12 @@ html {
   min-width: 230px;
 }
 
-.min-w-full {
-  min-width: 100%;
-}
-
 .min-w-\[40\%\] {
   min-width: 40%;
+}
+
+.min-w-full {
+  min-width: 100%;
 }
 
 .max-w-\[10rem\] {
