@@ -116,18 +116,8 @@ export const Maqam = () => {
         j = "uploadedCurrent";
       } else if (i === "meetings") {
         j = "uploadedMeetings";
-      } else if (i === "literatureDistribution") {
-        j = "uploadedLitrature";
-      } else if (i === "commonLiteratureDistribution") {
-        j = "uploadedCommonLiteratureDistribution";
-      } else if (i === "commonStudentMeetings") {
-        j = "uploadedCommonStudentMeetings";
       } else if (i === "studyCircle-decided") {
         j = "studyCircleMentioned-decided";
-      } else if (i === "umeedwaranFilled") {
-        j = "uploadedUmeedwaran";
-      } else if (i === "rafaqaFilled") {
-        j = "uploadedRafaqa";
       } else if (i === "studyCircle-completed") {
         j = "studyCircleMentioned-done";
       } else if (i === "studyCircle-attendance") {
@@ -178,6 +168,23 @@ export const Maqam = () => {
       document.getElementById(`${i}-decrease`).value = 0;
       document.getElementById(`${i}-monthly`).value = 0;
     });
+    [
+      "paighamEvent",
+      "shaheenMeeting",
+      "darseQuran",
+      "ijtKarkunan",
+      "studyCircleMentioned",
+      "ijtRafaqa",
+    ]?.forEach((i) => {
+      document.getElementById(`${i}-averageAttendance`).value = 0;
+    });
+
+    document.getElementById("karkunan-monthly").value = 0;
+    document.getElementById("rafaqa-monthly").value = 0;
+    document.getElementById("commonLiteratureDistribution").value = 0;
+    document.getElementById("commonStudentMeetings").value = 0;
+    document.getElementById("litrature").value = 0;
+
     const afd = [
       "rehaishHalqay",
       "taleemHalqay",
