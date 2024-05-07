@@ -1,4 +1,4 @@
-import { calculateRawabitDecided } from "../halqa";
+import { ilaqaRawabitDecided } from "./ToseeDawat";
 
 export const Box = ({ children, type }) => {
   return (
@@ -46,7 +46,7 @@ export const IfradiKuwat = ({ view }) => {
                 id={`arkan-start`}
                 onChange={() => {
                   calcultate("arkan");
-                  calculateRawabitDecided();
+                  ilaqaRawabitDecided();
                 }}
                 className="p-1 text-center min-w-full"
               />
@@ -61,7 +61,7 @@ export const IfradiKuwat = ({ view }) => {
                 id={`arkan-increase`}
                 onChange={() => {
                   calcultate("arkan");
-                  calculateRawabitDecided();
+                  ilaqaRawabitDecided();
                 }}
                 className="p-1 text-center min-w-full"
               />
@@ -76,7 +76,7 @@ export const IfradiKuwat = ({ view }) => {
                 id={`arkan-decrease`}
                 onChange={() => {
                   calcultate("arkan");
-                  calculateRawabitDecided();
+                  ilaqaRawabitDecided();
                 }}
                 className="p-1 text-center min-w-full"
               />
@@ -116,7 +116,7 @@ export const IfradiKuwat = ({ view }) => {
                 id={`umeedWaran-start`}
                 onChange={() => {
                   calcultate("umeedWaran");
-                  calculateRawabitDecided();
+                  ilaqaRawabitDecided();
                 }}
                 className="p-1 text-center min-w-full"
               />
@@ -129,7 +129,7 @@ export const IfradiKuwat = ({ view }) => {
                 required
                 onChange={() => {
                   calcultate("umeedWaran");
-                  calculateRawabitDecided();
+                  ilaqaRawabitDecided();
                 }}
                 name={`umeedWaran-increase`}
                 id={`umeedWaran-increase`}
@@ -146,7 +146,7 @@ export const IfradiKuwat = ({ view }) => {
                 id={`umeedWaran-decrease`}
                 onChange={() => {
                   calcultate("umeedWaran");
-                  calculateRawabitDecided();
+                  ilaqaRawabitDecided();
                 }}
                 className="p-1 text-center min-w-full"
               />

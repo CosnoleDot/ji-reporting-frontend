@@ -21,6 +21,8 @@ import { ToseeDawat } from "../components/maqamReport/ToseeDawat";
 import { Library } from "../components/maqamReport/Library";
 import { PaighamDigest } from "../components/maqamReport/PaighamDigest";
 import { RozOShabDiary } from "../components/maqamReport/RozOShabDiary";
+import { Jamiaat } from "../components/maqamReport/Jamiaat";
+import { Colleges } from "../components/maqamReport/Colleges";
 
 export const getData = async (path, id, setData, data) => {
   const arr = data[path];
@@ -311,6 +313,12 @@ export const Maqam = () => {
                 area={"مقام"}
                 view={view}
               />
+            </div>
+            <div className="mb-4">
+              <Jamiaat view={view} />
+            </div>
+            <div className="mb-4">
+              <Colleges view={view} />
             </div>
             <div className="mb-4">
               <Tanzeem view={view} />
