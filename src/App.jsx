@@ -47,6 +47,7 @@ import { MaqamReport } from "./pages/MaqamReport";
 import { HalqaReport } from "./pages/HalqaReport";
 import { ResetPassword } from "./pages/ResetPassword";
 import { MaqamHalqa } from "./components/reoprtDashboards/MaqamHalqa";
+import { MuntakhibMaqamReports } from "./pages/MuntakhibMaqamReports";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -73,6 +74,7 @@ function App() {
   const navigate = useNavigate();
   const [notifications, setNotifications] = useState([]);
   const [reports, setReports] = useState([]);
+  const [muntakhibMaqam, setMuntakhibMaqam]=useState(true);
   const location = useLocation();
   let dis;
   let r = [];
@@ -196,6 +198,7 @@ function App() {
           const validIlaqas = enabledIlaqas.filter(
             (i) => i?._id === me?.userAreaId?._id
           );
+          validIlaqas.length < 1 && setMuntakhibMaqam(false);
           setIlaqas(validIlaqas);
         }
       }
@@ -801,7 +804,7 @@ function App() {
                                       element={
                                         localStorage.getItem("@type") ===
                                         "maqam" ? (
-                                          <Maqam />
+                                          muntakhibMaqam ? <MuntakhibMaqamReports/> : <Maqam />
                                         ) : localStorage.getItem("@type") ===
                                           "division" ? (
                                           <Division />
