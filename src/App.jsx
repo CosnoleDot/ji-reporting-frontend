@@ -74,7 +74,7 @@ function App() {
   const navigate = useNavigate();
   const [notifications, setNotifications] = useState([]);
   const [reports, setReports] = useState([]);
-  const [muntakhibMaqam, setMuntakhibMaqam]=useState(true);
+  const [muntakhibMaqam, setMuntakhibMaqam] = useState(true);
   const location = useLocation();
   let dis;
   let r = [];
@@ -193,12 +193,12 @@ function App() {
           const validIlaqas = enabledIlaqas.filter(
             (i) => i?.maqam?._id === me?.userAreaId?._id
           );
-          setIlaqas(validIlaqas);
+          validIlaqas.length < 1 && setMuntakhibMaqam(false);
         } else {
           const validIlaqas = enabledIlaqas.filter(
             (i) => i?._id === me?.userAreaId?._id
           );
-          validIlaqas.length < 1 && setMuntakhibMaqam(false);
+
           setIlaqas(validIlaqas);
         }
       }
@@ -709,7 +709,6 @@ function App() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [me, isCompleted, navigate]);
-
   return (
     <MeContext.Provider value={me}>
       <DoubleScrollLeftRefresh />
@@ -804,7 +803,11 @@ function App() {
                                       element={
                                         localStorage.getItem("@type") ===
                                         "maqam" ? (
-                                          muntakhibMaqam ? <MuntakhibMaqamReports/> : <Maqam />
+                                          muntakhibMaqam ? (
+                                            <MuntakhibMaqamReports />
+                                          ) : (
+                                            <Maqam />
+                                          )
                                         ) : localStorage.getItem("@type") ===
                                           "division" ? (
                                           <Division />
@@ -867,7 +870,7 @@ function App() {
                                       path="/user-switch"
                                       element={<DeleteUser />}
                                     />
-                                    
+
                                     <Route
                                       path="/personalReport/create"
                                       element={<ReportUmeedwar />}

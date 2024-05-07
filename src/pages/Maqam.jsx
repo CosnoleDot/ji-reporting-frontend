@@ -47,6 +47,9 @@ export const Maqam = () => {
   const location = useLocation();
   const me = useContext(MeContext);
   const navigate = useNavigate();
+  useEffect(() => {
+    console.log(halqa, "h");
+  }, [maqam]);
   const autoFill = () => {
     const halq = {};
     document.getElementById("maqam-form").reset();
@@ -108,20 +111,22 @@ export const Maqam = () => {
           }
         });
       });
+    console.log(halq, "k");
     Object.keys(halq).forEach((i) => {
       let j;
       if (i === "studyCircle-decided") {
         j = "studyCircleMentioned-decided";
-      } else if (i === "current") {
-        j = "uploadedCurrent";
-      } else if (i === "meetings") {
-        j = "uploadedMeetings";
+      } else if (i === "studyCircle-decided") {
+        j = "studyCircleMentioned-decided";
+      } else if (i === "studyCircle-completed") {
       } else if (i === "studyCircle-decided") {
         j = "studyCircleMentioned-decided";
       } else if (i === "studyCircle-completed") {
         j = "studyCircleMentioned-done";
       } else if (i === "studyCircle-attendance") {
         j = "studyCircleMentioned-averageAttendance";
+      } else if (i === "currentSum") {
+        j = "current";
       } else {
         if (i.split("-")[1] === "completed") {
           j = i.split("-")[0] + "-done";
@@ -181,9 +186,7 @@ export const Maqam = () => {
 
     document.getElementById("karkunan-monthly").value = 0;
     document.getElementById("rafaqa-monthly").value = 0;
-    document.getElementById("commonLiteratureDistribution").value = 0;
-    document.getElementById("commonStudentMeetings").value = 0;
-    document.getElementById("litrature").value = 0;
+    document.getElementById("rawabitDecided").value = 0;
 
     const afd = [
       "rehaishHalqay",
@@ -288,6 +291,9 @@ export const Maqam = () => {
         await getMaqamReports();
         dispatch({ type: "SUCCESS", payload: req?.data?.message });
       } else {
+        console.log(jsonData, "k");
+        setLoading(false);
+        return;
         const req = await instance.post("/reports/maqam", jsonData, {
           headers: {
             "Content-Type": "application/json",

@@ -112,10 +112,9 @@ export const ZailiActivities = ({ view }) => {
                 type="number"
                 defaultValue={0}
                 required
-                name={`manual-ijtKarkunan-done`}
-                id={`manual-ijtKarkunan-done`}
+                name={`ijtKarkunan-manual`}
+                id={`ijtKarkunan-manual`}
                 className="p-1 text-center min-w-full"
-                oninput="calculateSum()"
               />
               =
               <input
@@ -123,13 +122,11 @@ export const ZailiActivities = ({ view }) => {
                 type="number"
                 defaultValue={
                   parseInt(document.getElementById("ijtKarkunan-done")?.value) +
-                  parseInt(
-                    document.getElementById("manual-ijtKarkunan-done")?.value
-                  )
+                  parseInt(document.getElementById("ijtKarkunan-manual")?.value)
                 }
                 required
-                name={`ijtKarkunan-done-sum`}
-                id={`ijtKarkunan-done-sum`}
+                name={`ijtKarkunan-sum`}
+                id={`ijtKarkunan-sum`}
                 className="p-1 text-center min-w-full"
               />
             </div>
@@ -174,8 +171,8 @@ export const ZailiActivities = ({ view }) => {
                   type="number"
                   defaultValue={0}
                   required
-                  name={`manual-darseQuran-done`}
-                  id={`manual-darseQuran-done`}
+                  name={`darseQuran-manual`}
+                  id={`darseQuran-manual`}
                   className="p-1 text-center "
                 />
                 =
@@ -187,12 +184,12 @@ export const ZailiActivities = ({ view }) => {
                       document.getElementById("darseQuran-done")?.value
                     ) +
                     parseInt(
-                      document.getElementById("manual-darseQuran-done")?.value
+                      document.getElementById("darseQuran-manual")?.value
                     )
                   }
                   required
-                  name={`darseQuran-done-sum`}
-                  id={`darseQuran-done-`}
+                  name={`darseQuran-sum`}
+                  id={`darseQuran-sum`}
                   className="p-1 text-center "
                 />
               </div>
