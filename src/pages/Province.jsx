@@ -22,6 +22,8 @@ import { ToseeDawat } from "../components/provinceReport/ToseeDawat";
 import { Library } from "../components/provinceReport/Library";
 import { PaighamDigest } from "../components/provinceReport/PaighamDigest";
 import { RozOShabDiary } from "../components/provinceReport/RozOShabDiary";
+import { Jamiaat } from "../components/provinceReport/Jamiaat";
+import { Colleges } from "../components/provinceReport/Colleges";
 
 const getData = async (id, setData, data) => {
   const maqam = data["province"];
@@ -398,6 +400,12 @@ export const Province = () => {
                 area={"صوبہ"}
                 view={view}
               />
+            </div>
+            <div className="mb-4">
+              <Jamiaat view={view} />
+            </div>
+            <div className="mb-4">
+              <Colleges view={view} />
             </div>
             <div className="mb-4">
               <Tanzeem view={view} id={id} />
