@@ -46,6 +46,7 @@ import { DivisionReport } from "./pages/DivisionReport";
 import { MaqamReport } from "./pages/MaqamReport";
 import { HalqaReport } from "./pages/HalqaReport";
 import { ResetPassword } from "./pages/ResetPassword";
+import { MaqamHalqa } from "./components/reoprtDashboards/MaqamHalqa";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -863,6 +864,7 @@ function App() {
                                       path="/user-switch"
                                       element={<DeleteUser />}
                                     />
+                                    
                                     <Route
                                       path="/personalReport/create"
                                       element={<ReportUmeedwar />}

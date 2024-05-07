@@ -555,6 +555,8 @@ export const Reports = () => {
     if (active === "halqa") getAreaWithType();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAreaType]);
+  console.log(filterAllData["halqa"], "asd");
+  console.log(active, tab, "asd");
   return (
     <GeneralLayout
       title={me?.userAreaId?.name.toUpperCase()}
@@ -961,14 +963,14 @@ export const Reports = () => {
               </Link>
             )}
 
-          {["country", "province", "maqam", "division", "ilaqa"].includes(
+          {["country", "province", "maqam", "ilaqa"].includes(
             localStorage.getItem("@type")
           ) &&
             ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
               localStorage.getItem("@nazimType")
             ) && (
               <Link
-                to={"?active=halqa"}
+                to={"?active=halqa&tab=maqam"}
                 role="tab"
                 className={`tab w-full ${
                   active === "halqa" ? "tab-active" : ""
@@ -978,6 +980,16 @@ export const Reports = () => {
                 Halqa
               </Link>
             )}
+          {localStorage.getItem("@type") === "division" && (
+            <Link
+              to={"?active=halqa&tab=division"}
+              role="tab"
+              className={`tab w-full ${active === "halqa" ? "tab-active" : ""}`}
+              onClick={() => setNotifyTo("halqa")}
+            >
+              Halqa
+            </Link>
+          )}
         </div>
         {/* )} */}
         {active === "halqa" && localStorage.getItem("@type") === "province" && (
@@ -1001,6 +1013,27 @@ export const Reports = () => {
             </Link>
           </div>
         )}
+        {active === "halqa" && localStorage.getItem("@type") === "maqam" && (
+          <div
+            role="tablist"
+            className="w-full flex justify-between items-center"
+          >
+            <Link
+              to={"?active=halqa&tab=maqam"}
+              role="tab"
+              className={`tab w-full ${tab === "maqam" ? "tab-active" : ""}`}
+            >
+              Maqam Halqa
+            </Link>
+            <Link
+              to={"?active=halqa&tab=ilaqa"}
+              role="tab"
+              className={`tab w-full ${tab === "ilaqa" ? "tab-active" : ""}`}
+            >
+              Ilaqa Halqa
+            </Link>
+          </div>
+        )}
         {["umeedwar", "rukan", "umeedwaar-nazim", "rukan-nazim"].includes(
           me?.nazimType
         ) && (
@@ -1020,7 +1053,9 @@ export const Reports = () => {
             ) : active === "halqa" &&
               tab === "division" &&
               filterAllData[active]?.filter(
-                (obj) => obj?.halqaAreaId?.parentType === "Tehsil"
+                (obj) =>
+                  obj?.halqaAreaId?.parentType === "Division" ||
+                  obj?.halqaAreaId?.parentType === "Tehsil"
               ).length < 1 ? (
               <NoReports />
             ) : active === "halqa" &&
@@ -1029,8 +1064,8 @@ export const Reports = () => {
                 (obj) => obj?.halqaAreaId?.parentType === "Maqam"
               ).length < 1 ? (
               <NoReports />
-            ) : active === "ilaqa" &&
-              tab === "halqa" &&
+            ) : active === "halqa" &&
+              tab === "ilaqa" &&
               filterAllData[active]?.filter(
                 (obj) => obj?.halqaAreaId?.parentType === "Ilaqa"
               ).length < 1 ? (
@@ -1038,7 +1073,8 @@ export const Reports = () => {
             ) : (
               filterAllData[active]?.map((obj) =>
                 active === "halqa" && tab === "division" ? (
-                  obj?.halqaAreaId?.parentType === "Tehsil" && (
+                  (obj?.halqaAreaId?.parentType === "Division" ||
+                    obj?.halqaAreaId?.parentType === "Tehsil") && (
                     <div
                       key={obj?._id}
                       className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
@@ -1081,52 +1117,9 @@ export const Reports = () => {
                       </div>
                     </div>
                   )
-                ) : active === "ilaqa" ? (
-                  obj?.ilaqaAreaId?._id.toString() ===
-                    me?.userAreaId?._id.toString() && (
-                    <div
-                      key={obj?._id}
-                      className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
-                    >
-                      <div className="flex w-full flex-col items-start justify-center">
-                        <span className="text-lg font-semibold">
-                          {((active !== "province" || active !== "halqa") &&
-                            obj?.[active + "AreaId"]?.name) ||
-                            "UNKNOWN"}
-                          {" - "}
-                          {getDivisionByTehsil(
-                            obj?.[active + "AreaId"]?.parentId,
-                            districts
-                          )}
-                          {" - "}
-                          {moment(obj?.month).format("MMMM YYYY")}
-                        </span>
-                        <span>
-                          Last Modified: {moment(obj?.updatedAt).fromNow()}
-                        </span>
-                      </div>
-                      <div className="flex items-end w-full justify-end gap-3 ">
-                        <button
-                          className="btn"
-                          onClick={() => viewReport(obj?._id)}
-                        >
-                          <FaEye />
-                        </button>
-                        <button
-                          className="btn"
-                          onClick={() =>
-                            window.open(
-                              `/${active}-report/print/${obj?._id}`,
-                              "blank"
-                            )
-                          }
-                        >
-                          <FaPrint />
-                        </button>
-                      </div>
-                    </div>
-                  )
-                ) : active === "halqa" && tab === "maqam" ? (
+                ) : active === "halqa" &&
+                  tab === "maqam" &&
+                  localStorage.getItem("@type") === "maqam" ? (
                   obj?.halqaAreaId?.parentType === "Maqam" && (
                     <div
                       key={obj?._id}
@@ -1167,6 +1160,132 @@ export const Reports = () => {
                       </div>
                     </div>
                   )
+                ) : active === "halqa" && tab === "ilaqa" ? (
+                  obj?.halqaAreaId?.parentType === "Ilaqa" && (
+                    <div
+                      key={obj?._id}
+                      className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
+                    >
+                      <div className="flex w-full flex-col items-start justify-center">
+                        <span className="text-lg font-semibold">
+                          {obj?.[active + "AreaId"]?.name || "UNKNOWN"}
+                          {" - "}
+                          {(active !== "province" &&
+                            obj?.[active + "AreaId"]?.parentId?.name) ||
+                            "UNKNOWN"}
+                          {" - "}
+                          {moment(obj?.month).format("MMMM YYYY")}
+                        </span>
+                        <span>
+                          Last Modified: {moment(obj?.updatedAt).fromNow()}
+                        </span>
+                      </div>
+                      <div className="flex items-end w-full justify-end gap-3 ">
+                        <button
+                          className="btn"
+                          onClick={() => viewReport(obj?._id)}
+                        >
+                          <FaEye />
+                        </button>
+                        <button
+                          className="btn"
+                          onClick={() =>
+                            window.open(
+                              `/${active}-report/print/${obj?._id}`,
+                              "blank"
+                            )
+                          }
+                        >
+                          <FaPrint />
+                        </button>
+                      </div>
+                    </div>
+                  )
+                ) : active === "ilaqa" ? (
+                  <div
+                    key={obj?._id}
+                    className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
+                  >
+                    <div className="flex w-full flex-col items-start justify-center">
+                      <span className="text-lg font-semibold">
+                        {((active !== "province" || active !== "halqa") &&
+                          obj?.[active + "AreaId"]?.name) ||
+                          "UNKNOWN"}
+                        {" - "}
+                        {getDivisionByTehsil(
+                          obj?.[active + "AreaId"]?.parentId,
+                          districts
+                        )}
+                        {" - "}
+                        {moment(obj?.month).format("MMMM YYYY")}
+                      </span>
+                      <span>
+                        Last Modified: {moment(obj?.updatedAt).fromNow()}
+                      </span>
+                    </div>
+                    <div className="flex items-end w-full justify-end gap-3 ">
+                      <button
+                        className="btn"
+                        onClick={() => viewReport(obj?._id)}
+                      >
+                        <FaEye />
+                      </button>
+                      <button
+                        className="btn"
+                        onClick={() =>
+                          window.open(
+                            `/${active}-report/print/${obj?._id}`,
+                            "blank"
+                          )
+                        }
+                      >
+                        <FaPrint />
+                      </button>
+                    </div>
+                  </div>
+                ) : active === "halqa" &&
+                  localStorage.getItem("@type") === "division" ? (
+                  <div
+                    key={obj?._id}
+                    className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
+                  >
+                    <div className="flex w-full flex-col items-start justify-center">
+                      <span className="text-lg font-semibold">
+                        {(active !== "province" &&
+                          obj?.[active + "AreaId"]?.name) ||
+                          "UNKNOWN"}
+                        {" - "}
+                        {getDivisionByTehsil(
+                          obj?.[active + "AreaId"]?.parentId,
+                          districts
+                        )}
+                        {" - "}
+                        {moment(obj?.month).format("MMMM YYYY")}
+                      </span>
+                      <span>
+                        Last Modified: {moment(obj?.updatedAt).fromNow()}
+                      </span>
+                    </div>
+                    <div className="flex items-end w-full justify-end gap-3 ">
+                      <button
+                        className="btn"
+                        onClick={() => viewReport(obj?._id)}
+                      >
+                        <FaEye />
+                      </button>
+                      <button
+                        className="btn"
+                        onClick={() =>
+                          window.open(
+                            `/${active}-report/print/${obj?._id}`,
+                            "blank"
+                          )
+                        }
+                      >
+                        <FaPrint />
+                      </button>
+                    </div>
+                  </div>
                 ) : (
                   <div
                     key={obj?._id}
