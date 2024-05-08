@@ -41,6 +41,7 @@ export const ToseeDawat = ({ view }) => {
     const raD = document.getElementById("rafaqa-decrease")?.value;
     const totalRafaqa = parseInt(raS) + parseInt(raI) - parseInt(raD);
     if (elem) {
+      console.log(totalArkaan, totalUmeedwaran, totalRafaqa);
       const value = totalArkaan + (totalUmeedwaran * 3 + totalRafaqa * 2);
       elem.value = value;
       if (rwbMeetings) {
@@ -87,8 +88,8 @@ export const ToseeDawat = ({ view }) => {
             type="number"
             defaultValue={0}
             required
-            name={`uploadedCurrent`}
-            id={`uploadedCurrent`}
+            name={`current`}
+            id={`current`}
             className="border-b-2 text-center border-dashed "
           />
           +
@@ -97,8 +98,8 @@ export const ToseeDawat = ({ view }) => {
             defaultValue={0}
             required
             readOnly={view}
-            name={`manualCurrent`}
-            id={`manualCurrent`}
+            name={`currentManual`}
+            id={`currentManual`}
             className="border-b-2 text-center border-dashed "
             oninput="calculateSum()"
           />
@@ -107,8 +108,8 @@ export const ToseeDawat = ({ view }) => {
             readOnly={true}
             type="number"
             defaultValue={
-              parseInt(document.getElementById("uploadedCurrent")?.value) +
-              parseInt(document.getElementById("manualCurrent")?.value)
+              parseInt(document.getElementById("current")?.value) +
+              parseInt(document.getElementById("currentManual")?.value)
             }
             required
             name={`currentSum`}
@@ -123,8 +124,8 @@ export const ToseeDawat = ({ view }) => {
             type="number"
             defaultValue={0}
             required
-            name={`uploadedMeetings`}
-            id={`uploadedMeetings`}
+            name={`meetings`}
+            id={`meetings`}
             className="border-b-2 text-center border-dashed "
           />
           +
@@ -133,8 +134,8 @@ export const ToseeDawat = ({ view }) => {
             defaultValue={0}
             required
             readOnly={view}
-            name={`manualMeetings`}
-            id={`manualMeetings`}
+            name={`meetingsManual`}
+            id={`meetingsManual`}
             className="border-b-2 text-center border-dashed "
             oninput="calculateSum()"
           />
@@ -143,12 +144,12 @@ export const ToseeDawat = ({ view }) => {
             readOnly={true}
             type="number"
             defaultValue={
-              parseInt(document.getElementById("uploadedMeetings")?.value) +
-              parseInt(document.getElementById("manualMeetings")?.value)
+              parseInt(document.getElementById("meetings")?.value) +
+              parseInt(document.getElementById("meetingsManual")?.value)
             }
             required
-            name={`meetings`}
-            id={`meetings`}
+            name={`meetingsSum`}
+            id={`meetingsSum`}
             className="border-b-2 text-center border-dashed "
           />
         </div>

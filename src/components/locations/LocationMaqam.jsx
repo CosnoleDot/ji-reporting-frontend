@@ -442,7 +442,7 @@ export const LocationMaqam = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredData.length > 1 ? (
+              {filteredData?.length > 1 ? (
                 filteredData?.map((ilaqa, index) => (
                   <tr
                     key={index}
@@ -587,8 +587,8 @@ export const LocationMaqam = () => {
                   Select Province
                 </option>
                 {provinces
-                  .filter((i) => !i?.disabled)
-                  .map((i, index) => (
+                  ?.filter((i) => !i?.disabled)
+                  ?.map((i, index) => (
                     <option value={i?._id} key={index}>
                       {i?.name}
                     </option>
