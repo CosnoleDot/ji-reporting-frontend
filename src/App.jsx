@@ -48,6 +48,7 @@ import { HalqaReport } from "./pages/HalqaReport";
 import { ResetPassword } from "./pages/ResetPassword";
 import { MaqamHalqa } from "./components/reoprtDashboards/MaqamHalqa";
 import { MuntakhibMaqamReports } from "./pages/MuntakhibMaqamReports";
+import { MarkazReport } from "./pages/MarkazReport";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -814,7 +815,10 @@ function App() {
                                         ) : localStorage.getItem("@type") ===
                                           "ilaqa" ? (
                                           <Ilaqa />
-                                        ) : (
+                                        ) : localStorage.getItem("@type") ===
+                                        "country" ? (
+                                        <MarkazReport />
+                                      ) : (
                                           <Halqa />
                                         )
                                       }
