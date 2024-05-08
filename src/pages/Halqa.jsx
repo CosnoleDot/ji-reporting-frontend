@@ -49,7 +49,6 @@ export const Halqa = () => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const jsonData = convertDataFormat(toJson(formData));
-
     setLoading(true);
     try {
       if (id) {
@@ -89,6 +88,7 @@ export const Halqa = () => {
   }, [id, data]);
 
   const autoFill = () => {
+    console.log(data);
     Object.keys(data).forEach((i) => {
       const elem = document.getElementById(i);
       if (elem) {
@@ -111,8 +111,6 @@ export const Halqa = () => {
   useEffect(() => {
     autoFill();
   }, [data]);
-
-
 
   return (
     <GeneralLayout>

@@ -47,9 +47,9 @@ export const Maqam = () => {
   const location = useLocation();
   const me = useContext(MeContext);
   const navigate = useNavigate();
-  useEffect(() => {
-    console.log(halqa, "h");
-  }, [maqam]);
+  // useEffect(() => {
+  //   console.log(halqa, "h");
+  // }, [maqam]);
   const autoFill = () => {
     const halq = {};
     document.getElementById("maqam-form").reset();
@@ -111,11 +111,13 @@ export const Maqam = () => {
           }
         });
       });
-    console.log(halq, "k");
+    // console.log(halq, "k");
     Object.keys(halq).forEach((i) => {
       let j;
       if (i === "studyCircle-decided") {
         j = "studyCircleMentioned-decided";
+      } else if (i === "literatureDistribution") {
+        j = "litrature";
       } else if (i === "studyCircle-decided") {
         j = "studyCircleMentioned-decided";
       } else if (i === "studyCircle-completed") {
@@ -146,6 +148,7 @@ export const Maqam = () => {
       }
       const elem = document.getElementById(j);
       if (elem) {
+        console.log(j)
         if (j === "month") {
         } else {
           if (elem.type === "checkbox") {
@@ -187,6 +190,9 @@ export const Maqam = () => {
     document.getElementById("karkunan-monthly").value = 0;
     document.getElementById("rafaqa-monthly").value = 0;
     document.getElementById("rawabitDecided").value = 0;
+    document.getElementById("litrature").value = 0;
+    document.getElementById("commonStudentMeetings").value = 0;
+    document.getElementById("commonLiteratureDistribution").value = 0;
 
     const afd = [
       "rehaishHalqay",
@@ -277,7 +283,6 @@ export const Maqam = () => {
         jsonData[key] = 0;
       }
     }
-
     setLoading(true);
     try {
       if (id) {
@@ -291,9 +296,6 @@ export const Maqam = () => {
         await getMaqamReports();
         dispatch({ type: "SUCCESS", payload: req?.data?.message });
       } else {
-        console.log(jsonData, "k");
-        setLoading(false);
-        return;
         const req = await instance.post("/reports/maqam", jsonData, {
           headers: {
             "Content-Type": "application/json",

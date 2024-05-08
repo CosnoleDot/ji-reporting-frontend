@@ -1,10 +1,12 @@
+import { useEffect } from "react";
+
 export const calculateRawabitDecided = () => {
   const elem = document.getElementById("rawabitDecided");
   const rwbMeetings = document.getElementById("rwabitMeetingsGoal");
   const arS = document.getElementById("arkan-start")?.value;
   const arI = document.getElementById("arkan-increase")?.value;
   const arD = document.getElementById("arkan-decrease")?.value;
-  console.log(arS,arI,arD)
+  console.log(arS, arI, arD);
   const totalArkaan = parseInt(arS) + parseInt(arI) - parseInt(arD);
   const umS = document.getElementById("umeedWaran-start")?.value;
   const umI = document.getElementById("umeedWaran-increase")?.value;
@@ -15,7 +17,8 @@ export const calculateRawabitDecided = () => {
   const raD = document.getElementById("rafaqa-decrease")?.value;
   const totalRafaqa = parseInt(raS) + parseInt(raI) - parseInt(raD);
   if (elem) {
-    elem.value = totalArkaan + (totalUmeedwaran * 3 + totalRafaqa * 2);
+    const value = totalArkaan + (totalUmeedwaran * 3 + totalRafaqa * 2);
+    elem.value = value;
     if (rwbMeetings) {
       rwbMeetings.value = elem.value * 3;
     }
@@ -23,6 +26,30 @@ export const calculateRawabitDecided = () => {
 };
 
 export const ToseeDawat = ({ view }) => {
+  useEffect(() => {
+    const elem = document.getElementById("rawabitDecided");
+    const rwbMeetings = document.getElementById("rwabitMeetingsGoal");
+    const arS = document.getElementById("arkan-start")?.value;
+    const arI = document.getElementById("arkan-increase")?.value;
+    const arD = document.getElementById("arkan-decrease")?.value;
+    console.log(arS, arI, arD);
+    const totalArkaan = parseInt(arS) + parseInt(arI) - parseInt(arD);
+    const umS = document.getElementById("umeedWaran-start")?.value;
+    const umI = document.getElementById("umeedWaran-increase")?.value;
+    const umD = document.getElementById("umeedWaran-decrease")?.value;
+    const totalUmeedwaran = parseInt(umS) + parseInt(umI) - parseInt(umD);
+    const raS = document.getElementById("rafaqa-start")?.value;
+    const raI = document.getElementById("rafaqa-increase")?.value;
+    const raD = document.getElementById("rafaqa-decrease")?.value;
+    const totalRafaqa = parseInt(raS) + parseInt(raI) - parseInt(raD);
+    if (elem) {
+      const value = totalArkaan + (totalUmeedwaran * 3 + totalRafaqa * 2);
+      elem.value = value;
+      if (rwbMeetings) {
+        rwbMeetings.value = elem.value * 3;
+      }
+    }
+  });
   return (
     <div className="p-2 py-5 relative w-full overflow-auto">
       <h2 className="text-black py-3 text-lg">توسیع دعوت</h2>

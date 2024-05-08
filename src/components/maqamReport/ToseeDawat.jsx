@@ -98,8 +98,8 @@ export const ToseeDawat = ({ view }) => {
             defaultValue={0}
             required
             readOnly={view}
-            name={`manualCurrent`}
-            id={`manualCurrent`}
+            name={`currentManual`}
+            id={`currentManual`}
             className="border-b-2 text-center border-dashed "
             oninput="calculateSum()"
           />
@@ -109,7 +109,7 @@ export const ToseeDawat = ({ view }) => {
             type="number"
             defaultValue={
               parseInt(document.getElementById("current")?.value) +
-              parseInt(document.getElementById("manualCurrent")?.value)
+              parseInt(document.getElementById("currentManual")?.value)
             }
             required
             name={`currentSum`}
