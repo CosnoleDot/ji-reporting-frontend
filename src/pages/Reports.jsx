@@ -423,9 +423,6 @@ export const Reports = () => {
       console.error("Error fetching reports:", error);
     }
   };
-  // useEffect(() => {
-  //   console.log(filterAllData[active]);
-  // }, [active, filterAllData]);
   const clearFilters = () => {
     setMonth("");
     setYear("2023");
@@ -555,8 +552,6 @@ export const Reports = () => {
     if (active === "halqa") getAreaWithType();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAreaType]);
-  console.log(filterAllData["halqa"], "asd");
-  console.log(active, tab, "asd");
   return (
     <GeneralLayout
       title={me?.userAreaId?.name.toUpperCase()}

@@ -52,6 +52,7 @@ export const Maqam = () => {
   // }, [maqam]);
   const autoFill = () => {
     const halq = {};
+
     document.getElementById("maqam-form").reset();
     if (halqa.filter((i) => i?.month.includes(month)).length < 1) {
       [
@@ -91,6 +92,7 @@ export const Maqam = () => {
       });
       document.getElementById("name").value = me?.userAreaId?.name;
     }
+
     halqa
       .filter((i) => i?.month.includes(month))
       .forEach((i) => {
@@ -111,18 +113,12 @@ export const Maqam = () => {
           }
         });
       });
-    // console.log(halq, "k");
     Object.keys(halq).forEach((i) => {
       let j;
       if (i === "studyCircle-decided") {
         j = "studyCircleMentioned-decided";
       } else if (i === "literatureDistribution") {
         j = "litrature";
-      } else if (i === "studyCircle-decided") {
-        j = "studyCircleMentioned-decided";
-      } else if (i === "studyCircle-completed") {
-      } else if (i === "studyCircle-decided") {
-        j = "studyCircleMentioned-decided";
       } else if (i === "studyCircle-completed") {
         j = "studyCircleMentioned-done";
       } else if (i === "studyCircle-attendance") {
@@ -146,9 +142,9 @@ export const Maqam = () => {
           j = i;
         }
       }
+      halq.litrature = halq.literatureDistribution;
       const elem = document.getElementById(j);
       if (elem) {
-        console.log(j)
         if (j === "month") {
         } else {
           if (elem.type === "checkbox") {
@@ -160,6 +156,9 @@ export const Maqam = () => {
           } else {
             if (i === "name" && !view) {
               elem.value = me?.userAreaId?.name;
+            } else if (elem === "litrature") {
+              console.log("am in");
+              elem.value = halq["literatureDistribution"];
             } else {
               elem.value = halq[i];
             }
@@ -190,9 +189,6 @@ export const Maqam = () => {
     document.getElementById("karkunan-monthly").value = 0;
     document.getElementById("rafaqa-monthly").value = 0;
     document.getElementById("rawabitDecided").value = 0;
-    document.getElementById("litrature").value = 0;
-    document.getElementById("commonStudentMeetings").value = 0;
-    document.getElementById("commonLiteratureDistribution").value = 0;
 
     const afd = [
       "rehaishHalqay",
@@ -215,6 +211,17 @@ export const Maqam = () => {
       calcultate(i);
     });
   };
+  // To set values to zero when in create mode
+  useEffect(() => {
+    const value1 = document.getElementById("litrature");
+    const value2 = document.getElementById("commonStudentMeetings");
+    const value3 = document.getElementById("commonLiteratureDistribution");
+    if (window.location.pathname?.split("/")[2] === "create") {
+      value1.value = 0;
+      value2.value = 0;
+      value3.value = 0;
+    }
+  }, [location.pathname]);
   useEffect(() => {
     const l = location.pathname?.split("/")[2];
     if (l === "view") {
