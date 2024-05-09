@@ -597,7 +597,6 @@ function App() {
         );
       } catch (err) {
         console.log(err);
-        console.log(err);
       }
     }
   };
@@ -605,7 +604,6 @@ function App() {
     const intervalId = setInterval(() => {
       if (me) {
         getAllReports();
-        getAllRequests();
       }
     }, 5000); // 5000 milliseconds = 5 seconds
 
@@ -831,7 +829,11 @@ function App() {
                                       element={
                                         localStorage.getItem("@type") ===
                                         "maqam" ? (
-                                          <Maqam />
+                                          muntakhibMaqam ? (
+                                            <MuntakhibMaqamReports />
+                                          ) : (
+                                            <Maqam />
+                                          )
                                         ) : localStorage.getItem("@type") ===
                                           "ilaqa" ? (
                                           <Ilaqa />
@@ -849,8 +851,13 @@ function App() {
                                     <Route
                                       path={"/reports/view/:id"}
                                       element={
-                                        active === "maqam" ? (
-                                          <Maqam />
+                                        localStorage.getItem("@type") ===
+                                        "maqam" ? (
+                                          muntakhibMaqam ? (
+                                            <MuntakhibMaqamReports />
+                                          ) : (
+                                            <Maqam />
+                                          )
                                         ) : active === "ilaqa" ? (
                                           <Ilaqa />
                                         ) : active === "division" ? (

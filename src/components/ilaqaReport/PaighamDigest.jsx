@@ -11,14 +11,14 @@ export const PaighamDigest = ({ view }) => {
               readOnly={view}
               placeholder="حلقہ جات"
               className="border-b-2 text-center border-dashed"
-              name="totalHalqaReceived"
-              id="totalHalqaReceived"
+              name="totalReceived"
+              id="totalReceived"
             />
             +
             <input
               readOnly={view}
-              name="totalZeliHalqaReceived"
-              id="totalZeliHalqaReceived"
+              name="manualReceived"
+              id="manualReceived"
               type="number"
               placeholder="ذیلی حلقہ جات"
               className="border-b-2 text-center border-dashed"
@@ -28,14 +28,12 @@ export const PaighamDigest = ({ view }) => {
               readOnly={true}
               type="number"
               defaultValue={
-                parseInt(
-                  document.getElementById("totalZeliHalqaReceived")?.value
-                ) +
-                parseInt(document.getElementById("totalHalqaReceived")?.value)
+                parseInt(document.getElementById("manualReceived")?.value) +
+                parseInt(document.getElementById("totalReceived")?.value)
               }
               required
-              name="totalReceived"
-              id="totalReceived"
+              name="receivedSum"
+              id="receivedSum"
               className="border-b-2 text-center border-dashed"
             />
           </div>
@@ -48,14 +46,14 @@ export const PaighamDigest = ({ view }) => {
               readOnly={view}
               placeholder="حلقہ جات"
               className="border-b-2 p-1 text-center border-dashed"
-              name="totalHalqaSold"
-              id="totalHalqaSold"
+              name="totalSold"
+              id="totalSold"
             />
             +
             <input
               readOnly={view}
-              name="totalZeliHalqaSold"
-              id="totalZeliHalqaSold"
+              name="manualSold"
+              id="manualSold"
               type="number"
               placeholder="ذیلی حلقہ جات"
               className="border-b-2 text-center border-dashed"
@@ -65,12 +63,12 @@ export const PaighamDigest = ({ view }) => {
               readOnly={true}
               type="number"
               defaultValue={
-                parseInt(document.getElementById("totalHalqaSold")?.value) +
-                parseInt(document.getElementById("totalZeliHalqaSold")?.value)
+                parseInt(document.getElementById("totalSold")?.value) +
+                parseInt(document.getElementById("manualSold")?.value)
               }
               required
-              name="totalSold"
-              id="totalSold"
+              name="soldSum"
+              id="soldSum"
               className="border-b-2 text-center border-dashed"
             />
           </div>
@@ -83,14 +81,14 @@ export const PaighamDigest = ({ view }) => {
               readOnly={view}
               placeholder="حلقہ جات"
               className="border-b-2 p-1 text-center border-dashed"
-              name="halqaMonthlyGoal"
-              id="halqaMonthlyGoal"
+              name="monthlyReceivingGoal"
+              id="monthlyReceivingGoal"
             />
             +
             <input
               readOnly={view}
-              name="halqaZeliMonthlyGoal"
-              id="halqaZeliMonthlyGoal"
+              name="manualMonthlyReceivingGoal"
+              id="manualMonthlyReceivingGoal"
               type="number"
               placeholder="ذیلی حلقہ جات"
               className="border-b-2 text-center border-dashed"
@@ -100,12 +98,16 @@ export const PaighamDigest = ({ view }) => {
               readOnly={true}
               type="number"
               defaultValue={
-                parseInt(document.getElementById("halqaMonthlyGoal")?.value) +
-                parseInt(document.getElementById("halqaZeliMonthlyGoal")?.value)
+                parseInt(
+                  document.getElementById("monthlyReceivingGoal")?.value
+                ) +
+                parseInt(
+                  document.getElementById("manualMonthlyReceivingGoal")?.value
+                )
               }
               required
-              name="totalSold"
-              id="totalSold"
+              name="monthlyReceivingGoalSum"
+              id="monthlyReceivingGoalSum"
               className="border-b-2 text-center border-dashed"
             />
           </div>

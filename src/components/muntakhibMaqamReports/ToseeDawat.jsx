@@ -121,8 +121,8 @@ export const ToseeDawat = ({ view }) => {
               parseInt(document.getElementById("manualMeetings")?.value)
             }
             required
-            name={`meetings`}
-            id={`meetings`}
+            name={`meetingsSum`}
+            id={`meetingsSum`}
             className="border-b-2 text-center border-dashed "
           />
         </div>
@@ -157,8 +157,8 @@ export const ToseeDawat = ({ view }) => {
               parseInt(document.getElementById("manualLitrature")?.value)
             }
             required
-            name={`litrature`}
-            id={`litrature`}
+            name={`literatureSum`}
+            id={`literatureSum`}
             className="border-b-2 text-center border-dashed "
           />
         </div>
@@ -174,8 +174,8 @@ export const ToseeDawat = ({ view }) => {
             type="number"
             defaultValue={0}
             required
-            name={`uploadedCommonStudentLitrature`}
-            id={`uploadedCommonStudentLitrature`}
+            name={`uploadedCommonLiteratureDistribution`}
+            id={`uploadedCommonLiteratureDistribution`}
             className="border-b-2 text-center border-dashed "
           />
           +
@@ -184,8 +184,8 @@ export const ToseeDawat = ({ view }) => {
             defaultValue={0}
             required
             readOnly={view}
-            name={`manualCommonStudentLitrature`}
-            id={`manualCommonStudentLitrature`}
+            name={`manualCommonLiteratureDistribution`}
+            id={`manualCommonLiteratureDistribution`}
             className="border-b-2 text-center border-dashed "
             oninput="calculateSum()"
           />
@@ -195,15 +195,15 @@ export const ToseeDawat = ({ view }) => {
             type="number"
             defaultValue={
               parseInt(
-                document.getElementById("uploadedCommonStudentLitrature")?.value
+                document.getElementById("uploadedCommonLiteratureDistribution")?.value
               ) +
               parseInt(
-                document.getElementById("manualCommonStudentLitrature")?.value
+                document.getElementById("manualCommonLiteratureDistribution")?.value
               )
             }
             required
-            name={`commonStudentLitrature`}
-            id={`commonStudentLitrature`}
+            name={`commonLiteratureDistributionSum`}
+            id={`commonLiteratureDistributionSum`}
             className="border-b-2 text-center border-dashed "
           />
         </div>
@@ -242,8 +242,8 @@ export const ToseeDawat = ({ view }) => {
               )
             }
             required
-            name={`commonStudentMeetings`}
-            id={`commonStudentMeetings`}
+            name={`commonStudentMeetingsSum`}
+            id={`commonStudentMeetingsSum`}
             className="border-b-2 text-center border-dashed "
           />
         </div>

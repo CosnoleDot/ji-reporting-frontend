@@ -264,16 +264,13 @@ export const Ilaqa = () => {
 
     const formData = new FormData(e.currentTarget);
     const jsonData = convertDataFormat(toJson(formData));
-
+    console.log(jsonData,'asd')
     // Replace null values with zero
     for (const key in jsonData) {
       if (jsonData.hasOwnProperty(key) && jsonData[key] === null) {
         jsonData[key] = 0;
       }
-      if (key === "ijtKarkunan" || key === "darseQuran") {
-        jsonData[key].done = jsonData[key]["done-sum"];
-        delete jsonData[key]["done-sum"];
-      }
+    
       if (key === "rafaqaFilled" || key === "umeedwaranFilled") {
         const rfq = document.getElementById(`${key}-sum`).value;
         jsonData[key] = rfq;
@@ -282,7 +279,7 @@ export const Ilaqa = () => {
         delete jsonData[`${key}-sum`];
       }
     }
-
+   
     setLoading(true);
     try {
       if (id) {
@@ -336,6 +333,15 @@ export const Ilaqa = () => {
     document.getElementById("shaheenMeeting-decided").value = busmTotalUnits;
   }, [totalHalqay, subTotalHalqay, busmTotalUnits]);
 
+  // to set the value to zero on create
+
+  useEffect(() => {
+    const value1 = document.getElementById("shabBedari");
+
+    if (window.location.pathname?.split("/")[2] === "create") {
+      value1.value = 0;
+    }
+  }, [location.pathname]);
   return (
     <GeneralLayout>
       <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">
