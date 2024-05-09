@@ -552,6 +552,7 @@ export const Reports = () => {
     if (active === "halqa") getAreaWithType();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAreaType]);
+  console.log(filterAllData,'asd')
   return (
     <GeneralLayout
       title={me?.userAreaId?.name.toUpperCase()}
@@ -958,7 +959,7 @@ export const Reports = () => {
               </Link>
             )}
 
-          {["country", "province", "maqam", "ilaqa"].includes(
+          {["country", "province", "maqam"].includes(
             localStorage.getItem("@type")
           ) &&
             ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
@@ -966,6 +967,20 @@ export const Reports = () => {
             ) && (
               <Link
                 to={"?active=halqa&tab=maqam"}
+                role="tab"
+                className={`tab w-full ${
+                  active === "halqa" ? "tab-active" : ""
+                }`}
+                onClick={() => setNotifyTo("halqa")}
+              >
+                Halqa
+              </Link>
+            )}
+             {[ "ilaqa"].includes(
+            localStorage.getItem("@type")
+          ) && (
+              <Link
+                to={"?active=halqa"}
                 role="tab"
                 className={`tab w-full ${
                   active === "halqa" ? "tab-active" : ""
@@ -1244,8 +1259,7 @@ export const Reports = () => {
                       </button>
                     </div>
                   </div>
-                ) : active === "halqa" &&
-                  localStorage.getItem("@type") === "division" ? (
+                ) : active === "halqa" ? (
                   <div
                     key={obj?._id}
                     className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"

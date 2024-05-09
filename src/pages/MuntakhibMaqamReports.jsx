@@ -52,7 +52,7 @@ export const MuntakhibMaqamReports = () => {
   const location = useLocation();
   const me = useContext(MeContext);
   const navigate = useNavigate();
-  console.log(ilaqa);
+  console.log(ilaqa,'asd');
   const autoFill = () => {
     const halq = {};
     document.getElementById("maqam-form").reset();
@@ -154,6 +154,9 @@ export const MuntakhibMaqamReports = () => {
       halq.uploadedCommonStudentMeetings = halq.commonStudentMeetingsSum;
       halq.uploadedRafaqaFilled = halq.rafaqaFilledSum;
       halq.uploadedUmeedwaran = halq.umeedwaranFilledSum;
+      halq.manualRafaqa = halq.manualRafaqaFilled;
+      console.log(halq,'aaa');
+
       [
         "commonLiteratureDistributionSum",
         "currentSum",
@@ -165,8 +168,6 @@ export const MuntakhibMaqamReports = () => {
         "manualCurrent",
         "manualLitrature",
         "manualMeetings",
-        "manualRafaqa",
-        "rafaqaFilledSum",
         "umeedwaranFilledSum",
         "manualUmeedwaran",
       ].forEach((l) => (document.getElementById(l).value = 0));
@@ -211,10 +212,6 @@ export const MuntakhibMaqamReports = () => {
       "busmSchoolUnits",
       "arkan",
       "umeedWaran",
-      "rafaqa",
-      "karkunan",
-      "shaheen",
-      "members",
       "rehaishHalqay",
 
       "taleemHalqay",
@@ -237,7 +234,6 @@ export const MuntakhibMaqamReports = () => {
     [
       "ijtArkan",
       "studyCircle",
-      "ijtRafaqa",
       "ijtNazmeen",
       "sadurMeeting",
       "ijtUmeedwaran",
@@ -348,6 +344,11 @@ export const MuntakhibMaqamReports = () => {
         await getMaqamReports();
         dispatch({ type: "SUCCESS", payload: req?.data?.message });
       } else {
+        
+        jsonData.rafaqaFilled = jsonData.uploadedRafaqa;
+        jsonData.manualRafaqaFilled = jsonData.manualRafaqa;
+        jsonData.umeedwaranFilled = jsonData.uploadedUmeedwaran;
+        
         const req = await instance.post("/reports/maqam", jsonData, {
           headers: {
             "Content-Type": "application/json",

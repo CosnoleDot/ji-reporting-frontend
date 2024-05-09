@@ -80,7 +80,7 @@ export const ToseeDawat = ({ view }) => {
           <input
             readOnly={true}
             type="number"
-            defaultValue={
+            value={
               parseInt(document.getElementById("uploadedCurrent")?.value) +
               parseInt(document.getElementById("manualCurrent")?.value)
             }
@@ -116,7 +116,7 @@ export const ToseeDawat = ({ view }) => {
           <input
             readOnly={true}
             type="number"
-            defaultValue={
+            value={
               parseInt(document.getElementById("uploadedMeetings")?.value) +
               parseInt(document.getElementById("manualMeetings")?.value)
             }
@@ -152,7 +152,7 @@ export const ToseeDawat = ({ view }) => {
           <input
             readOnly={true}
             type="number"
-            defaultValue={
+            value={
               parseInt(document.getElementById("uploadedLitrature")?.value) +
               parseInt(document.getElementById("manualLitrature")?.value)
             }
@@ -193,7 +193,7 @@ export const ToseeDawat = ({ view }) => {
           <input
             readOnly={true}
             type="number"
-            defaultValue={
+            value={
               parseInt(
                 document.getElementById("uploadedCommonLiteratureDistribution")?.value
               ) +
@@ -233,7 +233,7 @@ export const ToseeDawat = ({ view }) => {
           <input
             readOnly={true}
             type="number"
-            defaultValue={
+            value={
               parseInt(
                 document.getElementById("uploadedCommonStudentMeetings")?.value
               ) +

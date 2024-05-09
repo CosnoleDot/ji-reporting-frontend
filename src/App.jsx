@@ -177,7 +177,9 @@ function App() {
       });
       if (req) {
         const enabledIlaqas = req.data.data;
+        
         const type = localStorage.getItem("@type");
+        
         if (type === "country") {
           setIlaqas(
             enabledIlaqas?.filter((halqa) => {
@@ -194,6 +196,7 @@ function App() {
           const validIlaqas = enabledIlaqas.filter(
             (i) => i?.maqam?._id === me?.userAreaId?._id
           );
+          
           validIlaqas.length < 1 && setMuntakhibMaqam(false);
         } else {
           const validIlaqas = enabledIlaqas.filter(
@@ -710,6 +713,7 @@ function App() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [me, isCompleted, navigate]);
+  console.log(muntakhibMaqam,'asd')
   return (
     <MeContext.Provider value={me}>
       <DoubleScrollLeftRefresh />
