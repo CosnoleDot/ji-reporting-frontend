@@ -70,8 +70,8 @@ export const RozOShabDiary = ({ view }) => {
             readOnly={view}
             defaultValue={0}
             required
-            name={`manualRafaqa`}
-            id={`manualRafaqa`}
+            name={`manualRafaqaFilled`}
+            id={`manualRafaqaFilled`}
             className="p-1 text-center "
             oninput="calculateSum()"
           />
@@ -81,7 +81,7 @@ export const RozOShabDiary = ({ view }) => {
             type="number"
             defaultValue={
               parseInt(document.getElementById("uploadedRafaqa")?.value) +
-              parseInt(document.getElementById("manualRafaqa")?.value)
+              parseInt(document.getElementById("manualRafaqaFilled")?.value)
             }
             required
             name={`rafaqaFilledSum`}

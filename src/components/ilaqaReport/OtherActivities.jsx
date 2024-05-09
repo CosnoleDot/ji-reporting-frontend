@@ -42,7 +42,7 @@ export const OtherActivities = ({ view }) => {
         <div className='flex py-2'>
           <label className='block'>شب بیداری:</label>
           <input
-            readOnly={true}
+            readOnly={view}
             type='number'
             defaultValue={0}
             required

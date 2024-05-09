@@ -52,7 +52,7 @@ export const MuntakhibMaqamReports = () => {
   const location = useLocation();
   const me = useContext(MeContext);
   const navigate = useNavigate();
-  console.log(ilaqa, "asd");
+  console.log(ilaqa);
   const autoFill = () => {
     const halq = {};
     document.getElementById("maqam-form").reset();
@@ -116,18 +116,9 @@ export const MuntakhibMaqamReports = () => {
       });
     Object.keys(halq).forEach((i) => {
       let j;
+
       if (i === "studyCircle-decided") {
         j = "studyCircleMentioned-decided";
-      } else if (i === "current") {
-        j = "uploadedCurrent";
-      } else if (i === "meetings") {
-        j = "uploadedMeetings";
-      } else if (i === "literatureDistribution") {
-        j = "uploadedLitrature";
-      } else if (i === "commonLiteratureDistribution") {
-        j = "uploadedCommonLiteratureDistribution";
-      } else if (i === "commonStudentMeetings") {
-        j = "uploadedCommonStudentMeetings";
       } else if (i === "studyCircle-decided") {
         j = "studyCircleMentioned-decided";
       } else if (i === "umeedwaranFilled") {
@@ -155,7 +146,32 @@ export const MuntakhibMaqamReports = () => {
           j = i;
         }
       }
+      halq.uploadedCurrent = halq.currentSum;
+      halq.uploadedMeetings = halq.meetingsSum;
+      halq.uploadedCommonLiteratureDistribution =
+        halq.commonLiteratureDistributionSum;
+      halq.uploadedLitrature = halq.literatureSum;
+      halq.uploadedCommonStudentMeetings = halq.commonStudentMeetingsSum;
+      halq.uploadedRafaqaFilled = halq.rafaqaFilledSum;
+      halq.uploadedUmeedwaran = halq.umeedwaranFilledSum;
+      [
+        "commonLiteratureDistributionSum",
+        "currentSum",
+        "commonStudentMeetingsSum",
+        "meetingsSum",
+        "literatureSum",
+        "manualCommonLiteratureDistribution",
+        "manualCommonStudentMeetings",
+        "manualCurrent",
+        "manualLitrature",
+        "manualMeetings",
+        "manualRafaqa",
+        "rafaqaFilledSum",
+        "umeedwaranFilledSum",
+        "manualUmeedwaran",
+      ].forEach((l) => (document.getElementById(l).value = 0));
       const elem = document.getElementById(j);
+      console.log(halq, "h");
       if (elem) {
         if (j === "month") {
         } else {
@@ -200,7 +216,7 @@ export const MuntakhibMaqamReports = () => {
       "shaheen",
       "members",
       "rehaishHalqay",
-      
+
       "taleemHalqay",
     ].forEach((i) => {
       document.getElementById(`${i}-monthly`).value = 0;
@@ -219,16 +235,16 @@ export const MuntakhibMaqamReports = () => {
       document.getElementById(`${i}-averageAttendance`).value = 0;
     });
     [
-        "ijtArkan",
-        "studyCircle",
-        "ijtRafaqa",
-        "ijtNazmeen",
-        "sadurMeeting",
-        "ijtUmeedwaran",
-      ].forEach((i) => {
-        document.getElementById(`${i}-decided`).value = 0;
-        document.getElementById(`${i}-done`).value = 0;
-      });
+      "ijtArkan",
+      "studyCircle",
+      "ijtRafaqa",
+      "ijtNazmeen",
+      "sadurMeeting",
+      "ijtUmeedwaran",
+    ].forEach((i) => {
+      document.getElementById(`${i}-decided`).value = 0;
+      document.getElementById(`${i}-done`).value = 0;
+    });
     const afd = [
       "rehaishHalqay",
       "taleemHalqay",

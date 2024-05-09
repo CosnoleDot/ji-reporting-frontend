@@ -1226,6 +1226,12 @@ export const Reports = () => {
                         <FaEye />
                       </button>
                       <button
+                          className="btn"
+                          onClick={() => editReport(obj?._id)}
+                        >
+                          <FaEdit />
+                        </button>
+                      <button
                         className="btn"
                         onClick={() =>
                           window.open(

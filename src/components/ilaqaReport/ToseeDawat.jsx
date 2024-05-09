@@ -121,8 +121,8 @@ export const ToseeDawat = ({ view }) => {
               parseInt(document.getElementById("manualMeetings")?.value)
             }
             required
-            name={`litrature`}
-            id={`litrature`}
+            name={`meetingsSum`}
+            id={`meetingsSum`}
             className="border-b-2 text-center border-dashed "
           />
         </div>
@@ -157,8 +157,8 @@ export const ToseeDawat = ({ view }) => {
               parseInt(document.getElementById("manualLitrature")?.value)
             }
             required
-            name={`litrature`}
-            id={`litrature`}
+            name={`literatureSum`}
+            id={`literatureSum`}
             className="border-b-2 text-center border-dashed "
           />
         </div>
@@ -204,8 +204,8 @@ export const ToseeDawat = ({ view }) => {
               )
             }
             required
-            name={`comoonStudentLitrature`}
-            id={`comoonStudentLitrature`}
+            name={`commonLiteratureDistributionSum`}
+            id={`commonLiteratureDistributionSum`}
             className="border-b-2 text-center border-dashed "
           />
         </div>
@@ -244,8 +244,8 @@ export const ToseeDawat = ({ view }) => {
               )
             }
             required
-            name={`sumCommonStudentMeetings`}
-            id={`sumCommonStudentMeetings`}
+            name={`commonStudentMeetingsSum`}
+            id={`commonStudentMeetingsSum`}
             className="border-b-2 text-center border-dashed "
           />
         </div>
