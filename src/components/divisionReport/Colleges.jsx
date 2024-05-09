@@ -3,7 +3,7 @@ import { Box } from "../halqa";
 export const Colleges = ({ view }) => {
   return (
     <div className="relative w-full overflow-auto">
-            <h2 className="mb-2 text-lg">کالجز </h2>
+      <h2 className="mb-2 text-lg">کالجز </h2>
       <table className="w-full table">
         <thead>
           <tr>
@@ -41,7 +41,7 @@ export const Colleges = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type="number"
                 defaultValue={0}
                 required
@@ -88,7 +88,7 @@ export const Colleges = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type="number"
                 defaultValue={0}
                 required
@@ -113,7 +113,7 @@ export const Colleges = ({ view }) => {
             <Box>C</Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type="number"
                 defaultValue={0}
                 required
@@ -124,7 +124,7 @@ export const Colleges = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type="number"
                 defaultValue={0}
                 required
@@ -135,7 +135,7 @@ export const Colleges = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type="number"
                 defaultValue={0}
                 required
@@ -146,7 +146,7 @@ export const Colleges = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type="number"
                 defaultValue={0}
                 required
@@ -160,7 +160,7 @@ export const Colleges = ({ view }) => {
             <Box>D</Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type="number"
                 defaultValue={0}
                 required
@@ -171,7 +171,7 @@ export const Colleges = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type="number"
                 defaultValue={0}
                 required
@@ -182,7 +182,7 @@ export const Colleges = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type="number"
                 defaultValue={0}
                 required
@@ -193,7 +193,7 @@ export const Colleges = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type="number"
                 defaultValue={0}
                 required
