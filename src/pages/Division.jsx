@@ -17,7 +17,7 @@ import { UIContext } from "../context/ui";
 import { Tanzeem } from "../components/divisionReport/Tanzeem";
 import { IfradiKuwat } from "../components/divisionReport/IfradiKuwat";
 import { MarkaziActivities } from "../components/divisionReport/MarkaziActivities";
-import ZailiActivities from "../components/divisionReport/ZailiActivities";
+
 import { OtherActivities } from "../components/divisionReport/OtherActivities";
 import { ToseeDawat } from "../components/divisionReport/ToseeDawat";
 import { Library } from "../components/divisionReport/Library";
@@ -25,24 +25,27 @@ import { PaighamDigest } from "../components/divisionReport/PaighamDigest";
 import { RozOShabDiary } from "../components/divisionReport/RozOShabDiary";
 import { Jamiaat } from "../components/divisionReport/Jamiaat";
 import { Colleges } from "../components/divisionReport/Colleges";
+import { ZailiActivities } from "../components/divisionReport/ZailiActivities";
 
 export const Division = () => {
   // EDIT CODE START
   const halqa = useContext(HalqaReportContext);
   const maqam = useContext(MaqamReportContext);
   const division = useContext(DivisionReportContext);
+  const [month, setMonth] = useState("");
   const params = useParams();
   const [id, setId] = useState(null);
   const { dispatch } = useToastState();
   const [data, setData] = useState({});
   const { loading, setLoading, getDivisionReports } = useContext(UIContext);
   const [view, setView] = useState(false);
-  const [month, setMonth] = useState("");
-  const me = useContext(MeContext);
   const location = useLocation();
+  const me = useContext(MeContext);
   const navigate = useNavigate();
+
   const autoFill = () => {
     const halq = {};
+
     document.getElementById("division-form").reset();
     if (halqa.filter((i) => i?.month.includes(month)).length < 1) {
       [
@@ -73,26 +76,16 @@ export const Division = () => {
         "shabBedari",
         "nizamSalah",
         "rawabitDecided",
-        "current",
-        "meetings",
-        "literatureDistribution",
-        "commonStudentMeetings",
-        "commonLiteratureDistribution",
-        "totalBooks",
-        "meetings",
-        "literatureDistribution",
-        "commonStudentMeetings",
-        "commonLiteratureDistribution",
         "totalBooks",
         "totalIncrease",
         "totalDecrease",
         "totalBookRent",
-        "rafaqaFilled",
       ].forEach((i) => {
         document.getElementById(i).value = 0;
       });
       document.getElementById("name").value = me?.userAreaId?.name;
     }
+
     halqa
       .filter((i) => i?.month.includes(month))
       .forEach((i) => {
@@ -117,10 +110,14 @@ export const Division = () => {
       let j;
       if (i === "studyCircle-decided") {
         j = "studyCircleMentioned-decided";
+      } else if (i === "literatureDistribution") {
+        j = "litrature";
       } else if (i === "studyCircle-completed") {
         j = "studyCircleMentioned-done";
       } else if (i === "studyCircle-attendance") {
         j = "studyCircleMentioned-averageAttendance";
+      } else if (i === "currentSum") {
+        j = "current";
       } else {
         if (i.split("-")[1] === "completed") {
           j = i.split("-")[0] + "-done";
@@ -138,6 +135,8 @@ export const Division = () => {
           j = i;
         }
       }
+      halq.litrature = halq.literatureDistribution;
+      
       const elem = document.getElementById(j);
       if (elem) {
         if (j === "month") {
@@ -151,6 +150,9 @@ export const Division = () => {
           } else {
             if (i === "name" && !view) {
               elem.value = me?.userAreaId?.name;
+            } else if (elem === "litrature") {
+              console.log("am in");
+              elem.value = halq["literatureDistribution"];
             } else {
               elem.value = halq[i];
             }
@@ -158,20 +160,31 @@ export const Division = () => {
         }
       }
     });
-    Object.keys(data).forEach((i) => {
-      const elem = document.getElementById(i);
-      if (elem) {
-        if (i === "month") {
-          elem.value = data[i]?.split("")?.slice(0, 7)?.join("");
-        } else {
-          if (elem.type === "checkbox") {
-            elem.checked = data[i];
-          } else {
-            elem.value = data[i];
-          }
-        }
-      }
+    console.log(halq,'asd')
+    document.getElementById("studyCircle-averageAttendance").value = 0;
+    document.getElementById("studyCircle-done").value = 0;
+    ["arkan", "umeedWaran"].forEach((i) => {
+      document.getElementById(`${i}-start`).value = 0;
+      document.getElementById(`${i}-end`).value = 0;
+      document.getElementById(`${i}-increase`).value = 0;
+      document.getElementById(`${i}-decrease`).value = 0;
+      document.getElementById(`${i}-monthly`).value = 0;
     });
+    [
+      "paighamEvent",
+      "shaheenMeeting",
+      "darseQuran",
+      "ijtKarkunan",
+      "studyCircleMentioned",
+      "ijtRafaqa",
+    ]?.forEach((i) => {
+      document.getElementById(`${i}-averageAttendance`).value = 0;
+    });
+
+    document.getElementById("karkunan-monthly").value = 0;
+    document.getElementById("rafaqa-monthly").value = 0;
+    document.getElementById("rawabitDecided").value = 0;
+
     const afd = [
       "rehaishHalqay",
       "taleemHalqay",
@@ -192,19 +205,20 @@ export const Division = () => {
     afd.forEach((i) => {
       calcultate(i);
     });
-    document.getElementById("studyCircle-averageAttendance").value = 0;
-    document.getElementById("studyCircle-done").value = 0;
-    document.getElementById("umeedwaranFilled").value = 0;
-    document.getElementById("arkanFilled").value = 0;
-    ["arkan", "umeedWaran"].forEach((i) => {
-      document.getElementById(`${i}-start`).value = 0;
-      document.getElementById(`${i}-end`).value = 0;
-      document.getElementById(`${i}-increase`).value = 0;
-      document.getElementById(`${i}-decrease`).value = 0;
-      document.getElementById(`${i}-monthly`).value = 0;
-    });
   };
-
+  // To set values to zero when in create mode
+  useEffect(() => {
+    const value1 = document.getElementById("litrature");
+    const value2 = document.getElementById("commonStudentMeetings");
+    const value3 = document.getElementById("commonLiteratureDistribution");
+    const value4 = document.getElementById("shabBedari");
+    if (window.location.pathname?.split("/")[2] === "create") {
+      value1.value = 0;
+      value2.value = 0;
+      value3.value = 0;
+      value4.value = 0;
+    }
+  }, [window.location.pathname]);
   useEffect(() => {
     const l = location.pathname?.split("/")[2];
     if (l === "view") {
@@ -220,68 +234,6 @@ export const Division = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
-  useEffect(() => {
-    if (!id) autoFill();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, halqa, month]);
-  // EDIT CODE END
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(e.currentTarget);
-    const jsonData = convertDataFormat(toJson(formData));
-
-    setLoading(true);
-    try {
-      if (id) {
-        const studyCircleDecidedValue = document.getElementById(
-          "studyCircleMentioned-decided"
-        ).value;
-        const studyCircleDoneValue = document.getElementById(
-          "studyCircleMentioned-done"
-        ).value;
-        const studyCircleAverageAttendanceValue = document.getElementById(
-          "studyCircleMentioned-averageAttendance"
-        ).value;
-
-        const studyCircleMentioned = {
-          decided: studyCircleDecidedValue,
-          done: studyCircleDoneValue,
-          averageAttendance: studyCircleAverageAttendanceValue,
-        };
-
-        // Add studyCircleMentioned object to jsonData
-        jsonData.studyCircleMentioned = studyCircleMentioned;
-
-        const req = await instance.put(`/reports/division/${id}`, jsonData, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("@token")}`,
-          },
-        });
-        await getDivisionReports();
-        dispatch({ type: "SUCCESS", payload: req.data?.message });
-        navigate("/reports");
-      } else {
-        const req = await instance.post("/reports/division", jsonData, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("@token")}`,
-          },
-        });
-        await getDivisionReports();
-        dispatch({ type: "SUCCESS", payload: req.data?.message });
-        navigate("/reports");
-      }
-
-      e.target.reset();
-    } catch (error) {
-      dispatch({ type: "ERROR", payload: error.response.data.message });
-    }
-    setLoading(false);
-  };
-
   useEffect(() => {
     Object.keys(data).forEach((i) => {
       const elem = document.getElementById(i);
@@ -318,6 +270,89 @@ export const Division = () => {
       calcultate(i);
     });
   }, [data]);
+  useEffect(() => {
+    if (!id) autoFill();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id, halqa, month]);
+  // EDIT CODE END
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    const jsonData = convertDataFormat(toJson(formData));
+    console.log(jsonData,'asd')
+    setLoading(true);
+    try {
+      if (id) {
+        const studyCircleDecidedValue = document.getElementById(
+          "studyCircleMentioned-decided"
+        ).value;
+        const studyCircleDoneValue = document.getElementById(
+          "studyCircleMentioned-done"
+        ).value;
+        const studyCircleAverageAttendanceValue = document.getElementById(
+          "studyCircleMentioned-averageAttendance"
+        ).value;
+
+        const studyCircleMentioned = {
+          decided: studyCircleDecidedValue,
+          done: studyCircleDoneValue,
+          averageAttendance: studyCircleAverageAttendanceValue,
+        };
+
+        // Add studyCircleMentioned object to jsonData
+        jsonData.studyCircleMentioned = studyCircleMentioned;
+           console.log(jsonData,'asd')
+        const req = await instance.put(`/reports/division/${id}`, jsonData, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
+        });
+        await getDivisionReports();
+        dispatch({ type: "SUCCESS", payload: req.data?.message });
+        navigate("/reports");
+      } else {
+        const req = await instance.post("/reports/division", jsonData, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
+        });
+        await getDivisionReports();
+        dispatch({ type: "SUCCESS", payload: req.data?.message });
+        navigate("/reports");
+      }
+
+      e.target.reset();
+    } catch (error) {
+      dispatch({ type: "ERROR", payload: error.response.data.message });
+    }
+    setLoading(false);
+  };
+
+  const totalHalqay = parseInt(
+    document.getElementById("totalHalqay-end")?.value
+  );
+  const subTotalHalqay = parseInt(
+    document.getElementById("subTotalHalqay-end")?.value
+  );
+  const busmTotalUnits = parseInt(
+    document.getElementById("busmTotalUnits-end")?.value
+  );
+
+  useEffect(() => {
+    document.getElementById("studyCircleMentioned-decided").value = totalHalqay;
+    document.getElementById("ijtRafaqa-decided").value = totalHalqay;
+    document.getElementById("darseQuran-decided").value = parseFloat(
+      totalHalqay + subTotalHalqay
+    );
+    document.getElementById("ijtKarkunan-decided").value = parseFloat(
+      totalHalqay + subTotalHalqay
+    );
+    document.getElementById("paighamEvent-decided").value = busmTotalUnits;
+    document.getElementById("shaheenMeeting-decided").value = busmTotalUnits;
+  }, [totalHalqay, subTotalHalqay, busmTotalUnits]);
   return (
     <GeneralLayout>
       <div className="reports h-[calc(100vh-64.4px-64px)] overflow-hidden overflow-y-scroll w-full">
