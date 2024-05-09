@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 export const ilaqaRawabitDecided = () => {
   const elem = document.getElementById("rawabitDecided");
   const rwbMeetings = document.getElementById("rwabitMeetingsGoal");
@@ -23,6 +25,9 @@ export const ilaqaRawabitDecided = () => {
   }
 };
 export const ToseeDawat = ({ view }) => {
+  const sumUpTwoValues = (val1, val2, final) => {
+    document.getElementById(final).value = val1 + val2;
+  };
   return (
     <div className="p-2 py-5 relative w-full overflow-auto">
       <h2 className="text-black py-3 text-lg">توسیع دعوت</h2>
@@ -74,16 +79,18 @@ export const ToseeDawat = ({ view }) => {
             name={`manualCurrent`}
             id={`manualCurrent`}
             className="border-b-2 text-center border-dashed "
-            oninput="calculateSum()"
+            onChange={() =>
+              sumUpTwoValues(
+                parseInt(document.getElementById("uploadedCurrent").value),
+                parseInt(document.getElementById("manualCurrent").value),
+                "currentSum"
+              )
+            }
           />
           =
           <input
             readOnly={true}
             type="number"
-            defaultValue={
-              parseInt(document.getElementById("uploadedCurrent")?.value) +
-              parseInt(document.getElementById("manualCurrent")?.value)
-            }
             required
             name={`currentSum`}
             id={`currentSum`}
@@ -110,16 +117,18 @@ export const ToseeDawat = ({ view }) => {
             name={`manualMeetings`}
             id={`manualMeetings`}
             className="border-b-2 text-center border-dashed "
-            oninput="calculateSum()"
+            onChange={() =>
+              sumUpTwoValues(
+                parseInt(document.getElementById("uploadedMeetings").value),
+                parseInt(document.getElementById("manualMeetings").value),
+                "meetingsSum"
+              )
+            }
           />
           =
           <input
             readOnly={true}
             type="number"
-            defaultValue={
-              parseInt(document.getElementById("uploadedMeetings")?.value) +
-              parseInt(document.getElementById("manualMeetings")?.value)
-            }
             required
             name={`meetingsSum`}
             id={`meetingsSum`}
@@ -146,16 +155,18 @@ export const ToseeDawat = ({ view }) => {
             name={`manualLitrature`}
             id={`manualLitrature`}
             className="border-b-2 text-center border-dashed "
-            oninput="calculateSum()"
+            onChange={() =>
+              sumUpTwoValues(
+                parseInt(document.getElementById("uploadedLitrature").value),
+                parseInt(document.getElementById("manualLitrature").value),
+                "literatureSum"
+              )
+            }
           />
           =
           <input
             readOnly={true}
             type="number"
-            defaultValue={
-              parseInt(document.getElementById("uploadedLitrature")?.value) +
-              parseInt(document.getElementById("manualLitrature")?.value)
-            }
             required
             name={`literatureSum`}
             id={`literatureSum`}
@@ -187,22 +198,25 @@ export const ToseeDawat = ({ view }) => {
             name={`manualCommonLiteratureDistribution`}
             id={`manualCommonLiteratureDistribution`}
             className="border-b-2 text-center border-dashed "
-            oninput="calculateSum()"
+            onChange={() =>
+              sumUpTwoValues(
+                parseInt(
+                  document.getElementById(
+                    "uploadedCommonLiteratureDistribution"
+                  ).value
+                ),
+                parseInt(
+                  document.getElementById("manualCommonLiteratureDistribution")
+                    .value
+                ),
+                "commonLiteratureDistributionSum"
+              )
+            }
           />
           =
           <input
             readOnly={true}
             type="number"
-            defaultValue={
-              parseInt(
-                document.getElementById("uploadedCommonLiteratureDistribution")
-                  ?.value
-              ) +
-              parseInt(
-                document.getElementById("manualCommonLiteratureDistribution")
-                  ?.value
-              )
-            }
             required
             name={`commonLiteratureDistributionSum`}
             id={`commonLiteratureDistributionSum`}
@@ -229,20 +243,22 @@ export const ToseeDawat = ({ view }) => {
             name={`manualCommonStudentMeetings`}
             id={`manualCommonStudentMeetings`}
             className="border-b-2 text-center border-dashed "
-            oninput="calculateSum()"
+            onChange={() =>
+              sumUpTwoValues(
+                parseInt(
+                  document.getElementById("uploadedCommonStudentMeetings").value
+                ),
+                parseInt(
+                  document.getElementById("manualCommonStudentMeetings").value
+                ),
+                "commonStudentMeetingsSum"
+              )
+            }
           />
           =
           <input
             readOnly={true}
             type="number"
-            defaultValue={
-              parseInt(
-                document.getElementById("uploadedCommonStudentMeetings")?.value
-              ) +
-              parseInt(
-                document.getElementById("manualCommonStudentMeetings")?.value
-              )
-            }
             required
             name={`commonStudentMeetingsSum`}
             id={`commonStudentMeetingsSum`}

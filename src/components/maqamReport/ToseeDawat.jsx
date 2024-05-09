@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { sumUpTwoValues } from "../muntakhibMaqamReports";
 
 export const maqamRawabitDecided = () => {
   const elem = document.getElementById("rawabitDecided");
@@ -41,7 +42,6 @@ export const ToseeDawat = ({ view }) => {
     const raD = document.getElementById("rafaqa-decrease")?.value;
     const totalRafaqa = parseInt(raS) + parseInt(raI) - parseInt(raD);
     if (elem) {
-      console.log(totalArkaan, totalUmeedwaran, totalRafaqa);
       const value = totalArkaan + (totalUmeedwaran * 3 + totalRafaqa * 2);
       elem.value = value;
       if (rwbMeetings) {
@@ -50,6 +50,20 @@ export const ToseeDawat = ({ view }) => {
       }
     }
   });
+  const [cSum, setCSum] = useState();
+  const [mSum, setMSum] = useState();
+  useEffect(() => {
+    const uFilled = parseInt(document.getElementById("current").value);
+    const mFilled = parseInt(document.getElementById("currentManual").value);
+    const meetM = parseInt(document.getElementById("meetingsManual").value);
+    const meet = parseInt(document.getElementById("meetings").value);
+    if ((uFilled, mFilled)) {
+      setCSum(uFilled + mFilled);
+    }
+    if ((meet, meetM)) {
+      setMSum(meet + meetM);
+    }
+  }, [cSum, mSum]);
   return (
     <div className="p-2 py-5 relative w-full overflow-auto">
       <h2 className="text-black py-3 text-lg">توسیع دعوت</h2>
@@ -91,6 +105,13 @@ export const ToseeDawat = ({ view }) => {
             name={`current`}
             id={`current`}
             className="border-b-2 text-center border-dashed "
+            onChange={() =>
+              sumUpTwoValues(
+                parseInt(document.getElementById("current").value),
+                parseInt(document.getElementById("currentManual").value),
+                "currentSum"
+              )
+            }
           />
           +
           <input
@@ -101,20 +122,23 @@ export const ToseeDawat = ({ view }) => {
             name={`currentManual`}
             id={`currentManual`}
             className="border-b-2 text-center border-dashed "
-            oninput="calculateSum()"
+            onChange={() =>
+              sumUpTwoValues(
+                parseInt(document.getElementById("current").value),
+                parseInt(document.getElementById("currentManual").value),
+                "currentSum"
+              )
+            }
           />
           =
           <input
             readOnly={true}
             type="number"
-            defaultValue={
-              parseInt(document.getElementById("current")?.value) +
-              parseInt(document.getElementById("currentManual")?.value)
-            }
             required
             name={`currentSum`}
             id={`currentSum`}
             className="border-b-2 text-center border-dashed "
+            value={cSum}
           />
         </div>
         <div style={{ display: "flex" }}>
@@ -127,6 +151,13 @@ export const ToseeDawat = ({ view }) => {
             name={`meetings`}
             id={`meetings`}
             className="border-b-2 text-center border-dashed "
+            onChange={() =>
+              sumUpTwoValues(
+                parseInt(document.getElementById("meetings").value),
+                parseInt(document.getElementById("meetingsManual").value),
+                "meetingsSum"
+              )
+            }
           />
           +
           <input
@@ -137,20 +168,23 @@ export const ToseeDawat = ({ view }) => {
             name={`meetingsManual`}
             id={`meetingsManual`}
             className="border-b-2 text-center border-dashed "
-            oninput="calculateSum()"
+            onChange={() =>
+              sumUpTwoValues(
+                parseInt(document.getElementById("meetings").value),
+                parseInt(document.getElementById("meetingsManual").value),
+                "meetingsSum"
+              )
+            }
           />
           =
           <input
             readOnly={true}
             type="number"
-            defaultValue={
-              parseInt(document.getElementById("meetings")?.value) +
-              parseInt(document.getElementById("meetingsManual")?.value)
-            }
             required
             name={`meetingsSum`}
             id={`meetingsSum`}
             className="border-b-2 text-center border-dashed "
+            value={mSum}
           />
         </div>
         <div style={{ display: "flex" }}>

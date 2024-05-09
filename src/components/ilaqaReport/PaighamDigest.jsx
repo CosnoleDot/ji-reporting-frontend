@@ -1,4 +1,7 @@
 export const PaighamDigest = ({ view }) => {
+  const sumUpTwoValues = (val1, val2, final) => {
+    document.getElementById(final).value = val1 + val2;
+  };
   return (
     <div className="p-2 py-5 relative w-full overflow-auto">
       <h2 className="text-black py-3 text-lg">پیغام ڈائجسٹ</h2>
@@ -13,6 +16,13 @@ export const PaighamDigest = ({ view }) => {
               className="border-b-2 text-center border-dashed"
               name="totalReceived"
               id="totalReceived"
+              onChange={() =>
+                sumUpTwoValues(
+                  parseInt(document.getElementById("totalReceived").value),
+                  parseInt(document.getElementById("manualReceived").value),
+                  "receivedSum"
+                )
+              }
             />
             +
             <input
@@ -22,15 +32,18 @@ export const PaighamDigest = ({ view }) => {
               type="number"
               placeholder="ذیلی حلقہ جات"
               className="border-b-2 text-center border-dashed"
+              onChange={() =>
+                sumUpTwoValues(
+                  parseInt(document.getElementById("totalReceived").value),
+                  parseInt(document.getElementById("manualReceived").value),
+                  "receivedSum"
+                )
+              }
             />
             =
             <input
               readOnly={true}
               type="number"
-              defaultValue={
-                parseInt(document.getElementById("manualReceived")?.value) +
-                parseInt(document.getElementById("totalReceived")?.value)
-              }
               required
               name="receivedSum"
               id="receivedSum"
@@ -48,6 +61,13 @@ export const PaighamDigest = ({ view }) => {
               className="border-b-2 p-1 text-center border-dashed"
               name="totalSold"
               id="totalSold"
+              onChange={() =>
+                sumUpTwoValues(
+                  parseInt(document.getElementById("totalSold").value),
+                  parseInt(document.getElementById("manualSold").value),
+                  "soldSum"
+                )
+              }
             />
             +
             <input
@@ -57,15 +77,18 @@ export const PaighamDigest = ({ view }) => {
               type="number"
               placeholder="ذیلی حلقہ جات"
               className="border-b-2 text-center border-dashed"
+              onChange={() =>
+                sumUpTwoValues(
+                  parseInt(document.getElementById("totalSold").value),
+                  parseInt(document.getElementById("manualSold").value),
+                  "soldSum"
+                )
+              }
             />
             =
             <input
               readOnly={true}
               type="number"
-              defaultValue={
-                parseInt(document.getElementById("totalSold")?.value) +
-                parseInt(document.getElementById("manualSold")?.value)
-              }
               required
               name="soldSum"
               id="soldSum"
@@ -83,6 +106,17 @@ export const PaighamDigest = ({ view }) => {
               className="border-b-2 p-1 text-center border-dashed"
               name="monthlyReceivingGoal"
               id="monthlyReceivingGoal"
+              onChange={() =>
+                sumUpTwoValues(
+                  parseInt(
+                    document.getElementById("monthlyReceivingGoal").value
+                  ),
+                  parseInt(
+                    document.getElementById("manualMonthlyReceivingGoal").value
+                  ),
+                  "monthlyReceivingGoalSum"
+                )
+              }
             />
             +
             <input
@@ -92,19 +126,22 @@ export const PaighamDigest = ({ view }) => {
               type="number"
               placeholder="ذیلی حلقہ جات"
               className="border-b-2 text-center border-dashed"
+              onChange={() =>
+                sumUpTwoValues(
+                  parseInt(
+                    document.getElementById("monthlyReceivingGoal").value
+                  ),
+                  parseInt(
+                    document.getElementById("manualMonthlyReceivingGoal").value
+                  ),
+                  "monthlyReceivingGoalSum"
+                )
+              }
             />
             =
             <input
               readOnly={true}
               type="number"
-              defaultValue={
-                parseInt(
-                  document.getElementById("monthlyReceivingGoal")?.value
-                ) +
-                parseInt(
-                  document.getElementById("manualMonthlyReceivingGoal")?.value
-                )
-              }
               required
               name="monthlyReceivingGoalSum"
               id="monthlyReceivingGoalSum"
