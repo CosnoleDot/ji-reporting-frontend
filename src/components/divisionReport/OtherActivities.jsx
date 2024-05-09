@@ -2,8 +2,8 @@ export const OtherActivities = ({ view }) => {
   return (
     <div className='p-2 py-5 relative w-full overflow-auto'>
       <h2 className='text-black py-3 text-lg'>دیگر سرگرمیاں</h2>
-      <div className='flex flex-wrap w-full items-center justify-start gap-2'>
-        <div className='flex py-2'>
+      <div className='flex flex-wrap w-full items-center justify-start'>
+        {/* <div className='flex py-2'>
           <label className='block'> تربیت گاہ:</label>
           <input
             readOnly={view}
@@ -14,7 +14,7 @@ export const OtherActivities = ({ view }) => {
             id='tarbiyatGaah'
             className='border-b-2 text-center border-dashed'
           />
-        </div>
+        </div> */}
         <div className='flex py-2'>
           <label className='block'>دعوتی وفود:</label>
           <input
@@ -42,7 +42,7 @@ export const OtherActivities = ({ view }) => {
         <div className='flex py-2'>
           <label className='block'>شب بیداری:</label>
           <input
-            readOnly={true}
+            readOnly={view}
             type='number'
             defaultValue={0}
             required

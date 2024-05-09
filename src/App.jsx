@@ -477,8 +477,10 @@ function App() {
         headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
       });
       if (req) {
+        console.log(req.data.data,'asd')
         divisionR = req.data.data;
         setDivisionReports(req.data.data);
+        
       }
     } catch (err) {
       console.log(err);

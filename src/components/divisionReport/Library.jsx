@@ -1,9 +1,13 @@
 import { useContext } from "react";
-import { HalqaContext } from "../../context";
-
+import { countLibraries } from "../../pages/Maqam";
+import {
+  HalqaContext,
+  MaqamContext,
+  MaqamReportContext,
+  MeContext,
+} from "../../context";
 export const Library = () => {
   const halqa = useContext(HalqaContext);
-
   return (
     <div className="p-2 py-5 relative w-full overflow-auto">
       <h2 className="text-black py-3 text-lg">لائبریری</h2>
@@ -11,7 +15,7 @@ export const Library = () => {
         <div className="flex py-2">
           <label className="block"> کل تعداد لائبریریز:</label>
           <input
-            readOnly
+            readOnly={true}
             type="number"
             defaultValue={halqa?.length}
             required
@@ -23,7 +27,7 @@ export const Library = () => {
         <div className="flex py-2">
           <label className="block">کل تعدادکتب:</label>
           <input
-            readOnly
+            readOnly={true}
             type="number"
             defaultValue={0}
             required
@@ -35,7 +39,7 @@ export const Library = () => {
         <div className="flex py-2">
           <label className="block">اضافہ کتب:</label>
           <input
-            readOnly
+            readOnly={true}
             type="number"
             defaultValue={0}
             required
@@ -47,7 +51,7 @@ export const Library = () => {
         <div className="flex py-2">
           <label className="block">کمی کتب :</label>
           <input
-            readOnly
+            readOnly={true}
             type="number"
             defaultValue={0}
             required
@@ -59,7 +63,7 @@ export const Library = () => {
         <div className="flex py-2">
           <label className="block">کل اجرائے کتب:</label>
           <input
-            readOnly
+            readOnly={true}
             type="number"
             defaultValue={0}
             required
@@ -68,16 +72,6 @@ export const Library = () => {
             className="border-b-2 text-center border-dashed"
           />
         </div>
-        {/* <div className="flex py-2">
-            <label className="block">مرتب:</label>
-            <input
-            readOnly={true}
-              type="checkbox"
-              name="registeredTosee"
-              id="registeredTosee"
-              className="checkbox ms-2"
-            />
-          </div> */}
       </div>
     </div>
   );
