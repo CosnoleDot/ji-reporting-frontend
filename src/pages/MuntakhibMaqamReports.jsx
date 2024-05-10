@@ -52,7 +52,7 @@ export const MuntakhibMaqamReports = () => {
   const location = useLocation();
   const me = useContext(MeContext);
   const navigate = useNavigate();
-  console.log(ilaqa);
+  console.log(ilaqa,'asd');
   const autoFill = () => {
     const halq = {};
     document.getElementById("maqam-form").reset();
@@ -202,10 +202,6 @@ export const MuntakhibMaqamReports = () => {
       "busmSchoolUnits",
       "arkan",
       "umeedWaran",
-      "rafaqa",
-      "karkunan",
-      "shaheen",
-      "members",
       "rehaishHalqay",
 
       "taleemHalqay",
@@ -228,7 +224,6 @@ export const MuntakhibMaqamReports = () => {
     [
       "ijtArkan",
       "studyCircle",
-      "ijtRafaqa",
       "ijtNazmeen",
       "sadurMeeting",
       "ijtUmeedwaran",
@@ -355,6 +350,11 @@ export const MuntakhibMaqamReports = () => {
         await getMaqamReports();
         dispatch({ type: "SUCCESS", payload: req?.data?.message });
       } else {
+        
+        jsonData.rafaqaFilled = jsonData.uploadedRafaqa;
+        jsonData.manualRafaqaFilled = jsonData.manualRafaqa;
+        jsonData.umeedwaranFilled = jsonData.uploadedUmeedwaran;
+        
         const req = await instance.post("/reports/maqam", jsonData, {
           headers: {
             "Content-Type": "application/json",
@@ -393,6 +393,8 @@ export const MuntakhibMaqamReports = () => {
     document.getElementById("paighamEvent-decided").value = busmTotalUnits;
     document.getElementById("shaheenMeeting-decided").value = busmTotalUnits;
   }, [totalHalqay, subTotalHalqay, busmTotalUnits]);
+
+
   return (
     <GeneralLayout>
       <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">

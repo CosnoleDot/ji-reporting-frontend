@@ -1055,7 +1055,7 @@ export const Tanzeem = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type="number"
                 defaultValue={0}
                 required

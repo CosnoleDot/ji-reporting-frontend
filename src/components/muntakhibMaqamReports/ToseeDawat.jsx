@@ -164,6 +164,7 @@ export const ToseeDawat = ({ view }) => {
           <input
             readOnly={true}
             type="number"
+
             required
             name={`literatureSum`}
             id={`literatureSum`}
