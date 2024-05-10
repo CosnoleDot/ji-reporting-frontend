@@ -169,17 +169,7 @@ export const Tanzeem = ({ view }) => {
                 className="p-1 text-center min-w-full"
               />
             </Box>
-            <Box>
-              <input
-                readOnly={view}
-                type="number"
-                defaultValue={0}
-                required
-                name={`rehaishHalqay-monthly`}
-                id={`rehaishHalqay-monthly`}
-                className="p-1 text-center min-w-full"
-              />
-            </Box>
+
             <Box>
               <input
                 readOnly={view}
@@ -198,6 +188,17 @@ export const Tanzeem = ({ view }) => {
                 id={`rehaishHalqay-continue`}
                 className="p-1 text-center min-w-full"
               />
+              <Box>
+                <input
+                  readOnly={view}
+                  type="number"
+                  defaultValue={0}
+                  required
+                  name={`rehaishHalqay-monthly`}
+                  id={`rehaishHalqay-monthly`}
+                  className="p-1 text-center min-w-full"
+                />
+              </Box>
             </Box>
             <Box>
               <input

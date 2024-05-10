@@ -26,8 +26,9 @@ import { Jamiaat } from "../components/provinceReport/Jamiaat";
 import { Colleges } from "../components/provinceReport/Colleges";
 
 const getData = async (id, setData, data) => {
-  const maqam = data["province"];
-  const obj = maqam.filter((i) => i?._id?.toString() === id?.toString());
+  const province = data["province"];
+  console.log(province);
+  const obj = province.filter((i) => i?._id?.toString() === id?.toString());
   setData(reverseDataFormat(obj[0]));
 };
 
@@ -43,6 +44,7 @@ export const Province = () => {
   const { dispatch } = useToastState();
   const [data, setData] = useState({});
   const { loading, setLoading, getProvinceReports } = useContext(UIContext);
+  const [finalMerged, setFinalMerged] = useState({});
   const [view, setView] = useState(false);
   const location = useLocation();
   const me = useContext(MeContext);
@@ -198,9 +200,85 @@ export const Province = () => {
         "totalPrinted",
         "gift",
       ].forEach((i) => {
-        document.getElementById(i).value = 0;
+        // document.getElementById(i).value = 0;
       });
       document.getElementById("name").value = me?.userAreaId?.name;
+    }
+    const maqamTFiltered = maqam?.map((item) => {
+      const { muntakhibTdId, tdId } = item;
+      return { m: muntakhibTdId, t: tdId };
+    });
+
+    const divisionTFiltered = division?.map((item) => {
+      const { tdId } = item;
+      return { t: tdId };
+    });
+
+    const merged = {};
+
+    [...maqamTFiltered, ...divisionTFiltered].forEach((item) => {
+      const { m, t } = item;
+      if (t) {
+        Object.keys(t).forEach((key) => {
+          if (merged[key]) {
+            merged[key] += t[key];
+          } else {
+            merged[key] = t[key];
+          }
+        });
+      }
+      if (m) {
+        Object.keys(m).forEach((key) => {
+          if (merged[key]) {
+            merged[key] += m[key];
+          } else {
+            merged[key] = m[key];
+          }
+        });
+      }
+    });
+    for (const key in merged) {
+      if (key === "literatureDistribution") {
+        setFinalMerged((prevState) => ({
+          ...prevState,
+          [key]: merged["literatureDistribution"] + merged["literatureSum"],
+        }));
+      } else if (key === "commonLiteratureDistribution") {
+        setFinalMerged((prevState) => ({
+          ...prevState,
+          [key]:
+            merged["commonLiteratureDistribution"] +
+            merged["commonLiteratureDistributionSum"],
+        }));
+      } else if (key === "commonStudentMeetings") {
+        setFinalMerged((prevState) => ({
+          ...prevState,
+          [key]:
+            merged["commonStudentMeetingsSum"] +
+            merged["commonStudentMeetings"],
+        }));
+      } else if (
+        key !== "current" &&
+        key !== "manualMeetings" &&
+        key !== "uploadedCurrent" &&
+        key !== "uploadedLitrature" &&
+        key !== "uploadedMeetings" &&
+        key !== "uploadedCommonStudentMeetings" &&
+        key !== "uploadedCommonLiteratureDistribution" &&
+        key !== "current" &&
+        key !== "meetings" &&
+        key !== "currentManual" &&
+        key !== "manualCommonLiteratureDistribution" &&
+        key !== "manualCommonStudentMeetings" &&
+        key !== "manualCurrent" &&
+        key !== "manualLitrature" &&
+        key !== "meetingsManual"
+      ) {
+        setFinalMerged((prevState) => ({
+          ...prevState,
+          [key]: merged[key],
+        }));
+      }
     }
     maqam
       .filter((i) => i?.month.includes(month))
@@ -223,8 +301,8 @@ export const Province = () => {
         });
       });
     division
-      .filter((i) => i?.month.includes(month))
-      .forEach((i) => {
+      ?.filter((i) => i?.month.includes(month))
+      ?.forEach((i) => {
         const sim = reverseDataFormat(i);
         Object.keys(sim)?.forEach((j) => {
           if (provinceFinalData?.[j]) {
@@ -242,6 +320,11 @@ export const Province = () => {
           }
         });
       });
+    provinceFinalData["ijtKarkunan-done"] =
+      provinceFinalData["ijtKarkunan-sum"];
+    provinceFinalData["darseQuran-done"] = provinceFinalData["darseQuran-sum"];
+    console.log(province);
+    console.log(provinceFinalData);
     Object.keys(provinceFinalData).forEach((i) => {
       let j = i;
       const elem = document.getElementById(j);
@@ -264,13 +347,20 @@ export const Province = () => {
         }
       }
     });
-    Object.keys(data).forEach((i) => {
+    Object.keys(data)?.forEach((i) => {
       const elem = document.getElementById(i);
-      if (elem) {
+      if (
+        (elem && elem !== "current" && elem !== "meetings",
+        elem !== "rawabitDecided" &&
+          elem !== "rwabitMeetingsGoal" &&
+          elem !== "literatureDistribution" &&
+          elem !== "commonLiteratureDistribution" &&
+          elem !== "commonStudentMeetings")
+      ) {
         if (i === "month") {
           elem.value = data[i]?.split("")?.slice(0, 7)?.join("");
         } else {
-          if (elem.type === "checkbox") {
+          if (elem?.type === "checkbox") {
             elem.defaultChecked = data[i] ? true : false;
           } else {
             elem.value = data[i];
@@ -313,7 +403,12 @@ export const Province = () => {
     "divMushawarat-decided",
     "divMushawarat-done",
     "divMushawarat-averageAttendance",
+    "tarbiyatGaah",
+    "tarbiyatGaahGoal",
+    "tarbiyatGaahHeld",
+    "anyOther",
   ];
+
   useEffect(() => {
     if (data && id) {
       paigham.forEach((p) => {
@@ -324,7 +419,6 @@ export const Province = () => {
       });
     }
   }, [data]);
-
   useEffect(() => {
     const l = location.pathname?.split("/")[2];
     if (l === "view") {
@@ -340,6 +434,9 @@ export const Province = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
   useEffect(() => {
     if (!id) autoFill();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -423,7 +520,7 @@ export const Province = () => {
               <OtherActivities view={view} />
             </div>
             <div className="mb-4">
-              <ToseeDawat />
+              <ToseeDawat finalMerged={finalMerged} />
             </div>
             <div className="mb-4">
               <Library />
