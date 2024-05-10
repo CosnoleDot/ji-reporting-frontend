@@ -1,20 +1,12 @@
+
+export const sumUpTwoValues = (val1, val2, final) => {
+  document.getElementById(final).value = val1 + val2;
+};
 export const RozOShabDiary = ({ view }) => {
   return (
     <div className="p-2 py-5 relative w-full overflow-auto">
       <h2 className="text-black py-3 text-lg">روزشب ڈائری</h2>
-      <div className="flex flex-col w-full items-start gap-4 justify-start">
-        {/* <div className='flex py-2 ml-4'>
-          <label className='block'> کتنے ارکان فل کرتے ہیں:</label>
-          <input
-            readOnly={view}
-            type='number'
-            defaultValue={0}
-            required
-            name='arkanFilled'
-            id='arkanFilled'
-            className='border-b-2 text-center border-dashed'
-          />
-        </div> */}
+      <div className="flex flex-wrap w-full items-center justify-start">
         <div style={{ display: "flex" }}>
           <label className="block min-w-[40%]">
             کتنے امیدواران فل کرتے ہیں؟
@@ -27,6 +19,13 @@ export const RozOShabDiary = ({ view }) => {
             name={`uploadedUmeedwaran`}
             id={`uploadedUmeedwaran`}
             className="p-1 text-center "
+            onChange={() =>
+              sumUpTwoValues(
+                parseInt(document.getElementById("uploadedUmeedwaran").value),
+                parseInt(document.getElementById("manualUmeedwaran").value),
+                "rafaqaFilledSum"
+              )
+            }
           />
           +
           <input
@@ -37,20 +36,29 @@ export const RozOShabDiary = ({ view }) => {
             name={`manualUmeedwaran`}
             id={`manualUmeedwaran`}
             className="p-1 text-center "
-            oninput="calculateSum()"
+            onChange={() =>
+              sumUpTwoValues(
+                parseInt(document.getElementById("uploadedUmeedwaran").value),
+                parseInt(document.getElementById("manualUmeedwaran").value),
+                "umeedwaranFilledSum"
+              )
+            }
           />
           =
           <input
             readOnly={true}
             type="number"
-            value={
-              parseInt(document.getElementById("uploadedUmeedwaran")?.value) +
-              parseInt(document.getElementById("manualUmeedwaran")?.value)
-            }
             required
             name={`umeedwaranFilledSum`}
             id={`umeedwaranFilledSum`}
             className="p-1 text-center "
+            onChange={() =>
+              sumUpTwoValues(
+                parseInt(document.getElementById("uploadedUmeedwaran").value),
+                parseInt(document.getElementById("manualUmeedwaran").value),
+                "rafaqaFilledSum"
+              )
+            }
           />
         </div>
         <div style={{ display: "flex" }}>
@@ -63,6 +71,13 @@ export const RozOShabDiary = ({ view }) => {
             name={`uploadedRafaqa`}
             id={`uploadedRafaqa`}
             className="p-1 text-center "
+            onChange={() =>
+              sumUpTwoValues(
+                parseInt(document.getElementById("uploadedRafaqa").value),
+                parseInt(document.getElementById("manualRafaqa").value),
+                "rafaqaFilledSum"
+              )
+            }
           />
           +
           <input
@@ -73,16 +88,18 @@ export const RozOShabDiary = ({ view }) => {
             name={`manualRafaqa`}
             id={`manualRafaqa`}
             className="p-1 text-center "
-            oninput="calculateSum()"
+            onChange={() =>
+              sumUpTwoValues(
+                parseInt(document.getElementById("uploadedRafaqa").value),
+                parseInt(document.getElementById("manualRafaqa").value),
+                "rafaqaFilledSum"
+              )
+            }
           />
           =
           <input
             readOnly={true}
             type="number"
-            value={
-              parseInt(document.getElementById("uploadedRafaqa")?.value) +
-              parseInt(document.getElementById("manualRafaqa")?.value)
-            }
             required
             name={`rafaqaFilledSum`}
             id={`rafaqaFilledSum`}

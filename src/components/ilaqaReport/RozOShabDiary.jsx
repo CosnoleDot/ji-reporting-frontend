@@ -1,4 +1,7 @@
 export const RozOShabDiary = ({ view }) => {
+  const sumUpTwoValues = (val1, val2, final) => {
+    document.getElementById(final).value = val1 + val2;
+  };
   return (
     <div className="p-2 py-5 relative w-full overflow-auto">
       <h2 className="text-black py-3 text-lg">روزشب ڈائری</h2>
@@ -27,6 +30,13 @@ export const RozOShabDiary = ({ view }) => {
             name={`uploadedUmeedwaran`}
             id={`uploadedUmeedwaran`}
             className="p-1 text-center "
+            onChange={() =>
+              sumUpTwoValues(
+                parseInt(document.getElementById("uploadedUmeedwaran").value),
+                parseInt(document.getElementById("manualUmeedwaran").value),
+                "umeedwaranFilledSum"
+              )
+            }
           />
           +
           <input
@@ -37,16 +47,18 @@ export const RozOShabDiary = ({ view }) => {
             name={`manualUmeedwaran`}
             id={`manualUmeedwaran`}
             className="p-1 text-center "
-            oninput="calculateSum()"
+            onChange={() =>
+              sumUpTwoValues(
+                parseInt(document.getElementById("uploadedUmeedwaran").value),
+                parseInt(document.getElementById("manualUmeedwaran").value),
+                "umeedwaranFilledSum"
+              )
+            }
           />
           =
           <input
             readOnly={true}
             type="number"
-            defaultValue={
-              parseInt(document.getElementById("uploadedUmeedwaran")?.value) +
-              parseInt(document.getElementById("manualUmeedwaran")?.value)
-            }
             required
             name={`umeedwaranFilledSum`}
             id={`umeedwaranFilledSum`}
@@ -63,6 +75,13 @@ export const RozOShabDiary = ({ view }) => {
             name={`uploadedRafaqa`}
             id={`uploadedRafaqa`}
             className="p-1 text-center "
+            onChange={() =>
+              sumUpTwoValues(
+                parseInt(document.getElementById("uploadedRafaqa").value),
+                parseInt(document.getElementById("manualRafaqaFilled").value),
+                "rafaqaFilledSum"
+              )
+            }
           />
           +
           <input
@@ -73,16 +92,18 @@ export const RozOShabDiary = ({ view }) => {
             name={`manualRafaqaFilled`}
             id={`manualRafaqaFilled`}
             className="p-1 text-center "
-            oninput="calculateSum()"
+            onChange={() =>
+              sumUpTwoValues(
+                parseInt(document.getElementById("uploadedRafaqa").value),
+                parseInt(document.getElementById("manualRafaqaFilled").value),
+                "rafaqaFilledSum"
+              )
+            }
           />
           =
           <input
             readOnly={true}
             type="number"
-            defaultValue={
-              parseInt(document.getElementById("uploadedRafaqa")?.value) +
-              parseInt(document.getElementById("manualRafaqaFilled")?.value)
-            }
             required
             name={`rafaqaFilledSum`}
             id={`rafaqaFilledSum`}
