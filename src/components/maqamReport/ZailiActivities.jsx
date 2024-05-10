@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box } from "./IfradiKuwat";
+import { sumUpTwoValues } from "../muntakhibMaqamReports";
 
 export const ZailiActivities = ({ view }) => {
   return (
@@ -106,6 +107,13 @@ export const ZailiActivities = ({ view }) => {
                 name={`ijtKarkunan-done`}
                 id={`ijtKarkunan-done`}
                 className="p-1 text-center min-w-full"
+                onChange={() =>
+                  sumUpTwoValues(
+                    parseInt(document.getElementById("ijtKarkunan-done").value),
+                    parseInt(document.getElementById("ijtKarkunan-manual").value),
+                    "ijtKarkunan-sum"
+                  )
+                }
               />
               +
               <input
@@ -115,15 +123,18 @@ export const ZailiActivities = ({ view }) => {
                 name={`ijtKarkunan-manual`}
                 id={`ijtKarkunan-manual`}
                 className="p-1 text-center min-w-full"
+                onChange={() =>
+                  sumUpTwoValues(
+                    parseInt(document.getElementById("ijtKarkunan-done").value),
+                    parseInt(document.getElementById("ijtKarkunan-manual").value),
+                    "ijtKarkunan-sum"
+                  )
+                }
               />
               =
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={
-                  parseInt(document.getElementById("ijtKarkunan-done")?.value) +
-                  parseInt(document.getElementById("ijtKarkunan-manual")?.value)
-                }
                 required
                 name={`ijtKarkunan-sum`}
                 id={`ijtKarkunan-sum`}
@@ -165,6 +176,17 @@ export const ZailiActivities = ({ view }) => {
                   name={`darseQuran-done`}
                   id={`darseQuran-done`}
                   className="p-1 text-center "
+                  onChange={() =>
+                    sumUpTwoValues(
+                      parseInt(
+                        document.getElementById("darseQuran-done").value
+                      ),
+                      parseInt(
+                        document.getElementById("darseQuran-manual").value
+                      ),
+                      "darseQuran-sum"
+                    )
+                  }
                 />
                 +
                 <input
@@ -174,19 +196,22 @@ export const ZailiActivities = ({ view }) => {
                   name={`darseQuran-manual`}
                   id={`darseQuran-manual`}
                   className="p-1 text-center "
+                  onChange={() =>
+                    sumUpTwoValues(
+                      parseInt(
+                        document.getElementById("darseQuran-done").value
+                      ),
+                      parseInt(
+                        document.getElementById("darseQuran-manual").value
+                      ),
+                      "darseQuran-sum"
+                    )
+                  }
                 />
                 =
                 <input
                   readOnly={true}
                   type="number"
-                  defaultValue={
-                    parseInt(
-                      document.getElementById("darseQuran-done")?.value
-                    ) +
-                    parseInt(
-                      document.getElementById("darseQuran-manual")?.value
-                    )
-                  }
                   required
                   name={`darseQuran-sum`}
                   id={`darseQuran-sum`}

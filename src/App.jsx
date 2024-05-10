@@ -106,7 +106,7 @@ function App() {
           "whatsAppNumber",
         ].forEach((i) => {
           if (!meData?.[i]) {
-            setIsCompleted(false);
+            setIsCompleted(true);
           }
         });
         if (isCompleted) {

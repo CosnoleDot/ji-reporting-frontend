@@ -125,6 +125,10 @@ export const MuntakhibMaqamReports = () => {
         j = "uploadedUmeedwaran";
       } else if (i === "rafaqaFilled") {
         j = "uploadedRafaqa";
+      } else if (i === "umeedwaranFilledSum") {
+        j = "umeedwaranFilledSum";
+      } else if (i === "rafaqaFilledSum") {
+        j = "rafaqaFilledSum";
       } else if (i === "studyCircle-completed") {
         j = "studyCircleMentioned-done";
       } else if (i === "studyCircle-attendance") {
@@ -152,24 +156,11 @@ export const MuntakhibMaqamReports = () => {
         halq.commonLiteratureDistributionSum;
       halq.uploadedLitrature = halq.literatureSum;
       halq.uploadedCommonStudentMeetings = halq.commonStudentMeetingsSum;
-      halq.uploadedRafaqaFilled = halq.rafaqaFilledSum;
-      halq.uploadedUmeedwaran = halq.umeedwaranFilledSum;
-      [
-        "commonLiteratureDistributionSum",
-        "currentSum",
-        "commonStudentMeetingsSum",
-        "meetingsSum",
-        "literatureSum",
-        "manualCommonLiteratureDistribution",
-        "manualCommonStudentMeetings",
-        "manualCurrent",
-        "manualLitrature",
-        "manualMeetings",
-        "manualRafaqa",
-        "rafaqaFilledSum",
-        "umeedwaranFilledSum",
-        "manualUmeedwaran",
-      ].forEach((l) => (document.getElementById(l).value = 0));
+      halq.rafaqaFilled = halq.rafaqaFilledSum;
+      halq.rafaqaFilledSum = halq.rafaqaFilledSum;
+      halq.umeedwaranFilled = halq.umeedwaranFilledSum;
+      halq.umeedwaranFilledSum = halq.umeedwaranFilledSum;
+
       const elem = document.getElementById(j);
       console.log(halq, "h");
       if (elem) {
@@ -265,6 +256,22 @@ export const MuntakhibMaqamReports = () => {
     afd.forEach((i) => {
       calcultate(i);
     });
+    [
+      "commonLiteratureDistributionSum",
+      "currentSum",
+      "commonStudentMeetingsSum",
+      "meetingsSum",
+      "literatureSum",
+      "manualCommonLiteratureDistribution",
+      "manualCommonStudentMeetings",
+      "manualCurrent",
+      "manualLitrature",
+      "manualMeetings",
+      "manualRafaqa",
+      "rafaqaFilledSum",
+      "umeedwaranFilledSum",
+      "manualUmeedwaran",
+    ].forEach((l) => (document.getElementById(l).value = 0));
   };
   useEffect(() => {
     const l = location.pathname?.split("/")[2];
