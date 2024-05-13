@@ -713,7 +713,6 @@ function App() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [me, isCompleted, navigate]);
-  console.log(muntakhibMaqam,'asd')
   return (
     <MeContext.Provider value={me}>
       <DoubleScrollLeftRefresh />
