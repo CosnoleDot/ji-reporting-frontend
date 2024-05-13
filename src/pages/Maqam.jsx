@@ -47,9 +47,6 @@ export const Maqam = () => {
   const location = useLocation();
   const me = useContext(MeContext);
   const navigate = useNavigate();
-  useEffect(() => {
-    console.log(halqa, "halqa");
-  }, [halqa]);
   const autoFill = () => {
     const halq = {};
 
@@ -142,7 +139,6 @@ export const Maqam = () => {
           j = i;
         }
       }
-      console.log(halq,'newobj');
       halq.litrature = halq.literatureDistribution;
       const elem = document.getElementById(j);
       if (elem) {
@@ -158,7 +154,6 @@ export const Maqam = () => {
             if (i === "name" && !view) {
               elem.value = me?.userAreaId?.name;
             } else if (elem === "litrature") {
-              console.log("am in");
               elem.value = halq["literatureDistribution"];
             } else {
               elem.value = halq[i];

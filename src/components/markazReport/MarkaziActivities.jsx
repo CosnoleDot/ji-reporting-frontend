@@ -19,7 +19,7 @@ export const MarkaziActivities = ({ view }) => {
             <Box>ڈویژیزنل مشاورت</Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
@@ -30,7 +30,7 @@ export const MarkaziActivities = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
@@ -50,22 +50,12 @@ export const MarkaziActivities = ({ view }) => {
                 className="p-1 text-center min-w-full"
               />
             </Box>
-
-            {/* <Box>
-              <input
-                disabled={view}
-                type='checkbox'
-                className='p-1 text-center min-w-full checkbox'
-                name={`ijtArkan-registered`}
-                id={`ijtArkan-registered`}
-              />
-            </Box> */}
           </tr>
           <tr>
             <Box>اجتماعِ ارکان</Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
@@ -76,7 +66,7 @@ export const MarkaziActivities = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
@@ -99,7 +89,7 @@ export const MarkaziActivities = ({ view }) => {
 
             {/* <Box>
               <input
-                disabled={view}
+                disabled={true}
                 type='checkbox'
                 className='p-1 text-center min-w-full checkbox'
                 name={`ijtArkan-registered`}
@@ -111,7 +101,7 @@ export const MarkaziActivities = ({ view }) => {
             <Box>اجتماعِ ناظمین/ شوریٰ</Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
@@ -122,7 +112,7 @@ export const MarkaziActivities = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
@@ -145,7 +135,7 @@ export const MarkaziActivities = ({ view }) => {
 
             {/* <Box>
               <input
-                disabled={view}
+                disabled={true}
                 type='checkbox'
                 className='p-1 text-center min-w-full checkbox'
                 name={`ijtNazmeen-registered`}
@@ -157,7 +147,7 @@ export const MarkaziActivities = ({ view }) => {
             <Box>اجتماعِ امیدواران</Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
@@ -168,7 +158,7 @@ export const MarkaziActivities = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
@@ -191,7 +181,7 @@ export const MarkaziActivities = ({ view }) => {
 
             {/* <Box>
               <input
-                disabled={view}
+                disabled={true}
                 type='checkbox'
                 className='p-1 text-center min-w-full checkbox'
                 name={`ijtUmeedwaran-registered`}
@@ -203,7 +193,7 @@ export const MarkaziActivities = ({ view }) => {
             <Box>سٹڈی سرکل</Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
@@ -214,7 +204,7 @@ export const MarkaziActivities = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
@@ -237,7 +227,7 @@ export const MarkaziActivities = ({ view }) => {
 
             {/* <Box>
               <input
-                disabled={view}
+                disabled={true}
                 type='checkbox'
                 className='p-1 text-center min-w-full checkbox'
                 name={`studyCircle-registered`}
@@ -249,7 +239,7 @@ export const MarkaziActivities = ({ view }) => {
             <Box>صدورمیٹنگ</Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
@@ -260,7 +250,7 @@ export const MarkaziActivities = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
@@ -283,7 +273,7 @@ export const MarkaziActivities = ({ view }) => {
 
             {/* <Box>
               <input
-                disabled={view}
+                disabled={true}
                 type='checkbox'
                 className='p-1 text-center min-w-full checkbox'
                 name={`sadurMeeting-registered`}

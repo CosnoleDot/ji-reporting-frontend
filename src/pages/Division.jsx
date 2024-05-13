@@ -151,7 +151,6 @@ export const Division = () => {
             if (i === "name" && !view) {
               elem.value = me?.userAreaId?.name;
             } else if (elem === "litrature") {
-              console.log("am in");
               elem.value = halq["literatureDistribution"];
             } else {
               elem.value = halq[i];
@@ -160,7 +159,6 @@ export const Division = () => {
         }
       }
     });
-    console.log(halq,'asd')
     document.getElementById("studyCircle-averageAttendance").value = 0;
     document.getElementById("studyCircle-done").value = 0;
     ["arkan", "umeedWaran"].forEach((i) => {
@@ -280,7 +278,6 @@ export const Division = () => {
 
     const formData = new FormData(e.currentTarget);
     const jsonData = convertDataFormat(toJson(formData));
-    console.log(jsonData,'asd')
     setLoading(true);
     try {
       if (id) {
@@ -302,7 +299,6 @@ export const Division = () => {
 
         // Add studyCircleMentioned object to jsonData
         jsonData.studyCircleMentioned = studyCircleMentioned;
-           console.log(jsonData,'asd')
         const req = await instance.put(`/reports/division/${id}`, jsonData, {
           headers: {
             "Content-Type": "application/json",

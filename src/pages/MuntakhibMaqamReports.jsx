@@ -52,7 +52,6 @@ export const MuntakhibMaqamReports = () => {
   const location = useLocation();
   const me = useContext(MeContext);
   const navigate = useNavigate();
-  console.log(ilaqa,'asd');
   const autoFill = () => {
     const halq = {};
     document.getElementById("maqam-form").reset();
@@ -162,7 +161,6 @@ export const MuntakhibMaqamReports = () => {
       halq.umeedwaranFilledSum = halq.umeedwaranFilledSum;
 
       const elem = document.getElementById(j);
-      console.log(halq, "h");
       if (elem) {
         if (j === "month") {
         } else {
