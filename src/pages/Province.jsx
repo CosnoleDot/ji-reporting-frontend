@@ -346,7 +346,7 @@ export const Province = () => {
         "ijtKarkunan",
       ].map((i) => (provinceFinalData[`${i}-averageAttendance`] = 0));
     }
-
+ console.log(provinceFinalData,'aaa')
     Object.keys(provinceFinalData).forEach((i) => {
       let j = i;
       const elem = document.getElementById(j);
@@ -419,6 +419,32 @@ export const Province = () => {
     "studyCircleMentioned-averageAttendance",
     "darseQuran-averageAttendance",
     "ijtKarkunan-averageAttendance",
+    "arkan-manualStart",
+    "arkan-manualIncrease",
+    "arkan-manualDecrease",
+    "umeedWaran-manualStart",
+    "umeedWaran-manualIncrease",
+    "umeedWaran-manualDecrease",
+    
+    "tarbiyatGaahGoalManual",
+    "rafaqa-manualStart",
+    "rafaqa-manualIncrease",
+    "rafaqa-manualDecrease",
+    
+    "karkunan-manualStart",
+    "karkunan-manualIncrease",
+    "karkunan-manualDecrease",
+    
+    "shaheen-manualStart",
+    "shaheen-manualIncrease",
+    "shaheen-manualDecrease",
+    
+    "members-manualStart",
+    "members-manualIncrease",
+    "members-manualDecrease",
+   
+    "tarbiyatGaahHeldManual",
+
   ];
 
   useEffect(() => {
