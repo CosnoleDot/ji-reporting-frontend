@@ -41,7 +41,6 @@ export const ToseeDawat = ({ view }) => {
     const raD = document.getElementById("rafaqa-decrease")?.value;
     const totalRafaqa = parseInt(raS) + parseInt(raI) - parseInt(raD);
     if (elem) {
-      console.log(totalArkaan, totalUmeedwaran, totalRafaqa);
       const value = totalArkaan + (totalUmeedwaran * 3 + totalRafaqa * 2);
       elem.value = value;
       if (rwbMeetings) {

@@ -6,7 +6,6 @@ export const calculateRawabitDecided = () => {
   const arS = document.getElementById("arkan-start")?.value;
   const arI = document.getElementById("arkan-increase")?.value;
   const arD = document.getElementById("arkan-decrease")?.value;
-  console.log(arS, arI, arD);
   const totalArkaan = parseInt(arS) + parseInt(arI) - parseInt(arD);
   const umS = document.getElementById("umeedWaran-start")?.value;
   const umI = document.getElementById("umeedWaran-increase")?.value;
@@ -32,7 +31,6 @@ export const ToseeDawat = ({ view }) => {
     const arS = document.getElementById("arkan-start")?.value;
     const arI = document.getElementById("arkan-increase")?.value;
     const arD = document.getElementById("arkan-decrease")?.value;
-    console.log(arS, arI, arD);
     const totalArkaan = parseInt(arS) + parseInt(arI) - parseInt(arD);
     const umS = document.getElementById("umeedWaran-start")?.value;
     const umI = document.getElementById("umeedWaran-increase")?.value;

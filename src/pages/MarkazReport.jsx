@@ -42,7 +42,7 @@ export const MarkazReport = () => {
   const [id, setId] = useState(null);
   const { dispatch } = useToastState();
   const [data, setData] = useState({});
-  const { loading, setLoading, getMaqamReports } = useContext(UIContext);
+  const { loading, setLoading, getMarkazReport } = useContext(UIContext);
   const [view, setView] = useState(false);
   const [obj, setObj] = useState({});
   const location = useLocation();
@@ -50,7 +50,6 @@ export const MarkazReport = () => {
   const navigate = useNavigate();
   const autoFill = () => {
     const halq = {};
-    console.log(province);
     document.getElementById("markaz-form").reset();
     if (province.filter((i) => i?.month.includes(month)).length < 1) {
       [
@@ -67,12 +66,12 @@ export const MarkazReport = () => {
         "ijtRafaqa-decided",
         "ijtRafaqa-done",
         "ijtRafaqa-averageAttendance",
+        "darseQuran-averageAttendance",
+        "ijtKarkunan-averageAttendance",
         "ijtKarkunan-decided",
         "ijtKarkunan-done",
-        "ijtKarkunan-averageAttendance",
         "darseQuran-decided",
         "darseQuran-done",
-        "darseQuran-averageAttendance",
         "dawatiWafud",
         "rawabitParties",
         "shabBedari",
@@ -127,7 +126,6 @@ export const MarkazReport = () => {
           j = i;
         }
       }
-      console.log(halq);
       setObj({
         ijtRafaqaDecided: halq["ijtRafaqa-decided"],
         ijtRafaqaDone: halq["ijtRafaqa-done"],
@@ -173,9 +171,7 @@ export const MarkazReport = () => {
         }
       }
     });
-
-    document.getElementById("studyCircle-averageAttendance").value = 0;
-    document.getElementById("rawabitDecided").value = halq?.rawabitDecided;
+    document.getElementById("rawabitDecided").value = halq["rawabitDecided"];
     [
       "studyCircleMentioned",
       "darseQuran",
@@ -186,13 +182,37 @@ export const MarkazReport = () => {
       "sadurMeeting",
       "ijtKarkunan",
       "ijtUmeedwaran",
+      "divMushawarat",
+      "ijtArkan",
+      "studyCircle",
     ].forEach((i) => {
       document.getElementById(`${i}-averageAttendance`).value = 0;
     });
   };
+
+  const paigham = [
+    "tarbiyatGaahGoalManual",
+    "tarbiyatGaahGoalSum",
+    "tarbiyatGaahHeldManual",
+    "tarbiyatGaahHeldSum",
+    "divMushawarat-averageAttendance",
+    "ijtArkan-averageAttendance",
+    "ijtNazmeen-averageAttendance",
+    "ijtUmeedwaran-averageAttendance",
+    "studyCircle-averageAttendance",
+    "sadurMeeting-averageAttendance",
+  ];
+
   useEffect(() => {
-    console.log(obj);
-  }, [obj]);
+    if (data && id) {
+      paigham.forEach((p) => {
+        if (data[p] !== undefined) {
+          const fieldValue = data[p];
+          document.getElementById(p).value = fieldValue;
+        }
+      });
+    }
+  }, [data]);
   useEffect(() => {
     const l = location.pathname?.split("/")[2];
     if (l === "view") {
@@ -266,7 +286,7 @@ export const MarkazReport = () => {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
-        await getMaqamReports();
+        await getMarkazReport();
         dispatch({ type: "SUCCESS", payload: req?.data?.message });
       } else {
         const req = await instance.post("/reports/markaz", jsonData, {
@@ -275,7 +295,7 @@ export const MarkazReport = () => {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
-        await getMaqamReports();
+        await getMarkazReport();
         dispatch({ type: "SUCCESS", payload: req.data?.message });
       }
       navigate("/reports");
@@ -284,29 +304,6 @@ export const MarkazReport = () => {
     }
     setLoading(false);
   };
-
-  const totalHalqay = parseInt(
-    document.getElementById("totalHalqay-end")?.value
-  );
-  const subTotalHalqay = parseInt(
-    document.getElementById("subTotalHalqay-end")?.value
-  );
-  const busmTotalUnits = parseInt(
-    document.getElementById("busmTotalUnits-end")?.value
-  );
-
-  useEffect(() => {
-    document.getElementById("studyCircleMentioned-decided").value = totalHalqay;
-    document.getElementById("ijtRafaqa-decided").value = totalHalqay;
-    document.getElementById("darseQuran-decided").value = parseFloat(
-      totalHalqay + subTotalHalqay
-    );
-    document.getElementById("ijtKarkunan-decided").value = parseFloat(
-      totalHalqay + subTotalHalqay
-    );
-    document.getElementById("paighamEvent-decided").value = busmTotalUnits;
-    document.getElementById("shaheenMeeting-decided").value = busmTotalUnits;
-  }, [totalHalqay, subTotalHalqay, busmTotalUnits]);
   return (
     <GeneralLayout>
       <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">

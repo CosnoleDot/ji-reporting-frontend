@@ -225,9 +225,6 @@ export const Reports = () => {
         break;
     }
   };
-  useEffect(() => {
-    console.log(filterAllData);
-  }, [filterAllData]);
   const fetchReports = async () => {
     try {
       let response;
@@ -454,7 +451,6 @@ export const Reports = () => {
       console.error("Error fetching reports:", error);
     }
   };
-  console.log(allReports);
   const clearFilters = () => {
     setMonth("");
     setYear("2023");

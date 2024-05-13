@@ -91,14 +91,12 @@ export const Ilaqa = () => {
             j?.split("-")[1] !== "monthly"
           ) {
             try {
-              // console.log(sim[j]);
               halq[j] += parseInt(sim[j]) || 0;
             } catch {
               halq[j] += sim[j] || 0;
             }
           } else {
             try {
-              // console.log(sim[j]);
               if (
                 j?.split("-")[1] !== "attendance" &&
                 j?.split("-")[1] !== "monthly"
@@ -264,7 +262,6 @@ export const Ilaqa = () => {
 
     const formData = new FormData(e.currentTarget);
     const jsonData = convertDataFormat(toJson(formData));
-    console.log(jsonData,'asd')
     // Replace null values with zero
     for (const key in jsonData) {
       if (jsonData.hasOwnProperty(key) && jsonData[key] === null) {

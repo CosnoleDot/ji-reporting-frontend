@@ -1,5 +1,3 @@
-import { maqamRawabitDecided } from "./ToseeDawat";
-
 export const Box = ({ children, type }) => {
   return (
     <td
@@ -47,7 +45,6 @@ export const IfradiKuwat = ({ view }) => {
                   id={`arkan-start`}
                   onChange={() => {
                     calcultate("arkan");
-                    maqamRawabitDecided();
                   }}
                   className="p-1 text-center "
                 />
@@ -61,7 +58,6 @@ export const IfradiKuwat = ({ view }) => {
                   id={`arkan-manualStart`}
                   onChange={() => {
                     calcultate("arkan");
-                    maqamRawabitDecided();
                   }}
                   className="p-1 text-center "
                 />
@@ -75,7 +71,6 @@ export const IfradiKuwat = ({ view }) => {
                   id={`arkan-startSum`}
                   onChange={() => {
                     calcultate("arkan");
-                    maqamRawabitDecided();
                   }}
                   className="p-1 text-center "
                 />
@@ -92,7 +87,6 @@ export const IfradiKuwat = ({ view }) => {
                   id={`arkan-increase`}
                   onChange={() => {
                     calcultate("arkan");
-                    maqamRawabitDecided();
                   }}
                   className="p-1 text-center "
                 />
@@ -106,7 +100,6 @@ export const IfradiKuwat = ({ view }) => {
                   id={`arkan-manualIncrease`}
                   onChange={() => {
                     calcultate("arkan");
-                    maqamRawabitDecided();
                   }}
                   className="p-1 text-center "
                 />
@@ -120,7 +113,6 @@ export const IfradiKuwat = ({ view }) => {
                   id={`arkan-increaseSum`}
                   onChange={() => {
                     calcultate("arkan");
-                    maqamRawabitDecided();
                   }}
                   className="p-1 text-center "
                 />
@@ -137,7 +129,6 @@ export const IfradiKuwat = ({ view }) => {
                   id={`arkan-decrease`}
                   onChange={() => {
                     calcultate("arkan");
-                    maqamRawabitDecided();
                   }}
                   className="p-1 text-center "
                 />
@@ -151,7 +142,6 @@ export const IfradiKuwat = ({ view }) => {
                   id={`arkan-manualDecrease`}
                   onChange={() => {
                     calcultate("arkan");
-                    maqamRawabitDecided();
                   }}
                   className="p-1 text-center "
                 />
@@ -165,7 +155,6 @@ export const IfradiKuwat = ({ view }) => {
                   id={`arkan-decreaseSum`}
                   onChange={() => {
                     calcultate("arkan");
-                    maqamRawabitDecided();
                   }}
                   className="p-1 text-center "
                 />
@@ -208,7 +197,6 @@ export const IfradiKuwat = ({ view }) => {
                   id={`umeedWaran-start`}
                   onChange={() => {
                     calcultate("umeedWaran");
-                    maqamRawabitDecided();
                   }}
                   className="p-1 text-center "
                 />
@@ -222,7 +210,6 @@ export const IfradiKuwat = ({ view }) => {
                   id={`umeedWaran-manualStart`}
                   onChange={() => {
                     calcultate("umeedWaran");
-                    maqamRawabitDecided();
                   }}
                   className="p-1 text-center "
                 />
@@ -236,7 +223,6 @@ export const IfradiKuwat = ({ view }) => {
                   id={`umeedWaran-startSum`}
                   onChange={() => {
                     calcultate("umeedWaran");
-                    maqamRawabitDecided();
                   }}
                   className="p-1 text-center "
                 />
@@ -251,7 +237,6 @@ export const IfradiKuwat = ({ view }) => {
                   required
                   onChange={() => {
                     calcultate("umeedWaran");
-                    maqamRawabitDecided();
                   }}
                   name={`umeedWaran-increase`}
                   id={`umeedWaran-increase`}
@@ -265,7 +250,6 @@ export const IfradiKuwat = ({ view }) => {
                   required
                   onChange={() => {
                     calcultate("umeedWaran");
-                    maqamRawabitDecided();
                   }}
                   name={`umeedWaran-manualIncrease`}
                   id={`umeedWaran-manualIncrease`}
@@ -279,7 +263,6 @@ export const IfradiKuwat = ({ view }) => {
                   required
                   onChange={() => {
                     calcultate("umeedWaran");
-                    maqamRawabitDecided();
                   }}
                   name={`umeedWaran-increaseSum`}
                   id={`umeedWaran-increaseSum`}
@@ -298,7 +281,6 @@ export const IfradiKuwat = ({ view }) => {
                   id={`umeedWaran-decrease`}
                   onChange={() => {
                     calcultate("umeedWaran");
-                    maqamRawabitDecided();
                   }}
                   className="p-1 text-center "
                 />
@@ -312,7 +294,6 @@ export const IfradiKuwat = ({ view }) => {
                   id={`umeedWaran-manualDecrease`}
                   onChange={() => {
                     calcultate("umeedWaran");
-                    maqamRawabitDecided();
                   }}
                   className="p-1 text-center "
                 />
@@ -326,7 +307,6 @@ export const IfradiKuwat = ({ view }) => {
                   id={`umeedWaran-decreaseSum`}
                   onChange={() => {
                     calcultate("umeedWaran");
-                    maqamRawabitDecided();
                   }}
                   className="p-1 text-center "
                 />
