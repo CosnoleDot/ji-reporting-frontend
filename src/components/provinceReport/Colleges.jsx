@@ -19,7 +19,7 @@ export const Colleges = ({ view }) => {
             <Box>A</Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
@@ -30,7 +30,7 @@ export const Colleges = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
@@ -52,7 +52,7 @@ export const Colleges = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
@@ -66,7 +66,7 @@ export const Colleges = ({ view }) => {
             <Box>B</Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
@@ -77,7 +77,7 @@ export const Colleges = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
@@ -99,7 +99,7 @@ export const Colleges = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type="number"
                 defaultValue={0}
                 required

@@ -1,4 +1,5 @@
 export const ToseeDawat = ({ finalMerged }) => {
+
   return (
     <div className="p-2 py-5 relative w-full overflow-auto">
       <h2 className="text-black py-3 text-lg">توسیع دعوت</h2>
@@ -66,8 +67,8 @@ export const ToseeDawat = ({ finalMerged }) => {
             readOnly={true}
             type="number"
             value={
-              finalMerged?.literatureDistribution
-                ? finalMerged?.literatureDistribution
+              finalMerged?.literatureSum
+                ? finalMerged?.literatureSum
                 : 0
             }
             required
@@ -87,8 +88,8 @@ export const ToseeDawat = ({ finalMerged }) => {
             readOnly={true}
             type="number"
             value={
-              finalMerged?.commonStudentMeetings
-                ? finalMerged?.commonStudentMeetings
+              finalMerged?.commonStudentMeetingsSum
+                ? finalMerged?.commonStudentMeetingsSum
                 : 0
             }
             required
@@ -103,8 +104,8 @@ export const ToseeDawat = ({ finalMerged }) => {
             readOnly={true}
             type="number"
             value={
-              finalMerged?.commonLiteratureDistribution
-                ? finalMerged?.commonLiteratureDistribution
+              finalMerged?.commonLiteratureDistributionSum
+                ? finalMerged?.commonLiteratureDistributionSum
                 : 0
             }
             required

@@ -27,7 +27,7 @@ import { Colleges } from "../components/provinceReport/Colleges";
 
 const getData = async (id, setData, data) => {
   const province = data["province"];
-  console.log(province);
+
   const obj = province.filter((i) => i?._id?.toString() === id?.toString());
   setData(reverseDataFormat(obj[0]));
 };
@@ -52,6 +52,7 @@ export const Province = () => {
   const autoFill = () => {
     const provinceFinalData = {};
     document.getElementById("province-form").reset();
+   
     if (
       maqam.filter((i) => i?.month.includes(month))?.length < 1 &&
       division.filter((i) => i?.month.includes(month))?.length < 1
@@ -237,6 +238,7 @@ export const Province = () => {
         });
       }
     });
+    
     for (const key in merged) {
       if (key === "literatureDistribution") {
         setFinalMerged((prevState) => ({
@@ -305,6 +307,7 @@ export const Province = () => {
       ?.forEach((i) => {
         const sim = reverseDataFormat(i);
         Object.keys(sim)?.forEach((j) => {
+          
           if (provinceFinalData?.[j]) {
             try {
               provinceFinalData[j] += parseInt(sim[j]) || 0;
@@ -320,11 +323,12 @@ export const Province = () => {
           }
         });
       });
-    provinceFinalData["ijtKarkunan-done"] =
-      provinceFinalData["ijtKarkunan-sum"];
-    provinceFinalData["darseQuran-done"] = provinceFinalData["darseQuran-sum"];
-    console.log(province);
-    console.log(provinceFinalData);
+      // it was making value undefined 
+    // provinceFinalData["ijtKarkunan-done"] =
+    //   provinceFinalData["ijtKarkunan-sum"];
+    // provinceFinalData["darseQuran-done"] = provinceFinalData["darseQuran-sum"];
+   
+   
     Object.keys(provinceFinalData).forEach((i) => {
       let j = i;
       const elem = document.getElementById(j);
@@ -347,27 +351,27 @@ export const Province = () => {
         }
       }
     });
-    Object.keys(data)?.forEach((i) => {
-      const elem = document.getElementById(i);
-      if (
-        (elem && elem !== "current" && elem !== "meetings",
-        elem !== "rawabitDecided" &&
-          elem !== "rwabitMeetingsGoal" &&
-          elem !== "literatureDistribution" &&
-          elem !== "commonLiteratureDistribution" &&
-          elem !== "commonStudentMeetings")
-      ) {
-        if (i === "month") {
-          elem.value = data[i]?.split("")?.slice(0, 7)?.join("");
-        } else {
-          if (elem?.type === "checkbox") {
-            elem.defaultChecked = data[i] ? true : false;
-          } else {
-            elem.value = data[i];
-          }
-        }
-      }
-    });
+    // Object.keys(data)?.forEach((i) => {
+    //   const elem = document.getElementById(i);
+    //   if (
+    //     (elem && elem !== "current" && elem !== "meetings",
+    //     elem !== "rawabitDecided" &&
+    //       elem !== "rwabitMeetingsGoal" &&
+    //       elem !== "literatureDistribution" &&
+    //       elem !== "commonLiteratureDistribution" &&
+    //       elem !== "commonStudentMeetings")
+    //   ) {
+    //     if (i === "month") {
+    //       elem.value = data[i]?.split("")?.slice(0, 7)?.join("");
+    //     } else {
+    //       if (elem?.type === "checkbox") {
+    //         elem.defaultChecked = data[i] ? true : false;
+    //       } else {
+    //         elem.value = data[i];
+    //       }
+    //     }
+    //   }
+    // });
     const afd = [
       "rehaishHalqay",
       "taleemHalqay",
@@ -435,7 +439,7 @@ export const Province = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
   useEffect(() => {
-    console.log(data);
+
   }, [data]);
   useEffect(() => {
     if (!id) autoFill();
@@ -453,6 +457,7 @@ export const Province = () => {
     setLoading(true);
     try {
       if (id) {
+        
         const req = await instance.put(`/reports/province/${id}`, jsonData, {
           headers: {
             "Content-Type": "application/json",
