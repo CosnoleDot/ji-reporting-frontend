@@ -369,27 +369,6 @@ export const Province = () => {
         }
       }
     });
-    // Object.keys(data)?.forEach((i) => {
-    //   const elem = document.getElementById(i);
-    //   if (
-    //     (elem && elem !== "current" && elem !== "meetings",
-    //     elem !== "rawabitDecided" &&
-    //       elem !== "rwabitMeetingsGoal" &&
-    //       elem !== "literatureDistribution" &&
-    //       elem !== "commonLiteratureDistribution" &&
-    //       elem !== "commonStudentMeetings")
-    //   ) {
-    //     if (i === "month") {
-    //       elem.value = data[i]?.split("")?.slice(0, 7)?.join("");
-    //     } else {
-    //       if (elem?.type === "checkbox") {
-    //         elem.defaultChecked = data[i] ? true : false;
-    //       } else {
-    //         elem.value = data[i];
-    //       }
-    //     }
-    //   }
-    // });
     const afd = [
       "rehaishHalqay",
       "taleemHalqay",

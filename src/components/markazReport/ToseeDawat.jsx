@@ -22,7 +22,7 @@ export const maqamRawabitDecided = () => {
     }
   }
 };
-export const ToseeDawat = ({ view }) => {
+export const ToseeDawat = ({}) => {
   return (
     <div className="p-2 py-5 relative w-full overflow-auto">
       <h2 className="text-black py-3 text-lg">توسیع دعوت</h2>
@@ -49,6 +49,9 @@ export const ToseeDawat = ({ view }) => {
             type="number"
             defaultValue={0}
             required
+            value={
+              parseInt(document.getElementById("rawabitDecided").value) * 3
+            }
             name="rwabitMeetingsGoal"
             id="rwabitMeetingsGoal"
             className="border-b-2 text-center border-dashed"
@@ -61,11 +64,10 @@ export const ToseeDawat = ({ view }) => {
             type="number"
             defaultValue={0}
             required
-            name={`uploadedCurrent`}
-            id={`uploadedCurrent`}
+            name={`current`}
+            id={`current`}
             className="border-b-2 text-center border-dashed "
           />
-          
         </div>
         <div style={{ display: "flex" }}>
           <label className="block">ملاقاتیں:</label>
@@ -74,8 +76,8 @@ export const ToseeDawat = ({ view }) => {
             type="number"
             defaultValue={0}
             required
-            name={`uploadedMeetings`}
-            id={`uploadedMeetings`}
+            name={`meetings`}
+            id={`meetings`}
             className="border-b-2 text-center border-dashed "
           />
         </div>
@@ -86,8 +88,8 @@ export const ToseeDawat = ({ view }) => {
             type="number"
             defaultValue={0}
             required
-            name={`uploadedLitrature`}
-            id={`uploadedLitrature`}
+            name={`literatureDistribution`}
+            id={`literatureDistribution`}
             className="border-b-2 text-center border-dashed "
           />
         </div>
@@ -103,8 +105,8 @@ export const ToseeDawat = ({ view }) => {
             type="number"
             defaultValue={0}
             required
-            name={`uploadedCommonStudentLitrature`}
-            id={`uploadedCommonStudentLitrature`}
+            name={`commonLiteratureDistribution`}
+            id={`commonLiteratureDistribution`}
             className="border-b-2 text-center border-dashed "
           />
         </div>
@@ -115,8 +117,8 @@ export const ToseeDawat = ({ view }) => {
             type="number"
             defaultValue={0}
             required
-            name={`uploadedCommonStudentMeetings`}
-            id={`uploadedCommonStudentMeetings`}
+            name={`commonStudentMeetings`}
+            id={`commonStudentMeetings`}
             className="border-b-2 text-center border-dashed "
           />
         </div>

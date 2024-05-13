@@ -158,18 +158,12 @@ export const Tanzeem = ({ view }) => {
                 defaultValue={0}
                 required
                 name={`rehaishHalqay-end`}
-                onChange={() => {
-                  totalCalculate(
-                    "taleemHalqay",
-                    "rehaishHalqay",
-                    "rehaishHalqay-end"
-                  );
-                }}
                 id={`rehaishHalqay-end`}
+                
                 className="p-1 text-center min-w-full"
               />
             </Box>
-            
+
             <Box>
               <input
                 readOnly={true}
