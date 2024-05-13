@@ -5,19 +5,27 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useContext, useState } from "react";
 import { useEffect } from "react";
 import {
-  DivisionReportContext,
-  HalqaReportContext,
-  IlaqaReportContext,
-  MaqamReportContext,
+  MarkazReportContext,
   MeContext,
+  ProvinceReportContext,
   useToastState,
 } from "../context";
 import { UIContext } from "../context/ui";
-import { Colleges, IfradiKuwat, Jamiaat, Library, MarkaziActivities, OtherActivities, PaighamDigest, RozOShabDiary, Tanzeem, ToseeDawat, ZailiActivities } from "../components/markazReport";
+import {
+  Colleges,
+  IfradiKuwat,
+  Jamiaat,
+  Library,
+  MarkaziActivities,
+  OtherActivities,
+  RozOShabDiary,
+  Tanzeem,
+  ToseeDawat,
+  ZailiActivities,
+} from "../components/markazReport";
 import { GeneralInfo } from "../components/markazReport/GeneralInfo";
 
-
-export const getData = async (path, id, setData, data) => {
+const getData = async (path, id, setData, data) => {
   const arr = data[path];
   const obj = arr.filter((i) => i?._id?.toString() === id?.toString());
   // if (req) {
@@ -27,28 +35,26 @@ export const getData = async (path, id, setData, data) => {
 
 export const MarkazReport = () => {
   // EDIT CODE START
-  const halqa = useContext(HalqaReportContext);
-  const ilaqa = useContext(IlaqaReportContext);
-  const maqam = useContext(MaqamReportContext);
-  const division = useContext(DivisionReportContext);
+  const province = useContext(ProvinceReportContext);
+  const markaz = useContext(MarkazReportContext);
   const [month, setMonth] = useState("");
   const params = useParams();
   const [id, setId] = useState(null);
   const { dispatch } = useToastState();
   const [data, setData] = useState({});
-
   const { loading, setLoading, getMaqamReports } = useContext(UIContext);
   const [view, setView] = useState(false);
+  const [obj, setObj] = useState({});
   const location = useLocation();
   const me = useContext(MeContext);
   const navigate = useNavigate();
-  console.log(ilaqa, "asd");
   const autoFill = () => {
     const halq = {};
-    document.getElementById("maqam-form").reset();
-    if (ilaqa.filter((i) => i?.month.includes(month)).length < 1) {
+    console.log(province);
+    document.getElementById("markaz-form").reset();
+    if (province.filter((i) => i?.month.includes(month)).length < 1) {
       [
-        "rafaqa-start",
+        `rafaqa-start`,
         "karkunan-start",
         "rafaqa-increase",
         "karkunan-increase",
@@ -61,9 +67,6 @@ export const MarkazReport = () => {
         "ijtRafaqa-decided",
         "ijtRafaqa-done",
         "ijtRafaqa-averageAttendance",
-        "studyCircleMentioned-decided",
-        "studyCircleMentioned-done",
-        "studyCircleMentioned-averageAttendance",
         "ijtKarkunan-decided",
         "ijtKarkunan-done",
         "ijtKarkunan-averageAttendance",
@@ -74,7 +77,6 @@ export const MarkazReport = () => {
         "rawabitParties",
         "shabBedari",
         "nizamSalah",
-        "rawabitDecided",
         "totalBooks",
         "totalIncrease",
         "totalDecrease",
@@ -82,9 +84,9 @@ export const MarkazReport = () => {
       ].forEach((i) => {
         document.getElementById(i).value = 0;
       });
-      document.getElementById("name").value = me?.userAreaId?.name;
+      // document.getElementById("name").value = me?.userAreaId?.name;
     }
-    ilaqa
+    province
       .filter((i) => i?.month.includes(month))
       .forEach((i) => {
         const sim = reverseDataFormat(i);
@@ -106,28 +108,8 @@ export const MarkazReport = () => {
       });
     Object.keys(halq).forEach((i) => {
       let j;
-      if (i === "studyCircle-decided") {
-        j = "studyCircleMentioned-decided";
-      } else if (i === "current") {
-        j = "uploadedCurrent";
-      } else if (i === "meetings") {
-        j = "uploadedMeetings";
-      } else if (i === "literatureDistribution") {
-        j = "uploadedLitrature";
-      } else if (i === "commonLiteratureDistribution") {
-        j = "uploadedCommonLiteratureDistribution";
-      } else if (i === "commonStudentMeetings") {
-        j = "uploadedCommonStudentMeetings";
-      } else if (i === "studyCircle-decided") {
-        j = "studyCircleMentioned-decided";
-      } else if (i === "umeedwaranFilled") {
-        j = "uploadedUmeedwaran";
-      } else if (i === "rafaqaFilled") {
-        j = "uploadedRafaqa";
-      } else if (i === "studyCircle-completed") {
-        j = "studyCircleMentioned-done";
-      } else if (i === "studyCircle-attendance") {
-        j = "studyCircleMentioned-averageAttendance";
+      if (i === "current") {
+        j = "current";
       } else {
         if (i.split("-")[1] === "completed") {
           j = i.split("-")[0] + "-done";
@@ -145,6 +127,21 @@ export const MarkazReport = () => {
           j = i;
         }
       }
+      console.log(halq);
+      setObj({
+        ijtRafaqaDecided: halq["ijtRafaqa-decided"],
+        ijtRafaqaDone: halq["ijtRafaqa-done"],
+        studyCircleMentionedDone: halq["studyCircleMentioned-done"],
+        studyCircleMentionedDecided: halq["studyCircleMentioned-decided"],
+        darseQuranDecided: halq["darseQuran-decided"],
+        darseQuranDone: halq["darseQuran-done"],
+        ijtKarkunanDecided: halq["ijtKarkunan-decided"],
+        ijtKarkunanDone: halq["ijtKarkunan-done"],
+        shaheenMeetingDecided: halq["shaheenMeeting-decided"],
+        shaheenMeetingDone: halq["shaheenMeeting-done"],
+        paighamEventDecided: halq["paighamEvent-decided"],
+        paighamEventDone: halq["paighamEvent-done"],
+      });
       const elem = document.getElementById(j);
       if (elem) {
         if (j === "month") {
@@ -155,6 +152,17 @@ export const MarkazReport = () => {
             document.getElementById(
               `${j.split("-")[0]}-averageAttendance`
             ).value = halq[i];
+          }
+          if (j.split("-")[1] === "increaseSum") {
+            document.getElementById(`${j.split("-")[0]}-increase`).value =
+              halq[j];
+          }
+          if (j.split("-")[1] === "decreaseSum") {
+            document.getElementById(`${j.split("-")[0]}-decrease`).value =
+              halq[j];
+          }
+          if (j.split("-")[1] === "startSum") {
+            document.getElementById(`${j.split("-")[0]}-start`).value = halq[j];
           } else {
             if (i === "name" && !view) {
               elem.value = me?.userAreaId?.name;
@@ -165,36 +173,9 @@ export const MarkazReport = () => {
         }
       }
     });
+
     document.getElementById("studyCircle-averageAttendance").value = 0;
-    document.getElementById("studyCircle-done").value = 0;
-    ["arkan", "umeedWaran"].forEach((i) => {
-      document.getElementById(`${i}-start`).value = 0;
-      document.getElementById(`${i}-end`).value = 0;
-      document.getElementById(`${i}-increase`).value = 0;
-      document.getElementById(`${i}-decrease`).value = 0;
-      document.getElementById(`${i}-monthly`).value = 0;
-    });
-    [
-      "taleemHalqay",
-      "totalHalqay",
-      "busmRehaishUnits",
-      "busmTotalUnits",
-      "subRehaishHalqay",
-      "subTaleemHalqay",
-      "subTotalHalqay",
-      "busmSchoolUnits",
-      "arkan",
-      "umeedWaran",
-      "rafaqa",
-      "karkunan",
-      "shaheen",
-      "members",
-      "rehaishHalqay",
-      
-      "taleemHalqay",
-    ].forEach((i) => {
-      document.getElementById(`${i}-monthly`).value = 0;
-    });
+    document.getElementById("rawabitDecided").value = halq?.rawabitDecided;
     [
       "studyCircleMentioned",
       "darseQuran",
@@ -208,38 +189,10 @@ export const MarkazReport = () => {
     ].forEach((i) => {
       document.getElementById(`${i}-averageAttendance`).value = 0;
     });
-    [
-        "ijtArkan",
-        "studyCircle",
-        "ijtRafaqa",
-        "ijtNazmeen",
-        "sadurMeeting",
-        "ijtUmeedwaran",
-      ].forEach((i) => {
-        document.getElementById(`${i}-decided`).value = 0;
-        document.getElementById(`${i}-done`).value = 0;
-      });
-    const afd = [
-      "rehaishHalqay",
-      "taleemHalqay",
-      "totalHalqay",
-      "subRehaishHalqay",
-      "subTaleemHalqay",
-      "subTotalHalqay",
-      "busmSchoolUnits",
-      "busmRehaishUnits",
-      "busmTotalUnits",
-      "arkan",
-      "umeedWaran",
-      "rafaqa",
-      "karkunan",
-      "members",
-      "shaheen",
-    ];
-    afd.forEach((i) => {
-      calcultate(i);
-    });
   };
+  useEffect(() => {
+    console.log(obj);
+  }, [obj]);
   useEffect(() => {
     const l = location.pathname?.split("/")[2];
     if (l === "view") {
@@ -249,7 +202,7 @@ export const MarkazReport = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
   useEffect(() => {
-    if (id) getData("maqam", id, setData, { halqa, maqam, division });
+    if (id) getData("markaz", id, setData, { markaz });
     else {
       setLoading(false);
     }
@@ -280,12 +233,6 @@ export const MarkazReport = () => {
       "busmSchoolUnits",
       "busmRehaishUnits",
       "busmTotalUnits",
-      "arkan",
-      "umeedWaran",
-      "rafaqa",
-      "karkunan",
-      "members",
-      "shaheen",
     ];
     afd.forEach((i) => {
       calcultate(i);
@@ -294,7 +241,7 @@ export const MarkazReport = () => {
   useEffect(() => {
     if (!id) autoFill();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, halqa, month]);
+  }, [id, month]);
   // EDIT CODE END
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -313,7 +260,7 @@ export const MarkazReport = () => {
     try {
       if (id) {
         jsonData.month = data?.month;
-        const req = await instance.put(`/reports/maqam/${id}`, jsonData, {
+        const req = await instance.put(`/reports/markaz/${id}`, jsonData, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
@@ -322,7 +269,7 @@ export const MarkazReport = () => {
         await getMaqamReports();
         dispatch({ type: "SUCCESS", payload: req?.data?.message });
       } else {
-        const req = await instance.post("/reports/maqam", jsonData, {
+        const req = await instance.post("/reports/markaz", jsonData, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
@@ -367,7 +314,7 @@ export const MarkazReport = () => {
           className="flex flex-col justify-center items-center p-4 font-notoUrdu mb-5"
           dir="rtl"
           onSubmit={handleSubmit}
-          id="maqam-form"
+          id="markaz-form"
         >
           <h2 className="text-2xl">جا ئزءکارکردگی رپورٹ (برائے مرکز)</h2>
 
@@ -397,7 +344,7 @@ export const MarkazReport = () => {
               <MarkaziActivities view={view} />
             </div>
             <div className="mb-4">
-              <ZailiActivities view={view} />
+              <ZailiActivities view={view} obj={obj} />
             </div>
             <div className="mb-4">
               <OtherActivities view={view} />
