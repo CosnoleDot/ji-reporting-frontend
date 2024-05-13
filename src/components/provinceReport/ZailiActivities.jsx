@@ -40,7 +40,7 @@ const ZailiActivities = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type='number'
                 defaultValue={0}
                 required
@@ -76,7 +76,7 @@ const ZailiActivities = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type='number'
                 defaultValue={0}
                 required
@@ -112,7 +112,7 @@ const ZailiActivities = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type='number'
                 defaultValue={0}
                 required
@@ -148,7 +148,7 @@ const ZailiActivities = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly={true}
+                readOnly={view}
                 type='number'
                 defaultValue={0}
                 required
@@ -184,7 +184,7 @@ const ZailiActivities = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly
+                readOnly={view}
                 type='number'
                 defaultValue={0}
                 required
@@ -220,7 +220,7 @@ const ZailiActivities = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly
+                readOnly={view}
                 type='number'
                 defaultValue={0}
                 required
