@@ -64,12 +64,12 @@ export const MarkazReport = () => {
         "karkunan-end",
         "rafaqa-monthly",
         "karkunan-monthly",
-        // "ijtRafaqa-decided",
-        // "ijtRafaqa-done",
-        // "ijtRafaqa-averageAttendance",
-        // "ijtKarkunan-decided",
-        // "ijtKarkunan-done",
-        // "ijtKarkunan-averageAttendance",
+        "ijtRafaqa-decided",
+        "ijtRafaqa-done",
+        "ijtRafaqa-averageAttendance",
+        "ijtKarkunan-decided",
+        "ijtKarkunan-done",
+        "ijtKarkunan-averageAttendance",
         "darseQuran-decided",
         "darseQuran-done",
         "darseQuran-averageAttendance",
@@ -77,7 +77,6 @@ export const MarkazReport = () => {
         "rawabitParties",
         "shabBedari",
         "nizamSalah",
-        "rawabitDecided",
         "totalBooks",
         "totalIncrease",
         "totalDecrease",
@@ -128,6 +127,7 @@ export const MarkazReport = () => {
           j = i;
         }
       }
+      console.log(halq);
       setObj({
         ijtRafaqaDecided: halq["ijtRafaqa-decided"],
         ijtRafaqaDone: halq["ijtRafaqa-done"],
@@ -142,7 +142,6 @@ export const MarkazReport = () => {
         paighamEventDecided: halq["paighamEvent-decided"],
         paighamEventDone: halq["paighamEvent-done"],
       });
-      console.log(halq);
       const elem = document.getElementById(j);
       if (elem) {
         if (j === "month") {
@@ -153,6 +152,17 @@ export const MarkazReport = () => {
             document.getElementById(
               `${j.split("-")[0]}-averageAttendance`
             ).value = halq[i];
+          }
+          if (j.split("-")[1] === "increaseSum") {
+            document.getElementById(`${j.split("-")[0]}-increase`).value =
+              halq[j];
+          }
+          if (j.split("-")[1] === "decreaseSum") {
+            document.getElementById(`${j.split("-")[0]}-decrease`).value =
+              halq[j];
+          }
+          if (j.split("-")[1] === "startSum") {
+            document.getElementById(`${j.split("-")[0]}-start`).value = halq[j];
           } else {
             if (i === "name" && !view) {
               elem.value = me?.userAreaId?.name;
@@ -165,6 +175,7 @@ export const MarkazReport = () => {
     });
 
     document.getElementById("studyCircle-averageAttendance").value = 0;
+    document.getElementById("rawabitDecided").value = halq?.rawabitDecided;
     [
       "studyCircleMentioned",
       "darseQuran",

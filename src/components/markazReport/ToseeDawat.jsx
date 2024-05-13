@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-
 export const maqamRawabitDecided = () => {
   const elem = document.getElementById("rawabitDecided");
   const rwbMeetings = document.getElementById("rwabitMeetingsGoal");
@@ -24,31 +22,7 @@ export const maqamRawabitDecided = () => {
     }
   }
 };
-export const ToseeDawat = ({ view }) => {
-  useEffect(() => {
-    const elem = document.getElementById("rawabitDecided");
-    const rwbMeetings = document.getElementById("rwabitMeetingsGoal");
-    const arS = document.getElementById("arkan-start")?.value;
-    const arI = document.getElementById("arkan-increase")?.value;
-    const arD = document.getElementById("arkan-decrease")?.value;
-    const totalArkaan = parseInt(arS) + parseInt(arI) - parseInt(arD);
-    const umS = document.getElementById("umeedWaran-start")?.value;
-    const umI = document.getElementById("umeedWaran-increase")?.value;
-    const umD = document.getElementById("umeedWaran-decrease")?.value;
-    const totalUmeedwaran = parseInt(umS) + parseInt(umI) - parseInt(umD);
-    const raS = document.getElementById("rafaqa-start")?.value;
-    const raI = document.getElementById("rafaqa-increase")?.value;
-    const raD = document.getElementById("rafaqa-decrease")?.value;
-    const totalRafaqa = parseInt(raS) + parseInt(raI) - parseInt(raD);
-    if (elem) {
-      const value = totalArkaan + (totalUmeedwaran * 3 + totalRafaqa * 2);
-      elem.value = value;
-      if (rwbMeetings) {
-        const valueRawabitMeetings = value * 3;
-        rwbMeetings.value = valueRawabitMeetings;
-      }
-    }
-  });
+export const ToseeDawat = ({}) => {
   return (
     <div className="p-2 py-5 relative w-full overflow-auto">
       <h2 className="text-black py-3 text-lg">توسیع دعوت</h2>
@@ -75,6 +49,9 @@ export const ToseeDawat = ({ view }) => {
             type="number"
             defaultValue={0}
             required
+            value={
+              parseInt(document.getElementById("rawabitDecided").value) * 3
+            }
             name="rwabitMeetingsGoal"
             id="rwabitMeetingsGoal"
             className="border-b-2 text-center border-dashed"
