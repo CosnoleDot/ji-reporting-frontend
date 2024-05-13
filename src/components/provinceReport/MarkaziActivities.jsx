@@ -76,7 +76,7 @@ export const MarkaziActivities = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly
+                readOnly={view}
                 type='number'
                 defaultValue={0}
                 required
@@ -112,7 +112,7 @@ export const MarkaziActivities = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly
+                readOnly={view}
                 type='number'
                 defaultValue={0}
                 required
@@ -148,7 +148,7 @@ export const MarkaziActivities = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly
+                readOnly={view}
                 type='number'
                 defaultValue={0}
                 required
@@ -184,7 +184,7 @@ export const MarkaziActivities = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly
+                readOnly={view}
                 type='number'
                 defaultValue={0}
                 required
@@ -220,7 +220,7 @@ export const MarkaziActivities = ({ view }) => {
             </Box>
             <Box>
               <input
-                readOnly
+                readOnly={view}
                 type='number'
                 defaultValue={0}
                 required
