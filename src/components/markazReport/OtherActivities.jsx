@@ -5,7 +5,7 @@ export const OtherActivities = ({ view }) => {
       <div className="flex flex-col py-2">
         <h2 className="block text-black py-3 text-lg"> تربیت گاہ:</h2>
         <div className="flex py-2">
-          <label className="block">تربیت گاہوں کے انعقاد کا ہدف:</label>
+          <label className="block">تربیت گاہ:</label>
           <input
             readOnly={true}
             type="number"
@@ -13,6 +13,18 @@ export const OtherActivities = ({ view }) => {
             required
             name={`tarbiyatGaah`}
             id={`tarbiyatGaah`}
+            className="p-1 text-center "
+          />
+        </div>
+        <div className="flex py-2">
+          <label className="block">تربیت گاہوں کے انعقاد کا ہدف:</label>
+          <input
+            readOnly={true}
+            type="number"
+            defaultValue={0}
+            required
+            name={`tarbiyatGaahGoal`}
+            id={`tarbiyatGaahGoal`}
             className="p-1 text-center "
           />
           +
@@ -31,12 +43,12 @@ export const OtherActivities = ({ view }) => {
             readOnly={true}
             type="number"
             defaultValue={
-              parseInt(document.getElementById("tarbiyatGaah")?.value) +
+              parseInt(document.getElementById("tarbiyatGaahGoal")?.value) +
               parseInt(document.getElementById("tarbiyatGaahGoalManual")?.value)
             }
             required
-            name={`tarbiyatGaahEstSum`}
-            id={`tarbiyatGaahEstSum`}
+            name={`tarbiyatGaahGoalSum`}
+            id={`tarbiyatGaahGoalSum`}
             className="p-1 text-center "
           />
         </div>
@@ -47,8 +59,8 @@ export const OtherActivities = ({ view }) => {
             type="number"
             defaultValue={0}
             required
-            name={`tarbiyatGaah`}
-            id={`tarbiyatGaah`}
+            name={`tarbiyatGaahHeld`}
+            id={`tarbiyatGaahHeld`}
             className="p-1 text-center "
           />
           +
@@ -57,22 +69,21 @@ export const OtherActivities = ({ view }) => {
             readOnly={view}
             defaultValue={0}
             required
-            name={`tarbiyatGaahEstManual`}
-            id={`tarbiyatGaahEstManual`}
+            name={`tarbiyatGaahHeldManual`}
+            id={`tarbiyatGaahHeldManual`}
             className="p-1 text-center "
-            oninput="calculateSum()"
           />
           =
           <input
             readOnly={view}
             type="number"
             defaultValue={
-              parseInt(document.getElementById("tarbiyatGaah")?.value) +
-              parseInt(document.getElementById("tarbiyatGaahEstManual")?.value)
+              parseInt(document.getElementById("tarbiyatGaahHeld")?.value) +
+              parseInt(document.getElementById("tarbiyatGaahHeldManual")?.value)
             }
             required
-            name={`tarbiyatGaahEstSum`}
-            id={`tarbiyatGaahEstSum`}
+            name={`tarbiyatGaahHeldSum`}
+            id={`tarbiyatGaahHeldSum`}
             classNam
           />
         </div>

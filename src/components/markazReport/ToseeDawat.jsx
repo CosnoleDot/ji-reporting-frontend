@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 export const maqamRawabitDecided = () => {
   const elem = document.getElementById("rawabitDecided");
   const rwbMeetings = document.getElementById("rwabitMeetingsGoal");
@@ -23,6 +25,30 @@ export const maqamRawabitDecided = () => {
   }
 };
 export const ToseeDawat = ({ view }) => {
+  useEffect(() => {
+    const elem = document.getElementById("rawabitDecided");
+    const rwbMeetings = document.getElementById("rwabitMeetingsGoal");
+    const arS = document.getElementById("arkan-start")?.value;
+    const arI = document.getElementById("arkan-increase")?.value;
+    const arD = document.getElementById("arkan-decrease")?.value;
+    const totalArkaan = parseInt(arS) + parseInt(arI) - parseInt(arD);
+    const umS = document.getElementById("umeedWaran-start")?.value;
+    const umI = document.getElementById("umeedWaran-increase")?.value;
+    const umD = document.getElementById("umeedWaran-decrease")?.value;
+    const totalUmeedwaran = parseInt(umS) + parseInt(umI) - parseInt(umD);
+    const raS = document.getElementById("rafaqa-start")?.value;
+    const raI = document.getElementById("rafaqa-increase")?.value;
+    const raD = document.getElementById("rafaqa-decrease")?.value;
+    const totalRafaqa = parseInt(raS) + parseInt(raI) - parseInt(raD);
+    if (elem) {
+      const value = totalArkaan + (totalUmeedwaran * 3 + totalRafaqa * 2);
+      elem.value = value;
+      if (rwbMeetings) {
+        const valueRawabitMeetings = value * 3;
+        rwbMeetings.value = valueRawabitMeetings;
+      }
+    }
+  });
   return (
     <div className="p-2 py-5 relative w-full overflow-auto">
       <h2 className="text-black py-3 text-lg">توسیع دعوت</h2>
@@ -61,11 +87,10 @@ export const ToseeDawat = ({ view }) => {
             type="number"
             defaultValue={0}
             required
-            name={`uploadedCurrent`}
-            id={`uploadedCurrent`}
+            name={`current`}
+            id={`current`}
             className="border-b-2 text-center border-dashed "
           />
-          
         </div>
         <div style={{ display: "flex" }}>
           <label className="block">ملاقاتیں:</label>
@@ -74,8 +99,8 @@ export const ToseeDawat = ({ view }) => {
             type="number"
             defaultValue={0}
             required
-            name={`uploadedMeetings`}
-            id={`uploadedMeetings`}
+            name={`meetings`}
+            id={`meetings`}
             className="border-b-2 text-center border-dashed "
           />
         </div>
@@ -86,8 +111,8 @@ export const ToseeDawat = ({ view }) => {
             type="number"
             defaultValue={0}
             required
-            name={`uploadedLitrature`}
-            id={`uploadedLitrature`}
+            name={`literatureDistribution`}
+            id={`literatureDistribution`}
             className="border-b-2 text-center border-dashed "
           />
         </div>
@@ -103,8 +128,8 @@ export const ToseeDawat = ({ view }) => {
             type="number"
             defaultValue={0}
             required
-            name={`uploadedCommonStudentLitrature`}
-            id={`uploadedCommonStudentLitrature`}
+            name={`commonLiteratureDistribution`}
+            id={`commonLiteratureDistribution`}
             className="border-b-2 text-center border-dashed "
           />
         </div>
@@ -115,8 +140,8 @@ export const ToseeDawat = ({ view }) => {
             type="number"
             defaultValue={0}
             required
-            name={`uploadedCommonStudentMeetings`}
-            id={`uploadedCommonStudentMeetings`}
+            name={`commonStudentMeetings`}
+            id={`commonStudentMeetings`}
             className="border-b-2 text-center border-dashed "
           />
         </div>

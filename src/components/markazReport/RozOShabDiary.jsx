@@ -24,8 +24,8 @@ export const RozOShabDiary = ({ view }) => {
             type="number"
             defaultValue={0}
             required
-            name={`uploadedUmeedwaran`}
-            id={`uploadedUmeedwaran`}
+            name={`umeedwaranFilled`}
+            id={`umeedwaranFilled`}
             className="p-1 text-center "
           />
         </div>
@@ -36,8 +36,8 @@ export const RozOShabDiary = ({ view }) => {
             type="number"
             defaultValue={0}
             required
-            name={`uploadedRafaqa`}
-            id={`uploadedRafaqa`}
+            name={`rafaqaFilled`}
+            id={`rafaqaFilled`}
             className="p-1 text-center "
           />
         </div>

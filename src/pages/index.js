@@ -10,3 +10,4 @@ export * from "./LoadingScreen";
 export * from "./UmeedWarNazim";
 export * from "./PersonalReportsDashboard";
 export * from './Ilaqa'
+export * from './MarkazReport'

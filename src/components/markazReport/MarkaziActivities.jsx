@@ -15,7 +15,7 @@ export const MarkaziActivities = ({ view }) => {
           </tr>
         </thead>
         <tbody>
-        <tr>
+          <tr>
             <Box>ڈویژیزنل مشاورت</Box>
             <Box>
               <input
@@ -23,9 +23,8 @@ export const MarkaziActivities = ({ view }) => {
                 type="number"
                 defaultValue={0}
                 required
-                name={`divisonalMushawarat-decided`}
-                
-                id={`divisonalMushawarat-decided`}
+                name={`divMushawarat-decided`}
+                id={`divMushawarat-decided`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
@@ -35,8 +34,8 @@ export const MarkaziActivities = ({ view }) => {
                 type="number"
                 defaultValue={0}
                 required
-                name={`divisonalMushawarat-done`}
-                id={`divisonalMushawarat-done`}
+                name={`divMushawarat-done`}
+                id={`divMushawarat-done`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
@@ -46,8 +45,8 @@ export const MarkaziActivities = ({ view }) => {
                 type="number"
                 defaultValue={0}
                 required
-                name={`divisonalMushawarat-averageAttendance`}
-                id={`divisonalMushawarat-averageAttendance`}
+                name={`divMushawarat-averageAttendance`}
+                id={`divMushawarat-averageAttendance`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
@@ -71,7 +70,6 @@ export const MarkaziActivities = ({ view }) => {
                 defaultValue={0}
                 required
                 name={`ijtArkan-decided`}
-                
                 id={`ijtArkan-decided`}
                 className="p-1 text-center min-w-full"
               />
@@ -118,7 +116,6 @@ export const MarkaziActivities = ({ view }) => {
                 defaultValue={0}
                 required
                 name={`ijtNazmeen-decided`}
-                
                 id={`ijtNazmeen-decided`}
                 className="p-1 text-center min-w-full"
               />
@@ -211,7 +208,6 @@ export const MarkaziActivities = ({ view }) => {
                 defaultValue={0}
                 required
                 name={`studyCircle-decided`}
-                
                 id={`studyCircle-decided`}
                 className="p-1 text-center min-w-full"
               />
@@ -258,7 +254,6 @@ export const MarkaziActivities = ({ view }) => {
                 defaultValue={0}
                 required
                 name={`sadurMeeting-decided`}
-                
                 id={`sadurMeeting-decided`}
                 className="p-1 text-center min-w-full"
               />

@@ -11,6 +11,7 @@ import {
   IlaqaReportContext,
   MaqamContext,
   MaqamReportContext,
+  MarkazReportContext,
   MeContext,
   ProvinceContext,
   ProvinceReportContext,
@@ -116,6 +117,7 @@ export const Reports = () => {
   // const [showNotification, setShowNotification] = useState(false);
   const [notifyTo, setNotifyTo] = useState("halqa");
   const maqamReports = useContext(MaqamReportContext);
+  const markazReports = useContext(MarkazReportContext);
   const ilaqaReports = useContext(IlaqaReportContext);
   const divisionReports = useContext(DivisionReportContext);
   const halqaReports = useContext(HalqaReportContext);
@@ -223,6 +225,9 @@ export const Reports = () => {
         break;
     }
   };
+  useEffect(() => {
+    console.log(filterAllData);
+  }, [filterAllData]);
   const fetchReports = async () => {
     try {
       let response;
@@ -232,12 +237,14 @@ export const Reports = () => {
         const d = divisionReports;
         const p = provinceReports;
         const i = ilaqaReports;
+        const c = markazReports;
         setAllReports({
           maqam: id ? m.filter((i) => i?.maqamAreaId?._id === id) : m,
           ilaqa: id ? m.filter((i) => i?.ilaqaAreaId?._id === id) : i,
           halqa: id ? h.filter((i) => i?.halqaAreaId?._id === id) : h,
           division: id ? d.filter((i) => i?.divisionAreaId?._id === id) : d,
           province: id ? p.filter((i) => i?.provinceAreaId?._id === id) : p,
+          country: id ? p.filter((i) => i?.countryAreaId?._id === id) : c,
         });
         setFilterAllData({
           maqam: id ? m.filter((i) => i?.maqamAreaId?._id === id) : m,
@@ -245,6 +252,7 @@ export const Reports = () => {
           halqa: id ? h.filter((i) => i?.halqaAreaId?._id === id) : h,
           division: id ? d.filter((i) => i?.divisionAreaId?._id === id) : d,
           province: id ? p.filter((i) => i?.provinceAreaId?._id === id) : p,
+          country: id ? p.filter((i) => i?.countryAreaId?._id === id) : c,
         });
 
         // SELECT WITH ID & DATE
@@ -297,6 +305,13 @@ export const Reports = () => {
                     i?.month?.split("-").slice(0, 2).join("-") === selectedMonth
                 )
               : p,
+            country: selectedId
+              ? c.filter(
+                  (i) =>
+                    i?.countryAreaId?._id === selectedId &&
+                    i?.month?.split("-").slice(0, 2).join("-") === selectedMonth
+                )
+              : c,
           });
           setFilterAllData({
             maqam: selectedId
@@ -345,6 +360,13 @@ export const Reports = () => {
                     i?.month?.split("-").slice(0, 2).join("-") === selectedMonth
                 )
               : p,
+            country: selectedId
+              ? c.filter(
+                  (i) =>
+                    i?.countryAreaId?._id === selectedId &&
+                    i?.month?.split("-").slice(0, 2).join("-") === selectedMonth
+                )
+              : c,
           });
         }
 
@@ -375,6 +397,9 @@ export const Reports = () => {
             province: selectedId
               ? p.filter((i) => i?.provinceAreaId?._id === selectedId)
               : p,
+            country: selectedId
+              ? c.filter((i) => i?.countryAreaId?._id === selectedId)
+              : c,
           });
           setFilterAllData({
             maqam: selectedId
@@ -393,10 +418,16 @@ export const Reports = () => {
             province: selectedId
               ? p.filter((i) => i?.provinceAreaId?._id === selectedId)
               : p,
+            country: selectedId
+              ? c.filter((i) => i?.countryAreaId?._id === selectedId)
+              : c,
           });
         }
       } else {
         switch (userType) {
+          case "country":
+            response = markazReports;
+            break;
           case "province":
             response = provinceReports;
             break;
@@ -423,6 +454,7 @@ export const Reports = () => {
       console.error("Error fetching reports:", error);
     }
   };
+  console.log(allReports);
   const clearFilters = () => {
     setMonth("");
     setYear("2023");
@@ -552,7 +584,6 @@ export const Reports = () => {
     if (active === "halqa") getAreaWithType();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAreaType]);
-  console.log(filterAllData,'asd')
   return (
     <GeneralLayout
       title={me?.userAreaId?.name.toUpperCase()}
@@ -892,6 +923,21 @@ export const Reports = () => {
           role="tablist"
           className="w-full flex justify-between items-center"
         >
+          {["country"].includes(localStorage.getItem("@type")) &&
+            ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
+              localStorage.getItem("@nazimType")
+            ) && (
+              <Link
+                to={"?active=country"}
+                role="tab"
+                className={`tab w-full ${
+                  active === "country" ? "tab-active bg-slate-200" : ""
+                }`}
+                onClick={() => setNotifyTo("country")}
+              >
+                Country
+              </Link>
+            )}
           {["country", "province"].includes(localStorage.getItem("@type")) &&
             ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
               localStorage.getItem("@nazimType")
@@ -976,20 +1022,16 @@ export const Reports = () => {
                 Halqa
               </Link>
             )}
-             {[ "ilaqa"].includes(
-            localStorage.getItem("@type")
-          ) && (
-              <Link
-                to={"?active=halqa"}
-                role="tab"
-                className={`tab w-full ${
-                  active === "halqa" ? "tab-active" : ""
-                }`}
-                onClick={() => setNotifyTo("halqa")}
-              >
-                Halqa
-              </Link>
-            )}
+          {["ilaqa"].includes(localStorage.getItem("@type")) && (
+            <Link
+              to={"?active=halqa"}
+              role="tab"
+              className={`tab w-full ${active === "halqa" ? "tab-active" : ""}`}
+              onClick={() => setNotifyTo("halqa")}
+            >
+              Halqa
+            </Link>
+          )}
           {localStorage.getItem("@type") === "division" && (
             <Link
               to={"?active=halqa&tab=division"}
@@ -1241,11 +1283,11 @@ export const Reports = () => {
                         <FaEye />
                       </button>
                       <button
-                          className="btn"
-                          onClick={() => editReport(obj?._id)}
-                        >
-                          <FaEdit />
-                        </button>
+                        className="btn"
+                        onClick={() => editReport(obj?._id)}
+                      >
+                        <FaEdit />
+                      </button>
                       <button
                         className="btn"
                         onClick={() =>
@@ -1287,6 +1329,43 @@ export const Reports = () => {
                         onClick={() => viewReport(obj?._id)}
                       >
                         <FaEye />
+                      </button>
+                      <button
+                        className="btn"
+                        onClick={() =>
+                          window.open(
+                            `/${active}-report/print/${obj?._id}`,
+                            "blank"
+                          )
+                        }
+                      >
+                        <FaPrint />
+                      </button>
+                    </div>
+                  </div>
+                ) : // MARKAZ
+                active === "country" ? (
+                  <div
+                    key={obj?._id}
+                    className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
+                  >
+                    <div className="flex w-full flex-col items-start justify-center">
+                      <span>
+                        Last Modified: {moment(obj?.updatedAt).fromNow()}
+                      </span>
+                    </div>
+                    <div className="flex items-end w-full justify-end gap-3 ">
+                      <button
+                        className="btn"
+                        onClick={() => viewReport(obj?._id)}
+                      >
+                        <FaEye />
+                      </button>
+                      <button
+                        className="btn"
+                        onClick={() => editReport(obj?._id)}
+                      >
+                        <FaEdit />
                       </button>
                       <button
                         className="btn"
