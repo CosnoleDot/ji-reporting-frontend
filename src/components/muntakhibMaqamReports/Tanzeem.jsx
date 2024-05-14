@@ -537,13 +537,7 @@ export const Tanzeem = ({ view }) => {
                 type="number"
                 defaultValue={0}
                 required
-                onChange={() => {
-                  totalCalculate(
-                    "subTaleemHalqay",
-                    "subRehaishHalqay",
-                    "subTotalHalqay-monthly"
-                  );
-                }}
+                
                 name={`subRehaishHalqay-monthly`}
                 id={`subRehaishHalqay-monthly`}
                 className="p-1 text-center min-w-full"

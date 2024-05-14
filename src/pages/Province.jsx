@@ -50,6 +50,7 @@ export const Province = () => {
   const me = useContext(MeContext);
   const navigate = useNavigate();
   const [page, setPage] = useState();
+
   useEffect(() => {
     const url = window.location.pathname.split("/")[2];
     setPage(url);
@@ -346,7 +347,7 @@ export const Province = () => {
         "ijtKarkunan",
       ].map((i) => (provinceFinalData[`${i}-averageAttendance`] = 0));
     }
- console.log(provinceFinalData,'aaa')
+
     Object.keys(provinceFinalData).forEach((i) => {
       let j = i;
       const elem = document.getElementById(j);

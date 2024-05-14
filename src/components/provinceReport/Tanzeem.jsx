@@ -70,7 +70,6 @@ export const Tanzeem = ({ view, id }) => {
                 <input
                   readOnly={true}
                   type="number"
-                  defaultValue={0}
                   required
                   name={`rehaishHalqay-end`}
                   id={`rehaishHalqay-end`}

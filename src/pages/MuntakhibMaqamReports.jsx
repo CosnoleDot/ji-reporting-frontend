@@ -156,7 +156,6 @@ export const MuntakhibMaqamReports = () => {
       halq.uploadedLitrature = halq.literatureSum;
       halq.uploadedCommonStudentMeetings = halq.commonStudentMeetingsSum;
       halq.rafaqaFilled = halq.rafaqaFilledSum;
-      halq.rafaqaFilledSum = halq.rafaqaFilledSum;
       halq.umeedwaranFilled = halq.umeedwaranFilledSum;
       halq.umeedwaranFilledSum = halq.umeedwaranFilledSum;
 
@@ -201,7 +200,6 @@ export const MuntakhibMaqamReports = () => {
       "arkan",
       "umeedWaran",
       "rehaishHalqay",
-
       "taleemHalqay",
     ].forEach((i) => {
       document.getElementById(`${i}-monthly`).value = 0;
@@ -260,11 +258,12 @@ export const MuntakhibMaqamReports = () => {
       "manualCurrent",
       "manualLitrature",
       "manualMeetings",
-      "manualRafaqa",
       "rafaqaFilledSum",
       "umeedwaranFilledSum",
       "manualUmeedwaran",
     ].forEach((l) => (document.getElementById(l).value = 0));
+   
+   
   };
   useEffect(() => {
     const l = location.pathname?.split("/")[2];
@@ -339,6 +338,9 @@ export const MuntakhibMaqamReports = () => {
     try {
       if (id) {
         jsonData.month = data?.month;
+        jsonData.rafaqaFilled = jsonData.uploadedRafaqa;
+        jsonData.manualRafaqaFilled = jsonData.manualRafaqa;
+        jsonData.umeedwaranFilled = jsonData.uploadedUmeedwaran;
         const req = await instance.put(`/reports/maqam/${id}`, jsonData, {
           headers: {
             "Content-Type": "application/json",
@@ -392,6 +394,9 @@ export const MuntakhibMaqamReports = () => {
     document.getElementById("shaheenMeeting-decided").value = busmTotalUnits;
   }, [totalHalqay, subTotalHalqay, busmTotalUnits]);
 
+  if(data['manualRafaqaFilled']){
+    data.manualRafaqa = data['manualRafaqaFilled']
+  }
 
   return (
     <GeneralLayout>
