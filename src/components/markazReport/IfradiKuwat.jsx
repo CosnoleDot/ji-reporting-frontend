@@ -535,7 +535,7 @@ export const IfradiKuwat = ({ view }) => {
                   defaultValue={0}
                   required
                   name={`rafaqa-manualDecrease`}
-                  oonChange={() =>
+                  onChange={() =>
                     sumUpTwoValues(
                       parseInt(document.getElementById("rafaqa-decrease").value),
                       parseInt(
