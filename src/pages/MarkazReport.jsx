@@ -48,6 +48,7 @@ export const MarkazReport = () => {
   const location = useLocation();
   const me = useContext(MeContext);
   const navigate = useNavigate();
+  
   const autoFill = () => {
     const halq = {};
     document.getElementById("markaz-form").reset();
@@ -79,6 +80,8 @@ export const MarkazReport = () => {
         "totalBooks",
         "totalIncrease",
         "totalDecrease",
+        "tarbiyatGaahGoalSum",
+        "tarbiyatGaahHeldSum",
         "totalBookRent",
       ].forEach((i) => {
         document.getElementById(i).value = 0;
@@ -126,6 +129,23 @@ export const MarkazReport = () => {
           j = i;
         }
       }
+      //  there
+      
+      const afd = [
+        "rehaishHalqay",
+        "taleemHalqay",
+        "totalHalqay",
+        "subRehaishHalqay",
+        "subTaleemHalqay",
+        "subTotalHalqay",
+        "busmSchoolUnits",
+        "busmRehaishUnits",
+        "busmTotalUnits",
+      ];
+      afd.forEach((i) => {
+        calcultate(i);
+      });
+      
       setObj({
         ijtRafaqaDecided: halq["ijtRafaqa-decided"],
         ijtRafaqaDone: halq["ijtRafaqa-done"],
@@ -140,6 +160,7 @@ export const MarkazReport = () => {
         paighamEventDecided: halq["paighamEvent-decided"],
         paighamEventDone: halq["paighamEvent-done"],
       });
+     
       const elem = document.getElementById(j);
       if (elem) {
         if (j === "month") {
@@ -171,6 +192,7 @@ export const MarkazReport = () => {
         }
       }
     });
+    
     document.getElementById("rawabitDecided").value = halq["rawabitDecided"];
     [
       "studyCircleMentioned",
@@ -188,13 +210,16 @@ export const MarkazReport = () => {
     ].forEach((i) => {
       document.getElementById(`${i}-averageAttendance`).value = 0;
     });
+    
   };
 
   const paigham = [
     "tarbiyatGaahGoalManual",
-    "tarbiyatGaahGoalSum",
     "tarbiyatGaahHeldManual",
+    "tarbiyatGaahGoalSum",
     "tarbiyatGaahHeldSum",
+    "tarbiyatGaahGoal",
+    "tarbiyatGaahHeld",
     "divMushawarat-averageAttendance",
     "ijtArkan-averageAttendance",
     "ijtNazmeen-averageAttendance",
@@ -211,8 +236,11 @@ export const MarkazReport = () => {
           document.getElementById(p).value = fieldValue;
         }
       });
+     
     }
   }, [data]);
+ 
+  
   useEffect(() => {
     const l = location.pathname?.split("/")[2];
     if (l === "view") {
@@ -243,20 +271,8 @@ export const MarkazReport = () => {
         }
       }
     });
-    const afd = [
-      "rehaishHalqay",
-      "taleemHalqay",
-      "totalHalqay",
-      "subRehaishHalqay",
-      "subTaleemHalqay",
-      "subTotalHalqay",
-      "busmSchoolUnits",
-      "busmRehaishUnits",
-      "busmTotalUnits",
-    ];
-    afd.forEach((i) => {
-      calcultate(i);
-    });
+    
+   
   }, [data]);
   useEffect(() => {
     if (!id) autoFill();
@@ -275,7 +291,7 @@ export const MarkazReport = () => {
         jsonData[key] = 0;
       }
     }
-
+console.log(jsonData,'asd')
     setLoading(true);
     try {
       if (id) {
@@ -304,6 +320,8 @@ export const MarkazReport = () => {
     }
     setLoading(false);
   };
+  
+
   return (
     <GeneralLayout>
       <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">

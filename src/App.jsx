@@ -881,8 +881,7 @@ function App() {
                                       <Route
                                         path={"/reports/view/:id"}
                                         element={
-                                          localStorage.getItem("@type") ===
-                                          "maqam" ? (
+                                           active ==="maqam" ? (
                                             muntakhibMaqam ? (
                                               <MuntakhibMaqamReports />
                                             ) : (

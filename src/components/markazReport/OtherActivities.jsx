@@ -1,4 +1,11 @@
 export const OtherActivities = ({ view }) => {
+  const sumUpTwoValues = (val1, val2, final) => {
+    document.getElementById(final).value = val1 + val2;
+  };
+//   let a =document.getElementById('tarbiyatGaahGoalSum')?.value;
+//   let b = document.getElementById('tarbiyatGaahHeldSum')?.value
+//   a= parseInt(document.getElementById('tarbiyatGaahGoal')?.value) + parseInt(document.getElementById('tarbiyatGaahGoalManual')?.value);
+//  b = parseInt(document.getElementById('tarbiyatGaahHeld')?.value) + parseInt(document.getElementById('tarbiyatGaahHeldManual')?.value);
   return (
     <div className="p-2 py-5 relative w-full overflow-auto">
       <h2 className="text-black py-3 text-lg">دیگر سرگرمیاں</h2>
@@ -23,6 +30,13 @@ export const OtherActivities = ({ view }) => {
             type="number"
             defaultValue={0}
             required
+            onChange={() =>
+              sumUpTwoValues(
+                parseInt(document.getElementById("tarbiyatGaahGoal").value),
+                parseInt(document.getElementById("tarbiyatGaahGoalManual").value),
+                "tarbiyatGaahGoalSum"
+              )
+            }
             name={`tarbiyatGaahGoal`}
             id={`tarbiyatGaahGoal`}
             className="p-1 text-center "
@@ -33,10 +47,17 @@ export const OtherActivities = ({ view }) => {
             readOnly={view}
             defaultValue={0}
             required
+            onChange={() =>
+              sumUpTwoValues(
+                parseInt(document.getElementById("tarbiyatGaahGoal").value),
+                parseInt(document.getElementById("tarbiyatGaahGoalManual").value),
+                "tarbiyatGaahGoalSum"
+              )
+            }
             name={`tarbiyatGaahGoalManual`}
             id={`tarbiyatGaahGoalManual`}
             className="p-1 text-center "
-            oninput="calculateSum()"
+            
           />
           =
           <input
@@ -59,6 +80,13 @@ export const OtherActivities = ({ view }) => {
             type="number"
             defaultValue={0}
             required
+            onChange={() =>
+              sumUpTwoValues(
+                parseInt(document.getElementById("tarbiyatGaahHeld").value),
+                parseInt(document.getElementById("tarbiyatGaahHeldManual").value),
+                "tarbiyatGaahHeldSum"
+              )
+            }
             name={`tarbiyatGaahHeld`}
             id={`tarbiyatGaahHeld`}
             className="p-1 text-center "
@@ -69,13 +97,20 @@ export const OtherActivities = ({ view }) => {
             readOnly={view}
             defaultValue={0}
             required
+            onChange={() =>
+              sumUpTwoValues(
+                parseInt(document.getElementById("tarbiyatGaahHeld").value),
+                parseInt(document.getElementById("tarbiyatGaahHeldManual").value),
+                "tarbiyatGaahHeldSum"
+              )
+            }
             name={`tarbiyatGaahHeldManual`}
             id={`tarbiyatGaahHeldManual`}
             className="p-1 text-center "
           />
           =
           <input
-            readOnly={view}
+            readOnly={true}
             type="number"
             defaultValue={
               parseInt(document.getElementById("tarbiyatGaahHeld")?.value) +
