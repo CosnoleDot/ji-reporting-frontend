@@ -6,6 +6,7 @@ export const MarkaziActivities = ({ view }) => {
     <div className="relative w-full overflow-auto">
       <table className="w-full table">
         <thead>
+          
           <tr>
             <Box type={"heading"}>مرکزی طے شدہ سرگرمیاں</Box>
             <Box>طے شدہ</Box>
@@ -15,101 +16,7 @@ export const MarkaziActivities = ({ view }) => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <Box>اجتماع ارکان</Box>
-            <Box>
-              <input
-                readOnly={true}
-                type="number"
-                defaultValue={0}
-                required
-                name={`ijtArkan-decided`}
-                value={1}
-                id={`ijtArkan-decided`}
-                className="p-1 text-center min-w-full"
-              />
-            </Box>
-            <Box>
-              <input
-                readOnly={view}
-                type="number"
-                defaultValue={0}
-                required
-                name={`ijtArkan-done`}
-                id={`ijtArkan-done`}
-                className="p-1 text-center min-w-full"
-              />
-            </Box>
-            <Box>
-              <input
-                readOnly={view}
-                type="number"
-                defaultValue={0}
-                required
-                name={`ijtArkan-averageAttendance`}
-                id={`ijtArkan-averageAttendance`}
-                className="p-1 text-center min-w-full"
-              />
-            </Box>
-
-            {/* <Box>
-              <input
-                disabled={view}
-                type='checkbox'
-                className='p-1 text-center min-w-full checkbox'
-                name={`ijtArkan-registered`}
-                id={`ijtArkan-registered`}
-              />
-            </Box> */}
-          </tr>
-          <tr>
-            <Box>سٹڈی سرکل</Box>
-            <Box>
-              <input
-                readOnly={true}
-                type="number"
-                defaultValue={0}
-                required
-                name={`studyCircle-decided`}
-                value={1}
-                id={`studyCircle-decided`}
-                className="p-1 text-center min-w-full"
-              />
-            </Box>
-            <Box>
-              <input
-                readOnly={view}
-                type="number"
-                defaultValue={0}
-                required
-                name={`studyCircle-done`}
-                id={`studyCircle-done`}
-                className="p-1 text-center min-w-full"
-              />
-            </Box>
-            <Box>
-              <input
-                readOnly={view}
-                type="number"
-                defaultValue={0}
-                required
-                name={`studyCircle-averageAttendance`}
-                id={`studyCircle-averageAttendance`}
-                className="p-1 text-center min-w-full"
-              />
-            </Box>
-
-            {/* <Box>
-              <input
-                disabled={view}
-                type='checkbox'
-                className='p-1 text-center min-w-full checkbox'
-                name={`studyCircle-registered`}
-                id={`studyCircle-registered`}
-              />
-            </Box> */}
-          </tr>
-          <tr>
+        <tr>
             <Box>اجتماع ناظمین</Box>
             <Box>
               <input
@@ -203,6 +110,54 @@ export const MarkaziActivities = ({ view }) => {
               />
             </Box> */}
           </tr>
+          <tr>
+            <Box>سٹڈی سرکل</Box>
+            <Box>
+              <input
+                readOnly={true}
+                type="number"
+                defaultValue={0}
+                required
+                name={`studyCircle-decided`}
+                value={1}
+                id={`studyCircle-decided`}
+                className="p-1 text-center min-w-full"
+              />
+            </Box>
+            <Box>
+              <input
+                readOnly={view}
+                type="number"
+                defaultValue={0}
+                required
+                name={`studyCircle-done`}
+                id={`studyCircle-done`}
+                className="p-1 text-center min-w-full"
+              />
+            </Box>
+            <Box>
+              <input
+                readOnly={view}
+                type="number"
+                defaultValue={0}
+                required
+                name={`studyCircle-averageAttendance`}
+                id={`studyCircle-averageAttendance`}
+                className="p-1 text-center min-w-full"
+              />
+            </Box>
+
+            {/* <Box>
+              <input
+                disabled={view}
+                type='checkbox'
+                className='p-1 text-center min-w-full checkbox'
+                name={`studyCircle-registered`}
+                id={`studyCircle-registered`}
+              />
+            </Box> */}
+          </tr>
+          
           <tr>
             <Box>صدورمیٹنگ</Box>
             <Box>

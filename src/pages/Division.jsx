@@ -42,7 +42,11 @@ export const Division = () => {
   const location = useLocation();
   const me = useContext(MeContext);
   const navigate = useNavigate();
-
+  const [page, setPage] = useState();
+  useEffect(() => {
+    const url = window.location.pathname.split("/")[2];
+    setPage(url);
+  }, [window.location]);
   const autoFill = () => {
     const halq = {};
 
@@ -159,6 +163,7 @@ export const Division = () => {
         }
       }
     });
+    console.log(halq)
     document.getElementById("studyCircle-averageAttendance").value = 0;
     document.getElementById("studyCircle-done").value = 0;
     ["arkan", "umeedWaran"].forEach((i) => {
@@ -182,6 +187,12 @@ export const Division = () => {
     document.getElementById("karkunan-monthly").value = 0;
     document.getElementById("rafaqa-monthly").value = 0;
     document.getElementById("rawabitDecided").value = 0;
+    if (page === "create") {
+      [
+        "litrature","commonStudentMeetings","commonLiteratureDistribution"
+      ].map((i) => (document.getElementById(i).value = 0));
+    }
+  
 
     const afd = [
       "rehaishHalqay",
@@ -232,6 +243,8 @@ export const Division = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
+  ['rafaqaFilledSum',"umeedwaranFilledSum","currentSum","meetingsSum"].map((i)=>
+  delete data[i])
   useEffect(() => {
     Object.keys(data).forEach((i) => {
       const elem = document.getElementById(i);

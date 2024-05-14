@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { calculateRawabitDecided } from "../halqa";
 
 export const maqamRawabitDecided = () => {
   const elem = document.getElementById("rawabitDecided");
@@ -61,7 +62,7 @@ export const ToseeDawat = ({ view }) => {
           <input
             readOnly={true}
             type="number"
-            defaultValue={0}
+            defaultValue={calculateRawabitDecided()}
             required
             name="rawabitDecided"
             id="rawabitDecided"
@@ -117,7 +118,7 @@ export const ToseeDawat = ({ view }) => {
           />
         </div>
         <div style={{ display: "flex" }}>
-          <label className="block">ملاقاتیں:</label>
+          <label className="block">ملاقاتوں کی تعداد:</label>
           <input
             readOnly={true}
             type="number"
