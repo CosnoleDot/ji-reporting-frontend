@@ -4,7 +4,7 @@ export const RozOShabDiary = ({ view }) => {
   return (
     <div className="p-2 py-5 relative w-full overflow-auto">
       <h2 className="text-black py-3 text-lg">روزشب ڈائری</h2>
-      <div className="flex flex-wrap w-full items-center justify-start">
+      <div className="flex flex-col w-full items-start gap-4 justify-start">
         {/* <div className='flex py-2 ml-4'>
           <label className='block'> کتنے ارکان فل کرتے ہیں:</label>
           <input
