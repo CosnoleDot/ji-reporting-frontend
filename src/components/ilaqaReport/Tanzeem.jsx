@@ -434,14 +434,7 @@ export const Tanzeem = ({ view }) => {
                 required
                 name={`subRehaishHalqay-start`}
                 id={`subRehaishHalqay-start`}
-                onChange={() => {
-                  calcultate("subRehaishHalqay");
-                  totalCalculate(
-                    "subTaleemHalqay",
-                    "subRehaishHalqay",
-                    "subTotalHalqay-start"
-                  );
-                }}
+                
                 className="p-1 text-center min-w-full"
               />
             </Box>
