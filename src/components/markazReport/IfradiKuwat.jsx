@@ -66,13 +66,13 @@ export const IfradiKuwat = ({ view }) => {
                   name={`arkan-manualStart`}
                   id={`arkan-manualStart`}
                   onChange={() =>
-                    sumUpTwoValues(
+                    {sumUpTwoValues(
                       parseInt(document.getElementById("arkan-start").value),
                       parseInt(
                         document.getElementById("arkan-manualStart").value
                       ),
                       "arkan-startSum"
-                    )
+                    );calcultate("rafaqa")}
                   }
                   className="p-1 text-center "
                 />
@@ -102,14 +102,14 @@ export const IfradiKuwat = ({ view }) => {
                   required
                   name={`arkan-increase`}
                   id={`arkan-increase`}
-                  onChange={() =>
+                  onChange={() =>{
                     sumUpTwoValues(
                       parseInt(document.getElementById("arkan-increase").value),
                       parseInt(
                         document.getElementById("arkan-manualIncrease").value
                       ),
                       "arkan-increaseSum"
-                    )
+                    );calcultate("arkan")}
                   }
                   className="p-1 text-center "
                 />
@@ -121,14 +121,14 @@ export const IfradiKuwat = ({ view }) => {
                   required
                   name={`arkan-manualIncrease`}
                   id={`arkan-manualIncrease`}
-                  onChange={() =>
+                  onChange={() =>{
                     sumUpTwoValues(
                       parseInt(document.getElementById("arkan-increase").value),
                       parseInt(
                         document.getElementById("arkan-manualIncrease").value
                       ),
                       "arkan-increaseSum"
-                    )
+                    );calcultate("arkan")}
                   }
                   className="p-1 text-center "
                 />
@@ -159,13 +159,13 @@ export const IfradiKuwat = ({ view }) => {
                   name={`arkan-decrease`}
                   id={`arkan-decrease`}
                   onChange={() =>
-                    sumUpTwoValues(
+                    {sumUpTwoValues(
                       parseInt(document.getElementById("arkan-decrease").value),
                       parseInt(
                         document.getElementById("arkan-manualDecrease").value
                       ),
                       "arkan-decreaseSum"
-                    )
+                    );calcultate("arkan")}
                   }
                   className="p-1 text-center "
                 />
@@ -188,7 +188,7 @@ export const IfradiKuwat = ({ view }) => {
                         ),
                         "arkan-decreaseSum"
                       );
-                     
+                      calcultate("arkan")
                     }
                   }}
                   className="p-1 text-center "
@@ -246,13 +246,13 @@ export const IfradiKuwat = ({ view }) => {
                   name={`umeedWaran-start`}
                   id={`umeedWaran-start`}
                   onChange={() =>
-                    sumUpTwoValues(
+                 {   sumUpTwoValues(
                       parseInt(document.getElementById("umeedWaran-start").value),
                       parseInt(
                         document.getElementById("umeedWaran-manualStart").value
                       ),
                       "umeedWaran-startSum"
-                    )
+                    );calcultate("umeedWaran")}
                   }
                   className="p-1 text-center "
                 />
@@ -265,13 +265,13 @@ export const IfradiKuwat = ({ view }) => {
                   name={`umeedWaran-manualStart`}
                   id={`umeedWaran-manualStart`}
                   onChange={() =>
-                    sumUpTwoValues(
+                    {sumUpTwoValues(
                       parseInt(document.getElementById("umeedWaran-start").value),
                       parseInt(
                         document.getElementById("umeedWaran-manualStart").value
                       ),
                       "umeedWaran-startSum"
-                    )
+                    );calcultate("umeedWaran")}
                   }
                   className="p-1 text-center "
                 />
@@ -301,13 +301,13 @@ export const IfradiKuwat = ({ view }) => {
                   defaultValue={0}
                   required
                   onChange={() =>
-                    sumUpTwoValues(
+                    {sumUpTwoValues(
                       parseInt(document.getElementById("umeedWaran-increase").value),
                       parseInt(
                         document.getElementById("umeedWaran-manualIncrease").value
                       ),
                       "umeedWaran-increaseSum"
-                    )
+                    );calcultate("umeedWaran")}
                   }
                   name={`umeedWaran-increase`}
                   id={`umeedWaran-increase`}
@@ -320,13 +320,13 @@ export const IfradiKuwat = ({ view }) => {
                   defaultValue={0}
                   required
                   onChange={() =>
-                    sumUpTwoValues(
+                    {sumUpTwoValues(
                       parseInt(document.getElementById("umeedWaran-increase").value),
                       parseInt(
                         document.getElementById("umeedWaran-manualIncrease").value
                       ),
                       "umeedWaran-increaseSum"
-                    )
+                    );calcultate("umeedWaran")}
                   }
                   name={`umeedWaran-manualIncrease`}
                   id={`umeedWaran-manualIncrease`}
@@ -357,13 +357,13 @@ export const IfradiKuwat = ({ view }) => {
                   name={`umeedWaran-decrease`}
                   id={`umeedWaran-decrease`}
                   onChange={() =>
-                    sumUpTwoValues(
+                    {sumUpTwoValues(
                       parseInt(document.getElementById("umeedWaran-decrease").value),
                       parseInt(
                         document.getElementById("umeedWaran-manualDecrease").value
                       ),
                       "umeedWaran-decreaseSum"
-                    )
+                    );calcultate("umeedWaran")}
                   }
                   className="p-1 text-center "
                 />
@@ -376,13 +376,13 @@ export const IfradiKuwat = ({ view }) => {
                   name={`umeedWaran-manualDecrease`}
                   id={`umeedWaran-manualDecrease`}
                   onChange={() =>
-                    sumUpTwoValues(
+                    {sumUpTwoValues(
                       parseInt(document.getElementById("umeedWaran-decrease").value),
                       parseInt(
                         document.getElementById("umeedWaran-manualDecrease").value
                       ),
                       "umeedWaran-decreaseSum"
-                    )
+                    );calcultate("umeedWaran")}
                   }
                   className="p-1 text-center "
                 />
@@ -448,13 +448,13 @@ export const IfradiKuwat = ({ view }) => {
                   required
                   name={`rafaqa-manualStart`}
                   onChange={() =>
-                    sumUpTwoValues(
+                    {sumUpTwoValues(
                       parseInt(document.getElementById("rafaqa-start").value),
                       parseInt(
                         document.getElementById("rafaqa-manualStart").value
                       ),
                       "rafaqa-startSum"
-                    )
+                    );calcultate("rafaqa")}
                   }
                   id={`rafaqa-manualStart`}
                   className="p-1 text-center "
@@ -493,13 +493,13 @@ export const IfradiKuwat = ({ view }) => {
                   name={`rafaqa-manualIncrease`}
                   id={`rafaqa-manualIncrease`}
                   onChange={() =>
-                    sumUpTwoValues(
+                    {sumUpTwoValues(
                       parseInt(document.getElementById("rafaqa-increase").value),
                       parseInt(
                         document.getElementById("rafaqa-manualIncrease").value
                       ),
                       "rafaqa-increaseSum"
-                    )
+                    );calcultate("rafaqa")}
                   }
                   className="p-1 text-center "
                 />
@@ -535,14 +535,14 @@ export const IfradiKuwat = ({ view }) => {
                   defaultValue={0}
                   required
                   name={`rafaqa-manualDecrease`}
-                  onChange={() =>
+                  onChange={() =>{
                     sumUpTwoValues(
                       parseInt(document.getElementById("rafaqa-decrease").value),
                       parseInt(
                         document.getElementById("rafaqa-manualDecrease").value
                       ),
                       "rafaqa-decreaseSum"
-                    )
+                    );calcultate("rafaqa")}
                   }
                   id={`rafaqa-manualDecrease`}
                   className="p-1 text-center "
@@ -608,13 +608,13 @@ export const IfradiKuwat = ({ view }) => {
                   name={`karkunan-manualStart`}
                   id={`karkunan-manualStart`}
                   onChange={() =>
-                    sumUpTwoValues(
+                    {sumUpTwoValues(
                       parseInt(document.getElementById("karkunan-start").value),
                       parseInt(
                         document.getElementById("karkunan-manualStart").value
                       ),
                       "karkunan-startSum"
-                    )
+                    );calcultate("karkunan")}
                   }
                   className="p-1 text-center "
                 />
@@ -651,13 +651,13 @@ export const IfradiKuwat = ({ view }) => {
                   required
                   name={`karkunan-manualIncrease`}
                   onChange={() =>
-                    sumUpTwoValues(
+                    {sumUpTwoValues(
                       parseInt(document.getElementById("karkunan-increase").value),
                       parseInt(
                         document.getElementById("karkunan-manualIncrease").value
                       ),
                       "karkunan-increaseSum"
-                    )
+                    );calcultate("karkunan")}
                   }
                   id={`karkunan-manualIncrease`}
                   className="p-1 text-center "
@@ -696,13 +696,13 @@ export const IfradiKuwat = ({ view }) => {
                   name={`karkunan-manualDecrease`}
                   id={`karkunan-manualDecrease`}
                   onChange={() =>
-                    sumUpTwoValues(
+                    {sumUpTwoValues(
                       parseInt(document.getElementById("karkunan-decrease").value),
                       parseInt(
                         document.getElementById("karkunan-manualDecrease").value
                       ),
                       "karkunan-decreaseSum"
-                    )
+                    );calcultate("karkunan")}
                   }
                   className="p-1 text-center "
                 />
@@ -766,13 +766,13 @@ export const IfradiKuwat = ({ view }) => {
                   required
                   name={`shaheen-manualStart`}
                   onChange={() =>
-                    sumUpTwoValues(
-                      parseInt(document.getElementById("karkunan-start").value),
+                    {sumUpTwoValues(
+                      parseInt(document.getElementById("shaheen-start").value),
                       parseInt(
-                        document.getElementById("karkunan-manualStart").value
+                        document.getElementById("shaheen-manualStart").value
                       ),
                       "shaheen-startSum"
-                    )
+                    );calcultate("shaheen")}
                   }
                   id={`shaheen-manualStart`}
                   className="p-1 text-center "
@@ -806,13 +806,13 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   onChange={() =>
-                    sumUpTwoValues(
+                    {sumUpTwoValues(
                       parseInt(document.getElementById("shaheen-increase").value),
                       parseInt(
                         document.getElementById("shaheen-manualIncrease").value
                       ),
                       "shaheen-increaseSum"
-                    )
+                    );calcultate("shaheen")}
                   }
                   type="number"
                   defaultValue={0}
@@ -855,13 +855,13 @@ export const IfradiKuwat = ({ view }) => {
                   name={`shaheen-manualDecrease`}
                   id={`shaheen-manualDecrease`}
                   onChange={() =>
-                    sumUpTwoValues(
+                    {sumUpTwoValues(
                       parseInt(document.getElementById("shaheen-decrease").value),
                       parseInt(
                         document.getElementById("shaheen-manualDecrease").value
                       ),
                       "shaheen-decreaseSum"
-                    )
+                    );calcultate("shaheen")}
                   }
                   className="p-1 text-center "
                 />
@@ -925,13 +925,13 @@ export const IfradiKuwat = ({ view }) => {
                   required
                   name={`members-manualStart`}
                   onChange={() =>
-                    sumUpTwoValues(
+                    {sumUpTwoValues(
                       parseInt(document.getElementById("members-start").value),
                       parseInt(
                         document.getElementById("members-manualStart").value
                       ),
                       "members-startSum"
-                    )
+                    );calcultate("members")}
                   }
                   id={`members-manualStart`}
                   className="p-1 text-center "
@@ -969,13 +969,13 @@ export const IfradiKuwat = ({ view }) => {
                   required
                   name={`members-manualIncrease`}
                   onChange={() =>
-                    sumUpTwoValues(
+                    {sumUpTwoValues(
                       parseInt(document.getElementById("members-increase").value),
                       parseInt(
                         document.getElementById("members-manualIncrease").value
                       ),
                       "members-increaseSum"
-                    )
+                    );calcultate("members")}
                   }
                   id={`members-manualIncrease`}
                   className="p-1 text-center "
@@ -1013,13 +1013,13 @@ export const IfradiKuwat = ({ view }) => {
                   required
                   name={`members-manualDecrease`}
                   onChange={() =>
-                    sumUpTwoValues(
+                    {sumUpTwoValues(
                       parseInt(document.getElementById("members-decrease").value),
                       parseInt(
                         document.getElementById("members-manualDecrease").value
                       ),
                       "members-decreaseSum"
-                    )
+                    );calcultate("members")}
                   }
                   id={`members-manualDecrease`}
                   className="p-1 text-center "
