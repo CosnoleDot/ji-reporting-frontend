@@ -562,6 +562,7 @@ function App() {
       }
     }
   };
+  
   // NOTiFICATIONS CODE
   const getAllReports = async () => {
     if (
