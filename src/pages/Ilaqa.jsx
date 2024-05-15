@@ -170,6 +170,7 @@ export const Ilaqa = () => {
           }
         }
       }
+      console.log(halq,'asd')
     });
     document.getElementById("studyCircle-averageAttendance").value = 0;
     document.getElementById("studyCircle-done").value = 0;
@@ -222,7 +223,14 @@ export const Ilaqa = () => {
       if (elem) {
         if (i === "month") {
           elem.value = data[i]?.split("")?.slice(0, 7)?.join("");
-        } else {
+        } 
+        else if(i ==="ijtKarkunan-sum"){
+          delete data.i
+        }
+        else if(i ==="darseQuran-sum"){
+          delete data.i
+        }
+        else {
           if (elem.type === "checkbox") {
             elem.checked = data[i];
           } else {
@@ -339,6 +347,7 @@ export const Ilaqa = () => {
       value1.value = 0;
     }
   }, [location.pathname]);
+  console.log(data,'asd')
   return (
     <GeneralLayout>
       <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">
