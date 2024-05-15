@@ -48,7 +48,7 @@ export const MarkazReport = () => {
   const location = useLocation();
   const me = useContext(MeContext);
   const navigate = useNavigate();
-  
+  console.log(province,'asd')
   const autoFill = () => {
     const halq = {};
     document.getElementById("markaz-form").reset();
@@ -130,7 +130,8 @@ export const MarkazReport = () => {
         }
       }
       //  there
-      
+     
+      console.log(halq,'asd')
       const afd = [
         "rehaishHalqay",
         "taleemHalqay",
@@ -145,7 +146,7 @@ export const MarkazReport = () => {
       afd.forEach((i) => {
         calcultate(i);
       });
-      
+    
       setObj({
         ijtRafaqaDecided: halq["ijtRafaqa-decided"],
         ijtRafaqaDone: halq["ijtRafaqa-done"],
@@ -176,19 +177,34 @@ export const MarkazReport = () => {
             document.getElementById(`${j.split("-")[0]}-increase`).value =
               halq[j];
           }
+          if (j.split("-")[1] === "increaseSum") {
+            document.getElementById(`${j.split("-")[0]}-increase`).value =
+              halq[j];
+          }
           if (j.split("-")[1] === "decreaseSum") {
             document.getElementById(`${j.split("-")[0]}-decrease`).value =
               halq[j];
           }
           if (j.split("-")[1] === "startSum") {
             document.getElementById(`${j.split("-")[0]}-start`).value = halq[j];
-          } else {
+          }
+          
+          if (j.split("-")[1] === "manualStart" || j.split("-")[1] === "manualIncrease" || j.split("-")[1] === "manualDecrease") {
+            document.getElementById(`${j.split("-")[0]}-manualStart`).value = 0;
+            document.getElementById(`${j.split("-")[0]}-manualIncrease`).value = 0;
+            document.getElementById(`${j.split("-")[0]}-manualDecrease`).value = 0;
+          }
+          
+          
+          
+           else {
             if (i === "name" && !view) {
               elem.value = me?.userAreaId?.name;
             } else {
               elem.value = halq[i];
             }
           }
+          
         }
       }
     });
@@ -236,7 +252,7 @@ export const MarkazReport = () => {
           document.getElementById(p).value = fieldValue;
         }
       });
-     
+     console.log(data,'asd')
     }
   }, [data]);
  
