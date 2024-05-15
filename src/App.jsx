@@ -735,7 +735,7 @@ function App() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [me, isCompleted, navigate]);
-  console.log(ilaqas,'asd')
+
   return (
     <MeContext.Provider value={me}>
       <DoubleScrollLeftRefresh />
