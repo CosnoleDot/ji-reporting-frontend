@@ -730,7 +730,7 @@ export const LocationDivision = () => {
                   Select Province
                 </option>
                 {provinces
-                  .filter((i) => !i?.disabled && i?._id === me?.userAreaId?._id)
+                  ?.filter((i) => !i?.disabled && i?._id === me?.userAreaId?._id)
                   .map((i, index) => (
                     <option value={i?._id} key={index}>
                       {i?.name}

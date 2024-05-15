@@ -179,7 +179,7 @@ function App() {
       });
       if (req) {
         const enabledIlaqas = req.data.data;
-
+       
         const type = localStorage.getItem("@type");
 
         if (type === "country") {
@@ -198,7 +198,7 @@ function App() {
           const validIlaqas = enabledIlaqas.filter(
             (i) => i?.maqam?._id === me?.userAreaId?._id
           );
-
+          setIlaqas(validIlaqas);
           validIlaqas.length < 1 && setMuntakhibMaqam(false);
         } else {
           const validIlaqas = enabledIlaqas.filter(
@@ -206,6 +206,8 @@ function App() {
           );
 
           setIlaqas(validIlaqas);
+         
+          
         }
       }
     } catch (err) {
@@ -733,6 +735,7 @@ function App() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [me, isCompleted, navigate]);
+  console.log(ilaqas,'asd')
   return (
     <MeContext.Provider value={me}>
       <DoubleScrollLeftRefresh />

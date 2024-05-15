@@ -55,7 +55,7 @@ export const LocationMaqam = () => {
       }
       setLoading(false);
     };
-
+console.log(ilaqas,'asd')
     // Call the function when the component mounts or when the location changes
     getQueryParams();
     // eslint-disable-next-line
@@ -249,14 +249,14 @@ export const LocationMaqam = () => {
 
       setFilteredData(filteredMaqams);
     } else if (view === "ilaqa") {
-      const filteredHalqa = ilaqas
+      const filteredIlaqa = ilaqas
         ?.map((ilaqa) => ilaqa)
         .filter(
           (ila) =>
             ila?.name.toLowerCase().includes(value.toLowerCase()) ||
             ila?.maqam?.name.toLowerCase().includes(value.toLowerCase())
         );
-      setFilteredData(filteredHalqa);
+      setFilteredData(filteredIlaqa);
     }
   };
   return (
