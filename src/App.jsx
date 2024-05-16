@@ -185,13 +185,12 @@ function App() {
       });
       if (req) {
         const enabledIlaqas = req.data.data;
-
         const type = localStorage.getItem("@type");
 
         if (type === "country") {
           setIlaqas(
-            enabledIlaqas?.filter((halqa) => {
-              return halqa?.disabled !== true;
+            enabledIlaqas?.filter((ilaqa) => {
+              return ilaqa?.disabled === false;
             })
           );
         } else if (type === "province") {
@@ -210,7 +209,6 @@ function App() {
           const validIlaqas = enabledIlaqas.filter(
             (i) => i?._id === me?.userAreaId?._id
           );
-
           setIlaqas(validIlaqas);
         }
       }
@@ -619,7 +617,7 @@ function App() {
             const months = r?.map((_) =>
               _.month.split("-").slice(0, 2).join("-")
             );
-            return !months.includes(
+            return !months?.includes(
               i?.createdAt.split("-").slice(0, 2).join("-")
             );
           })
@@ -721,7 +719,10 @@ function App() {
         location.pathname?.split("/")[2] === "edit"
       ) {
         navigate("/reports");
-      } else if (location.pathname?.includes("reports")) {
+      } else if (
+        location.pathname?.includes("reports") ||
+        location.pathname?.includes("user-switch")
+      ) {
         navigate("/");
       }
     };
