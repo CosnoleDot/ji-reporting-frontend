@@ -85,6 +85,7 @@ export const Dashboard = () => {
         setLoading(true);
         try {
           const getUnfilledReports = async (path) => {
+            console.log(path, queryDate);
             const res = await instance.get(
               `/reports/${path}/data/filled-unfilled`,
               {
@@ -104,24 +105,28 @@ export const Dashboard = () => {
           const maqamData = maqam?.data?.data?.allMaqams || [];
           const halqaData = halqa?.data?.data?.allHalqas || [];
           const divisionData = division?.data?.data?.allDivisions || [];
+          console.log(halqaData);
           const getFilteredHalqas = (halqaData) => [
             ...halqaData.filter((h) => {
               if (userAreaType === "Maqam") {
                 if (
-                  h.parentType === "Maqam" &&
-                  h?.parentId?._id === selectedId
+                  (h.parentType === "Maqam" || h.parentType === "Ilaqa") &&
+                  (h?.parentId?._id === selectedId ||
+                    h.parentId?.maqam === selectedId)
                 ) {
                   return true;
                 }
                 return false;
               }
               if (userAreaType === "Tehsil") {
-                if (h.parentType === "Tehsil") {
+                if (h.parentType === "Tehsil" || h.parentType === "Division") {
                   const district = h?.parentId?.district;
+                  const halqas = h?.parentId?.division === selectedId;
                   const filteredDistricts = districts
                     .filter((dis) => dis?.division?._id === selectedId)
                     .map((div) => div?._id);
-                  return filteredDistricts.includes(district);
+
+                  return filteredDistricts.includes(district) || halqas;
                 }
                 return false;
               }
@@ -333,15 +338,9 @@ export const Dashboard = () => {
     const filledNazim = nazim.filter((n) =>
       nazimFilledPersonalIds.includes(n?._id)
     );
-    const unfilledNazim = nazim.filter((n) =>
-      unfilledIds.includes(n?._id)
-    );
+    const unfilledNazim = nazim.filter((n) => unfilledIds.includes(n?._id));
     // saving the initial data so that on clear filter can set it back
-    if (
-      !initialData ||
-      !initialData.nazim ||
-      initialData.nazim.length === 0
-    ) {
+    if (!initialData || !initialData.nazim || initialData.nazim.length === 0) {
       setInitialData((prevData) => ({
         ...prevData,
         nazim: nazim,

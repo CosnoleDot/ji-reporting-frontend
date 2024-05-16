@@ -4,7 +4,7 @@ import { FaEdit, FaEye, FaPrint } from "react-icons/fa";
 import moment from "moment";
 import instance from "../api/instrance";
 import { useNavigate } from "react-router-dom";
-import { DistrictContext, MaqamContext } from "../context";
+import { DistrictContext, MaqamContext, IlaqaContext } from "../context";
 import { getDivisionByTehsil, months } from "./Reports";
 import { MdCancel } from "react-icons/md";
 // import { ProvinceContext } from "../context";
@@ -18,6 +18,7 @@ export const PersonalReportsDashboard = () => {
   const [isMobileView, setIsMobileView] = useState(false);
   const maqams = useContext(MaqamContext);
   const districts = useContext(DistrictContext);
+  const ilaqas = useContext(IlaqaContext);
   const [toggle, setToggle] = useState(false);
   // const provinces = useContext(ProvinceContext);
   let navigate = useNavigate();
@@ -29,6 +30,9 @@ export const PersonalReportsDashboard = () => {
     } else if (area?.parentType === "Tehsil") {
       const name = getDivisionByTehsil(area?.parentId, districts);
       return `${area?.name} - ${name} (Division)`;
+    } else if (area?.parentType === "Ilaqa") {
+      const name = ilaqas?.find((i) => i?._id === area?.parentId);
+      return `${area?.name} Of Ilaqa ${name?.name} Of Maqam ${name?.maqam?.name}`;
     } else if (area?.province) {
       return `${area?.name} - ${
         maqams.find((i) => i?._id === area?._id) ? "Maqam" : "Division"
