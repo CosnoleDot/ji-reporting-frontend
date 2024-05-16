@@ -25,7 +25,7 @@ export const ProvinceReport = () => {
     <div className="wrapper reports" style={{ marginBottom: "2rem" }} dir="rtl">
       <PrintDocument />
       <h3 style={{ textAlign: "center", fontWeight: "bold" }}>
-        جائزہ کارکردگی رپورت برآے صوبہ
+        جائزہ کارکردگی رپورٹ برائے صوبہ
       </h3>
       <div
         style={{
@@ -38,7 +38,7 @@ export const ProvinceReport = () => {
       >
         <h4 className="header">صوبے کا نام: </h4>
         <h6>{data?.provinceAreaId?.name}</h6>
-        <h4 className="header">برآے ماہ:</h4>
+        <h4 className="header">برائے ماہ:</h4>
         <h6>{data?.month.split("T")[0]}</h6>
       </div>
       <div
@@ -222,7 +222,7 @@ export const ProvinceReport = () => {
           <strong>اختتام پر</strong>
         </p>
         <p className="header" style={{ width: "100%" }}>
-          <strong>سلانہ ہدف</strong>
+          <strong>سالانہ ہدف</strong>
         </p>
       </div>
       <div

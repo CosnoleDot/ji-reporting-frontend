@@ -55,7 +55,7 @@ export const LocationMaqam = () => {
       }
       setLoading(false);
     };
-console.log(ilaqas,'asd')
+
     // Call the function when the component mounts or when the location changes
     getQueryParams();
     // eslint-disable-next-line

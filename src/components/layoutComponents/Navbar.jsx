@@ -15,7 +15,7 @@ export const Navbar = ({ title }) => {
   const { userRequests, notifications, getAllNotifications } =
     useContext(UIContext);
   const { setMe } = useContext(UIContext);
- console.log(userRequests,'aaa')
+ 
   return (
     <>
       <div className="navbar bg-blue-500 text-white">

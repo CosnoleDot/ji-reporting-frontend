@@ -407,7 +407,7 @@ export const MuntakhibMaqamReports = () => {
           onSubmit={handleSubmit}
           id="maqam-form"
         >
-          <h2 className="text-2xl">جا ئزءکارکردگی رپورٹ (براے منتخب مقام)</h2>
+          <h2 className="text-2xl">جا ئزءکارکردگی رپورٹ (برائے منتخب مقام)</h2>
 
           <div className="w-full p-4">
             <div>

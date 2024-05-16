@@ -88,7 +88,7 @@ export const Halqa = () => {
   }, [id, data]);
 
   const autoFill = () => {
-    console.log(data);
+   
     Object.keys(data).forEach((i) => {
       const elem = document.getElementById(i);
       if (elem) {
