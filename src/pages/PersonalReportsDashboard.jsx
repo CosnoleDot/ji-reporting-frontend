@@ -22,7 +22,6 @@ export const PersonalReportsDashboard = () => {
   const [toggle, setToggle] = useState(false);
   // const provinces = useContext(ProvinceContext);
   let navigate = useNavigate();
-
   const getAreaType = (area) => {
     if (area?.parentType === "Maqam") {
       const name = maqams.find((i) => i?._id === area?.parentId);
@@ -31,8 +30,14 @@ export const PersonalReportsDashboard = () => {
       const name = getDivisionByTehsil(area?.parentId, districts);
       return `${area?.name} - ${name} (Division)`;
     } else if (area?.parentType === "Ilaqa") {
-      const name = ilaqas?.find((i) => i?._id === area?.parentId);
-      return `${area?.name} Of Ilaqa ${name?.name} Of Maqam ${name?.maqam?.name}`;
+      const name = ilaqas?.find(
+        (i) => i?._id.toString() === area?.parentId.toString()
+      );
+      if (name) {
+        return `${area?.name} Of Ilaqa ${name?.name} Of Maqam ${name?.maqam?.name}`;
+      } else {
+        return area?.name;
+      }
     } else if (area?.province) {
       return `${area?.name} - ${
         maqams.find((i) => i?._id === area?._id) ? "Maqam" : "Division"

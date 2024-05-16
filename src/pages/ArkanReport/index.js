@@ -19,6 +19,7 @@ export const ArkanReport = () => {
       setData(req?.data?.data);
     }
   };
+  console.log(data);
   useEffect(() => {
     if (params?.id) printReport(params?.id);
   }, [params]);
@@ -49,16 +50,18 @@ export const ArkanReport = () => {
         style={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "space-between",
+          justifyContent: "start",
           gap: "20px",
           width: "100%",
+          marginBottom:'20px'
         }}
       >
         <div
           style={{
             display: "flex",
-            alignItems: "center",
-            justifyContent: " center",
+            alignItems: "start",
+            justifyContent: " start",
+            width: "100%",
           }}
         >
           <p>نام:</p>
@@ -66,20 +69,21 @@ export const ArkanReport = () => {
             style={{
               border: "none",
               borderBottom: "1px dotted black",
-              width: "100px",
             }}
             readonly
             id="name"
             name="name"
           >
-            {data?.name}
+            {data?.userId?.name}
           </p>
         </div>
         <div
           style={{
             display: "flex",
             alignItems: "center",
-            justifyContent: " center",
+            justifyContent: " start",
+            width: "100%",
+
           }}
         >
           <p>جمعیت سے تعلق:</p>
@@ -87,13 +91,12 @@ export const ArkanReport = () => {
             style={{
               border: "none",
               borderBottom: "1px dotted black",
-              width: "100px",
             }}
             readonly
             id="JamiatRelation"
             name="JamiatRelation"
           >
-            {data?.JamiatRelation}
+            {data?.userId.nazimType}
           </p>
         </div>
         <div
@@ -101,6 +104,8 @@ export const ArkanReport = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: " center",
+            width: "100%",
+
           }}
         >
           <p>تنظیمی تعلق:</p>
@@ -109,12 +114,11 @@ export const ArkanReport = () => {
             name="organizationRelation"
             style={{
               border: "none",
-              borderBottom: "1px dotted black",
-              width: "100px",
+              borderBottom: "1px dotted black"
             }}
             readonly
           >
-            {data?.organizationRelation}
+            {data?.userId.nazimType}
           </p>
         </div>
       </div>
