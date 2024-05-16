@@ -25,7 +25,7 @@ const Dates = ({
   setDurationYears,
   getData,
 }) => {
-  const [year, setYear] = useState(2023);
+  const [year, setYear] = useState(2024);
 
   return (
     <div className="fixed top-0 left-0 z-1 w-full h-screen bg-white">

@@ -93,7 +93,7 @@ export const HalqaReport = () => {
           <strong>اختتام پر</strong>
         </p>
         <p className="header" style={{ width: "100%" }}>
-          <strong>سالانہ ہدف</strong>
+          <strong>ماہانہ ہدف</strong>
         </p>
       </div>
       <div
@@ -114,7 +114,7 @@ export const HalqaReport = () => {
               data?.wiId?.arkan?.increase -
               data?.wiId?.arkan?.decrease}
           </p>
-          <p>{data?.wiId?.arkan?.annual}</p>
+          <p>{data?.wiId?.arkan?.monthly}</p>
         </div>
         <div className="row">
           <p className="header">امیدواران </p>
@@ -126,7 +126,7 @@ export const HalqaReport = () => {
               data?.wiId?.umeedWaran?.increase -
               data?.wiId?.umeedWaran?.decrease}
           </p>
-          <p>{data?.wiId?.umeedWaran?.annual}</p>
+          <p>{data?.wiId?.umeedWaran?.monthly}</p>
         </div>
         <div className="row">
           <p className="header">رفقا </p>
@@ -138,7 +138,7 @@ export const HalqaReport = () => {
               data?.wiId?.rafaqa?.increase -
               data?.wiId?.rafaqa?.decrease}
           </p>
-          <p>{data?.wiId?.rafaqa?.annual}</p>
+          <p>{data?.wiId?.rafaqa?.monthly}</p>
           {/* <p>Data 3</p> */}
         </div>
         <div className="row">
@@ -151,9 +151,16 @@ export const HalqaReport = () => {
               data?.wiId?.karkunan?.increase -
               data?.wiId?.karkunan?.decrease}
           </p>
-          <p>{data?.wiId?.karkunan?.annual}</p>
+          <p>{data?.wiId?.karkunan?.monthly}</p>
           {/* <p>Data 3</p> */}
         </div>
+      </div>
+      <div className="flex w-full p-4 gap-4 text-xl justify-end items-center mb-4">
+      <h2 className="ml-4">
+          <strong className="ml-4">کاروائ رجسٹر </strong>
+          
+        </h2>
+        <input type="checkbox" className="w-8 mr-4 h-8" checked={data?.halqaActivityId?.ijtRafaqa?.registered ? true : false} />
       </div>
       <div
         style={{
@@ -178,9 +185,9 @@ export const HalqaReport = () => {
         <p className="header" style={{ width: "100%" }}>
           <strong>عنوان </strong>
         </p>
-        <p className="header" style={{ width: "100%" }}>
+        {/* <p className="header" style={{ width: "100%" }}>
           <strong>مرتب/غیرمرتب </strong>
-        </p>
+        </p> */}
       </div>
       <div
         style={{
@@ -196,9 +203,7 @@ export const HalqaReport = () => {
           <p>{data?.halqaActivityId?.ijtKarkunan?.decided}</p>
           <p>{data?.halqaActivityId?.ijtKarkunan?.attendance}</p>
           <p>{data?.halqaActivityId?.ijtKarkunan?.title}</p>
-          <p>
-            {data?.halqaActivityId?.ijtKarkunan?.registered ? "ہاں" : "نہیں"}
-          </p>
+          
         </div>
         <div className="row">
           <p className="header">سٹڈی  سرکل </p>
@@ -206,9 +211,7 @@ export const HalqaReport = () => {
           <p>{data?.halqaActivityId?.studyCircle?.decided}</p>
           <p>{data?.halqaActivityId?.studyCircle?.attendance}</p>
           <p>{data?.halqaActivityId?.studyCircle?.title}</p>
-          <p>
-            {data?.halqaActivityId?.studyCircle?.registered ? "ہاں" : "نہیں"}
-          </p>
+         
         </div>
         <div className="row">
           <p className="header">اجتماعِ رفقا </p>
@@ -216,7 +219,7 @@ export const HalqaReport = () => {
           <p>{data?.halqaActivityId?.ijtRafaqa?.decided}</p>
           <p>{data?.halqaActivityId?.ijtRafaqa?.attendance}</p>
           <p>{data?.halqaActivityId?.ijtRafaqa?.title}</p>
-          <p>{data?.halqaActivityId?.ijtRafaqa?.registered ? "ہاں" : "نہیں"}</p>
+          
         </div>
         <div className="row">
           <p className="header">درسِ قرآن </p>
@@ -224,9 +227,7 @@ export const HalqaReport = () => {
           <p>{data?.halqaActivityId?.darseQuran?.decided}</p>
           <p>{data?.halqaActivityId?.darseQuran?.attendance}</p>
           <p>{data?.halqaActivityId?.darseQuran?.title}</p>
-          <p>
-            {data?.halqaActivityId?.darseQuran?.registered ? "ہاں" : "نہیں"}
-          </p>
+          
         </div>
       </div>
 

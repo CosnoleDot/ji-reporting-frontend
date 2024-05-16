@@ -5,7 +5,7 @@ export const RozOShabDiary = ({ view }) => {
   return (
     <div className="p-2 py-5 relative w-full overflow-auto">
       <h2 className="text-black py-3 text-lg">روزشب ڈائری</h2>
-      <div className="flex flex-wrap w-full items-center justify-start">
+      <div className="flex flex-wrap gap-4 w-full items-center justify-start">
 
         <div style={{ display: "flex" }}>
           <label className="block min-w-[40%]">

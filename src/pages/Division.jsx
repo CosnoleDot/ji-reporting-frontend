@@ -187,6 +187,7 @@ export const Division = () => {
     document.getElementById("karkunan-monthly").value = 0;
     document.getElementById("rafaqa-monthly").value = 0;
     document.getElementById("rawabitDecided").value = 0;
+    document.getElementById("shabBedari").value = 0;
     if (page === "create") {
       [
         "litrature","commonStudentMeetings","commonLiteratureDistribution"
@@ -372,7 +373,7 @@ export const Division = () => {
           id="division-form"
         >
           {/* <fieldset disabled={view} className="w-full"> */}
-          <h2 className="text-2xl mb-4">جا ئزءکارکردگی رپورٹ (براے ڈویژن)</h2>
+          <h2 className="text-2xl mb-4">جا ئزءکارکردگی رپورٹ (برائے ڈویژن)</h2>
           <div className="w-full">
             <div className="mb-4">
               <GeneralInfo
