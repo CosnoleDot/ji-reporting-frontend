@@ -90,7 +90,8 @@ export const getDivisionByTehsil = (tehsil, districts) => {
   return districts.find((i) => i?._id === districtId)?.division?.name;
 };
 
-export const Reports = () => {
+export const Reports = ({maqam}) => {
+  
   const [reports, setReports] = useState([]);
   const [allReports, setAllReports] = useState([]);
   const navigate = useNavigate();
@@ -137,6 +138,7 @@ export const Reports = () => {
   const [selectedId, setSelectedId] = useState("");
   const [selectedMonth, setSelectedMonth] = useState("");
   const params = useLocation();
+  const { getNazim } = useContext(UIContext);
 
   // GENERATE MONTHS
   useEffect(() => {
@@ -167,13 +169,7 @@ export const Reports = () => {
   };
 
   const viewReport = async (id) => {
-    if(active==="maqam"){
-      const filterMaqam = maqamReports?.filter((i)=> i._id == id)
-      const maqamId =  filterMaqam[0]?.userId._id;
-     
-      const filterIlaqa = ilaqas?.filter((i)=> i?.maqam?._id === maqamId)
-      console.log(maqamReports,ilaqas,maqamId,'asd')
-    }
+    
     navigate(`view/${id}`);
   };
   const editReport = (id) => {
@@ -995,9 +991,26 @@ export const Reports = () => {
                 Maqam
               </Link>
             )}
-          {["country", "maqam", "ilaqa"].includes(
+          {["country", "ilaqa"].includes(
             localStorage.getItem("@type")
           ) &&
+            ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
+              localStorage.getItem("@nazimType")
+            ) && (
+              <Link
+                to={"?active=ilaqa&tab=maqam"}
+                role="tab"
+                className={`tab w-full ${
+                  active === "ilaqa" ? "tab-active" : ""
+                }`}
+                onClick={() => setNotifyTo("ilaqa")}
+              >
+                Ilaqa
+              </Link>
+            )}
+            {["maqam"].includes(
+            localStorage.getItem("@type")
+          ) && maqam &&
             ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
               localStorage.getItem("@nazimType")
             ) && (
@@ -1087,7 +1100,7 @@ export const Reports = () => {
             </Link>
           </div>
         )}
-        {active === "halqa" && localStorage.getItem("@type") === "maqam" && (
+       {maqam &&  (active === "halqa" && localStorage.getItem("@type") === "maqam" && (
           <div
             role="tablist"
             className="w-full flex justify-between items-center"
@@ -1107,7 +1120,7 @@ export const Reports = () => {
               Ilaqa Halqa
             </Link>
           </div>
-        )}
+        ))}
         {["umeedwar", "rukan", "umeedwaar-nazim", "rukan-nazim"].includes(
           me?.nazimType
         ) && (

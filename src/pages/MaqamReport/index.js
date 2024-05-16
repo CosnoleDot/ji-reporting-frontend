@@ -21,7 +21,7 @@ export const MaqamReport = () => {
   useEffect(() => {
     if (params?.id) printReport(params?.id);
   }, [params]);
-
+  console.log(data, "asd");
   return (
     <div className="wrapper reports" style={{ marginBottom: "2rem" }} dir="rtl">
       <PrintDocument />
@@ -43,6 +43,181 @@ export const MaqamReport = () => {
         </h6>
         <h4 className="header">برائے ماہ:</h4>
         <h6>{data?.month.split("T")[0]}</h6>
+      </div>
+      <div className="flex w-full p-4 justify-start items-center font-bold text-2xl"> جامعات</div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-start",
+          alignItems: "center",
+          width: "100%",
+        }}
+        className="tableContainer"
+      >
+        <p className="header" style={{ width: "100%", padding: "8px 5px" }}>
+          <strong>کیٹیگری</strong>
+        </p>
+        <p className="header" style={{ width: "100%" }}>
+          <strong>آغازمیں</strong>
+        </p>
+        <p className="header" style={{ width: "100%" }}>
+          <strong>اضافہ</strong>
+        </p>
+        
+        <p className="header" style={{ width: "100%" }}>
+          <strong>اختتام پر</strong>
+        </p>
+        <p className="header" style={{ width: "100%" }}>
+          <strong>ماہانہ ہدف</strong>
+        </p>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          marginBottom: "2rem",
+        }}
+        className="tableContainer"
+      >
+       
+        <div className="row">
+          <p className="header">A </p>
+          <p>{data?.jamiaatId?.jamiaatA?.start}</p>
+          <p>{data?.jamiaatId?.jamiaatA?.increase}</p>
+          <p>
+            {data?.jamiaatId?.jamiaatA?.start +
+              data?.jamiaatId?.jamiaatA?.increase}
+          </p>
+          <p>{data?.jamiaatId?.jamiaatA?.monthly}</p>
+          
+        </div>
+        <div className="row">
+          <p className="header">B </p>
+          <p>{data?.jamiaatId?.jamiaatB?.start}</p>
+          <p>{data?.jamiaatId?.jamiaatB?.increase}</p>
+          <p>
+            {data?.jamiaatId?.jamiaatB?.start +
+              data?.jamiaatId?.jamiaatB?.increase}
+          </p>
+          <p>{data?.jamiaatId?.jamiaatB?.monthly}</p>
+          
+        </div>
+        <div className="row">
+          <p className="header">C</p>
+          <p>{data?.jamiaatId?.jamiaatC?.start}</p>
+          <p>{data?.jamiaatId?.jamiaatC?.increase}</p>
+          <p>
+            {data?.jamiaatId?.jamiaatC?.start +
+              data?.jamiaatId?.jamiaatC?.increase}
+          </p>
+          <p>{data?.jamiaatId?.jamiaatC?.monthly}</p>
+          
+        </div>
+        <div className="row">
+          <p className="header">D</p>
+          <p>{data?.jamiaatId?.jamiaatD?.start}</p>
+          <p>{data?.jamiaatId?.jamiaatD?.increase}</p>
+          <p>
+            {data?.jamiaatId?.jamiaatD?.start +
+              data?.jamiaatId?.jamiaatD?.increase}
+          </p>
+          <p>{data?.jamiaatId?.jamiaatD?.monthly}</p>
+          
+        </div>
+        <div className="row">
+          <p className="header">E</p>
+          <p>{data?.jamiaatId?.jamiaatE?.start}</p>
+          <p>{data?.jamiaatId?.jamiaatE?.increase}</p>
+          <p>
+            {data?.jamiaatId?.jamiaatE?.start +
+              data?.jamiaatId?.jamiaatE?.increase}
+          </p>
+          <p>{data?.jamiaatId?.jamiaatE?.monthly}</p>
+          
+        </div>
+        
+      </div>
+      <div className="flex w-full p-4 justify-start items-center font-bold text-2xl"> کالجز</div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-start",
+          alignItems: "center",
+          width: "100%",
+        }}
+        className="tableContainer"
+      >
+        <p className="header" style={{ width: "100%", padding: "8px 5px" }}>
+          <strong>کیٹیگری</strong>
+        </p>
+        <p className="header" style={{ width: "100%" }}>
+          <strong>آغازمیں</strong>
+        </p>
+        <p className="header" style={{ width: "100%" }}>
+          <strong>اضافہ</strong>
+        </p>
+        
+        <p className="header" style={{ width: "100%" }}>
+          <strong>اختتام پر</strong>
+        </p>
+        <p className="header" style={{ width: "100%" }}>
+          <strong>ماہانہ ہدف</strong>
+        </p>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          marginBottom: "2rem",
+        }}
+        className="tableContainer"
+      >
+       
+        <div className="row">
+          <p className="header">A </p>
+          <p>{data?.collegesId?.collegesA?.start}</p>
+          <p>{data?.collegesId?.collegesA?.increase}</p>
+          <p>
+            {data?.collegesId?.collegesA?.start +
+              data?.collegesId?.collegesA?.increase}
+          </p>
+          <p>{data?.collegesId?.collegesA?.monthly}</p>
+          
+        </div>
+        <div className="row">
+          <p className="header">B </p>
+          <p>{data?.collegesId?.collegesB?.start}</p>
+          <p>{data?.collegesId?.collegesB?.increase}</p>
+          <p>
+            {data?.collegesId?.collegesB?.start +
+              data?.collegesId?.collegesB?.increase}
+          </p>
+          <p>{data?.collegesId?.collegesB?.monthly}</p>
+          
+        </div>
+        <div className="row">
+          <p className="header">C</p>
+          <p>{data?.collegesId?.collegesC?.start}</p>
+          <p>{data?.collegesId?.collegesC?.increase}</p>
+          <p>
+            {data?.collegesId?.collegesC?.start +
+              data?.collegesId?.collegesC?.increase}
+          </p>
+          <p>{data?.collegesId?.collegesC?.monthly}</p>
+          
+        </div>
+        <div className="row">
+          <p className="header">D</p>
+          <p>{data?.collegesId?.collegesD?.start}</p>
+          <p>{data?.collegesId?.collegesD?.increase}</p>
+          <p>
+            {data?.collegesId?.collegesD?.start +
+              data?.collegesId?.collegesD?.increase}
+          </p>
+          <p>{data?.collegesId?.collegesD?.monthly}</p>
+          
+        </div>
+        
       </div>
       <div
         style={{
@@ -226,7 +401,7 @@ export const MaqamReport = () => {
           <strong>اختتام پر</strong>
         </p>
         <p className="header" style={{ width: "100%" }}>
-          <strong>سالانہ ہدف</strong>
+          <strong>ماہانہ ہدف</strong>
         </p>
       </div>
       <div
@@ -247,7 +422,7 @@ export const MaqamReport = () => {
               data?.wiId?.arkan?.increase -
               data?.wiId?.arkan?.decrease}
           </p>
-          <p>{data?.wiId?.arkan?.annual}</p>
+          <p>{data?.wiId?.arkan?.monthly}</p>
           {/* <p>{data?.wiId?.arkan?.}</p> */}
         </div>
         <div className="row">
@@ -260,7 +435,7 @@ export const MaqamReport = () => {
               data?.wiId?.umeedWaran?.increase -
               data?.wiId?.umeedWaran?.decrease}
           </p>
-          <p>{data?.wiId?.umeedWaran?.annual}</p>
+          <p>{data?.wiId?.umeedWaran?.monthly}</p>
           {/* <p>Data 3</p> */}
         </div>
         <div className="row">
@@ -273,7 +448,7 @@ export const MaqamReport = () => {
               data?.wiId?.rafaqa?.increase -
               data?.wiId?.rafaqa?.decrease}
           </p>
-          <p>{data?.wiId?.rafaqa?.annual}</p>
+          <p>{data?.wiId?.rafaqa?.monthly}</p>
           {/* <p>Data 3</p> */}
         </div>
         <div className="row">
@@ -286,7 +461,7 @@ export const MaqamReport = () => {
               data?.wiId?.karkunan?.increase -
               data?.wiId?.karkunan?.decrease}
           </p>
-          <p>{data?.wiId?.karkunan?.annual}</p>
+          <p>{data?.wiId?.karkunan?.monthly}</p>
           {/* <p>Data 3</p> */}
         </div>
         <div className="row">
@@ -299,7 +474,7 @@ export const MaqamReport = () => {
               data?.wiId?.shaheen?.increase -
               data?.wiId?.shaheen?.decrease}
           </p>
-          <p>{data?.wiId?.shaheen?.annual}</p>
+          <p>{data?.wiId?.shaheen?.monthly}</p>
           {/* <p>Data 3</p> */}
         </div>
         <div className="row">
@@ -312,7 +487,7 @@ export const MaqamReport = () => {
               data?.wiId?.members?.increase -
               data?.wiId?.members?.decrease}
           </p>
-          <p>{data?.wiId?.members?.annual}</p>
+          <p>{data?.wiId?.members?.monthly}</p>
           {/* <p>Data 3</p> */}
         </div>
       </div>
@@ -336,9 +511,7 @@ export const MaqamReport = () => {
         <p className="header">
           <strong>اوسط حاضری</strong>
         </p>
-        <p className="header">
-          <strong>مرتب</strong>
-        </p>
+        
       </div>
       <div
         style={{
@@ -353,43 +526,35 @@ export const MaqamReport = () => {
           <p>{data?.maqamActivityId?.ijtArkan?.decided}</p>
           <p>{data?.maqamActivityId?.ijtArkan?.done}</p>
           <p>{data?.maqamActivityId?.ijtArkan?.averageAttendance}</p>
-          <p>{data?.maqamActivityId?.ijtArkan?.registered ? "ہاں" : "نہیں"}</p>
+         
         </div>
         <div className="row">
-          <p className="header">سٹڈی  سرکل</p>
+          <p className="header">سٹڈی سرکل</p>
           <p>{data?.maqamActivityId?.studyCircle?.decided}</p>
           <p>{data?.maqamActivityId?.studyCircle?.done}</p>
           <p>{data?.maqamActivityId?.studyCircle?.averageAttendance}</p>
-          <p>
-            {data?.maqamActivityId?.studyCircle?.registered ? "ہاں" : "نہیں"}
-          </p>
+        
         </div>
         <div className="row">
           <p className="header">اجتماعِ ناظمین </p>
           <p>{data?.maqamActivityId?.ijtNazmeen?.decided}</p>
           <p>{data?.maqamActivityId?.ijtNazmeen?.done}</p>
           <p>{data?.maqamActivityId?.ijtNazmeen?.averageAttendance}</p>
-          <p>
-            {data?.maqamActivityId?.ijtNazmeen?.registered ? "ہاں" : "نہیں"}
-          </p>
+        
         </div>
         <div className="row">
           <p className="header">اجتماعِ امیدوران </p>
           <p>{data?.maqamActivityId?.ijtUmeedwaran?.decided}</p>
           <p>{data?.maqamActivityId?.ijtUmeedwaran?.done}</p>
           <p>{data?.maqamActivityId?.ijtUmeedwaran?.averageAttendance}</p>
-          <p>
-            {data?.maqamActivityId?.ijtUmeedwaran?.registered ? "ہاں" : "نہیں"}
-          </p>
+       
         </div>
         <div className="row">
           <p className="header"> صدور میٹینگ</p>
           <p>{data?.maqamActivityId?.sadurMeeting?.decided}</p>
           <p>{data?.maqamActivityId?.sadurMeeting?.done}</p>
           <p>{data?.maqamActivityId?.sadurMeeting?.averageAttendance}</p>
-          <p>
-            {data?.maqamActivityId?.sadurMeeting?.registered ? "ہاں" : "نہیں"}
-          </p>
+         
         </div>
       </div>
       <div
@@ -428,7 +593,7 @@ export const MaqamReport = () => {
           <p>{data?.mentionedActivityId?.ijtRafaqa?.averageAttendance}</p>
         </div>
         <div className="row">
-          <p className="header">سٹڈی  سرکل </p>
+          <p className="header">سٹڈی سرکل </p>
           <p>{data?.mentionedActivityId?.studyCircle?.decided}</p>
           <p>{data?.mentionedActivityId?.studyCircle?.done}</p>
           <p>{data?.mentionedActivityId?.studyCircle?.averageAttendance}</p>

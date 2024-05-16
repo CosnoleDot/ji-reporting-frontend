@@ -822,7 +822,7 @@ function App() {
                                       />
                                       <Route
                                         path="/reports"
-                                        element={<Reports />}
+                                        element={<Reports maqam={muntakhibMaqam}/>}
                                       />
                                       <Route
                                         path="/personalReport"

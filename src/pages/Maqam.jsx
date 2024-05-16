@@ -185,6 +185,7 @@ export const Maqam = () => {
     document.getElementById("karkunan-monthly").value = 0;
     document.getElementById("rafaqa-monthly").value = 0;
     document.getElementById("rawabitDecided").value = 0;
+    document.getElementById("shabBedari").value = 0;
 
     const afd = [
       "rehaishHalqay",

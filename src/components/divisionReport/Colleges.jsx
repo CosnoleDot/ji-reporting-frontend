@@ -7,7 +7,7 @@ export const Colleges = ({ view }) => {
       <table className="w-full table">
         <thead>
           <tr>
-            <Box type={"heading"}>نام کیٹیگری</Box>
+            <Box > کیٹیگری</Box>
             <Box>آغاز میں</Box>
             <Box>اضافہ</Box>
             <Box>اختتام پر</Box>

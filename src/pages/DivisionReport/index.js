@@ -45,6 +45,181 @@ export const DivisionReport = () => {
         <h4 className="header">برائے ماہ:</h4>
         <h6>{data?.month.split("T")[0]}</h6>
       </div>
+      <div className="flex w-full p-4 justify-start items-center font-bold text-2xl"> جامعات</div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-start",
+          alignItems: "center",
+          width: "100%",
+        }}
+        className="tableContainer"
+      >
+        <p className="header" style={{ width: "100%", padding: "8px 5px" }}>
+          <strong>کیٹیگری</strong>
+        </p>
+        <p className="header" style={{ width: "100%" }}>
+          <strong>آغازمیں</strong>
+        </p>
+        <p className="header" style={{ width: "100%" }}>
+          <strong>اضافہ</strong>
+        </p>
+        
+        <p className="header" style={{ width: "100%" }}>
+          <strong>اختتام پر</strong>
+        </p>
+        <p className="header" style={{ width: "100%" }}>
+          <strong>ماہانہ ہدف</strong>
+        </p>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          marginBottom: "2rem",
+        }}
+        className="tableContainer"
+      >
+       
+        <div className="row">
+          <p className="header">A </p>
+          <p>{data?.jamiaatId?.jamiaatA?.start}</p>
+          <p>{data?.jamiaatId?.jamiaatA?.increase}</p>
+          <p>
+            {data?.jamiaatId?.jamiaatA?.start +
+              data?.jamiaatId?.jamiaatA?.increase}
+          </p>
+          <p>{data?.jamiaatId?.jamiaatA?.monthly}</p>
+          
+        </div>
+        <div className="row">
+          <p className="header">B </p>
+          <p>{data?.jamiaatId?.jamiaatB?.start}</p>
+          <p>{data?.jamiaatId?.jamiaatB?.increase}</p>
+          <p>
+            {data?.jamiaatId?.jamiaatB?.start +
+              data?.jamiaatId?.jamiaatB?.increase}
+          </p>
+          <p>{data?.jamiaatId?.jamiaatB?.monthly}</p>
+          
+        </div>
+        <div className="row">
+          <p className="header">C</p>
+          <p>{data?.jamiaatId?.jamiaatC?.start}</p>
+          <p>{data?.jamiaatId?.jamiaatC?.increase}</p>
+          <p>
+            {data?.jamiaatId?.jamiaatC?.start +
+              data?.jamiaatId?.jamiaatC?.increase}
+          </p>
+          <p>{data?.jamiaatId?.jamiaatC?.monthly}</p>
+          
+        </div>
+        <div className="row">
+          <p className="header">D</p>
+          <p>{data?.jamiaatId?.jamiaatD?.start}</p>
+          <p>{data?.jamiaatId?.jamiaatD?.increase}</p>
+          <p>
+            {data?.jamiaatId?.jamiaatD?.start +
+              data?.jamiaatId?.jamiaatD?.increase}
+          </p>
+          <p>{data?.jamiaatId?.jamiaatD?.monthly}</p>
+          
+        </div>
+        <div className="row">
+          <p className="header">E</p>
+          <p>{data?.jamiaatId?.jamiaatE?.start}</p>
+          <p>{data?.jamiaatId?.jamiaatE?.increase}</p>
+          <p>
+            {data?.jamiaatId?.jamiaatE?.start +
+              data?.jamiaatId?.jamiaatE?.increase}
+          </p>
+          <p>{data?.jamiaatId?.jamiaatE?.monthly}</p>
+          
+        </div>
+        
+      </div>
+      <div className="flex w-full p-4 justify-start items-center font-bold text-2xl"> کالجز</div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-start",
+          alignItems: "center",
+          width: "100%",
+        }}
+        className="tableContainer"
+      >
+        <p className="header" style={{ width: "100%", padding: "8px 5px" }}>
+          <strong>کیٹیگری</strong>
+        </p>
+        <p className="header" style={{ width: "100%" }}>
+          <strong>آغازمیں</strong>
+        </p>
+        <p className="header" style={{ width: "100%" }}>
+          <strong>اضافہ</strong>
+        </p>
+        
+        <p className="header" style={{ width: "100%" }}>
+          <strong>اختتام پر</strong>
+        </p>
+        <p className="header" style={{ width: "100%" }}>
+          <strong>ماہانہ ہدف</strong>
+        </p>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          marginBottom: "2rem",
+        }}
+        className="tableContainer"
+      >
+       
+        <div className="row">
+          <p className="header">A </p>
+          <p>{data?.collegesId?.collegesA?.start}</p>
+          <p>{data?.collegesId?.collegesA?.increase}</p>
+          <p>
+            {data?.collegesId?.collegesA?.start +
+              data?.collegesId?.collegesA?.increase}
+          </p>
+          <p>{data?.collegesId?.collegesA?.monthly}</p>
+          
+        </div>
+        <div className="row">
+          <p className="header">B </p>
+          <p>{data?.collegesId?.collegesB?.start}</p>
+          <p>{data?.collegesId?.collegesB?.increase}</p>
+          <p>
+            {data?.collegesId?.collegesB?.start +
+              data?.collegesId?.collegesB?.increase}
+          </p>
+          <p>{data?.collegesId?.collegesB?.monthly}</p>
+          
+        </div>
+        <div className="row">
+          <p className="header">C</p>
+          <p>{data?.collegesId?.collegesC?.start}</p>
+          <p>{data?.collegesId?.collegesC?.increase}</p>
+          <p>
+            {data?.collegesId?.collegesC?.start +
+              data?.collegesId?.collegesC?.increase}
+          </p>
+          <p>{data?.collegesId?.collegesC?.monthly}</p>
+          
+        </div>
+        <div className="row">
+          <p className="header">D</p>
+          <p>{data?.collegesId?.collegesD?.start}</p>
+          <p>{data?.collegesId?.collegesD?.increase}</p>
+          <p>
+            {data?.collegesId?.collegesD?.start +
+              data?.collegesId?.collegesD?.increase}
+          </p>
+          <p>{data?.collegesId?.collegesD?.monthly}</p>
+          
+        </div>
+        
+      </div>
       <div
         style={{
           display: "flex",
@@ -75,6 +250,9 @@ export const DivisionReport = () => {
         <p className="header" style={{ width: "100%" }}>
           <strong>فعال</strong>
         </p>
+        <p className="header" style={{ width: "100%" }}>
+          <strong>ماہانہ ہدف</strong>
+        </p>
       </div>
       <div
         style={{
@@ -96,6 +274,7 @@ export const DivisionReport = () => {
           </p>
           <p>{data?.maqamTanzeemId?.rehaishHalqay?.paused}</p>
           <p>{data?.maqamTanzeemId?.rehaishHalqay?.continue}</p>
+          <p>{data?.maqamTanzeemId?.rehaishHalqay?.monthly}</p>
         </div>
         <div className="row">
           <p className="header"> تعلیمی حلقے</p>
@@ -109,6 +288,7 @@ export const DivisionReport = () => {
           </p>
           <p>{data?.maqamTanzeemId?.taleemHalqay?.paused}</p>
           <p>{data?.maqamTanzeemId?.taleemHalqay?.continue}</p>
+          <p>{data?.maqamTanzeemId?.taleemHalqay?.monthly}</p>
         </div>
         <div className="row">
           <p className="header">کل حلقے</p>
@@ -122,6 +302,7 @@ export const DivisionReport = () => {
           </p>
           <p>{data?.maqamTanzeemId?.totalHalqay?.paused}</p>
           <p>{data?.maqamTanzeemId?.totalHalqay?.continue}</p>
+          <p>{data?.maqamTanzeemId?.totalHalqay?.monthly}</p>
         </div>
         <div className="row">
           <p className="header">رہائشی زیلی حلقے</p>
@@ -135,6 +316,7 @@ export const DivisionReport = () => {
           </p>
           <p>{data?.maqamTanzeemId?.subRehaishHalqay?.paused}</p>
           <p>{data?.maqamTanzeemId?.subRehaishHalqay?.continue}</p>
+          <p>{data?.maqamTanzeemId?.subRehaishHalqay?.monthly}</p>
         </div>
         <div className="row">
           <p className="header">تعلیمی زیلی حلقے</p>
@@ -148,6 +330,7 @@ export const DivisionReport = () => {
           </p>
           <p>{data?.maqamTanzeemId?.subTaleemHalqay?.paused}</p>
           <p>{data?.maqamTanzeemId?.subTaleemHalqay?.continue}</p>
+          <p>{data?.maqamTanzeemId?.subTaleemHalqay?.monthly}</p>
         </div>
         <div className="row">
           <p className="header">کل زیلی حلقے</p>
@@ -161,6 +344,7 @@ export const DivisionReport = () => {
           </p>
           <p>{data?.maqamTanzeemId?.subTotalHalqay?.paused}</p>
           <p>{data?.maqamTanzeemId?.subTotalHalqay?.continue}</p>
+          <p>{data?.maqamTanzeemId?.subTaleemHalqay?.monthly}</p>
         </div>
 
         <div className="row">
@@ -175,6 +359,7 @@ export const DivisionReport = () => {
           </p>
           <p>{data?.maqamTanzeemId?.busmSchoolUnits?.paused}</p>
           <p>{data?.maqamTanzeemId?.busmSchoolUnits?.continue}</p>
+          <p>{data?.maqamTanzeemId?.subTaleemHalqay?.monthly}</p>
         </div>
         <div className="row">
           <p className="header">بزم کے رہائشی یونٹس</p>
@@ -188,6 +373,7 @@ export const DivisionReport = () => {
           </p>
           <p>{data?.maqamTanzeemId?.busmRehaishUnits?.paused}</p>
           <p>{data?.maqamTanzeemId?.busmRehaishUnits?.continue}</p>
+          <p>{data?.maqamTanzeemId?.subTaleemHalqay?.monthly}</p>
         </div>
         <div className="row">
           <p className="header">بزم کے کل یونٹس</p>
@@ -201,6 +387,7 @@ export const DivisionReport = () => {
           </p>
           <p>{data?.maqamTanzeemId?.busmTotalUnits?.paused}</p>
           <p>{data?.maqamTanzeemId?.busmTotalUnits?.continue}</p>
+          <p>{data?.maqamTanzeemId?.subTaleemHalqay?.monthly}</p>
         </div>
       </div>
       <div
@@ -228,7 +415,7 @@ export const DivisionReport = () => {
           <strong>اختتام پر</strong>
         </p>
         <p className="header" style={{ width: "100%" }}>
-          <strong>سالانہ ہدف</strong>
+          <strong>ماہانہ ہدف</strong>
         </p>
       </div>
       <div
@@ -249,7 +436,7 @@ export const DivisionReport = () => {
               data?.wiId?.arkan?.increase -
               data?.wiId?.arkan?.decrease}
           </p>
-          <p>{data?.wiId?.arkan?.annual}</p>
+          <p>{data?.wiId?.arkan?.monthly}</p>
           {/* <p>{data?.wiId?.arkan?.}</p> */}
         </div>
         <div className="row">
@@ -262,7 +449,7 @@ export const DivisionReport = () => {
               data?.wiId?.umeedWaran?.increase -
               data?.wiId?.umeedWaran?.decrease}
           </p>
-          <p>{data?.wiId?.umeedWaran?.annual}</p>
+          <p>{data?.wiId?.umeedWaran?.monthly}</p>
           {/* <p>Data 3</p> */}
         </div>
         <div className="row">
@@ -275,7 +462,7 @@ export const DivisionReport = () => {
               data?.wiId?.rafaqa?.increase -
               data?.wiId?.rafaqa?.decrease}
           </p>
-          <p>{data?.wiId?.rafaqa?.annual}</p>
+          <p>{data?.wiId?.rafaqa?.monthly}</p>
           {/* <p>Data 3</p> */}
         </div>
         <div className="row">
@@ -288,7 +475,7 @@ export const DivisionReport = () => {
               data?.wiId?.karkunan?.increase -
               data?.wiId?.karkunan?.decrease}
           </p>
-          <p>{data?.wiId?.karkunan?.annual}</p>
+          <p>{data?.wiId?.karkunan?.monthly}</p>
           {/* <p>Data 3</p> */}
         </div>
         <div className="row">
@@ -301,7 +488,7 @@ export const DivisionReport = () => {
               data?.wiId?.shaheen?.increase -
               data?.wiId?.shaheen?.decrease}
           </p>
-          <p>{data?.wiId?.shaheen?.annual}</p>
+          <p>{data?.wiId?.shaheen?.monthly}</p>
           {/* <p>Data 3</p> */}
         </div>
         <div className="row">
@@ -314,7 +501,7 @@ export const DivisionReport = () => {
               data?.wiId?.members?.increase -
               data?.wiId?.members?.decrease}
           </p>
-          <p>{data?.wiId?.members?.annual}</p>
+          <p>{data?.wiId?.members?.monthly}</p>
           {/* <p>Data 3</p> */}
         </div>
       </div>
@@ -338,9 +525,7 @@ export const DivisionReport = () => {
         <p className="header">
           <strong>اوسط حاضری</strong>
         </p>
-        <p className="header">
-          <strong>مرتب/غیرمرتب</strong>
-        </p>
+        
       </div>
       <div
         style={{
@@ -355,42 +540,28 @@ export const DivisionReport = () => {
           <p>{data?.divisionActivityId?.studyCircle?.decided}</p>
           <p>{data?.divisionActivityId?.studyCircle?.done}</p>
           <p>{data?.divisionActivityId?.studyCircle?.averageAttendance}</p>
-          <p>
-            {data?.divisionActivityId?.studyCircle?.registered ? "ہاں" : "نہیں"}
-          </p>
+         
         </div>
         <div className="row">
           <p className="header">اجتماع ناظمین </p>
           <p>{data?.divisionActivityId?.ijtNazmeen?.decided}</p>
           <p>{data?.divisionActivityId?.ijtNazmeen?.done}</p>
           <p>{data?.divisionActivityId?.ijtNazmeen?.averageAttendance}</p>
-          <p>
-            {data?.divisionActivityId?.ijtNazmeen?.registered === true
-              ? "ہاں"
-              : "نہیں"}
-          </p>
+          
         </div>
         <div className="row">
           <p className="header">اجتماع امیدوران </p>
           <p>{data?.divisionActivityId?.ijtUmeedwaran?.decided}</p>
           <p>{data?.divisionActivityId?.ijtUmeedwaran?.done}</p>
           <p>{data?.divisionActivityId?.ijtUmeedwaran?.averageAttendance}</p>
-          <p>
-            {data?.divisionActivityId?.ijtUmeedwaran?.registered === true
-              ? "ہاں"
-              : "نہیں"}
-          </p>
+          
         </div>
         <div className="row">
           <p className="header"> صدور میٹینگ</p>
           <p>{data?.divisionActivityId?.sadurMeeting?.decided}</p>
           <p>{data?.divisionActivityId?.sadurMeeting?.done}</p>
           <p>{data?.divisionActivityId?.sadurMeeting?.averageAttendance}</p>
-          <p>
-            {data?.divisionActivityId?.sadurMeeting?.registered === true
-              ? "ہاں"
-              : "نہیں"}
-          </p>
+          
         </div>
       </div>
       <div
@@ -615,9 +786,7 @@ export const DivisionReport = () => {
           <h6 style={{ width: "100%", textAlign: "start" }}>
             کتنے امیدوران فل کرتے ہیں :{data?.rsdId?.umeedwaranFilled}
           </h6>
-          <h6 style={{ width: "100%", textAlign: "start" }}>
-            کتنے ارکان فل کرتے ہیں :{data?.rsdId?.arkanFilled}
-          </h6>
+          
           <h6 style={{ width: "100%", textAlign: "start" }}>
             کتنےرفقا فل کرتے ہیں :{data?.rsdId?.rafaqaFilled}
           </h6>
