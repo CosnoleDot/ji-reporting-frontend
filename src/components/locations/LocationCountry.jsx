@@ -55,7 +55,7 @@ export const LocationCountry = () => {
   const handleDisable = async (id) => {
     setLoading(true);
     try {
-      const req = await instance.delete(`/locations/province/${id}`, {
+      const req = await instance.patch(`/locations/province/${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("@token")}`,
           "Content-Type": "application/json",

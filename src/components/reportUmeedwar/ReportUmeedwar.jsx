@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { GeneralLayout } from "../layoutComponents";
-import { InputWithLabel } from "../InputWithLabel";
 import { Rawabit1, Rawabit2, Rawabit3 } from "./rawaabit";
 import { RegularStudents } from "./RegularStudents";
 import { convertDataFormat, toJson } from "../../utils";

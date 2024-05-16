@@ -1,15 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { GeneralLayout } from "../components";
-import { FaClosedCaptioning, FaEdit, FaEye, FaPrint } from "react-icons/fa";
+import { FaEdit, FaEye, FaPrint } from "react-icons/fa";
 import moment from "moment";
 import instance from "../api/instrance";
 import { useNavigate } from "react-router-dom";
-import {
-  DistrictContext,
-  DivisionContext,
-  HalqaContext,
-  MaqamContext,
-} from "../context";
+import { DistrictContext, MaqamContext } from "../context";
 import { getDivisionByTehsil, months } from "./Reports";
 import { MdCancel } from "react-icons/md";
 // import { ProvinceContext } from "../context";
@@ -28,6 +23,7 @@ export const PersonalReportsDashboard = () => {
   let navigate = useNavigate();
 
   const getAreaType = (area) => {
+    console.log(area);
     if (area?.parentType === "Maqam") {
       const name = maqams.find((i) => i?._id === area?.parentId);
       return `${area?.name} - ${name?.name} (Maqam)`;
@@ -38,8 +34,11 @@ export const PersonalReportsDashboard = () => {
       return `${area?.name} - ${
         maqams.find((i) => i?._id === area?._id) ? "Maqam" : "Division"
       }`;
+    } else if (area?.name === "Pakistan") {
+      console.log("am in");
+      return `${area?.name} - (Country)`;
     }
-    return "Punjab";
+    return "Pakistan";
   };
   const getAllReports = async () => {
     const req = await instance.get(`/umeedwar`, {
@@ -48,8 +47,12 @@ export const PersonalReportsDashboard = () => {
         Authorization: `Bearer ${localStorage.getItem("@token")}`,
       },
     });
+    console.log(req?.data?.data);
     const d = req?.data?.data?.map((obj) => ({
-      title: `${obj?.userId?.name}` + " " + getAreaType(obj?.areaId),
+      title:
+        `${obj?.userId?.name !== undefined ? obj?.userId?.name : ''}  ` +
+        " " +
+        getAreaType(obj?.areaId),
       ...obj,
     }));
 
@@ -90,6 +93,7 @@ export const PersonalReportsDashboard = () => {
     const findData = `${year}-${
       parseInt(month) > 9 ? month : "0" + month.toString()
     }`;
+
     const filData = data?.reduce((acc, curr) => {
       Object.keys(curr).forEach((tag) => {
         if (tag === "month") {
