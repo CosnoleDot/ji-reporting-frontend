@@ -246,9 +246,44 @@ export const ReportUmeedwar = () => {
           </div>
 
           <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
-            {intro.map((obj, index) => (
-              <div className="w-full md:pr-0 mb-2" key={index}>
-                <InputWithLabel
+            <div className="w-full flex gap-4 md:pr-0 mb-2">
+              <div className="flex gap-4">
+                {" "}
+                <label htmlFor="name">نام</label>
+                <input
+                  type="text"
+                  defaultValue={me?.name || "Name"}
+                  readOnly
+                  id="name"
+                  class="name"
+                  value={me?.name}
+                />
+              </div>
+              <div className="flex gap-4">
+                {" "}
+                <label htmlFor="name">جمعیت سے تعلق</label>
+                <input
+                  type="text"
+                  defaultValue={localStorage.getItem("@nazimType")}
+                  readOnly
+                  id="JamiatRelation"
+                  class="JamiatRelation"
+                  value={localStorage.getItem("@nazimType")}
+                />
+              </div>
+              <div className="flex gap-4">
+                {" "}
+                <label htmlFor="name">تنظیمی تعلق</label>
+                <input
+                  type="text"
+                  defaultValue={localStorage.getItem("@nazimType")}
+                  readOnly
+                  id="JamiatRelation"
+                  class="JamiatRelation"
+                  value={localStorage.getItem("@nazimType")}
+                />
+              </div>
+              {/* <InputWithLabel
                   readOnly={
                     view ||
                     obj.key === "organizationRelation" ||
@@ -272,9 +307,8 @@ export const ReportUmeedwar = () => {
                   label={obj.title}
                   name={obj?.key}
                   type={obj?.type}
-                />
-              </div>
-            ))}
+                /> */}
+            </div>
           </div>
           <FajarNamaz view={view} />
           <OtherNamaz view={view} />
