@@ -47,7 +47,7 @@ export const HalqaReport = () => {
           marginBottom: "2rem",
         }}
       >
-        جائزہ کارکردگی رپورت برآے حلقہ
+        جائزہ کارکردگی رپورٹ برائے حلقہ
       </h3>
       <div
         style={{
@@ -65,7 +65,7 @@ export const HalqaReport = () => {
           {data?.halqaAreaId?.name}( {getAreaType(data?.halqaAreaId)})
         </h6>
 
-        <h4 className="header">برآے ماہ:</h4>
+        <h4 className="header">برائے ماہ:</h4>
         <h6>{data?.month.split("T")[0]}</h6>
       </div>
 
@@ -93,7 +93,7 @@ export const HalqaReport = () => {
           <strong>اختتام پر</strong>
         </p>
         <p className="header" style={{ width: "100%" }}>
-          <strong>سلانہ ہدف</strong>
+          <strong>سالانہ ہدف</strong>
         </p>
       </div>
       <div

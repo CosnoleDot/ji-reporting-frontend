@@ -8,6 +8,7 @@ import {
   DivisionReportContext,
   HalqaContext,
   HalqaReportContext,
+  IlaqaContext,
   IlaqaReportContext,
   MaqamContext,
   MaqamReportContext,
@@ -127,6 +128,8 @@ export const Reports = () => {
   const maqams = useContext(MaqamContext);
   const divisions = useContext(DivisionContext);
   const districts = useContext(DistrictContext);
+  const ilaqas = useContext(IlaqaContext);
+
   const provinces = useContext(ProvinceContext);
   const tehsils = useContext(TehsilContext);
   const halqas = useContext(HalqaContext);
@@ -164,10 +167,19 @@ export const Reports = () => {
   };
 
   const viewReport = async (id) => {
+    if(active==="maqam"){
+      const filterMaqam = maqamReports?.filter((i)=> i._id == id)
+      const maqamId =  filterMaqam[0]?.userId._id;
+     
+      const filterIlaqa = ilaqas?.filter((i)=> i?.maqam?._id === maqamId)
+      console.log(maqamReports,ilaqas,maqamId,'asd')
+    }
     navigate(`view/${id}`);
   };
   const editReport = (id) => {
+    
     navigate(`edit/${id}`);
+    
   };
   const getAreas = async () => {
     switch (active) {
@@ -983,14 +995,14 @@ export const Reports = () => {
                 Maqam
               </Link>
             )}
-          {["country", "province", "maqam", "ilaqa"].includes(
+          {["country", "maqam", "ilaqa"].includes(
             localStorage.getItem("@type")
           ) &&
             ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
               localStorage.getItem("@nazimType")
             ) && (
               <Link
-                to={"?active=ilaqa"}
+                to={"?active=ilaqa&tab=maqam"}
                 role="tab"
                 className={`tab w-full ${
                   active === "ilaqa" ? "tab-active" : ""
@@ -1000,7 +1012,21 @@ export const Reports = () => {
                 Ilaqa
               </Link>
             )}
-
+          {["province"].includes(localStorage.getItem("@type")) &&
+            ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
+              localStorage.getItem("@nazimType")
+            ) && (
+              <Link
+                to={"?active=ilaqa&tab=province"}
+                role="tab"
+                className={`tab w-full ${
+                  active === "ilaqa" ? "tab-active" : ""
+                }`}
+                onClick={() => setNotifyTo("ilaqa")}
+              >
+                Ilaqa
+              </Link>
+            )}
           {["country", "province", "maqam"].includes(
             localStorage.getItem("@type")
           ) &&
@@ -1020,7 +1046,7 @@ export const Reports = () => {
             )}
           {["ilaqa"].includes(localStorage.getItem("@type")) && (
             <Link
-              to={"?active=halqa"}
+              to={"?active=halqa&tab=ilaqa"}
               role="tab"
               className={`tab w-full ${active === "halqa" ? "tab-active" : ""}`}
               onClick={() => setNotifyTo("halqa")}
@@ -1249,7 +1275,8 @@ export const Reports = () => {
                       </div>
                     </div>
                   )
-                ) : active === "ilaqa" ? (
+                ) : active === "ilaqa" &&
+                  localStorage.getItem("@token") === "ilaqa" ? (
                   <div
                     key={obj?._id}
                     className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
@@ -1292,6 +1319,43 @@ export const Reports = () => {
                             "blank"
                           )
                         }
+                      >
+                        <FaPrint />
+                      </button>
+                    </div>
+                  </div>
+                ) : active === "ilaqa" && tab === "maqam" ? (
+                  <div
+                    key={obj?._id}
+                    className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
+                  >
+                    <div className="flex w-full flex-col items-start justify-center">
+                      <span className="text-lg font-semibold">
+                        {((active !== "province" || active !== "halqa") &&
+                          obj?.[active + "AreaId"]?.name) ||
+                          "UNKNOWN"}
+                        {" - "}
+                        {getDivisionByTehsil(
+                          obj?.[active + "AreaId"]?.parentId,
+                          districts
+                        )}
+                        {" - "}
+                        {moment(obj?.month).format("MMMM YYYY")}
+                      </span>
+                      <span>
+                        Last Modified: {moment(obj?.updatedAt).fromNow()}
+                      </span>
+                    </div>
+                    <div className="flex items-end w-full justify-end gap-3 ">
+                      <button
+                        className="btn"
+                        onClick={() => viewReport(obj?._id)}
+                      >
+                        <FaEye />
+                      </button>
+                      <button
+                        className="btn"
+                        onClick={() => editReport(obj?._id)}
                       >
                         <FaPrint />
                       </button>

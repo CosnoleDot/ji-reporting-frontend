@@ -170,7 +170,7 @@ export const Ilaqa = () => {
           }
         }
       }
-      console.log(halq,'asd')
+   
     });
     document.getElementById("studyCircle-averageAttendance").value = 0;
     document.getElementById("studyCircle-done").value = 0;
@@ -347,7 +347,7 @@ export const Ilaqa = () => {
       value1.value = 0;
     }
   }, [location.pathname]);
-  console.log(data,'asd')
+  
   return (
     <GeneralLayout>
       <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">
@@ -357,7 +357,7 @@ export const Ilaqa = () => {
           onSubmit={handleSubmit}
           id="ilaqa-form"
         >
-          <h2 className="text-2xl">جا ئزءکارکردگی رپورٹ (براے علاقہ)</h2>
+          <h2 className="text-2xl">جا ئزءکارکردگی رپورٹ (برائے علاقہ)</h2>
           <div className="w-full p-4">
             <div>
               <GeneralInfo

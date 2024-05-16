@@ -25,7 +25,7 @@ export const DivisionReport = () => {
     <div className="wrapper reports" style={{ marginBottom: "2rem" }} dir="rtl">
       <PrintDocument />
       <h3 style={{ textAlign: "center", fontWeight: "bold" }}>
-        جائزہ کارکردگی رپورت برآے ڈویژن
+        جائزہ کارکردگی رپورٹ برائے ڈویژن
       </h3>
       <div
         style={{
@@ -42,7 +42,7 @@ export const DivisionReport = () => {
         <h6>
           {data?.divisionAreaId?.name}- ({data?.divisionAreaId?.province?.name})
         </h6>
-        <h4 className="header">برآے ماہ:</h4>
+        <h4 className="header">برائے ماہ:</h4>
         <h6>{data?.month.split("T")[0]}</h6>
       </div>
       <div
@@ -228,7 +228,7 @@ export const DivisionReport = () => {
           <strong>اختتام پر</strong>
         </p>
         <p className="header" style={{ width: "100%" }}>
-          <strong>سلانہ ہدف</strong>
+          <strong>سالانہ ہدف</strong>
         </p>
       </div>
       <div

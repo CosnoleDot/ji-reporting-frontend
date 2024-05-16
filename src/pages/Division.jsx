@@ -163,7 +163,7 @@ export const Division = () => {
         }
       }
     });
-    console.log(halq)
+
     document.getElementById("studyCircle-averageAttendance").value = 0;
     document.getElementById("studyCircle-done").value = 0;
     ["arkan", "umeedWaran"].forEach((i) => {

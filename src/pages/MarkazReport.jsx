@@ -48,7 +48,7 @@ export const MarkazReport = () => {
   const location = useLocation();
   const me = useContext(MeContext);
   const navigate = useNavigate();
-  console.log(province,'asd')
+ 
   const autoFill = () => {
     const halq = {};
     document.getElementById("markaz-form").reset();
@@ -130,8 +130,7 @@ export const MarkazReport = () => {
         }
       }
       //  there
-     
-      console.log(halq,'asd')
+ 
       const afd = [
         "rehaishHalqay",
         "taleemHalqay",
@@ -252,7 +251,7 @@ export const MarkazReport = () => {
           document.getElementById(p).value = fieldValue;
         }
       });
-     console.log(data,'asd')
+    
     }
   }, [data]);
  
@@ -307,7 +306,7 @@ export const MarkazReport = () => {
         jsonData[key] = 0;
       }
     }
-console.log(jsonData,'asd')
+
     setLoading(true);
     try {
       if (id) {
