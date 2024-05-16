@@ -23,7 +23,6 @@ export const PersonalReportsDashboard = () => {
   let navigate = useNavigate();
 
   const getAreaType = (area) => {
-    console.log(area);
     if (area?.parentType === "Maqam") {
       const name = maqams.find((i) => i?._id === area?.parentId);
       return `${area?.name} - ${name?.name} (Maqam)`;
@@ -35,8 +34,9 @@ export const PersonalReportsDashboard = () => {
         maqams.find((i) => i?._id === area?._id) ? "Maqam" : "Division"
       }`;
     } else if (area?.name === "Pakistan") {
-      console.log("am in");
-      return `${area?.name} - (Country)`;
+      return `${area?.name} `;
+    } else if (area?.country) {
+      return `${area?.name} `;
     }
     return "Pakistan";
   };
@@ -47,10 +47,13 @@ export const PersonalReportsDashboard = () => {
         Authorization: `Bearer ${localStorage.getItem("@token")}`,
       },
     });
-    console.log(req?.data?.data);
     const d = req?.data?.data?.map((obj) => ({
       title:
-        `${obj?.userId?.name !== undefined ? obj?.userId?.name : ''}  ` +
+        `${
+          obj?.userId?.name !== undefined && obj?.userId?.name !== "undefined"
+            ? obj?.userId?.name
+            : ""
+        }  ` +
         " " +
         getAreaType(obj?.areaId),
       ...obj,

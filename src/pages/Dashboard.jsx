@@ -261,7 +261,9 @@ export const Dashboard = () => {
     } else if (area?.parentType === "Division") {
       return `Of Division ${area?.parentId?.name} `;
     } else if (area?.province) {
-      const matchingProvince = provinces?.find((p) => p?._id === area?.province);
+      const matchingProvince = provinces?.find(
+        (p) => p?._id === area?.province
+      );
       return ` Of ${matchingProvince?.name}`;
     }
 
@@ -293,7 +295,7 @@ export const Dashboard = () => {
     // Set firstDayOfCurrentMonth to the 1st of the current month
     const firstDayOfCurrentMonth = new Date(
       currentMonth.getFullYear(),
-      currentMonth.getMonth(),
+      currentMonth.getMonth() + 0,
       1
     );
 
@@ -301,7 +303,7 @@ export const Dashboard = () => {
     const lastDayOfCurrentMonth = new Date(
       currentMonth.getFullYear(),
       currentMonth.getMonth() + 1,
-      0
+      1
     );
     // Filter out reports within the current month
     const requiredUmeedwarReports = umeedwarReports.filter((report) => {
@@ -311,7 +313,6 @@ export const Dashboard = () => {
         reportDate <= lastDayOfCurrentMonth
       );
     });
-
     // Filter out nazim who are not of type "nazim"
     const validNazim = nazim.filter(
       (n) => n?.nazimType && n?.nazimType !== "nazim"
@@ -319,33 +320,31 @@ export const Dashboard = () => {
 
     // Get IDs of validNazim
     const validNazimIds = validNazim.map((n) => n?._id);
-
     // Get IDs of nazim who have filled personal reports
     const nazimFilledPersonalIds = requiredUmeedwarReports.map(
       (report) => report?.userId?._id
     );
-
     // Get IDs of unfilled nazim
     const unfilledIds = validNazimIds.filter(
       (id) => !nazimFilledPersonalIds.includes(id)
     );
 
     // Separate filled and unfilled nazim
-    const filledNazim = validNazim.filter((n) =>
+    const filledNazim = nazim.filter((n) =>
       nazimFilledPersonalIds.includes(n?._id)
     );
-    const unfilledNazim = validNazim.filter((n) =>
+    const unfilledNazim = nazim.filter((n) =>
       unfilledIds.includes(n?._id)
     );
     // saving the initial data so that on clear filter can set it back
     if (
       !initialData ||
-      !initialData.validNazim ||
-      initialData.validNazim.length === 0
+      !initialData.nazim ||
+      initialData.nazim.length === 0
     ) {
       setInitialData((prevData) => ({
         ...prevData,
-        validNazim: validNazim,
+        nazim: nazim,
         personalF: filledNazim,
         personalU: unfilledNazim,
       }));
@@ -554,7 +553,11 @@ export const Dashboard = () => {
               )}
             {localStorage.getItem("@type") === "halqa" && (
               <div
-                onClick={() => navigate("/reports/create")}
+                onClick={() =>
+                  me?.nazimType === "rukan" || me?.nazimType === "umeedwar"
+                    ? navigate("/personalReport/create")
+                    : navigate("/reports/create")
+                }
                 className="flex items-center bg-white border rounded-sm overflow-hidden shadow cursor-pointer"
               >
                 <div className="p-4 bg-red-400">
