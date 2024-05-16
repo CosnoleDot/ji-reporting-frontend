@@ -131,7 +131,6 @@ function App() {
                 req?.data?.data?.nazimType ||
               localStorage?.getItem("@type") !== req?.data?.data?.nazim
             ) {
-            
               alert(
                 "Your account will be logged out as admin has updated your rights"
               );
@@ -155,21 +154,28 @@ function App() {
     }
   };
   const getProvinces = async () => {
-    try {
-      const req = await instance.get("/locations/province", {
-        headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
-      });
-      if (req) {
-        setProvinces(
-          req.data?.data?.filter((i) => i?.country === me?.userAreaId?._id)
-        );
+    if (me?.userAreaType !== "Halqa") {
+      try {
+        const req = await instance.get("/locations/province", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
+        });
+        if (req) {
+          setProvinces(
+            req.data?.data?.filter((i) => i?.country === me?.userAreaId?._id)
+          );
+        }
+      } catch (err) {
+        console.log(err);
+        dispatch({
+          type: "ERROR",
+          payload: err?.response?.data?.message || err?.message,
+        });
       }
-    } catch (err) {
-      console.log(err);
-      dispatch({
-        type: "ERROR",
-        payload: err?.response?.data?.message || err?.message,
-      });
+    } else {
+      console.log("first");
+      return;
     }
   };
   const getIlaqas = async () => {
@@ -179,7 +185,7 @@ function App() {
       });
       if (req) {
         const enabledIlaqas = req.data.data;
-       
+
         const type = localStorage.getItem("@type");
 
         if (type === "country") {
@@ -206,8 +212,6 @@ function App() {
           );
 
           setIlaqas(validIlaqas);
-         
-          
         }
       }
     } catch (err) {
@@ -562,7 +566,7 @@ function App() {
       }
     }
   };
-  
+
   // NOTiFICATIONS CODE
   const getAllReports = async () => {
     if (
@@ -885,7 +889,7 @@ function App() {
                                       <Route
                                         path={"/reports/view/:id"}
                                         element={
-                                           active ==="maqam" ? (
+                                          active === "maqam" ? (
                                             muntakhibMaqam ? (
                                               <MuntakhibMaqamReports />
                                             ) : (

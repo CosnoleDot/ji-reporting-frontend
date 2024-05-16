@@ -16,7 +16,6 @@ import {
 import instance from "../api/instrance";
 import { Link } from "react-router-dom";
 import { MdOutlineUpgrade } from "react-icons/md";
-import { getDivisionByTehsil } from "./Reports";
 import { RiDeviceRecoverFill } from "react-icons/ri";
 export const DeleteUser = () => {
   const me = useContext(MeContext);
@@ -125,8 +124,9 @@ export const DeleteUser = () => {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
+        await getNazim();
+        setData(nazim);
         if (req) {
-          await getNazim();
           dispatch({ type: "SUCCESS", payload: req.data?.message });
         }
       }
