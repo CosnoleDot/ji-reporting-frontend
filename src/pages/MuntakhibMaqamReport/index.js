@@ -704,6 +704,9 @@ export const MuntakhibMaqamReport = () => {
             طے شدہ:{data?.muntakhibTdId?.rawabitDecided}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
+          روابط سے ملاقاتوں کا ہدف:{data?.muntakhibTdId?.rwabitMeetingsGoal}
+          </h6>
+          <h6 style={{ width: "100%", textAlign: "start" }}>
             موجودہ :{data?.muntakhibTdId?.currentSum}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
@@ -774,6 +777,11 @@ export const MuntakhibMaqamReport = () => {
           <h6 style={{ width: "100%", textAlign: "start" }}>
             فروخت کردہ :{data?.paighamDigestId?.totalSold}
           </h6>
+          
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+          ڈائجسٹ موصول کرنے کا ماہانہ حدف:{data?.paighamDigestId?.monthlyReceivingGoal}
+          </h6>
+          
         </div>
         <h3 style={{ textAlign: "start", fontWeight: "bolder" }}>
           روز شب ڈائری
