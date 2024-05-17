@@ -209,6 +209,7 @@ export const ReportUmeedwar = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
+  console.log(me,'fff')
   return (
     <GeneralLayout>
       <div dir="rtl" className="p-4 reports">
@@ -263,11 +264,11 @@ export const ReportUmeedwar = () => {
                 <label htmlFor="name">جمعیت سے تعلق</label>
                 <input
                   type="text"
-                  defaultValue={localStorage.getItem("@nazimType")}
+                  defaultValue={localStorage.getItem("@type")}
                   readOnly
                   id="JamiatRelation"
                   class="JamiatRelation"
-                  value={localStorage.getItem("@nazimType")}
+                  value={localStorage.getItem("@type")}
                 />
               </div>
               <div className="flex gap-4">
@@ -277,8 +278,8 @@ export const ReportUmeedwar = () => {
                   type="text"
                   defaultValue={localStorage.getItem("@nazimType")}
                   readOnly
-                  id="JamiatRelation"
-                  class="JamiatRelation"
+                  id="organizationRelation"
+                  class="organizationRelation"
                   value={localStorage.getItem("@nazimType")}
                 />
               </div>

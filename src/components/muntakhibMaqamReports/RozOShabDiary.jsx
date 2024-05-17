@@ -30,7 +30,7 @@ export const RozOShabDiary = ({ view }) => {
             type="number"
             readOnly={view}
             required
-            placeholder="manual umeedwaran"
+            placeholder="ذیلی حلقہ"
             name={`manualUmeedwaran`}
             id={`manualUmeedwaran`}
             className="p-1 text-center "
@@ -47,16 +47,11 @@ export const RozOShabDiary = ({ view }) => {
             readOnly={true}
             type="number"
             required
+            defaultValue={document.getElementById("uploadedUmeedwaran")?.value}
             name={`umeedwaranFilledSum`}
             id={`umeedwaranFilledSum`}
             className="p-1 text-center "
-            onChange={() =>
-              sumUpTwoValues(
-                parseInt(document.getElementById("uploadedUmeedwaran").value),
-                parseInt(document.getElementById("manualUmeedwaran").value),
-                "rafaqaFilledSum"
-              )
-            }
+           
           />
         </div>
         <div style={{ display: "flex" }}>
@@ -80,6 +75,7 @@ export const RozOShabDiary = ({ view }) => {
           <input
             type="number"
             readOnly={view}
+            placeholder="ذیلی حلقہ"
             required
             name={`manualRafaqa`}
             id={`manualRafaqa`}
@@ -96,6 +92,7 @@ export const RozOShabDiary = ({ view }) => {
           <input
             readOnly={true}
             type="number"
+            defaultValue={document.getElementById("uploadedRafaqa")?.value}
             required
             name={`rafaqaFilledSum`}
             id={`rafaqaFilledSum`}
