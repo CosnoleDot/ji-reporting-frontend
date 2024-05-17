@@ -518,7 +518,7 @@ export const LocationDivision = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredData.length > 1 ? (
+              {filteredData.length > 0 ? (
                 filteredData?.map((tehsil, index) => (
                   <tr
                     key={index}
@@ -642,7 +642,7 @@ export const LocationDivision = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredData.length > 1 ? (
+              {filteredData.length > 0 ? (
                 filteredData
                   ?.filter(
                     (i) =>

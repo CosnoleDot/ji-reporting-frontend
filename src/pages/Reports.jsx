@@ -1099,7 +1099,7 @@ export const Reports = ({ maqam }) => {
             </Link>
           </div>
         )}
-        {maqam &&
+        {/* {maqam &&
           active === "halqa" &&
           localStorage.getItem("@type") === "maqam" && (
             <div
@@ -1114,7 +1114,7 @@ export const Reports = ({ maqam }) => {
                 Halqa
               </Link>
             </div>
-          )}
+          )} */}
         {["umeedwar", "rukan", "umeedwaar-nazim", "rukan-nazim"].includes(
           me?.nazimType
         ) && (
@@ -1142,7 +1142,9 @@ export const Reports = ({ maqam }) => {
             ) : active === "halqa" &&
               tab === "maqam" &&
               filterAllData[active]?.filter(
-                (obj) => obj?.halqaAreaId?.parentType === "Maqam"
+                (obj) =>
+                  obj?.halqaAreaId?.parentType === "Maqam" ||
+                  obj?.halqaAreaId?.parentType === "Ilaqa"
               ).length < 1 ? (
               <NoReports />
             ) : active === "halqa" &&
@@ -1201,7 +1203,8 @@ export const Reports = ({ maqam }) => {
                 ) : active === "halqa" &&
                   tab === "maqam" &&
                   localStorage.getItem("@type") === "maqam" ? (
-                  obj?.halqaAreaId?.parentType === "Maqam" && (
+                  (obj?.halqaAreaId?.parentType === "Maqam" ||
+                    obj?.halqaAreaId?.parentType === "Ilaqa") && (
                     <div
                       key={obj?._id}
                       className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
