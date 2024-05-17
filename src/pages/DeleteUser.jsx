@@ -8,7 +8,6 @@ import {
   MaqamContext,
   MeContext,
   ProvinceContext,
-  DistrictContext,
   useToastState,
   IlaqaContext,
   TehsilContext,
@@ -25,7 +24,6 @@ export const DeleteUser = () => {
   const maqams = useContext(MaqamContext);
   const provinces = useContext(ProvinceContext);
   const divisions = useContext(DivisionContext);
-  const districts = useContext(DistrictContext);
   const { nazim, loading, setLoading, getNazim } = useContext(UIContext);
   const [data, setData] = useState(nazim);
   const [userAreaType, setUserAreaType] = useState("");
@@ -249,6 +247,9 @@ export const DeleteUser = () => {
     setNazimType("nazim");
     document.getElementById("autocomplete0").value = "";
   };
+  useEffect(() => {
+    console.log(ilaqas);
+  }, [ilaqas]);
   useEffect(() => {
     const handleClickYear = (e) => {
       if (
@@ -1011,7 +1012,6 @@ export const DeleteUser = () => {
                           </label>
                         </div>
                       )}
-
                     {(me?.nazim?.toLowerCase() === "country" ||
                       me?.nazim?.toLowerCase() === "province") && (
                       <div className="form-control">
@@ -1158,34 +1158,54 @@ export const DeleteUser = () => {
                     id="autocomplete0-list"
                     className="absolute hidden z-10 max-h-[150px] overflow-y-scroll bg-white border border-gray-300 w-full mt-1"
                   >
-                    {areas
-                      .sort((a, b) => a?.name?.localeCompare(b?.name))
-                      .filter((item) => {
-                        if (searchArea && searchArea !== "") {
-                          if (
-                            item?.name
-                              ?.toString()
-                              ?.toLowerCase()
-                              ?.includes(searchArea?.toString()?.toLowerCase())
-                          ) {
-                            return true;
-                          }
-                          return false;
-                        } else {
-                          return true;
-                        }
-                      })
-                      .map((area, index) => (
-                        <div
-                          key={index}
-                          onClick={() => {
-                            document.getElementById("userAreaId").value =
-                              area?._id;
-                            setSelectedId(area?._id);
-                            document.getElementById("autocomplete0").value = `${
-                              area?.name
-                            }${
-                              userAreaType === "Halqa"
+                    {areas?.length > 0
+                      ? areas
+                          .sort((a, b) => a?.name?.localeCompare(b?.name))
+                          .filter((item) => {
+                            if (searchArea && searchArea !== "") {
+                              if (
+                                item?.name
+                                  ?.toString()
+                                  ?.toLowerCase()
+                                  ?.includes(
+                                    searchArea?.toString()?.toLowerCase()
+                                  )
+                              ) {
+                                return true;
+                              }
+                              return false;
+                            } else {
+                              return true;
+                            }
+                          })
+                          .map((area, index) => (
+                            <div
+                              key={index}
+                              onClick={() => {
+                                document.getElementById("userAreaId").value =
+                                  area?._id;
+                                setSelectedId(area?._id);
+                                document.getElementById(
+                                  "autocomplete0"
+                                ).value = `${area?.name}${
+                                  userAreaType === "Halqa"
+                                    ? ` - ${area?.parentId?.name} (${area?.parentType})`
+                                    : userAreaType === "Ilaqa"
+                                    ? ` - ${area?.maqam?.name} (${area?.maqam?.province?.name})`
+                                    : userAreaType === "Maqam"
+                                    ? ` - ${area?.province?.name} `
+                                    : userAreaType === "Division"
+                                    ? ` - ${area?.province?.name}`
+                                    : ""
+                                }`;
+                                document
+                                  .getElementById("autocomplete0-list")
+                                  .classList.add("hidden");
+                              }}
+                              className="p-2 cursor-pointer hover:bg-gray-100"
+                            >
+                              {area?.name}
+                              {userAreaType === "Halqa"
                                 ? ` - ${area?.parentId?.name} (${area?.parentType})`
                                 : userAreaType === "Ilaqa"
                                 ? ` - ${area?.maqam?.name} (${area?.maqam?.province?.name})`
@@ -1193,26 +1213,10 @@ export const DeleteUser = () => {
                                 ? ` - ${area?.province?.name} `
                                 : userAreaType === "Division"
                                 ? ` - ${area?.province?.name}`
-                                : ""
-                            }`;
-                            document
-                              .getElementById("autocomplete0-list")
-                              .classList.add("hidden");
-                          }}
-                          className="p-2 cursor-pointer hover:bg-gray-100"
-                        >
-                          {area?.name}
-                          {userAreaType === "Halqa"
-                            ? ` - ${area?.parentId?.name} (${area?.parentType})`
-                            : userAreaType === "Ilaqa"
-                            ? ` - ${area?.maqam?.name} (${area?.maqam?.province?.name})`
-                            : userAreaType === "Maqam"
-                            ? ` - ${area?.province?.name} `
-                            : userAreaType === "Division"
-                            ? ` - ${area?.province?.name}`
-                            : ""}
-                        </div>
-                      ))}
+                                : ""}
+                            </div>
+                          ))
+                      : "No Area found"}
                   </div>
                 </div>
               </form>

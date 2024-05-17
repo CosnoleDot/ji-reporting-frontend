@@ -90,8 +90,7 @@ export const getDivisionByTehsil = (tehsil, districts) => {
   return districts.find((i) => i?._id === districtId)?.division?.name;
 };
 
-export const Reports = ({maqam}) => {
-  
+export const Reports = ({ maqam }) => {
   const [reports, setReports] = useState([]);
   const [allReports, setAllReports] = useState([]);
   const navigate = useNavigate();
@@ -169,13 +168,10 @@ export const Reports = ({maqam}) => {
   };
 
   const viewReport = async (id) => {
-    
     navigate(`view/${id}`);
   };
   const editReport = (id) => {
-    
     navigate(`edit/${id}`);
-    
   };
   const getAreas = async () => {
     switch (active) {
@@ -189,16 +185,21 @@ export const Reports = ({maqam}) => {
         setAreas(maqams);
         break;
       case "halqa":
-        setAreas(
-          halqas.filter((i) => {
-            if (tab === "maqam") {
-              return i?.parentType === "Maqam";
-            } else if (tab === "division") {
-              return i?.parentType === "Tehsil";
-            }
-            return true;
-          })
-        );
+        if (halqas?.length > 0) {
+          setAreas(
+            halqas.filter((i) => {
+              if (tab === "maqam") {
+                return i?.parentType === "Maqam";
+              } else if (tab === "division") {
+                return i?.parentType === "Tehsil";
+              }
+              return true;
+            })
+          );
+        } else {
+          setAreas(halqas);
+        }
+
         break;
       default:
         setAreas(provinces);
@@ -991,9 +992,7 @@ export const Reports = ({maqam}) => {
                 Maqam
               </Link>
             )}
-          {["country", "ilaqa"].includes(
-            localStorage.getItem("@type")
-          ) &&
+          {["country", "ilaqa"].includes(localStorage.getItem("@type")) &&
             ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
               localStorage.getItem("@nazimType")
             ) && (
@@ -1008,9 +1007,8 @@ export const Reports = ({maqam}) => {
                 Ilaqa
               </Link>
             )}
-            {["maqam"].includes(
-            localStorage.getItem("@type")
-          ) && maqam &&
+          {["maqam"].includes(localStorage.getItem("@type")) &&
+            maqam &&
             ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
               localStorage.getItem("@nazimType")
             ) && (
@@ -1100,27 +1098,29 @@ export const Reports = ({maqam}) => {
             </Link>
           </div>
         )}
-       {maqam &&  (active === "halqa" && localStorage.getItem("@type") === "maqam" && (
-          <div
-            role="tablist"
-            className="w-full flex justify-between items-center"
-          >
-            <Link
-              to={"?active=halqa&tab=maqam"}
-              role="tab"
-              className={`tab w-full ${tab === "maqam" ? "tab-active" : ""}`}
+        {maqam &&
+          active === "halqa" &&
+          localStorage.getItem("@type") === "maqam" && (
+            <div
+              role="tablist"
+              className="w-full flex justify-between items-center"
             >
-              Maqam Halqa
-            </Link>
-            <Link
-              to={"?active=halqa&tab=ilaqa"}
-              role="tab"
-              className={`tab w-full ${tab === "ilaqa" ? "tab-active" : ""}`}
-            >
-              Ilaqa Halqa
-            </Link>
-          </div>
-        ))}
+              <Link
+                to={"?active=halqa&tab=maqam"}
+                role="tab"
+                className={`tab w-full ${tab === "maqam" ? "tab-active" : ""}`}
+              >
+                Maqam Halqa
+              </Link>
+              <Link
+                to={"?active=halqa&tab=ilaqa"}
+                role="tab"
+                className={`tab w-full ${tab === "ilaqa" ? "tab-active" : ""}`}
+              >
+                Ilaqa Halqa
+              </Link>
+            </div>
+          )}
         {["umeedwar", "rukan", "umeedwaar-nazim", "rukan-nazim"].includes(
           me?.nazimType
         ) && (
