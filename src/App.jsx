@@ -179,146 +179,211 @@ function App() {
     }
   };
   const getIlaqas = async () => {
-    try {
-      const req = await instance.get("/locations/ilaqa", {
-        headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
-      });
-      if (req) {
-        const enabledIlaqas = req.data.data;
-        const type = localStorage.getItem("@type");
+    if (
+      me?.userAreaType !== "Halqa" &&
+      me?.userAreaType !== "Division" &&
+      me?.userAreaType !== "Ilaqa" &&
+      me?.userAreaType !== "Maqam"
+    ) {
+      try {
+        const req = await instance.get("/locations/ilaqa", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
+        });
+        if (req) {
+          const enabledIlaqas = req.data.data;
+          const type = localStorage.getItem("@type");
 
-        if (type === "country") {
-          setIlaqas(
-            enabledIlaqas?.filter((ilaqa) => {
-              return ilaqa?.disabled === false;
-            })
-          );
-        } else if (type === "province") {
-          setIlaqas(
-            enabledIlaqas.filter((i) => {
-              return i?.maqam?.province?._id === me?.userAreaId?._id;
-            })
-          );
-        } else if (type === "maqam") {
-          const validIlaqas = enabledIlaqas.filter(
-            (i) => i?.maqam?._id === me?.userAreaId?._id
-          );
-          setIlaqas(validIlaqas);
-          validIlaqas.length < 1 && setMuntakhibMaqam(false);
-        } else {
-          const validIlaqas = enabledIlaqas.filter(
-            (i) => i?._id === me?.userAreaId?._id
-          );
-          setIlaqas(validIlaqas);
+          if (type === "country") {
+            setIlaqas(
+              enabledIlaqas?.filter((ilaqa) => {
+                return ilaqa?.disabled === false;
+              })
+            );
+          } else if (type === "province") {
+            setIlaqas(
+              enabledIlaqas.filter((i) => {
+                return i?.maqam?.province?._id === me?.userAreaId?._id;
+              })
+            );
+          } else if (type === "maqam") {
+            const validIlaqas = enabledIlaqas.filter(
+              (i) => i?.maqam?._id === me?.userAreaId?._id
+            );
+            setIlaqas(validIlaqas);
+            validIlaqas.length < 1 && setMuntakhibMaqam(false);
+          } else {
+            const validIlaqas = enabledIlaqas.filter(
+              (i) => i?._id === me?.userAreaId?._id
+            );
+            setIlaqas(validIlaqas);
+          }
         }
+      } catch (err) {
+        console.log(err);
+        dispatch({
+          type: "ERROR",
+          payload: err?.response?.data?.message || err?.message,
+        });
       }
-    } catch (err) {
-      console.log(err);
-      dispatch({
-        type: "ERROR",
-        payload: err?.response?.data?.message || err?.message,
-      });
+    } else {
+      return;
     }
   };
   const getMaqams = async () => {
-    try {
-      const req = await instance.get("/locations/maqam", {
-        headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
-      });
-      if (req) {
-        setMaqams(
-          req.data.data.filter(
-            (i) =>
-              i?._id === me?.userAreaId?._id ||
-              i?.province?._id === me?.userAreaId?._id ||
-              i?.province?.country === me?.userAreaId?._id
-          )
-        );
+    if (
+      me?.userAreaType !== "Halqa" &&
+      me?.userAreaType !== "Division" &&
+      me?.userAreaType !== "Ilaqa"
+    ) {
+      try {
+        const req = await instance.get("/locations/maqam", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
+        });
+        if (req) {
+          setMaqams(
+            req.data.data.filter(
+              (i) =>
+                i?._id === me?.userAreaId?._id ||
+                i?.province?._id === me?.userAreaId?._id ||
+                i?.province?.country === me?.userAreaId?._id
+            )
+          );
+        }
+      } catch (err) {
+        console.log(err);
+        dispatch({
+          type: "ERROR",
+          payload: err?.response?.data?.message || err?.message,
+        });
       }
-    } catch (err) {
-      console.log(err);
-      dispatch({
-        type: "ERROR",
-        payload: err?.response?.data?.message || err?.message,
-      });
+    } else {
+      return;
     }
   };
   const getDivisions = async () => {
-    try {
-      const req = await instance.get("/locations/division", {
-        headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
-      });
-      if (req) {
-        setDivisions(
-          req.data.data.filter(
-            (i) =>
-              i?._id === me?.userAreaId?._id ||
-              i?.province?._id === me?.userAreaId?._id ||
-              i?.province?.country === me?.userAreaId?._id
-          )
-        );
+    if (
+      me?.userAreaType !== "Halqa" &&
+      me?.userAreaType !== "Maqam" &&
+      me?.userAreaType !== "Ilaqa"
+    ) {
+      try {
+        const req = await instance.get("/locations/division", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
+        });
+        if (req) {
+          setDivisions(
+            req.data.data.filter(
+              (i) =>
+                i?._id === me?.userAreaId?._id ||
+                i?.province?._id === me?.userAreaId?._id ||
+                i?.province?.country === me?.userAreaId?._id
+            )
+          );
+        }
+      } catch (err) {
+        console.log(err);
+        dispatch({
+          type: "ERROR",
+          payload: err?.response?.data?.message || err?.message,
+        });
       }
-    } catch (err) {
-      console.log(err);
-      dispatch({
-        type: "ERROR",
-        payload: err?.response?.data?.message || err?.message,
-      });
+    } else {
+      return;
     }
   };
   const getTehsils = async () => {
-    try {
-      const req = await instance.get("/locations/tehsil", {
-        headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
-      });
-      if (req) {
-        const allData = req.data.data;
-        const validTehsils = allData.filter(
-          (i) =>
-            i?.district?.division?._id === me?.userAreaId?._id ||
-            i?.district?.division?.province?._id === me?.userAreaId?._id ||
-            i?.district?.division?.province?.country === me?.userAreaId?._id
-        );
-        setTehsils(validTehsils);
+    if (
+      me?.userAreaType !== "Halqa" &&
+      me?.userAreaType !== "Maqam" &&
+      me?.userAreaType !== "Ilaqa"
+    ) {
+      try {
+        const req = await instance.get("/locations/tehsil", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
+        });
+        if (req) {
+          const allData = req.data.data;
+          const validTehsils = allData.filter(
+            (i) =>
+              i?.district?.division?._id === me?.userAreaId?._id ||
+              i?.district?.division?.province?._id === me?.userAreaId?._id ||
+              i?.district?.division?.province?.country === me?.userAreaId?._id
+          );
+          setTehsils(validTehsils);
+        }
+      } catch (err) {
+        console.log(err);
+        dispatch({
+          type: "ERROR",
+          payload: err?.response?.data?.message || err?.message,
+        });
       }
-    } catch (err) {
-      console.log(err);
-      dispatch({
-        type: "ERROR",
-        payload: err?.response?.data?.message || err?.message,
-      });
+    } else {
+      return;
     }
   };
   const getDistricts = async () => {
-    try {
-      const req = await instance.get("/locations/district", {
-        headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
-      });
-      if (req) {
-        const allData = req.data.data;
-        const validDistricts = allData.filter(
-          (i) =>
-            i?.division?._id === me?.userAreaId?._id ||
-            i?.division?.province?._id === me?.userAreaId?._id ||
-            i?.division?.province?.country === me?.userAreaId?._id
-        );
-        setDistricts(validDistricts);
-        dis = validDistricts;
+    if (
+      me?.userAreaType !== "Halqa" &&
+      me?.userAreaType !== "Maqam" &&
+      me?.userAreaType !== "Ilaqa"
+    ) {
+      try {
+        const req = await instance.get("/locations/district", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
+        });
+        if (req) {
+          const allData = req.data.data;
+          const validDistricts = allData.filter(
+            (i) =>
+              i?.division?._id === me?.userAreaId?._id ||
+              i?.division?.province?._id === me?.userAreaId?._id ||
+              i?.division?.province?.country === me?.userAreaId?._id
+          );
+          setDistricts(validDistricts);
+          dis = validDistricts;
+        }
+      } catch (err) {
+        console.log(err);
+        dispatch({
+          type: "ERROR",
+          payload: err?.response?.data?.message || err?.message,
+        });
       }
-    } catch (err) {
-      console.log(err);
-      dispatch({
-        type: "ERROR",
-        payload: err?.response?.data?.message || err?.message,
-      });
+    } else {
+      return;
     }
   };
   const getHalqas = async () => {
     try {
-      const req = await instance.get("/locations/halqa", {
-        headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
-      });
+      let req;
+      if (me?.userAreaType === "Halqa") {
+        console.log("first");
+        req = await instance.get(`/locations/halqa/${me?.userAreaId?._id}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
+        });
+      } else {
+        console.log("second");
+        req = await instance.get("/locations/halqa", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
+        });
+      }
       if (req) {
+        console.log(req);
         const enabledHalqas = req.data.data;
         const type = localStorage.getItem("@type");
         if (type === "country") {
@@ -411,12 +476,9 @@ function App() {
 
           setHalqas(validHalqas);
         } else {
-          const validHalqas = enabledHalqas.filter(
-            (i) =>
-              i?._id === me?.userAreaId?._id ||
-              i?.parentId?._id === me?.userAreaId?._id
-          );
-          setHalqas(validHalqas);
+          if (enabledHalqas?.halqa?.disabled !== true) {
+            setHalqas(enabledHalqas);
+          }
         }
       }
     } catch (err) {
@@ -430,89 +492,117 @@ function App() {
 
   let provinceR, maqamR, divisionR, halqaR, ilaqaR, markazR;
   const getMarkazReport = async () => {
-    try {
-      const req = await instance.get("/reports/markaz", {
-        headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
-      });
-      if (req) {
-        markazR = req.data.data;
-        setMarkazReport(req.data.data);
+    if (me?.userAreaType === "Country")
+      try {
+        const req = await instance.get("/reports/markaz", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
+        });
+        if (req) {
+          markazR = req.data.data;
+          setMarkazReport(req.data.data);
+        }
+      } catch (err) {
+        console.log(err);
+        dispatch({
+          type: "ERROR",
+          payload: err?.response?.data?.message || err?.message,
+        });
       }
-    } catch (err) {
-      console.log(err);
-      dispatch({
-        type: "ERROR",
-        payload: err?.response?.data?.message || err?.message,
-      });
-    }
+    return;
   };
   const getProvinceReports = async () => {
-    try {
-      const req = await instance.get("/reports/province", {
-        headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
-      });
-      if (req) {
-        provinceR = req.data.data;
-        setProvinceReports(req.data.data);
+    if (me?.userAreaType === "Country" || me?.userAreaType === "Province")
+      try {
+        const req = await instance.get("/reports/province", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
+        });
+        if (req) {
+          provinceR = req.data.data;
+          setProvinceReports(req.data.data);
+        }
+      } catch (err) {
+        console.log(err);
+        dispatch({
+          type: "ERROR",
+          payload: err?.response?.data?.message || err?.message,
+        });
       }
-    } catch (err) {
-      console.log(err);
-      dispatch({
-        type: "ERROR",
-        payload: err?.response?.data?.message || err?.message,
-      });
-    }
+    return;
   };
   const getMaqamReports = async () => {
-    try {
-      const req = await instance.get("/reports/maqam", {
-        headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
-      });
-      if (req) {
-        maqamR = req.data.data;
-        setMaqamReports(req.data.data);
+    if (
+      me?.userAreaType === "Country" ||
+      me?.userAreaType === "Province" ||
+      me?.userAreaType === "Maqam"
+    )
+      try {
+        const req = await instance.get("/reports/maqam", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
+        });
+        if (req) {
+          maqamR = req.data.data;
+          setMaqamReports(req.data.data);
+        }
+      } catch (err) {
+        console.log(err);
+        dispatch({
+          type: "ERROR",
+          payload: err?.response?.data?.message || err?.message,
+        });
       }
-    } catch (err) {
-      console.log(err);
-      dispatch({
-        type: "ERROR",
-        payload: err?.response?.data?.message || err?.message,
-      });
-    }
+    return;
   };
   const getIlaqaReports = async () => {
-    try {
-      const req = await instance.get("/reports/ilaqa", {
-        headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
-      });
-      if (req) {
-        ilaqaR = req.data.data;
-        setIlaqaReports(req.data.data);
+    if (me?.userAreaType !== "Halqa" && me?.userAreaType !== "Division")
+      try {
+        const req = await instance.get("/reports/ilaqa", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
+        });
+        if (req) {
+          ilaqaR = req.data.data;
+          setIlaqaReports(req.data.data);
+        }
+      } catch (err) {
+        console.log(err);
+        dispatch({
+          type: "ERROR",
+          payload: err?.response?.data?.message || err?.message,
+        });
       }
-    } catch (err) {
-      console.log(err);
-      dispatch({
-        type: "ERROR",
-        payload: err?.response?.data?.message || err?.message,
-      });
-    }
+    return;
   };
   const getDivisionReports = async () => {
-    try {
-      const req = await instance.get("/reports/division", {
-        headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
-      });
-      if (req) {
-        divisionR = req.data.data;
-        setDivisionReports(req.data.data);
+    if (
+      me?.userAreaType === "Country" ||
+      me?.userAreaType === "Province" ||
+      me?.userAreaType === "Division"
+    )
+      try {
+        const req = await instance.get("/reports/division", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
+        });
+        if (req) {
+          divisionR = req.data.data;
+          setDivisionReports(req.data.data);
+        }
+      } catch (err) {
+        console.log(err);
+        dispatch({
+          type: "ERROR",
+          payload: err?.response?.data?.message || err?.message,
+        });
       }
-    } catch (err) {
-      console.log(err);
-      dispatch({
-        type: "ERROR",
-        payload: err?.response?.data?.message || err?.message,
-      });
-    }
+    return;
   };
   const getHalqaReports = async () => {
     try {
@@ -569,11 +659,14 @@ function App() {
   const getAllReports = async () => {
     if (
       localStorage.getItem("@token") &&
-      localStorage.getItem("@type") !== "province"
+      localStorage.getItem("@type") !== "country"
     ) {
       try {
         let req;
         switch (localStorage.getItem("@type")) {
+          case "country":
+            req = markazR;
+            break;
           case "province":
             req = provinceR;
             break;
@@ -596,7 +689,6 @@ function App() {
         r = req;
         setReports(req);
       } catch (err) {
-        console.log(err);
         console.log(err);
       }
     }
@@ -673,11 +765,9 @@ function App() {
       await getDivisions();
       setCount((100 / 16) * 5);
       setValue("Fetching districts");
-      await sleep(1000);
       await getDistricts();
       setCount((100 / 16) * 6);
       setValue("Fetching tehsils");
-      await sleep(1000);
       await getTehsils();
       setCount((100 / 16) * 7);
       setValue("Fetching halqas");
@@ -827,7 +917,9 @@ function App() {
                                       />
                                       <Route
                                         path="/reports"
-                                        element={<Reports maqam={muntakhibMaqam}/>}
+                                        element={
+                                          <Reports maqam={muntakhibMaqam} />
+                                        }
                                       />
                                       <Route
                                         path="/personalReport"
