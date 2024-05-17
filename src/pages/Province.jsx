@@ -490,6 +490,7 @@ export const Province = () => {
     setLoading(true);
     try {
       if (id) {
+        console.log(jsonData,'asd')
         const req = await instance.put(`/reports/province/${id}`, jsonData, {
           headers: {
             "Content-Type": "application/json",
@@ -514,7 +515,11 @@ export const Province = () => {
     }
     setLoading(false);
   };
-
+  Object.keys(data).forEach((i)=>{
+    if(data[i]===null){
+      data[i]=0
+    }
+  })
   return (
     <GeneralLayout>
       <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">

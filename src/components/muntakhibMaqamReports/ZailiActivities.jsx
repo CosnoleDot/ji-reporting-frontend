@@ -162,7 +162,7 @@ export const ZailiActivities = ({ view }) => {
             <Box>شاہین میٹنگ</Box>
             <Box>
               <input
-                disabled={view}
+                disabled={true}
                 type="number"
                 defaultValue={0}
                 required
@@ -174,7 +174,7 @@ export const ZailiActivities = ({ view }) => {
             </Box>
             <Box>
               <input
-                disabled={view}
+                disabled={true}
                 type="number"
                 defaultValue={0}
                 required
@@ -199,7 +199,7 @@ export const ZailiActivities = ({ view }) => {
             <Box>پیغام محفل</Box>
             <Box>
               <input
-                disabled={view}
+                disabled={true}
                 type="number"
                 defaultValue={0}
                 required
@@ -211,7 +211,7 @@ export const ZailiActivities = ({ view }) => {
             </Box>
             <Box>
               <input
-                disabled={view}
+                disabled={true}
                 type="number"
                 defaultValue={0}
                 required

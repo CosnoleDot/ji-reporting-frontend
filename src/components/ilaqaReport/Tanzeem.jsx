@@ -169,17 +169,7 @@ export const Tanzeem = ({ view }) => {
                 className="p-1 text-center min-w-full"
               />
             </Box>
-            <Box>
-              <input
-                readOnly={view}
-                type="number"
-                defaultValue={0}
-                required
-                name={`rehaishHalqay-monthly`}
-                id={`rehaishHalqay-monthly`}
-                className="p-1 text-center min-w-full"
-              />
-            </Box>
+           
             <Box>
               <input
                 readOnly={view}
@@ -215,6 +205,18 @@ export const Tanzeem = ({ view }) => {
                     "totalHalqay-paused"
                   );
                 }}
+                className="p-1 text-center min-w-full"
+              />
+             
+            </Box>
+            <Box>
+              <input
+                readOnly={view}
+                type="number"
+                defaultValue={0}
+                required
+                name={`rehaishHalqay-monthly`}
+                id={`rehaishHalqay-monthly`}
                 className="p-1 text-center min-w-full"
               />
             </Box>
@@ -529,13 +531,7 @@ export const Tanzeem = ({ view }) => {
                 type="number"
                 defaultValue={0}
                 required
-                onChange={() => {
-                  totalCalculate(
-                    "subTaleemHalqay",
-                    "subRehaishHalqay",
-                    "subTotalHalqay-monthly"
-                  );
-                }}
+               
                 name={`subRehaishHalqay-monthly`}
                 id={`subRehaishHalqay-monthly`}
                 className="p-1 text-center min-w-full"

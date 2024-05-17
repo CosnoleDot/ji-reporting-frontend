@@ -101,7 +101,7 @@ export const Tanzeem = ({ view, id }) => {
             </Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
@@ -186,7 +186,7 @@ export const Tanzeem = ({ view, id }) => {
             </Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
@@ -271,7 +271,7 @@ export const Tanzeem = ({ view, id }) => {
             </Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
@@ -356,7 +356,7 @@ export const Tanzeem = ({ view, id }) => {
             </Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
@@ -441,7 +441,7 @@ export const Tanzeem = ({ view, id }) => {
             </Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
@@ -526,7 +526,7 @@ export const Tanzeem = ({ view, id }) => {
             </Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
@@ -611,7 +611,7 @@ export const Tanzeem = ({ view, id }) => {
             </Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
@@ -696,7 +696,7 @@ export const Tanzeem = ({ view, id }) => {
             </Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
@@ -781,7 +781,7 @@ export const Tanzeem = ({ view, id }) => {
             </Box>
             <Box>
               <input
-                readOnly={view}
+                readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
