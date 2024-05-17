@@ -264,13 +264,18 @@ export const Dashboard = () => {
       const name = getDivisionByTehsil(area?.parentId, districts);
       return `${name}`;
     } else if (area?.parentType === "Ilaqa") {
-      const ilaqas = ilaqa?.find((il) => il?._id === area?.parentId);
-      return `Of Ilaqa ${area?.parentId?.name} ${
-        localStorage.getItem("@type") === "province" ||
-        localStorage.getItem("@type") === "country"
-          ? ilaqas?.maqam?.name
-          : ""
-      } `;
+      let ilaqas;
+      if (ilaqa?.length > 0) {
+        ilaqas = ilaqa?.find((il) => il?._id === area?.parentId);
+        return `Of Ilaqa ${area?.parentId?.name} ${
+          localStorage.getItem("@type") === "province" ||
+          localStorage.getItem("@type") === "country"
+            ? ilaqas?.maqam?.name
+            : ""
+        } `;
+      } else {
+        return `Of Ilaqa ${area?.parentId?.name} ${area?.parentId?.maqam?.name}`;
+      }
     } else if (area?.parentType === "Division") {
       return `Of Division ${area?.parentId?.name} `;
     } else if (area?.province) {

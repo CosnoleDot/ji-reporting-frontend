@@ -179,18 +179,22 @@ function App() {
     }
   };
   const getIlaqas = async () => {
-    if (
-      me?.userAreaType !== "Halqa" &&
-      me?.userAreaType !== "Division" &&
-      me?.userAreaType !== "Ilaqa" &&
-      me?.userAreaType !== "Maqam"
-    ) {
+    if (me?.userAreaType !== "Halqa" && me?.userAreaType !== "Division") {
       try {
-        const req = await instance.get("/locations/ilaqa", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("@token")}`,
-          },
-        });
+        let req;
+        if (me?.userAreaType === "Ilaqa") {
+          req = await instance.get(`/locations/ilaqa/${me?.userAreaId?._id}`, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("@token")}`,
+            },
+          });
+        } else {
+          req = await instance.get("/locations/ilaqa", {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("@token")}`,
+            },
+          });
+        }
         if (req) {
           const enabledIlaqas = req.data.data;
           const type = localStorage.getItem("@type");
@@ -214,10 +218,14 @@ function App() {
             setIlaqas(validIlaqas);
             validIlaqas.length < 1 && setMuntakhibMaqam(false);
           } else {
-            const validIlaqas = enabledIlaqas.filter(
-              (i) => i?._id === me?.userAreaId?._id
-            );
-            setIlaqas(validIlaqas);
+            if (enabledIlaqas?.disabled !== true) {
+              setIlaqas([enabledIlaqas]);
+            } else {
+              dispatch({
+                type: "ERROR",
+                payload: "Ilaqa fetched",
+              });
+            }
           }
         }
       } catch (err) {
@@ -368,14 +376,12 @@ function App() {
     try {
       let req;
       if (me?.userAreaType === "Halqa") {
-        console.log("first");
         req = await instance.get(`/locations/halqa/${me?.userAreaId?._id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
       } else {
-        console.log("second");
         req = await instance.get("/locations/halqa", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
@@ -383,7 +389,6 @@ function App() {
         });
       }
       if (req) {
-        console.log(req);
         const enabledHalqas = req.data.data;
         const type = localStorage.getItem("@type");
         if (type === "country") {
@@ -476,8 +481,8 @@ function App() {
 
           setHalqas(validHalqas);
         } else {
-          if (enabledHalqas?.halqa?.disabled !== true) {
-            setHalqas(enabledHalqas);
+          if (enabledHalqas?.disabled !== true) {
+            setHalqas([enabledHalqas]);
           }
         }
       }
