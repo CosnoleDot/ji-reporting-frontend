@@ -38,7 +38,6 @@ export const HalqaReport = () => {
     }
     return "UNKNOWN";
   };
-  console.log(data, "asd");
   return (
     <div className="wrapper reports" style={{ marginBottom: "2rem" }} dir="rtl">
       <PrintDocument />

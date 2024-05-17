@@ -248,9 +248,6 @@ export const DeleteUser = () => {
     document.getElementById("autocomplete0").value = "";
   };
   useEffect(() => {
-    console.log(ilaqas);
-  }, [ilaqas]);
-  useEffect(() => {
     const handleClickYear = (e) => {
       if (
         !["year-of-joining", "plus-year", "minus-year"].includes(e.target.id)
