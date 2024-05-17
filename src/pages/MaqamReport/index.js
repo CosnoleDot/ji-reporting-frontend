@@ -67,7 +67,7 @@ export const MaqamReport = () => {
           <strong>اختتام پر</strong>
         </p>
         <p className="header" style={{ width: "100%" }}>
-          <strong> اضافہ کا ماہانہ ہدف:</strong>
+          <strong> ماہانہ ہدف</strong>
         </p>
       </div>
       <div
@@ -95,8 +95,7 @@ export const MaqamReport = () => {
           <p>{data?.jamiaatId?.jamiaatB?.start}</p>
           <p>{data?.jamiaatId?.jamiaatB?.increase}</p>
           <p>
-            {data?.jamiaatId?.jamiaatB?.start +
-              data?.jamiaatId?.jamiaatB?.increase}
+           { data?.jamiaatId?.jamiaatB?.end}
           </p>
           <p>{data?.jamiaatId?.jamiaatB?.monthly}</p>
           
@@ -106,8 +105,7 @@ export const MaqamReport = () => {
           <p>{data?.jamiaatId?.jamiaatC?.start}</p>
           <p>{data?.jamiaatId?.jamiaatC?.increase}</p>
           <p>
-            {data?.jamiaatId?.jamiaatC?.start +
-              data?.jamiaatId?.jamiaatC?.increase}
+            {data?.jamiaatId?.jamiaatC?.end}
           </p>
           <p>{data?.jamiaatId?.jamiaatC?.monthly}</p>
           
@@ -117,8 +115,7 @@ export const MaqamReport = () => {
           <p>{data?.jamiaatId?.jamiaatD?.start}</p>
           <p>{data?.jamiaatId?.jamiaatD?.increase}</p>
           <p>
-            {data?.jamiaatId?.jamiaatD?.start +
-              data?.jamiaatId?.jamiaatD?.increase}
+            {data?.jamiaatId?.jamiaatD?.end}
           </p>
           <p>{data?.jamiaatId?.jamiaatD?.monthly}</p>
           
@@ -128,8 +125,7 @@ export const MaqamReport = () => {
           <p>{data?.jamiaatId?.jamiaatE?.start}</p>
           <p>{data?.jamiaatId?.jamiaatE?.increase}</p>
           <p>
-            {data?.jamiaatId?.jamiaatE?.start +
-              data?.jamiaatId?.jamiaatE?.increase}
+            {data?.jamiaatId?.jamiaatE?.end}
           </p>
           <p>{data?.jamiaatId?.jamiaatE?.monthly}</p>
           
@@ -160,7 +156,7 @@ export const MaqamReport = () => {
           <strong>اختتام پر</strong>
         </p>
         <p className="header" style={{ width: "100%" }}>
-          <strong>اضافہ کا ماہانہ ہدف:</strong>
+          <strong> ماہانہ ہدف</strong>
         </p>
       </div>
       <div
@@ -177,8 +173,7 @@ export const MaqamReport = () => {
           <p>{data?.collegesId?.collegesA?.start}</p>
           <p>{data?.collegesId?.collegesA?.increase}</p>
           <p>
-            {data?.collegesId?.collegesA?.start +
-              data?.collegesId?.collegesA?.increase}
+            {data?.collegesId?.collegesA?.end}
           </p>
           <p>{data?.collegesId?.collegesA?.monthly}</p>
           
@@ -188,8 +183,7 @@ export const MaqamReport = () => {
           <p>{data?.collegesId?.collegesB?.start}</p>
           <p>{data?.collegesId?.collegesB?.increase}</p>
           <p>
-            {data?.collegesId?.collegesB?.start +
-              data?.collegesId?.collegesB?.increase}
+            {data?.collegesId?.collegesB?.end}
           </p>
           <p>{data?.collegesId?.collegesB?.monthly}</p>
           
@@ -199,8 +193,7 @@ export const MaqamReport = () => {
           <p>{data?.collegesId?.collegesC?.start}</p>
           <p>{data?.collegesId?.collegesC?.increase}</p>
           <p>
-            {data?.collegesId?.collegesC?.start +
-              data?.collegesId?.collegesC?.increase}
+            {data?.collegesId?.collegesC?.end}
           </p>
           <p>{data?.collegesId?.collegesC?.monthly}</p>
           
@@ -210,8 +203,7 @@ export const MaqamReport = () => {
           <p>{data?.collegesId?.collegesD?.start}</p>
           <p>{data?.collegesId?.collegesD?.increase}</p>
           <p>
-            {data?.collegesId?.collegesD?.start +
-              data?.collegesId?.collegesD?.increase}
+            {data?.collegesId?.collegesD?.end}
           </p>
           <p>{data?.collegesId?.collegesD?.monthly}</p>
           
@@ -248,7 +240,7 @@ export const MaqamReport = () => {
           <strong>غیرفعال</strong>
         </p>
         <p className="header" style={{ width: "100%" }}>
-          <strong>اضافہ کا ماہانہ ہدف:</strong>
+          <strong>ماہانہ ہدف</strong>
         </p>
       </div>
       <div
@@ -414,7 +406,7 @@ export const MaqamReport = () => {
           <strong>اختتام پر</strong>
         </p>
         <p className="header" style={{ width: "100%" }}>
-          <strong>اضافہ کا ماہانہ ہدف:</strong>
+          <strong> ماہانہ ہدف</strong>
         </p>
       </div>
       <div
@@ -614,13 +606,13 @@ export const MaqamReport = () => {
         <div className="row">
           <p className="header">اجتماعِ کارکنان </p>
           <p>{data?.mentionedActivityId?.ijtKarkunan?.decided}</p>
-          <p>{data?.mentionedActivityId?.ijtKarkunan?.done}</p>
+          <p>{data?.mentionedActivityId?.ijtKarkunan?.sum}</p>
           <p>{data?.mentionedActivityId?.ijtKarkunan?.averageAttendance}</p>
         </div>
         <div className="row">
           <p className="header"> درس قرآن </p>
           <p>{data?.mentionedActivityId?.darseQuran?.decided}</p>
-          <p>{data?.mentionedActivityId?.darseQuran?.done}</p>
+          <p>{data?.mentionedActivityId?.darseQuran?.sum}</p>
           <p>{data?.mentionedActivityId?.darseQuran?.averageAttendance}</p>
         </div>
         <div className="row">
@@ -687,7 +679,7 @@ export const MaqamReport = () => {
         }}
         className="tableContainer"
       >
-        <h3 style={{ textAlign: "start", fontWeight: "bolder" }}>توسیع دعوت</h3>
+        <h3 style={{ textAlign: "start", fontWeight: "bolder",marginTop:"8px" }}>توسیع دعوت</h3>
         <h3 style={{ textAlign: "start", fontWeight: "bold" }}>روابط</h3>
         <div
           style={{
@@ -697,20 +689,28 @@ export const MaqamReport = () => {
             marginBottom: "1rem",
             width: "100%",
           }}
-          className="tableContainer"
         >
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            طے شدہ:{data?.muntakhibTdId?.rawabitDecided}
+            طے شدہ:{data?.tdId?.rawabitDecided}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            موجودہ :{data?.muntakhibTdId?.currentSum}
+            موجودہ :{data?.tdId?.currentSum}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            ملاقاتوں کی تعداد:{data?.tdId?.meetings}
+          روابط سے ملاقاتوں کا ہدف:{data?.tdId?.rwabitMeetingsGoal}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            تقسیم لٹریچر:{data?.muntakhibTdId?.literatureSum}
+          ملاقاتیں:{data?.tdId?.meetingsSum}
           </h6>
+        
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+            تقسیم لٹریچر:{data?.tdId?.literatureDistribution}
+          </h6>
+          
+           
+            
+       
+         
         </div>
         <h3 style={{ textAlign: "start", fontWeight: "bold" }}>عام طلبہ</h3>
         <div
@@ -723,10 +723,10 @@ export const MaqamReport = () => {
           }}
         >
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            ملاقاتوں کی تعداد:{data?.tdId?.commonStudentMeetings}
+            ملاقاتیں:{data?.tdId?.commonStudentMeetings}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            تقسیم لٹریچر:{data?.muntakhibTdId?.commonLiteratureDistributionSum}
+            تقسیم لٹریچر:{data?.tdId?.commonLiteratureDistribution}
           </h6>
         </div>
         <h3 style={{ textAlign: "start", fontWeight: "bolder" }}>لائبریری </h3>
@@ -773,6 +773,9 @@ export const MaqamReport = () => {
           <h6 style={{ width: "100%", textAlign: "start" }}>
             فروخت کردہ :{data?.paighamDigestId?.totalSold}
           </h6>
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+          ڈائجسٹ موصول کرنے کا ماہانہ ہدف:{data?.paighamDigestId?.monthlyReceivingGoal}
+          </h6>
         </div>
         <h3 style={{ textAlign: "start", fontWeight: "bolder" }}>
           روز شب ڈائری
@@ -791,7 +794,7 @@ export const MaqamReport = () => {
           </h6>
           
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            کتنےرفقا فل کرتے ہیں :{data?.rsdId?.rafaqaFilledSum}
+            کتنےرفقا فل کرتے ہیں :{data?.rsdId?.rafaqaFilled}
           </h6>
         </div>
         <div
