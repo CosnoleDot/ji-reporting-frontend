@@ -118,7 +118,7 @@ export const ZailiActivities = ({ view }) => {
               +
               <input
                 type="number"
-                defaultValue={0}
+                placeholder="ذیلی حلقہ"
                 required
                 name={`ijtKarkunan-manual`}
                 id={`ijtKarkunan-manual`}
@@ -134,6 +134,9 @@ export const ZailiActivities = ({ view }) => {
               =
               <input
                 readOnly={true}
+                defaultValue={
+                  document.getElementById("ijtKarkunan-done")?.value
+                }
                 type="number"
                 required
                 name={`ijtKarkunan-sum`}
@@ -191,7 +194,7 @@ export const ZailiActivities = ({ view }) => {
                 +
                 <input
                   type="number"
-                  defaultValue={0}
+                  placeholder="ذیلی حلقہ"
                   required
                   name={`darseQuran-manual`}
                   id={`darseQuran-manual`}
@@ -211,6 +214,9 @@ export const ZailiActivities = ({ view }) => {
                 =
                 <input
                   readOnly={true}
+                  defaultValue={
+                    document.getElementById("darseQuran-done")?.value
+                  }
                   type="number"
                   required
                   name={`darseQuran-sum`}

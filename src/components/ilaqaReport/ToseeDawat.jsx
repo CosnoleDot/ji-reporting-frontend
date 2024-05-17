@@ -73,7 +73,7 @@ export const ToseeDawat = ({ view }) => {
           +
           <input
             type="number"
-            defaultValue={0}
+            placeholder="ذیلی حلقہ"
             required
             readOnly={view}
             name={`manualCurrent`}
@@ -111,7 +111,7 @@ export const ToseeDawat = ({ view }) => {
           +
           <input
             type="number"
-            defaultValue={0}
+            placeholder="ذیلی حلقہ"
             required
             readOnly={view}
             name={`manualMeetings`}
@@ -149,7 +149,7 @@ export const ToseeDawat = ({ view }) => {
           +
           <input
             type="number"
-            defaultValue={0}
+            placeholder="ذیلی حلقہ"
             required
             readOnly={view}
             name={`manualLitrature`}
@@ -192,7 +192,7 @@ export const ToseeDawat = ({ view }) => {
           +
           <input
             type="number"
-            defaultValue={0}
+            placeholder="ذیلی حلقہ"
             required
             readOnly={view}
             name={`manualCommonLiteratureDistribution`}
@@ -237,7 +237,7 @@ export const ToseeDawat = ({ view }) => {
           +
           <input
             type="number"
-            defaultValue={0}
+            placeholder="ذیلی حلقہ"
             required
             readOnly={view}
             name={`manualCommonStudentMeetings`}

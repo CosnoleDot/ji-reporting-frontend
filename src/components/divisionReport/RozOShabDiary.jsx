@@ -1,4 +1,5 @@
 import { Box } from "../halqa";
+import { sumUpTwoValues } from "../muntakhibMaqamReports";
 
 export const RozOShabDiary = ({ view }) => {
   return (
@@ -34,20 +35,24 @@ export const RozOShabDiary = ({ view }) => {
           <input
             type="number"
             readOnly={view}
-            defaultValue={0}
+            placeholder="ذیلی حلقہ"
             required
             name={`manualUmeedwaran`}
             id={`manualUmeedwaran`}
             className="border-b-2 text-center border-dashed "
-            oninput="calculateSum()"
+            onChange={() =>
+              sumUpTwoValues(
+                parseInt(document.getElementById("umeedwaranFilled").value),
+                parseInt(document.getElementById("manualUmeedwaran").value),
+                "umeedwaranFilledSum"
+              )
+            }
           />
           =
           <input
             readOnly={true}
             type="number"
-            defaultValue={
-              parseInt(document.getElementById("umeedwaranFilled")?.value) +
-              parseInt(document.getElementById("manualUmeedwaran")?.value)
+            defaultValue={document.getElementById("umeedwaranFilled")?.value
             }
             required
             name={`umeedwaranFilledSum`}
@@ -72,20 +77,24 @@ export const RozOShabDiary = ({ view }) => {
           <input
             type="number"
             readOnly={view}
-            defaultValue={0}
+            placeholder="ذیلی حلقہ"
             required
             name={`manualRafaqaFilled`}
             id={`manualRafaqaFilled`}
             className="border-b-2 text-center border-dashed "
-            oninput="calculateSum()"
+            onChange={() =>
+              sumUpTwoValues(
+                parseInt(document.getElementById("rafaqaFilled").value),
+                parseInt(document.getElementById("manualRafaqaFilled").value),
+                "rafaqaFilledSum"
+              )
+            }
           />
           =
           <input
             readOnly={true}
             type="number"
-            defaultValue={
-              parseInt(document.getElementById("rafaqaFilled")?.value) +
-              parseInt(document.getElementById("manualRafaqaFilled")?.value)
+            defaultValue={document.getElementById("rafaqaFilled")?.value
             }
             required
             name={`rafaqaFilledSum`}

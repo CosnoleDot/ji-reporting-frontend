@@ -1,3 +1,5 @@
+import { sumUpTwoValues } from "../muntakhibMaqamReports";
+
 export const OtherActivities = ({ view }) => {
   return (
     <div className="p-2 py-5 relative w-full overflow-auto">
@@ -31,20 +33,25 @@ export const OtherActivities = ({ view }) => {
           <input
             type="number"
             readOnly={view}
-            defaultValue={0}
+            placeholder="ذیلی حلقہ"
             required
             name={`tarbiyatGaahGoalManual`}
             id={`tarbiyatGaahGoalManual`}
             className="p-1 text-center "
-            oninput="calculateSum()"
+            onChange={() =>
+              sumUpTwoValues(
+                parseInt(document.getElementById("tarbiyatGaahGoal").value),
+                parseInt(document.getElementById("tarbiyatGaahGoalManual").value),
+                "tarbiyatGaahGoalSum"
+              )
+            }
           />
           =
           <input
             readOnly={true}
             type="number"
             defaultValue={
-              parseInt(document.getElementById("tarbiyatGaahGoal")?.value) +
-              parseInt(document.getElementById("tarbiyatGaahGoalManual")?.value)
+              document.getElementById("tarbiyatGaahGoal")?.value
             }
             required
             name={`tarbiyatGaahGoalSum`}
@@ -67,19 +74,25 @@ export const OtherActivities = ({ view }) => {
           <input
             type="number"
             readOnly={view}
-            defaultValue={0}
+            placeholder="ذیلی حلقہ"
             required
             name={`tarbiyatGaahHeldManual`}
             id={`tarbiyatGaahHeldManual`}
             className="p-1 text-center "
+            onChange={() =>
+              sumUpTwoValues(
+                parseInt(document.getElementById("tarbiyatGaahHeld").value),
+                parseInt(document.getElementById("tarbiyatGaahHeldManual").value),
+                "tarbiyatGaahHeldSum"
+              )
+            }
           />
           =
           <input
             readOnly={true}
             type="number"
             defaultValue={
-              parseInt(document.getElementById("tarbiyatGaahHeld")?.value) +
-              parseInt(document.getElementById("tarbiyatGaahHeldManual")?.value)
+              document.getElementById("tarbiyatGaahHeld")?.value
             }
             required
             name={`tarbiyatGaahHeldSum`}

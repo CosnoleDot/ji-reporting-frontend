@@ -31,7 +31,7 @@ export const RozOShabDiary = ({ view }) => {
           <input
             type="number"
             readOnly={view}
-            defaultValue={0}
+            placeholder="ذیلی حلقہ"
             required
             name={`manualUmeedwaran`}
             id={`manualUmeedwaran`}
@@ -47,6 +47,9 @@ export const RozOShabDiary = ({ view }) => {
           =
           <input
             readOnly={true}
+            defaultValue={
+              document.getElementById("umeedwaranFilled")?.value
+            }
             type="number"
             required
             name={`umeedwaranFilledSum`}

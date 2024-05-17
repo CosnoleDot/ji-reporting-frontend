@@ -1,4 +1,5 @@
 import { maqamRawabitDecided } from "../maqamReport/ToseeDawat";
+import { sumUpTwoValues } from "../muntakhibMaqamReports";
 
 export const Box = ({ children, type }) => {
   return (
@@ -42,7 +43,6 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={true}
                   type="number"
-                  defaultValue={0}
                   required
                   name={`arkan-start`}
                   id={`arkan-start`}
@@ -53,19 +53,25 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                  defaultValue={0}
+                  placeholder="ذیلی حلقہ"
                   required
                   name={`arkan-manualStart`}
                   id={`arkan-manualStart`}
                   className="p-1 text-center "
+                  onChange={() =>
+                    sumUpTwoValues(
+                      parseInt(document.getElementById("arkan-start").value),
+                      parseInt(document.getElementById("arkan-manualStart").value),
+                      "arkan-startSum"
+                    )
+                  }
                 />
                 =
                 <input
                   readOnly={true}
                   type="number"
                   defaultValue={
-                    parseInt(document.getElementById("arkan-start")?.value) +
-                    parseInt(document.getElementById("arkan-manualStart")?.value)
+                    document.getElementById("arkan-start")?.value
                   }
                   required
                   name={`arkan-startSum`}
@@ -80,7 +86,7 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={true}
                   type="number"
-                  defaultValue={0}
+                  
                   required
                   name={`arkan-increase`}
                   id={`arkan-increase`}
@@ -91,11 +97,17 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                  defaultValue={0}
+                  placeholder="ذیلی حلقہ"
                   required
                   name={`arkan-manualIncrease`}
                   id={`arkan-manualIncrease`}
-                  
+                  onChange={() =>
+                    sumUpTwoValues(
+                      parseInt(document.getElementById("arkan-increase").value),
+                      parseInt(document.getElementById("arkan-manualIncrease").value),
+                      "arkan-increaseSum"
+                    )
+                  }
                   className="p-1 text-center "
                 />
                 =
@@ -103,8 +115,7 @@ export const IfradiKuwat = ({ view }) => {
                   readOnly={true}
                   type="number"
                   defaultValue={
-                    parseInt(document.getElementById("arkan-increase")?.value) +
-                    parseInt(document.getElementById("arkan-manualIncrease")?.value)
+                    document.getElementById("arkan-increase")?.value
                   }
                   required
                   name={`arkan-increaseSum`}
@@ -119,7 +130,7 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={true}
                   type="number"
-                  defaultValue={0}
+                  
                   required
                   name={`arkan-decrease`}
                   id={`arkan-decrease`}
@@ -130,11 +141,17 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                  defaultValue={0}
+                  placeholder="ذیلی حلقہ"
                   required
                   name={`arkan-manualDecrease`}
                   id={`arkan-manualDecrease`}
-                  
+                  onChange={() =>
+                    sumUpTwoValues(
+                      parseInt(document.getElementById("arkan-decrease").value),
+                      parseInt(document.getElementById("arkan-manualDecrease").value),
+                      "arkan-decreaseSum"
+                    )
+                  }
                   className="p-1 text-center "
                 />
                 =
@@ -142,8 +159,7 @@ export const IfradiKuwat = ({ view }) => {
                   readOnly={true}
                   type="number"
                   defaultValue={
-                    parseInt(document.getElementById("arkan-decrease")?.value) +
-                    parseInt(document.getElementById("arkan-manualDecrease")?.value)
+                    document.getElementById("arkan-decrease")?.value
                   }
                   required
                   name={`arkan-decreaseSum`}
@@ -184,7 +200,6 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={true}
                   type="number"
-                  defaultValue={0}
                   required
                   name={`umeedWaran-start`}
                   id={`umeedWaran-start`}
@@ -195,11 +210,17 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                  defaultValue={0}
+                  placeholder="ذیلی حلقہ"
                   required
                   name={`umeedWaran-manualStart`}
                   id={`umeedWaran-manualStart`}
-                  
+                  onChange={() =>
+                    sumUpTwoValues(
+                      parseInt(document.getElementById("umeedWaran-start").value),
+                      parseInt(document.getElementById("umeedWaran-manualStart").value),
+                      "umeedWaran-startSum"
+                    )
+                  }
                   className="p-1 text-center "
                 />
                 =
@@ -207,8 +228,7 @@ export const IfradiKuwat = ({ view }) => {
                   readOnly={true}
                   type="number"
                   defaultValue={
-                    parseInt(document.getElementById("umeedWaran-start")?.value) +
-                    parseInt(document.getElementById("umeedWaran-manualStart")?.value)
+                   document.getElementById("umeedWaran-start")?.value
                   }
                   required
                   name={`umeedWaran-startSum`}
@@ -223,7 +243,6 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={true}
                   type="number"
-                  defaultValue={0}
                   required
                   
                   name={`umeedWaran-increase`}
@@ -234,19 +253,25 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                  defaultValue={0}
+                  placeholder="ذیلی حلقہ"
                   required
                   name={`umeedWaran-manualIncrease`}
                   id={`umeedWaran-manualIncrease`}
                   className="p-1 text-center "
+                  onChange={() =>
+                    sumUpTwoValues(
+                      parseInt(document.getElementById("umeedWaran-increase").value),
+                      parseInt(document.getElementById("umeedWaran-manualIncrease").value),
+                      "umeedWaran-increaseSum"
+                    )
+                  }
                 />
                 =
                 <input
                   readOnly={true}
                   type="number"
                   defaultValue={
-                    parseInt(document.getElementById("umeedWaran-increase")?.value) +
-                    parseInt(document.getElementById("umeedWaran-manualIncrease")?.value)
+                    document.getElementById("umeedWaran-increase")?.value
                   }
                   required
                   name={`umeedWaran-increaseSum`}
@@ -260,7 +285,6 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={true}
                   type="number"
-                  defaultValue={0}
                   required
                   name={`umeedWaran-decrease`}
                   id={`umeedWaran-decrease`}
@@ -271,11 +295,17 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                  defaultValue={0}
+                  placeholder="ذیلی حلقہ"
                   required
                   name={`umeedWaran-manualDecrease`}
                   id={`umeedWaran-manualDecrease`}
-                  
+                  onChange={() =>
+                    sumUpTwoValues(
+                      parseInt(document.getElementById("umeedWaran-decrease").value),
+                      parseInt(document.getElementById("umeedWaran-manualDecrease").value),
+                      "umeedWaran-decreaseSum"
+                    )
+                  }
                   className="p-1 text-center "
                 />
                 =
@@ -283,8 +313,7 @@ export const IfradiKuwat = ({ view }) => {
                   readOnly={true}
                   type="number"
                   defaultValue={
-                    parseInt(document.getElementById("umeedWaran-decrease")?.value) +
-                    parseInt(document.getElementById("umeedWaran-manualDecrease")?.value)
+                    document.getElementById("umeedWaran-decrease")?.value
                   }
                   required
                   name={`umeedWaran-decreaseSum`}
@@ -326,7 +355,6 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={true}
                   type="number"
-                  defaultValue={0}
                   required
                   name={`rafaqa-start`}
                   
@@ -337,19 +365,25 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                  defaultValue={0}
+                  placeholder="ذیلی حلقہ"
                   required
                   name={`rafaqa-manualStart`}
                   id={`rafaqa-manualStart`}
                   className="p-1 text-center "
+                  onChange={() =>
+                    sumUpTwoValues(
+                      parseInt(document.getElementById("rafaqa-manualStart").value),
+                      parseInt(document.getElementById("rafaqa-manualStart").value),
+                      "rafaqa-startSum"
+                    )
+                  }
                 />
                 =
                 <input
                   readOnly={true}
                   type="number"
                   defaultValue={
-                    parseInt(document.getElementById("rafaqa-start")?.value) +
-                    parseInt(document.getElementById("rafaqa-manualStart")?.value)
+                    document.getElementById("rafaqa-start")?.value
                   }
                   required
                   name={`rafaqa-startSum`}
@@ -363,7 +397,6 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={true}
                   type="number"
-                  defaultValue={0}
                   required
                   name={`rafaqa-increase`}
                   id={`rafaqa-increase`}
@@ -373,11 +406,17 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                  defaultValue={0}
+                  placeholder="ذیلی حلقہ"
                   required
                   name={`rafaqa-manualIncrease`}
                   id={`rafaqa-manualIncrease`}
-                  
+                  onChange={() =>
+                    sumUpTwoValues(
+                      parseInt(document.getElementById("rafaqa-increase").value),
+                      parseInt(document.getElementById("rafaqa-manualIncrease").value),
+                      "rafaqa-increaseSum"
+                    )
+                  }
                   className="p-1 text-center "
                 />
                 =
@@ -385,8 +424,7 @@ export const IfradiKuwat = ({ view }) => {
                   readOnly={true}
                   type="number"
                   defaultValue={
-                    parseInt(document.getElementById("rafaqa-increase")?.value) +
-                    parseInt(document.getElementById("rafaqa-manualIncrease")?.value)
+                    document.getElementById("rafaqa-increase")?.value
                   }
                   required
                   name={`rafaqa-increaseSum`}
@@ -401,7 +439,6 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={true}
                   type="number"
-                  defaultValue={0}
                   required
                   name={`rafaqa-decrease`}
                   
@@ -412,10 +449,16 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                  defaultValue={0}
+                  placeholder="ذیلی حلقہ"
                   required
                   name={`rafaqa-manualDecrease`}
-                  
+                  onChange={() =>
+                    sumUpTwoValues(
+                      parseInt(document.getElementById("rafaqa-decrease").value),
+                      parseInt(document.getElementById("rafaqa-manualDecrease").value),
+                      "rafaqa-decreaseSum"
+                    )
+                  }
                   id={`rafaqa-manualDecrease`}
                   className="p-1 text-center "
                 />
@@ -424,8 +467,7 @@ export const IfradiKuwat = ({ view }) => {
                   readOnly={true}
                   type="number"
                   defaultValue={
-                    parseInt(document.getElementById("rafaqa-decrease")?.value) +
-                    parseInt(document.getElementById("rafaqa-manualDecrease")?.value)
+                    document.getElementById("rafaqa-decrease")?.value
                   }
                   required
                   name={`rafaqa-decreaseSum`}
@@ -467,7 +509,6 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={true}
                   type="number"
-                  defaultValue={0}
                   required
                   name={`karkunan-start`}
                   id={`karkunan-start`}
@@ -478,11 +519,17 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                  defaultValue={0}
+                  placeholder="ذیلی حلقہ"
                   required
                   name={`karkunan-manualStart`}
                   id={`karkunan-manualStart`}
-                  
+                  onChange={() =>
+                    sumUpTwoValues(
+                      parseInt(document.getElementById("karkunan-manualStart").value),
+                      parseInt(document.getElementById("karkunan-manualStart").value),
+                      "karkunan-startSum"
+                    )
+                  }
                   className="p-1 text-center "
                 />
                 =
@@ -490,8 +537,7 @@ export const IfradiKuwat = ({ view }) => {
                   readOnly={true}
                   type="number"
                   defaultValue={
-                    parseInt(document.getElementById("karkunan-start")?.value) +
-                    parseInt(document.getElementById("karkunan-manualStart")?.value)
+                    document.getElementById("karkunan-start")?.value
                   }
                   required
                   name={`karkunan-startSum`}
@@ -506,7 +552,6 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={true}
                   type="number"
-                  defaultValue={0}
                   required
                   name={`karkunan-increase`}
                   
@@ -517,10 +562,16 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                  defaultValue={0}
+                  placeholder="ذیلی حلقہ"
                   required
                   name={`karkunan-manualIncrease`}
-                  
+                  onChange={() =>
+                    sumUpTwoValues(
+                      parseInt(document.getElementById("karkunan-increase").value),
+                      parseInt(document.getElementById("karkunan-manualIncrease").value),
+                      "karkunan-increaseSum"
+                    )
+                  }
                   id={`karkunan-manualIncrease`}
                   className="p-1 text-center "
                 />
@@ -529,8 +580,7 @@ export const IfradiKuwat = ({ view }) => {
                   readOnly={true}
                   type="number"
                   defaultValue={
-                    parseInt(document.getElementById("karkunan-increase")?.value) +
-                    parseInt(document.getElementById("karkunan-manualIncrease")?.value)
+                    document.getElementById("karkunan-increase")?.value
                   }
                   required
                   name={`karkunan-increaseSum`}
@@ -556,11 +606,17 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                  defaultValue={0}
+                  placeholder="ذیلی حلقہ"
                   required
                   name={`karkunan-manualDecrease`}
                   id={`karkunan-manualDecrease`}
-                  
+                  onChange={() =>
+                    sumUpTwoValues(
+                      parseInt(document.getElementById("karkunan-decrease").value),
+                      parseInt(document.getElementById("karkunan-manualDecrease").value),
+                      "karkunan-decreaseSum"
+                    )
+                  }
                   className="p-1 text-center "
                 />
                 =
@@ -568,8 +624,7 @@ export const IfradiKuwat = ({ view }) => {
                   readOnly={true}
                   type="number"
                   defaultValue={
-                    parseInt(document.getElementById("karkunan-decrease")?.value) +
-                    parseInt(document.getElementById("karkunan-manualDecrease")?.value)
+                    document.getElementById("karkunan-decrease")?.value
                   }
                   required
                   name={`karkunan-decreaseSum`}
@@ -611,7 +666,6 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={true}
                   type="number"
-                  defaultValue={0}
                   required
                   name={`shaheen-start`}
                   
@@ -622,10 +676,16 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                  defaultValue={0}
+                  placeholder="ذیلی حلقہ"
                   required
                   name={`shaheen-manualStart`}
-                  
+                  onChange={() =>
+                    sumUpTwoValues(
+                      parseInt(document.getElementById("shaheen-start").value),
+                      parseInt(document.getElementById("shaheen-manualStart").value),
+                      "shaheen-startSum"
+                    )
+                  }
                   id={`shaheen-manualStart`}
                   className="p-1 text-center "
                 />
@@ -634,8 +694,7 @@ export const IfradiKuwat = ({ view }) => {
                   readOnly={true}
                   type="number"
                   defaultValue={
-                    parseInt(document.getElementById("shaheen-start")?.value) +
-                    parseInt(document.getElementById("shaheen-manualStart")?.value)
+                    document.getElementById("shaheen-start")?.value
                   }
                   required
                   name={`shaheen-startSum`}
@@ -651,7 +710,6 @@ export const IfradiKuwat = ({ view }) => {
                   readOnly={true}
                   
                   type="number"
-                  defaultValue={0}
                   required
                   name={`shaheen-increase`}
                   id={`shaheen-increase`}
@@ -662,11 +720,18 @@ export const IfradiKuwat = ({ view }) => {
                   readOnly={view}
                   
                   type="number"
-                  defaultValue={0}
+                  placeholder="ذیلی حلقہ"
                   required
                   name={`shaheen-manualIncrease`}
                   id={`shaheen-manualIncrease`}
                   className="p-1 text-center "
+                  onChange={() =>
+                    sumUpTwoValues(
+                      parseInt(document.getElementById("shaheen-increase").value),
+                      parseInt(document.getElementById("shaheen-manualIncrease").value),
+                      "shaheen-increaseSum"
+                    )
+                  }
                 />
                 =
                 <input
@@ -674,8 +739,7 @@ export const IfradiKuwat = ({ view }) => {
                   
                   type="number"
                   defaultValue={
-                    parseInt(document.getElementById("shaheen-increase")?.value) +
-                    parseInt(document.getElementById("shaheen-manualIncrease")?.value)
+                    document.getElementById("shaheen-increase")?.value
                   }
                   required
                   name={`shaheen-increaseSum`}
@@ -689,22 +753,26 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={true}
                   type="number"
-                  defaultValue={0}
                   required
                   name={`shaheen-decrease`}
                   id={`shaheen-decrease`}
-                  
                   className="p-1 text-center "
                 />
                 +
                 <input
                   readOnly={view}
                   type="number"
-                  defaultValue={0}
+                  placeholder="ذیلی حلقہ"
                   required
                   name={`shaheen-manualDecrease`}
                   id={`shaheen-manualDecrease`}
-                  
+                  onChange={() =>
+                    sumUpTwoValues(
+                      parseInt(document.getElementById("shaheen-decrease").value),
+                      parseInt(document.getElementById("shaheen-manualDecrease").value),
+                      "shaheen-decreaseSum"
+                    )
+                  }
                   className="p-1 text-center "
                 />
                 =
@@ -712,8 +780,7 @@ export const IfradiKuwat = ({ view }) => {
                   readOnly={true}
                   type="number"
                   defaultValue={
-                    parseInt(document.getElementById("shaheen-decrease")?.value) +
-                    parseInt(document.getElementById("shaheen-manualDecrease")?.value)
+                    document.getElementById("shaheen-decrease")?.value
                   }
                   required
                   name={`shaheen-decreaseSum`}
@@ -755,7 +822,6 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={true}
                   type="number"
-                  defaultValue={0}
                   required
                   name={`members-start`}
                   id={`members-start`}
@@ -765,10 +831,17 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                  defaultValue={0}
+                  placeholder="ذیلی حلقہ"
                   required
                   name={`members-manualStart`}
                   id={`members-manualStart`}
+                  onChange={() =>
+                    sumUpTwoValues(
+                      parseInt(document.getElementById("members-start").value),
+                      parseInt(document.getElementById("members-manualStart").value),
+                      "members-startSum"
+                    )
+                  }
                   className="p-1 text-center "
                 />
                 =
@@ -776,8 +849,7 @@ export const IfradiKuwat = ({ view }) => {
                   readOnly={true}
                   type="number"
                   defaultValue={
-                    parseInt(document.getElementById("members-start")?.value) +
-                    parseInt(document.getElementById("members-manualStart")?.value)
+                    document.getElementById("members-start")?.value
                   }
                   required
                   name={`members-startSum`}
@@ -791,7 +863,6 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={true}
                   type="number"
-                  defaultValue={0}
                   required
                   name={`members-increase`}
                   id={`members-increase`}
@@ -801,10 +872,17 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                  defaultValue={0}
+                  placeholder="ذیلی حلقہ"
                   required
                   name={`members-manualIncrease`}
                   id={`members-manualIncrease`}
+                  onChange={() =>
+                    sumUpTwoValues(
+                      parseInt(document.getElementById("members-increase").value),
+                      parseInt(document.getElementById("members-manualIncrease").value),
+                      "members-increaseSum"
+                    )
+                  }
                   className="p-1 text-center "
                 />
                 =
@@ -812,8 +890,7 @@ export const IfradiKuwat = ({ view }) => {
                   readOnly={true}
                   type="number"
                   defaultValue={
-                    parseInt(document.getElementById("members-increase")?.value) +
-                    parseInt(document.getElementById("members-manualIncrease")?.value)
+                    document.getElementById("members-increase")?.value
                   }
                   required
                   name={`members-increaseSum`}
@@ -827,7 +904,6 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={true}
                   type="number"
-                  defaultValue={0}
                   required
                   name={`members-decrease`}
                   id={`members-decrease`}
@@ -837,19 +913,25 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                  defaultValue={0}
+                  placeholder="ذیلی حلقہ"
                   required
                   name={`members-manualDecrease`}
                   id={`members-manualDecrease`}
                   className="p-1 text-center "
+                  onChange={() =>
+                    sumUpTwoValues(
+                      parseInt(document.getElementById("members-decrease").value),
+                      parseInt(document.getElementById("members-manualDecrease").value),
+                      "members-decreaseSum"
+                    )
+                  }
                 />
                 =
                 <input
                   readOnly={true}
                   type="number"
                   defaultValue={
-                    parseInt(document.getElementById("members-decrease")?.value) +
-                    parseInt(document.getElementById("members-manualDecrease")?.value)
+                    document.getElementById("members-decrease")?.value
                   }
                   required
                   name={`members-decreaseSum`}
