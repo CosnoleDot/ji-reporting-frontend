@@ -21,7 +21,6 @@ export const Jamiaat = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`jamiaatA-start`}
                 id={`jamiaatA-start`}
@@ -32,7 +31,6 @@ export const Jamiaat = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`jamiaatA-increase`}
                 id={`jamiaatA-increase`}
@@ -43,7 +41,6 @@ export const Jamiaat = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`jamiaatA-end`}
                 id={`jamiaatA-end`}
@@ -54,7 +51,6 @@ export const Jamiaat = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`jamiaatA-monthly`}
                 id={`jamiaatA-monthly`}
@@ -68,7 +64,6 @@ export const Jamiaat = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`jamiaatB-start`}
                 id={`jamiaatB-start`}
@@ -79,7 +74,6 @@ export const Jamiaat = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`jamiaatB-increase`}
                 id={`jamiaatB-increase`}
@@ -90,7 +84,6 @@ export const Jamiaat = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`jamiaatB-end`}
                 id={`jamiaatB-end`}
@@ -101,7 +94,6 @@ export const Jamiaat = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`jamiaatB-monthly`}
                 id={`jamiaatB-monthly`}
@@ -115,7 +107,6 @@ export const Jamiaat = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`jamiaatC-start`}
                 id={`jamiaatC-start`}
@@ -126,7 +117,6 @@ export const Jamiaat = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`jamiaatC-increase`}
                 id={`jamiaatC-increase`}
@@ -137,7 +127,6 @@ export const Jamiaat = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`jamiaatC-end`}
                 id={`jamiaatC-end`}
@@ -148,7 +137,6 @@ export const Jamiaat = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`jamiaatC-monthly`}
                 id={`jamiaatC-monthly`}
@@ -162,7 +150,6 @@ export const Jamiaat = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`jamiaatD-start`}
                 id={`jamiaatD-start`}
@@ -173,7 +160,6 @@ export const Jamiaat = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`jamiaatD-increase`}
                 id={`jamiaatD-increase`}
@@ -184,7 +170,6 @@ export const Jamiaat = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`jamiaatD-end`}
                 id={`jamiaatD-end`}
@@ -195,7 +180,6 @@ export const Jamiaat = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`jamiaatD-monthly`}
                 id={`jamiaatD-monthly`}
@@ -209,7 +193,6 @@ export const Jamiaat = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`jamiaatE-start`}
                 id={`jamiaatE-start`}
@@ -220,7 +203,6 @@ export const Jamiaat = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`jamiaatE-increase`}
                 id={`jamiaatE-increase`}
@@ -231,7 +213,6 @@ export const Jamiaat = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`jamiaatE-end`}
                 id={`jamiaatE-end`}
@@ -242,7 +223,6 @@ export const Jamiaat = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`jamiaatE-monthly`}
                 id={`jamiaatE-monthly`}

@@ -21,7 +21,7 @@ export const Colleges = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
+         
                 required
                 name={`collegesA-start`}
                 id={`collegesA-start`}
@@ -32,7 +32,7 @@ export const Colleges = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
+         
                 required
                 name={`collegesA-increase`}
                 id={`collegesA-increase`}
@@ -43,7 +43,7 @@ export const Colleges = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
+         
                 required
                 name={`collegesA-end`}
                 id={`collegesA-end`}
@@ -54,7 +54,7 @@ export const Colleges = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
+         
                 required
                 name={`collegesA-monthly`}
                 id={`collegesA-monthly`}
@@ -68,7 +68,7 @@ export const Colleges = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
+         
                 required
                 name={`collegesB-start`}
                 id={`collegesB-start`}
@@ -79,7 +79,7 @@ export const Colleges = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
+         
                 required
                 name={`collegesB-increase`}
                 id={`collegesB-increase`}
@@ -90,7 +90,7 @@ export const Colleges = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
+         
                 required
                 name={`collegesB-end`}
                 id={`collegesB-end`}
@@ -101,7 +101,7 @@ export const Colleges = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
+         
                 required
                 name={`collegesB-monthly`}
                 id={`collegesB-monthly`}
@@ -115,7 +115,7 @@ export const Colleges = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
+         
                 required
                 name={`collegesC-start`}
                 id={`collegesC-start`}
@@ -126,7 +126,7 @@ export const Colleges = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
+         
                 required
                 name={`collegesC-increase`}
                 id={`collegesC-increase`}
@@ -137,7 +137,7 @@ export const Colleges = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
+         
                 required
                 name={`collegesC-end`}
                 id={`collegesC-end`}
@@ -148,7 +148,7 @@ export const Colleges = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
+         
                 required
                 name={`collegesC-monthly`}
                 id={`collegesC-monthly`}
@@ -162,7 +162,7 @@ export const Colleges = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
+         
                 required
                 name={`collegesD-start`}
                 id={`collegesD-start`}
@@ -173,7 +173,7 @@ export const Colleges = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
+         
                 required
                 name={`collegesD-increase`}
                 id={`collegesD-increase`}
@@ -184,7 +184,7 @@ export const Colleges = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
+         
                 required
                 name={`collegesD-end`}
                 id={`collegesD-end`}
@@ -195,7 +195,7 @@ export const Colleges = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
+         
                 required
                 name={`collegesD-monthly`}
                 id={`collegesD-monthly`}
