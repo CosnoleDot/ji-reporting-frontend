@@ -1,4 +1,3 @@
-
 export const sumUpTwoValues = (val1, val2, final) => {
   document.getElementById(final).value = val1 + val2;
 };
@@ -14,7 +13,6 @@ export const RozOShabDiary = ({ view }) => {
           <input
             readOnly={true}
             type="number"
-            defaultValue={0}
             required
             name={`uploadedUmeedwaran`}
             id={`uploadedUmeedwaran`}
@@ -31,8 +29,8 @@ export const RozOShabDiary = ({ view }) => {
           <input
             type="number"
             readOnly={view}
-            defaultValue={0}
             required
+            placeholder="manual umeedwaran"
             name={`manualUmeedwaran`}
             id={`manualUmeedwaran`}
             className="p-1 text-center "
@@ -66,7 +64,6 @@ export const RozOShabDiary = ({ view }) => {
           <input
             readOnly={true}
             type="number"
-            defaultValue={0}
             required
             name={`uploadedRafaqa`}
             id={`uploadedRafaqa`}
@@ -83,7 +80,6 @@ export const RozOShabDiary = ({ view }) => {
           <input
             type="number"
             readOnly={view}
-            defaultValue={0}
             required
             name={`manualRafaqa`}
             id={`manualRafaqa`}
@@ -106,30 +102,6 @@ export const RozOShabDiary = ({ view }) => {
             className="p-1 text-center "
           />
         </div>
-        {/* <div className="flex py-2">
-          <label className="block min-w-[40%]">کتنے امیدواران فل کرتے ہیں؟</label>
-          <input
-            readOnly={view}
-            type="number"
-            defaultValue={0}
-            required
-            name="umeedwaranFilled"
-            id="umeedwaranFilled"
-            className="border-b-2 text-center border-dashed"
-          />
-        </div>
-        <div className="flex py-2 ">
-          <label className="block min-w-[40%]">کتنےرفقافل کرتے ہیں:</label>
-          <input
-            readOnly={true}
-            type="number"
-            defaultValue={0}
-            required
-            name="rafaqaFilled"
-            id="rafaqaFilled"
-            className="border-b-2 text-center border-dashed"
-          />
-        </div> */}
       </div>
     </div>
   );

@@ -150,7 +150,6 @@ export const Ilaqa = () => {
           j = i;
         }
       }
-
       const elem = document.getElementById(j);
       if (elem) {
         if (j === "month") {
@@ -347,12 +346,6 @@ export const Ilaqa = () => {
   }, [location.pathname]);
   Object.keys(data).forEach((i) => {
     if (data[i] === null) {
-      data[i] = 0;
-    }
-    if (data[i] === "rafaqaFilledSum") {
-      data[i] = 0;
-    }
-    if (data[i] === "umeedwaranFilledSum") {
       data[i] = 0;
     }
   });
