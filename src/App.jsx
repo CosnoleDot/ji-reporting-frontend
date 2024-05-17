@@ -46,7 +46,6 @@ import { ProvinceReport } from "./pages/ProvinceReport";
 import { DivisionReport } from "./pages/DivisionReport";
 import { HalqaReport } from "./pages/HalqaReport";
 import { ResetPassword } from "./pages/ResetPassword";
-import { MaqamHalqa } from "./components/reoprtDashboards/MaqamHalqa";
 import { MuntakhibMaqamReports } from "./pages/MuntakhibMaqamReports";
 import { MarkazReport } from "./pages/MarkazReport";
 import { IlaqaReport } from "./pages/IlaqaReport";

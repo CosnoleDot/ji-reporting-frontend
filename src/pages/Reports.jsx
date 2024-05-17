@@ -8,7 +8,6 @@ import {
   DivisionReportContext,
   HalqaContext,
   HalqaReportContext,
-  IlaqaContext,
   IlaqaReportContext,
   MaqamContext,
   MaqamReportContext,
@@ -25,7 +24,6 @@ import { Link } from "react-router-dom";
 import { FaRegFileExcel } from "react-icons/fa";
 import { AiFillBell } from "react-icons/ai";
 import { UIContext } from "../context/ui";
-import { PersonalReportsDashboard } from "./PersonalReportsDashboard";
 
 const NoReports = () => (
   <div className="card-body flex flex-col items-center justify-center w-full p-5 mb-1 rounded-xl">
@@ -128,8 +126,6 @@ export const Reports = ({ maqam }) => {
   const maqams = useContext(MaqamContext);
   const divisions = useContext(DivisionContext);
   const districts = useContext(DistrictContext);
-  const ilaqas = useContext(IlaqaContext);
-
   const provinces = useContext(ProvinceContext);
   const tehsils = useContext(TehsilContext);
   const halqas = useContext(HalqaContext);
@@ -137,7 +133,6 @@ export const Reports = ({ maqam }) => {
   const [selectedId, setSelectedId] = useState("");
   const [selectedMonth, setSelectedMonth] = useState("");
   const params = useLocation();
-  const { getNazim } = useContext(UIContext);
 
   // GENERATE MONTHS
   useEffect(() => {

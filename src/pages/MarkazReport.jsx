@@ -253,6 +253,8 @@ export const MarkazReport = () => {
       });
     
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [data]);
  
   
@@ -286,8 +288,8 @@ export const MarkazReport = () => {
         }
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     
-   
   }, [data]);
   useEffect(() => {
     if (!id) autoFill();

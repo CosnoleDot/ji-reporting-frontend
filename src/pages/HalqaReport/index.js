@@ -27,7 +27,6 @@ export const HalqaReport = () => {
 
   const getAreaType = (area) => {
     if (area?.parentType === "Maqam") {
-      const name = maqams.find((i) => i?._id === area?.parentId);
       return `Halqa of Maqam`;
     } else if (area?.parentType === "Tehsil") {
       const tehsil = tehsils?.find((teh) => teh?._id === area?.parentId);

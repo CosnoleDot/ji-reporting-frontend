@@ -328,10 +328,6 @@ export const Province = () => {
           }
         });
       });
-    // it was making value undefined
-    // provinceFinalData["ijtKarkunan-done"] =
-    //   provinceFinalData["ijtKarkunan-sum"];
-    // provinceFinalData["darseQuran-done"] = provinceFinalData["darseQuran-sum"];
     if (page === "create") {
       [
         "ijtArkan",
@@ -426,26 +422,20 @@ export const Province = () => {
     "umeedWaran-manualStart",
     "umeedWaran-manualIncrease",
     "umeedWaran-manualDecrease",
-    
     "tarbiyatGaahGoalManual",
     "rafaqa-manualStart",
     "rafaqa-manualIncrease",
     "rafaqa-manualDecrease",
-    
     "karkunan-manualStart",
     "karkunan-manualIncrease",
     "karkunan-manualDecrease",
-    
     "shaheen-manualStart",
     "shaheen-manualIncrease",
     "shaheen-manualDecrease",
-    
     "members-manualStart",
     "members-manualIncrease",
     "members-manualDecrease",
-   
     "tarbiyatGaahHeldManual",
-
   ];
 
   useEffect(() => {
@@ -457,6 +447,8 @@ export const Province = () => {
         }
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [data]);
   useEffect(() => {
     const l = location.pathname?.split("/")[2];

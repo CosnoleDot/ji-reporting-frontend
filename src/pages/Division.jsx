@@ -140,7 +140,7 @@ export const Division = () => {
         }
       }
       halq.litrature = halq.literatureDistribution;
-      
+
       const elem = document.getElementById(j);
       if (elem) {
         if (j === "month") {
@@ -190,10 +190,11 @@ export const Division = () => {
     document.getElementById("shabBedari").value = 0;
     if (page === "create") {
       [
-        "litrature","commonStudentMeetings","commonLiteratureDistribution"
+        "litrature",
+        "commonStudentMeetings",
+        "commonLiteratureDistribution",
       ].map((i) => (document.getElementById(i).value = 0));
     }
-  
 
     const afd = [
       "rehaishHalqay",
@@ -228,7 +229,8 @@ export const Division = () => {
       value3.value = 0;
       value4.value = 0;
     }
-  }, [window.location.pathname]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   useEffect(() => {
     const l = location.pathname?.split("/")[2];
     if (l === "view") {
@@ -244,8 +246,9 @@ export const Division = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
-  ['rafaqaFilledSum',"umeedwaranFilledSum","currentSum","meetingsSum"].map((i)=>
-  delete data[i])
+  ["rafaqaFilledSum", "umeedwaranFilledSum", "currentSum", "meetingsSum"].map(
+    (i) => delete data[i]
+  );
   useEffect(() => {
     Object.keys(data).forEach((i) => {
       const elem = document.getElementById(i);
@@ -363,7 +366,7 @@ export const Division = () => {
     document.getElementById("paighamEvent-decided").value = busmTotalUnits;
     document.getElementById("shaheenMeeting-decided").value = busmTotalUnits;
   }, [totalHalqay, subTotalHalqay, busmTotalUnits]);
-  data.litrature = data['literatureDistribution']
+  data.litrature = data["literatureDistribution"];
 
   return (
     <GeneralLayout>
