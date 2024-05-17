@@ -490,9 +490,6 @@ function App() {
     }
   };
 
-  useEffect(() => {
-    console.log(halqas, "halqas");
-  }, [halqas]);
   let provinceR, maqamR, divisionR, halqaR, ilaqaR, markazR;
   const getMarkazReport = async () => {
     if (me?.userAreaType === "Country")

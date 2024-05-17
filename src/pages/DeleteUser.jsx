@@ -967,23 +967,27 @@ export const DeleteUser = () => {
                       </div>
                     )}
 
-                    <div className="form-control">
-                      <label className="label cursor-pointer gap-2">
-                        <input
-                          type="radio"
-                          name="userAreaType"
-                          className="radio checked:bg-blue-500"
-                          checked={userAreaType === "Division"}
-                          value="Division"
-                          onChange={(e) => {
-                            setUserAreaType(e.target.value);
-                            setSearchArea("");
-                            document.getElementById("autocomplete0").value = "";
-                          }}
-                        />
-                        <span className="label-text">Division</span>
-                      </label>
-                    </div>
+                    {(me?.nazim?.toLowerCase() === "country" ||
+                      me?.nazim?.toLowerCase() === "province") && (
+                      <div className="form-control">
+                        <label className="label cursor-pointer gap-2">
+                          <input
+                            type="radio"
+                            name="userAreaType"
+                            className="radio checked:bg-blue-500"
+                            checked={userAreaType === "Division"}
+                            value="Division"
+                            onChange={(e) => {
+                              setUserAreaType(e.target.value);
+                              setSearchArea("");
+                              document.getElementById("autocomplete0").value =
+                                "";
+                            }}
+                          />
+                          <span className="label-text">Division</span>
+                        </label>
+                      </div>
+                    )}
                     {(me?.nazim?.toLowerCase() === "maqam" ||
                       me?.nazim?.toLowerCase() === "country" ||
                       me?.nazim?.toLowerCase() === "province") &&
@@ -1008,23 +1012,27 @@ export const DeleteUser = () => {
                         </div>
                       )}
 
-                    <div className="form-control">
-                      <label className="label cursor-pointer gap-2">
-                        <input
-                          type="radio"
-                          name="userAreaType"
-                          className="radio checked:bg-blue-500"
-                          checked={userAreaType === "Maqam"}
-                          value="Maqam"
-                          onChange={(e) => {
-                            setUserAreaType(e.target.value);
-                            setSearchArea("");
-                            document.getElementById("autocomplete0").value = "";
-                          }}
-                        />
-                        <span className="label-text">Maqam</span>
-                      </label>
-                    </div>
+                    {(me?.nazim?.toLowerCase() === "country" ||
+                      me?.nazim?.toLowerCase() === "province") && (
+                      <div className="form-control">
+                        <label className="label cursor-pointer gap-2">
+                          <input
+                            type="radio"
+                            name="userAreaType"
+                            className="radio checked:bg-blue-500"
+                            checked={userAreaType === "Maqam"}
+                            value="Maqam"
+                            onChange={(e) => {
+                              setUserAreaType(e.target.value);
+                              setSearchArea("");
+                              document.getElementById("autocomplete0").value =
+                                "";
+                            }}
+                          />
+                          <span className="label-text">Maqam</span>
+                        </label>
+                      </div>
+                    )}
                     <div className="form-control">
                       <label className="label cursor-pointer gap-2">
                         <input
