@@ -707,7 +707,7 @@ export const MaqamReport = () => {
             موجودہ :{data?.muntakhibTdId?.currentSum}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            ملاقاتیں:{data?.muntakhibTdId?.meetingsSum}
+            ملاقاتوں کی تعداد:{data?.tdId?.meetings}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
             تقسیم لٹریچر:{data?.muntakhibTdId?.literatureSum}
@@ -724,7 +724,7 @@ export const MaqamReport = () => {
           }}
         >
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            ملاقاتیں:{data?.muntakhibTdId?.commonStudentMeetingsSum}
+            ملاقاتوں کی تعداد:{data?.tdId?.commonStudentMeetings}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
             تقسیم لٹریچر:{data?.muntakhibTdId?.commonLiteratureDistributionSum}

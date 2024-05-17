@@ -98,7 +98,7 @@ export const ToseeDawat = ({ view }) => {
           />
         </div>
         <div style={{ display: "flex" }}>
-          <label className="block">ملاقاتیں:</label>
+          <label className="block">ملاقاتوں کی تعداد:</label>
           <input
             readOnly={true}
             type="number"
@@ -224,7 +224,7 @@ export const ToseeDawat = ({ view }) => {
           />
         </div>
         <div style={{ display: "flex" }}>
-          <label className="block">ملاقاتیں:</label>
+          <label className="block">ملاقاتوں کی تعداد:</label>
           <input
             readOnly={true}
             type="number"

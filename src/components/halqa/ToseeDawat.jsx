@@ -140,7 +140,7 @@ export const ToseeDawat = ({ view }) => {
           <label className="block">عام طلبہ:</label>
         </div>
         <div className="flex py-2">
-          <label className="block">ملاقاتیں:</label>
+          <label className="block">ملاقاتوں کی تعداد:</label>
           <input
             readOnly={view}
             type="number"

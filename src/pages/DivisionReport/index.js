@@ -729,7 +729,7 @@ export const DivisionReport = () => {
           }}
         >
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            ملاقاتیں:{data?.tdId?.commonStudentMeetings}
+            ملاقاتوں کی تعداد:{data?.tdId?.commonStudentMeetings}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
             تقسیم لٹریچر:{data?.tdId?.commonLiteratureDistribution}
