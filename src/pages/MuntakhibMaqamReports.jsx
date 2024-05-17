@@ -155,10 +155,12 @@ export const MuntakhibMaqamReports = () => {
         halq.commonLiteratureDistributionSum;
       halq.uploadedLitrature = halq.literatureSum;
       halq.uploadedCommonStudentMeetings = halq.commonStudentMeetingsSum;
+      halq.totalReceived = halq.receivedSum;
+      halq.monthlyReceivingGoal = halq.monthlyReceivingGoalSum;
+      halq.totalSold = halq.soldSum;
       document.getElementById("uploadedRafaqa").value = halq.rafaqaFilledSum;
       document.getElementById("uploadedUmeedwaran").value =
         halq.umeedwaranFilledSum;
-      console.log(halq);
       const elem = document.getElementById(j);
       if (elem) {
         if (j === "month") {
