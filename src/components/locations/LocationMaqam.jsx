@@ -25,7 +25,7 @@ export const LocationMaqam = () => {
   const [view, setView] = useState("halqa");
   const [isIlaqa, setIsIlaqa] = useState(false);
   const params = useLocation();
-  const [muntakhib , setMuntakhib]=useState(ilaqas?.length >0 ? true : false);
+  const [muntakhib, setMuntakhib] = useState(ilaqas?.length > 0 ? true : false);
   useEffect(() => {
     // Function to parse query parameters
     setLoading(true); // Set loading to true before fetching data
@@ -260,7 +260,7 @@ export const LocationMaqam = () => {
       setFilteredData(filteredIlaqa);
     }
   };
-  
+
   return (
     <>
       <div
@@ -362,13 +362,15 @@ export const LocationMaqam = () => {
         >
           Halqa
         </Link>
-       {muntakhib &&  <Link
-          to={"?active=maqam&view=ilaqa"}
-          role="tab"
-          className={`tab w-full ${view === "ilaqa" ? "tab-active" : ""}`}
-        >
-          Ilaqa
-        </Link>}
+        {muntakhib && (
+          <Link
+            to={"?active=maqam&view=ilaqa"}
+            role="tab"
+            className={`tab w-full ${view === "ilaqa" ? "tab-active" : ""}`}
+          >
+            Ilaqa
+          </Link>
+        )}
       </div>
 
       {view === "maqam" && (
@@ -424,9 +426,7 @@ export const LocationMaqam = () => {
                   </tr>
                 ))
               ) : (
-                <div>
-                  <Loader />
-                </div>
+                <div>No Record Found</div>
               )}
             </tbody>
           </table>
@@ -486,9 +486,7 @@ export const LocationMaqam = () => {
                   </tr>
                 ))
               ) : (
-                <div>
-                  <Loader />
-                </div>
+                <div>No Record Found</div>
               )}
             </tbody>
           </table>
@@ -561,9 +559,7 @@ export const LocationMaqam = () => {
                     </tr>
                   ))
               ) : (
-                <div>
-                  <Loader />
-                </div>
+                <div>No Record Found</div>
               )}
             </tbody>
           </table>
