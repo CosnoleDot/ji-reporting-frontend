@@ -52,6 +52,7 @@ import { MarkazReport } from "./pages/MarkazReport";
 import { IlaqaReport } from "./pages/IlaqaReport";
 import { MuntakhibMaqamReport } from "./pages/MuntakhibMaqamReport";
 import { MaqamReport } from "./pages/MaqamReport";
+import { MarkazReportPrint } from "./pages/MarkazReportPrint";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -955,7 +956,7 @@ function App() {
                                       />
                                       <Route
                                         path="/country-report/print/:id"
-                                        element={<MarkazReport />}
+                                        element={<MarkazReportPrint />}
                                       />
                                     </Routes>
                                     <LoadingScreen

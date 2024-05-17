@@ -588,6 +588,7 @@ export const Reports = ({maqam}) => {
     if (active === "halqa") getAreaWithType();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAreaType]);
+  console.log(filterAllData,'asd')
   return (
     <GeneralLayout
       title={me?.userAreaId?.name.toUpperCase()}

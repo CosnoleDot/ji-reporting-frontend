@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import "./MarkazReport.css";
+import "./MarkazReportPrint.css";
 import { useParams } from "react-router-dom";
 import instance from "../../api/instrance";
 import { PrintDocument } from "../../components";
-export const MarkazReport = () => {
+export const MarkazReportPrint = () => {
   const [data, setData] = useState();
   const params = useParams();
   const printReport = async (id) => {
-    const req = await instance.get(`/reports/province/${id}`, {
+    const req = await instance.get(`/reports/markaz/${id}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("@token")}`,
