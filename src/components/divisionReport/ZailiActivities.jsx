@@ -1,5 +1,6 @@
 import React from "react";
 import { Box } from "./IfradiKuwat";
+import { sumUpTwoValues } from "../muntakhibMaqamReports";
 
 export const ZailiActivities = ({ view }) => {
   return (
@@ -110,19 +111,25 @@ export const ZailiActivities = ({ view }) => {
               +
               <input
                 type="number"
-                defaultValue={0}
+                placeholder="ذیلی حلقہ"
                 required
                 name={`ijtKarkunan-manual`}
                 id={`ijtKarkunan-manual`}
                 className="p-1 text-center min-w-full"
+                onChange={() =>
+                  sumUpTwoValues(
+                    parseInt(document.getElementById("ijtKarkunan-done").value),
+                    parseInt(document.getElementById("ijtKarkunan-manual").value),
+                    "ijtKarkunan-sum"
+                  )
+                }
               />
               =
               <input
                 readOnly={true}
                 type="number"
                 defaultValue={
-                  parseInt(document.getElementById("ijtKarkunan-done")?.value) +
-                  parseInt(document.getElementById("ijtKarkunan-manual")?.value)
+                  document.getElementById("ijtKarkunan-done")?.value
                 }
                 required
                 name={`ijtKarkunan-sum`}
@@ -169,23 +176,26 @@ export const ZailiActivities = ({ view }) => {
                 +
                 <input
                   type="number"
-                  defaultValue={0}
+                  placeholder="ذیلی حلقہ"
                   required
                   name={`darseQuran-manual`}
                   id={`darseQuran-manual`}
                   className="p-1 text-center "
+                  onChange={() =>
+                    sumUpTwoValues(
+                      parseInt(document.getElementById("darseQuran-done").value),
+                      parseInt(document.getElementById("darseQuran-manual").value),
+                      "darseQuran-sum"
+                    )
+                  }
                 />
                 =
                 <input
                   readOnly={true}
                   type="number"
                   defaultValue={
-                    parseInt(
                       document.getElementById("darseQuran-done")?.value
-                    ) +
-                    parseInt(
-                      document.getElementById("darseQuran-manual")?.value
-                    )
+                    
                   }
                   required
                   name={`darseQuran-sum`}

@@ -45,7 +45,7 @@ export const OtherActivities = ({ view }) => {
           <input
             type="number"
             readOnly={view}
-            defaultValue={0}
+            placeholder="ذیلی حلقہ"
             required
             onChange={() =>
               sumUpTwoValues(
@@ -64,8 +64,7 @@ export const OtherActivities = ({ view }) => {
             readOnly={true}
             type="number"
             defaultValue={
-              parseInt(document.getElementById("tarbiyatGaahGoal")?.value) +
-              parseInt(document.getElementById("tarbiyatGaahGoalManual")?.value)
+              document.getElementById("tarbiyatGaahGoal")?.value
             }
             required
             name={`tarbiyatGaahGoalSum`}
@@ -95,7 +94,7 @@ export const OtherActivities = ({ view }) => {
           <input
             type="number"
             readOnly={view}
-            defaultValue={0}
+            placeholder="ذیلی حلقہ"
             required
             onChange={() =>
               sumUpTwoValues(
@@ -113,8 +112,7 @@ export const OtherActivities = ({ view }) => {
             readOnly={true}
             type="number"
             defaultValue={
-              parseInt(document.getElementById("tarbiyatGaahHeld")?.value) +
-              parseInt(document.getElementById("tarbiyatGaahHeldManual")?.value)
+              document.getElementById("tarbiyatGaahHeld")?.value
             }
             required
             name={`tarbiyatGaahHeldSum`}

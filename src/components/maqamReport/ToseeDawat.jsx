@@ -116,7 +116,7 @@ export const ToseeDawat = ({ view }) => {
           +
           <input
             type="number"
-            defaultValue={0}
+            placeholder="ذیلی حلقہ"
             required
             readOnly={view}
             name={`currentManual`}
@@ -133,6 +133,9 @@ export const ToseeDawat = ({ view }) => {
           =
           <input
             readOnly={true}
+            defaultValue={
+              document.getElementById("current")?.value
+            }
             type="number"
             required
             name={`currentSum`}
@@ -162,7 +165,7 @@ export const ToseeDawat = ({ view }) => {
           +
           <input
             type="number"
-            defaultValue={0}
+            placeholder="ذیلی حلقہ"
             required
             readOnly={view}
             name={`meetingsManual`}
@@ -180,6 +183,9 @@ export const ToseeDawat = ({ view }) => {
           <input
             readOnly={true}
             type="number"
+            defaultValue={
+              document.getElementById("meetings")?.value
+            }
             required
             name={`meetingsSum`}
             id={`meetingsSum`}

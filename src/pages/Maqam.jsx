@@ -161,6 +161,7 @@ export const Maqam = () => {
           }
         }
       }
+      console.log(halq,'aaa')
     });
     document.getElementById("studyCircle-averageAttendance").value = 0;
     document.getElementById("studyCircle-done").value = 0;

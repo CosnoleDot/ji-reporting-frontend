@@ -111,7 +111,7 @@ const ZailiActivities = ({ view }) => {
               <input
               readOnly={view}
                 type="number"
-                defaultValue={0}
+                placeholder="کل ذیلی حلقہ جات"
                 required
                 name={`ijtKarkunan-manual`}
                 id={`ijtKarkunan-manual`}
@@ -174,7 +174,7 @@ const ZailiActivities = ({ view }) => {
                 <input
                 readOnly={view}
                   type="number"
-                  defaultValue={0}
+                  placeholder="کل ذیلی حلقہ جات"
                   required
                   name={`darseQuran-manual`}
                   id={`darseQuran-manual`}
