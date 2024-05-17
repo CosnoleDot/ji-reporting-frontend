@@ -231,13 +231,16 @@ export const LocationMaqam = () => {
   };
   const handleSearch = (value) => {
     if (view === "halqa") {
-      const filteredHalqa = halqas
-        ?.map((halqa) => halqa)
-        .filter(
-          (hal) =>
-            hal?.name.toLowerCase().includes(value.toLowerCase()) ||
-            hal?.parentId?.name.toLowerCase().includes(value.toLowerCase())
+      const filteredHalqa = halqas?.filter((hal) => {
+        const halName = hal?.name?.toLowerCase() || "";
+        const parentName = hal?.parentId?.name?.toLowerCase() || "";
+        const searchValue = value.toLowerCase();
+
+        return (
+          halName.includes(searchValue) || parentName.includes(searchValue)
         );
+      });
+
       setFilteredData(filteredHalqa);
     } else if (view === "maqam") {
       const filteredMaqams = maqams
@@ -385,7 +388,7 @@ export const LocationMaqam = () => {
               </tr>
             </thead>
             <tbody className="mt-5">
-              {filteredData.length > 1 ? (
+              {filteredData.length > 0 ? (
                 filteredData?.map((maqam, index) => (
                   <tr
                     key={index}
@@ -444,7 +447,7 @@ export const LocationMaqam = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredData?.length > 1 ? (
+              {filteredData?.length > 0 ? (
                 filteredData?.map((ilaqa, index) => (
                   <tr
                     key={index}
@@ -504,7 +507,7 @@ export const LocationMaqam = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredData.length > 1 ? (
+              {filteredData.length > 0 ? (
                 filteredData
                   ?.filter(
                     (i) =>
