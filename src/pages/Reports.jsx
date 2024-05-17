@@ -922,7 +922,7 @@ export const Reports = ({ maqam }) => {
         {/* localStorage.getItem('@type') === 'province' && ( */}
         <div
           role="tablist"
-          className="w-full flex justify-between items-center"
+          className="w-full flex justify-between items-center overflow-x-scroll min-h[5rem] overflow-y-hidden"
         >
           {["country"].includes(localStorage.getItem("@type")) &&
             ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
