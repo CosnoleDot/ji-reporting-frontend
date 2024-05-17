@@ -289,6 +289,7 @@ export const Ilaqa = () => {
     try {
       if (id) {
         jsonData.month = data?.month;
+        console.log(jsonData,'asd')
         const req = await instance.put(`/reports/ilaqa/${id}`, jsonData, {
           headers: {
             "Content-Type": "application/json",
@@ -347,6 +348,12 @@ export const Ilaqa = () => {
       value1.value = 0;
     }
   }, [location.pathname]);
+  Object.keys(data).forEach((i)=>{
+    if(data[i]===null){
+      data[i]=0
+    }
+  })
+ 
   
   return (
     <GeneralLayout>

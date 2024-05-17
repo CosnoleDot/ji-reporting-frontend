@@ -9,6 +9,7 @@ export const HalqaReport = () => {
   const params = useParams();
   const maqams = useContext(MaqamContext);
   const tehsils = useContext(TehsilContext);
+
   const printReport = async (id) => {
     const req = await instance.get(`/reports/halqa/${id}`, {
       headers: {
@@ -27,7 +28,7 @@ export const HalqaReport = () => {
   const getAreaType = (area) => {
     if (area?.parentType === "Maqam") {
       const name = maqams.find((i) => i?._id === area?.parentId);
-      return `Maqam - ${name?.name}`;
+      return `Halqa of Maqam`;
     } else if (area?.parentType === "Tehsil") {
       const tehsil = tehsils?.find((teh) => teh?._id === area?.parentId);
       const districtId = tehsil?.district;
@@ -37,6 +38,7 @@ export const HalqaReport = () => {
     }
     return "UNKNOWN";
   };
+  console.log(data, "asd");
   return (
     <div className="wrapper reports" style={{ marginBottom: "2rem" }} dir="rtl">
       <PrintDocument />
@@ -156,11 +158,14 @@ export const HalqaReport = () => {
         </div>
       </div>
       <div className="flex w-full p-4 gap-4 text-xl justify-end items-center mb-4">
-      <h2 className="ml-4">
+        <h2 className="ml-4">
           <strong className="ml-4">کاروائ رجسٹر </strong>
-          
         </h2>
-        <input type="checkbox" className="w-8 mr-4 h-8" checked={data?.halqaActivityId?.ijtRafaqa?.registered ? true : false} />
+        <input
+          type="checkbox"
+          className="w-8 mr-4 h-8"
+          checked={data?.halqaActivityId?.ijtRafaqa?.registered ? true : false}
+        />
       </div>
       <div
         style={{
@@ -199,35 +204,31 @@ export const HalqaReport = () => {
       >
         <div className="row">
           <p className="header">اجتماع کارکنان</p>
-          <p>{data?.halqaActivityId?.ijtKarkunan?.completed}</p>
           <p>{data?.halqaActivityId?.ijtKarkunan?.decided}</p>
+          <p>{data?.halqaActivityId?.ijtKarkunan?.completed}</p>
           <p>{data?.halqaActivityId?.ijtKarkunan?.attendance}</p>
           <p>{data?.halqaActivityId?.ijtKarkunan?.title}</p>
-          
         </div>
         <div className="row">
-          <p className="header">سٹڈی  سرکل </p>
-          <p>{data?.halqaActivityId?.studyCircle?.completed}</p>
+          <p className="header">سٹڈی سرکل </p>
           <p>{data?.halqaActivityId?.studyCircle?.decided}</p>
+          <p>{data?.halqaActivityId?.studyCircle?.completed}</p>
           <p>{data?.halqaActivityId?.studyCircle?.attendance}</p>
           <p>{data?.halqaActivityId?.studyCircle?.title}</p>
-         
         </div>
         <div className="row">
           <p className="header">اجتماعِ رفقا </p>
-          <p>{data?.halqaActivityId?.ijtRafaqa?.completed}</p>
           <p>{data?.halqaActivityId?.ijtRafaqa?.decided}</p>
+          <p>{data?.halqaActivityId?.ijtRafaqa?.completed}</p>
           <p>{data?.halqaActivityId?.ijtRafaqa?.attendance}</p>
           <p>{data?.halqaActivityId?.ijtRafaqa?.title}</p>
-          
         </div>
         <div className="row">
           <p className="header">درسِ قرآن </p>
-          <p>{data?.halqaActivityId?.darseQuran?.completed}</p>
           <p>{data?.halqaActivityId?.darseQuran?.decided}</p>
+          <p>{data?.halqaActivityId?.darseQuran?.completed}</p>
           <p>{data?.halqaActivityId?.darseQuran?.attendance}</p>
           <p>{data?.halqaActivityId?.darseQuran?.title}</p>
-          
         </div>
       </div>
 
@@ -286,7 +287,7 @@ export const HalqaReport = () => {
         }}
         className="tableContainer"
       >
-        <h3 style={{ textAlign: "start", fontWeight: "bolder" }}>توسیع دعوت</h3>
+        <h3 style={{ textAlign: "start", fontWeight: "bolder",marginTop:"8px" }}>توسیع دعوت</h3>
         <h3 style={{ textAlign: "start", fontWeight: "bold" }}>روابط</h3>
         <div
           style={{
@@ -304,14 +305,27 @@ export const HalqaReport = () => {
             موجودہ :{data?.tdId?.current}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            ملاقاتوں کی تعداد:{data?.tdId?.meetings}
+          روابط سے ملاقاتوں کا ہدف:{data?.tdId?.rwabitMeetingsGoal}
           </h6>
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+          ملاقاتوں کی تعداد:{data?.tdId?.meetings}
+          </h6>
+        
           <h6 style={{ width: "100%", textAlign: "start" }}>
             تقسیم لٹریچر:{data?.tdId?.literatureDistribution}
           </h6>
-          <h6 style={{ width: "100%", textAlign: "start" }}>
-            روابط رجسٹر مرتب:{data?.tdId?.registered ? "ہاں" : "نہیں"}
-          </h6>
+          
+            <h6 style={{ width: "100%", textAlign: "start", display:"flex" }}>
+             روابط رجسٹر مرتب:
+             <input
+              type="checkbox"
+              className="w-8 mr-4 h-8"
+              checked={data?.tdId?.registered ? true : false}
+            />
+            </h6>
+            
+       
+         
         </div>
         <h3 style={{ textAlign: "start", fontWeight: "bold" }}>عام طلبہ</h3>
         <div
@@ -338,6 +352,7 @@ export const HalqaReport = () => {
             alignItems: "center",
             marginBottom: "1rem",
             width: "100%",
+            marginTop:"8px"
           }}
         >
           <h6 style={{ width: "100%", textAlign: "start" }}>
@@ -354,11 +369,15 @@ export const HalqaReport = () => {
             اجراےَ کتب :{data?.halqaLibId?.bookRent}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            لائبریری رجسٹر مرتب :{data?.halqaLibId?.registered ? "ہاں" : "نہیں"}
+            لائبریری رجسٹر مرتب : <input
+              type="checkbox"
+              className="w-8 mr-4 h-8"
+              checked={data?.halqaLibId?.registered ? true : false}
+            />
           </h6>
         </div>
 
-        <h3 style={{ textAlign: "start", fontWeight: "bolder" }}>
+        <h3 style={{ textAlign: "start", fontWeight: "bolder",marginBottom:"8px" }}>
           روز شب ڈائری
         </h3>
         <div
@@ -372,9 +391,6 @@ export const HalqaReport = () => {
         >
           <h6 style={{ width: "100%", textAlign: "start" }}>
             کتنے امیدوران فل کرتے ہیں :{data?.rsdId?.umeedwaranFilled}
-          </h6>
-          <h6 style={{ width: "100%", textAlign: "start" }}>
-            کتنے ارکان فل کرتے ہیں :{data?.rsdId?.arkanFilled}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
             کتنےرفقا فل کرتے ہیں :{data?.rsdId?.rafaqaFilled}
