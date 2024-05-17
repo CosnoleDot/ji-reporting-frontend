@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
-import "./MaqamReport.css";
+import "./MarkazReport.css";
 import { useParams } from "react-router-dom";
 import instance from "../../api/instrance";
 import { PrintDocument } from "../../components";
-
-export const MaqamReport = () => {
+export const MarkazReport = () => {
   const [data, setData] = useState();
   const params = useParams();
   const printReport = async (id) => {
-    const req = await instance.get(`/reports/maqam/${id}`, {
+    const req = await instance.get(`/reports/province/${id}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("@token")}`,
@@ -21,12 +20,12 @@ export const MaqamReport = () => {
   useEffect(() => {
     if (params?.id) printReport(params?.id);
   }, [params]);
-  console.log(data, "asd");
+console.log(data,'asd')
   return (
     <div className="wrapper reports" style={{ marginBottom: "2rem" }} dir="rtl">
       <PrintDocument />
       <h3 style={{ textAlign: "center", fontWeight: "bold" }}>
-        جائزہ کارکردگی رپورٹ برائے منتخب مقام
+        جائزہ کارکردگی رپورٹ برائے صوبہ
       </h3>
       <div
         style={{
@@ -37,10 +36,8 @@ export const MaqamReport = () => {
         }}
         className="tableContainer"
       >
-        <h4 className="header"> مقام کا نام:</h4>
-        <h6>
-          {data?.maqamAreaId?.name}- ({data?.maqamAreaId?.province?.name})
-        </h6>
+        <h4 className="header">صوبے کا نام: </h4>
+        <h6>{data?.provinceAreaId?.name}</h6>
         <h4 className="header">برائے ماہ:</h4>
         <h6>{data?.month.split("T")[0]}</h6>
       </div>
@@ -68,7 +65,7 @@ export const MaqamReport = () => {
           <strong>اختتام پر</strong>
         </p>
         <p className="header" style={{ width: "100%" }}>
-          <strong> اضافہ کا ماہانہ ہدف:</strong>
+          <strong>ماہانہ ہدف</strong>
         </p>
       </div>
       <div
@@ -161,7 +158,7 @@ export const MaqamReport = () => {
           <strong>اختتام پر</strong>
         </p>
         <p className="header" style={{ width: "100%" }}>
-          <strong>اضافہ کا ماہانہ ہدف:</strong>
+          <strong>ماہانہ ہدف</strong>
         </p>
       </div>
       <div
@@ -240,16 +237,13 @@ export const MaqamReport = () => {
           <strong>کمی</strong>
         </p>
         <p className="header" style={{ width: "100%" }}>
-          <strong>اختتام پر</strong>
-        </p>
-        <p className="header" style={{ width: "100%" }}>
-          <strong>فعال</strong>
+          <strong>اختتام</strong>
         </p>
         <p className="header" style={{ width: "100%" }}>
           <strong>غیرفعال</strong>
         </p>
         <p className="header" style={{ width: "100%" }}>
-          <strong>اضافہ کا ماہانہ ہدف:</strong>
+          <strong>فعال</strong>
         </p>
       </div>
       <div
@@ -261,133 +255,122 @@ export const MaqamReport = () => {
         className="tableContainer"
       >
         <div className="row">
-          <p className="header">رہائشی حلقے</p>
-          <p>{data?.maqamTanzeemId?.rehaishHalqay?.start}</p>
-          <p>{data?.maqamTanzeemId?.rehaishHalqay?.increase}</p>
-          <p>{data?.maqamTanzeemId?.rehaishHalqay?.decrease}</p>
+          <p className="header">رِہائشی حلقے</p>
+          <p>{data?.provinceTanzeemId?.rehaishHalqay?.start}</p>
+          <p>{data?.provinceTanzeemId?.rehaishHalqay?.increase}</p>
+          <p>{data?.provinceTanzeemId?.rehaishHalqay?.decrease}</p>
           <p>
-            {data?.maqamTanzeemId?.rehaishHalqay?.start +
-              data?.maqamTanzeemId?.rehaishHalqay?.increase -
-              data?.maqamTanzeemId?.rehaishHalqay?.decrease}
+            {data?.provinceTanzeemId?.rehaishHalqay?.start +
+              data?.provinceTanzeemId?.rehaishHalqay?.increase -
+              data?.provinceTanzeemId?.rehaishHalqay?.decrease}
           </p>
-          <p>{data?.maqamTanzeemId?.rehaishHalqay?.continue}</p>
-          <p>{data?.maqamTanzeemId?.rehaishHalqay?.paused}</p>
-          <p>{data?.maqamTanzeemId?.rehaishHalqay?.monthly}</p>
-        
-          
+          <p>{data?.provinceTanzeemId?.rehaishHalqay?.paused}</p>
+          <p>{data?.provinceTanzeemId?.rehaishHalqay?.continue}</p>
         </div>
         <div className="row">
           <p className="header"> تعلیمی حلقے</p>
-          <p>{data?.maqamTanzeemId?.taleemHalqay?.start}</p>
-          <p>{data?.maqamTanzeemId?.taleemHalqay?.increase}</p>
-          <p>{data?.maqamTanzeemId?.taleemHalqay?.decrease}</p>
+          <p>{data?.provinceTanzeemId?.taleemHalqay?.start}</p>
+          <p>{data?.provinceTanzeemId?.taleemHalqay?.increase}</p>
+          <p>{data?.provinceTanzeemId?.taleemHalqay?.decrease}</p>
           <p>
-            {data?.maqamTanzeemId?.taleemHalqay?.start +
-              data?.maqamTanzeemId?.taleemHalqay?.increase -
-              data?.maqamTanzeemId?.taleemHalqay?.decrease}
+            {data?.provinceTanzeemId?.taleemHalqay?.start +
+              data?.provinceTanzeemId?.taleemHalqay?.increase -
+              data?.provinceTanzeemId?.taleemHalqay?.decrease}
           </p>
-          <p>{data?.maqamTanzeemId?.taleemHalqay?.continue}</p>
-          <p>{data?.maqamTanzeemId?.taleemHalqay?.paused}</p>
-          <p>{data?.maqamTanzeemId?.taleemHalqay?.monthly}</p>
+          <p>{data?.provinceTanzeemId?.taleemHalqay?.paused}</p>
+          <p>{data?.provinceTanzeemId?.taleemHalqay?.continue}</p>
         </div>
         <div className="row">
           <p className="header">کل حلقے</p>
-          <p>{data?.maqamTanzeemId?.totalHalqay?.start}</p>
-          <p>{data?.maqamTanzeemId?.totalHalqay?.increase}</p>
-          <p>{data?.maqamTanzeemId?.totalHalqay?.decrease}</p>
+          <p>{data?.provinceTanzeemId?.totalHalqay?.start}</p>
+          <p>{data?.provinceTanzeemId?.totalHalqay?.increase}</p>
+          <p>{data?.provinceTanzeemId?.totalHalqay?.decrease}</p>
           <p>
-            {data?.maqamTanzeemId?.totalHalqay?.start +
-              data?.maqamTanzeemId?.totalHalqay?.increase -
-              data?.maqamTanzeemId?.totalHalqay?.decrease}
+            {data?.provinceTanzeemId?.totalHalqay?.start +
+              data?.provinceTanzeemId?.totalHalqay?.increase -
+              data?.provinceTanzeemId?.totalHalqay?.decrease}
           </p>
-          <p>{data?.maqamTanzeemId?.totalHalqay?.continue}</p>
-          <p>{data?.maqamTanzeemId?.totalHalqay?.paused}</p>
-          <p>{data?.maqamTanzeemId?.totalHalqay?.monthly}</p>
+          <p>{data?.provinceTanzeemId?.totalHalqay?.paused}</p>
+          <p>{data?.provinceTanzeemId?.totalHalqay?.continue}</p>
         </div>
         <div className="row">
-          <p className="header">رہائشی زیلی حلقے</p>
-          <p>{data?.maqamTanzeemId?.subRehaishHalqay?.start}</p>
-          <p>{data?.maqamTanzeemId?.subRehaishHalqay?.increase}</p>
-          <p>{data?.maqamTanzeemId?.subRehaishHalqay?.decrease}</p>
+          <p className="header">رِہائشی زیلی حلقے</p>
+          <p>{data?.provinceTanzeemId?.subRehaishHalqay?.start}</p>
+          <p>{data?.provinceTanzeemId?.subRehaishHalqay?.increase}</p>
+          <p>{data?.provinceTanzeemId?.subRehaishHalqay?.decrease}</p>
           <p>
-            {data?.maqamTanzeemId?.subRehaishHalqay?.start +
-              data?.maqamTanzeemId?.subRehaishHalqay?.increase -
-              data?.maqamTanzeemId?.subRehaishHalqay?.decrease}
+            {data?.provinceTanzeemId?.subRehaishHalqay?.start +
+              data?.provinceTanzeemId?.subRehaishHalqay?.increase -
+              data?.provinceTanzeemId?.subRehaishHalqay?.decrease}
           </p>
-          <p>{data?.maqamTanzeemId?.subRehaishHalqay?.continue}</p>
-          <p>{data?.maqamTanzeemId?.subRehaishHalqay?.paused}</p>
-          <p>{data?.maqamTanzeemId?.subRehaishHalqay?.monthly}</p>
+          <p>{data?.provinceTanzeemId?.subRehaishHalqay?.paused}</p>
+          <p>{data?.provinceTanzeemId?.subRehaishHalqay?.continue}</p>
         </div>
         <div className="row">
           <p className="header">تعلیمی زیلی حلقے</p>
-          <p>{data?.maqamTanzeemId?.subTaleemHalqay?.start}</p>
-          <p>{data?.maqamTanzeemId?.subTaleemHalqay?.increase}</p>
-          <p>{data?.maqamTanzeemId?.subTaleemHalqay?.decrease}</p>
+          <p>{data?.provinceTanzeemId?.subTaleemHalqay?.start}</p>
+          <p>{data?.provinceTanzeemId?.subTaleemHalqay?.increase}</p>
+          <p>{data?.provinceTanzeemId?.subTaleemHalqay?.decrease}</p>
           <p>
-            {data?.maqamTanzeemId?.subTaleemHalqay?.start +
-              data?.maqamTanzeemId?.subTaleemHalqay?.increase -
-              data?.maqamTanzeemId?.subTaleemHalqay?.decrease}
+            {data?.provinceTanzeemId?.subTaleemHalqay?.start +
+              data?.provinceTanzeemId?.subTaleemHalqay?.increase -
+              data?.provinceTanzeemId?.subTaleemHalqay?.decrease}
           </p>
-          <p>{data?.maqamTanzeemId?.subTaleemHalqay?.continue}</p>
-          <p>{data?.maqamTanzeemId?.subTaleemHalqay?.paused}</p>
-          <p>{data?.maqamTanzeemId?.subTaleemHalqay?.monthly}</p>
+          <p>{data?.provinceTanzeemId?.subTaleemHalqay?.paused}</p>
+          <p>{data?.provinceTanzeemId?.subTaleemHalqay?.continue}</p>
         </div>
         <div className="row">
           <p className="header">کل زیلی حلقے</p>
-          <p>{data?.maqamTanzeemId?.subTotalHalqay?.start}</p>
-          <p>{data?.maqamTanzeemId?.subTotalHalqay?.increase}</p>
-          <p>{data?.maqamTanzeemId?.subTotalHalqay?.decrease}</p>
+          <p>{data?.provinceTanzeemId?.subTotalHalqay?.start}</p>
+          <p>{data?.provinceTanzeemId?.subTotalHalqay?.increase}</p>
+          <p>{data?.provinceTanzeemId?.subTotalHalqay?.decrease}</p>
           <p>
-            {data?.maqamTanzeemId?.subTotalHalqay?.start +
-              data?.maqamTanzeemId?.subTotalHalqay?.increase -
-              data?.maqamTanzeemId?.subTotalHalqay?.decrease}
+            {data?.provinceTanzeemId?.subTotalHalqay?.start +
+              data?.provinceTanzeemId?.subTotalHalqay?.increase -
+              data?.provinceTanzeemId?.subTotalHalqay?.decrease}
           </p>
-          <p>{data?.maqamTanzeemId?.subTotalHalqay?.continue}</p>
-          <p>{data?.maqamTanzeemId?.subTotalHalqay?.paused}</p>
-          <p>{data?.maqamTanzeemId?.subTotalHalqay?.monthly}</p>
+          <p>{data?.provinceTanzeemId?.subTotalHalqay?.paused}</p>
+          <p>{data?.provinceTanzeemId?.subTotalHalqay?.continue}</p>
         </div>
 
         <div className="row">
           <p className="header">بزم کے سکول یونٹس</p>
-          <p>{data?.maqamTanzeemId?.busmSchoolUnits?.start}</p>
-          <p>{data?.maqamTanzeemId?.busmSchoolUnits?.increase}</p>
-          <p>{data?.maqamTanzeemId?.busmSchoolUnits?.decrease}</p>
+          <p>{data?.provinceTanzeemId?.busmSchoolUnits?.start}</p>
+          <p>{data?.provinceTanzeemId?.busmSchoolUnits?.increase}</p>
+          <p>{data?.provinceTanzeemId?.busmSchoolUnits?.decrease}</p>
           <p>
-            {data?.maqamTanzeemId?.busmSchoolUnits?.start +
-              data?.maqamTanzeemId?.busmSchoolUnits?.increase -
-              data?.maqamTanzeemId?.busmSchoolUnits?.decrease}
+            {data?.provinceTanzeemId?.busmSchoolUnits?.start +
+              data?.provinceTanzeemId?.busmSchoolUnits?.increase -
+              data?.provinceTanzeemId?.busmSchoolUnits?.decrease}
           </p>
-          <p>{data?.maqamTanzeemId?.busmSchoolUnits?.continue}</p>
-          <p>{data?.maqamTanzeemId?.busmSchoolUnits?.paused}</p>
-          <p>{data?.maqamTanzeemId?.busmSchoolUnits?.monthly}</p>
+          <p>{data?.provinceTanzeemId?.busmSchoolUnits?.paused}</p>
+          <p>{data?.provinceTanzeemId?.busmSchoolUnits?.continue}</p>
         </div>
         <div className="row">
-          <p className="header">بزم کے رہائشی یونٹس</p>
-          <p>{data?.maqamTanzeemId?.busmRehaishUnits?.start}</p>
-          <p>{data?.maqamTanzeemId?.busmRehaishUnits?.increase}</p>
-          <p>{data?.maqamTanzeemId?.busmRehaishUnits?.decrease}</p>
+          <p className="header">بزم کے رِہائشی یونٹس</p>
+          <p>{data?.provinceTanzeemId?.busmRehaishUnits?.start}</p>
+          <p>{data?.provinceTanzeemId?.busmRehaishUnits?.increase}</p>
+          <p>{data?.provinceTanzeemId?.busmRehaishUnits?.decrease}</p>
           <p>
-            {data?.maqamTanzeemId?.busmRehaishUnits?.start +
-              data?.maqamTanzeemId?.busmRehaishUnits?.increase -
-              data?.maqamTanzeemId?.busmRehaishUnits?.decrease}
+            {data?.provinceTanzeemId?.busmRehaishUnits?.start +
+              data?.provinceTanzeemId?.busmRehaishUnits?.increase -
+              data?.provinceTanzeemId?.busmRehaishUnits?.decrease}
           </p>
-          <p>{data?.maqamTanzeemId?.busmRehaishUnits?.continue}</p>
-          <p>{data?.maqamTanzeemId?.busmRehaishUnits?.paused}</p>
-          <p>{data?.maqamTanzeemId?.busmRehaishUnits?.monthly}</p>
+          <p>{data?.provinceTanzeemId?.busmRehaishUnits?.paused}</p>
+          <p>{data?.provinceTanzeemId?.busmRehaishUnits?.continue}</p>
         </div>
         <div className="row">
           <p className="header">بزم کے کل یونٹس</p>
-          <p>{data?.maqamTanzeemId?.busmTotalUnits?.start}</p>
-          <p>{data?.maqamTanzeemId?.busmTotalUnits?.increase}</p>
-          <p>{data?.maqamTanzeemId?.busmTotalUnits?.decrease}</p>
+          <p>{data?.provinceTanzeemId?.busmTotalUnits?.start}</p>
+          <p>{data?.provinceTanzeemId?.busmTotalUnits?.increase}</p>
+          <p>{data?.provinceTanzeemId?.busmTotalUnits?.decrease}</p>
           <p>
-            {data?.maqamTanzeemId?.busmTotalUnits?.start +
-              data?.maqamTanzeemId?.busmTotalUnits?.increase -
-              data?.maqamTanzeemId?.busmTotalUnits?.decrease}
+            {data?.provinceTanzeemId?.busmTotalUnits?.start +
+              data?.provinceTanzeemId?.busmTotalUnits?.increase -
+              data?.provinceTanzeemId?.busmTotalUnits?.decrease}
           </p>
-          <p>{data?.maqamTanzeemId?.busmTotalUnits?.continue}</p>
-          <p>{data?.maqamTanzeemId?.busmTotalUnits?.paused}</p>
-          <p>{data?.maqamTanzeemId?.busmTotalUnits?.monthly}</p>
+          <p>{data?.provinceTanzeemId?.busmTotalUnits?.paused}</p>
+          <p>{data?.provinceTanzeemId?.busmTotalUnits?.continue}</p>
         </div>
       </div>
       <div
@@ -397,7 +380,6 @@ export const MaqamReport = () => {
           alignItems: "center",
           width: "100%",
         }}
-        className="tableContainer"
       >
         <p className="header" style={{ width: "100%", padding: "8px 5px" }}>
           <strong>افرادی قوت</strong>
@@ -415,7 +397,7 @@ export const MaqamReport = () => {
           <strong>اختتام پر</strong>
         </p>
         <p className="header" style={{ width: "100%" }}>
-          <strong>اضافہ کا ماہانہ ہدف:</strong>
+          <strong>ماہانہ ہدف</strong>
         </p>
       </div>
       <div
@@ -428,80 +410,79 @@ export const MaqamReport = () => {
       >
         <div className="row">
           <p className="header">ارکان</p>
-          <p>{data?.wiId?.arkan?.start}</p>
-          <p>{data?.wiId?.arkan?.increase}</p>
-          <p>{data?.wiId?.arkan?.decrease}</p>
+          <p>{data?.provinceWorkerInfoId?.arkan?.startSum}</p>
+          <p>{data?.provinceWorkerInfoId?.arkan?.increaseSum}</p>
+          <p>{data?.provinceWorkerInfoId?.arkan?.decreaseSum}</p>
           <p>
-            {data?.wiId?.arkan?.start +
-              data?.wiId?.arkan?.increase -
-              data?.wiId?.arkan?.decrease}
+            {data?.provinceWorkerInfoId?.arkan?.startSum +
+              data?.provinceWorkerInfoId?.arkan?.increaseSum -
+              data?.provinceWorkerInfoId?.arkan?.decreaseSum}
           </p>
-          <p>{data?.wiId?.arkan?.monthly}</p>
-          {/* <p>{data?.wiId?.arkan?.}</p> */}
+          <p>{data?.provinceWorkerInfoId?.arkan?.monthly}</p>
         </div>
         <div className="row">
           <p className="header">امیدواران </p>
-          <p>{data?.wiId?.umeedWaran?.start}</p>
-          <p>{data?.wiId?.umeedWaran?.increase}</p>
-          <p>{data?.wiId?.umeedWaran?.decrease}</p>
+          <p>{data?.provinceWorkerInfoId?.umeedWaran?.startSum}</p>
+          <p>{data?.provinceWorkerInfoId?.umeedWaran?.increaseSum}</p>
+          <p>{data?.provinceWorkerInfoId?.umeedWaran?.decreaseSum}</p>
           <p>
-            {data?.wiId?.umeedWaran?.start +
-              data?.wiId?.umeedWaran?.increase -
-              data?.wiId?.umeedWaran?.decrease}
+            {data?.provinceWorkerInfoId?.umeedWaran?.startSum +
+              data?.provinceWorkerInfoId?.umeedWaran?.increaseSum -
+              data?.provinceWorkerInfoId?.umeedWaran?.decreaseSum}
           </p>
-          <p>{data?.wiId?.umeedWaran?.monthly}</p>
+          <p>{data?.provinceWorkerInfoId?.umeedWaran?.monthly}</p>
           {/* <p>Data 3</p> */}
         </div>
         <div className="row">
           <p className="header">رفقا </p>
-          <p>{data?.wiId?.rafaqa?.start}</p>
-          <p>{data?.wiId?.rafaqa?.increase}</p>
-          <p>{data?.wiId?.rafaqa?.decrease}</p>
+          <p>{data?.provinceWorkerInfoId?.rafaqa?.startSum}</p>
+          <p>{data?.provinceWorkerInfoId?.rafaqa?.increaseSum}</p>
+          <p>{data?.provinceWorkerInfoId?.rafaqa?.decreaseSum}</p>
           <p>
-            {data?.wiId?.rafaqa?.start +
-              data?.wiId?.rafaqa?.increase -
-              data?.wiId?.rafaqa?.decrease}
+            {data?.provinceWorkerInfoId?.rafaqa?.startSum +
+              data?.provinceWorkerInfoId?.rafaqa?.increaseSum -
+              data?.provinceWorkerInfoId?.rafaqa?.decreaseSum}
           </p>
-          <p>{data?.wiId?.rafaqa?.monthly}</p>
+          <p>{data?.provinceWorkerInfoId?.rafaqa?.monthly}</p>
           {/* <p>Data 3</p> */}
         </div>
         <div className="row">
           <p className="header">کارکنان </p>
-          <p>{data?.wiId?.karkunan?.start}</p>
-          <p>{data?.wiId?.karkunan?.increase}</p>
-          <p>{data?.wiId?.karkunan?.decrease}</p>
+          <p>{data?.provinceWorkerInfoId?.karkunan?.startSum}</p>
+          <p>{data?.provinceWorkerInfoId?.karkunan?.increaseSum}</p>
+          <p>{data?.provinceWorkerInfoId?.karkunan?.decreaseSum}</p>
           <p>
-            {data?.wiId?.karkunan?.start +
-              data?.wiId?.karkunan?.increase -
-              data?.wiId?.karkunan?.decrease}
+            {data?.provinceWorkerInfoId?.karkunan?.startSum +
+              data?.provinceWorkerInfoId?.karkunan?.increaseSum -
+              data?.provinceWorkerInfoId?.karkunan?.decreaseSum}
           </p>
-          <p>{data?.wiId?.karkunan?.monthly}</p>
+          <p>{data?.provinceWorkerInfoId?.karkunan?.monthly}</p>
           {/* <p>Data 3</p> */}
         </div>
         <div className="row">
           <p className="header"> شاہین</p>
-          <p>{data?.wiId?.shaheen?.start}</p>
-          <p>{data?.wiId?.shaheen?.increase}</p>
-          <p>{data?.wiId?.shaheen?.decrease}</p>
+          <p>{data?.provinceWorkerInfoId?.shaheen?.startSum}</p>
+          <p>{data?.provinceWorkerInfoId?.shaheen?.increaseSum}</p>
+          <p>{data?.provinceWorkerInfoId?.shaheen?.decreaseSum}</p>
           <p>
-            {data?.wiId?.shaheen?.start +
-              data?.wiId?.shaheen?.increase -
-              data?.wiId?.shaheen?.decrease}
+            {data?.provinceWorkerInfoId?.shaheen?.startSum +
+              data?.provinceWorkerInfoId?.shaheen?.increaseSum -
+              data?.provinceWorkerInfoId?.shaheen?.decreaseSum}
           </p>
-          <p>{data?.wiId?.shaheen?.monthly}</p>
+          <p>{data?.provinceWorkerInfoId?.shaheen?.monthly}</p>
           {/* <p>Data 3</p> */}
         </div>
         <div className="row">
           <p className="header">ممبرز </p>
-          <p>{data?.wiId?.members?.start}</p>
-          <p>{data?.wiId?.members?.increase}</p>
-          <p>{data?.wiId?.members?.decrease}</p>
+          <p>{data?.provinceWorkerInfoId?.members?.startSum}</p>
+          <p>{data?.provinceWorkerInfoId?.members?.increaseSum}</p>
+          <p>{data?.provinceWorkerInfoId?.members?.decreaseSum}</p>
           <p>
-            {data?.wiId?.members?.start +
-              data?.wiId?.members?.increase -
-              data?.wiId?.members?.decrease}
+            {data?.provinceWorkerInfoId?.members?.startSum +
+              data?.provinceWorkerInfoId?.members?.increaseSum -
+              data?.provinceWorkerInfoId?.members?.decreaseSum}
           </p>
-          <p>{data?.wiId?.members?.monthly}</p>
+          <p>{data?.provinceWorkerInfoId?.members?.monthly}</p>
           {/* <p>Data 3</p> */}
         </div>
       </div>
@@ -525,7 +506,6 @@ export const MaqamReport = () => {
         <p className="header">
           <strong>اوسط حاضری</strong>
         </p>
-        
       </div>
       <div
         style={{
@@ -536,39 +516,40 @@ export const MaqamReport = () => {
         className="tableContainer"
       >
         <div className="row">
+          <p className="header"> ڈویژنل مشاورات</p>
+          <p>{data?.provinceActivityId?.divMushawarat?.decided}</p>
+          <p>{data?.provinceActivityId?.divMushawarat?.done}</p>
+          <p>{data?.provinceActivityId?.divMushawarat?.averageAttendance}</p>
+        </div>
+        <div className="row">
           <p className="header">اجتماع ارکان</p>
-          <p>{data?.maqamActivityId?.ijtArkan?.decided}</p>
-          <p>{data?.maqamActivityId?.ijtArkan?.done}</p>
-          <p>{data?.maqamActivityId?.ijtArkan?.averageAttendance}</p>
-         
+          <p>{data?.provinceActivityId?.ijtArkan?.decided}</p>
+          <p>{data?.provinceActivityId?.ijtArkan?.done}</p>
+          <p>{data?.provinceActivityId?.ijtArkan?.averageAttendance}</p>
         </div>
         <div className="row">
-          <p className="header">سٹڈی سرکل</p>
-          <p>{data?.maqamActivityId?.studyCircle?.decided}</p>
-          <p>{data?.maqamActivityId?.studyCircle?.done}</p>
-          <p>{data?.maqamActivityId?.studyCircle?.averageAttendance}</p>
-        
+          <p className="header">اجتماع ناظمین </p>
+          <p>{data?.provinceActivityId?.ijtNazmeen?.decided}</p>
+          <p>{data?.provinceActivityId?.ijtNazmeen?.done}</p>
+          <p>{data?.provinceActivityId?.ijtNazmeen?.averageAttendance}</p>
         </div>
         <div className="row">
-          <p className="header">اجتماعِ ناظمین </p>
-          <p>{data?.maqamActivityId?.ijtNazmeen?.decided}</p>
-          <p>{data?.maqamActivityId?.ijtNazmeen?.done}</p>
-          <p>{data?.maqamActivityId?.ijtNazmeen?.averageAttendance}</p>
-        
+          <p className="header">اجتماع امیدوران </p>
+          <p>{data?.provinceActivityId?.ijtUmeedwaran?.decided}</p>
+          <p>{data?.provinceActivityId?.ijtUmeedwaran?.done}</p>
+          <p>{data?.provinceActivityId?.ijtUmeedwaran?.averageAttendance}</p>
         </div>
         <div className="row">
-          <p className="header">اجتماعِ امیدوران </p>
-          <p>{data?.maqamActivityId?.ijtUmeedwaran?.decided}</p>
-          <p>{data?.maqamActivityId?.ijtUmeedwaran?.done}</p>
-          <p>{data?.maqamActivityId?.ijtUmeedwaran?.averageAttendance}</p>
-       
+          <p className="header">سٹڈی  سرکل </p>
+          <p>{data?.provinceActivityId?.studyCircle?.decided}</p>
+          <p>{data?.provinceActivityId?.studyCircle?.done}</p>
+          <p>{data?.provinceActivityId?.studyCircle?.averageAttendance}</p>
         </div>
         <div className="row">
           <p className="header"> صدور میٹینگ</p>
-          <p>{data?.maqamActivityId?.sadurMeeting?.decided}</p>
-          <p>{data?.maqamActivityId?.sadurMeeting?.done}</p>
-          <p>{data?.maqamActivityId?.sadurMeeting?.averageAttendance}</p>
-         
+          <p>{data?.provinceActivityId?.sadurMeeting?.decided}</p>
+          <p>{data?.provinceActivityId?.sadurMeeting?.done}</p>
+          <p>{data?.provinceActivityId?.sadurMeeting?.averageAttendance}</p>
         </div>
       </div>
       <div
@@ -607,13 +588,13 @@ export const MaqamReport = () => {
           <p>{data?.mentionedActivityId?.ijtRafaqa?.averageAttendance}</p>
         </div>
         <div className="row">
-          <p className="header">سٹڈی سرکل </p>
+          <p className="header">سٹڈی  سرکل </p>
           <p>{data?.mentionedActivityId?.studyCircle?.decided}</p>
           <p>{data?.mentionedActivityId?.studyCircle?.done}</p>
           <p>{data?.mentionedActivityId?.studyCircle?.averageAttendance}</p>
         </div>
         <div className="row">
-          <p className="header">اجتماعِ کارکنان </p>
+          <p className="header">اجتماع کارکنان </p>
           <p>{data?.mentionedActivityId?.ijtKarkunan?.decided}</p>
           <p>{data?.mentionedActivityId?.ijtKarkunan?.done}</p>
           <p>{data?.mentionedActivityId?.ijtKarkunan?.averageAttendance}</p>
@@ -637,9 +618,11 @@ export const MaqamReport = () => {
           <p>{data?.mentionedActivityId?.paighamEvent?.averageAttendance}</p>
         </div>
       </div>
-      <div className="flex w-full items-start justify-start font-bold p-2 ">
+      <h3
+        style={{ textAlign: "start", fontWeight: "bold", marginBottom: "1rem" }}
+      >
         دیگر سرگرمیاں
-      </div>
+      </h3>
       <div
         style={{
           display: "flex",
@@ -649,6 +632,9 @@ export const MaqamReport = () => {
         }}
         className="tableContainer"
       >
+        <h6 style={{ width: "100%", textAlign: "start" }}>
+          تربیت گاہ:{data?.otherActivityId?.tarbiyatGaah}
+        </h6>
         <h6 style={{ width: "100%", textAlign: "start" }}>
           دعوتی وفود:{data?.otherActivityId?.dawatiWafud}
         </h6>
@@ -661,7 +647,9 @@ export const MaqamReport = () => {
         <h6 style={{ width: "100%", textAlign: "start" }}>
           نِطام الصلوۃ:{data?.otherActivityId?.nizamSalah}
         </h6>
-    
+        <h6 style={{ width: "100%", textAlign: "start" }}>
+          تنظیمی دورہ:{data?.otherActivityId?.tanzeemiRound}
+        </h6>
       </div>
       <div
         style={{
@@ -669,12 +657,13 @@ export const MaqamReport = () => {
           alignItems: "flex-start",
           justifyContent: "flex-start",
           textAlign: "start",
-          flexDirection: "row",
+          flexDirection: "column",
           gap: "10px",
+          marginBottom: "1rem",
         }}
-        className="tableContainer mb-4"
+        className="tableContainer"
       >
-        <h3>کوئی اور سرگرمی:</h3>
+        <h3>کوئی اور سرگرمی</h3>
         <h6>{data?.otherActivityId?.anyOther}</h6>
       </div>
       <div
@@ -688,7 +677,7 @@ export const MaqamReport = () => {
         }}
         className="tableContainer"
       >
-        <h3 style={{ textAlign: "start", fontWeight: "bolder" }}>توسیع دعوت</h3>
+        <h3 style={{ textAlign: "start", fontWeight: "bolder",marginTop:"8px" }}>توسیع دعوت</h3>
         <h3 style={{ textAlign: "start", fontWeight: "bold" }}>روابط</h3>
         <div
           style={{
@@ -698,20 +687,29 @@ export const MaqamReport = () => {
             marginBottom: "1rem",
             width: "100%",
           }}
-          className="tableContainer"
         >
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            طے شدہ:{data?.muntakhibTdId?.rawabitDecided}
+            طے شدہ:{data?.tdId?.rawabitDecided}
+          </h6>
+          
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+          روابط سے ملاقاتوں کا ہدف:{data?.tdId?.rwabitMeetingsGoal}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            موجودہ :{data?.muntakhibTdId?.currentSum}
+          موجود :{data?.tdId?.current}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            ملاقاتیں:{data?.muntakhibTdId?.meetingsSum}
+          ملاقاتیں: :{data?.tdId?.meetings}
           </h6>
+        
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            تقسیم لٹریچر:{data?.muntakhibTdId?.literatureSum}
+            تقسیم لٹریچر:{data?.tdId?.literatureDistribution}
           </h6>
+          
+           
+            
+       
+         
         </div>
         <h3 style={{ textAlign: "start", fontWeight: "bold" }}>عام طلبہ</h3>
         <div
@@ -724,10 +722,10 @@ export const MaqamReport = () => {
           }}
         >
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            ملاقاتیں:{data?.muntakhibTdId?.commonStudentMeetingsSum}
+            ملاقاتیں:{data?.tdId?.commonStudentMeetings}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            تقسیم لٹریچر:{data?.muntakhibTdId?.commonLiteratureDistributionSum}
+            تقسیم لٹریچر:{data?.tdId?.commonLiteratureDistribution}
           </h6>
         </div>
         <h3 style={{ textAlign: "start", fontWeight: "bolder" }}>لائبریری </h3>
@@ -741,19 +739,19 @@ export const MaqamReport = () => {
           }}
         >
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            کل تعداد لائبریری:{data?.maqamDivisionLibId?.totalLibraries}
+            کل تعداد لائبریری:{data?.provinceDivisionLibId?.totalLibraries}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            کل تعداد کتب:{data?.maqamDivisionLibId?.totalBooks}
+            کل تعداد کتب:{data?.provinceDivisionLibId?.totalBooks}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            اضافہ کتب :{data?.maqamDivisionLibId?.totalIncrease}
+            اضافہ کتب :{data?.provinceDivisionLibId?.totalIncrease}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            کمی کتب :{data?.maqamDivisionLibId?.totalDecrease}
+            کمی کتب :{data?.provinceDivisionLibId?.totalDecrease}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            کل اجراےَ کتب :{data?.maqamDivisionLibId?.totalBookRent}
+            کل اجراےَ کتب :{data?.provinceDivisionLibId?.totalBookRent}
           </h6>
         </div>
         <h3 style={{ textAlign: "start", fontWeight: "bolder" }}>
@@ -769,10 +767,17 @@ export const MaqamReport = () => {
           }}
         >
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            کل موصولہ :{data?.paighamDigestId?.totalReceived}
+            کل پرنٹ کردہ:
+            {data?.paighamDigestId?.totalPrinted}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            فروخت کردہ :{data?.paighamDigestId?.totalSold}
+            کل فروخت کردہ (تنظیمی) :{data?.paighamDigestId?.totalSoldTanzeemi}
+          </h6>
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+            کل فروخت کردہ(مارکیٹ):{data?.paighamDigestId?.totalSoldMarket}
+          </h6>
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+            گفٹ:{data?.paighamDigestId?.gift}
           </h6>
         </div>
         <h3 style={{ textAlign: "start", fontWeight: "bolder" }}>
@@ -788,11 +793,11 @@ export const MaqamReport = () => {
           }}
         >
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            کتنے امیدوران فل کرتے ہیں :{data?.rsdId?.umeedwaranFilledSum}
+            کتنے امیدوران فل کرتے ہیں :{data?.rsdId?.umeedwaranFilled}
           </h6>
-          
+       
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            کتنےرفقا فل کرتے ہیں :{data?.rsdId?.rafaqaFilledSum}
+            کتنےرفقا فل کرتے ہیں :{data?.rsdId?.rafaqaFilled}
           </h6>
         </div>
         <div
@@ -804,7 +809,6 @@ export const MaqamReport = () => {
             flexDirection: "column",
             gap: "10px",
           }}
-          className="tableContainer"
         >
           <h3 style={{ fontWeight: "bolder" }}> تبصرہ </h3>
           <h6>{data?.comments}</h6>

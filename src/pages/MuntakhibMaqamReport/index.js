@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import "./MaqamReport.css";
+import "./MuntakhibMaqamReport.css";
 import { useParams } from "react-router-dom";
 import instance from "../../api/instrance";
 import { PrintDocument } from "../../components";
 
-export const MaqamReport = () => {
+export const MuntakhibMaqamReport = () => {
   const [data, setData] = useState();
   const params = useParams();
   const printReport = async (id) => {

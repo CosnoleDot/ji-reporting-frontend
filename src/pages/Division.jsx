@@ -363,6 +363,8 @@ export const Division = () => {
     document.getElementById("paighamEvent-decided").value = busmTotalUnits;
     document.getElementById("shaheenMeeting-decided").value = busmTotalUnits;
   }, [totalHalqay, subTotalHalqay, busmTotalUnits]);
+  data.litrature = data['literatureDistribution']
+
   return (
     <GeneralLayout>
       <div className="reports h-[calc(100vh-64.4px-64px)] overflow-hidden overflow-y-scroll w-full">

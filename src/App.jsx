@@ -44,12 +44,14 @@ import { DoubleScrollLeftRefresh, Loader, ReportUmeedwar } from "./components";
 import { ArkanReport } from "./pages/ArkanReport";
 import { ProvinceReport } from "./pages/ProvinceReport";
 import { DivisionReport } from "./pages/DivisionReport";
-import { MaqamReport } from "./pages/MaqamReport";
 import { HalqaReport } from "./pages/HalqaReport";
 import { ResetPassword } from "./pages/ResetPassword";
 import { MaqamHalqa } from "./components/reoprtDashboards/MaqamHalqa";
 import { MuntakhibMaqamReports } from "./pages/MuntakhibMaqamReports";
 import { MarkazReport } from "./pages/MarkazReport";
+import { IlaqaReport } from "./pages/IlaqaReport";
+import { MuntakhibMaqamReport } from "./pages/MuntakhibMaqamReport";
+import { MaqamReport } from "./pages/MaqamReport";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -882,6 +884,7 @@ function App() {
                                           )
                                         }
                                       />
+                                      
                                       <Route
                                         path={"/reports/view/:id"}
                                         element={
@@ -941,13 +944,18 @@ function App() {
                                         path="/division-report/print/:id"
                                         element={<DivisionReport />}
                                       />
+                                      <Route path="/ilaqa-report/print/:id" element={<IlaqaReport/>}/>
                                       <Route
                                         path="/maqam-report/print/:id"
-                                        element={<MaqamReport />}
+                                        element={muntakhibMaqam ?<MuntakhibMaqamReport/>:<MaqamReport />}
                                       />
                                       <Route
                                         path="/halqa-report/print/:id"
                                         element={<HalqaReport />}
+                                      />
+                                      <Route
+                                        path="/country-report/print/:id"
+                                        element={<MarkazReport />}
                                       />
                                     </Routes>
                                     <LoadingScreen

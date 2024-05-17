@@ -21,6 +21,7 @@ export const DivisionReport = () => {
   useEffect(() => {
     if (params?.id) printReport(params?.id);
   }, [params]);
+  console.log(data,'asd')
   return (
     <div className="wrapper reports" style={{ marginBottom: "2rem" }} dir="rtl">
       <PrintDocument />
@@ -608,13 +609,13 @@ export const DivisionReport = () => {
         <div className="row">
           <p className="header">اجتماع کارکنان </p>
           <p>{data?.mentionedActivityId?.ijtKarkunan?.decided}</p>
-          <p>{data?.mentionedActivityId?.ijtKarkunan?.done}</p>
+          <p>{data?.mentionedActivityId?.ijtKarkunan?.sum}</p>
           <p>{data?.mentionedActivityId?.ijtKarkunan?.averageAttendance}</p>
         </div>
         <div className="row">
           <p className="header"> درس قرآن </p>
           <p>{data?.mentionedActivityId?.darseQuran?.decided}</p>
-          <p>{data?.mentionedActivityId?.darseQuran?.done}</p>
+          <p>{data?.mentionedActivityId?.darseQuran?.sum}</p>
           <p>{data?.mentionedActivityId?.darseQuran?.averageAttendance}</p>
         </div>
         <div className="row">
@@ -630,11 +631,9 @@ export const DivisionReport = () => {
           <p>{data?.mentionedActivityId?.paighamEvent?.averageAttendance}</p>
         </div>
       </div>
-      <h3
-        style={{ textAlign: "start", fontWeight: "bold", marginBottom: "1rem" }}
-      >
+     <div className="w-full flex justify-start font-bold mb-4">
         دیگر سرگرمیاں
-      </h3>
+        </div>
       <div
         style={{
           display: "flex",
@@ -666,8 +665,9 @@ export const DivisionReport = () => {
           alignItems: "flex-start",
           justifyContent: "flex-start",
           textAlign: "start",
-          flexDirection: "column",
+          flexDirection: "row",
           gap: "10px",
+          marginBottom:'4px'
         }}
         className="tableContainer"
       >
@@ -685,7 +685,7 @@ export const DivisionReport = () => {
         }}
         className="tableContainer"
       >
-        <h3 style={{ textAlign: "start", fontWeight: "bolder" }}>توسیع دعوت</h3>
+        <h3 style={{ textAlign: "start", fontWeight: "bolder",marginTop:"8px" }}>توسیع دعوت</h3>
         <h3 style={{ textAlign: "start", fontWeight: "bold" }}>روابط</h3>
         <div
           style={{
@@ -700,14 +700,23 @@ export const DivisionReport = () => {
             طے شدہ:{data?.tdId?.rawabitDecided}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            موجودہ :{data?.tdId?.current}
+            موجودہ :{data?.tdId?.currentSum}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            ملاقاتیں:{data?.tdId?.meetings}
+          روابط سے ملاقاتوں کا ہدف:{data?.tdId?.rwabitMeetingsGoal}
           </h6>
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+          ملاقاتوں کی تعداد:{data?.tdId?.meetingsSum}
+          </h6>
+        
           <h6 style={{ width: "100%", textAlign: "start" }}>
             تقسیم لٹریچر:{data?.tdId?.literatureDistribution}
           </h6>
+          
+           
+            
+       
+         
         </div>
         <h3 style={{ textAlign: "start", fontWeight: "bold" }}>عام طلبہ</h3>
         <div
@@ -770,6 +779,9 @@ export const DivisionReport = () => {
           <h6 style={{ width: "100%", textAlign: "start" }}>
             فروخت کردہ :{data?.paighamDigestId?.totalSold}
           </h6>
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+          موصول کرنے کا ماہانہ ہدف:{data?.paighamDigestId?.monthlyReceivingGoal}
+          </h6>
         </div>
         <h3 style={{ textAlign: "start", fontWeight: "bolder" }}>
           روز شب ڈائری
@@ -784,11 +796,11 @@ export const DivisionReport = () => {
           }}
         >
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            کتنے امیدوران فل کرتے ہیں :{data?.rsdId?.umeedwaranFilled}
+            کتنے امیدوران فل کرتے ہیں :{data?.rsdId?.umeedwaranFilledSum}
           </h6>
           
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            کتنےرفقا فل کرتے ہیں :{data?.rsdId?.rafaqaFilled}
+            کتنےرفقا فل کرتے ہیں :{data?.rsdId?.rafaqaFilledSum}
           </h6>
         </div>
         <div
