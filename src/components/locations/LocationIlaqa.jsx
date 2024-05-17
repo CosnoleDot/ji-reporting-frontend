@@ -2,8 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import {
   HalqaContext,
   IlaqaContext,
-  MaqamContext,
-  ProvinceContext,
   useToastState,
 } from "../../context";
 import { Link, useLocation } from "react-router-dom";
