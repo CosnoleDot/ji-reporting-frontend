@@ -21,7 +21,6 @@ export const MarkaziActivities = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`ijtArkan-decided`}
                 value={1}
@@ -33,7 +32,6 @@ export const MarkaziActivities = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`ijtArkan-done`}
                 id={`ijtArkan-done`}
@@ -44,7 +42,6 @@ export const MarkaziActivities = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`ijtArkan-averageAttendance`}
                 id={`ijtArkan-averageAttendance`}
@@ -68,7 +65,6 @@ export const MarkaziActivities = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`studyCircle-decided`}
                 value={1}
@@ -80,7 +76,6 @@ export const MarkaziActivities = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`studyCircle-done`}
                 id={`studyCircle-done`}
@@ -91,7 +86,6 @@ export const MarkaziActivities = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`studyCircle-averageAttendance`}
                 id={`studyCircle-averageAttendance`}
@@ -115,7 +109,6 @@ export const MarkaziActivities = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`ijtNazmeen-decided`}
                 value={1}
@@ -127,7 +120,6 @@ export const MarkaziActivities = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`ijtNazmeen-done`}
                 id={`ijtNazmeen-done`}
@@ -138,7 +130,6 @@ export const MarkaziActivities = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`ijtNazmeen-averageAttendance`}
                 id={`ijtNazmeen-averageAttendance`}
@@ -162,7 +153,6 @@ export const MarkaziActivities = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`ijtUmeedwaran-decided`}
                 value={2}
@@ -174,7 +164,6 @@ export const MarkaziActivities = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`ijtUmeedwaran-done`}
                 id={`ijtUmeedwaran-done`}
@@ -185,7 +174,6 @@ export const MarkaziActivities = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`ijtUmeedwaran-averageAttendance`}
                 id={`ijtUmeedwaran-averageAttendance`}
@@ -209,7 +197,6 @@ export const MarkaziActivities = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`sadurMeeting-decided`}
                 value={1}
@@ -221,7 +208,6 @@ export const MarkaziActivities = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`sadurMeeting-done`}
                 id={`sadurMeeting-done`}
@@ -232,7 +218,6 @@ export const MarkaziActivities = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`sadurMeeting-averageAttendance`}
                 id={`sadurMeeting-averageAttendance`}
