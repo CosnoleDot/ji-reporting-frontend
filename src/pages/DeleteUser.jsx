@@ -8,7 +8,6 @@ import {
   MaqamContext,
   MeContext,
   ProvinceContext,
-  DistrictContext,
   useToastState,
   IlaqaContext,
   TehsilContext,
@@ -16,7 +15,6 @@ import {
 import instance from "../api/instrance";
 import { Link } from "react-router-dom";
 import { MdOutlineUpgrade } from "react-icons/md";
-import { getDivisionByTehsil } from "./Reports";
 import { RiDeviceRecoverFill } from "react-icons/ri";
 export const DeleteUser = () => {
   const me = useContext(MeContext);
@@ -26,7 +24,6 @@ export const DeleteUser = () => {
   const maqams = useContext(MaqamContext);
   const provinces = useContext(ProvinceContext);
   const divisions = useContext(DivisionContext);
-  const districts = useContext(DistrictContext);
   const { nazim, loading, setLoading, getNazim } = useContext(UIContext);
   const [data, setData] = useState(nazim);
   const [userAreaType, setUserAreaType] = useState("");
@@ -125,8 +122,9 @@ export const DeleteUser = () => {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
+        await getNazim();
+        setData(nazim);
         if (req) {
-          await getNazim();
           dispatch({ type: "SUCCESS", payload: req.data?.message });
         }
       }
@@ -249,6 +247,9 @@ export const DeleteUser = () => {
     setNazimType("nazim");
     document.getElementById("autocomplete0").value = "";
   };
+  useEffect(() => {
+    console.log(ilaqas);
+  }, [ilaqas]);
   useEffect(() => {
     const handleClickYear = (e) => {
       if (
@@ -678,213 +679,6 @@ export const DeleteUser = () => {
                   className="w-full input input-bordered input-primary"
                 />
               </div>
-
-              {/* <div>
-                <span className="px-1 py-2 block font-semibold">
-                  Organization pocket:
-                </span>
-                <div className="flex flex-wrap items-center justify-start border border-primary p-2 rounded-lg">
-                  <div className="form-control">
-                    <label className="label cursor-pointer gap-2">
-                      <input
-                        type="radio"
-                        name="userAreaType"
-                        className="radio checked:bg-blue-500"
-                        checked={userAreaType === "Province"}
-                        value="Province"
-                        onChange={(e) => {
-                          setUserAreaType(e.target.value);
-                          setSearchArea("");
-                          document.getElementById("autocomplete").value = "";
-                        }}
-                      />
-                      <span className="label-text">Province</span>
-                    </label>
-                  </div>
-                  <div className="form-control">
-                    <label className="label cursor-pointer gap-2">
-                      <input
-                        type="radio"
-                        name="userAreaType"
-                        className="radio checked:bg-blue-500"
-                        checked={userAreaType === "Division"}
-                        value="Division"
-                        onChange={(e) => {
-                          setUserAreaType(e.target.value);
-                          setSearchArea("");
-                          document.getElementById("autocomplete").value = "";
-                        }}
-                      />
-                      <span className="label-text">Division</span>
-                    </label>
-                  </div>
-                  <div className="form-control">
-                    <label className="label cursor-pointer gap-2">
-                      <input
-                        type="radio"
-                        name="userAreaType"
-                        className="radio checked:bg-blue-500"
-                        checked={userAreaType === "Maqam"}
-                        value="Maqam"
-                        onChange={(e) => {
-                          setUserAreaType(e.target.value);
-                          setSearchArea("");
-                          document.getElementById("autocomplete").value = "";
-                        }}
-                      />
-                      <span className="label-text">Maqam</span>
-                    </label>
-                  </div>
-                  <div className="form-control">
-                    <label className="label cursor-pointer gap-2">
-                      <input
-                        type="radio"
-                        name="userAreaType"
-                        className="radio checked:bg-blue-500"
-                        checked={userAreaType === "Halqa"}
-                        value="Halqa"
-                        onChange={(e) => {
-                          setUserAreaType(e.target.value);
-                          setSearchArea("");
-                          document.getElementById("autocomplete").value = "";
-                        }}
-                      />
-                      <span className="label-text">Halqa</span>
-                    </label>
-                  </div>
-                </div>
-              </div> */}
-
-              {/* NAZIM TYPES */}
-              {/* <div>
-                <span className="px-1 py-2 block font-semibold">Status:</span>
-                <div className="flex items-center justify-between border border-primary p-2 rounded-lg">
-                  <div className="form-control">
-                    <label className="label cursor-pointer gap-2">
-                      <input
-                        type="radio"
-                        name="nazimType"
-                        className="radio checked:bg-blue-500"
-                        checked={nazimType === "nazim"}
-                        value="nazim"
-                        onChange={(e) => {
-                          setNazimType(e.target.value);
-                          setSearchArea("");
-                          document.getElementById("autocomplete").value = "";
-                        }}
-                      />
-                      <span className="label-text">Nazim</span>
-                    </label>
-                  </div>
-                  <div className="form-control">
-                    <label className="label cursor-pointer gap-2">
-                      <input
-                        type="radio"
-                        name="nazimType"
-                        className="radio checked:bg-blue-500"
-                        checked={nazimType === "rukan"}
-                        value="rukan"
-                        onChange={(e) => {
-                          setNazimType(e.target.value);
-                          setSearchArea("");
-                          document.getElementById("autocomplete").value = "";
-                        }}
-                      />
-                      <span className="label-text">Rukan</span>
-                    </label>
-                  </div>
-                  <div className="form-control">
-                    <label className="label cursor-pointer gap-2">
-                      <input
-                        type="radio"
-                        name="nazimType"
-                        className="radio checked:bg-blue-500"
-                        checked={nazimType === "umeedwaar"}
-                        value="umeedwaar"
-                        onChange={(e) => {
-                          setNazimType(e.target.value);
-                          setSearchArea("");
-                          document.getElementById("autocomplete").value = "";
-                        }}
-                      />
-                      <span className="label-text">Umeedwaar</span>
-                    </label>
-                  </div>
-                </div>
-              </div> */}
-              {/* <div className="relative">
-                <span className="px-1 py-2 block font-semibold">Area:</span>
-                <input type="hidden" name="userAreaId" id="userAreaId" />
-                <input
-                  id="autocomplete"
-                  type="text"
-                  className="input input-bordered input-primary w-full"
-                  placeholder="Select area"
-                  onChange={(e) => setSearchArea(e.target.value)}
-                  onClick={() => {
-                    if (
-                      document
-                        .getElementById("autocomplete-list")
-                        .classList.contains("hidden")
-                    ) {
-                      document
-                        .getElementById("autocomplete-list")
-                        .classList.remove("hidden");
-                    } else {
-                      document
-                        .getElementById("autocomplete-list")
-                        .classList.add("hidden");
-                    }
-                  }}
-                />
-                <div
-                  id="autocomplete-list"
-                  className="absolute hidden z-10 max-h-[100px] overflow-y-scroll bg-white border border-gray-300 w-full mt-1"
-                >
-                  {areas
-                    .sort((a, b) => a?.name?.localeCompare(b?.name))
-                    .filter((item) => {
-                      if (searchArea && searchArea !== "") {
-                        if (
-                          item?.name
-                            ?.toString()
-                            ?.toLowerCase()
-                            ?.includes(searchArea?.toString()?.toLowerCase())
-                        ) {
-                          return true;
-                        }
-                        return false;
-                      } else {
-                        return true;
-                      }
-                    })
-                    .map((area, index) => (
-                      <div
-                        key={index}
-                        onClick={() => {
-                          document.getElementById("userAreaId").value =
-                            area?._id;
-                          document.getElementById("autocomplete").value = `${
-                            area?.name
-                          }${
-                            userAreaType === "Halqa"
-                              ? ` - ${area?.parentId?.name} (${area?.parentType})`
-                              : ""
-                          }`;
-                          document
-                            .getElementById("autocomplete-list")
-                            .classList.add("hidden");
-                        }}
-                        className="p-2 cursor-pointer hover:bg-gray-100"
-                      >
-                        {area?.name}
-                        {userAreaType === "Halqa"
-                          ? ` - ${area?.parentId?.name} (${area?.parentType})`
-                          : ""}
-                      </div>
-                    ))}
-                </div>
-              </div> */}
               <button
                 type="submit"
                 className="btn btn-primary"
@@ -1174,33 +968,16 @@ export const DeleteUser = () => {
                       </div>
                     )}
 
-                    <div className="form-control">
-                      <label className="label cursor-pointer gap-2">
-                        <input
-                          type="radio"
-                          name="userAreaType"
-                          className="radio checked:bg-blue-500"
-                          checked={userAreaType === "Division"}
-                          value="Division"
-                          onChange={(e) => {
-                            setUserAreaType(e.target.value);
-                            setSearchArea("");
-                            document.getElementById("autocomplete0").value = "";
-                          }}
-                        />
-                        <span className="label-text">Division</span>
-                      </label>
-                    </div>
-                    {(me?.nazim?.toLowerCase() === "maqam" ||
-                      me?.nazim?.toLowerCase() === "country") && (
+                    {(me?.nazim?.toLowerCase() === "country" ||
+                      me?.nazim?.toLowerCase() === "province") && (
                       <div className="form-control">
                         <label className="label cursor-pointer gap-2">
                           <input
                             type="radio"
                             name="userAreaType"
                             className="radio checked:bg-blue-500"
-                            checked={userAreaType === "Ilaqa"}
-                            value="Ilaqa"
+                            checked={userAreaType === "Division"}
+                            value="Division"
                             onChange={(e) => {
                               setUserAreaType(e.target.value);
                               setSearchArea("");
@@ -1208,28 +985,54 @@ export const DeleteUser = () => {
                                 "";
                             }}
                           />
-                          <span className="label-text">Ilaqa</span>
+                          <span className="label-text">Division</span>
                         </label>
                       </div>
                     )}
-
-                    <div className="form-control">
-                      <label className="label cursor-pointer gap-2">
-                        <input
-                          type="radio"
-                          name="userAreaType"
-                          className="radio checked:bg-blue-500"
-                          checked={userAreaType === "Maqam"}
-                          value="Maqam"
-                          onChange={(e) => {
-                            setUserAreaType(e.target.value);
-                            setSearchArea("");
-                            document.getElementById("autocomplete0").value = "";
-                          }}
-                        />
-                        <span className="label-text">Maqam</span>
-                      </label>
-                    </div>
+                    {(me?.nazim?.toLowerCase() === "maqam" ||
+                      me?.nazim?.toLowerCase() === "country" ||
+                      me?.nazim?.toLowerCase() === "province") &&
+                      ilaqas?.length > 0 && (
+                        <div className="form-control">
+                          <label className="label cursor-pointer gap-2">
+                            <input
+                              type="radio"
+                              name="userAreaType"
+                              className="radio checked:bg-blue-500"
+                              checked={userAreaType === "Ilaqa"}
+                              value="Ilaqa"
+                              onChange={(e) => {
+                                setUserAreaType(e.target.value);
+                                setSearchArea("");
+                                document.getElementById("autocomplete0").value =
+                                  "";
+                              }}
+                            />
+                            <span className="label-text">Ilaqa</span>
+                          </label>
+                        </div>
+                      )}
+                    {(me?.nazim?.toLowerCase() === "country" ||
+                      me?.nazim?.toLowerCase() === "province") && (
+                      <div className="form-control">
+                        <label className="label cursor-pointer gap-2">
+                          <input
+                            type="radio"
+                            name="userAreaType"
+                            className="radio checked:bg-blue-500"
+                            checked={userAreaType === "Maqam"}
+                            value="Maqam"
+                            onChange={(e) => {
+                              setUserAreaType(e.target.value);
+                              setSearchArea("");
+                              document.getElementById("autocomplete0").value =
+                                "";
+                            }}
+                          />
+                          <span className="label-text">Maqam</span>
+                        </label>
+                      </div>
+                    )}
                     <div className="form-control">
                       <label className="label cursor-pointer gap-2">
                         <input
@@ -1355,52 +1158,65 @@ export const DeleteUser = () => {
                     id="autocomplete0-list"
                     className="absolute hidden z-10 max-h-[150px] overflow-y-scroll bg-white border border-gray-300 w-full mt-1"
                   >
-                    {areas
-                      .sort((a, b) => a?.name?.localeCompare(b?.name))
-                      .filter((item) => {
-                        if (searchArea && searchArea !== "") {
-                          if (
-                            item?.name
-                              ?.toString()
-                              ?.toLowerCase()
-                              ?.includes(searchArea?.toString()?.toLowerCase())
-                          ) {
-                            return true;
-                          }
-                          return false;
-                        } else {
-                          return true;
-                        }
-                      })
-                      .map((area, index) => (
-                        <div
-                          key={index}
-                          onClick={() => {
-                            document.getElementById("userAreaId").value =
-                              area?._id;
-                            setSelectedId(area?._id);
-                            document.getElementById("autocomplete0").value = `${
-                              area?.name
-                            }${
-                              userAreaType === "Halqa"
+                    {areas?.length > 0
+                      ? areas
+                          .sort((a, b) => a?.name?.localeCompare(b?.name))
+                          .filter((item) => {
+                            if (searchArea && searchArea !== "") {
+                              if (
+                                item?.name
+                                  ?.toString()
+                                  ?.toLowerCase()
+                                  ?.includes(
+                                    searchArea?.toString()?.toLowerCase()
+                                  )
+                              ) {
+                                return true;
+                              }
+                              return false;
+                            } else {
+                              return true;
+                            }
+                          })
+                          .map((area, index) => (
+                            <div
+                              key={index}
+                              onClick={() => {
+                                document.getElementById("userAreaId").value =
+                                  area?._id;
+                                setSelectedId(area?._id);
+                                document.getElementById(
+                                  "autocomplete0"
+                                ).value = `${area?.name}${
+                                  userAreaType === "Halqa"
+                                    ? ` - ${area?.parentId?.name} (${area?.parentType})`
+                                    : userAreaType === "Ilaqa"
+                                    ? ` - ${area?.maqam?.name} (${area?.maqam?.province?.name})`
+                                    : userAreaType === "Maqam"
+                                    ? ` - ${area?.province?.name} `
+                                    : userAreaType === "Division"
+                                    ? ` - ${area?.province?.name}`
+                                    : ""
+                                }`;
+                                document
+                                  .getElementById("autocomplete0-list")
+                                  .classList.add("hidden");
+                              }}
+                              className="p-2 cursor-pointer hover:bg-gray-100"
+                            >
+                              {area?.name}
+                              {userAreaType === "Halqa"
                                 ? ` - ${area?.parentId?.name} (${area?.parentType})`
-                                : `${area?.maqam?.name} - (${area?.maqam?.province?.name})`
-                            }`;
-                            document
-                              .getElementById("autocomplete0-list")
-                              .classList.add("hidden");
-                          }}
-                          className="p-2 cursor-pointer hover:bg-gray-100"
-                        >
-                          {userAreaType === "Halqa"
-                            ? `${getAreaType(area)}`
-                            : `${area?.name} ${
-                                area?.province?.name
-                                  ? area?.province?.name
-                                  : `${area?.maqam?.name} - (${area?.maqam?.province?.name})`
-                              }`}
-                        </div>
-                      ))}
+                                : userAreaType === "Ilaqa"
+                                ? ` - ${area?.maqam?.name} (${area?.maqam?.province?.name})`
+                                : userAreaType === "Maqam"
+                                ? ` - ${area?.province?.name} `
+                                : userAreaType === "Division"
+                                ? ` - ${area?.province?.name}`
+                                : ""}
+                            </div>
+                          ))
+                      : "No Area found"}
                   </div>
                 </div>
               </form>

@@ -170,7 +170,6 @@ export const Ilaqa = () => {
           }
         }
       }
-   
     });
     document.getElementById("studyCircle-averageAttendance").value = 0;
     document.getElementById("studyCircle-done").value = 0;
@@ -217,20 +216,18 @@ export const Ilaqa = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
+  console.log(data);
   useEffect(() => {
     Object.keys(data).forEach((i) => {
       const elem = document.getElementById(i);
       if (elem) {
         if (i === "month") {
           elem.value = data[i]?.split("")?.slice(0, 7)?.join("");
-        } 
-        else if(i ==="ijtKarkunan-sum"){
-          delete data.i
-        }
-        else if(i ==="darseQuran-sum"){
-          delete data.i
-        }
-        else {
+        } else if (i === "ijtKarkunan-sum") {
+          delete data.i;
+        } else if (i === "darseQuran-sum") {
+          delete data.i;
+        } else {
           if (elem.type === "checkbox") {
             elem.checked = data[i];
           } else {
@@ -275,7 +272,7 @@ export const Ilaqa = () => {
       if (jsonData.hasOwnProperty(key) && jsonData[key] === null) {
         jsonData[key] = 0;
       }
-    
+
       if (key === "rafaqaFilled" || key === "umeedwaranFilled") {
         const rfq = document.getElementById(`${key}-sum`).value;
         jsonData[key] = rfq;
@@ -284,12 +281,12 @@ export const Ilaqa = () => {
         delete jsonData[`${key}-sum`];
       }
     }
-   
+
     setLoading(true);
     try {
       if (id) {
         jsonData.month = data?.month;
-        console.log(jsonData,'asd')
+        console.log(jsonData, "asd");
         const req = await instance.put(`/reports/ilaqa/${id}`, jsonData, {
           headers: {
             "Content-Type": "application/json",
@@ -348,13 +345,18 @@ export const Ilaqa = () => {
       value1.value = 0;
     }
   }, [location.pathname]);
-  Object.keys(data).forEach((i)=>{
-    if(data[i]===null){
-      data[i]=0
+  Object.keys(data).forEach((i) => {
+    if (data[i] === null) {
+      data[i] = 0;
     }
-  })
- 
-  
+    if (data[i] === "rafaqaFilledSum") {
+      data[i] = 0;
+    }
+    if (data[i] === "umeedwaranFilledSum") {
+      data[i] = 0;
+    }
+  });
+
   return (
     <GeneralLayout>
       <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">

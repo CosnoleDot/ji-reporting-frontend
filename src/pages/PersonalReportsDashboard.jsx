@@ -4,7 +4,7 @@ import { FaEdit, FaEye, FaPrint } from "react-icons/fa";
 import moment from "moment";
 import instance from "../api/instrance";
 import { useNavigate } from "react-router-dom";
-import { DistrictContext, MaqamContext } from "../context";
+import { DistrictContext, MaqamContext, IlaqaContext } from "../context";
 import { getDivisionByTehsil, months } from "./Reports";
 import { MdCancel } from "react-icons/md";
 // import { ProvinceContext } from "../context";
@@ -18,25 +18,34 @@ export const PersonalReportsDashboard = () => {
   const [isMobileView, setIsMobileView] = useState(false);
   const maqams = useContext(MaqamContext);
   const districts = useContext(DistrictContext);
+  const ilaqas = useContext(IlaqaContext);
   const [toggle, setToggle] = useState(false);
   // const provinces = useContext(ProvinceContext);
   let navigate = useNavigate();
-
   const getAreaType = (area) => {
-    console.log(area);
     if (area?.parentType === "Maqam") {
       const name = maqams.find((i) => i?._id === area?.parentId);
       return `${area?.name} - ${name?.name} (Maqam)`;
     } else if (area?.parentType === "Tehsil") {
       const name = getDivisionByTehsil(area?.parentId, districts);
       return `${area?.name} - ${name} (Division)`;
+    } else if (area?.parentType === "Ilaqa") {
+      const name = ilaqas?.find(
+        (i) => i?._id.toString() === area?.parentId.toString()
+      );
+      if (name) {
+        return `${area?.name} Of Ilaqa ${name?.name} Of Maqam ${name?.maqam?.name}`;
+      } else {
+        return area?.name;
+      }
     } else if (area?.province) {
       return `${area?.name} - ${
         maqams.find((i) => i?._id === area?._id) ? "Maqam" : "Division"
       }`;
     } else if (area?.name === "Pakistan") {
-      console.log("am in");
-      return `${area?.name} - (Country)`;
+      return `${area?.name} `;
+    } else if (area?.country) {
+      return `${area?.name} `;
     }
     return "Pakistan";
   };
@@ -47,10 +56,13 @@ export const PersonalReportsDashboard = () => {
         Authorization: `Bearer ${localStorage.getItem("@token")}`,
       },
     });
-    console.log(req?.data?.data);
     const d = req?.data?.data?.map((obj) => ({
       title:
-        `${obj?.userId?.name !== undefined ? obj?.userId?.name : ''}  ` +
+        `${
+          obj?.userId?.name !== undefined && obj?.userId?.name !== "undefined"
+            ? obj?.userId?.name
+            : ""
+        }  ` +
         " " +
         getAreaType(obj?.areaId),
       ...obj,

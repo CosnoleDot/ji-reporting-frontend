@@ -73,7 +73,6 @@ export const Halqa = () => {
         dispatch({ type: "SUCCESS", payload: req.data?.message });
         navigate("/reports");
       }
-
       e.target.reset();
     } catch (err) {
       dispatch({ type: "ERROR", payload: err.response.data.message });

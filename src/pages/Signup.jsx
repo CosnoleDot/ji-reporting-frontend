@@ -119,6 +119,12 @@ export const Signup = () => {
         setLoading(false);
         setAreas(data.data.data);
         break;
+      case "Ilaqa":
+        setLoading(true);
+        data = await instance.get("/locations/ilaqa");
+        setLoading(false);
+        setAreas(data.data.data);
+        break;
       default:
         break;
     }
@@ -422,6 +428,18 @@ export const Signup = () => {
                     type="radio"
                     name="userAreaType"
                     className="radio checked:bg-blue-500"
+                    value="Ilaqa"
+                    onChange={(e) => setUserAreaType(e.target.value)}
+                  />
+                  <span className="label-text">Ilaqa</span>
+                </label>
+              </div>
+              <div className="form-control">
+                <label className="label cursor-pointer gap-2">
+                  <input
+                    type="radio"
+                    name="userAreaType"
+                    className="radio checked:bg-blue-500"
                     value="Halqa"
                     onChange={(e) => setUserAreaType(e.target.value)}
                   />
@@ -644,6 +662,12 @@ export const Signup = () => {
                     {area?.name}
                     {userAreaType === "Halqa"
                       ? ` - ${area?.parentId?.name} (${area?.parentType})`
+                      : userAreaType === "Ilaqa"
+                      ? ` - ${area?.maqam?.name} (${area?.maqam?.province?.name})`
+                      : userAreaType === "Maqam"
+                      ? ` - ${area?.province?.name} `
+                      : userAreaType === "Division"
+                      ? ` - ${area?.province?.name}`
                       : ""}
                   </div>
                 ))}

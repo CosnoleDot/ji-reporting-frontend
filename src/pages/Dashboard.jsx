@@ -100,28 +100,33 @@ export const Dashboard = () => {
           const maqam = await getUnfilledReports("maqam");
           const halqa = await getUnfilledReports("halqa");
           const division = await getUnfilledReports("division");
+          const ilaqa = await getUnfilledReports("ilaqa");
           const provinceData = province?.data?.data?.allProvince || [];
           const maqamData = maqam?.data?.data?.allMaqams || [];
           const halqaData = halqa?.data?.data?.allHalqas || [];
           const divisionData = division?.data?.data?.allDivisions || [];
+          const ilaqaData = division?.data?.data?.allIlaqas || [];
           const getFilteredHalqas = (halqaData) => [
             ...halqaData.filter((h) => {
               if (userAreaType === "Maqam") {
                 if (
-                  h.parentType === "Maqam" &&
-                  h?.parentId?._id === selectedId
+                  (h.parentType === "Maqam" || h.parentType === "Ilaqa") &&
+                  (h?.parentId?._id === selectedId ||
+                    h.parentId?.maqam === selectedId)
                 ) {
                   return true;
                 }
                 return false;
               }
               if (userAreaType === "Tehsil") {
-                if (h.parentType === "Tehsil") {
+                if (h.parentType === "Tehsil" || h.parentType === "Division") {
                   const district = h?.parentId?.district;
+                  const halqas = h?.parentId?.division === selectedId;
                   const filteredDistricts = districts
                     .filter((dis) => dis?.division?._id === selectedId)
                     .map((div) => div?._id);
-                  return filteredDistricts.includes(district);
+
+                  return filteredDistricts.includes(district) || halqas;
                 }
                 return false;
               }
@@ -130,11 +135,17 @@ export const Dashboard = () => {
           ];
           const temp = {
             unfilled: null,
-            totalprovince: 1,
+            totalAreas: 1,
             filled: null,
             allData:
               userAreaType === "All"
-                ? [...provinceData, ...maqamData, ...halqaData, ...divisionData]
+                ? [
+                    ...provinceData,
+                    ...maqamData,
+                    ...halqaData,
+                    ...divisionData,
+                    ...ilaqaData,
+                  ]
                 : getFilteredHalqas(halqaData),
           };
           temp.unfilled =
@@ -144,13 +155,15 @@ export const Dashboard = () => {
                   ...maqam?.data?.data?.unfilled,
                   ...halqa?.data?.data?.unfilled,
                   ...division?.data?.data?.unfilled,
+                  ...ilaqa?.data?.data?.unfilled,
                 ]
               : getFilteredHalqas(halqa?.data?.data?.unfilled);
-          temp.totalprovince =
+          temp.totalAreas =
             province?.data?.data?.totalprovince +
             maqam?.data?.data?.totalmaqam +
             halqa?.data?.data?.totalhalqa +
-            division?.data?.data?.totaldivision;
+            division?.data?.data?.totaldivision +
+            ilaqa?.data?.data?.totalIlaqa;
           const reportFilledBy = temp?.allData?.filter((obj1) => {
             return !temp?.unfilled?.some((obj2) => obj2._id === obj1._id);
           });
@@ -249,19 +262,26 @@ export const Dashboard = () => {
       return `Of Maqam ${name?.name} Of ${name?.province?.name}`;
     } else if (area?.parentType === "Tehsil") {
       const name = getDivisionByTehsil(area?.parentId, districts);
-      const district = districts?.filter(
-        (dis) => dis?._id === area?.parentId?.district
-      );
-      return `${name} Division Of ${district?.division?.name} Of ${district?.division?.province?.name}`;
+      return `${name}`;
     } else if (area?.parentType === "Ilaqa") {
-      const maqam = maqams?.find(
-        (maqam) => maqam?._id.toString() === area?.parentId?.maqam.toString()
-      );
-      return `Of Ilaqa ${area?.parentId?.name} Of Maqam ${maqam?.name} of ${maqam?.province?.name}`;
+      let ilaqas;
+      if (ilaqa?.length > 0) {
+        ilaqas = ilaqa?.find((il) => il?._id === area?.parentId);
+        return `Of Ilaqa ${area?.parentId?.name} ${
+          localStorage.getItem("@type") === "province" ||
+          localStorage.getItem("@type") === "country"
+            ? ilaqas?.maqam?.name
+            : ""
+        } `;
+      } else {
+        return `Of Ilaqa ${area?.parentId?.name} ${area?.parentId?.maqam?.name}`;
+      }
     } else if (area?.parentType === "Division") {
       return `Of Division ${area?.parentId?.name} `;
     } else if (area?.province) {
-      const matchingProvince = provinces?.find((p) => p?._id === area?.province);
+      const matchingProvince = provinces?.find(
+        (p) => p?._id === area?.province
+      );
       return ` Of ${matchingProvince?.name}`;
     }
 
@@ -293,7 +313,7 @@ export const Dashboard = () => {
     // Set firstDayOfCurrentMonth to the 1st of the current month
     const firstDayOfCurrentMonth = new Date(
       currentMonth.getFullYear(),
-      currentMonth.getMonth(),
+      currentMonth.getMonth() + 0,
       1
     );
 
@@ -301,7 +321,7 @@ export const Dashboard = () => {
     const lastDayOfCurrentMonth = new Date(
       currentMonth.getFullYear(),
       currentMonth.getMonth() + 1,
-      0
+      1
     );
     // Filter out reports within the current month
     const requiredUmeedwarReports = umeedwarReports.filter((report) => {
@@ -311,7 +331,6 @@ export const Dashboard = () => {
         reportDate <= lastDayOfCurrentMonth
       );
     });
-
     // Filter out nazim who are not of type "nazim"
     const validNazim = nazim.filter(
       (n) => n?.nazimType && n?.nazimType !== "nazim"
@@ -319,33 +338,25 @@ export const Dashboard = () => {
 
     // Get IDs of validNazim
     const validNazimIds = validNazim.map((n) => n?._id);
-
     // Get IDs of nazim who have filled personal reports
     const nazimFilledPersonalIds = requiredUmeedwarReports.map(
       (report) => report?.userId?._id
     );
-
     // Get IDs of unfilled nazim
     const unfilledIds = validNazimIds.filter(
       (id) => !nazimFilledPersonalIds.includes(id)
     );
 
     // Separate filled and unfilled nazim
-    const filledNazim = validNazim.filter((n) =>
+    const filledNazim = nazim.filter((n) =>
       nazimFilledPersonalIds.includes(n?._id)
     );
-    const unfilledNazim = validNazim.filter((n) =>
-      unfilledIds.includes(n?._id)
-    );
+    const unfilledNazim = nazim.filter((n) => unfilledIds.includes(n?._id));
     // saving the initial data so that on clear filter can set it back
-    if (
-      !initialData ||
-      !initialData.validNazim ||
-      initialData.validNazim.length === 0
-    ) {
+    if (!initialData || !initialData.nazim || initialData.nazim.length === 0) {
       setInitialData((prevData) => ({
         ...prevData,
-        validNazim: validNazim,
+        nazim: nazim,
         personalF: filledNazim,
         personalU: unfilledNazim,
       }));
@@ -554,7 +565,11 @@ export const Dashboard = () => {
               )}
             {localStorage.getItem("@type") === "halqa" && (
               <div
-                onClick={() => navigate("/reports/create")}
+                onClick={() =>
+                  me?.nazimType === "rukan" || me?.nazimType === "umeedwar"
+                    ? navigate("/personalReport/create")
+                    : navigate("/reports/create")
+                }
                 className="flex items-center bg-white border rounded-sm overflow-hidden shadow cursor-pointer"
               >
                 <div className="p-4 bg-red-400">

@@ -16,7 +16,7 @@ export const maqamRawabitDecided = () => {
   const raD = document.getElementById("rafaqa-decrease")?.value;
   const totalRafaqa = parseInt(raS) + parseInt(raI) - parseInt(raD);
   if (elem) {
-    const value = totalArkaan + (totalUmeedwaran * 3 + totalRafaqa * 2);
+    const value = (totalArkaan + totalUmeedwaran) * 3 + totalRafaqa * 2;
     elem.value = value;
     if (rwbMeetings) {
       const valueRawabitMeetings = value * 3;
@@ -95,7 +95,7 @@ export const ToseeDawat = ({ view }) => {
           />
         </div>
         <div style={{ display: "flex" }}>
-          <label className="block">ملاقاتیں:</label>
+          <label className="block">ملاقاتوں کی تعداد:</label>
           <input
             readOnly={true}
             type="number"
@@ -222,7 +222,7 @@ export const ToseeDawat = ({ view }) => {
           />
         </div>
         <div style={{ display: "flex" }}>
-          <label className="block">ملاقاتیں:</label>
+          <label className="block">ملاقاتوں کی تعداد:</label>
           <input
             readOnly={true}
             type="number"
