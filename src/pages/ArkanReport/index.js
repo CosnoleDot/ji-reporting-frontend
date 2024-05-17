@@ -19,10 +19,11 @@ export const ArkanReport = () => {
       setData(req?.data?.data);
     }
   };
-  console.log(data);
+ 
   useEffect(() => {
     if (params?.id) printReport(params?.id);
   }, [params]);
+ 
   return (
     <div className="containerPrint" dir="rtl">
       <PrintDocument />
