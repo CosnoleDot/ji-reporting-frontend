@@ -818,7 +818,7 @@ function App() {
         navigate("/reports");
       } else if (
         location.pathname?.includes("reports") ||
-        location.pathname?.includes("user-switch")
+        location.pathname?.includes("user-switch")||location.pathname?.includes("locations")
       ) {
         navigate("/");
       }
