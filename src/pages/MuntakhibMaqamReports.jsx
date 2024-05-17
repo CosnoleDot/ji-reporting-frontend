@@ -161,6 +161,7 @@ export const MuntakhibMaqamReports = () => {
       document.getElementById("uploadedRafaqa").value = halq.rafaqaFilledSum;
       document.getElementById("uploadedUmeedwaran").value =
         halq.umeedwaranFilledSum;
+      console.log(halq);
       const elem = document.getElementById(j);
       if (elem) {
         if (j === "month") {
@@ -343,6 +344,7 @@ export const MuntakhibMaqamReports = () => {
         await getMaqamReports();
         dispatch({ type: "SUCCESS", payload: req?.data?.message });
       } else {
+        console.log(jsonData);
         jsonData.rafaqaFilled = jsonData.uploadedRafaqa;
         jsonData.manualRafaqaFilled = jsonData.manualRafaqa;
         jsonData.umeedwaranFilled = jsonData.uploadedUmeedwaran;

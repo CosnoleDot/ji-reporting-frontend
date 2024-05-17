@@ -107,7 +107,7 @@ export const ZailiActivities = ({ view }) => {
                 id={`ijtKarkunan-done`}
                 className="p-1 text-center min-w-full"
               />
-              </Box>
+            </Box>
             <Box>
               <input
                 readOnly={view}
@@ -134,17 +134,15 @@ export const ZailiActivities = ({ view }) => {
               />
             </Box>
             <Box>
-              
-                <input
-                  readOnly={true}
-                  type="number"
-                  defaultValue={0}
-                  required
-                  name={`darseQuran-done`}
-                  id={`darseQuran-done`}
-                  className="p-1 text-center "
-                />
-              
+              <input
+                readOnly={true}
+                type="number"
+                defaultValue={0}
+                required
+                name={`darseQuran-done`}
+                id={`darseQuran-done`}
+                className="p-1 text-center "
+              />
             </Box>
             <Box>
               <input
@@ -162,11 +160,10 @@ export const ZailiActivities = ({ view }) => {
             <Box>شاہین میٹنگ</Box>
             <Box>
               <input
-                disabled={true}
+                readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
-                readOnly
                 name={`shaheenMeeting-decided`}
                 id={`shaheenMeeting-decided`}
                 className="p-1 text-center min-w-full"
@@ -174,7 +171,7 @@ export const ZailiActivities = ({ view }) => {
             </Box>
             <Box>
               <input
-                disabled={true}
+                readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
@@ -185,7 +182,7 @@ export const ZailiActivities = ({ view }) => {
             </Box>
             <Box>
               <input
-                disabled={view}
+                readOnly={view}
                 type="number"
                 defaultValue={0}
                 required
@@ -199,11 +196,10 @@ export const ZailiActivities = ({ view }) => {
             <Box>پیغام محفل</Box>
             <Box>
               <input
-                disabled={true}
+                readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
-                readOnly
                 name={`paighamEvent-decided`}
                 id={`paighamEvent-decided`}
                 className="p-1 text-center min-w-full"
@@ -211,7 +207,7 @@ export const ZailiActivities = ({ view }) => {
             </Box>
             <Box>
               <input
-                disabled={true}
+                readOnly={true}
                 type="number"
                 defaultValue={0}
                 required
@@ -222,7 +218,7 @@ export const ZailiActivities = ({ view }) => {
             </Box>
             <Box>
               <input
-                disabled={view}
+                readOnly={view}
                 type="number"
                 defaultValue={0}
                 required
