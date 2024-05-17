@@ -50,7 +50,7 @@ export const ToseeDawat = ({ finalMerged }) => {
           />
         </div>
         <div className="flex py-2">
-          <label className="block">ملاقاتیں:</label>
+          <label className="block">ملاقاتوں کی تعداد:</label>
           <input
             readOnly={true}
             type="number"
@@ -83,7 +83,7 @@ export const ToseeDawat = ({ finalMerged }) => {
           <label className="block ml-16 font-bold">عام طلبہ:</label>
         </div>
         <div className="flex py-2">
-          <label className="block">ملاقاتیں:</label>
+          <label className="block">ملاقاتوں کی تعداد:</label>
           <input
             readOnly={true}
             type="number"

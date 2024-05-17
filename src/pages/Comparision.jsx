@@ -548,7 +548,7 @@ export const Comparision = () => {
             overflowY: "visible",
             overflowX: "scroll",
           }}
-          className="flex mx-10 items-center justify-start lg:justify-center xl:justify-center gap-3 border-b border-t py-3 inlineQ"
+          className="flex mr-10 items-center justify-start lg:justify-center xl:justify-center gap-3 border-b border-t py-3 inlineQ"
         >
           <select
             value={reportType}

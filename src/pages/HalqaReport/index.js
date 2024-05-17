@@ -304,7 +304,7 @@ export const HalqaReport = () => {
             موجودہ :{data?.tdId?.current}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            ملاقاتیں:{data?.tdId?.meetings}
+            ملاقاتوں کی تعداد:{data?.tdId?.meetings}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
             تقسیم لٹریچر:{data?.tdId?.literatureDistribution}
@@ -324,7 +324,7 @@ export const HalqaReport = () => {
           }}
         >
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            ملاقاتیں:{data?.tdId?.commonStudentMeetings}
+            ملاقاتوں کی تعداد:{data?.tdId?.commonStudentMeetings}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
             تقسیم لٹریچر:{data?.tdId?.commonLiteratureDistribution}

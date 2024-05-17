@@ -595,10 +595,8 @@ export const Reports = ({ maqam }) => {
       active={"reports"}
     >
       <div className="relative flex flex-col gap-3 items-center p-5 justify-center h-[calc(100vh-65.6px-64px)]">
-        <div className="flex w-full items-center justify-between xs:flex-col">
-          <h3 className="font-bold text-xl hidden lg:block xl:block">
-            Reports
-          </h3>
+        <h3 className="w-full font-bold text-left text-xl hidden lg:block xl:block">Reports</h3>
+        <div className="flex flex-col w-full items-center justify-between md:flex-row">
           <dialog id="filter-area-dialog" className="modal">
             <div className="modal-box min-h-[300px]">
               <form method="dialog" className="mb-3">
