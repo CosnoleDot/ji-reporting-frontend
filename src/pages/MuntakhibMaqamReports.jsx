@@ -155,10 +155,12 @@ export const MuntakhibMaqamReports = () => {
         halq.commonLiteratureDistributionSum;
       halq.uploadedLitrature = halq.literatureSum;
       halq.uploadedCommonStudentMeetings = halq.commonStudentMeetingsSum;
-      halq.rafaqaFilled = halq.rafaqaFilledSum;
-      halq.umeedwaranFilled = halq.umeedwaranFilledSum;
-      halq.umeedwaranFilledSum = halq.umeedwaranFilledSum;
-
+      halq.totalReceived = halq.receivedSum;
+      halq.monthlyReceivingGoal = halq.monthlyReceivingGoalSum;
+      halq.totalSold = halq.soldSum;
+      document.getElementById("uploadedRafaqa").value = halq.rafaqaFilledSum;
+      document.getElementById("uploadedUmeedwaran").value =
+        halq.umeedwaranFilledSum;
       const elem = document.getElementById(j);
       if (elem) {
         if (j === "month") {
@@ -253,17 +255,8 @@ export const MuntakhibMaqamReports = () => {
       "commonStudentMeetingsSum",
       "meetingsSum",
       "literatureSum",
-      "manualCommonLiteratureDistribution",
-      "manualCommonStudentMeetings",
-      "manualCurrent",
-      "manualLitrature",
-      "manualMeetings",
-      "rafaqaFilledSum",
-      "umeedwaranFilledSum",
       "manualUmeedwaran",
     ].forEach((l) => (document.getElementById(l).value = 0));
-   
-   
   };
   useEffect(() => {
     const l = location.pathname?.split("/")[2];
@@ -350,11 +343,10 @@ export const MuntakhibMaqamReports = () => {
         await getMaqamReports();
         dispatch({ type: "SUCCESS", payload: req?.data?.message });
       } else {
-        
         jsonData.rafaqaFilled = jsonData.uploadedRafaqa;
         jsonData.manualRafaqaFilled = jsonData.manualRafaqa;
         jsonData.umeedwaranFilled = jsonData.uploadedUmeedwaran;
-        
+
         const req = await instance.post("/reports/maqam", jsonData, {
           headers: {
             "Content-Type": "application/json",
@@ -394,14 +386,14 @@ export const MuntakhibMaqamReports = () => {
     document.getElementById("shaheenMeeting-decided").value = busmTotalUnits;
   }, [totalHalqay, subTotalHalqay, busmTotalUnits]);
 
-  if(data['manualRafaqaFilled']){
-    data.manualRafaqa = data['manualRafaqaFilled']
+  if (data["manualRafaqaFilled"]) {
+    data.manualRafaqa = data["manualRafaqaFilled"];
   }
-  Object.keys(data).forEach((i)=>{
-    if(data[i]===null){
-      data[i]=0
+  Object.keys(data).forEach((i) => {
+    if (data[i] === null) {
+      data[i] = 0;
     }
-  })
+  });
   return (
     <GeneralLayout>
       <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">

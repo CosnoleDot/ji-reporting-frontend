@@ -589,14 +589,16 @@ export const Reports = ({ maqam }) => {
     if (active === "halqa") getAreaWithType();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAreaType]);
- 
+
   return (
     <GeneralLayout
       title={me?.userAreaId?.name.toUpperCase()}
       active={"reports"}
     >
       <div className="relative flex flex-col gap-3 items-center p-5 justify-center h-[calc(100vh-65.6px-64px)]">
-        <h3 className="w-full font-bold text-left text-xl hidden lg:block xl:block">Reports</h3>
+        <h3 className="w-full font-bold text-left text-xl hidden lg:block xl:block">
+          Reports
+        </h3>
         <div className="flex flex-col w-full items-center justify-between md:flex-row">
           <dialog id="filter-area-dialog" className="modal">
             <div className="modal-box min-h-[300px]">
@@ -1109,14 +1111,7 @@ export const Reports = ({ maqam }) => {
                 role="tab"
                 className={`tab w-full ${tab === "maqam" ? "tab-active" : ""}`}
               >
-                Maqam Halqa
-              </Link>
-              <Link
-                to={"?active=halqa&tab=ilaqa"}
-                role="tab"
-                className={`tab w-full ${tab === "ilaqa" ? "tab-active" : ""}`}
-              >
-                Ilaqa Halqa
+                Halqa
               </Link>
             </div>
           )}
@@ -1367,7 +1362,12 @@ export const Reports = ({ maqam }) => {
                       </button>
                       <button
                         className="btn"
-                        onClick={() => editReport(obj?._id)}
+                        onClick={() =>
+                          window.open(
+                            `/${active}-report/print/${obj?._id}`,
+                            "blank"
+                          )
+                        }
                       >
                         <FaPrint />
                       </button>
