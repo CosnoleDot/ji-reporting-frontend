@@ -996,7 +996,7 @@ export const Reports = ({ maqam }) => {
               localStorage.getItem("@nazimType")
             ) && (
               <Link
-                to={"?active=ilaqa&tab=maqam"}
+                to={"?active=ilaqa"}
                 role="tab"
                 className={`tab w-full ${
                   active === "ilaqa" ? "tab-active" : ""
