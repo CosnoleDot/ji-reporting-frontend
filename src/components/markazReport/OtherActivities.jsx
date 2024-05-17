@@ -124,6 +124,18 @@ export const OtherActivities = ({ view }) => {
         </div>
       </div>
       <div className="flex flex-wrap w-full items-center justify-start">
+      <div className="flex py-2">
+          <label className="block">تنظیمی دورہ:</label>
+          <input
+            readOnly={view}
+            type="number"
+            defaultValue={0}
+            required
+            name="tanzeemiRound"
+            id="tanzeemiRound"
+            className="border-b-2 text-center border-dashed"
+          />
+        </div>
         <div className="flex py-2">
           <label className="block">دعوتی وفود:</label>
           <input
