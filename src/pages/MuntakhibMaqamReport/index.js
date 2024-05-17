@@ -707,7 +707,7 @@ export const MuntakhibMaqamReport = () => {
             موجودہ :{data?.muntakhibTdId?.currentSum}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            ملاقاتیں:{data?.muntakhibTdId?.meetingsSum}
+          ملاقاتوں کی تعداد:{data?.muntakhibTdId?.meetingsSum}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
             تقسیم لٹریچر:{data?.muntakhibTdId?.literatureSum}

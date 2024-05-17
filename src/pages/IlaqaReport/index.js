@@ -524,7 +524,7 @@ export const IlaqaReport = () => {
             موجودہ :{data?.tdId?.currentSum}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            ملاقاتیں:{data?.tdId?.meetingsSum}
+          ملاقاتوں کی تعداد:{data?.tdId?.meetingsSum}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
             تقسیم لٹریچر:{data?.tdId?.literatureSum}

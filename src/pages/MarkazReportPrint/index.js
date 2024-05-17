@@ -694,7 +694,7 @@ export const MarkazReportPrint = () => {
             موجود :{data?.tdId?.current}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            ملاقاتیں: :{data?.tdId?.meetings}
+          ملاقاتوں کی تعداد: :{data?.tdId?.meetings}
           </h6>
 
           <h6 style={{ width: "100%", textAlign: "start" }}>

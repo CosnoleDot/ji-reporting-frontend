@@ -222,7 +222,7 @@ export const ToseeDawat = ({ view }) => {
           />
         </div>
         <div style={{ display: "flex" }}>
-          <label className="block">ملاقاتوں کی تعداد:</label>
+          <label className="block"> ملاقاتیں :</label>
           <input
             readOnly={true}
             type="number"

@@ -699,17 +699,12 @@ console.log(data,'asd')
           موجود :{data?.tdId?.current}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-          ملاقاتیں: :{data?.tdId?.meetings}
+          ملاقاتوں کی تعداد: :{data?.tdId?.meetings}
           </h6>
         
           <h6 style={{ width: "100%", textAlign: "start" }}>
             تقسیم لٹریچر:{data?.tdId?.literatureDistribution}
           </h6>
-          
-           
-            
-       
-         
         </div>
         <h3 style={{ textAlign: "start", fontWeight: "bold" }}>عام طلبہ</h3>
         <div
@@ -722,7 +717,7 @@ console.log(data,'asd')
           }}
         >
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            ملاقاتوں کی تعداد:{data?.tdId?.commonStudentMeetings}
+          ملاقاتیں :{data?.tdId?.commonStudentMeetings}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
             تقسیم لٹریچر:{data?.tdId?.commonLiteratureDistribution}
