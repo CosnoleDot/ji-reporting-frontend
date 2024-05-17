@@ -215,7 +215,6 @@ export const Ilaqa = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
-  console.log(data);
   useEffect(() => {
     Object.keys(data).forEach((i) => {
       const elem = document.getElementById(i);
@@ -285,7 +284,6 @@ export const Ilaqa = () => {
     try {
       if (id) {
         jsonData.month = data?.month;
-        console.log(jsonData, "asd");
         const req = await instance.put(`/reports/ilaqa/${id}`, jsonData, {
           headers: {
             "Content-Type": "application/json",

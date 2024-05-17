@@ -21,7 +21,6 @@ export const MuntakhibMaqamReport = () => {
   useEffect(() => {
     if (params?.id) printReport(params?.id);
   }, [params]);
-  console.log(data, "asd");
   return (
     <div className="wrapper reports" style={{ marginBottom: "2rem" }} dir="rtl">
       <PrintDocument />

@@ -490,7 +490,6 @@ export const Province = () => {
     setLoading(true);
     try {
       if (id) {
-        console.log(jsonData,'asd')
         const req = await instance.put(`/reports/province/${id}`, jsonData, {
           headers: {
             "Content-Type": "application/json",

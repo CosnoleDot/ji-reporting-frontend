@@ -310,7 +310,6 @@ export const MarkazReport = () => {
     setLoading(true);
     try {
       if (id) {
-        console.log(jsonData,'asd')
         jsonData.month = data?.month;
         const req = await instance.put(`/reports/markaz/${id}`, jsonData, {
           headers: {
@@ -341,7 +340,6 @@ export const MarkazReport = () => {
       data[i]=0
     }
   })
-  console.log(data,'aaa')
 
   return (
     <GeneralLayout>

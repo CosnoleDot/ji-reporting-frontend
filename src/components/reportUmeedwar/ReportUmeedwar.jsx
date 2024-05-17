@@ -209,7 +209,6 @@ export const ReportUmeedwar = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
-  console.log(me,'fff')
   return (
     <GeneralLayout>
       <div dir="rtl" className="p-4 reports">

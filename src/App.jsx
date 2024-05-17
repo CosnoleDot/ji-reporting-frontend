@@ -177,7 +177,6 @@ function App() {
         });
       }
     } else {
-      console.log("first");
       return;
     }
   };
