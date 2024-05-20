@@ -399,6 +399,7 @@ function App() {
             })
           );
         } else if (type === "province") {
+          console.log(enabledHalqas);
           setHalqas(
             enabledHalqas.filter((i) => {
               if (
@@ -409,7 +410,9 @@ function App() {
               ) {
                 const validMaqamHalqas =
                   i?.parentId?.maqam?.province?._id === me?.userAreaId?._id ||
-                  i?.parentId?.province?._id === me?.userAreaId?._id;
+                  i?.parentId?.ilaqa?.maqam?.province?._id ===
+                    me?.userAreaId?._id;
+                console.log(validMaqamHalqas);
                 let validDistrictsId;
                 if (dis?.length > 0) {
                   validDistrictsId = dis?.map((i) => i?._id?.toString());
@@ -430,6 +433,7 @@ function App() {
                       me?.userAreaId?._id?.toString();
 
                   // Return true if any of the conditions are met
+                  // console.log(isDivisionParentValid, validMaqamHalqas);
                   return (
                     isParentValid || isDivisionParentValid || validMaqamHalqas
                   );
@@ -817,7 +821,8 @@ function App() {
         navigate("/reports");
       } else if (
         location.pathname?.includes("reports") ||
-        location.pathname?.includes("user-switch")||location.pathname?.includes("locations")
+        location.pathname?.includes("user-switch") ||
+        location.pathname?.includes("locations")
       ) {
         navigate("/");
       }
@@ -985,7 +990,7 @@ function App() {
                                           )
                                         }
                                       />
-                                      
+
                                       <Route
                                         path={"/reports/view/:id"}
                                         element={
@@ -1045,10 +1050,19 @@ function App() {
                                         path="/division-report/print/:id"
                                         element={<DivisionReport />}
                                       />
-                                      <Route path="/ilaqa-report/print/:id" element={<IlaqaReport/>}/>
+                                      <Route
+                                        path="/ilaqa-report/print/:id"
+                                        element={<IlaqaReport />}
+                                      />
                                       <Route
                                         path="/maqam-report/print/:id"
-                                        element={muntakhibMaqam ?<MuntakhibMaqamReport/>:<MaqamReport />}
+                                        element={
+                                          muntakhibMaqam ? (
+                                            <MuntakhibMaqamReport />
+                                          ) : (
+                                            <MaqamReport />
+                                          )
+                                        }
                                       />
                                       <Route
                                         path="/halqa-report/print/:id"

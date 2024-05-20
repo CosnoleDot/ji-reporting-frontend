@@ -23,7 +23,7 @@ export const Navbar = ({ title }) => {
           <span className="text-xl">{title || "IJT Reporting"}</span>
         </div>
         <div className="flex-none">
-          {localStorage.getItem("@type") !== "province" && (
+          {localStorage.getItem("@type") !== "country" && (
             <div className="relative dropdown dropdown-end">
               <div
                 tabIndex={0}

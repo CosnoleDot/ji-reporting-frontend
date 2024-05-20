@@ -933,7 +933,7 @@ export const Reports = ({ maqam }) => {
                 role="tab"
                 className={`tab w-full ${
                   active === "country" ? "tab-active bg-slate-200" : ""
-                }`}
+                }  font-bold underline`}
                 onClick={() => setNotifyTo("country")}
               >
                 Country
@@ -948,7 +948,7 @@ export const Reports = ({ maqam }) => {
                 role="tab"
                 className={`tab w-full ${
                   active === "province" ? "tab-active bg-slate-200" : ""
-                }`}
+                } font-bold underline`}
                 onClick={() => setNotifyTo("province")}
               >
                 Province
@@ -965,7 +965,7 @@ export const Reports = ({ maqam }) => {
                 role="tab"
                 className={`tab w-full ${
                   active === "division" ? "tab-active" : ""
-                }`}
+                } font-bold underline`}
                 onClick={() => setNotifyTo("division")}
               >
                 Division
@@ -982,7 +982,7 @@ export const Reports = ({ maqam }) => {
                 role="tab"
                 className={`tab w-full ${
                   active === "maqam" ? "tab-active" : ""
-                }`}
+                } font-bold underline`}
                 onClick={() => setNotifyTo("maqam")}
               >
                 Maqam
@@ -997,7 +997,7 @@ export const Reports = ({ maqam }) => {
                 role="tab"
                 className={`tab w-full ${
                   active === "ilaqa" ? "tab-active" : ""
-                }`}
+                } font-bold underline`}
                 onClick={() => setNotifyTo("ilaqa")}
               >
                 Ilaqa
@@ -1013,7 +1013,7 @@ export const Reports = ({ maqam }) => {
                 role="tab"
                 className={`tab w-full ${
                   active === "ilaqa" ? "tab-active" : ""
-                }`}
+                } font-bold underline`}
                 onClick={() => setNotifyTo("ilaqa")}
               >
                 Ilaqa
@@ -1028,7 +1028,7 @@ export const Reports = ({ maqam }) => {
                 role="tab"
                 className={`tab w-full ${
                   active === "ilaqa" ? "tab-active" : ""
-                }`}
+                } font-bold underline`}
                 onClick={() => setNotifyTo("ilaqa")}
               >
                 Ilaqa
@@ -1045,7 +1045,7 @@ export const Reports = ({ maqam }) => {
                 role="tab"
                 className={`tab w-full ${
                   active === "halqa" ? "tab-active" : ""
-                }`}
+                } font-bold underline`}
                 onClick={() => setNotifyTo("halqa")}
               >
                 Halqa
@@ -1055,7 +1055,9 @@ export const Reports = ({ maqam }) => {
             <Link
               to={"?active=halqa&tab=ilaqa"}
               role="tab"
-              className={`tab w-full ${active === "halqa" ? "tab-active" : ""}`}
+              className={`tab w-full ${
+                active === "halqa" ? "tab-active" : ""
+              } font-bold underline`}
               onClick={() => setNotifyTo("halqa")}
             >
               Halqa
@@ -1065,7 +1067,9 @@ export const Reports = ({ maqam }) => {
             <Link
               to={"?active=halqa&tab=division"}
               role="tab"
-              className={`tab w-full ${active === "halqa" ? "tab-active" : ""}`}
+              className={`tab w-full ${
+                active === "halqa" ? "tab-active" : ""
+              } font-bold underline`}
               onClick={() => setNotifyTo("halqa")}
             >
               Halqa
@@ -1094,29 +1098,16 @@ export const Reports = ({ maqam }) => {
             </Link>
           </div>
         )}
-        {/* {maqam &&
-          active === "halqa" &&
-          localStorage.getItem("@type") === "maqam" && (
-            <div
-              role="tablist"
-              className="w-full flex justify-between items-center"
-            >
-              <Link
-                to={"?active=halqa&tab=maqam"}
-                role="tab"
-                className={`tab w-full ${tab === "maqam" ? "tab-active" : ""}`}
-              >
-                Halqa
-              </Link>
-            </div>
-          )} */}
+
         {["umeedwar", "rukan", "umeedwaar-nazim", "rukan-nazim"].includes(
           me?.nazimType
         ) && (
           <Link
             to={"/personalReport"}
             role="tab"
-            className={`tab w-full ${tab === "personal" ? "tab-active" : ""}`}
+            className={`tab w-full ${
+              tab === "personal" ? "tab-active" : ""
+            } font-bold underline`}
             onClick={() => setTab("personal")}
           >
             Personal

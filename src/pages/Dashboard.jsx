@@ -25,6 +25,7 @@ import { getDivisionByTehsil } from "./Reports";
 
 export const Dashboard = () => {
   const [count, setCount] = useState(0);
+  const { getHalqas } = useContext(UIContext);
   const { nazim, setLoading } = useContext(UIContext);
   const maqams = useContext(MaqamContext);
   const divisions = useContext(DivisionContext);
@@ -52,6 +53,7 @@ export const Dashboard = () => {
   const [personalFilled, setPersonalFilled] = useState([]);
   const [initialData, setInitialData] = useState(null);
   const [show, setShow] = useState(true);
+  const [totalHalqas, setTotalHalqas] = useState([]);
   const [month, setMonth] = useState();
   let date;
   useEffect(() => {
@@ -74,7 +76,11 @@ export const Dashboard = () => {
   };
   useEffect(() => {
     getAllReports();
+    getHalqas();
   }, []);
+  useEffect(() => {
+    console.log(unit);
+  });
   const getData = async () => {
     // Check if data is already stored in session storage
     if (userAreaType === "personal" && queryDate !== "") {
@@ -106,6 +112,8 @@ export const Dashboard = () => {
           const halqaData = halqa?.data?.data?.allHalqas || [];
           const divisionData = division?.data?.data?.allDivisions || [];
           const ilaqaData = division?.data?.data?.allIlaqas || [];
+          setTotalHalqas(halqa?.data?.data?.totalHalqas);
+          setTotalHalqas(halqaData, "h");
           const getFilteredHalqas = (halqaData) => [
             ...halqaData.filter((h) => {
               if (userAreaType === "Maqam") {
@@ -557,9 +565,7 @@ export const Dashboard = () => {
                   </div>
                   <div className="px-4 text-gray-700">
                     <h3 className="text-sm tracking-wider">Total Units</h3>
-                    <p className="text-3xl">
-                      {unit?.filter((unit) => unit?.disabled !== true).length}
-                    </p>
+                    <p className="text-3xl">{totalHalqas.length}</p>
                   </div>
                 </div>
               )}
@@ -656,7 +662,7 @@ export const Dashboard = () => {
                     Clear Filter
                   </button>
                 </div>
-                <div className="overflow-x-auto grid grid-cols-1 gap-4  mt-8 sm:grid-cols-1 sm:px-8 w-full">
+                <div className="overflow-x-auto grid grid-cols-1 gap-4  mt-8 sm:grid-cols-1 sm:px-4 w-full">
                   <div className="w-full mb-3 h-[300px] overflow-auto overflow-y-scroll">
                     <p className="text-slate-500">Reports of {month}</p>
                     {show && (
@@ -690,6 +696,9 @@ export const Dashboard = () => {
                                         </span>
                                       )}
                                     </td>
+                                    <td>
+                                      
+                                    </td>
                                   </tr>
                                 ))
                             ) : (
@@ -710,7 +719,10 @@ export const Dashboard = () => {
                                   key={index}
                                 >
                                   <td className="w-[50%]">
-                                    {obj.name} - {`${getAreaType(obj)}`}
+                                    {obj.name}{" "}
+                                    {obj?.parentType
+                                      ? "-" + obj?.parentType
+                                      : ""}
                                   </td>
                                   <td className="w-[50%]">
                                     {nazim.find(
@@ -754,7 +766,9 @@ export const Dashboard = () => {
                                   >
                                     <td className="w-[50%]">{obj.name}</td>
                                     <td className="w-[50%]">
-                                      {getUsersAreaDetails(obj)}
+                                      {obj?.parentType
+                                        ? "-" + obj?.parentType
+                                        : ""}
                                     </td>
                                   </tr>
                                 ))
@@ -776,9 +790,7 @@ export const Dashboard = () => {
                                   key={index}
                                 >
                                   <td className="w-[50%]">{obj.name}</td>
-                                  <td className="w-[50%]">
-                                    {getUsersAreaDetails(obj)}
-                                  </td>
+                                  <td className="w-[50%]">{obj?.parentType}</td>
                                 </tr>
                               ))
                           ) : (
