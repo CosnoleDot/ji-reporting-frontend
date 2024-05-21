@@ -69,21 +69,7 @@ export const DeleteUser = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAreaType]);
 
-  // get Divisions
-  const getAreaType = (area) => {
-    if (area?.parentType === "Maqam") {
-      return `${area?.name} - ${area?.parentId?.name}(Maqam)`;
-    } else if (area?.parentType === "Tehsil") {
-      return `${area?.name} - ${area?.parentId?.district?.division?.name}(Division)`;
-    } else if (area?.parentType === "Ilaqa") {
-      return `${area?.name} - ${area?.parentId?.name}(Ilaqa)`;
-    } else if (area?.parentType === "Division") {
-      return `${area?.name} - ${area?.parentId?.name}(Division)`;
-    } else if (area?.province) {
-      return maqams.find((i) => i?._id === area?._id) ? "Maqam" : "Division";
-    }
-    return "Province";
-  };
+
   const getAreaTypeWithoutName = (area) => {
     if (area?.parentType === "Maqam") {
       const maqam = maqams.find((i) => i?._id === area?.parentId);

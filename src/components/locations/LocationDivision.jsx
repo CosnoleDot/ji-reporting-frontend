@@ -6,6 +6,7 @@ import {
   MeContext,
   ProvinceContext,
   TehsilContext,
+  ViewDetails,
   useToastState,
 } from "../../context";
 import { Link, useLocation } from "react-router-dom";
@@ -13,12 +14,13 @@ import instance from "../../api/instrance";
 import { FaEdit } from "react-icons/fa";
 import { UIContext } from "../../context/ui";
 import { Loader } from "../Loader";
-
+import { FcViewDetails } from "react-icons/fc";
 export const LocationDivision = () => {
   const provinces = useContext(ProvinceContext);
   const me = useContext(MeContext);
   const tehsils = useContext(TehsilContext);
   const divisions = useContext(DivisionContext);
+  const areaDetails = useContext(ViewDetails);
   const halqas = useContext(HalqaContext);
   const districts = useContext(DistrictContext);
   const [filteredData, setFilteredData] = useState(halqas);
@@ -30,6 +32,7 @@ export const LocationDivision = () => {
     getTehsils,
     loading,
     setLoading,
+    getAreaDetails,
   } = useContext(UIContext);
   const [editMode, setEditMode] = useState(false);
   const [id, setId] = useState("");
@@ -634,7 +637,7 @@ export const LocationDivision = () => {
                 <th className=" text-start"></th>
                 <th className="w-full text-start">Name</th>
                 <th className="w-full text-center">
-                  {tehsils?.length > 0 ? "Tehsil" : "Division"}
+                  {tehsils?.length > 0 ? "Area Details" : "Division"}
                 </th>
                 <th className="w-full text-center">Edit/Disable</th>
               </tr>
@@ -653,22 +656,15 @@ export const LocationDivision = () => {
                     >
                       <th>{index + 1}</th>
                       <td className="w-full">{halqa?.name}</td>
-                      <td className="w-full">{`${halqa?.parentType} ${
-                        halqa?.parentId?.name?.toUpperCase() || "-"
-                      } of ${
-                        halqa?.parentType !== "Division"
-                          ? `Division ${
-                              halqa?.parentId?.district?.division?.name ||
-                              halqa?.parentId?.name ||
-                              "-"
-                            } (${
-                              halqa?.parentId?.district?.division?.province
-                                ?.name ||
-                              halqa?.parentId?.province?.name ||
-                              "-"
-                            })`
-                          : `(${halqa?.parentId?.province?.name})`
-                      }`}</td>
+                      <td className="">
+                        <div
+                          onClick={() => {
+                            getAreaDetails(halqa);
+                          }}
+                        >
+                          <FcViewDetails className="cursor-pointer text-2xl" />
+                        </div>
+                      </td>
 
                       <td className="flex w-full justify-center items-center gap-4">
                         <button
@@ -1048,6 +1044,92 @@ export const LocationDivision = () => {
               >
                 Close
               </button>
+            </form>
+          </div>
+        </div>
+      </dialog>
+      <dialog id="area_details" className="modal">
+        <div className="modal-box">
+          <h3 className="font-bold text-lg mb-3">Details of the area</h3>
+          <div className="w-full  flex flex-col justify-between items-start text-left gap-4  flex-wrap">
+            <div className="w-full flex justify-start items-center gap-5">
+              <h5>Name:</h5>
+              <h4 className="text-gray-400 font-bold">{areaDetails?.name}</h4>
+            </div>
+            <div className="w-full flex justify-start items-center gap-5">
+              {areaDetails?.parentType ? areaDetails?.parentType + ":" : ""}
+              <h4 className="text-gray-400 font-bold">
+                {areaDetails?.parentType === "Ilaqa"
+                  ? areaDetails?.parentId?.name
+                  : areaDetails?.parentType === "Maqam"
+                  ? areaDetails?.parentId?.name
+                  : areaDetails?.parentType === "Tehsil"
+                  ? areaDetails?.parentId?.name
+                  : areaDetails?.parentType === "Division"
+                  ? areaDetails?.parentId?.name
+                  : ""}
+              </h4>
+            </div>
+            {(areaDetails?.parentType === "Tehsil" ||
+              areaDetails?.parentType === "Division") && (
+              <>
+                <div className="w-full flex justify-start items-center gap-5">
+                  <h5> District:</h5>
+                  <h4 className="text-gray-400 font-bold">
+                    {areaDetails?.parentId?.district
+                      ? areaDetails?.parentId?.district?.name
+                      : "Not a District aera"}
+                  </h4>
+                </div>
+                <div className="w-full flex justify-start items-center gap-5">
+                  <h5>Division:</h5>
+                  <h4 className="text-gray-400 font-bold">
+                    {areaDetails?.parentId?.district
+                      ? areaDetails?.parentId?.district?.division?.name
+                      : areaDetails?.division?.name}
+                  </h4>
+                </div>
+              </>
+            )}
+            {areaDetails?.parentType === "Ilaqa" && (
+              <div className="w-full flex justify-start items-center gap-5">
+                <h5>Maqam:</h5>
+                <h4 className="text-gray-400 font-bold">
+                  {areaDetails?.parentType === "Ilaqa"
+                    ? areaDetails?.parentId?.maqam?.name
+                    : ""}
+                </h4>
+              </div>
+            )}
+            <div className="w-full flex justify-start items-center gap-5">
+              <h4>Province:</h4>
+              <h4 className="text-gray-400 font-bold">
+                {areaDetails?.parentType === "Ilaqa"
+                  ? areaDetails?.parentId?.maqam?.province?.name
+                  : areaDetails?.parentType === "Maqam"
+                  ? areaDetails?.parentId?.province?.name
+                  : areaDetails?.parentType === "Tehsil"
+                  ? areaDetails?.parentId?.district?.division?.province?.name
+                  : areaDetails?.parentType === "Division"
+                  ? areaDetails?.parentId?.province?.name
+                  : areaDetails?.province?.name}
+              </h4>
+            </div>
+            <div className="w-full flex justify-start items-center gap-5">
+              <h5>country:</h5>
+              <h4 className="text-gray-400 font-bold">Pakistan</h4>
+            </div>
+          </div>
+          <div className="modal-action w-full">
+            <form method="dialog" className="w-full">
+              <div className=" w-full flex justify-end gap-3 items-center">
+                <button
+                  id="close-details-modal"
+                  className="btn ms-3 capitalize"
+                >
+                  Close
+                </button>
+              </div>
             </form>
           </div>
         </div>

@@ -18,16 +18,16 @@ import {
   ProvinceReportContext,
   TehsilContext,
   IlaqaContext,
+  ViewDetails,
 } from "../context";
 import { UIContext } from "../context/ui";
 import { useNavigate } from "react-router-dom";
 import instance from "../api/instrance";
-import { getDivisionByTehsil } from "./Reports";
 
 export const Dashboard = () => {
   const [count, setCount] = useState(0);
   const { getHalqas } = useContext(UIContext);
-  const { nazim, setLoading } = useContext(UIContext);
+  const { nazim, setLoading, getAreaDetails } = useContext(UIContext);
   const maqams = useContext(MaqamContext);
   const divisions = useContext(DivisionContext);
   const provinces = useContext(ProvinceContext);
@@ -39,6 +39,7 @@ export const Dashboard = () => {
   const divisionReports = useContext(DivisionReportContext);
   const halqaReports = useContext(HalqaReportContext);
   const provinceReports = useContext(ProvinceReportContext);
+  const areaDetails = useContext(ViewDetails);
   const me = useContext(MeContext);
   const [userAreaType, setUserAreaType] = useState("All");
   const [areas, setAreas] = useState([]);
@@ -54,8 +55,6 @@ export const Dashboard = () => {
   const [personalFilled, setPersonalFilled] = useState([]);
   const [initialData, setInitialData] = useState(null);
   const [show, setShow] = useState(true);
-  const [totalHalqas, setTotalHalqas] = useState([]);
-  const [areaDetails, setAreaDetails] = useState();
   const [month, setMonth] = useState();
   let date;
   useEffect(() => {
@@ -111,8 +110,6 @@ export const Dashboard = () => {
           const halqaData = halqa?.data?.data?.allHalqas || [];
           const divisionData = division?.data?.data?.allDivisions || [];
           const ilaqaData = division?.data?.data?.allIlaqas || [];
-          setTotalHalqas(halqa?.data?.data?.totalHalqas);
-          setTotalHalqas(halqaData, "h");
           const getFilteredHalqas = (halqaData) => [
             ...halqaData.filter((h) => {
               if (userAreaType === "Maqam") {
@@ -195,63 +192,6 @@ export const Dashboard = () => {
       setLoading(false);
     }
   };
-  const getAreaDetails = async (obj) => {
-    const getPath = (parentId) => {
-      switch (parentId) {
-        case "Ilaqa":
-          return "halqa";
-
-        case "Maqam":
-          return "halqa";
-
-        case "Division":
-          return "halqa";
-
-        case "Tehsil":
-          return "halqa";
-
-        case "halqa":
-          return "halqa";
-
-        default:
-          return "invalid path";
-      }
-    };
-    let res;
-    try {
-      if (obj?.parentType) {
-        res = await instance.get(
-          `/locations/${getPath(obj?.parentType)}/${obj?._id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("@token")}`,
-            },
-          }
-        );
-      } else if (!obj?.parentType && obj?.maqam) {
-        res = await instance.get(`/locations/ilaqa/${obj?._id}`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("@token")}`,
-          },
-        });
-      } else {
-        res = await instance.get(`/locations/maqam/${obj?._id}`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("@token")}`,
-          },
-        });
-      }
-      if (res) {
-        setAreaDetails(res?.data?.data);
-      } else {
-        setAreaDetails(obj);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-
-    document.getElementById("area_details").showModal();
-  };
   useEffect(() => {
     const storedData = sessionStorage.getItem("storedData");
     if (storedData) {
@@ -320,52 +260,7 @@ export const Dashboard = () => {
     getAreas();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAreaType]);
-  const getAreaType = (area) => {
-    if (area?.parentType === "Maqam") {
-      const name = maqams?.find((i) => i?._id === area?.parentId?._id);
-      return `Of Maqam ${name?.name} Of ${name?.province?.name}`;
-    } else if (area?.parentType === "Tehsil") {
-      const name = getDivisionByTehsil(area?.parentId, districts);
-      return `${name}`;
-    } else if (area?.parentType === "Ilaqa") {
-      let ilaqas;
-      if (ilaqa?.length > 0) {
-        ilaqas = ilaqa?.find((il) => il?._id === area?.parentId);
-        return `Of Ilaqa ${area?.parentId?.name} ${
-          localStorage.getItem("@type") === "province" ||
-          localStorage.getItem("@type") === "country"
-            ? ilaqas?.maqam?.name
-            : ""
-        } `;
-      } else {
-        return `Of Ilaqa ${area?.parentId?.name} ${area?.parentId?.maqam?.name}`;
-      }
-    } else if (area?.parentType === "Division") {
-      return `Of Division ${area?.parentId?.name} `;
-    } else if (area?.province) {
-      const matchingProvince = provinces?.find(
-        (p) => p?._id === area?.province
-      );
-      return ` Of ${matchingProvince?.name}`;
-    }
 
-    return "Province";
-  };
-  const getUsersAreaDetails = (user) => {
-    if (user?.userAreaId?.parentType === "Maqam") {
-      const name = unit.find((i) => i?._id === user?.userAreaId?._id);
-      return `${name?.name} - ${name?.parentId?.name} (Maqam)`;
-    } else if (user?.userAreaId?.parentType === "Tehsil") {
-      const name = tehsils.find(
-        (teshsil) => teshsil?._id === user?.userAreaId?.parentId
-      )?.district?.division?.name;
-      return `${user?.userAreaId?.name} - ${name} (Division)`;
-    } else {
-      return `${user?.userAreaId?.name} - ${
-        user?.userAreaId?.name === "Punjab" ? "" : "Punjab"
-      } (${user?.userAreaType})`;
-    }
-  };
   // filter PERSONAL REPORTS
 
   const handlePersonalFilledReports = () => {
