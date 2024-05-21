@@ -1031,20 +1031,22 @@ export const Dashboard = () => {
                 </h4>
               </div>
             )}
-            <div className="w-full flex justify-start items-center gap-5">
-              <h4>Province:</h4>
-              <h4 className="text-gray-400 font-bold">
-                {areaDetails?.parentType === "Ilaqa"
-                  ? areaDetails?.parentId?.maqam?.province?.name
-                  : areaDetails?.parentType === "Maqam"
-                  ? areaDetails?.parentId?.province?.name
-                  : areaDetails?.parentType === "Tehsil"
-                  ? areaDetails?.parentId?.district?.division?.province?.name
-                  : areaDetails?.parentType === "Division"
-                  ? areaDetails?.parentId?.province?.name
-                  : areaDetails?.province?.name}
-              </h4>
-            </div>
+            {!areaDetails?.country && (
+              <div className="w-full flex justify-start items-center gap-5">
+                <h4>Province:</h4>
+                <h4 className="text-gray-400 font-bold">
+                  {areaDetails?.parentType === "Ilaqa"
+                    ? areaDetails?.parentId?.maqam?.province?.name
+                    : areaDetails?.parentType === "Maqam"
+                    ? areaDetails?.parentId?.province?.name
+                    : areaDetails?.parentType === "Tehsil"
+                    ? areaDetails?.parentId?.district?.division?.province?.name
+                    : areaDetails?.parentType === "Division"
+                    ? areaDetails?.parentId?.province?.name
+                    : areaDetails?.province?.name}
+                </h4>
+              </div>
+            )}
             <div className="w-full flex justify-start items-center gap-5">
               <h5>country:</h5>
               <h4 className="text-gray-400 font-bold">Pakistan</h4>
