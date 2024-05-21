@@ -199,7 +199,6 @@ export const Dashboard = () => {
     }
   }, []);
   useEffect(() => {
-    // Fetch data only when 'me' is available and initialData is empty
     getData();
     // eslint-disable-next-line
   }, [me]);

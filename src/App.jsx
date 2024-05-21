@@ -709,6 +709,7 @@ function App() {
   useEffect(() => {
     const intervalId = setInterval(() => {
       if (me) {
+        getAllRequests();
         getAllReports();
       }
     }, 5000); // 5000 milliseconds = 5 seconds
