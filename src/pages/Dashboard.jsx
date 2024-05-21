@@ -3,6 +3,7 @@ import { GeneralLayout } from "../components";
 import { FaLocationDot } from "react-icons/fa6";
 import { CiLocationOn } from "react-icons/ci";
 import { FaFilter, FaLocationArrow, FaPlus } from "react-icons/fa";
+import { FcViewDetails } from "react-icons/fc";
 import { useEffect } from "react";
 import {
   DistrictContext,
@@ -54,6 +55,7 @@ export const Dashboard = () => {
   const [initialData, setInitialData] = useState(null);
   const [show, setShow] = useState(true);
   const [totalHalqas, setTotalHalqas] = useState([]);
+  const [areaDetails, setAreaDetails] = useState();
   const [month, setMonth] = useState();
   let date;
   useEffect(() => {
@@ -78,9 +80,6 @@ export const Dashboard = () => {
     getAllReports();
     getHalqas();
   }, []);
-  useEffect(() => {
-    console.log(unit);
-  });
   const getData = async () => {
     // Check if data is already stored in session storage
     if (userAreaType === "personal" && queryDate !== "") {
@@ -196,6 +195,63 @@ export const Dashboard = () => {
       setLoading(false);
     }
   };
+  const getAreaDetails = async (obj) => {
+    const getPath = (parentId) => {
+      switch (parentId) {
+        case "Ilaqa":
+          return "halqa";
+
+        case "Maqam":
+          return "halqa";
+
+        case "Division":
+          return "halqa";
+
+        case "Tehsil":
+          return "halqa";
+
+        case "halqa":
+          return "halqa";
+
+        default:
+          return "invalid path";
+      }
+    };
+    let res;
+    try {
+      if (obj?.parentType) {
+        res = await instance.get(
+          `/locations/${getPath(obj?.parentType)}/${obj?._id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("@token")}`,
+            },
+          }
+        );
+      } else if (!obj?.parentType && obj?.maqam) {
+        res = await instance.get(`/locations/ilaqa/${obj?._id}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
+        });
+      } else {
+        res = await instance.get(`/locations/maqam/${obj?._id}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
+        });
+      }
+      if (res) {
+        setAreaDetails(res?.data?.data);
+      } else {
+        setAreaDetails(obj);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
+    document.getElementById("area_details").showModal();
+  };
   useEffect(() => {
     const storedData = sessionStorage.getItem("storedData");
     if (storedData) {
@@ -310,7 +366,6 @@ export const Dashboard = () => {
       } (${user?.userAreaType})`;
     }
   };
-
   // filter PERSONAL REPORTS
 
   const handlePersonalFilledReports = () => {
@@ -565,7 +620,7 @@ export const Dashboard = () => {
                   </div>
                   <div className="px-4 text-gray-700">
                     <h3 className="text-sm tracking-wider">Total Units</h3>
-                    <p className="text-3xl">{totalHalqas.length}</p>
+                    <p className="text-3xl">{unit.length}</p>
                   </div>
                 </div>
               )}
@@ -696,8 +751,14 @@ export const Dashboard = () => {
                                         </span>
                                       )}
                                     </td>
-                                    <td>
-                                      
+                                    <td className="">
+                                      <div
+                                        onClick={() => {
+                                          getAreaDetails(obj);
+                                        }}
+                                      >
+                                        <FcViewDetails className="cursor-pointer text-2xl p-0 m-0" />
+                                      </div>
                                     </td>
                                   </tr>
                                 ))
@@ -732,6 +793,15 @@ export const Dashboard = () => {
                                         User Not Registered Yet
                                       </span>
                                     )}
+                                  </td>
+                                  <td className="">
+                                    <div
+                                      onClick={() => {
+                                        getAreaDetails(obj);
+                                      }}
+                                    >
+                                      <FcViewDetails className="cursor-pointer text-2xl" />
+                                    </div>
                                   </td>
                                 </tr>
                               ))
@@ -1011,6 +1081,92 @@ export const Dashboard = () => {
                 </div>
               </form>
             </div>
+          </div>
+        </div>
+      </dialog>
+      <dialog id="area_details" className="modal">
+        <div className="modal-box">
+          <h3 className="font-bold text-lg mb-3">Details of the area</h3>
+          <div className="w-full  flex flex-col justify-between items-start text-left gap-4  flex-wrap">
+            <div className="w-full flex justify-start items-center gap-5">
+              <h5>Name:</h5>
+              <h4 className="text-gray-400 font-bold">{areaDetails?.name}</h4>
+            </div>
+            <div className="w-full flex justify-start items-center gap-5">
+              {areaDetails?.parentType ? areaDetails?.parentType + ":" : ""}
+              <h4 className="text-gray-400 font-bold">
+                {areaDetails?.parentType === "Ilaqa"
+                  ? areaDetails?.parentId?.name
+                  : areaDetails?.parentType === "Maqam"
+                  ? areaDetails?.parentId?.name
+                  : areaDetails?.parentType === "Tehsil"
+                  ? areaDetails?.parentId?.name
+                  : areaDetails?.parentType === "Division"
+                  ? areaDetails?.parentId?.name
+                  : ""}
+              </h4>
+            </div>
+            {(areaDetails?.parentType === "Tehsil" ||
+              areaDetails?.parentType === "Division") && (
+              <>
+                <div className="w-full flex justify-start items-center gap-5">
+                  <h5> District:</h5>
+                  <h4 className="text-gray-400 font-bold">
+                    {areaDetails?.parentId?.district
+                      ? areaDetails?.parentId?.district?.name
+                      : "Not a District aera"}
+                  </h4>
+                </div>
+                <div className="w-full flex justify-start items-center gap-5">
+                  <h5>Division:</h5>
+                  <h4 className="text-gray-400 font-bold">
+                    {areaDetails?.parentId?.district
+                      ? areaDetails?.parentId?.district?.division?.name
+                      : areaDetails?.division?.name}
+                  </h4>
+                </div>
+              </>
+            )}
+            {areaDetails?.parentType === "Ilaqa" && (
+              <div className="w-full flex justify-start items-center gap-5">
+                <h5>Maqam:</h5>
+                <h4 className="text-gray-400 font-bold">
+                  {areaDetails?.parentType === "Ilaqa"
+                    ? areaDetails?.parentId?.maqam?.name
+                    : ""}
+                </h4>
+              </div>
+            )}
+            <div className="w-full flex justify-start items-center gap-5">
+              <h4>Province:</h4>
+              <h4 className="text-gray-400 font-bold">
+                {areaDetails?.parentType === "Ilaqa"
+                  ? areaDetails?.parentId?.maqam?.province?.name
+                  : areaDetails?.parentType === "Maqam"
+                  ? areaDetails?.parentId?.province?.name
+                  : areaDetails?.parentType === "Tehsil"
+                  ? areaDetails?.parentId?.district?.division?.province?.name
+                  : areaDetails?.parentType === "Division"
+                  ? areaDetails?.parentId?.province?.name
+                  : areaDetails?.province?.name}
+              </h4>
+            </div>
+            <div className="w-full flex justify-start items-center gap-5">
+              <h5>country:</h5>
+              <h4 className="text-gray-400 font-bold">Pakistan</h4>
+            </div>
+          </div>
+          <div className="modal-action w-full">
+            <form method="dialog" className="w-full">
+              <div className=" w-full flex justify-end gap-3 items-center">
+                <button
+                  id="close-details-modal"
+                  className="btn ms-3 capitalize"
+                >
+                  Close
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </dialog>

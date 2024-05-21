@@ -3455,6 +3455,10 @@ html {
   z-index: 1;
 }
 
+.m-0 {
+  margin: 0px;
+}
+
 .m-2 {
   margin: 0.5rem;
 }
@@ -4759,6 +4763,11 @@ html {
 
   .sm\:flex-col {
     flex-direction: column;
+  }
+
+  .sm\:px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
   .sm\:px-8 {

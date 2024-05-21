@@ -189,44 +189,27 @@ function App() {
               Authorization: `Bearer ${localStorage.getItem("@token")}`,
             },
           });
+          if (req) {
+            setIlaqas([req?.data?.data]);
+          } else {
+            dispatch({
+              type: "ERROR",
+              payload: req?.response?.data?.message || err?.message,
+            });
+          }
         } else {
           req = await instance.get("/locations/ilaqa", {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("@token")}`,
             },
           });
-        }
-        if (req) {
-          const enabledIlaqas = req.data.data;
-          const type = localStorage.getItem("@type");
-
-          if (type === "country") {
-            setIlaqas(
-              enabledIlaqas?.filter((ilaqa) => {
-                return ilaqa?.disabled === false;
-              })
-            );
-          } else if (type === "province") {
-            setIlaqas(
-              enabledIlaqas.filter((i) => {
-                return i?.maqam?.province?._id === me?.userAreaId?._id;
-              })
-            );
-          } else if (type === "maqam") {
-            const validIlaqas = enabledIlaqas.filter(
-              (i) => i?.maqam?._id === me?.userAreaId?._id
-            );
-            setIlaqas(validIlaqas);
-            validIlaqas.length < 1 && setMuntakhibMaqam(false);
+          if (req) {
+            setIlaqas(req?.data?.data);
           } else {
-            if (enabledIlaqas?.disabled !== true) {
-              setIlaqas([enabledIlaqas]);
-            } else {
-              dispatch({
-                type: "ERROR",
-                payload: "Ilaqa fetched",
-              });
-            }
+            dispatch({
+              type: "ERROR",
+              payload: req?.response?.data?.message || err?.message,
+            });
           }
         }
       } catch (err) {
@@ -247,20 +230,23 @@ function App() {
       me?.userAreaType !== "Ilaqa"
     ) {
       try {
-        const req = await instance.get("/locations/maqam", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("@token")}`,
-          },
-        });
-        if (req) {
-          setMaqams(
-            req.data.data.filter(
-              (i) =>
-                i?._id === me?.userAreaId?._id ||
-                i?.province?._id === me?.userAreaId?._id ||
-                i?.province?.country === me?.userAreaId?._id
-            )
-          );
+        let req;
+        if (me?.userAreaType === "Maqam") {
+          req = await instance.get(`/locations/maqam/${me?.userAreaId?._id}`, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("@token")}`,
+            },
+          });
+          if (req) {
+            setMaqams([req?.data?.data]);
+          }
+        } else {
+          req = await instance.get("/locations/maqam", {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("@token")}`,
+            },
+          });
+          setMaqams(req?.data?.data);
         }
       } catch (err) {
         console.log(err);
@@ -279,21 +265,39 @@ function App() {
       me?.userAreaType !== "Maqam" &&
       me?.userAreaType !== "Ilaqa"
     ) {
+      let req;
       try {
-        const req = await instance.get("/locations/division", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("@token")}`,
-          },
-        });
-        if (req) {
-          setDivisions(
-            req.data.data.filter(
-              (i) =>
-                i?._id === me?.userAreaId?._id ||
-                i?.province?._id === me?.userAreaId?._id ||
-                i?.province?.country === me?.userAreaId?._id
-            )
+        if (me?.userAreaType === "Province" || me?.userAreaType === "Country") {
+          req = await instance.get("/locations/division", {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("@token")}`,
+            },
+          });
+          if (req) {
+            setDivisions(req?.data?.data);
+          } else {
+            dispatch({
+              type: "ERROR",
+              payload: req?.response?.data?.message || err?.message,
+            });
+          }
+        } else if (me?.userAreaType === "Division") {
+          req = await instance.get(
+            `/locations/division/${me?.userAreaId?._id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("@token")}`,
+              },
+            }
           );
+          if (req) {
+            setDivisions([req?.data?.data]);
+          } else {
+            dispatch({
+              type: "ERROR",
+              payload: req?.response?.data?.message || err?.message,
+            });
+          }
         }
       } catch (err) {
         console.log(err);
@@ -373,6 +377,9 @@ function App() {
       return;
     }
   };
+  useEffect(() => {
+    console.log(ilaqas);
+  }, [ilaqas]);
   const getHalqas = async () => {
     try {
       let req;
@@ -382,113 +389,27 @@ function App() {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
+        if (req) {
+          setHalqas([req?.data?.data]);
+        } else {
+          dispatch({
+            type: "ERROR",
+            payload: req?.response?.data?.message || err?.message,
+          });
+        }
       } else {
         req = await instance.get("/locations/halqa", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
-      }
-      if (req) {
-        const enabledHalqas = req.data.data;
-        const type = localStorage.getItem("@type");
-        if (type === "country") {
-          setHalqas(
-            enabledHalqas?.filter((halqa) => {
-              return halqa?.disabled !== true;
-            })
-          );
-        } else if (type === "province") {
-          console.log(enabledHalqas);
-          setHalqas(
-            enabledHalqas.filter((i) => {
-              if (
-                i?.parentType === "Maqam" ||
-                i?.parentType === "Ilaqa" ||
-                i?.parentType === "Division" ||
-                i?.parentType === "Tehsil"
-              ) {
-                const validMaqamHalqas =
-                  i?.parentId?.maqam?.province?._id === me?.userAreaId?._id ||
-                  i?.parentId?.ilaqa?.maqam?.province?._id ===
-                    me?.userAreaId?._id;
-                console.log(validMaqamHalqas);
-                let validDistrictsId;
-                if (dis?.length > 0) {
-                  validDistrictsId = dis?.map((i) => i?._id?.toString());
-                } else {
-                  validDistrictsId = districts?.map((i) => i?._id?.toString());
-                }
-                if (validDistrictsId) {
-                  // Check if the parent type is "Tehsil" or "division" and the district matches one of the valid districts
-                  const isParentValid =
-                    (i?.parentType === "Tehsil" ||
-                      i?.parentType === "division") &&
-                    validDistrictsId.includes(
-                      i?.parentId.district?._id?.toString()
-                    );
-                  const isDivisionParentValid =
-                    i?.parentType === "division" &&
-                    i?.parentId._id.toString() ===
-                      me?.userAreaId?._id?.toString();
-
-                  // Return true if any of the conditions are met
-                  // console.log(isDivisionParentValid, validMaqamHalqas);
-                  return (
-                    isParentValid || isDivisionParentValid || validMaqamHalqas
-                  );
-                }
-              }
-            })
-          );
-        } else if (type === "maqam") {
-          const validHalqas = enabledHalqas.filter((i) => {
-            if (i?.parentType === "Maqam" || i?.parentType === "Ilaqa") {
-              return (
-                i?.parentId?._id === me?.userAreaId?._id ||
-                i?.parentId?.maqam?._id === me?.userAreaId?._id
-              );
-            }
-          });
-          setHalqas(validHalqas);
-        } else if (type === "ilaqa") {
-          const validHalqas = enabledHalqas.filter(
-            (i) =>
-              i?.parentType === "Ilaqa" &&
-              i?.parentId?._id === me?.userAreaId?._id
-          );
-          setHalqas(validHalqas);
-        } else if (type === "division") {
-          let validDistrictsId;
-          if (dis?.length > 0) {
-            validDistrictsId = dis?.map((i) => i?._id?.toString());
-          } else {
-            validDistrictsId = districts?.map((i) => i?._id?.toString());
-          }
-          let isParentValid;
-          let isDivisionParentValid;
-          const validHalqas = enabledHalqas.filter((halqa) => {
-            // Check if the parent type is "Tehsil" or "division" and the district matches one of the valid districts
-            if (halqa.parentType === "Tehsil") {
-              return (isParentValid = validDistrictsId.includes(
-                halqa.parentId.district?._id?.toString()
-              ));
-            }
-            if (halqa.parentType === "Division") {
-              return (isDivisionParentValid =
-                halqa?.parentId?._id.toString() ===
-                me?.userAreaId?._id?.toString());
-            }
-
-            // Return true if any of the conditions are met
-            return isParentValid || isDivisionParentValid;
-          });
-
-          setHalqas(validHalqas);
+        if (req) {
+          setHalqas(req?.data?.data);
         } else {
-          if (enabledHalqas?.disabled !== true) {
-            setHalqas([enabledHalqas]);
-          }
+          dispatch({
+            type: "ERROR",
+            payload: req?.response?.data?.message || err?.message,
+          });
         }
       }
     } catch (err) {
