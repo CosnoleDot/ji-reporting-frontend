@@ -194,7 +194,7 @@ function App() {
           } else {
             dispatch({
               type: "ERROR",
-              payload: req?.response?.data?.message || err?.message,
+              payload: req?.response?.data?.message 
             });
           }
         } else {
@@ -208,7 +208,7 @@ function App() {
           } else {
             dispatch({
               type: "ERROR",
-              payload: req?.response?.data?.message || err?.message,
+              payload: req?.response?.data?.message 
             });
           }
         }
@@ -278,7 +278,7 @@ function App() {
           } else {
             dispatch({
               type: "ERROR",
-              payload: req?.response?.data?.message || err?.message,
+              payload: req?.response?.data?.message
             });
           }
         } else if (me?.userAreaType === "Division") {
@@ -295,7 +295,7 @@ function App() {
           } else {
             dispatch({
               type: "ERROR",
-              payload: req?.response?.data?.message || err?.message,
+              payload: req?.response?.data?.message 
             });
           }
         }
@@ -377,9 +377,6 @@ function App() {
       return;
     }
   };
-  useEffect(() => {
-    console.log(ilaqas);
-  }, [ilaqas]);
   const getHalqas = async () => {
     try {
       let req;
@@ -394,7 +391,7 @@ function App() {
         } else {
           dispatch({
             type: "ERROR",
-            payload: req?.response?.data?.message || err?.message,
+            payload: req?.response?.data?.message 
           });
         }
       } else {
@@ -408,7 +405,7 @@ function App() {
         } else {
           dispatch({
             type: "ERROR",
-            payload: req?.response?.data?.message || err?.message,
+            payload: req?.response?.data?.message 
           });
         }
       }
