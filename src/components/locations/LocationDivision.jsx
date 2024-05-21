@@ -654,7 +654,7 @@ export const LocationDivision = () => {
                       <th>{index + 1}</th>
                       <td className="w-full">{halqa?.name}</td>
                       <td className="w-full">{`${halqa?.parentType} ${
-                        halqa?.parentId?.name.toUpperCase() || "-"
+                        halqa?.parentId?.name?.toUpperCase() || "-"
                       } of ${
                         halqa?.parentType !== "Division"
                           ? `Division ${
@@ -701,9 +701,9 @@ export const LocationDivision = () => {
                     </tr>
                   ))
               ) : (
-                <div>
+                <section>
                   <Loader />
-                </div>
+                </section>
               )}
             </tbody>
           </table>
