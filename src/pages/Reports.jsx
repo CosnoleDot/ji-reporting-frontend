@@ -922,7 +922,7 @@ export const Reports = ({ maqam }) => {
         {/* localStorage.getItem('@type') === 'province' && ( */}
         <div
           role="tablist"
-          className="w-full flex justify-between items-center overflow-x-scroll min-h[5rem] overflow-y-hidden"
+          className="w-full flex justify-between items-center overflow-x-scroll"
         >
           {["country"].includes(localStorage.getItem("@type")) &&
             ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
@@ -931,7 +931,7 @@ export const Reports = ({ maqam }) => {
               <Link
                 to={"?active=country"}
                 role="tab"
-                className={`tab w-full ${
+                className={`tab p-2 w-full ${
                   active === "country" ? "tab-active bg-slate-200" : ""
                 }  font-bold underline`}
                 onClick={() => setNotifyTo("country")}
@@ -946,7 +946,7 @@ export const Reports = ({ maqam }) => {
               <Link
                 to={"?active=province"}
                 role="tab"
-                className={`tab w-full ${
+                className={`tab p-2 w-full ${
                   active === "province" ? "tab-active bg-slate-200" : ""
                 } font-bold underline`}
                 onClick={() => setNotifyTo("province")}
@@ -963,7 +963,7 @@ export const Reports = ({ maqam }) => {
               <Link
                 to={"?active=division"}
                 role="tab"
-                className={`tab w-full ${
+                className={`tab p-2 w-full ${
                   active === "division" ? "tab-active" : ""
                 } font-bold underline`}
                 onClick={() => setNotifyTo("division")}
@@ -980,7 +980,7 @@ export const Reports = ({ maqam }) => {
               <Link
                 to={"?active=maqam"}
                 role="tab"
-                className={`tab w-full ${
+                className={`tab p-2 w-full ${
                   active === "maqam" ? "tab-active" : ""
                 } font-bold underline`}
                 onClick={() => setNotifyTo("maqam")}
@@ -995,7 +995,7 @@ export const Reports = ({ maqam }) => {
               <Link
                 to={"?active=ilaqa"}
                 role="tab"
-                className={`tab w-full ${
+                className={`tab p-2 w-full ${
                   active === "ilaqa" ? "tab-active" : ""
                 } font-bold underline`}
                 onClick={() => setNotifyTo("ilaqa")}
@@ -1011,7 +1011,7 @@ export const Reports = ({ maqam }) => {
               <Link
                 to={"?active=ilaqa&tab=maqam"}
                 role="tab"
-                className={`tab w-full ${
+                className={`tab p-2 w-full ${
                   active === "ilaqa" ? "tab-active" : ""
                 } font-bold underline`}
                 onClick={() => setNotifyTo("ilaqa")}
@@ -1026,7 +1026,7 @@ export const Reports = ({ maqam }) => {
               <Link
                 to={"?active=ilaqa&tab=province"}
                 role="tab"
-                className={`tab w-full ${
+                className={`tab p-2 w-full ${
                   active === "ilaqa" ? "tab-active" : ""
                 } font-bold underline`}
                 onClick={() => setNotifyTo("ilaqa")}
@@ -1043,7 +1043,7 @@ export const Reports = ({ maqam }) => {
               <Link
                 to={"?active=halqa&tab=maqam"}
                 role="tab"
-                className={`tab w-full ${
+                className={`tab p-2 w-full ${
                   active === "halqa" ? "tab-active" : ""
                 } font-bold underline`}
                 onClick={() => setNotifyTo("halqa")}
@@ -1055,7 +1055,7 @@ export const Reports = ({ maqam }) => {
             <Link
               to={"?active=halqa&tab=ilaqa"}
               role="tab"
-              className={`tab w-full ${
+              className={`tab p-2 w-full ${
                 active === "halqa" ? "tab-active" : ""
               } font-bold underline`}
               onClick={() => setNotifyTo("halqa")}
@@ -1067,7 +1067,7 @@ export const Reports = ({ maqam }) => {
             <Link
               to={"?active=halqa&tab=division"}
               role="tab"
-              className={`tab w-full ${
+              className={`tab p-2 w-full ${
                 active === "halqa" ? "tab-active" : ""
               } font-bold underline`}
               onClick={() => setNotifyTo("halqa")}
