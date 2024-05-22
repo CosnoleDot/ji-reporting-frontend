@@ -26,7 +26,7 @@ import { AiFillBell } from "react-icons/ai";
 import { UIContext } from "../context/ui";
 
 const NoReports = () => (
-  <div className="card-body flex flex-col items-center justify-center w-full p-5 mb-1 rounded-xl">
+  <div className="card-body flex flex-col items-center justify-center w-full p-2 md:p-5 mb-1 rounded-xl">
     <FaRegFileExcel className="text-gray-300 w-40 h-40" />
     <span className="text-gray-300 font-bold text-3xl">No Reports Found!</span>
   </div>
@@ -617,7 +617,7 @@ export const Reports = ({ maqam }) => {
                 </button>
               </form>
               <div className="relative">
-                <span className="px-1 py-2 block font-semibold w-[50%]">
+                <span className="px-1 py-1 block font-semibold w-[50%]">
                   Select Area:
                 </span>
                 {active === "halqa" && (
@@ -930,7 +930,7 @@ export const Reports = ({ maqam }) => {
               <Link
                 to={"?active=country"}
                 role="tab"
-                className={`tab m-2 p-2 w-full ${
+                className={`tab flex justify-center items-center mb-2 p-2 w-full ${
                   active === "country" ? "tab-active bg-slate-200" : ""
                 }  font-bold underline`}
                 onClick={() => setNotifyTo("country")}
@@ -945,7 +945,7 @@ export const Reports = ({ maqam }) => {
               <Link
                 to={"?active=province"}
                 role="tab"
-                className={`tab m-2 p-2 w-full ${
+                className={`tab flex justify-center items-center mb-2 p-2 w-full ${
                   active === "province" ? "tab-active bg-slate-200" : ""
                 } font-bold underline`}
                 onClick={() => setNotifyTo("province")}
@@ -962,7 +962,7 @@ export const Reports = ({ maqam }) => {
               <Link
                 to={"?active=division"}
                 role="tab"
-                className={`tab m-2 p-2 w-full ${
+                className={`tab flex justify-center items-center mb-2 p-2 w-full ${
                   active === "division" ? "tab-active" : ""
                 } font-bold underline`}
                 onClick={() => setNotifyTo("division")}
@@ -979,7 +979,7 @@ export const Reports = ({ maqam }) => {
               <Link
                 to={"?active=maqam"}
                 role="tab"
-                className={`tab m-2 p-2 w-full ${
+                className={`tab flex justify-center items-center mb-2 p-2 w-full ${
                   active === "maqam" ? "tab-active" : ""
                 } font-bold underline`}
                 onClick={() => setNotifyTo("maqam")}
@@ -994,7 +994,7 @@ export const Reports = ({ maqam }) => {
               <Link
                 to={"?active=ilaqa"}
                 role="tab"
-                className={`tab m-2 p-2 w-full ${
+                className={`tab flex justify-center items-center mb-2 p-2 w-full ${
                   active === "ilaqa" ? "tab-active" : ""
                 } font-bold underline`}
                 onClick={() => setNotifyTo("ilaqa")}
@@ -1010,7 +1010,7 @@ export const Reports = ({ maqam }) => {
               <Link
                 to={"?active=ilaqa&tab=maqam"}
                 role="tab"
-                className={`tab m-2 p-2 w-full ${
+                className={`tab flex justify-center items-center mb-2 p-2 w-full ${
                   active === "ilaqa" ? "tab-active" : ""
                 } font-bold underline`}
                 onClick={() => setNotifyTo("ilaqa")}
@@ -1025,7 +1025,7 @@ export const Reports = ({ maqam }) => {
               <Link
                 to={"?active=ilaqa&tab=province"}
                 role="tab"
-                className={`tab m-2 p-2 w-full ${
+                className={`tab flex justify-center items-center mb-2 p-2 w-full ${
                   active === "ilaqa" ? "tab-active" : ""
                 } font-bold underline`}
                 onClick={() => setNotifyTo("ilaqa")}
@@ -1042,7 +1042,7 @@ export const Reports = ({ maqam }) => {
               <Link
                 to={"?active=halqa&tab=maqam"}
                 role="tab"
-                className={`tab m-2 p-2 w-full ${
+                className={`tab flex justify-center items-center mb-2 p-2 w-full ${
                   active === "halqa" ? "tab-active" : ""
                 } font-bold underline`}
                 onClick={() => setNotifyTo("halqa")}
@@ -1054,7 +1054,7 @@ export const Reports = ({ maqam }) => {
             <Link
               to={"?active=halqa&tab=ilaqa"}
               role="tab"
-              className={`tab m-2 p-2 w-full ${
+              className={`tab flex justify-center items-center mb-2 p-2 w-full ${
                 active === "halqa" ? "tab-active" : ""
               } font-bold underline`}
               onClick={() => setNotifyTo("halqa")}
@@ -1066,7 +1066,7 @@ export const Reports = ({ maqam }) => {
             <Link
               to={"?active=halqa&tab=division"}
               role="tab"
-              className={`tab m-2 p-2 w-full ${
+              className={`tab flex justify-center items-center mb-2 p-2 w-full ${
                 active === "halqa" ? "tab-active" : ""
               } font-bold underline`}
               onClick={() => setNotifyTo("halqa")}
@@ -1076,34 +1076,38 @@ export const Reports = ({ maqam }) => {
           )}
         </div>
         {/* )} */}
-        {active === "halqa" && (localStorage.getItem("@type") === "province" || localStorage.getItem("@type") === "country") && (
-          <div
-            role="tablist"
-            className="w-full flex justify-between items-center"
-          >
-            <Link
-              to={"?active=halqa&tab=maqam"}
-              role="tab"
-              className={`tab w-full ${tab === "maqam" ? "tab-active" : ""}`}
+        {active === "halqa" &&
+          (localStorage.getItem("@type") === "province" ||
+            localStorage.getItem("@type") === "country") && (
+            <div
+              role="tablist"
+              className="w-full flex justify-between items-center"
             >
-              Maqam Halqa
-            </Link>
-            <Link
-              to={"?active=halqa&tab=division"}
-              role="tab"
-              className={`tab w-full ${tab === "division" ? "tab-active" : ""}`}
-            >
-              Division Halqa
-            </Link>
-            <Link
-              to={"?active=halqa&tab=ilaqa"}
-              role="tab"
-              className={`tab w-full ${tab === "ilaqa" ? "tab-active" : ""}`}
-            >
-              Ilaqa Halqa
-            </Link>
-          </div>
-        )}
+              <Link
+                to={"?active=halqa&tab=maqam"}
+                role="tab"
+                className={`tab flex justify-center items-center w-full ${tab === "maqam" ? "tab-active" : ""}`}
+              >
+                Maqam Halqa
+              </Link>
+              <Link
+                to={"?active=halqa&tab=division"}
+                role="tab"
+                className={`tab flex justify-center items-center w-full ${
+                  tab === "division" ? "tab-active" : ""
+                }`}
+              >
+                Division Halqa
+              </Link>
+              <Link
+                to={"?active=halqa&tab=ilaqa"}
+                role="tab"
+                className={`tab flex justify-center items-center w-full ${tab === "ilaqa" ? "tab-active" : ""}`}
+              >
+                Ilaqa Halqa
+              </Link>
+            </div>
+          )}
 
         {["umeedwar", "rukan", "umeedwaar-nazim", "rukan-nazim"].includes(
           me?.nazimType
@@ -1111,7 +1115,7 @@ export const Reports = ({ maqam }) => {
           <Link
             to={"/personalReport"}
             role="tab"
-            className={`tab w-full ${
+            className={`tab flex justify-center items-center w-full ${
               tab === "personal" ? "tab-active" : ""
             } font-bold underline`}
             onClick={() => setTab("personal")}
@@ -1119,7 +1123,7 @@ export const Reports = ({ maqam }) => {
             Personal
           </Link>
         )}
-        <div className="relative overflow-y-scroll gap-3 w-full items-center p-5 justify-center h-[calc(100vh-65.6px-64px-48px)]">
+        <div className="relative overflow-y-scroll gap-3 w-full items-center p-0 md:p-5 justify-center h-[calc(100vh-65.6px-64px-48px)]">
           {userType !== "halqa" ? (
             filterAllData[active]?.length < 1 ? (
               <NoReports />
@@ -1152,10 +1156,10 @@ export const Reports = ({ maqam }) => {
                     obj?.halqaAreaId?.parentType === "Tehsil") && (
                     <div
                       key={obj?._id}
-                      className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
+                      className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
                     >
                       <div className="flex w-full flex-col items-start justify-center">
-                        <span className="text-lg font-semibold">
+                        <span className="text-sm lg:text-lg font-semibold">
                           {((active !== "province" || active !== "halqa") &&
                             obj?.[active + "AreaId"]?.name) ||
                             "UNKNOWN"}
@@ -1173,13 +1177,13 @@ export const Reports = ({ maqam }) => {
                       </div>
                       <div className="flex items-end w-full justify-end gap-3 ">
                         <button
-                          className="btn"
+                          className="btn "
                           onClick={() => viewReport(obj?._id)}
                         >
                           <FaEye />
                         </button>
                         <button
-                          className="btn"
+                          className="btn "
                           onClick={() =>
                             window.open(
                               `/${active}-report/print/${obj?._id}`,
@@ -1199,10 +1203,54 @@ export const Reports = ({ maqam }) => {
                     obj?.halqaAreaId?.parentType === "Ilaqa") && (
                     <div
                       key={obj?._id}
-                      className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
+                      className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
                     >
                       <div className="flex w-full flex-col items-start justify-center">
-                        <span className="text-lg font-semibold">
+                        <span className="text-sm lg:text-lg font-semibold">
+                          {obj?.[active + "AreaId"]?.name || "UNKNOWN"}
+                          {" - "}
+                          {(active !== "province" &&
+                            obj?.[active + "AreaId"]?.parentId?.name) ||
+                            "UNKNOWN"}
+                          {" - "}
+                          {moment(obj?.month).format("MMMM YYYY")}
+                        </span>
+                        <span>
+                          Last Modified: {moment(obj?.updatedAt).fromNow()}
+                        </span>
+                      </div>
+                      <div className="flex items-end w-full justify-end gap-3 ">
+                        <button
+                          className="btn "
+                          onClick={() => viewReport(obj?._id)}
+                        >
+                          <FaEye />
+                        </button>
+                        <button
+                          className="btn "
+                          onClick={() =>
+                            window.open(
+                              `/${active}-report/print/${obj?._id}`,
+                              "blank"
+                            )
+                          }
+                        >
+                          <FaPrint />
+                        </button>
+                      </div>
+                    </div>
+                  )
+                ) : active === "halqa" &&
+                  tab === "maqam" &&
+                  (localStorage.getItem("@type") === "province" ||
+                    localStorage.getItem("@type") === "country") ? (
+                  obj?.halqaAreaId?.parentType === "Maqam" && (
+                    <div
+                      key={obj?._id}
+                      className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
+                    >
+                      <div className="flex w-full flex-col items-start justify-center">
+                        <span className="text-sm lg:text-lg font-semibold">
                           {obj?.[active + "AreaId"]?.name || "UNKNOWN"}
                           {" - "}
                           {(active !== "province" &&
@@ -1236,57 +1284,14 @@ export const Reports = ({ maqam }) => {
                       </div>
                     </div>
                   )
-                ) : active === "halqa" &&
-                tab === "maqam" &&
-                (localStorage.getItem("@type") === "province" || localStorage.getItem("@type") === "country") ? (
-                (obj?.halqaAreaId?.parentType === "Maqam") && (
-                  <div
-                    key={obj?._id}
-                    className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
-                  >
-                    <div className="flex w-full flex-col items-start justify-center">
-                      <span className="text-lg font-semibold">
-                        {obj?.[active + "AreaId"]?.name || "UNKNOWN"}
-                        {" - "}
-                        {(active !== "province" &&
-                          obj?.[active + "AreaId"]?.parentId?.name) ||
-                          "UNKNOWN"}
-                        {" - "}
-                        {moment(obj?.month).format("MMMM YYYY")}
-                      </span>
-                      <span>
-                        Last Modified: {moment(obj?.updatedAt).fromNow()}
-                      </span>
-                    </div>
-                    <div className="flex items-end w-full justify-end gap-3 ">
-                      <button
-                        className="btn"
-                        onClick={() => viewReport(obj?._id)}
-                      >
-                        <FaEye />
-                      </button>
-                      <button
-                        className="btn"
-                        onClick={() =>
-                          window.open(
-                            `/${active}-report/print/${obj?._id}`,
-                            "blank"
-                          )
-                        }
-                      >
-                        <FaPrint />
-                      </button>
-                    </div>
-                  </div>
-                )
-              ): active === "halqa" && tab === "ilaqa" ? (
+                ) : active === "halqa" && tab === "ilaqa" ? (
                   obj?.halqaAreaId?.parentType === "Ilaqa" && (
                     <div
                       key={obj?._id}
-                      className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
+                      className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
                     >
                       <div className="flex w-full flex-col items-start justify-center">
-                        <span className="text-lg font-semibold">
+                        <span className="text-sm lg:text-lg font-semibold">
                           {obj?.[active + "AreaId"]?.name || "UNKNOWN"}
                           {" - "}
                           {(active !== "province" &&
@@ -1301,13 +1306,13 @@ export const Reports = ({ maqam }) => {
                       </div>
                       <div className="flex items-end w-full justify-end gap-3 ">
                         <button
-                          className="btn"
+                          className="btn "
                           onClick={() => viewReport(obj?._id)}
                         >
                           <FaEye />
                         </button>
                         <button
-                          className="btn"
+                          className="btn "
                           onClick={() =>
                             window.open(
                               `/${active}-report/print/${obj?._id}`,
@@ -1324,10 +1329,10 @@ export const Reports = ({ maqam }) => {
                   localStorage.getItem("@token") === "ilaqa" ? (
                   <div
                     key={obj?._id}
-                    className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
+                    className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
                   >
                     <div className="flex w-full flex-col items-start justify-center">
-                      <span className="text-lg font-semibold">
+                      <span className="text-sm lg:text-lg font-semibold">
                         {((active !== "province" || active !== "halqa") &&
                           obj?.[active + "AreaId"]?.name) ||
                           "UNKNOWN"}
@@ -1345,19 +1350,19 @@ export const Reports = ({ maqam }) => {
                     </div>
                     <div className="flex items-end w-full justify-end gap-3 ">
                       <button
-                        className="btn"
+                        className="btn "
                         onClick={() => viewReport(obj?._id)}
                       >
                         <FaEye />
                       </button>
                       <button
-                        className="btn"
+                        className="btn "
                         onClick={() => editReport(obj?._id)}
                       >
                         <FaEdit />
                       </button>
                       <button
-                        className="btn"
+                        className="btn "
                         onClick={() =>
                           window.open(
                             `/${active}-report/print/${obj?._id}`,
@@ -1372,10 +1377,10 @@ export const Reports = ({ maqam }) => {
                 ) : active === "ilaqa" && tab === "maqam" ? (
                   <div
                     key={obj?._id}
-                    className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
+                    className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
                   >
                     <div className="flex w-full flex-col items-start justify-center">
-                      <span className="text-lg font-semibold">
+                      <span className="text-sm lg:text-lg font-semibold">
                         {((active !== "province" || active !== "halqa") &&
                           obj?.[active + "AreaId"]?.name) ||
                           "UNKNOWN"}
@@ -1393,13 +1398,13 @@ export const Reports = ({ maqam }) => {
                     </div>
                     <div className="flex items-end w-full justify-end gap-3 ">
                       <button
-                        className="btn"
+                        className="btn "
                         onClick={() => viewReport(obj?._id)}
                       >
                         <FaEye />
                       </button>
                       <button
-                        className="btn"
+                        className="btn "
                         onClick={() =>
                           window.open(
                             `/${active}-report/print/${obj?._id}`,
@@ -1414,10 +1419,10 @@ export const Reports = ({ maqam }) => {
                 ) : active === "halqa" ? (
                   <div
                     key={obj?._id}
-                    className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
+                    className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
                   >
                     <div className="flex w-full flex-col items-start justify-center">
-                      <span className="text-lg font-semibold">
+                      <span className="text-sm lg:text-lg font-semibold">
                         {(active !== "province" &&
                           obj?.[active + "AreaId"]?.name) ||
                           "UNKNOWN"}
@@ -1435,13 +1440,13 @@ export const Reports = ({ maqam }) => {
                     </div>
                     <div className="flex items-end w-full justify-end gap-3 ">
                       <button
-                        className="btn"
+                        className="btn "
                         onClick={() => viewReport(obj?._id)}
                       >
                         <FaEye />
                       </button>
                       <button
-                        className="btn"
+                        className="btn "
                         onClick={() =>
                           window.open(
                             `/${active}-report/print/${obj?._id}`,
@@ -1457,28 +1462,32 @@ export const Reports = ({ maqam }) => {
                 active === "country" ? (
                   <div
                     key={obj?._id}
-                    className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
+                    className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
                   >
                     <div className="flex w-full flex-col items-start justify-center">
+                      <span className="text-sm lg:text-lg font-semibold">
+                        {obj?.[active + "AreaId"]?.name + " "}
+                        {moment(obj?.month).format("MMMM YYYY")}
+                      </span>
                       <span>
                         Last Modified: {moment(obj?.updatedAt).fromNow()}
                       </span>
                     </div>
                     <div className="flex items-end w-full justify-end gap-3 ">
                       <button
-                        className="btn"
+                        className="btn "
                         onClick={() => viewReport(obj?._id)}
                       >
                         <FaEye />
                       </button>
                       <button
-                        className="btn"
+                        className="btn "
                         onClick={() => editReport(obj?._id)}
                       >
                         <FaEdit />
                       </button>
                       <button
-                        className="btn"
+                        className="btn "
                         onClick={() =>
                           window.open(
                             `/${active}-report/print/${obj?._id}`,
@@ -1493,10 +1502,10 @@ export const Reports = ({ maqam }) => {
                 ) : (
                   <div
                     key={obj?._id}
-                    className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
+                    className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
                   >
                     <div className="flex w-full flex-col items-start justify-center">
-                      <span className="text-lg font-semibold">
+                      <span className="text-sm lg:text-lg font-semibold">
                         {obj?.[active + "AreaId"]?.name || "UNKNOWN"}
                         {" - "}
                         {obj?.[active + "AreaId"]?.province?.name ||
@@ -1512,7 +1521,7 @@ export const Reports = ({ maqam }) => {
                     </div>
                     <div className="flex items-end w-full justify-end gap-3 ">
                       <button
-                        className="btn"
+                        className="btn "
                         onClick={() => viewReport(obj?._id)}
                       >
                         <FaEye />
@@ -1520,14 +1529,14 @@ export const Reports = ({ maqam }) => {
 
                       {active === localStorage.getItem("@type") && (
                         <button
-                          className="btn"
+                          className="btn "
                           onClick={() => editReport(obj?._id)}
                         >
                           <FaEdit />
                         </button>
                       )}
                       <button
-                        className="btn"
+                        className="btn "
                         onClick={() => handlePrint(obj?._id)}
                       >
                         <FaPrint />
@@ -1545,10 +1554,10 @@ export const Reports = ({ maqam }) => {
               ?.map((obj) => (
                 <div
                   key={obj?._id}
-                  className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
+                  className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
                 >
                   <div className="flex w-full flex-col items-start justify-center">
-                    <span className="text-lg font-semibold">
+                    <span className="text-sm lg:text-lg font-semibold">
                       {moment(obj?.month).format("MMMM YYYY")}
                     </span>
                     <span>
