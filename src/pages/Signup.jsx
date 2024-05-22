@@ -450,7 +450,7 @@ export const Signup = () => {
           </div>
           <div className="w-full flex items-center justify-between gap-2 flex-col ">
             <span className="w-full block font-semibold">
-              Month of becoming rukan or umeedwar:
+              RelationShip with Jamiat
             </span>
             <div className="w-full p-1 mt-2 flex justify-between items-center">
               <div className="form-control">
@@ -500,20 +500,25 @@ export const Signup = () => {
                     value="nazim"
                     className="radio checked:bg-blue-500"
                     defaultChecked={joiningDate?.title === "nazim"}
-                    onChange={(e) =>
+                    onChange={(e) => {
                       setJoiningDate((prev) => ({
                         ...prev,
                         title: e.target.value,
-                      }))
-                    }
+                        date: "",
+                      }));
+                    }}
                   />
                   <span className="label-text">Rafeeq</span>
                 </label>
               </div>
             </div>
+            <span className="w-full block font-semibold">
+              Month of becoming rukan or umeedwar:
+            </span>
             <input
               required
               type="month"
+              disabled={joiningDate?.title === "nazim"}
               placeholder="No data"
               name="joiningDate"
               className="w-full input input-bordered input-primary"

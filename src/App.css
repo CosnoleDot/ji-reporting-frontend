@@ -20,24 +20,49 @@
 
 ::-webkit-scrollbar {
   width: 5px;
+  height: 10px;
 }
 /* Track */
+/* General scrollbar track styling */
 ::-webkit-scrollbar-track {
   background: #fff;
 }
-/* Handle */
+
+/* General scrollbar thumb styling */
 ::-webkit-scrollbar-thumb {
   background: #ddd;
   border-radius: 5px;
 }
-/* Handle on hover */
+
+/* Thumb styling on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #ddd;
+  background: #ccc;
 }
 
+/* Vertical scrollbar */
 .inlineQ::-webkit-scrollbar {
   width: 2px;
+}
+
+/* Hide the vertical scrollbar */
+.inlineQ::-webkit-scrollbar:vertical {
   display: none;
+}
+
+/* Horizontal scrollbar */
+.inlineQ::-webkit-scrollbar:horizontal {
+  height: 6px; /* Change this value to adjust the height of the scrollbar thumb */
+}
+
+/* Horizontal scrollbar thumb */
+.inlineQ::-webkit-scrollbar-thumb:horizontal {
+  background: #ddd;
+  border-radius: 5px;
+}
+
+/* Horizontal scrollbar thumb on hover */
+.inlineQ::-webkit-scrollbar-thumb:horizontal:hover {
+  background: #ccc;
 }
 
 .btn {

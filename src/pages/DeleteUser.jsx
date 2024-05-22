@@ -69,7 +69,6 @@ export const DeleteUser = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAreaType]);
 
-
   const getAreaTypeWithoutName = (area) => {
     if (area?.parentType === "Maqam") {
       const maqam = maqams.find((i) => i?._id === area?.parentId);
@@ -199,6 +198,7 @@ export const DeleteUser = () => {
       });
       dispatch({ type: "SUCCESS", payload: req.data?.message });
       getNazim();
+      setData(nazim);
     } catch (err) {
       dispatch({ type: "ERROR", payload: err?.response?.data?.message });
     }
@@ -374,24 +374,6 @@ export const DeleteUser = () => {
                         )}
                       </td>
                       <td className="flex row justify-center items-center gap-3">
-                        <div className="flex justify-center items-center">
-                          <Link
-                            to={`/reports?active=${user?.userAreaType?.toLowerCase()}${
-                              user?.userAreaId?.parentType
-                                ? `&tab=${
-                                    user?.userAreaId?.parentType?.toLowerCase() ===
-                                    "maqam"
-                                      ? "maqam"
-                                      : "division"
-                                  }`
-                                : ""
-                            }&areaId=${user?.userAreaId?._id}`}
-                            readOnly={loading}
-                            className="btn"
-                          >
-                            <FaFile />
-                          </Link>
-                        </div>
                         <div className="flex justify-center items-center">
                           <button
                             onClick={() => {
