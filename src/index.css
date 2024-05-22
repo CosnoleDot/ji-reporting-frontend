@@ -3690,6 +3690,10 @@ html {
   height: 100vh;
 }
 
+.h-\[2rem\] {
+  height: 2rem;
+}
+
 .max-h-56 {
   max-height: 14rem;
 }
@@ -4249,6 +4253,11 @@ html {
   padding-bottom: 1.25rem;
 }
 
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
 .pl-3 {
   padding-left: 0.75rem;
 }
@@ -4801,6 +4810,11 @@ html {
     padding-right: 2rem;
   }
 
+  .sm\:px-0 {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
   .sm\:text-sm {
     font-size: 0.875rem;
     line-height: 1.25rem;
@@ -4814,6 +4828,10 @@ html {
 @media (min-width: 768px) {
   .md\:left-\[155px\] {
     left: 155px;
+  }
+
+  .md\:h-auto {
+    height: auto;
   }
 
   .md\:max-w-\[228px\] {
@@ -4834,6 +4852,24 @@ html {
 
   .md\:justify-center {
     justify-content: center;
+  }
+
+  .md\:p-4 {
+    padding: 1rem;
+  }
+
+  .md\:p-5 {
+    padding: 1.25rem;
+  }
+
+  .md\:px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .md\:py-4 {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
   }
 
   .md\:pr-0 {
@@ -4884,6 +4920,15 @@ html {
 
   .lg\:justify-center {
     justify-content: center;
+  }
+
+  .lg\:p-4 {
+    padding: 1rem;
+  }
+
+  .lg\:text-lg {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
   }
 }
 
