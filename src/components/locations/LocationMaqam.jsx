@@ -187,7 +187,6 @@ export const LocationMaqam = () => {
     }
     setLoading(false);
   };
-  console.log(areaDetails);
   const handleSubmitEditIlaqa = async () => {
     setLoading(true);
     try {
