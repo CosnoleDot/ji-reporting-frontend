@@ -584,7 +584,7 @@ export const Reports = ({ maqam }) => {
     if (active === "halqa") getAreaWithType();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAreaType]);
-
+  console.log(filterAllData,'asd')
   return (
     <GeneralLayout
       title={me?.userAreaId?.name.toUpperCase()}
@@ -1077,7 +1077,7 @@ export const Reports = ({ maqam }) => {
           )}
         </div>
         {/* )} */}
-        {active === "halqa" && localStorage.getItem("@type") === "province" && (
+        {active === "halqa" && (localStorage.getItem("@type") === "province" || localStorage.getItem("@type") === "country") && (
           <div
             role="tablist"
             className="w-full flex justify-between items-center"
@@ -1095,6 +1095,13 @@ export const Reports = ({ maqam }) => {
               className={`tab w-full ${tab === "division" ? "tab-active" : ""}`}
             >
               Division Halqa
+            </Link>
+            <Link
+              to={"?active=halqa&tab=ilaqa"}
+              role="tab"
+              className={`tab w-full ${tab === "ilaqa" ? "tab-active" : ""}`}
+            >
+              Ilaqa Halqa
             </Link>
           </div>
         )}
@@ -1230,7 +1237,50 @@ export const Reports = ({ maqam }) => {
                       </div>
                     </div>
                   )
-                ) : active === "halqa" && tab === "ilaqa" ? (
+                ) : active === "halqa" &&
+                tab === "maqam" &&
+                (localStorage.getItem("@type") === "province" || localStorage.getItem("@type") === "country") ? (
+                (obj?.halqaAreaId?.parentType === "Maqam") && (
+                  <div
+                    key={obj?._id}
+                    className="card-body flex items-between justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
+                  >
+                    <div className="flex w-full flex-col items-start justify-center">
+                      <span className="text-lg font-semibold">
+                        {obj?.[active + "AreaId"]?.name || "UNKNOWN"}
+                        {" - "}
+                        {(active !== "province" &&
+                          obj?.[active + "AreaId"]?.parentId?.name) ||
+                          "UNKNOWN"}
+                        {" - "}
+                        {moment(obj?.month).format("MMMM YYYY")}
+                      </span>
+                      <span>
+                        Last Modified: {moment(obj?.updatedAt).fromNow()}
+                      </span>
+                    </div>
+                    <div className="flex items-end w-full justify-end gap-3 ">
+                      <button
+                        className="btn"
+                        onClick={() => viewReport(obj?._id)}
+                      >
+                        <FaEye />
+                      </button>
+                      <button
+                        className="btn"
+                        onClick={() =>
+                          window.open(
+                            `/${active}-report/print/${obj?._id}`,
+                            "blank"
+                          )
+                        }
+                      >
+                        <FaPrint />
+                      </button>
+                    </div>
+                  </div>
+                )
+              ): active === "halqa" && tab === "ilaqa" ? (
                   obj?.halqaAreaId?.parentType === "Ilaqa" && (
                     <div
                       key={obj?._id}
