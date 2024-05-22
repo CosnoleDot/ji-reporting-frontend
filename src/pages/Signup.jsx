@@ -513,7 +513,7 @@ export const Signup = () => {
               </div>
             </div>
             <span className="w-full block font-semibold">
-              Month of becoming rukan or umeedwar:
+              Month of becoming {joiningDate?.title.toUpperCase()}:
             </span>
             <input
               required

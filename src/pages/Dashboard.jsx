@@ -199,9 +199,11 @@ export const Dashboard = () => {
     }
   }, []);
   useEffect(() => {
-    getData();
+    if (data.length === 0) {
+      getData();
+    }
     // eslint-disable-next-line
-  }, [me]);
+  }, [me, data]);
   const clearFilter = () => {
     // setting back the data from initial state back to the respective sates
     setQuerydate("");
@@ -1012,7 +1014,7 @@ export const Dashboard = () => {
                   : ""}
               </h4>
             </div>
-           
+
             {(areaDetails?.parentType === "Tehsil" ||
               areaDetails?.parentType === "Division") && (
               <>
