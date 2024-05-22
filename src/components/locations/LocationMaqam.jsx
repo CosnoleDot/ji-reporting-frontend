@@ -4,20 +4,28 @@ import {
   IlaqaContext,
   MaqamContext,
   ProvinceContext,
+  ViewDetails,
   useToastState,
 } from "../../context";
 import { Link, useLocation } from "react-router-dom";
 import instance from "../../api/instrance";
 import { FaEdit } from "react-icons/fa";
 import { UIContext } from "../../context/ui";
-import { Loader } from "../Loader";
+import { FcViewDetails } from "react-icons/fc";
 export const LocationMaqam = () => {
   const provinces = useContext(ProvinceContext);
   const maqams = useContext(MaqamContext);
   const halqas = useContext(HalqaContext);
   const ilaqas = useContext(IlaqaContext);
-  const { getHalqas, getMaqams, setLoading, loading, getIlaqas } =
-    useContext(UIContext);
+  const areaDetails = useContext(ViewDetails);
+  const {
+    getHalqas,
+    getMaqams,
+    setLoading,
+    loading,
+    getIlaqas,
+    getAreaDetails,
+  } = useContext(UIContext);
   const [editMode, setEditMode] = useState(false);
   const [id, setId] = useState("");
   const { dispatch } = useToastState();
@@ -179,6 +187,7 @@ export const LocationMaqam = () => {
     }
     setLoading(false);
   };
+  console.log(areaDetails);
   const handleSubmitEditIlaqa = async () => {
     setLoading(true);
     try {
@@ -442,7 +451,7 @@ export const LocationMaqam = () => {
               <tr className="fixed mb-2 bg-slate-300 flex w-full justify-between items-start">
                 <th className=" text-start"></th>
                 <th className="w-full text-start">Name</th>
-                <th className="w-full text-start">Maqam</th>
+                <th className="w-full text-start">Area Details</th>
                 <th className="w-full text-center">Edit/Disable</th>
               </tr>
             </thead>
@@ -451,13 +460,18 @@ export const LocationMaqam = () => {
                 filteredData?.map((ilaqa, index) => (
                   <tr
                     key={index}
-                    className="flex w-full justify-between items-start"
+                    className="flex w-full justify-between items-center"
                   >
                     <th>{index + 1}</th>
                     <td className="w-full text-start">{ilaqa?.name}</td>
                     <td className="w-full text-start">
-                      Maqam Of {ilaqa?.maqam?.name || "-"} ({" "}
-                      {ilaqa?.maqam?.province?.name})
+                      <div
+                        onClick={() => {
+                          getAreaDetails(ilaqa);
+                        }}
+                      >
+                        <FcViewDetails className="cursor-pointer text-2xl" />
+                      </div>
                     </td>
                     <td className="flex  w-full justify-center items-center gap-4">
                       <button
@@ -502,7 +516,7 @@ export const LocationMaqam = () => {
               <tr className="fixed mb-2 bg-slate-300 flex w-full justify-between items-start">
                 <th className="text-start"></th>
                 <th className="w-full text-start">Name</th>
-                <th className="w-full text-start">Ilaqa/Maqam</th>
+                <th className="w-full text-start">Area Details</th>
                 <th className="w-full text-center">Edit/Disable</th>
               </tr>
             </thead>
@@ -516,21 +530,19 @@ export const LocationMaqam = () => {
                   .map((halqa, index) => (
                     <tr
                       key={index}
-                      className="flex w-full justify-between items-start"
+                      className="flex w-full justify-between items-center"
                     >
                       <th>{index + 1}</th>
                       <td className="w-full text-start">{halqa?.name}</td>
-                      <td className="w-full text-start">{`Halqa of ${
-                        halqa?.parentType
-                      }  ${
-                        halqa?.parentId?.ilaqa?.name
-                          ? halqa?.parentId?.ilaqa?.name
-                          : halqa?.parentId?.name
-                      } (${
-                        halqa?.parentId?.maqam?.province?.name
-                          ? halqa?.parentId?.maqam?.province?.name
-                          : halqa?.parentId?.province?.name
-                      })`}</td>
+                      <td className="w-full text-start">
+                        <div
+                          onClick={() => {
+                            getAreaDetails(halqa);
+                          }}
+                        >
+                          <FcViewDetails className="cursor-pointer text-2xl" />
+                        </div>
+                      </td>
                       <td className="flex w-full justify-center  items-center gap-4">
                         <button
                           disabled={loading}
@@ -860,6 +872,112 @@ export const LocationMaqam = () => {
               >
                 Close
               </button>
+            </form>
+          </div>
+        </div>
+      </dialog>
+      <dialog id="area_details" className="modal">
+        <div className="modal-box">
+          <h3 className="font-bold text-lg mb-3">Details of the area</h3>
+          <div className="w-full  flex flex-col justify-between items-start text-left gap-4  flex-wrap">
+            <div className="w-full flex justify-start items-center gap-5">
+              <h5>Name:</h5>
+              <h4 className="text-gray-400 font-bold">{areaDetails?.name}</h4>
+              <h4 className="text-gray-400 font-semibold">
+                {areaDetails?.parentType === "Ilaqa" ||
+                areaDetails?.parentType === "Tehsil" ||
+                areaDetails?.parentType === "Division" ||
+                areaDetails?.parentType === "Maqam"
+                  ? "(Halqa)"
+                  : !areaDetails?.parentId && areaDetails?.maqam
+                  ? "(Ilaqa)"
+                  : areaDetails?.country
+                  ? "(Procince)"
+                  : "(Country)"}
+              </h4>
+            </div>
+            <div className="w-full flex justify-start items-center gap-5">
+              {areaDetails?.parentType
+                ? areaDetails?.parentType + ":"
+                : areaDetails?.maqam
+                ? "Maqam"
+                : ""}
+              <h4 className="text-gray-400 font-bold">
+                {areaDetails?.parentType === "Ilaqa"
+                  ? areaDetails?.parentId?.name
+                  : areaDetails?.parentType === "Maqam"
+                  ? areaDetails?.parentId?.name
+                  : areaDetails?.parentType === "Tehsil"
+                  ? areaDetails?.parentId?.name
+                  : areaDetails?.parentType === "Division"
+                  ? areaDetails?.parentId?.name
+                  : areaDetails?.maqam?.name}
+              </h4>
+            </div>
+            {(areaDetails?.parentType === "Tehsil" ||
+              areaDetails?.parentType === "Division") && (
+              <>
+                <div className="w-full flex justify-start items-center gap-5">
+                  <h5> District:</h5>
+                  <h4 className="text-gray-400 font-bold">
+                    {areaDetails?.parentId?.district
+                      ? areaDetails?.parentId?.district?.name
+                      : "Not a District aera"}
+                  </h4>
+                </div>
+                <div className="w-full flex justify-start items-center gap-5">
+                  <h5>Division:</h5>
+                  <h4 className="text-gray-400 font-bold">
+                    {areaDetails?.parentId?.district
+                      ? areaDetails?.parentId?.district?.division?.name
+                      : areaDetails?.division?.name}
+                  </h4>
+                </div>
+              </>
+            )}
+            {areaDetails?.parentType === "Ilaqa" && (
+              <div className="w-full flex justify-start items-center gap-5">
+                <h5>Maqam:</h5>
+                <h4 className="text-gray-400 font-bold">
+                  {areaDetails?.parentType === "Ilaqa"
+                    ? areaDetails?.parentId?.maqam?.name
+                    : ""}
+                </h4>
+              </div>
+            )}
+            {!areaDetails?.country && (
+              <div className="w-full flex justify-start items-center gap-5">
+                <h4>Province:</h4>
+                <h4 className="text-gray-400 font-bold">
+                  {areaDetails?.parentType === "Ilaqa"
+                    ? areaDetails?.parentId?.maqam?.province?.name
+                    : areaDetails?.parentType === "Maqam"
+                    ? areaDetails?.parentId?.province?.name
+                    : areaDetails?.parentType === "Tehsil"
+                    ? areaDetails?.parentId?.district?.division?.province?.name
+                    : areaDetails?.parentType === "Division"
+                    ? areaDetails?.parentId?.province?.name
+                    : areaDetails?.maqam
+                    ? areaDetails?.maqam?.province?.name
+                    : areaDetails?.province?.name}
+                </h4>
+              </div>
+            )}
+            <div className="w-full flex justify-start items-center gap-5">
+              <h5>country:</h5>
+              <h4 className="text-gray-400 font-bold">Pakistan</h4>
+            </div>
+          </div>
+          <div className="modal-action w-full">
+            <form method="dialog" className="w-full">
+              <div className=" w-full flex justify-end gap-3 items-center">
+                <button
+                  id="close-details-modal"
+                  className="btn ms-3 capitalize"
+                >
+                  Close
+                </button>
+              </div>
             </form>
           </div>
         </div>

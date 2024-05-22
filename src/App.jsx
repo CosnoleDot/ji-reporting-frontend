@@ -667,6 +667,9 @@ function App() {
         case "halqa":
           return "halqa";
 
+        case "":
+          return "halqa";
+
         default:
           return "invalid path";
       }
@@ -684,6 +687,12 @@ function App() {
         );
       } else if (!obj?.parentType && obj?.maqam) {
         res = await instance.get(`/locations/ilaqa/${obj?._id}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
+        });
+      } else if (!obj?.parentType && obj?.country) {
+        res = await instance.get(`/locations/province/${obj?._id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
