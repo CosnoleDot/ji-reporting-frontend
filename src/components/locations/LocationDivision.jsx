@@ -1055,6 +1055,18 @@ export const LocationDivision = () => {
             <div className="w-full flex justify-start items-center gap-5">
               <h5>Name:</h5>
               <h4 className="text-gray-400 font-bold">{areaDetails?.name}</h4>
+              <h4 className="text-gray-400 font-semibold">
+                {areaDetails?.parentType === "Ilaqa" ||
+                areaDetails?.parentType === "Tehsil" ||
+                areaDetails?.parentType === "Division" ||
+                areaDetails?.parentType === "Maqam"
+                  ? "(Halqa)"
+                  : !areaDetails?.parentId && areaDetails?.maqam
+                  ? "(Ilaqa)"
+                  : areaDetails?.country
+                  ? "(Procince)"
+                  : "(Country)"}
+              </h4>
             </div>
             <div className="w-full flex justify-start items-center gap-5">
               {areaDetails?.parentType ? areaDetails?.parentType + ":" : ""}
