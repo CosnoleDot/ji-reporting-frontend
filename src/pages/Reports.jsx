@@ -24,8 +24,13 @@ import { Link } from "react-router-dom";
 import { FaRegFileExcel } from "react-icons/fa";
 import { AiFillBell } from "react-icons/ai";
 import { UIContext } from "../context/ui";
+import { ProvinceReports } from "./Reports/ProvinceReports";
+import { DivisionReports } from "./Reports/DivisionReports";
+import { MaqamReports } from "./Reports/MaqamReports";
+import { IlaqaReports } from "./Reports/IlaqaReports";
+import { HalqaReports } from "./Reports/HalqaReports";
 
-const NoReports = () => (
+export const NoReports = () => (
   <div className="card-body flex flex-col items-center justify-center w-full p-2 md:p-5 mb-1 rounded-xl">
     <FaRegFileExcel className="text-gray-300 w-40 h-40" />
     <span className="text-gray-300 font-bold text-3xl">No Reports Found!</span>
@@ -96,7 +101,7 @@ export const Reports = ({ maqam }) => {
   const [search, showSearch] = useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
   const [month, setMonth] = useState("");
-  const [year, setYear] = useState("2023");
+  const [year, setYear] = useState("2024");
   const [filterData, setFilterData] = useState([]);
   const me = useContext(MeContext);
   const { dispatch } = useToastState();
@@ -468,72 +473,72 @@ export const Reports = ({ maqam }) => {
     fetchReports();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userType, id, active, tab, selectedId, selectedMonth]);
-  const searchResults = () => {
-    if (userType !== "halqa") {
-      if (year !== "" && month !== "") {
-        const filteredData = { ...allReports };
-        filteredData[active] = allReports[active]?.filter((i) => {
-          const [f_year, f_month] = [
-            i?.month?.split("-")[0],
-            i?.month?.split("-")[1],
-          ];
-          return (
-            parseInt(year) === parseInt(f_year) &&
-            parseInt(month) === parseInt(f_month)
-          );
-        });
-        showSearch(false);
-        setFilterAllData(filteredData);
-      } else if (year !== "" && month === "") {
-        const filteredData = { ...allReports };
-        filteredData[active] = allReports[active]?.filter((i) => {
-          const f_year = i?.month?.split("-")[0];
-          return parseInt(year) === parseInt(f_year);
-        });
-        showSearch(false);
-        setFilterAllData(filteredData);
-      } else if (year === "" && month !== "") {
-        dispatch({ type: "ERROR", payload: "Enter year with month" });
-        setFilterAllData(allReports);
-      } else if (year === "" && month === "") {
-        dispatch({ type: "ERROR", payload: "Date is required" });
-        setFilterAllData(allReports);
-      } else {
-        setFilterAllData(allReports);
-      }
-    } else {
-      if (year !== "" && month !== "") {
-        const filteredData = reports?.reduce((acc, curr) => {
-          const reportYear = parseInt((curr?.month).split("-")[0]);
-          const reportMonth = parseInt((curr?.month).split("-")[1]);
-          if (
-            reportMonth === parseInt(month) &&
-            reportYear === parseInt(year)
-          ) {
-            acc.push(curr);
-          }
-          return acc;
-        }, []);
-        showSearch(false);
-        setFilterData(filteredData);
-      } else if (year !== "" && month === "") {
-        const filteredData = reports?.filter((curr) => {
-          const reportedYear = (curr?.month).split("-")[0];
-          return parseInt(reportedYear) === parseInt(year);
-        });
-        showSearch(false);
-        setFilterData(filteredData);
-      } else if (year === "" && month !== "") {
-        dispatch({ type: "ERROR", payload: "Enter year with month" });
-        setFilterData(reports);
-      } else if (year === "" && month === "") {
-        dispatch({ type: "ERROR", payload: "Date is required" });
-        setFilterData(reports);
-      } else {
-        setFilterData(reports);
-      }
-    }
-  };
+  // const searchResults = () => {
+  //   if (userType !== "halqa") {
+  //     if (year !== "" && month !== "") {
+  //       const filteredData = { ...allReports };
+  //       filteredData[active] = allReports[active]?.filter((i) => {
+  //         const [f_year, f_month] = [
+  //           i?.month?.split("-")[0],
+  //           i?.month?.split("-")[1],
+  //         ];
+  //         return (
+  //           parseInt(year) === parseInt(f_year) &&
+  //           parseInt(month) === parseInt(f_month)
+  //         );
+  //       });
+  //       showSearch(false);
+  //       setFilterAllData(filteredData);
+  //     } else if (year !== "" && month === "") {
+  //       const filteredData = { ...allReports };
+  //       filteredData[active] = allReports[active]?.filter((i) => {
+  //         const f_year = i?.month?.split("-")[0];
+  //         return parseInt(year) === parseInt(f_year);
+  //       });
+  //       showSearch(false);
+  //       setFilterAllData(filteredData);
+  //     } else if (year === "" && month !== "") {
+  //       dispatch({ type: "ERROR", payload: "Enter year with month" });
+  //       setFilterAllData(allReports);
+  //     } else if (year === "" && month === "") {
+  //       dispatch({ type: "ERROR", payload: "Date is required" });
+  //       setFilterAllData(allReports);
+  //     } else {
+  //       setFilterAllData(allReports);
+  //     }
+  //   } else {
+  //     if (year !== "" && month !== "") {
+  //       const filteredData = reports?.reduce((acc, curr) => {
+  //         const reportYear = parseInt((curr?.month).split("-")[0]);
+  //         const reportMonth = parseInt((curr?.month).split("-")[1]);
+  //         if (
+  //           reportMonth === parseInt(month) &&
+  //           reportYear === parseInt(year)
+  //         ) {
+  //           acc.push(curr);
+  //         }
+  //         return acc;
+  //       }, []);
+  //       showSearch(false);
+  //       setFilterData(filteredData);
+  //     } else if (year !== "" && month === "") {
+  //       const filteredData = reports?.filter((curr) => {
+  //         const reportedYear = (curr?.month).split("-")[0];
+  //         return parseInt(reportedYear) === parseInt(year);
+  //       });
+  //       showSearch(false);
+  //       setFilterData(filteredData);
+  //     } else if (year === "" && month !== "") {
+  //       dispatch({ type: "ERROR", payload: "Enter year with month" });
+  //       setFilterData(reports);
+  //     } else if (year === "" && month === "") {
+  //       dispatch({ type: "ERROR", payload: "Date is required" });
+  //       setFilterData(reports);
+  //     } else {
+  //       setFilterData(reports);
+  //     }
+  //   }
+  // };
   useEffect(() => {
     if (window) {
       if (window.innerWidth < 520) {
@@ -594,187 +599,8 @@ export const Reports = ({ maqam }) => {
           Reports
         </h3>
         <div className="flex flex-col w-full items-center justify-between md:flex-row">
-          <dialog id="filter-area-dialog" className="modal">
-            <div className="modal-box min-h-[300px]">
-              <form method="dialog" className="mb-3">
-                <button
-                  id="filter-area-dialog-close-btn"
-                  className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-                  onClick={() => {
-                    setUserAreaType("");
-                    if (
-                      !document
-                        .getElementById("autocomplete-list")
-                        .classList.contains("hidden")
-                    ) {
-                      document
-                        .getElementById("autocomplete-list")
-                        .classList.add("hidden");
-                    }
-                  }}
-                >
-                  ✕
-                </button>
-              </form>
-              <div className="relative">
-                <span className="px-1 py-1 block font-semibold w-[50%]">
-                  Select Area:
-                </span>
-                {active === "halqa" && (
-                  <div className="flex items-center gap-3 justify-start border border-primary p-2 rounded-lg mb-3">
-                    {tab !== "maqam" && (
-                      <div className="form-control">
-                        <label className="label cursor-pointer gap-2">
-                          <input
-                            type="radio"
-                            name="userAreaType"
-                            className="radio checked:bg-blue-500"
-                            value="division"
-                            checked={userAreaType === "division"}
-                            onChange={(e) => setUserAreaType(e.target.value)}
-                          />
-                          <span className="label-text">Division</span>
-                        </label>
-                      </div>
-                    )}
-                    {tab !== "division" && (
-                      <div className="form-control">
-                        <label className="label cursor-pointer gap-2">
-                          <input
-                            type="radio"
-                            name="userAreaType"
-                            className="radio checked:bg-blue-500"
-                            value="maqam"
-                            checked={userAreaType === "maqam"}
-                            onChange={(e) => setUserAreaType(e.target.value)}
-                          />
-                          <span className="label-text">Maqam</span>
-                        </label>
-                      </div>
-                    )}
-                    <div className="form-control">
-                      <label className="label cursor-pointer gap-2">
-                        <input
-                          type="radio"
-                          name="userAreaType"
-                          className="radio checked:bg-blue-500"
-                          value="halqa"
-                          checked={userAreaType === "halqa"}
-                          onChange={(e) => setUserAreaType(e.target.value)}
-                          defaultChecked
-                        />
-                        <span className="label-text">Halqa</span>
-                      </label>
-                    </div>
-                  </div>
-                )}
-                <input type="hidden" name="userAreaId" id="userAreaId" />
-                <input
-                  id="autocomplete"
-                  autoComplete="off"
-                  type="search"
-                  className="input input-bordered input-primary w-full"
-                  placeholder={`Select ${
-                    active === "halqa" ? userAreaType : active
-                  }`}
-                  onChange={(e) => setSearchArea(e.target.value)}
-                  onClick={() => {
-                    if (
-                      document
-                        .getElementById("autocomplete-list")
-                        .classList.contains("hidden")
-                    ) {
-                      document
-                        .getElementById("autocomplete-list")
-                        .classList.remove("hidden");
-                    } else {
-                      document
-                        .getElementById("autocomplete-list")
-                        .classList.add("hidden");
-                    }
-                  }}
-                />
-                <div
-                  id="autocomplete-list"
-                  className="absolute z-10 hidden max-h-[100px] overflow-y-scroll bg-white border border-gray-300 w-full mt-1"
-                >
-                  {areas
-                    ?.sort((a, b) => a?.name?.localeCompare(b?.name))
-                    ?.filter((item) => {
-                      if (searchArea && searchArea !== "") {
-                        if (
-                          item?.name
-                            ?.toString()
-                            ?.toLowerCase()
-                            ?.includes(searchArea?.toString()?.toLowerCase())
-                        ) {
-                          return true;
-                        }
-                        return false;
-                      } else {
-                        return true;
-                      }
-                    })
-                    .map((area, index) => (
-                      <div
-                        key={index}
-                        onClick={() => {
-                          document.getElementById("userAreaId").value =
-                            area?._id;
-                          setSelectedId(area?._id);
-                          document.getElementById("autocomplete").value = `${
-                            area?.name
-                          }${
-                            userAreaType === "halqa"
-                              ? ` - ${area?.parentId?.name} (${area?.parentType})`
-                              : ""
-                          }`;
-                          document
-                            .getElementById("autocomplete-list")
-                            .classList.add("hidden");
-                          if (
-                            !document
-                              .getElementById("autocomplete-list")
-                              .classList.contains("hidden")
-                          ) {
-                            document
-                              .getElementById("autocomplete-list")
-                              .classList.add("hidden");
-                          }
-                        }}
-                        className="p-2 cursor-pointer hover:bg-gray-100"
-                      >
-                        {area?.name}
-                        {active === "halqa" ? "-" + getAreaType(area) : ""}
-                      </div>
-                    ))}
-                </div>
-                <input
-                  type="month"
-                  name="month"
-                  className="w-full mt-5 mb-5 input input-bordered input-primary"
-                  value={selectedMonth}
-                  onChange={(e) => setSelectedMonth(e.target.value)}
-                />
-                <div className="w-full flex justify-end items-end">
-                  <button
-                    className="btn"
-                    onClick={() => {
-                      document
-                        .getElementById("filter-area-dialog-close-btn")
-                        .click();
-                      fetchReports();
-                    }}
-                  >
-                    ok
-                  </button>
-                </div>
-              </div>
-            </div>
-          </dialog>
-
           <div className="join xs:w-full">
-            {!isMobileView && (
+            {/* {!isMobileView && (
               <div className="w-full">
                 <select
                   className="select select-bordered join-item"
@@ -805,8 +631,8 @@ export const Reports = ({ maqam }) => {
                     ))}
                 </select>
               </div>
-            )}
-            {search && (
+            )} */}
+            {/* {search && (
               <div className="fixed p-3 z-40 rounded-lg top-[140px] left-[5px] w-[calc(100%-10px)] overflow-hidden bg-white min-h-[100px] border">
                 <div className="flex flex-col gap-3">
                   <div className="w-full flex flex-col">
@@ -844,10 +670,9 @@ export const Reports = ({ maqam }) => {
                   </button>
                 </div>
               </div>
-            )}
+            )} */}
 
-            <div className="indicator ">
-              {/* <span className='indicator-item badge badge-secondary'>new</span> */}
+            {/* <div className="indicator ">
               <button
                 className={`btn ${!isMobileView ? "join-item" : ""}`}
                 onClick={() =>
@@ -891,7 +716,7 @@ export const Reports = ({ maqam }) => {
                     <AiFillBell />
                   </button>
                 )}
-            </div>
+            </div> */}
           </div>
           <div className="flex justify-end items-center gap-4">
             <button className="btn " onClick={handleReport}>
@@ -1075,39 +900,8 @@ export const Reports = ({ maqam }) => {
             </Link>
           )}
         </div>
+    
         {/* )} */}
-        {active === "halqa" &&
-          (localStorage.getItem("@type") === "province" ||
-            localStorage.getItem("@type") === "country") && (
-            <div
-              role="tablist"
-              className="w-full flex justify-between items-center"
-            >
-              <Link
-                to={"?active=halqa&tab=maqam"}
-                role="tab"
-                className={`tab flex justify-center items-center w-full ${tab === "maqam" ? "tab-active" : ""}`}
-              >
-                Maqam Halqa
-              </Link>
-              <Link
-                to={"?active=halqa&tab=division"}
-                role="tab"
-                className={`tab flex justify-center items-center w-full ${
-                  tab === "division" ? "tab-active" : ""
-                }`}
-              >
-                Division Halqa
-              </Link>
-              <Link
-                to={"?active=halqa&tab=ilaqa"}
-                role="tab"
-                className={`tab flex justify-center items-center w-full ${tab === "ilaqa" ? "tab-active" : ""}`}
-              >
-                Ilaqa Halqa
-              </Link>
-            </div>
-          )}
 
         {["umeedwar", "rukan", "umeedwaar-nazim", "rukan-nazim"].includes(
           me?.nazimType
@@ -1124,475 +918,18 @@ export const Reports = ({ maqam }) => {
           </Link>
         )}
         <div className="relative overflow-y-scroll gap-3 w-full items-center p-0 md:p-5 justify-center h-[calc(100vh-65.6px-64px-48px)]">
-          {userType !== "halqa" ? (
-            filterAllData[active]?.length < 1 ? (
-              <NoReports />
-            ) : active === "halqa" &&
-              tab === "division" &&
-              filterAllData[active]?.filter(
-                (obj) =>
-                  obj?.halqaAreaId?.parentType === "Division" ||
-                  obj?.halqaAreaId?.parentType === "Tehsil"
-              ).length < 1 ? (
-              <NoReports />
-            ) : active === "halqa" &&
-              tab === "maqam" &&
-              filterAllData[active]?.filter(
-                (obj) =>
-                  obj?.halqaAreaId?.parentType === "Maqam" ||
-                  obj?.halqaAreaId?.parentType === "Ilaqa"
-              ).length < 1 ? (
-              <NoReports />
-            ) : active === "halqa" &&
-              tab === "ilaqa" &&
-              filterAllData[active]?.filter(
-                (obj) => obj?.halqaAreaId?.parentType === "Ilaqa"
-              ).length < 1 ? (
-              <NoReports />
-            ) : (
-              filterAllData[active]?.map((obj) =>
-                active === "halqa" && tab === "division" ? (
-                  (obj?.halqaAreaId?.parentType === "Division" ||
-                    obj?.halqaAreaId?.parentType === "Tehsil") && (
-                    <div
-                      key={obj?._id}
-                      className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
-                    >
-                      <div className="flex w-full flex-col items-start justify-center">
-                        <span className="text-sm lg:text-lg font-semibold">
-                          {((active !== "province" || active !== "halqa") &&
-                            obj?.[active + "AreaId"]?.name) ||
-                            "UNKNOWN"}
-                          {" - "}
-                          {getDivisionByTehsil(
-                            obj?.[active + "AreaId"]?.parentId,
-                            districts
-                          )}
-                          {" - "}
-                          {moment(obj?.month).format("MMMM YYYY")}
-                        </span>
-                        <span>
-                          Last Modified: {moment(obj?.updatedAt).fromNow()}
-                        </span>
-                      </div>
-                      <div className="flex items-end w-full justify-end gap-3 ">
-                        <button
-                          className="btn "
-                          onClick={() => viewReport(obj?._id)}
-                        >
-                          <FaEye />
-                        </button>
-                        <button
-                          className="btn "
-                          onClick={() =>
-                            window.open(
-                              `/${active}-report/print/${obj?._id}`,
-                              "blank"
-                            )
-                          }
-                        >
-                          <FaPrint />
-                        </button>
-                      </div>
-                    </div>
-                  )
-                ) : active === "halqa" &&
-                  tab === "maqam" &&
-                  localStorage.getItem("@type") === "maqam" ? (
-                  (obj?.halqaAreaId?.parentType === "Maqam" ||
-                    obj?.halqaAreaId?.parentType === "Ilaqa") && (
-                    <div
-                      key={obj?._id}
-                      className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
-                    >
-                      <div className="flex w-full flex-col items-start justify-center">
-                        <span className="text-sm lg:text-lg font-semibold">
-                          {obj?.[active + "AreaId"]?.name || "UNKNOWN"}
-                          {" - "}
-                          {(active !== "province" &&
-                            obj?.[active + "AreaId"]?.parentId?.name) ||
-                            "UNKNOWN"}
-                          {" - "}
-                          {moment(obj?.month).format("MMMM YYYY")}
-                        </span>
-                        <span>
-                          Last Modified: {moment(obj?.updatedAt).fromNow()}
-                        </span>
-                      </div>
-                      <div className="flex items-end w-full justify-end gap-3 ">
-                        <button
-                          className="btn "
-                          onClick={() => viewReport(obj?._id)}
-                        >
-                          <FaEye />
-                        </button>
-                        <button
-                          className="btn "
-                          onClick={() =>
-                            window.open(
-                              `/${active}-report/print/${obj?._id}`,
-                              "blank"
-                            )
-                          }
-                        >
-                          <FaPrint />
-                        </button>
-                      </div>
-                    </div>
-                  )
-                ) : active === "halqa" &&
-                  tab === "maqam" &&
-                  (localStorage.getItem("@type") === "province" ||
-                    localStorage.getItem("@type") === "country") ? (
-                  obj?.halqaAreaId?.parentType === "Maqam" && (
-                    <div
-                      key={obj?._id}
-                      className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
-                    >
-                      <div className="flex w-full flex-col items-start justify-center">
-                        <span className="text-sm lg:text-lg font-semibold">
-                          {obj?.[active + "AreaId"]?.name || "UNKNOWN"}
-                          {" - "}
-                          {(active !== "province" &&
-                            obj?.[active + "AreaId"]?.parentId?.name) ||
-                            "UNKNOWN"}
-                          {" - "}
-                          {moment(obj?.month).format("MMMM YYYY")}
-                        </span>
-                        <span>
-                          Last Modified: {moment(obj?.updatedAt).fromNow()}
-                        </span>
-                      </div>
-                      <div className="flex items-end w-full justify-end gap-3 ">
-                        <button
-                          className="btn"
-                          onClick={() => viewReport(obj?._id)}
-                        >
-                          <FaEye />
-                        </button>
-                        <button
-                          className="btn"
-                          onClick={() =>
-                            window.open(
-                              `/${active}-report/print/${obj?._id}`,
-                              "blank"
-                            )
-                          }
-                        >
-                          <FaPrint />
-                        </button>
-                      </div>
-                    </div>
-                  )
-                ) : active === "halqa" && tab === "ilaqa" ? (
-                  obj?.halqaAreaId?.parentType === "Ilaqa" && (
-                    <div
-                      key={obj?._id}
-                      className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
-                    >
-                      <div className="flex w-full flex-col items-start justify-center">
-                        <span className="text-sm lg:text-lg font-semibold">
-                          {obj?.[active + "AreaId"]?.name || "UNKNOWN"}
-                          {" - "}
-                          {(active !== "province" &&
-                            obj?.[active + "AreaId"]?.parentId?.name) ||
-                            "UNKNOWN"}
-                          {" - "}
-                          {moment(obj?.month).format("MMMM YYYY")}
-                        </span>
-                        <span>
-                          Last Modified: {moment(obj?.updatedAt).fromNow()}
-                        </span>
-                      </div>
-                      <div className="flex items-end w-full justify-end gap-3 ">
-                        <button
-                          className="btn "
-                          onClick={() => viewReport(obj?._id)}
-                        >
-                          <FaEye />
-                        </button>
-                        <button
-                          className="btn "
-                          onClick={() =>
-                            window.open(
-                              `/${active}-report/print/${obj?._id}`,
-                              "blank"
-                            )
-                          }
-                        >
-                          <FaPrint />
-                        </button>
-                      </div>
-                    </div>
-                  )
-                ) : active === "ilaqa" &&
-                  localStorage.getItem("@token") === "ilaqa" ? (
-                  <div
-                    key={obj?._id}
-                    className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
-                  >
-                    <div className="flex w-full flex-col items-start justify-center">
-                      <span className="text-sm lg:text-lg font-semibold">
-                        {((active !== "province" || active !== "halqa") &&
-                          obj?.[active + "AreaId"]?.name) ||
-                          "UNKNOWN"}
-                        {" - "}
-                        {getDivisionByTehsil(
-                          obj?.[active + "AreaId"]?.parentId,
-                          districts
-                        )}
-                        {" - "}
-                        {moment(obj?.month).format("MMMM YYYY")}
-                      </span>
-                      <span>
-                        Last Modified: {moment(obj?.updatedAt).fromNow()}
-                      </span>
-                    </div>
-                    <div className="flex items-end w-full justify-end gap-3 ">
-                      <button
-                        className="btn "
-                        onClick={() => viewReport(obj?._id)}
-                      >
-                        <FaEye />
-                      </button>
-                      <button
-                        className="btn "
-                        onClick={() => editReport(obj?._id)}
-                      >
-                        <FaEdit />
-                      </button>
-                      <button
-                        className="btn "
-                        onClick={() =>
-                          window.open(
-                            `/${active}-report/print/${obj?._id}`,
-                            "blank"
-                          )
-                        }
-                      >
-                        <FaPrint />
-                      </button>
-                    </div>
-                  </div>
-                ) : active === "ilaqa" && tab === "maqam" ? (
-                  <div
-                    key={obj?._id}
-                    className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
-                  >
-                    <div className="flex w-full flex-col items-start justify-center">
-                      <span className="text-sm lg:text-lg font-semibold">
-                        {((active !== "province" || active !== "halqa") &&
-                          obj?.[active + "AreaId"]?.name) ||
-                          "UNKNOWN"}
-                        {" - "}
-                        {getDivisionByTehsil(
-                          obj?.[active + "AreaId"]?.parentId,
-                          districts
-                        )}
-                        {" - "}
-                        {moment(obj?.month).format("MMMM YYYY")}
-                      </span>
-                      <span>
-                        Last Modified: {moment(obj?.updatedAt).fromNow()}
-                      </span>
-                    </div>
-                    <div className="flex items-end w-full justify-end gap-3 ">
-                      <button
-                        className="btn "
-                        onClick={() => viewReport(obj?._id)}
-                      >
-                        <FaEye />
-                      </button>
-                      <button
-                        className="btn "
-                        onClick={() =>
-                          window.open(
-                            `/${active}-report/print/${obj?._id}`,
-                            "blank"
-                          )
-                        }
-                      >
-                        <FaPrint />
-                      </button>
-                    </div>
-                  </div>
-                ) : active === "halqa" ? (
-                  <div
-                    key={obj?._id}
-                    className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
-                  >
-                    <div className="flex w-full flex-col items-start justify-center">
-                      <span className="text-sm lg:text-lg font-semibold">
-                        {(active !== "province" &&
-                          obj?.[active + "AreaId"]?.name) ||
-                          "UNKNOWN"}
-                        {" - "}
-                        {getDivisionByTehsil(
-                          obj?.[active + "AreaId"]?.parentId,
-                          districts
-                        )}
-                        {" - "}
-                        {moment(obj?.month).format("MMMM YYYY")}
-                      </span>
-                      <span>
-                        Last Modified: {moment(obj?.updatedAt).fromNow()}
-                      </span>
-                    </div>
-                    <div className="flex items-end w-full justify-end gap-3 ">
-                      <button
-                        className="btn "
-                        onClick={() => viewReport(obj?._id)}
-                      >
-                        <FaEye />
-                      </button>
-                      <button
-                        className="btn "
-                        onClick={() =>
-                          window.open(
-                            `/${active}-report/print/${obj?._id}`,
-                            "blank"
-                          )
-                        }
-                      >
-                        <FaPrint />
-                      </button>
-                    </div>
-                  </div>
-                ) : // MARKAZ
-                active === "country" ? (
-                  <div
-                    key={obj?._id}
-                    className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
-                  >
-                    <div className="flex w-full flex-col items-start justify-center">
-                      <span className="text-sm lg:text-lg font-semibold">
-                        {obj?.[active + "AreaId"]?.name + " "}
-                        {moment(obj?.month).format("MMMM YYYY")}
-                      </span>
-                      <span>
-                        Last Modified: {moment(obj?.updatedAt).fromNow()}
-                      </span>
-                    </div>
-                    <div className="flex items-end w-full justify-end gap-3 ">
-                      <button
-                        className="btn "
-                        onClick={() => viewReport(obj?._id)}
-                      >
-                        <FaEye />
-                      </button>
-                      <button
-                        className="btn "
-                        onClick={() => editReport(obj?._id)}
-                      >
-                        <FaEdit />
-                      </button>
-                      <button
-                        className="btn "
-                        onClick={() =>
-                          window.open(
-                            `/${active}-report/print/${obj?._id}`,
-                            "blank"
-                          )
-                        }
-                      >
-                        <FaPrint />
-                      </button>
-                    </div>
-                  </div>
-                ) : (
-                  <div
-                    key={obj?._id}
-                    className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
-                  >
-                    <div className="flex w-full flex-col items-start justify-center">
-                      <span className="text-sm lg:text-lg font-semibold">
-                        {obj?.[active + "AreaId"]?.name || "UNKNOWN"}
-                        {" - "}
-                        {obj?.[active + "AreaId"]?.province?.name ||
-                          (active !== "province" &&
-                            active !== "halqa" &&
-                            "UNKNOWN")}
-                        {obj?.[active + "AreaId"]?.province?.name && " - "}
-                        {moment(obj?.month).format("MMMM YYYY")}
-                      </span>
-                      <span>
-                        Last Modified: {moment(obj?.updatedAt).fromNow()}
-                      </span>
-                    </div>
-                    <div className="flex items-end w-full justify-end gap-3 ">
-                      <button
-                        className="btn "
-                        onClick={() => viewReport(obj?._id)}
-                      >
-                        <FaEye />
-                      </button>
-
-                      {active === localStorage.getItem("@type") && (
-                        <button
-                          className="btn "
-                          onClick={() => editReport(obj?._id)}
-                        >
-                          <FaEdit />
-                        </button>
-                      )}
-                      <button
-                        className="btn "
-                        onClick={() => handlePrint(obj?._id)}
-                      >
-                        <FaPrint />
-                      </button>
-                    </div>
-                  </div>
-                )
-              )
-            )
-          ) : filterData?.length < 1 ? (
-            <NoReports />
+          {active === "province" ? (
+            <ProvinceReports />
+          ) : active === "division" ? (
+            <DivisionReports tab={active} />
+          ) : active === "maqam" ? (
+            <MaqamReports />
+          ) : active === "ilaqa" ? (
+            <IlaqaReports />
+          ) : active === "halqa" ? (
+            <HalqaReports />
           ) : (
-            filterData
-              .sort((a, b) => a.createdAt - b.createdAt)
-              ?.map((obj) => (
-                <div
-                  key={obj?._id}
-                  className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
-                >
-                  <div className="flex w-full flex-col items-start justify-center">
-                    <span className="text-sm lg:text-lg font-semibold">
-                      {moment(obj?.month).format("MMMM YYYY")}
-                    </span>
-                    <span>
-                      Last Modified: {moment(obj?.updatedAt).fromNow()}
-                    </span>
-                  </div>
-                  <div className="flex items-end w-full justify-end gap-3 ">
-                    <button
-                      className="btn"
-                      onClick={() => viewReport(obj?._id)}
-                    >
-                      <FaEye />
-                    </button>
-                    <button
-                      className="btn"
-                      onClick={() => editReport(obj?._id)}
-                    >
-                      <FaEdit />
-                    </button>
-                    <button
-                      className="btn"
-                      onClick={() =>
-                        window.open(
-                          `/${localStorage.getItem("@type")}-report/print/${
-                            obj?._id
-                          }`,
-                          "blank"
-                        )
-                      }
-                    >
-                      <FaPrint />
-                    </button>
-                  </div>
-                </div>
-              ))
+            "No"
           )}
         </div>
       </div>

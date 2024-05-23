@@ -53,10 +53,10 @@ export const ToseeDawat = ({ view }) => {
       <h2 className="text-black py-3 text-lg">توسیع دعوت</h2>
       <div className="flex flex-wrap w-full items-center justify-start">
         <div className="flex py-2 me-5">
-          <label className="block">روابط:</label>
+          <label className="block text-sm md:text-lg">روابط:</label>
         </div>
         <div className="flex py-2">
-          <label className="block">طے شدہ:</label>
+          <label className="block text-sm md:text-lg">طے شدہ:</label>
           <input
             readOnly
             type="number"
@@ -64,11 +64,11 @@ export const ToseeDawat = ({ view }) => {
             required
             name="rawabitDecided"
             id="rawabitDecided"
-            className="border-b-2 text-center border-dashed"
+            className="border-b-2 text-center border-dashed max-w-[6rem] md:max-w-lg"
           />
         </div>
         <div className="flex py-2">
-          <label className="block">موجود:</label>
+          <label className="block text-sm md:text-lg">موجود:</label>
           <input
             readOnly={view}
             type="number"
@@ -76,11 +76,13 @@ export const ToseeDawat = ({ view }) => {
             required
             name="current"
             id="current"
-            className="border-b-2 text-center border-dashed"
+            className="border-b-2 text-center border-dashed max-w-[6rem] md:max-w-lg"
           />
         </div>
         <div className="flex py-2">
-          <label className="block">روابط سےملاقاتوں کاہدف:</label>
+          <label className="block text-sm md:text-lg">
+            روابط سےملاقاتوں کاہدف:
+          </label>
           <input
             readOnly
             type="number"
@@ -88,11 +90,11 @@ export const ToseeDawat = ({ view }) => {
             required
             name="rwabitMeetingsGoal"
             id="rwabitMeetingsGoal"
-            className="border-b-2 text-center border-dashed"
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg"
           />
         </div>
         <div className="flex py-2">
-          <label className="block">ملاقاتوں کی تعداد:</label>
+          <label className="block text-sm md:text-lg">ملاقاتوں کی تعداد:</label>
           <input
             readOnly={view}
             type="number"
@@ -100,11 +102,11 @@ export const ToseeDawat = ({ view }) => {
             required
             name="meetings"
             id="meetings"
-            className="border-b-2 text-center border-dashed"
+            className="border-b-2 text-center border-dashed max-w-[6rem] md:max-w-lg"
           />
         </div>
         <div className="flex py-2">
-          <label className="block">تقسیم لٹریچر:</label>
+          <label className="block text-sm md:text-lg">تقسیم لٹریچر:</label>
           <input
             readOnly={view}
             type="number"
@@ -112,11 +114,11 @@ export const ToseeDawat = ({ view }) => {
             required
             name="literatureDistribution"
             id="literatureDistribution"
-            className="border-b-2 text-center border-dashed"
+            className="border-b-2 text-center border-dashed max-w-[6rem] md:max-w-lg"
           />
         </div>
         <div className="flex py-2">
-          <label className="block">روابط رجسٹر مرتب:</label>
+          <label className="block text-sm md:text-lg">روابط رجسٹر مرتب:</label>
           {view ? (
             <input
               disabled
@@ -137,10 +139,10 @@ export const ToseeDawat = ({ view }) => {
       </div>
       <div className="flex flex-wrap w-full items-center justify-start">
         <div className="flex py-2 me-5">
-          <label className="block">عام طلبہ:</label>
+          <label className="block text-sm md:text-lg">عام طلبہ:</label>
         </div>
         <div className="flex py-2">
-          <label className="block"> ملاقاتیں :</label>
+          <label className="block text-sm md:text-lg"> ملاقاتیں :</label>
           <input
             readOnly={view}
             type="number"
@@ -148,11 +150,11 @@ export const ToseeDawat = ({ view }) => {
             required
             name="commonStudentMeetings"
             id="commonStudentMeetings"
-            className="border-b-2 text-center border-dashed"
+            className="border-b-2 text-center border-dashed max-w-[6rem] md:max-w-lg"
           />
         </div>
         <div className="flex py-2">
-          <label className="block">تقسیم لٹریچر:</label>
+          <label className="block text-sm md:text-lg">تقسیم لٹریچر:</label>
           <input
             readOnly={view}
             type="number"
@@ -160,7 +162,7 @@ export const ToseeDawat = ({ view }) => {
             required
             name="commonLiteratureDistribution"
             id="commonLiteratureDistribution"
-            className="border-b-2 text-center border-dashed"
+            className="border-b-2 text-center border-dashed max-w-[6rem] md:max-w-lg"
           />
         </div>
       </div>

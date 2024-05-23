@@ -158,17 +158,18 @@ function App() {
     }
   };
   const getProvinces = async () => {
-    if (me?.userAreaType !== "Halqa") {
+    if (me?.userAreaType === "Province") {
       try {
-        const req = await instance.get("/locations/province", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("@token")}`,
-          },
-        });
+        const req = await instance.get(
+          `/locations/province/${me?.userAreaId?._id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("@token")}`,
+            },
+          }
+        );
         if (req) {
-          setProvinces(
-            req.data?.data?.filter((i) => i?.country === me?.userAreaId?._id)
-          );
+          setProvinces([req.data?.data]);
         }
       } catch (err) {
         console.log(err);
@@ -178,7 +179,29 @@ function App() {
         });
       }
     } else {
-      return;
+      if (me?.userAreaType === "Country") {
+        try {
+          const req = await instance.get(`/locations/province`, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("@token")}`,
+            },
+          });
+          if (req) {
+            setProvinces([req.data?.data]);
+          }
+        } catch (err) {
+          console.log(err);
+          dispatch({
+            type: "ERROR",
+            payload: err?.response?.data?.message || err?.message,
+          });
+        }
+      } else {
+        dispatch({
+          type: "ERROR",
+          payload: "Not a valid user",
+        });
+      }
     }
   };
   const getIlaqas = async () => {

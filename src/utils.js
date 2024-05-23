@@ -1,3 +1,6 @@
+import instance from "./api/instrance";
+import { useToastState } from "./context";
+
 export const toJson = (formData) => {
   const obj = {};
   formData.forEach(function (value, key) {
@@ -90,4 +93,22 @@ export const reverseDataFormat = (data) => {
     }
   });
   return obj;
+};
+
+export const getPReports = async (tab, id, areaType) => {
+  try {
+    const req = await instance.get(
+      `/reports/${tab}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          "Content-Type": "application/json",
+        },
+      },
+      { AreaType: areaType, tab: tab }
+    );
+    return req?.data?.data;
+  } catch (err) {
+    console.log(err);
+  }
 };

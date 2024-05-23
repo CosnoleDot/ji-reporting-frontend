@@ -3822,6 +3822,10 @@ html {
   max-width: 20rem;
 }
 
+.max-w-\[6rem\] {
+  max-width: 6rem;
+}
+
 .flex-1 {
   flex: 1 1 0%;
 }
@@ -4820,6 +4824,10 @@ html {
     max-width: 228px;
   }
 
+  .md\:max-w-lg {
+    max-width: 32rem;
+  }
+
   .md\:flex-row {
     flex-direction: row;
   }
@@ -4842,6 +4850,11 @@ html {
 
   .md\:pr-0 {
     padding-right: 0px;
+  }
+
+  .md\:text-lg {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
   }
 }
 
