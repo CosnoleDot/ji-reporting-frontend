@@ -891,7 +891,7 @@ export const LocationMaqam = () => {
                   : !areaDetails?.parentId && areaDetails?.maqam
                   ? "(Ilaqa)"
                   : areaDetails?.country
-                  ? "(Procince)"
+                  ? "(Province)"
                   : "(Country)"}
               </h4>
             </div>
@@ -963,7 +963,7 @@ export const LocationMaqam = () => {
               </div>
             )}
             <div className="w-full flex justify-start items-center gap-5">
-              <h5>country:</h5>
+              <h5>Country:</h5>
               <h4 className="text-gray-400 font-bold">Pakistan</h4>
             </div>
           </div>
