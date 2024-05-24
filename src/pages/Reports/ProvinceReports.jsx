@@ -4,6 +4,7 @@ import { FaEdit, FaEye, FaPrint } from "react-icons/fa";
 import moment from "moment";
 import { NoReports, months } from "../Reports";
 import { FilterDialog } from "./FilterDialog";
+import { useNavigate } from "react-router-dom";
 
 export const ProvinceReports = () => {
   const pReports = useContext(ProvinceReportContext);
@@ -15,7 +16,7 @@ export const ProvinceReports = () => {
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("2023");
   const me = useContext(MeContext);
-
+  const navigate = useNavigate();
   const searchResults = () => {
     if (year !== "" && month !== "") {
       let filteredData = { ...pReports };
@@ -190,15 +191,24 @@ export const ProvinceReports = () => {
               <span>Last Modified: {moment(p?.updatedAt).fromNow()}</span>
             </div>
             <div className="flex items-end w-full justify-end gap-3 ">
-              <button className="btn">
+              <button
+                className="btn"
+                onClick={() => navigate(`/reports/view/${p._id}`)}
+              >
                 <FaEye />
               </button>
 
-              <button className="btn">
+              <button
+                className="btn"
+                onClick={() => navigate(`/reports/edit/${p._id}`)}
+              >
                 <FaEdit />
               </button>
 
-              <button className="btn">
+              <button
+                className="btn"
+                onClick={() => navigate(`/province-report/print/${p._id}`)}
+              >
                 <FaPrint />
               </button>
             </div>
