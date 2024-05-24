@@ -25,11 +25,11 @@ import { RozOShabDiary } from "../components/provinceReport/RozOShabDiary";
 import { Jamiaat } from "../components/provinceReport/Jamiaat";
 import { Colleges } from "../components/provinceReport/Colleges";
 
-const getData = async (id, setData, data) => {
-  const province = data["province"];
-
-  const obj = province.filter((i) => i?._id?.toString() === id?.toString());
-  setData(reverseDataFormat(obj[0]));
+const getData = async ( data) => {
+  
+  // const province = data["province"];
+  // const obj = province.filter((i) => i?._id?.toString() === id?.toString());
+ return reverseDataFormat(data);
 };
 
 export const Province = () => {
@@ -457,9 +457,28 @@ export const Province = () => {
     setId(params?.id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
+  const getProvinceReport = async () => {
+    try {
+      const req = await instance.get(`/reports/province/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          "Content-Type": "application/json",
+        },
+      });
+      const repo = req?.data?.data;
+     setData(reverseDataFormat(repo))
+    
+      dispatch({ type: "SUCCESS", payload: req.data?.message });
+    } catch (err) {
+      dispatch({ type: "ERROR", payload: err.response.data.message });
+    }
+    setLoading(false);
+  };
   useEffect(() => {
-    if (id) getData(id, setData, { halqa, maqam, division, province });
-    else {
+    if (id) {
+      setLoading(true);
+      getProvinceReport();
+    } else {
       setLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
