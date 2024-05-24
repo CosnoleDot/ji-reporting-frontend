@@ -112,7 +112,7 @@ export const Notifications = ({ userRequests, type }) => {
                   <div className="flex flex-col px-3">
                     <span className="font-semibold">{req?.content}</span>
                     <span>
-                      {months[moment(req?.createdAt).month()].title},{" "}
+                      {months[moment(req?.createdAt).month()].title},
                       {moment(req?.createdAt).year()}
                     </span>
                   </div>

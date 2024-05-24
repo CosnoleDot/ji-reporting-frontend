@@ -51,7 +51,7 @@ export const ToseeDawat = ({ view }) => {
   return (
     <div className="p-2 py-5 relative w-full overflow-auto">
       <h2 className="text-black py-3 text-lg">توسیع دعوت</h2>
-      <div className="flex flex-wrap w-full items-center justify-start">
+      <div className="flex-col lg:flex-row w-full items-center justify-start">
         <div className="flex py-2 me-5">
           <label className="block text-sm md:text-lg">روابط:</label>
         </div>
@@ -64,7 +64,7 @@ export const ToseeDawat = ({ view }) => {
             required
             name="rawabitDecided"
             id="rawabitDecided"
-            className="border-b-2 text-center border-dashed max-w-[6rem] md:max-w-lg"
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0max-w-[6rem] md:max-w-lg"
           />
         </div>
         <div className="flex py-2">
@@ -76,7 +76,7 @@ export const ToseeDawat = ({ view }) => {
             required
             name="current"
             id="current"
-            className="border-b-2 text-center border-dashed max-w-[6rem] md:max-w-lg"
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0max-w-[6rem] md:max-w-lg"
           />
         </div>
         <div className="flex py-2">
@@ -90,7 +90,7 @@ export const ToseeDawat = ({ view }) => {
             required
             name="rwabitMeetingsGoal"
             id="rwabitMeetingsGoal"
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg"
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
           />
         </div>
         <div className="flex py-2">
@@ -102,7 +102,7 @@ export const ToseeDawat = ({ view }) => {
             required
             name="meetings"
             id="meetings"
-            className="border-b-2 text-center border-dashed max-w-[6rem] md:max-w-lg"
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0max-w-[6rem] md:max-w-lg"
           />
         </div>
         <div className="flex py-2">
@@ -114,7 +114,7 @@ export const ToseeDawat = ({ view }) => {
             required
             name="literatureDistribution"
             id="literatureDistribution"
-            className="border-b-2 text-center border-dashed max-w-[6rem] md:max-w-lg"
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0max-w-[6rem] md:max-w-lg"
           />
         </div>
         <div className="flex py-2">
@@ -137,7 +137,7 @@ export const ToseeDawat = ({ view }) => {
           )}
         </div>
       </div>
-      <div className="flex flex-wrap w-full items-center justify-start">
+      <div className="flex-col lg:flex-row w-full items-center justify-start">
         <div className="flex py-2 me-5">
           <label className="block text-sm md:text-lg">عام طلبہ:</label>
         </div>
@@ -150,7 +150,7 @@ export const ToseeDawat = ({ view }) => {
             required
             name="commonStudentMeetings"
             id="commonStudentMeetings"
-            className="border-b-2 text-center border-dashed max-w-[6rem] md:max-w-lg"
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0max-w-[6rem] md:max-w-lg"
           />
         </div>
         <div className="flex py-2">
@@ -162,7 +162,7 @@ export const ToseeDawat = ({ view }) => {
             required
             name="commonLiteratureDistribution"
             id="commonLiteratureDistribution"
-            className="border-b-2 text-center border-dashed max-w-[6rem] md:max-w-lg"
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0max-w-[6rem] md:max-w-lg"
           />
         </div>
       </div>

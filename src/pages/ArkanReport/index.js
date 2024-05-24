@@ -771,7 +771,7 @@ export const ArkanReport = () => {
           width: "100%",
         }}
       >
-        <p>اس ماہ کون سی سورۃ حفظ کروائی:</p>
+        <p>اس ماہ کون سی سورۃ حفظ کروائیی:</p>
         <p
           style={{ border: "none", borderBottom: "1px dotted black" }}
           readonly
@@ -942,7 +942,7 @@ export const ArkanReport = () => {
           width: "100%",
         }}
       >
-        <p>اس ماہ کون سی سورۃ حفظ کروائی:</p>
+        <p>اس ماہ کون سی سورۃ حفظ کروائیی:</p>
         <p
           style={{ border: "none", borderBottom: "1px dotted black" }}
           readonly
@@ -1113,7 +1113,7 @@ export const ArkanReport = () => {
           width: "100%",
         }}
       >
-        <p>اس ماہ کون سی سورۃ حفظ کروائی:</p>
+        <p>اس ماہ کون سی سورۃ حفظ کروائیی:</p>
         <p
           style={{ border: "none", borderBottom: "1px dotted black" }}
           readonly

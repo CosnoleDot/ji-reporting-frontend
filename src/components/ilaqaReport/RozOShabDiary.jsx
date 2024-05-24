@@ -5,9 +5,9 @@ export const RozOShabDiary = ({ view }) => {
   return (
     <div className="p-2 py-5 relative w-full overflow-auto">
       <h2 className="text-black py-3 text-lg">روزشب ڈائری</h2>
-      <div className="flex flex-wrap w-full items-center justify-start">
-        <div style={{ display: "flex" }}>
-          <label className="block min-w-[40%]">
+      <div className="flex-col lg:flex-row w-full items-center justify-start">
+       <div className="flex-col lg:flex-row">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0">
             کتنے امیدواران فل کرتے ہیں؟
           </label>
           <input
@@ -17,7 +17,7 @@ export const RozOShabDiary = ({ view }) => {
             required
             name={`uploadedUmeedwaran`}
             id={`uploadedUmeedwaran`}
-            className="p-1 text-center "
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
             onChange={() =>
               sumUpTwoValues(
                 parseInt(document.getElementById("uploadedUmeedwaran").value),
@@ -30,11 +30,10 @@ export const RozOShabDiary = ({ view }) => {
           <input
             type="number"
             readOnly={view}
-            placeholder="ذیلی حلقہ"
             required
             name={`manualUmeedwaran`}
             id={`manualUmeedwaran`}
-            className="p-1 text-center "
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
             onChange={() =>
               sumUpTwoValues(
                 parseInt(document.getElementById("uploadedUmeedwaran").value),
@@ -50,11 +49,13 @@ export const RozOShabDiary = ({ view }) => {
             required
             name={`umeedwaranFilledSum`}
             id={`umeedwaranFilledSum`}
-            className="p-1 text-center "
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
           />
         </div>
-        <div style={{ display: "flex" }}>
-          <label className="block min-w-[40%]">کتنےرفقافل کرتے ہیں:</label>
+       <div className="flex-col lg:flex-row">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0">
+            کتنےرفقافل کرتے ہیں:
+          </label>
           <input
             readOnly={true}
             type="number"
@@ -62,7 +63,7 @@ export const RozOShabDiary = ({ view }) => {
             required
             name={`uploadedRafaqa`}
             id={`uploadedRafaqa`}
-            className="p-1 text-center "
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
             onChange={() =>
               sumUpTwoValues(
                 parseInt(document.getElementById("uploadedRafaqa").value),
@@ -75,11 +76,10 @@ export const RozOShabDiary = ({ view }) => {
           <input
             type="number"
             readOnly={view}
-            placeholder="ذیلی حلقہ"
             required
             name={`manualRafaqaFilled`}
             id={`manualRafaqaFilled`}
-            className="p-1 text-center "
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
             onChange={() =>
               sumUpTwoValues(
                 parseInt(document.getElementById("uploadedRafaqa").value),
@@ -95,7 +95,7 @@ export const RozOShabDiary = ({ view }) => {
             required
             name={`rafaqaFilledSum`}
             id={`rafaqaFilledSum`}
-            className="p-1 text-center "
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
           />
         </div>
       </div>

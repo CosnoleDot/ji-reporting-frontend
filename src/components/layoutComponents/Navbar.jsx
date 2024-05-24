@@ -117,7 +117,7 @@ export const Navbar = ({ title }) => {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Powered By:{" "}
+                  Powered By:
                   <img src="/cd.png" className="w-5 h-5" alt="ConsoleDot" />
                 </a>
               </li>

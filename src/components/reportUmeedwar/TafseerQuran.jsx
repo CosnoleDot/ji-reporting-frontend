@@ -20,7 +20,7 @@ const tafseerQuran = [
 export const TafseerQuran = ({ view }) => {
   return (
     <div className="w-full">
-      <h3 className="block w-full text-start font-medium text-sm p-3">
+      <h3 className="block w-full text-start text-lg lg:text-xl p-3">
         تفسیرِقُرآن
       </h3>
       <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">

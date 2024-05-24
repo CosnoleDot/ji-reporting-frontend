@@ -10,7 +10,7 @@ const course = [
 export const Course = ({ view }) => {
   return (
     <div className="w-full">
-      <h3 className="block w-full text-start font-medium text-sm p-3">کورس</h3>
+      <h3 className="block w-full text-start text-lg md:text-xl p-3">کورس</h3>
       <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
         {course.map((obj, index) => (
           <div className="w-full md:pr-0 mb-2" key={index}>

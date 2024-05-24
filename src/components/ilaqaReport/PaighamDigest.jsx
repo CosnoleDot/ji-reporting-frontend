@@ -4,16 +4,17 @@ export const PaighamDigest = ({ view }) => {
   };
   return (
     <div className="p-2 py-5 relative w-full overflow-auto">
-      <h2 className="text-black py-3 text-lg">پیغام ڈائجسٹ</h2>
-      <div className="flex flex-wrap w-full items-center justify-start">
-        <div className="flex py-2 ml-4">
-          <label className="block">کل موصولہ:</label>
+      <h2 className="text-black py-3 text-lg"> ہمقدم ڈائجسٹ</h2>
+      <div className="flex-col lg:flex-row w-full items-center justify-start">
+        <div className="flex-col lg:flex-row py-2 ml-4">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0">
+            کل موصولہ:
+          </label>
           <div className="flex">
             <input
               type="number"
               readOnly={view}
-              placeholder="حلقہ جات"
-              className="border-b-2 text-center border-dashed"
+              className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
               name="totalReceived"
               id="totalReceived"
               onChange={() =>
@@ -30,8 +31,7 @@ export const PaighamDigest = ({ view }) => {
               name="manualReceived"
               id="manualReceived"
               type="number"
-              placeholder="ذیلی حلقہ جات"
-              className="border-b-2 text-center border-dashed"
+              className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
               onChange={() =>
                 sumUpTwoValues(
                   parseInt(document.getElementById("totalReceived").value),
@@ -47,18 +47,19 @@ export const PaighamDigest = ({ view }) => {
               required
               name="receivedSum"
               id="receivedSum"
-              className="border-b-2 text-center border-dashed"
+              className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
             />
           </div>
         </div>
-        <div className="flex py-2 ml-4">
-          <label className="block p-1"> فروخت کردہ:</label>
+        <div className="flex-col lg:flex-row py-2 ml-4">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0">
+            فروخت کردہ:
+          </label>
           <div className="flex">
             <input
               type="number"
               readOnly={view}
-              placeholder="حلقہ جات"
-              className="border-b-2 p-1 text-center border-dashed"
+              className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
               name="totalSold"
               id="totalSold"
               onChange={() =>
@@ -75,8 +76,7 @@ export const PaighamDigest = ({ view }) => {
               name="manualSold"
               id="manualSold"
               type="number"
-              placeholder="ذیلی حلقہ جات"
-              className="border-b-2 text-center border-dashed"
+              className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
               onChange={() =>
                 sumUpTwoValues(
                   parseInt(document.getElementById("totalSold").value),
@@ -92,18 +92,19 @@ export const PaighamDigest = ({ view }) => {
               required
               name="soldSum"
               id="soldSum"
-              className="border-b-2 text-center border-dashed"
+              className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
             />
           </div>
         </div>
-        <div className="flex py-2 ml-4">
-          <label className="block p-1">ڈایجسٹ موصول کرنے کا ماہانہ ہدف:</label>
+        <div className="flex-col lg:flex-row py-2 ml-4">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0">
+            ڈائجسٹ موصول کرنے کا ماہانہ ہدف:
+          </label>
           <div className="flex">
             <input
               type="number"
               readOnly={view}
-              placeholder="حلقہ جات"
-              className="border-b-2 p-1 text-center border-dashed"
+              className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
               name="monthlyReceivingGoal"
               id="monthlyReceivingGoal"
               onChange={() =>
@@ -124,8 +125,7 @@ export const PaighamDigest = ({ view }) => {
               name="manualMonthlyReceivingGoal"
               id="manualMonthlyReceivingGoal"
               type="number"
-              placeholder="ذیلی حلقہ جات"
-              className="border-b-2 text-center border-dashed"
+              className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
               onChange={() =>
                 sumUpTwoValues(
                   parseInt(
@@ -145,7 +145,7 @@ export const PaighamDigest = ({ view }) => {
               required
               name="monthlyReceivingGoalSum"
               id="monthlyReceivingGoalSum"
-              className="border-b-2 text-center border-dashed"
+              className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
             />
           </div>
         </div>

@@ -59,7 +59,9 @@ export const ToseeDawat = ({ view }) => {
           <h3 className="block ml-28 font-bold">روابط:</h3>
         </div>
         <div className="flex py-2">
-          <label className="block">طے شدہ:</label>
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0">
+            طے شدہ:
+          </label>
           <input
             readOnly={true}
             type="number"
@@ -67,11 +69,13 @@ export const ToseeDawat = ({ view }) => {
             required
             name="rawabitDecided"
             id="rawabitDecided"
-            className="border-b-2 text-center border-dashed"
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
           />
         </div>
         <div className="flex py-2">
-          <label className="block">روابط سےملاقاتوں کاہدف:</label>
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0">
+            روابط سےملاقاتوں کاہدف:
+          </label>
           <input
             readOnly={true}
             type="number"
@@ -79,11 +83,13 @@ export const ToseeDawat = ({ view }) => {
             required
             name="rwabitMeetingsGoal"
             id="rwabitMeetingsGoal"
-            className="border-b-2 text-center border-dashed"
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
           />
         </div>
-        <div style={{ display: "flex" }}>
-          <label className="block">موجود:</label>
+        <div className="flex flex-col lg:flex-row">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0">
+            موجود:
+          </label>
           <input
             readOnly={true}
             type="number"
@@ -91,17 +97,16 @@ export const ToseeDawat = ({ view }) => {
             required
             name={`current`}
             id={`current`}
-            className="border-b-2 text-center border-dashed "
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
           />
           +
           <input
             type="number"
-            placeholder="ذیلی حلقہ"
             required
             readOnly={view}
             name={`currentManual`}
             id={`currentManual`}
-            className="border-b-2 text-center border-dashed "
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
             onChange={() =>
               sumUpTwoValues(
                 parseInt(document.getElementById("current").value),
@@ -114,16 +119,17 @@ export const ToseeDawat = ({ view }) => {
           <input
             readOnly={true}
             type="number"
-            defaultValue={document.getElementById("current")?.value
-            }
+            defaultValue={document.getElementById("current")?.value}
             required
             name={`currentSum`}
             id={`currentSum`}
-            className="border-b-2 text-center border-dashed "
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
           />
         </div>
-        <div style={{ display: "flex" }}>
-          <label className="block">ملاقاتوں کی تعداد:</label>
+        <div className="flex flex-col lg:flex-row">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0">
+            ملاقاتوں کی تعداد:
+          </label>
           <input
             readOnly={true}
             type="number"
@@ -131,17 +137,16 @@ export const ToseeDawat = ({ view }) => {
             required
             name={`meetings`}
             id={`meetings`}
-            className="border-b-2 text-center border-dashed "
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
           />
           +
           <input
             type="number"
-            placeholder="ذیلی حلقہ"
             required
             readOnly={view}
             name={`meetingsManual`}
             id={`meetingsManual`}
-            className="border-b-2 text-center border-dashed "
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
             onChange={() =>
               sumUpTwoValues(
                 parseInt(document.getElementById("meetings").value),
@@ -154,17 +159,17 @@ export const ToseeDawat = ({ view }) => {
           <input
             readOnly={true}
             type="number"
-            defaultValue={
-              document.getElementById("meetings")?.value
-            }
+            defaultValue={document.getElementById("meetings")?.value}
             required
             name={`meetingsSum`}
             id={`meetingsSum`}
-            className="border-b-2 text-center border-dashed "
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
           />
         </div>
-        <div style={{ display: "flex" }}>
-          <label className="block">تقسیم لٹریچر:</label>
+        <div className="flex flex-col lg:flex-row">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0">
+            تقسیم لٹریچر:
+          </label>
           <input
             readOnly={view}
             type="number"
@@ -172,16 +177,18 @@ export const ToseeDawat = ({ view }) => {
             required
             name={`litrature`}
             id={`litrature`}
-            className="border-b-2 text-center border-dashed "
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
           />
         </div>
       </div>
       <div className="flex flex-col w-full items-start justify-start">
         <div className="flex py-2 me-5">
-          <label className="block ml-16 font-bold">عام طلبہ:</label>
+          <label className="block text-sm md:text-lg sm:mb-2">عام طلبہ:</label>
         </div>
-        <div style={{ display: "flex" }}>
-          <label className="block">تقسیم لٹریچر:</label>
+        <div className="flex">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0">
+            تقسیم لٹریچر:
+          </label>
           <input
             readOnly={view}
             type="number"
@@ -189,11 +196,13 @@ export const ToseeDawat = ({ view }) => {
             required
             name={`commonLiteratureDistribution`}
             id={`commonLiteratureDistribution`}
-            className="border-b-2 text-center border-dashed "
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
           />
         </div>
-        <div style={{ display: "flex" }}>
-          <label className="block">ملاقاتوں کی تعداد:</label>
+        <div className="flex">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0">
+            ملاقاتوں کی تعداد:
+          </label>
           <input
             readOnly={view}
             type="number"
@@ -201,7 +210,7 @@ export const ToseeDawat = ({ view }) => {
             required
             name={`commonStudentMeetings`}
             id={`commonStudentMeetings`}
-            className="border-b-2 text-center border-dashed "
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
           />
         </div>
       </div>

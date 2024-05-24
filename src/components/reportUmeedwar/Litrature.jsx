@@ -15,8 +15,8 @@ const litrature = [
 export const Litrature = ({ view }) => {
   return (
     <div className="w-full">
-      <h3 className="block w-full text-start font-medium text-sm p-3">
-        لیٹریچر
+      <h3 className="block w-full text-start text-lg md:text-xl p-3">
+        لٹریچر
       </h3>
       <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
         {litrature.map((obj, index) => (
