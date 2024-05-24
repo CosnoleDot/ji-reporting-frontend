@@ -89,7 +89,9 @@ export const months = [
 ];
 
 export const getDivisionByTehsil = (tehsil, districts) => {
+
   const districtId = tehsil?.district;
+  
   return districts.find((i) => i?._id === districtId)?.division?.name;
 };
 
