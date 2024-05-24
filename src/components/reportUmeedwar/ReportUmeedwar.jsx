@@ -212,7 +212,9 @@ export const ReportUmeedwar = () => {
   return (
     <GeneralLayout>
       <div dir="rtl" className="p-4 reports">
-        <h2 className="block w-full text-center p-3">رپورٹ خاکہ </h2>
+        <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
+          رپورٹ خاکہ
+        </h2>
 
         <form
           className="flex w-full flex-col items-center justify-end gap-5 p-3 overflow-auto mb-5"
@@ -221,7 +223,9 @@ export const ReportUmeedwar = () => {
         >
           <div className="w-full md:pr-0 mb-2">
             <div className="flex justify-end items-center gap-2 w-full p-2">
-              <label htmlFor="month">برائے ماہ</label>
+              <label className="block text-sm md:text-lg" htmlFor="month">
+                برائے ماہ
+              </label>
               <input
                 className="border-b-2 border-dashed"
                 type="month"
@@ -231,7 +235,7 @@ export const ReportUmeedwar = () => {
                 value={date}
               />
             </div>
-            <h3 className="mb-5">
+            <h3 className="mb-2 block text-sm md:text-lg">
               اس ماہ میں کوئ خصوصی مصروفیت جس کی وجہ سے آپ کئ روٹین متاثر ہوئ ہو
             </h3>
             <textarea
@@ -245,68 +249,55 @@ export const ReportUmeedwar = () => {
           </div>
 
           <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
-            <div className="w-full flex gap-4 md:pr-0 mb-2">
-              <div className="flex gap-4">
-                {" "}
-                <label htmlFor="name">نام</label>
+            <div className="w-full flex-col lg:flex-row gap-4 md:pr-0 mb-2">
+              <div className="flex gap-4 mb-4">
+                <label className="block text-sm md:text-lg" htmlFor="name">
+                  نام
+                </label>
                 <input
                   type="text"
                   defaultValue={me?.name || "Name"}
                   readOnly
                   id="name"
-                  class="name"
+                  name="name"
+                  className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
                   value={me?.name}
                 />
               </div>
-              <div className="flex gap-4">
-                {" "}
-                <label htmlFor="name">جمعیت سے تعلق</label>
+              <div className="w-full flex gap-4  mb-4">
+                <label
+                  className="block text-sm md:text-lg"
+                  htmlFor="JamiatRelation"
+                >
+                  جمعیت سے تعلق
+                </label>
                 <input
                   type="text"
                   defaultValue={localStorage.getItem("@type")}
                   readOnly
                   id="JamiatRelation"
-                  class="JamiatRelation"
+                  name="JamiatRelation"
+                  className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
                   value={localStorage.getItem("@type")}
                 />
               </div>
               <div className="flex gap-4">
-                {" "}
-                <label htmlFor="name">تنظیمی تعلق</label>
+                <label
+                  className="block text-sm md:text-lg"
+                  htmlFor="organizationRelation"
+                >
+                  تنظیمی تعلق
+                </label>
                 <input
                   type="text"
                   defaultValue={localStorage.getItem("@nazimType")}
                   readOnly
                   id="organizationRelation"
-                  class="organizationRelation"
+                  name="organizationRelation"
+                  className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
                   value={localStorage.getItem("@nazimType")}
                 />
               </div>
-              {/* <InputWithLabel
-                  readOnly={
-                    view ||
-                    obj.key === "organizationRelation" ||
-                    obj?.key === "JamiatRelation" ||
-                    obj?.key === "name"
-                  }
-                  value={
-                    obj?.key === "name"
-                      ? singleFile?.userId?.name
-                      : obj?.key === "JamiatRelation"
-                      ? singleFile?.userId?.nazimType
-                      : singleFile?.userId?.nazim
-                  }
-                  placeholder={
-                    obj?.key === "name"
-                      ? me?.name
-                      : obj?.key === "JamiatRelation"
-                      ? me?.nazimType
-                      : me?.userAreaType
-                  }
-                  label={obj.title}
-                  name={obj?.key}
-                  type={obj?.type}
-                /> */}
             </div>
           </div>
           <FajarNamaz view={view} />
@@ -316,12 +307,12 @@ export const ReportUmeedwar = () => {
           <Litrature view={view} />
           <Hifz view={view} />
           <Course view={view} />
-          <div className="w-full flex justify-start items-center">
+          <div className="w-full flex-col lg:flex-row justify-start items-center">
             <div className="flex w-full  flex-col justify-start items-start">
-              <h3 className="block w-full text-sm p-3">
+              <h3 className="mb-2 block w-full text-start text-sm md:text-lg p-3">
                 اجتماعِ امیدواران میں شرکت کی
               </h3>
-              <div className="flex flex-wrap items-center justify-start border border-primary p-2 rounded-lg">
+              <div className="flex-col lg:flex-row items-center justify-start border border-primary p-2 rounded-lg">
                 <div className="form-control">
                   <label className="label cursor-pointer gap-2">
                     <input
@@ -364,8 +355,10 @@ export const ReportUmeedwar = () => {
               </div>
             </div>
             <div className="flex w-full  flex-col justify-start items-start">
-              <h2 className="block w-full p-3">سٹڈی سرکل میں شرکت کی</h2>
-              <div className="flex flex-wrap items-center justify-start border border-primary p-2 rounded-lg">
+              <h3 className="mb-2 block w-full text-start text-sm md:text-lg p-3">
+                سٹڈی سرکل میں شرکت کی
+              </h3>
+              <div className="flex-col lg:flex-row items-center justify-start border border-primary p-2 rounded-lg">
                 <div className="form-control">
                   <label className="label cursor-pointer gap-2">
                     <input
@@ -411,9 +404,11 @@ export const ReportUmeedwar = () => {
               </div>
             </div>
             <div className="flex w-full  flex-col justify-start items-start">
-              <h2 className="block w-full p-3">اعانت ادا </h2>
+              <h3 className="mb-2 block w-full text-start text-sm md:text-lg p-3">
+                اعانت ادا
+              </h3>
 
-              <div className="flex flex-wrap items-center justify-start border border-primary p-2 rounded-lg">
+              <div className="flex-col lg:flex-row items-center justify-start border border-primary p-2 rounded-lg">
                 <div className="form-control">
                   <label className="label cursor-pointer gap-2">
                     <input
@@ -473,7 +468,7 @@ export const ReportUmeedwar = () => {
             <RegularStudents view={view} />
           </div>
           <div className="w-full flex justify-start items-center">
-            <h3 className="">تبصرہ</h3>
+            <h3 className="mb-2 ">تبصرہ</h3>
           </div>
           <textarea
             className="inptut border rounded-md pr-2 w-full"

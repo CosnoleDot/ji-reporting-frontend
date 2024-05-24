@@ -378,7 +378,9 @@ export const Division = () => {
           id="division-form"
         >
           {/* <fieldset disabled={view} className="w-full"> */}
-          <h2 className="text-2xl mb-4">جا ئزءکارکردگی رپورٹ (برائے ڈویژن)</h2>
+          <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
+            جائزہ کارکردگی رپورٹ (برائے ڈویژن)
+          </h2>
           <div className="w-full">
             <div className="mb-4">
               <GeneralInfo

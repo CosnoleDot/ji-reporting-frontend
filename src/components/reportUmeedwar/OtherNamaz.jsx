@@ -37,8 +37,8 @@ export const OtherNamaz = ({ view }) => {
   }, []);
   return (
     <div className="w-full">
-      <h3 className="block w-full text-start font-medium text-sm p-3">
-        دیگرنمازیں{" "}
+      <h3 className="block w-full text-start text-lg md:text-xl p-3">
+        دیگرنمازیں
       </h3>
       <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
         {otherNamaz.map((obj, index) => (

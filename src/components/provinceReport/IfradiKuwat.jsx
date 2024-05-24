@@ -53,8 +53,7 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                  placeholder="ذیلی حلقہ"
-                  required
+                        required
                   name={`arkan-manualStart`}
                   id={`arkan-manualStart`}
                   className="p-1 text-center "
@@ -97,8 +96,7 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                  placeholder="ذیلی حلقہ"
-                  required
+                        required
                   name={`arkan-manualIncrease`}
                   id={`arkan-manualIncrease`}
                   onChange={() =>
@@ -141,8 +139,7 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                  placeholder="ذیلی حلقہ"
-                  required
+                        required
                   name={`arkan-manualDecrease`}
                   id={`arkan-manualDecrease`}
                   onChange={() =>
@@ -210,8 +207,7 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                  placeholder="ذیلی حلقہ"
-                  required
+                        required
                   name={`umeedWaran-manualStart`}
                   id={`umeedWaran-manualStart`}
                   onChange={() =>
@@ -253,8 +249,7 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                  placeholder="ذیلی حلقہ"
-                  required
+                        required
                   name={`umeedWaran-manualIncrease`}
                   id={`umeedWaran-manualIncrease`}
                   className="p-1 text-center "
@@ -295,8 +290,7 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                  placeholder="ذیلی حلقہ"
-                  required
+                        required
                   name={`umeedWaran-manualDecrease`}
                   id={`umeedWaran-manualDecrease`}
                   onChange={() =>
@@ -365,8 +359,7 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                  placeholder="ذیلی حلقہ"
-                  required
+                        required
                   name={`rafaqa-manualStart`}
                   id={`rafaqa-manualStart`}
                   className="p-1 text-center "
@@ -406,8 +399,7 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                  placeholder="ذیلی حلقہ"
-                  required
+                        required
                   name={`rafaqa-manualIncrease`}
                   id={`rafaqa-manualIncrease`}
                   onChange={() =>
@@ -449,8 +441,7 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                  placeholder="ذیلی حلقہ"
-                  required
+                        required
                   name={`rafaqa-manualDecrease`}
                   onChange={() =>
                     sumUpTwoValues(
@@ -519,8 +510,7 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                  placeholder="ذیلی حلقہ"
-                  required
+                        required
                   name={`karkunan-manualStart`}
                   id={`karkunan-manualStart`}
                   onChange={() =>
@@ -562,8 +552,7 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                  placeholder="ذیلی حلقہ"
-                  required
+                        required
                   name={`karkunan-manualIncrease`}
                   onChange={() =>
                     sumUpTwoValues(
@@ -606,8 +595,7 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                  placeholder="ذیلی حلقہ"
-                  required
+                        required
                   name={`karkunan-manualDecrease`}
                   id={`karkunan-manualDecrease`}
                   onChange={() =>
@@ -676,8 +664,7 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                  placeholder="ذیلی حلقہ"
-                  required
+                        required
                   name={`shaheen-manualStart`}
                   onChange={() =>
                     sumUpTwoValues(
@@ -720,8 +707,7 @@ export const IfradiKuwat = ({ view }) => {
                   readOnly={view}
                   
                   type="number"
-                  placeholder="ذیلی حلقہ"
-                  required
+                        required
                   name={`shaheen-manualIncrease`}
                   id={`shaheen-manualIncrease`}
                   className="p-1 text-center "
@@ -762,8 +748,7 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                  placeholder="ذیلی حلقہ"
-                  required
+                        required
                   name={`shaheen-manualDecrease`}
                   id={`shaheen-manualDecrease`}
                   onChange={() =>
@@ -831,8 +816,7 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                  placeholder="ذیلی حلقہ"
-                  required
+                        required
                   name={`members-manualStart`}
                   id={`members-manualStart`}
                   onChange={() =>
@@ -872,8 +856,7 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                  placeholder="ذیلی حلقہ"
-                  required
+                        required
                   name={`members-manualIncrease`}
                   id={`members-manualIncrease`}
                   onChange={() =>
@@ -913,8 +896,7 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                  placeholder="ذیلی حلقہ"
-                  required
+                        required
                   name={`members-manualDecrease`}
                   id={`members-manualDecrease`}
                   className="p-1 text-center "

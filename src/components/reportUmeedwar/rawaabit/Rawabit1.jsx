@@ -29,12 +29,12 @@ const rbt1 = [
     key: "rbt1SurahTafseer",
   },
   {
-    title: "اس ماہ کون سی سورۃحفظ کروائ",
+    title: "اس ماہ کون سی سورۃحفظ کروائی",
     type: "text",
     key: "rbt1SurahHifz",
   },
   // {
-  //   title: "اس ماہ نمازوں کی صورتحال کیسی رھی",
+  //   title: "اس ماہ نمازوں کی صورتحال کیسی رہی",
   //   type: "textarea",
   //   key: "rbt1NamazCondition",
   // },
@@ -70,22 +70,24 @@ export const Rawabit1 = ({
               required={true}
             />
           ))}
-          <h3 className="mb-2">
+
+          <h3 className="mb-2 block w-full text-start text-sm md:text-lg p-3">
+            اس ماہ نمازوں کی صورتحال کیسی رہی
+          </h3>
+          <textarea
+            className="inptut border rounded-md pr-2 w-full"
+            placeholder={"..."}
+            id={"rbt1NamazCondition"}
+            name={"rbt1NamazCondition"}
+            type={"textarea"}
+            disabled={view}
+            required
+          ></textarea>
+          <h3 className="mb-2 block w-full text-start text-sm md:text-lg p-3">
             اس ماہ جمعیت کے کون کون سے پروگرامات میں شریک کروایا
           </h3>
 
-          <div className="w-full flex justify-start gap-3 flex-row-reverse items-center">
-            {!view && (
-              <button
-                className="btn btn-primary mb-3 max-w-[10rem]"
-                onClick={(e) => {
-                  e.preventDefault();
-                  document.getElementById("p-dialog").showModal();
-                }}
-              >
-                +Add
-              </button>
-            )}
+          <div className="w-full flex-col lg:flex-row justify-start gap-3  items-center">
             <dialog id="p-dialog" className="p-4">
               <label htmlFor="rbt1Programs" className="mb-3 block">
                 Program Name
@@ -103,6 +105,7 @@ export const Rawabit1 = ({
                 Done
               </button>
             </dialog>
+
             <div className="flex w-full justify-start items-center mb-3 min-h-[30px] border rounded-md border-slate-300">
               {rbt1Programs &&
                 rbt1Programs.length > 0 &&
@@ -126,6 +129,17 @@ export const Rawabit1 = ({
                   </p>
                 ))}
             </div>
+            {!view && (
+              <button
+                className="btn w-full md:w-auto btn-primary mb-3 max-w-full capitalize"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById("p-dialog").showModal();
+                }}
+              >
+                +Add Program Name
+              </button>
+            )}
           </div>
           <div className="flex justify-start items-center gap-2">
             {!view &&
@@ -144,17 +158,6 @@ export const Rawabit1 = ({
                 />
               ))}
           </div>
-
-          <h3 className=" block mb-2">اس ماہ نمازوں کی صورتحال کیسی رھی</h3>
-          <textarea
-            className="inptut border rounded-md pr-2 w-full"
-            placeholder={"..."}
-            id={"rbt1NamazCondition"}
-            name={"rbt1NamazCondition"}
-            type={"textarea"}
-            disabled={view}
-            required
-          ></textarea>
         </div>
       </div>
     </div>

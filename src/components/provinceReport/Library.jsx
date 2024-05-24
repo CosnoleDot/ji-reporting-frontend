@@ -7,9 +7,12 @@ export const Library = () => {
   return (
     <div className="p-2 py-5 relative w-full overflow-auto">
       <h2 className="text-black py-3 text-lg">لائبریری</h2>
-      <div className="flex flex-wrap w-full items-center justify-start">
+      <div className="flex-col lg:flex-row w-full items-center justify-start">
         <div className="flex py-2">
-          <label className="block"> کل تعداد لائبریریز:</label>
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0">
+            
+            کل تعداد لائبریریز:
+          </label>
           <input
             // readOnly={true}
             type="number"
@@ -17,11 +20,13 @@ export const Library = () => {
             required
             name="totalLibraries"
             id="totalLibraries"
-            className="border-b-2 text-center border-dashed"
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
           />
         </div>
         <div className="flex py-2">
-          <label className="block">کل تعدادکتب:</label>
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0">
+            کل تعدادکتب:
+          </label>
           <input
             readOnly={true}
             type="number"
@@ -29,11 +34,11 @@ export const Library = () => {
             required
             name="totalBooks"
             id="totalBooks"
-            className="border-b-2 text-center border-dashed"
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
           />
         </div>
         <div className="flex py-2">
-          <label className="block">اضافہ کتب:</label>
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0">اضافہ کتب:</label>
           <input
             readOnly={true}
             type="number"
@@ -41,11 +46,11 @@ export const Library = () => {
             required
             name="totalIncrease"
             id="totalIncrease"
-            className="border-b-2 text-center border-dashed"
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
           />
         </div>
         <div className="flex py-2">
-          <label className="block">کمی کتب :</label>
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0">کمی کتب :</label>
           <input
             readOnly={true}
             type="number"
@@ -53,11 +58,13 @@ export const Library = () => {
             required
             name="totalDecrease"
             id="totalDecrease"
-            className="border-b-2 text-center border-dashed"
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
           />
         </div>
         <div className="flex py-2">
-          <label className="block">کل اجرائے کتب:</label>
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0">
+            کل اجرائے کتب:
+          </label>
           <input
             readOnly={true}
             type="number"
@@ -65,7 +72,7 @@ export const Library = () => {
             required
             name="totalBookRent"
             id="totalBookRent"
-            className="border-b-2 text-center border-dashed"
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
           />
         </div>
       </div>

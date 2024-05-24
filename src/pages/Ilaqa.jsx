@@ -357,8 +357,10 @@ export const Ilaqa = () => {
           onSubmit={handleSubmit}
           id="ilaqa-form"
         >
-          <h2 className="text-2xl">جا ئزءکارکردگی رپورٹ (برائے علاقہ)</h2>
-          <div className="w-full p-4">
+          <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
+            جائزہ کارکردگی رپورٹ (برائے علاقہ)
+          </h2>
+          <div className="w-full">
             <div>
               <GeneralInfo
                 setMonth={setMonth}

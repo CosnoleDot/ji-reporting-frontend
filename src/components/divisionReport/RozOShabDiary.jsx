@@ -15,11 +15,11 @@ export const RozOShabDiary = ({ view }) => {
             required
             name='arkanFilled'
             id='arkanFilled'
-            className='border-b-2 text-center border-dashed'
+            className='border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0'
           />
         </div> */}
-        <div style={{ display: "flex" }}>
-          <label className="block min-w-[40%]">
+       <div className="flex-col lg:flex-row">
+                <label className="block text-sm md:text-lg mb-2 lg:mb-0">
             کتنے امیدواران فل کرتے ہیں؟
           </label>
           <input
@@ -29,17 +29,16 @@ export const RozOShabDiary = ({ view }) => {
             required
             name={`umeedwaranFilled`}
             id={`umeedwaranFilled`}
-            className="border-b-2 text-center border-dashed "
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
           />
           +
           <input
             type="number"
             readOnly={view}
-            placeholder="ذیلی حلقہ"
             required
             name={`manualUmeedwaran`}
             id={`manualUmeedwaran`}
-            className="border-b-2 text-center border-dashed "
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
             onChange={() =>
               sumUpTwoValues(
                 parseInt(document.getElementById("umeedwaranFilled").value),
@@ -57,11 +56,11 @@ export const RozOShabDiary = ({ view }) => {
             required
             name={`umeedwaranFilledSum`}
             id={`umeedwaranFilledSum`}
-            className="border-b-2 text-center border-dashed "
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
           />
         </div>
-        <div style={{ display: "flex" }}>
-          <label className="block min-w-[40%]">کتنےرفقافل کرتے ہیں:</label>
+       <div className="flex-col lg:flex-row">
+                <label className="block text-sm md:text-lg mb-2 lg:mb-0">کتنےرفقافل کرتے ہیں:</label>
 
           <input
             readOnly={true}
@@ -70,18 +69,17 @@ export const RozOShabDiary = ({ view }) => {
             required
             name={`rafaqaFilled`}
             id={`rafaqaFilled`}
-            className="border-b-2 text-center border-dashed "
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
           />
 
           +
           <input
             type="number"
             readOnly={view}
-            placeholder="ذیلی حلقہ"
             required
             name={`manualRafaqaFilled`}
             id={`manualRafaqaFilled`}
-            className="border-b-2 text-center border-dashed "
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
             onChange={() =>
               sumUpTwoValues(
                 parseInt(document.getElementById("rafaqaFilled").value),
@@ -99,11 +97,11 @@ export const RozOShabDiary = ({ view }) => {
             required
             name={`rafaqaFilledSum`}
             id={`rafaqaFilledSum`}
-            className="border-b-2 text-center border-dashed "
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
           />
         </div>
         {/* <div className="flex py-2">
-          <label className="block min-w-[40%]">کتنے امیدواران فل کرتے ہیں؟</label>
+                <label className="block text-sm md:text-lg mb-2 lg:mb-0">کتنے امیدواران فل کرتے ہیں؟</label>
           <input
             readOnly={view}
             type="number"
@@ -111,11 +109,11 @@ export const RozOShabDiary = ({ view }) => {
             required
             name="umeedwaranFilled"
             id="umeedwaranFilled"
-            className="border-b-2 text-center border-dashed"
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
           />
         </div>
         <div className="flex py-2 ">
-          <label className="block min-w-[40%]">کتنےرفقافل کرتے ہیں:</label>
+                <label className="block text-sm md:text-lg mb-2 lg:mb-0">کتنےرفقافل کرتے ہیں:</label>
           <input
             readOnly={true}
             type="number"
@@ -123,7 +121,7 @@ export const RozOShabDiary = ({ view }) => {
             required
             name="rafaqaFilled"
             id="rafaqaFilled"
-            className="border-b-2 text-center border-dashed"
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
           />
         </div> */}
       </div>

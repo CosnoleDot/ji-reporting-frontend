@@ -114,7 +114,7 @@ export const Halqa = () => {
   return (
     <GeneralLayout>
       <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">
-        <h2 className="block w-full text-center p-3">
+        <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
           کارکردگی رپورٹ براۓ حلقہ
         </h2>
         <form
