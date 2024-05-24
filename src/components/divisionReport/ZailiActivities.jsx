@@ -111,7 +111,7 @@ export const ZailiActivities = ({ view }) => {
               +
               <input
                 type="number"
-                placeholder="ذیلی حلقہ"
+                placeholder="کل زیلی حلقہ جات"
                 required
                 name={`ijtKarkunan-manual`}
                 id={`ijtKarkunan-manual`}
@@ -119,7 +119,9 @@ export const ZailiActivities = ({ view }) => {
                 onChange={() =>
                   sumUpTwoValues(
                     parseInt(document.getElementById("ijtKarkunan-done").value),
-                    parseInt(document.getElementById("ijtKarkunan-manual").value),
+                    parseInt(
+                      document.getElementById("ijtKarkunan-manual").value
+                    ),
                     "ijtKarkunan-sum"
                   )
                 }
@@ -176,15 +178,19 @@ export const ZailiActivities = ({ view }) => {
                 +
                 <input
                   type="number"
-                  placeholder="ذیلی حلقہ"
                   required
+                  placeholder="کل زیلی حلقہ جات"
                   name={`darseQuran-manual`}
                   id={`darseQuran-manual`}
                   className="p-1 text-center "
                   onChange={() =>
                     sumUpTwoValues(
-                      parseInt(document.getElementById("darseQuran-done").value),
-                      parseInt(document.getElementById("darseQuran-manual").value),
+                      parseInt(
+                        document.getElementById("darseQuran-done").value
+                      ),
+                      parseInt(
+                        document.getElementById("darseQuran-manual").value
+                      ),
                       "darseQuran-sum"
                     )
                   }
@@ -194,8 +200,7 @@ export const ZailiActivities = ({ view }) => {
                   readOnly={true}
                   type="number"
                   defaultValue={
-                      document.getElementById("darseQuran-done")?.value
-                    
+                    document.getElementById("darseQuran-done")?.value
                   }
                   required
                   name={`darseQuran-sum`}

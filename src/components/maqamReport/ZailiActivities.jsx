@@ -110,7 +110,9 @@ export const ZailiActivities = ({ view }) => {
                 onChange={() =>
                   sumUpTwoValues(
                     parseInt(document.getElementById("ijtKarkunan-done").value),
-                    parseInt(document.getElementById("ijtKarkunan-manual").value),
+                    parseInt(
+                      document.getElementById("ijtKarkunan-manual").value
+                    ),
                     "ijtKarkunan-sum"
                   )
                 }
@@ -118,15 +120,17 @@ export const ZailiActivities = ({ view }) => {
               +
               <input
                 type="number"
-                placeholder="ذیلی حلقہ"
                 required
+                placeholder="کل زیلی حلقہ جات"
                 name={`ijtKarkunan-manual`}
                 id={`ijtKarkunan-manual`}
                 className="p-1 text-center min-w-full"
                 onChange={() =>
                   sumUpTwoValues(
                     parseInt(document.getElementById("ijtKarkunan-done").value),
-                    parseInt(document.getElementById("ijtKarkunan-manual").value),
+                    parseInt(
+                      document.getElementById("ijtKarkunan-manual").value
+                    ),
                     "ijtKarkunan-sum"
                   )
                 }
@@ -194,10 +198,10 @@ export const ZailiActivities = ({ view }) => {
                 +
                 <input
                   type="number"
-                  placeholder="ذیلی حلقہ"
                   required
                   name={`darseQuran-manual`}
                   id={`darseQuran-manual`}
+                  placeholder="کل زیلی حلقہ جات"
                   className="p-1 text-center "
                   onChange={() =>
                     sumUpTwoValues(

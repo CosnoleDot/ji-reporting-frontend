@@ -48,7 +48,7 @@ export const MarkazReport = () => {
   const location = useLocation();
   const me = useContext(MeContext);
   const navigate = useNavigate();
- 
+
   const autoFill = () => {
     const halq = {};
     document.getElementById("markaz-form").reset();
@@ -130,7 +130,7 @@ export const MarkazReport = () => {
         }
       }
       //  there
- 
+
       const afd = [
         "rehaishHalqay",
         "taleemHalqay",
@@ -145,7 +145,7 @@ export const MarkazReport = () => {
       afd.forEach((i) => {
         calcultate(i);
       });
-    
+
       setObj({
         ijtRafaqaDecided: halq["ijtRafaqa-decided"],
         ijtRafaqaDone: halq["ijtRafaqa-done"],
@@ -160,7 +160,7 @@ export const MarkazReport = () => {
         paighamEventDecided: halq["paighamEvent-decided"],
         paighamEventDone: halq["paighamEvent-done"],
       });
-     
+
       const elem = document.getElementById(j);
       if (elem) {
         if (j === "month") {
@@ -187,27 +187,30 @@ export const MarkazReport = () => {
           if (j.split("-")[1] === "startSum") {
             document.getElementById(`${j.split("-")[0]}-start`).value = halq[j];
           }
-          
-          if (j.split("-")[1] === "manualStart" || j.split("-")[1] === "manualIncrease" || j.split("-")[1] === "manualDecrease") {
+
+          if (
+            j.split("-")[1] === "manualStart" ||
+            j.split("-")[1] === "manualIncrease" ||
+            j.split("-")[1] === "manualDecrease"
+          ) {
             document.getElementById(`${j.split("-")[0]}-manualStart`).value = 0;
-            document.getElementById(`${j.split("-")[0]}-manualIncrease`).value = 0;
-            document.getElementById(`${j.split("-")[0]}-manualDecrease`).value = 0;
-          }
-          
-          
-          
-           else {
+            document.getElementById(
+              `${j.split("-")[0]}-manualIncrease`
+            ).value = 0;
+            document.getElementById(
+              `${j.split("-")[0]}-manualDecrease`
+            ).value = 0;
+          } else {
             if (i === "name" && !view) {
               elem.value = me?.userAreaId?.name;
             } else {
               elem.value = halq[i];
             }
           }
-          
         }
       }
     });
-    
+
     document.getElementById("rawabitDecided").value = halq["rawabitDecided"];
     [
       "studyCircleMentioned",
@@ -225,7 +228,6 @@ export const MarkazReport = () => {
     ].forEach((i) => {
       document.getElementById(`${i}-averageAttendance`).value = 0;
     });
-    
   };
 
   const paigham = [
@@ -251,13 +253,10 @@ export const MarkazReport = () => {
           document.getElementById(p).value = fieldValue;
         }
       });
-    
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-
   }, [data]);
- 
-  
+
   useEffect(() => {
     const l = location.pathname?.split("/")[2];
     if (l === "view") {
@@ -289,7 +288,6 @@ export const MarkazReport = () => {
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    
   }, [data]);
   useEffect(() => {
     if (!id) autoFill();
@@ -337,11 +335,11 @@ export const MarkazReport = () => {
     }
     setLoading(false);
   };
-  Object.keys(data).forEach((i)=>{
-    if(data[i]===null){
-      data[i]=0
+  Object.keys(data).forEach((i) => {
+    if (data[i] === null) {
+      data[i] = 0;
     }
-  })
+  });
 
   return (
     <GeneralLayout>
@@ -352,9 +350,12 @@ export const MarkazReport = () => {
           onSubmit={handleSubmit}
           id="markaz-form"
         >
-          <h2 className="text-2xl">جا ئزءکارکردگی رپورٹ (برائے مرکز)</h2>
+          <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
+            {" "}
+            جائزہ کارکردگی رپورٹ (برائے مرکز)
+          </h2>
 
-          <div className="w-full p-4">
+          <div className="w-full ">
             <div>
               <GeneralInfo
                 setMonth={setMonth}

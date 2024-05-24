@@ -41,7 +41,7 @@ export const MarkazReportPrint = () => {
         <h6>{data?.month.split("T")[0]}</h6>
       </div>
       <div className="flex w-full p-4 justify-start items-center font-bold text-2xl">
-        {" "}
+        
         جامعات
       </div>
       <div
@@ -115,7 +115,7 @@ export const MarkazReportPrint = () => {
         </div>
       </div>
       <div className="flex w-full p-4 justify-start items-center font-bold text-2xl">
-        {" "}
+        
         کالجز
       </div>
       <div

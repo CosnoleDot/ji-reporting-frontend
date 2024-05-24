@@ -33,7 +33,9 @@ export const ToseeDawat = ({ view }) => {
           <h3 className="block ml-28 font-bold">روابط:</h3>
         </div>
         <div className="flex py-2">
-          <label className="block">طے شدہ:</label>
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0">
+            طے شدہ:
+          </label>
           <input
             readOnly={true}
             type="number"
@@ -41,23 +43,13 @@ export const ToseeDawat = ({ view }) => {
             required
             name="rawabitDecided"
             id="rawabitDecided"
-            className="border-b-2 text-center border-dashed"
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
           />
         </div>
-        <div className="flex py-2">
-          <label className="block">روابط سےملاقاتوں کاہدف:</label>
-          <input
-            readOnly={true}
-            type="number"
-            defaultValue={0}
-            required
-            name="rwabitMeetingsGoal"
-            id="rwabitMeetingsGoal"
-            className="border-b-2 text-center border-dashed"
-          />
-        </div>
-        <div style={{ display: "flex" }}>
-          <label className="block">موجود:</label>
+        <div className="flex-col lg:flex-row">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0">
+            موجود:
+          </label>
           <input
             readOnly={true}
             type="number"
@@ -65,17 +57,16 @@ export const ToseeDawat = ({ view }) => {
             required
             name={`uploadedCurrent`}
             id={`uploadedCurrent`}
-            className="border-b-2 text-center border-dashed "
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
           />
           +
           <input
             type="number"
-            placeholder="ذیلی حلقہ"
             required
             readOnly={view}
             name={`manualCurrent`}
             id={`manualCurrent`}
-            className="border-b-2 text-center border-dashed "
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
             onChange={() =>
               sumUpTwoValues(
                 parseInt(document.getElementById("uploadedCurrent").value),
@@ -92,11 +83,28 @@ export const ToseeDawat = ({ view }) => {
             required
             name={`currentSum`}
             id={`currentSum`}
-            className="border-b-2 text-center border-dashed "
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
           />
         </div>
-        <div style={{ display: "flex" }}>
-          <label className="block">ملاقاتوں کی تعداد:</label>
+        <div className="flex py-2">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0">
+            روابط سےملاقاتوں کاہدف:
+          </label>
+          <input
+            readOnly={true}
+            type="number"
+            defaultValue={0}
+            required
+            name="rwabitMeetingsGoal"
+            id="rwabitMeetingsGoal"
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+          />
+        </div>
+
+        <div className="flex-col lg:flex-row">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0">
+            ملاقاتوں کی تعداد:
+          </label>
           <input
             readOnly={true}
             type="number"
@@ -104,17 +112,16 @@ export const ToseeDawat = ({ view }) => {
             required
             name={`uploadedMeetings`}
             id={`uploadedMeetings`}
-            className="border-b-2 text-center border-dashed "
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
           />
           +
           <input
             type="number"
-            placeholder="ذیلی حلقہ"
             required
             readOnly={view}
             name={`manualMeetings`}
             id={`manualMeetings`}
-            className="border-b-2 text-center border-dashed "
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
             onChange={() =>
               sumUpTwoValues(
                 parseInt(document.getElementById("uploadedMeetings").value),
@@ -130,11 +137,13 @@ export const ToseeDawat = ({ view }) => {
             required
             name={`meetingsSum`}
             id={`meetingsSum`}
-            className="border-b-2 text-center border-dashed "
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
           />
         </div>
-        <div style={{ display: "flex" }}>
-          <label className="block">تقسیم لٹریچر:</label>
+        <div className="flex-col lg:flex-row">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0">
+            تقسیم لٹریچر:
+          </label>
           <input
             readOnly={true}
             type="number"
@@ -142,17 +151,16 @@ export const ToseeDawat = ({ view }) => {
             required
             name={`uploadedLitrature`}
             id={`uploadedLitrature`}
-            className="border-b-2 text-center border-dashed "
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
           />
           +
           <input
             type="number"
-            placeholder="ذیلی حلقہ"
             required
             readOnly={view}
             name={`manualLitrature`}
             id={`manualLitrature`}
-            className="border-b-2 text-center border-dashed "
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
             onChange={() =>
               sumUpTwoValues(
                 parseInt(document.getElementById("uploadedLitrature").value),
@@ -169,7 +177,7 @@ export const ToseeDawat = ({ view }) => {
             required
             name={`literatureSum`}
             id={`literatureSum`}
-            className="border-b-2 text-center border-dashed "
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
           />
         </div>
       </div>
@@ -177,8 +185,10 @@ export const ToseeDawat = ({ view }) => {
         <div className="flex py-2 me-5">
           <label className="block ml-16 font-bold">عام طلبہ:</label>
         </div>
-        <div style={{ display: "flex" }}>
-          <label className="block">تقسیم لٹریچر:</label>
+        <div className="flex-col lg:flex-row">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0">
+            تقسیم لٹریچر:
+          </label>
           <input
             readOnly={true}
             type="number"
@@ -186,17 +196,16 @@ export const ToseeDawat = ({ view }) => {
             required
             name={`uploadedCommonLiteratureDistribution`}
             id={`uploadedCommonLiteratureDistribution`}
-            className="border-b-2 text-center border-dashed "
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
           />
           +
           <input
             type="number"
-            placeholder="ذیلی حلقہ"
             required
             readOnly={view}
             name={`manualCommonLiteratureDistribution`}
             id={`manualCommonLiteratureDistribution`}
-            className="border-b-2 text-center border-dashed "
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
             onChange={() =>
               sumUpTwoValues(
                 parseInt(
@@ -219,11 +228,14 @@ export const ToseeDawat = ({ view }) => {
             required
             name={`commonLiteratureDistributionSum`}
             id={`commonLiteratureDistributionSum`}
-            className="border-b-2 text-center border-dashed "
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
           />
         </div>
-        <div style={{ display: "flex" }}>
-          <label className="block"> ملاقاتیں :</label>
+        <div className="flex-col lg:flex-row">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0">
+            {" "}
+            ملاقاتیں :
+          </label>
           <input
             readOnly={true}
             type="number"
@@ -231,17 +243,16 @@ export const ToseeDawat = ({ view }) => {
             required
             name={`uploadedCommonStudentMeetings`}
             id={`uploadedCommonStudentMeetings`}
-            className="border-b-2 text-center border-dashed "
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
           />
           +
           <input
             type="number"
-            placeholder="ذیلی حلقہ"
             required
             readOnly={view}
             name={`manualCommonStudentMeetings`}
             id={`manualCommonStudentMeetings`}
-            className="border-b-2 text-center border-dashed "
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
             onChange={() =>
               sumUpTwoValues(
                 parseInt(
@@ -261,7 +272,7 @@ export const ToseeDawat = ({ view }) => {
             required
             name={`commonStudentMeetingsSum`}
             id={`commonStudentMeetingsSum`}
-            className="border-b-2 text-center border-dashed "
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
           />
         </div>
       </div>

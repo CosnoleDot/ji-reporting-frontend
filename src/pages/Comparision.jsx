@@ -497,7 +497,7 @@ export const Comparision = () => {
           toseeDawa: {
             genralstudentstotalmeetups: "عام طلبہ سے کل ملاقاتیں",
             genralstudentstotallitraturedivided:
-              "عام طلبہ کتنا لیٹریچرتقسیم کیا",
+              "عام طلبہ کتنا لٹریچرتقسیم کیا",
             genralstudentscount: "عام طلبہ کل سے ملاقاتیں",
           },
         },

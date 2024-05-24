@@ -29,12 +29,12 @@ const rbt3 = [
     key: "rbt3SurahTafseer",
   },
   {
-    title: "اس ماہ کون سی سورۃحفظ کروائ",
+    title: "اس ماہ کون سی سورۃحفظ کروائی",
     type: "text",
     key: "rbt3SurahHifz",
   },
   // {
-  //   title: "اس ماہ نمازوں کی صورتحال کیسی رھی",
+  //   title: "اس ماہ نمازوں کی صورتحال کیسی رہی",
   //   type: "textarea",
   //   key: "rbt3NamazCondition",
   // },
@@ -70,22 +70,11 @@ export const Rawabit3 = ({
               required={true}
             />
           ))}
-          <h3 className="mb-2">
+          <h3 className="mb-2 block w-full text-start text-sm md:text-lg p-3">
             اس ماہ جمعیت کے کون کون سے پروگرامات میں شریک کروایا
           </h3>
 
-          <div className="w-full flex justify-start gap-3 flex-row-reverse items-center">
-            {!view && (
-              <button
-                className="btn btn-primary mb-3 max-w-[10rem]"
-                onClick={(e) => {
-                  e.preventDefault();
-                  document.getElementById("p-dialog3").showModal();
-                }}
-              >
-                +Add
-              </button>
-            )}
+          <div className="w-full flex-col justify-start gap-3 lg:flex-row items-center">
             <dialog id="p-dialog3" className="p-4 ">
               <label htmlFor="rbt3Programs" className="mb-3 block">
                 Program Name
@@ -129,6 +118,17 @@ export const Rawabit3 = ({
                   </p>
                 ))}
             </div>
+            {!view && (
+              <button
+                className="btn w-full md:w-auto btn-primary mb-3 max-w-full capitalize"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById("p-dialog3").showModal();
+                }}
+              >
+                +Add Program Name
+              </button>
+            )}
           </div>
 
           <div className="flex justify-start items-center gap-2">
@@ -149,7 +149,9 @@ export const Rawabit3 = ({
               ))}
           </div>
 
-          <h3 className="mb-2">اس ماہ نمازوں کی صورتحال کیسی رھی</h3>
+          <h3 className="mb-2 block w-full text-start text-sm md:text-lg p-3">
+            اس ماہ نمازوں کی صورتحال کیسی رہی
+          </h3>
           <textarea
             className="inptut border rounded-md pr-2 w-full"
             placeholder={"..."}

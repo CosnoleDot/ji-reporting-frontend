@@ -911,7 +911,7 @@ export const DeleteUser = () => {
                   <span className="px-1 py-2 block font-semibold">
                     Organization pocket:
                   </span>
-                  <div className="flex flex-wrap items-center justify-start border border-primary p-2 rounded-lg">
+                  <div className="flex-col lg:flex-row items-center justify-start border border-primary p-2 rounded-lg">
                     {me?.nazim.toLowerCase() === "country" && (
                       <div className="form-control">
                         <label className="label cursor-pointer gap-2">

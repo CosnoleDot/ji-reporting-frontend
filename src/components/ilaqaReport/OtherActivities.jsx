@@ -12,7 +12,7 @@ export const OtherActivities = ({ view }) => {
             required
             name='tarbiyatGaah'
             id='tarbiyatGaah'
-            className='border-b-2 text-center border-dashed'
+            className='border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0'
           />
         </div> */}
         <div className='flex py-2'>
@@ -24,7 +24,7 @@ export const OtherActivities = ({ view }) => {
             required
             name='dawatiWafud'
             id='dawatiWafud'
-            className='border-b-2 text-center border-dashed'
+            className='border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0'
           />
         </div>
         <div className='flex py-2'>
@@ -36,7 +36,7 @@ export const OtherActivities = ({ view }) => {
             required
             name='rawabitParties'
             id='rawabitParties'
-            className='border-b-2 text-center border-dashed'
+            className='border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0'
           />
         </div>
         <div className='flex py-2'>
@@ -48,7 +48,7 @@ export const OtherActivities = ({ view }) => {
             required
             name='shabBedari'
             id='shabBedari'
-            className='border-b-2 text-center border-dashed'
+            className='border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0'
           />
         </div>
         <div className='flex py-2'>
@@ -60,7 +60,7 @@ export const OtherActivities = ({ view }) => {
             required
             name='nizamSalah'
             id='nizamSalah'
-            className='border-b-2 text-center border-dashed'
+            className='border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0'
           />
         </div>
 

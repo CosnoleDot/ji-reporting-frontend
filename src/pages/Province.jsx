@@ -448,7 +448,6 @@ export const Province = () => {
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-
   }, [data]);
   useEffect(() => {
     const l = location.pathname?.split("/")[2];
@@ -506,11 +505,11 @@ export const Province = () => {
     }
     setLoading(false);
   };
-  Object.keys(data).forEach((i)=>{
-    if(data[i]===null){
-      data[i]=0
+  Object.keys(data).forEach((i) => {
+    if (data[i] === null) {
+      data[i] = 0;
     }
-  })
+  });
   return (
     <GeneralLayout>
       <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">
@@ -520,7 +519,10 @@ export const Province = () => {
           onSubmit={handleSubmit}
           id="province-form"
         >
-          <h2 className="text-2xl">جا ئزءکارکردگی رپورٹ (براے صوبہ)</h2>
+          <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
+            
+            جائزہ کارکردگی رپورٹ (براے صوبہ)
+          </h2>
           <div className="w-full p-4">
             <div>
               <GeneralInfo

@@ -661,7 +661,7 @@ export const Dashboard = () => {
                             ) : (
                               <tr>
                                 <td colSpan="2">
-                                  No one has filled report yet{" "}
+                                  No one has filled report yet
                                 </td>
                               </tr>
                             )
@@ -676,7 +676,7 @@ export const Dashboard = () => {
                                   key={index}
                                 >
                                   <td className="w-[50%]">
-                                    {obj.name}{" "}
+                                    {obj.name}
                                     {obj?.parentType
                                       ? "-" + obj?.parentType
                                       : ""}
@@ -741,7 +741,7 @@ export const Dashboard = () => {
                             ) : (
                               <tr>
                                 <td colSpan="2">
-                                  No one has filled personal report yet{" "}
+                                  No one has filled personal report yet
                                 </td>
                               </tr>
                             )
@@ -762,7 +762,7 @@ export const Dashboard = () => {
                           ) : (
                             <tr>
                               <td colSpan="2">
-                                All have filled thier personal Reports{" "}
+                                All have filled thier personal Reports
                               </td>
                             </tr>
                           )}

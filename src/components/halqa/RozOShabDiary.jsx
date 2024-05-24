@@ -1,42 +1,34 @@
 export const RozOShabDiary = ({ view }) => {
   return (
-    <div className='p-2 py-5 relative w-full overflow-auto'>
-      <h2 className='text-black py-3 text-lg'>روزوشب ڈائری</h2>
-      <div className='flex flex-wrap w-full items-center justify-start'>
-        {/* <div className='flex py-2'>
-          <label className='block'>کتنے ارکان فل کرتے ہیں؟</label>
+    <div className="p-2 py-5 relative w-full overflow-auto">
+      <h2 className="text-black py-3 text-lg">روزوشب ڈائری</h2>
+      <div className="flex-col lg:flex-row w-full items-center justify-start">
+        <div className="flex py-2">
+          <label className="block text-sm md:text-lg">
+            کتنے امیدواران فل کرتے ہیں؟
+          </label>
           <input
             readOnly={view}
-            type='number'
+            type="number"
             defaultValue={0}
             required
-            name='arkanFilled'
-            id='arkanFilled'
-            className='border-b-2 text-center border-dashed'
-          />
-        </div> */}
-        <div className='flex py-2'>
-          <label className='block'>کتنے امیدواران فل کرتے ہیں؟</label>
-          <input
-            readOnly={view}
-            type='number'
-            defaultValue={0}
-            required
-            name='umeedwaranFilled'
-            id='umeedwaranFilled'
-            className='border-b-2 text-center border-dashed'
+            name="umeedwaranFilled"
+            id="umeedwaranFilled"
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
           />
         </div>
-        <div className='flex py-2'>
-          <label className='block'>کتنے رفقا فل کرتے ہیں؟</label>
+        <div className="flex py-2">
+          <label className="block text-sm md:text-lg">
+            کتنے رفقا فل کرتے ہیں؟
+          </label>
           <input
             readOnly={view}
-            type='number'
+            type="number"
             defaultValue={0}
             required
-            name='rafaqaFilled'
-            id='rafaqaFilled'
-            className='border-b-2 text-center border-dashed'
+            name="rafaqaFilled"
+            id="rafaqaFilled"
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
           />
         </div>
       </div>

@@ -349,7 +349,7 @@ export const Maqam = () => {
           onSubmit={handleSubmit}
           id="maqam-form"
         >
-          <h2 className="text-2xl">جا ئزءکارکردگی رپورٹ (براے مقام)</h2>
+          <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">  جائزہ کارکردگی رپورٹ (براے مقام)</h2>
           <div className="w-full p-4">
             <div>
               <GeneralInfo
