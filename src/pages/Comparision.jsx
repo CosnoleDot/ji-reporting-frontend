@@ -4,9 +4,11 @@ import {
   DistrictContext,
   DivisionContext,
   HalqaContext,
+  IlaqaContext,
   MaqamContext,
   MeContext,
   ProvinceContext,
+  TehsilContext,
   useToastState,
 } from "../context";
 import instance from "../api/instrance";
@@ -154,11 +156,12 @@ export const Comparision = () => {
   const maqams = useContext(MaqamContext);
   const divisions = useContext(DivisionContext);
   const halqas = useContext(HalqaContext);
+  const tehsils = useContext(TehsilContext)
+  const ilaqas = useContext(IlaqaContext);
   const districts = useContext(DistrictContext);
   const provinces = useContext(ProvinceContext);
   const nazims = useContext(UIContext);
   const [searchArea, setSearchArea] = useState("");
-
   const [areas, setAreas] = useState({
     maqam: [],
     division: [],
@@ -509,16 +512,28 @@ export const Comparision = () => {
     }
   };
   const getAreaType = (area) => {
+    
     if (area?.parentType === "Maqam") {
-      const name = maqams.find((i) => i?._id === area?.parentId?._id);
-      return `${name?.name} (Maqam)`;
+      const name = maqams.find((i) => i?._id === area?.parentId);
+      return `${name?.name}(Maqam)`;
     } else if (area?.parentType === "Tehsil") {
-      const name = getDivisionByTehsil(area?.parentId, districts);
-      return `${name} (Division)`;
+      
+      const tehsil = tehsils?.find((i)=> i._id === area.parentId);
+      
+      // const name = getDivisionByTehsil(tehsil, districts);
+      return `${tehsil?.district?.division?.name}(Division)`;
+    } else if (area?.parentType === "Ilaqa") {
+      const ilaqa = ilaqas?.find((i)=> i._id === area.parentId).maqam.name
+      return `${ilaqa}(Maqam)`;
     } else if (area?.province) {
       return maqams.find((i) => i?._id === area?._id) ? "Maqam" : "Division";
     }
-    return "Province";
+    else if(area?.country) {
+          return ''
+    }
+    else{
+      return `${area?.maqam?.name}`
+    }
   };
   const handleEventClick = (e) => {
     if (e?.target?.id !== "autocomplete0") {

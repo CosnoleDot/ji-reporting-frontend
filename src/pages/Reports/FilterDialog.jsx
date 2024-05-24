@@ -13,16 +13,8 @@ import {
 } from "../../context";
 import instance from "../../api/instrance";
 
-export const FilterDialog = ({ setFilterAllData }) => {
-  const [tab, setTab] = useState(
-    ["province", "maqam"].includes(localStorage.getItem("@type"))
-      ? "maqam"
-      : ["division"].includes(localStorage.getItem("@type"))
-      ? "division"
-      : ["ilaqa"].includes(localStorage.getItem("@type"))
-      ? "ilaqa"
-      : "halqa"
-  );
+export const FilterDialog = ({ setFilterAllData ,tab  }) => {
+  
 
   const { active, setActive } = useContext(UIContext);
 
@@ -39,22 +31,34 @@ export const FilterDialog = ({ setFilterAllData }) => {
   const provinces = useContext(ProvinceContext);
   const halqas = useContext(HalqaContext);
   const ilaqas = useContext(IlaqaContext);
+  const tehsils= useContext(TehsilContext);
   const { dispatch } = useToastState();
 
   const getAreaType = (area) => {
+    
     if (area?.parentType === "Maqam") {
-      const name = maqams.find((i) => i?._id === area?.parentId?._id);
+      const name = maqams.find((i) => i?._id === area?.parentId);
       return `${name?.name}(Maqam)`;
     } else if (area?.parentType === "Tehsil") {
-      const name = getDivisionByTehsil(area?.parentId, districts);
-      return `${name}(Division)`;
-    } else if (area?.maqam) {
-      return `${area?.maqam?.name}`;
+      
+      const tehsil = tehsils?.find((i)=> i._id === area.parentId);
+      
+      // const name = getDivisionByTehsil(tehsil, districts);
+      return `${tehsil?.district?.division?.name}(Division)`;
+    } else if (area?.parentType === "Ilaqa") {
+      const ilaqa = ilaqas?.find((i)=> i._id === area.parentId).maqam.name
+      return `${ilaqa}(Maqam)`;
     } else if (area?.province) {
       return maqams.find((i) => i?._id === area?._id) ? "Maqam" : "Division";
     }
-    return "Province";
+    else if(area?.country) {
+          return ''
+    }
+    else{
+      return `${area?.maqam?.name}`
+    }
   };
+  
   const getFilterData = async () => {
     try {
       const req = await instance.get(`/reports/${userAreaType}/${selectedId}`, {
@@ -91,6 +95,9 @@ export const FilterDialog = ({ setFilterAllData }) => {
               return i?.parentType === "Maqam";
             } else if (tab === "division") {
               return i?.parentType === "Tehsil";
+            }
+            else if (tab === "ilaqa") {
+              return i?.parentType === "Ilaqa";
             }
             return true;
           })
@@ -217,7 +224,7 @@ export const FilterDialog = ({ setFilterAllData }) => {
           id="autocomplete-list"
           className="absolute z-10 hidden max-h-[100px] overflow-y-scroll bg-white border border-gray-300 w-full mt-1"
         >
-          {areas
+          {userAreaType!=="" && areas
             ?.sort((a, b) => a?.name?.localeCompare(b?.name))
             ?.filter((item) => {
               if (searchArea && searchArea !== "") {
@@ -280,6 +287,7 @@ export const FilterDialog = ({ setFilterAllData }) => {
             onClick={() => {
               document.getElementById("filter-area-dialog-close-btn").click();
               getFilterData();
+              setUserAreaType('')
             }}
           >
             ok
