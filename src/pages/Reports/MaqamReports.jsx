@@ -18,6 +18,7 @@ export const MaqamReports = () => {
   const [year, setYear] = useState("2023");
   const me = useContext(MeContext);
   const navigate = useNavigate();
+  
   const searchResults = () => {
     if (year !== "" && month !== "") {
       let filteredData = { ...mReports };
@@ -205,7 +206,7 @@ export const MaqamReports = () => {
             <div className="flex items-end w-full justify-end gap-3 ">
               <button
                 className="btn"
-                onClick={() => viewReport(p?._id, p?.maqamAreaId)}
+                onClick={() => viewReport(p?._id, p?.maqamAreaId?._id)}
               >
                 <FaEye />
               </button>
@@ -213,7 +214,7 @@ export const MaqamReports = () => {
               {me?.userAreaType === "Maqam" && (
                 <button
                   className="btn"
-                  onClick={() => editReport(p?._id, p?.maqamAreaId)}
+                  onClick={() => editReport(p?._id, p?.maqamAreaId?._id)}
                 >
                   <FaEdit />
                 </button>

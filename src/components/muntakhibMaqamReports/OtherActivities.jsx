@@ -70,7 +70,7 @@ export const OtherActivities = ({ view }) => {
           />
         </div>
 
-        <div className="flex-col lg:flex-row py-2">
+        <div className="flex gap-4 py-2">
           <label className="block text-sm md:text-lg  mb-2 lg:mb-0">
             کوئ اور سرگرمی:
           </label>
