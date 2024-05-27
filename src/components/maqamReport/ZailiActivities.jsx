@@ -25,7 +25,7 @@ export const ZailiActivities = ({ view }) => {
                 required
                 name={`ijtRafaqa-decided`}
                 id={`ijtRafaqa-decided`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
@@ -36,7 +36,7 @@ export const ZailiActivities = ({ view }) => {
                 required
                 name={`ijtRafaqa-done`}
                 id={`ijtRafaqa-done`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
@@ -46,7 +46,7 @@ export const ZailiActivities = ({ view }) => {
                 required
                 name={`ijtRafaqa-averageAttendance`}
                 id={`ijtRafaqa-averageAttendance`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
           </tr>
@@ -60,7 +60,7 @@ export const ZailiActivities = ({ view }) => {
                 required
                 name={`studyCircleMentioned-decided`}
                 id={`studyCircleMentioned-decided`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
@@ -71,7 +71,7 @@ export const ZailiActivities = ({ view }) => {
                 required
                 name={`studyCircleMentioned-done`}
                 id={`studyCircleMentioned-done`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
@@ -81,7 +81,7 @@ export const ZailiActivities = ({ view }) => {
                 required
                 name={`studyCircleMentioned-averageAttendance`}
                 id={`studyCircleMentioned-averageAttendance`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
           </tr>
@@ -95,10 +95,10 @@ export const ZailiActivities = ({ view }) => {
                 required
                 name={`ijtKarkunan-decided`}
                 id={`ijtKarkunan-decided`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
-            <div style={{ display: "flex", width: "30%" }}>
+            <div className=" flex justify-start items-center overflow-hidden overflow-x-scroll w-full">
               <input
                 readOnly={true}
                 type="number"
@@ -106,7 +106,7 @@ export const ZailiActivities = ({ view }) => {
                 required
                 name={`ijtKarkunan-done`}
                 id={`ijtKarkunan-done`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
                 onChange={() =>
                   sumUpTwoValues(
                     parseInt(document.getElementById("ijtKarkunan-done").value),
@@ -124,7 +124,7 @@ export const ZailiActivities = ({ view }) => {
                 placeholder="کل زیلی حلقہ جات"
                 name={`ijtKarkunan-manual`}
                 id={`ijtKarkunan-manual`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
                 onChange={() =>
                   sumUpTwoValues(
                     parseInt(document.getElementById("ijtKarkunan-done").value),
@@ -145,7 +145,7 @@ export const ZailiActivities = ({ view }) => {
                 required
                 name={`ijtKarkunan-sum`}
                 id={`ijtKarkunan-sum`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </div>
             <Box>
@@ -156,7 +156,7 @@ export const ZailiActivities = ({ view }) => {
                 required
                 name={`ijtKarkunan-averageAttendance`}
                 id={`ijtKarkunan-averageAttendance`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
           </tr>
@@ -170,11 +170,11 @@ export const ZailiActivities = ({ view }) => {
                 required
                 name={`darseQuran-decided`}
                 id={`darseQuran-decided`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
-              <div className="flex">
+              <div className=" flex justify-start items-center overflow-hidden overflow-x-scroll w-full">
                 <input
                   readOnly={true}
                   type="number"
@@ -182,7 +182,7 @@ export const ZailiActivities = ({ view }) => {
                   required
                   name={`darseQuran-done`}
                   id={`darseQuran-done`}
-                  className="p-1 text-center "
+                  className="p-1 text-center max-w-full"
                   onChange={() =>
                     sumUpTwoValues(
                       parseInt(
@@ -202,7 +202,7 @@ export const ZailiActivities = ({ view }) => {
                   name={`darseQuran-manual`}
                   id={`darseQuran-manual`}
                   placeholder="کل زیلی حلقہ جات"
-                  className="p-1 text-center "
+                  className="p-1 text-center max-w-full"
                   onChange={() =>
                     sumUpTwoValues(
                       parseInt(
@@ -225,7 +225,7 @@ export const ZailiActivities = ({ view }) => {
                   required
                   name={`darseQuran-sum`}
                   id={`darseQuran-sum`}
-                  className="p-1 text-center "
+                  className="p-1 text-center max-w-full"
                 />
               </div>
             </Box>
@@ -237,7 +237,7 @@ export const ZailiActivities = ({ view }) => {
                 required
                 name={`darseQuran-averageAttendance`}
                 id={`darseQuran-averageAttendance`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
           </tr>
@@ -252,7 +252,7 @@ export const ZailiActivities = ({ view }) => {
                 readOnly
                 name={`shaheenMeeting-decided`}
                 id={`shaheenMeeting-decided`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
@@ -263,7 +263,7 @@ export const ZailiActivities = ({ view }) => {
                 required
                 name={`shaheenMeeting-done`}
                 id={`shaheenMeeting-done`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
@@ -274,7 +274,7 @@ export const ZailiActivities = ({ view }) => {
                 required
                 name={`shaheenMeeting-averageAttendance`}
                 id={`shaheenMeeting-averageAttendance`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
           </tr>
@@ -289,7 +289,7 @@ export const ZailiActivities = ({ view }) => {
                 readOnly
                 name={`paighamEvent-decided`}
                 id={`paighamEvent-decided`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
@@ -300,7 +300,7 @@ export const ZailiActivities = ({ view }) => {
                 required
                 name={`paighamEvent-done`}
                 id={`paighamEvent-done`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
@@ -311,7 +311,7 @@ export const ZailiActivities = ({ view }) => {
                 required
                 name={`paighamEvent-averageAttendance`}
                 id={`paighamEvent-averageAttendance`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
           </tr>

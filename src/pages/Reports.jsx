@@ -10,6 +10,7 @@ import {
   HalqaReportContext,
   IlaqaContext,
   IlaqaReportContext,
+  IsMuntakhib,
   MaqamContext,
   MaqamReportContext,
   MarkazReportContext,
@@ -96,7 +97,7 @@ export const getDivisionByTehsil = (tehsil, districts) => {
   return districts.find((i) => i?._id === districtId)?.division?.name;
 };
 
-export const Reports = ({ maqam }) => {
+export const Reports = () => {
   const [reports, setReports] = useState([]);
   const [allReports, setAllReports] = useState([]);
   const navigate = useNavigate();
@@ -118,10 +119,8 @@ export const Reports = ({ maqam }) => {
       : "halqa"
   );
   const [id, setId] = useState(null);
-  const { active, setActive } = useContext(UIContext);
+  const { active, setActive, filterMuntakhib } = useContext(UIContext);
   const [filterAllData, setFilterAllData] = useState({});
-
-  // const [showNotification, setShowNotification] = useState(false);
   const [notifyTo, setNotifyTo] = useState("halqa");
   const maqamReports = useContext(MaqamReportContext);
   const markazReports = useContext(MarkazReportContext);
@@ -138,6 +137,7 @@ export const Reports = ({ maqam }) => {
   const tehsils = useContext(TehsilContext);
   const halqas = useContext(HalqaContext);
   const ilaqas = useContext(IlaqaContext);
+  const muntakhib = useContext(IsMuntakhib);
   const [userAreaType, setUserAreaType] = useState("halqa");
   const [selectedId, setSelectedId] = useState("");
   const [selectedMonth, setSelectedMonth] = useState("");
@@ -168,7 +168,12 @@ export const Reports = ({ maqam }) => {
     showSearch(!search);
   };
   const handleReport = () => {
-    navigate(`/reports/create`);
+    if (me?.userAreaType === "Maqam") {
+      filterMuntakhib(me?.userAreaId?._id);
+      navigate(`/reports/create`);
+    } else {
+      navigate(`/reports/create`);
+    }
   };
 
   const getAreas = async () => {

@@ -4,8 +4,11 @@ import { FaEdit, FaEye, FaPrint } from "react-icons/fa";
 import moment from "moment";
 import { NoReports, months } from "../Reports";
 import { FilterDialog } from "./FilterDialog";
+import { useNavigate } from "react-router-dom";
+import { UIContext } from "../../context/ui";
 
 export const MaqamReports = () => {
+  const { filterMuntakhib } = useContext(UIContext);
   const mReports = useContext(MaqamReportContext);
   const [filterAllData, setFilterAllData] = useState(mReports);
   const { dispatch } = useToastState();
@@ -14,6 +17,7 @@ export const MaqamReports = () => {
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("2023");
   const me = useContext(MeContext);
+  const navigate = useNavigate();
   const searchResults = () => {
     if (year !== "" && month !== "") {
       let filteredData = { ...mReports };
@@ -55,6 +59,14 @@ export const MaqamReports = () => {
     setYear("2023");
     setFilterAllData(mReports);
     document.getElementById("autocomplete").value = "";
+  };
+  const viewReport = async (reportId, areaId) => {
+    filterMuntakhib(areaId);
+    navigate(`view/${reportId}`);
+  };
+  const editReport = (reportId, areaId) => {
+    filterMuntakhib(areaId);
+    navigate(`edit/${reportId}`);
   };
   return (
     <>
@@ -188,13 +200,21 @@ export const MaqamReports = () => {
               <span>Last Modified: {moment(p?.updatedAt).fromNow()}</span>
             </div>
             <div className="flex items-end w-full justify-end gap-3 ">
-              <button className="btn">
+              <button
+                className="btn"
+                onClick={() => viewReport(p?._id, p?.maqamAreaId)}
+              >
                 <FaEye />
               </button>
 
-              <button className="btn">
-                <FaEdit />
-              </button>
+              {me?.userAreaType === "Maqam" && (
+                <button
+                  className="btn"
+                  onClick={() => editReport(p?._id, p?.maqamAreaId)}
+                >
+                  <FaEdit />
+                </button>
+              )}
 
               <button className="btn">
                 <FaPrint />

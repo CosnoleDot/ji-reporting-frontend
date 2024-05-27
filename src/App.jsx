@@ -30,6 +30,7 @@ import {
   HalqaReportContext,
   IlaqaContext,
   IlaqaReportContext,
+  IsMuntakhib,
   MaqamContext,
   MaqamReportContext,
   MarkazReportContext,
@@ -80,7 +81,7 @@ function App() {
   const navigate = useNavigate();
   const [notifications, setNotifications] = useState([]);
   const [reports, setReports] = useState([]);
-  const [muntakhibMaqam, setMuntakhibMaqam] = useState(true);
+  const [muntakhibMaqam, setMuntakhibMaqam] = useState(false);
   const [areaDetails, setAreaDetails] = useState({});
   const location = useLocation();
   let dis;
@@ -228,7 +229,7 @@ function App() {
               Authorization: `Bearer ${localStorage.getItem("@token")}`,
             },
           });
-          if (req) {
+          if (req?.data?.data.length > 1) {
             setIlaqas(req?.data?.data);
           } else {
             dispatch({
@@ -442,7 +443,16 @@ function App() {
       });
     }
   };
-
+  const filterMuntakhib = (id) => {
+    let muntakhib = ilaqas.find(
+      (ilaqa) => ilaqa?.maqam?._id.toString() === id.toString()
+    );
+    if (muntakhib) {
+      setMuntakhibMaqam(true);
+    } else {
+      setMuntakhibMaqam(false);
+    }
+  };
   let provinceR, maqamR, divisionR, halqaR, ilaqaR, markazR;
   const getMarkazReport = async () => {
     if (me?.userAreaType === "Country")
@@ -521,7 +531,6 @@ function App() {
         });
         if (req) {
           ilaqaR = req.data.data;
-          console.log(ilaqaR);
           setIlaqaReports(req.data.data);
         }
       } catch (err) {
@@ -871,242 +880,247 @@ function App() {
                             <IlaqaReportContext.Provider value={ilaqaReports}>
                               <HalqaReportContext.Provider value={halqaReports}>
                                 <ViewDetails.Provider value={areaDetails}>
-                                  <UIContext.Provider
-                                    value={{
-                                      userRequests,
-                                      nazim,
-                                      loading,
-                                      notifications,
-                                      reports,
-                                      active,
-                                      isCompleted,
-                                      setLoading,
-                                      getMe,
-                                      getProvinces,
-                                      getMaqams,
-                                      getDivisions,
-                                      getDistricts,
-                                      getTehsils,
-                                      getHalqas,
-                                      getIlaqas,
-                                      getMarkazReport,
-                                      getProvinceReports,
-                                      getMaqamReports,
-                                      getIlaqaReports,
-                                      getDivisionReports,
-                                      getHalqaReports,
-                                      getAllRequests,
-                                      setReports,
-                                      getAllNotifications,
-                                      getNazim,
-                                      setActive,
-                                      setMe,
-                                      getAreaDetails,
-                                    }}
-                                  >
-                                    <div className="flex flex-col">
-                                      <Routes>
-                                        <Route
-                                          path="/signup"
-                                          element={<Signup />}
-                                        />
-                                        <Route
-                                          path="/login"
-                                          element={
-                                            <Login
-                                              setAuthenticated={
-                                                setAuthenticaated
-                                              }
-                                            />
-                                          }
-                                        />
-                                        <Route
-                                          path="/"
-                                          element={<Dashboard />}
-                                        />
-                                        <Route
-                                          path="/reset-password"
-                                          element={<Forget />}
-                                        />
-                                        <Route
-                                          path="/reset"
-                                          element={<ResetPassword />}
-                                        />
-                                        <Route
-                                          path="change-password"
-                                          element={<ChangePassword />}
-                                        />
-                                        <Route
-                                          path="/comparison"
-                                          element={<Comparision />}
-                                        />
-                                        <Route
-                                          path="/chart"
-                                          element={<ReportChart />}
-                                        />
-                                        <Route
-                                          path="/reports"
-                                          element={
-                                            <Reports maqam={muntakhibMaqam} />
-                                          }
-                                        />
-                                        <Route
-                                          path="/personalReport"
-                                          element={<PersonalReportsDashboard />}
-                                        />
-                                        <Route
-                                          path="/reports/create"
-                                          element={
-                                            localStorage.getItem("@type") ===
-                                            "maqam" ? (
-                                              muntakhibMaqam ? (
-                                                <MuntakhibMaqamReports />
+                                  <IsMuntakhib.Provider value={muntakhibMaqam}>
+                                    <UIContext.Provider
+                                      value={{
+                                        userRequests,
+                                        nazim,
+                                        loading,
+                                        notifications,
+                                        reports,
+                                        active,
+                                        isCompleted,
+                                        setLoading,
+                                        getMe,
+                                        getProvinces,
+                                        getMaqams,
+                                        getDivisions,
+                                        getDistricts,
+                                        getTehsils,
+                                        getHalqas,
+                                        getIlaqas,
+                                        getMarkazReport,
+                                        getProvinceReports,
+                                        getMaqamReports,
+                                        getIlaqaReports,
+                                        getDivisionReports,
+                                        getHalqaReports,
+                                        getAllRequests,
+                                        setReports,
+                                        getAllNotifications,
+                                        getNazim,
+                                        setActive,
+                                        setMe,
+                                        getAreaDetails,
+                                        filterMuntakhib,
+                                      }}
+                                    >
+                                      <div className="flex flex-col">
+                                        <Routes>
+                                          <Route
+                                            path="/signup"
+                                            element={<Signup />}
+                                          />
+                                          <Route
+                                            path="/login"
+                                            element={
+                                              <Login
+                                                setAuthenticated={
+                                                  setAuthenticaated
+                                                }
+                                              />
+                                            }
+                                          />
+                                          <Route
+                                            path="/"
+                                            element={<Dashboard />}
+                                          />
+                                          <Route
+                                            path="/reset-password"
+                                            element={<Forget />}
+                                          />
+                                          <Route
+                                            path="/reset"
+                                            element={<ResetPassword />}
+                                          />
+                                          <Route
+                                            path="change-password"
+                                            element={<ChangePassword />}
+                                          />
+                                          <Route
+                                            path="/comparison"
+                                            element={<Comparision />}
+                                          />
+                                          <Route
+                                            path="/chart"
+                                            element={<ReportChart />}
+                                          />
+                                          <Route
+                                            path="/reports"
+                                            element={
+                                              <Reports maqam={muntakhibMaqam} />
+                                            }
+                                          />
+                                          <Route
+                                            path="/personalReport"
+                                            element={
+                                              <PersonalReportsDashboard />
+                                            }
+                                          />
+                                          <Route
+                                            path="/reports/create"
+                                            element={
+                                              localStorage.getItem("@type") ===
+                                              "maqam" ? (
+                                                muntakhibMaqam ? (
+                                                  <MuntakhibMaqamReports />
+                                                ) : (
+                                                  <Maqam />
+                                                )
+                                              ) : localStorage.getItem(
+                                                  "@type"
+                                                ) === "division" ? (
+                                                <Division />
+                                              ) : localStorage.getItem(
+                                                  "@type"
+                                                ) === "province" ? (
+                                                <Province />
+                                              ) : localStorage.getItem(
+                                                  "@type"
+                                                ) === "ilaqa" ? (
+                                                <Ilaqa />
+                                              ) : localStorage.getItem(
+                                                  "@type"
+                                                ) === "country" ? (
+                                                <MarkazReport />
                                               ) : (
-                                                <Maqam />
+                                                <Halqa />
                                               )
-                                            ) : localStorage.getItem(
-                                                "@type"
-                                              ) === "division" ? (
-                                              <Division />
-                                            ) : localStorage.getItem(
-                                                "@type"
-                                              ) === "province" ? (
-                                              <Province />
-                                            ) : localStorage.getItem(
-                                                "@type"
-                                              ) === "ilaqa" ? (
-                                              <Ilaqa />
-                                            ) : localStorage.getItem(
-                                                "@type"
-                                              ) === "country" ? (
-                                              <MarkazReport />
-                                            ) : (
-                                              <Halqa />
-                                            )
-                                          }
-                                        />
-                                        <Route
-                                          path="/reports/edit/:id"
-                                          element={
-                                            localStorage.getItem("@type") ===
-                                            "maqam" ? (
-                                              muntakhibMaqam ? (
-                                                <MuntakhibMaqamReports />
+                                            }
+                                          />
+                                          <Route
+                                            path="/reports/edit/:id"
+                                            element={
+                                              localStorage.getItem("@type") ===
+                                              "maqam" ? (
+                                                muntakhibMaqam ? (
+                                                  <MuntakhibMaqamReports />
+                                                ) : (
+                                                  <Maqam />
+                                                )
+                                              ) : localStorage.getItem(
+                                                  "@type"
+                                                ) === "ilaqa" ? (
+                                                <Ilaqa />
+                                              ) : localStorage.getItem(
+                                                  "@type"
+                                                ) === "division" ? (
+                                                <Division />
+                                              ) : localStorage.getItem(
+                                                  "@type"
+                                                ) === "province" ? (
+                                                <Province />
+                                              ) : localStorage.getItem(
+                                                  "@type"
+                                                ) === "country" ? (
+                                                <MarkazReport />
                                               ) : (
-                                                <Maqam />
+                                                <Halqa />
                                               )
-                                            ) : localStorage.getItem(
-                                                "@type"
-                                              ) === "ilaqa" ? (
-                                              <Ilaqa />
-                                            ) : localStorage.getItem(
-                                                "@type"
-                                              ) === "division" ? (
-                                              <Division />
-                                            ) : localStorage.getItem(
-                                                "@type"
-                                              ) === "province" ? (
-                                              <Province />
-                                            ) : localStorage.getItem(
-                                                "@type"
-                                              ) === "country" ? (
-                                              <MarkazReport />
-                                            ) : (
-                                              <Halqa />
-                                            )
-                                          }
-                                        />
+                                            }
+                                          />
 
-                                        <Route
-                                          path={"/reports/view/:id"}
-                                          element={
-                                            active === "maqam" ? (
-                                              muntakhibMaqam ? (
-                                                <MuntakhibMaqamReports />
+                                          <Route
+                                            path={"/reports/view/:id"}
+                                            element={
+                                              active === "maqam" ? (
+                                                muntakhibMaqam ? (
+                                                  <MuntakhibMaqamReports />
+                                                ) : (
+                                                  <Maqam />
+                                                )
+                                              ) : active === "ilaqa" ? (
+                                                <Ilaqa />
+                                              ) : active === "division" ? (
+                                                <Division />
+                                              ) : active === "province" ? (
+                                                <Province />
+                                              ) : active === "country" ? (
+                                                <MarkazReport />
                                               ) : (
-                                                <Maqam />
+                                                <Halqa />
                                               )
-                                            ) : active === "ilaqa" ? (
-                                              <Ilaqa />
-                                            ) : active === "division" ? (
-                                              <Division />
-                                            ) : active === "province" ? (
-                                              <Province />
-                                            ) : active === "country" ? (
-                                              <MarkazReport />
-                                            ) : (
-                                              <Halqa />
-                                            )
-                                          }
-                                        />
-                                        <Route
-                                          path="/profile"
-                                          element={<EditProfile />}
-                                        />
-                                        <Route
-                                          path="/locations"
-                                          element={<Locations />}
-                                        />
-                                        <Route
-                                          path="/user-switch"
-                                          element={<DeleteUser />}
-                                        />
+                                            }
+                                          />
+                                          <Route
+                                            path="/profile"
+                                            element={<EditProfile />}
+                                          />
+                                          <Route
+                                            path="/locations"
+                                            element={<Locations />}
+                                          />
+                                          <Route
+                                            path="/user-switch"
+                                            element={<DeleteUser />}
+                                          />
 
-                                        <Route
-                                          path="/personalReport/create"
-                                          element={<ReportUmeedwar />}
+                                          <Route
+                                            path="/personalReport/create"
+                                            element={<ReportUmeedwar />}
+                                          />
+                                          <Route
+                                            path="/personalReport/view/:id"
+                                            element={<ReportUmeedwar />}
+                                          />
+                                          <Route
+                                            path="/personalReport/edit/:id"
+                                            element={<ReportUmeedwar />}
+                                          />
+                                          <Route
+                                            path="/personalReport/print/:id"
+                                            element={<ArkanReport />}
+                                          />
+                                          <Route
+                                            path="/province-report/print/:id"
+                                            element={<ProvinceReport />}
+                                          />
+                                          <Route
+                                            path="/division-report/print/:id"
+                                            element={<DivisionReport />}
+                                          />
+                                          <Route
+                                            path="/ilaqa-report/print/:id"
+                                            element={<IlaqaReport />}
+                                          />
+                                          <Route
+                                            path="/maqam-report/print/:id"
+                                            element={
+                                              muntakhibMaqam ? (
+                                                <MuntakhibMaqamReport />
+                                              ) : (
+                                                <MaqamReport />
+                                              )
+                                            }
+                                          />
+                                          <Route
+                                            path="/halqa-report/print/:id"
+                                            element={<HalqaReport />}
+                                          />
+                                          <Route
+                                            path="/country-report/print/:id"
+                                            element={<MarkazReportPrint />}
+                                          />
+                                        </Routes>
+                                        <LoadingScreen
+                                          count={count}
+                                          value={value}
                                         />
-                                        <Route
-                                          path="/personalReport/view/:id"
-                                          element={<ReportUmeedwar />}
-                                        />
-                                        <Route
-                                          path="/personalReport/edit/:id"
-                                          element={<ReportUmeedwar />}
-                                        />
-                                        <Route
-                                          path="/personalReport/print/:id"
-                                          element={<ArkanReport />}
-                                        />
-                                        <Route
-                                          path="/province-report/print/:id"
-                                          element={<ProvinceReport />}
-                                        />
-                                        <Route
-                                          path="/division-report/print/:id"
-                                          element={<DivisionReport />}
-                                        />
-                                        <Route
-                                          path="/ilaqa-report/print/:id"
-                                          element={<IlaqaReport />}
-                                        />
-                                        <Route
-                                          path="/maqam-report/print/:id"
-                                          element={
-                                            muntakhibMaqam ? (
-                                              <MuntakhibMaqamReport />
-                                            ) : (
-                                              <MaqamReport />
-                                            )
-                                          }
-                                        />
-                                        <Route
-                                          path="/halqa-report/print/:id"
-                                          element={<HalqaReport />}
-                                        />
-                                        <Route
-                                          path="/country-report/print/:id"
-                                          element={<MarkazReportPrint />}
-                                        />
-                                      </Routes>
-                                      <LoadingScreen
-                                        count={count}
-                                        value={value}
-                                      />
-                                      {loading && <Loader />}
-                                      <Toast />
-                                    </div>
-                                  </UIContext.Provider>
+                                        {loading && <Loader />}
+                                        <Toast />
+                                      </div>
+                                    </UIContext.Provider>
+                                  </IsMuntakhib.Provider>
                                 </ViewDetails.Provider>
                               </HalqaReportContext.Provider>
                             </IlaqaReportContext.Provider>
