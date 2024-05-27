@@ -3487,6 +3487,10 @@ html {
   margin-bottom: -0.375rem;
 }
 
+.mb-0 {
+  margin-bottom: 0px;
+}
+
 .mb-1 {
   margin-bottom: 0.25rem;
 }
@@ -3576,10 +3580,6 @@ html {
 
 .mt-8 {
   margin-top: 2rem;
-}
-
-.mb-0 {
-  margin-bottom: 0px;
 }
 
 .block {
@@ -3794,6 +3794,18 @@ html {
   width: 100%;
 }
 
+.w-\[15rem\] {
+  width: 15rem;
+}
+
+.w-\[10rem\] {
+  width: 10rem;
+}
+
+.w-\[20rem\] {
+  width: 20rem;
+}
+
 .min-w-\[10rem\] {
   min-width: 10rem;
 }
@@ -3810,6 +3822,10 @@ html {
   min-width: 100%;
 }
 
+.max-w-\[5rem\] {
+  max-width: 5rem;
+}
+
 .max-w-\[6rem\] {
   max-width: 6rem;
 }
@@ -3820,6 +3836,10 @@ html {
 
 .max-w-xs {
   max-width: 20rem;
+}
+
+.max-w-\[10rem\] {
+  max-width: 10rem;
 }
 
 .flex-1 {
@@ -4891,6 +4911,18 @@ html {
 
   .lg\:max-w-lg {
     max-width: 32rem;
+  }
+
+  .lg\:max-w-full {
+    max-width: 100%;
+  }
+
+  .lg\:max-w-\[10rem\] {
+    max-width: 10rem;
+  }
+
+  .lg\:max-w-\[15rem\] {
+    max-width: 15rem;
   }
 
   .lg\:grid-cols-2 {

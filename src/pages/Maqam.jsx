@@ -38,6 +38,7 @@ export const Maqam = () => {
   const maqam = useContext(MaqamReportContext);
   const division = useContext(DivisionReportContext);
   const [month, setMonth] = useState("");
+  const [createData, setCreateData] = useState();
   const params = useParams();
   const [id, setId] = useState(null);
   const { dispatch } = useToastState();
@@ -51,7 +52,7 @@ export const Maqam = () => {
     const halq = {};
 
     document.getElementById("maqam-form").reset();
-    if (halqa.filter((i) => i?.month.includes(month)).length < 1) {
+    if (createData?.filter((i) => i?.month.includes(month)).length < 1) {
       [
         "rafaqa-start",
         "karkunan-start",
@@ -90,9 +91,9 @@ export const Maqam = () => {
       document.getElementById("name").value = me?.userAreaId?.name;
     }
 
-    halqa
-      .filter((i) => i?.month.includes(month))
-      .forEach((i) => {
+    createData
+      ?.filter((i) => i?.month?.includes(month))
+      ?.forEach((i) => {
         const sim = reverseDataFormat(i);
         Object.keys(sim)?.forEach((j) => {
           if (halq?.[j]) {
@@ -208,6 +209,42 @@ export const Maqam = () => {
       calcultate(i);
     });
   };
+
+  // GET REPORTS OF MAQAM HALQA TO CREATE MAQAM REPORT THE COMING REPORTS WILL BE POPULATED
+  const getHalqaReports = async () => {
+    try {
+      const req = await instance.get(`/reports/maqam`, {
+        params: { areaId: me?.userAreaId?._id },
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          "Content-Type": "application/json",
+        },
+      });
+      const repo = req?.data?.data;
+      setCreateData(repo);
+      dispatch({ type: "SUCCESS", payload: req.data?.message });
+    } catch (err) {
+      dispatch({ type: "ERROR", payload: err.response.data.message });
+    }
+    setLoading(false);
+  };
+  const getMaqamReport = async () => {
+    try {
+      const req = await instance.get(`/reports/maqam/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          "Content-Type": "application/json",
+        },
+      });
+      const repo = req?.data?.data;
+      setData(reverseDataFormat(repo));
+      dispatch({ type: "SUCCESS", payload: req.data?.message });
+    } catch (err) {
+      dispatch({ type: "ERROR", payload: err.response.data.message });
+    }
+    setLoading(false);
+  };
+
   // To set values to zero when in create mode
   useEffect(() => {
     const value1 = document.getElementById("litrature");
@@ -228,9 +265,9 @@ export const Maqam = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
   useEffect(() => {
-    if (id) getData("maqam", id, setData, { halqa, maqam, division });
-    else {
-      setLoading(false);
+    const l = location.pathname?.split("/")[2];
+    if (l === "create") {
+      getHalqaReports();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
@@ -271,9 +308,13 @@ export const Maqam = () => {
     });
   }, [data]);
   useEffect(() => {
-    if (!id) autoFill();
+    if (!id) {
+      autoFill();
+    } else {
+      getMaqamReport();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, halqa, month]);
+  }, [month, createData, id]);
   // EDIT CODE END
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -338,7 +379,7 @@ export const Maqam = () => {
     document.getElementById("paighamEvent-decided").value = busmTotalUnits;
     document.getElementById("shaheenMeeting-decided").value = busmTotalUnits;
   }, [totalHalqay, subTotalHalqay, busmTotalUnits]);
-  data.litrature= data['literatureDistribution']
+  data.litrature = data["literatureDistribution"];
 
   return (
     <GeneralLayout>
@@ -349,7 +390,10 @@ export const Maqam = () => {
           onSubmit={handleSubmit}
           id="maqam-form"
         >
-          <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">  جائزہ کارکردگی رپورٹ (براے مقام)</h2>
+          <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
+            {" "}
+            جائزہ کارکردگی رپورٹ (براے مقام)
+          </h2>
           <div className="w-full p-4">
             <div>
               <GeneralInfo

@@ -18,16 +18,13 @@ import {
   MeContext,
   useToastState,
 } from "../context";
-import { convertDataFormat, toJson } from "../utils";
+import { convertDataFormat, reverseDataFormat, toJson } from "../utils";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { getData } from "./Maqam";
 import { UIContext } from "../context/ui";
 
 export const Halqa = () => {
   const { dispatch } = useToastState();
-  const halqa = useContext(HalqaReportContext);
-  const maqam = useContext(MaqamReportContext);
-  const division = useContext(DivisionReportContext);
   const me = useContext(MeContext);
   const [id, setId] = useState(null);
   const [view, setView] = useState(false);
@@ -80,11 +77,6 @@ export const Halqa = () => {
     }
     setLoading(false);
   };
-  useEffect(() => {
-    if (id && Object.keys(data).length <= 2) {
-      getData("halqa", id, setData, { halqa, maqam, division });
-    }
-  }, [id, data]);
 
   const autoFill = () => {
     Object.keys(data).forEach((i) => {
@@ -118,21 +110,24 @@ export const Halqa = () => {
         },
       });
       const repo = req?.data?.data;
-      setData(repo);
+      setData(reverseDataFormat(repo));
       dispatch({ type: "SUCCESS", payload: req.data?.message });
     } catch (err) {
-      dispatch({ type: "ERROR", payload: err.response.data.message });
+      dispatch({ type: "ERROR", payload: err.response?.data?.message });
     }
     setLoading(false);
   };
   useEffect(() => {
-    const l = location.pathname?.split("/")[2];
     setId(params?.id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params]);
+  useEffect(() => {
+    const l = location.pathname?.split("/")[2];
     if ((l === "view" && id) || l === "edit") {
       getHalqaReport();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params]);
+  }, [id]);
   return (
     <GeneralLayout>
       <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">
