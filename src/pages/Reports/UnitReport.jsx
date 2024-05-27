@@ -201,9 +201,11 @@ export const UnitReport = () => {
                 <FaEye />
               </button>
 
-              <button className="btn" onClick={() => editReport(p?._id)}>
-                <FaEdit />
-              </button>
+              {me?.userAreaType === "Halqa" && (
+                <button className="btn" onClick={() => editReport(p?._id)}>
+                  <FaEdit />
+                </button>
+              )}
 
               <button className="btn">
                 <FaPrint />

@@ -65,7 +65,6 @@ export const IlaqaReports = () => {
   const editReport = (id) => {
     navigate(`edit/${id}`);
   };
-  console.log(me.userAreaType);
   return (
     <>
       <div className="join xs:w-full mb-4">
@@ -202,6 +201,9 @@ export const IlaqaReports = () => {
                 <FaEye />
               </button>
 
+              <button className="btn" onClick={() => editReport(p?._id)}>
+                <FaEdit />
+              </button>
               {me?.userAreaType == "Ilaqa"
                 && 
                   <button className="btn" onClick={() => editReport(p?._id)}>
@@ -209,10 +211,7 @@ export const IlaqaReports = () => {
                   </button>
               }
 
-              <button
-                className="btn"
-                onClick={() => navigate(`/ilaqa-report/print/${p?._id}`)}
-              >
+              <button className="btn">
                 <FaPrint />
               </button>
             </div>
