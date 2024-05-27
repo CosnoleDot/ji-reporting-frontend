@@ -444,15 +444,18 @@ function App() {
     }
   };
   const filterMuntakhib = (id) => {
-    let muntakhib = ilaqas.find(
-      (ilaqa) => ilaqa?.maqam?._id.toString() === id.toString()
-    );
-    if (muntakhib) {
+    console.log(id);
+    const mT = ilaqas.filter((ilaqa) => ilaqa?.maqam?._id == id);
+    console.log(mT);
+    if (mT?.length > 0) {
       setMuntakhibMaqam(true);
     } else {
       setMuntakhibMaqam(false);
     }
   };
+  useEffect(() => {
+    console.log(muntakhibMaqam);
+  }, [muntakhibMaqam]);
   let provinceR, maqamR, divisionR, halqaR, ilaqaR, markazR;
   const getMarkazReport = async () => {
     if (me?.userAreaType === "Country")
@@ -508,8 +511,10 @@ function App() {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
+        console.log(req);
         if (req) {
           maqamR = req.data.data;
+          console.log(maqamR);
           setMaqamReports(req.data.data);
         }
       } catch (err) {

@@ -201,11 +201,9 @@ export const IlaqaReports = () => {
                 <FaEye />
               </button>
 
-              <button className="btn" onClick={() => editReport(p?._id)}>
-                <FaEdit />
-              </button>
-              {me?.userAreaType == "Ilaqa"
-                && 
+            
+              {localStorage.getItem("@type") == "ilaqa"
+                &&
                   <button className="btn" onClick={() => editReport(p?._id)}>
                     <FaEdit />
                   </button>

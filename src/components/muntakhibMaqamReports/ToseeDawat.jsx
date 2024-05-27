@@ -46,7 +46,7 @@ export const ToseeDawat = ({ view }) => {
             className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
           />
         </div>
-        <div className="flex-col lg:flex-row">
+        <div className="flex">
           <label className="block text-sm md:text-lg mb-2 lg:mb-0">
             موجود:
           </label>
@@ -79,7 +79,7 @@ export const ToseeDawat = ({ view }) => {
           <input
             readOnly={true}
             type="number"
-            defaultValue={document.getElementById("uploadedCurrent")?.value}
+            defaultValue={parseInt(document.getElementById("uploadedCurrent")?.value)+0}
             required
             name={`currentSum`}
             id={`currentSum`}
@@ -101,8 +101,8 @@ export const ToseeDawat = ({ view }) => {
           />
         </div>
 
-        <div className="flex-col lg:flex-row">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0">
+        <div className="flex gap-4 items-center ">
+          <label className="block text-sm whitespace-nowrap break-words md:text-lg mb-2 lg:mb-0 ">
             ملاقاتوں کی تعداد:
           </label>
           <input
@@ -112,7 +112,7 @@ export const ToseeDawat = ({ view }) => {
             required
             name={`uploadedMeetings`}
             id={`uploadedMeetings`}
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+            className="border-b-2 text-center border-dashed  w-auto mb-2 lg:mb-0"
           />
           +
           <input
@@ -140,7 +140,7 @@ export const ToseeDawat = ({ view }) => {
             className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
           />
         </div>
-        <div className="flex-col lg:flex-row">
+        <div className="flex gap-4 items-center">
           <label className="block text-sm md:text-lg mb-2 lg:mb-0">
             تقسیم لٹریچر:
           </label>
@@ -185,7 +185,7 @@ export const ToseeDawat = ({ view }) => {
         <div className="flex py-2 me-5">
           <label className="block ml-16 font-bold">عام طلبہ:</label>
         </div>
-        <div className="flex-col lg:flex-row">
+        <div className="flex gap-4 items-center">
           <label className="block text-sm md:text-lg mb-2 lg:mb-0">
             تقسیم لٹریچر:
           </label>
@@ -231,7 +231,7 @@ export const ToseeDawat = ({ view }) => {
             className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
           />
         </div>
-        <div className="flex-col lg:flex-row">
+        <div className="flex gap-4 items-center">
           <label className="block text-sm md:text-lg mb-2 lg:mb-0">
             {" "}
             ملاقاتیں :
