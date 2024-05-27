@@ -204,6 +204,12 @@ export const IlaqaReports = () => {
               <button className="btn" onClick={() => editReport(p?._id)}>
                 <FaEdit />
               </button>
+              {me?.userAreaType == "Ilaqa"
+                && 
+                  <button className="btn" onClick={() => editReport(p?._id)}>
+                    <FaEdit />
+                  </button>
+              }
 
               <button className="btn">
                 <FaPrint />
