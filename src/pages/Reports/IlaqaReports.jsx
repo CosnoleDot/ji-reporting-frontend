@@ -197,12 +197,12 @@ export const IlaqaReports = () => {
               <span>Last Modified: {moment(p?.updatedAt).fromNow()}</span>
             </div>
             <div className="flex items-end w-full justify-end gap-3 ">
-              <button className="btn">
-                <FaEye onClick={() => viewReport(p?._id)} />
+              <button className="btn" onClick={() => viewReport(p?._id)}>
+                <FaEye />
               </button>
 
-              <button className="btn">
-                <FaEdit onClick={() => editReport(p?._id)} />
+              <button className="btn" onClick={() => editReport(p?._id)}>
+                <FaEdit />
               </button>
 
               <button className="btn">
