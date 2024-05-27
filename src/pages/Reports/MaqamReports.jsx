@@ -68,6 +68,9 @@ export const MaqamReports = () => {
     filterMuntakhib(areaId);
     navigate(`edit/${reportId}`);
   };
+  const handlePrint = (id) => {
+    window.open(`maqam-report/print/${id}`, "blank");
+  };
   return (
     <>
       <div className="join xs:w-full mb-4">
@@ -215,8 +218,7 @@ export const MaqamReports = () => {
                   <FaEdit />
                 </button>
               )}
-
-              <button className="btn">
+              <button className="btn" onClick={() => handlePrint(p?._id)}>
                 <FaPrint />
               </button>
             </div>

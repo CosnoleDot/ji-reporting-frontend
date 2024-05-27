@@ -55,10 +55,10 @@ export const ToseeDawat = ({ view }) => {
     <div className="p-2 py-5 relative w-full overflow-auto">
       <h2 className="text-black py-3 text-lg">توسیع دعوت</h2>
       <div className="flex flex-col  w-full items-start justify-start">
-        <div className="flex py-2">
+        <div className="flex py-2 mb-2">
           <h3 className="block ml-28 font-bold">روابط:</h3>
         </div>
-        <div className="flex py-2">
+        <div className="flex py-2 mb-2">
           <label className="block text-sm md:text-lg mb-2 lg:mb-0">
             طے شدہ:
           </label>
@@ -69,10 +69,10 @@ export const ToseeDawat = ({ view }) => {
             required
             name="rawabitDecided"
             id="rawabitDecided"
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+            className="border-b-2 text-center border-dashed   mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
           />
         </div>
-        <div className="flex py-2">
+        <div className="flex py-2 mb-2">
           <label className="block text-sm md:text-lg mb-2 lg:mb-0">
             روابط سےملاقاتوں کاہدف:
           </label>
@@ -83,10 +83,10 @@ export const ToseeDawat = ({ view }) => {
             required
             name="rwabitMeetingsGoal"
             id="rwabitMeetingsGoal"
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+            className="border-b-2 text-center border-dashed   mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
           />
         </div>
-        <div className="flex flex-col lg:flex-row">
+        <div className="flex gap-3 mb-2 overflow-hidden overflow-x-scroll w-full">
           <label className="block text-sm md:text-lg mb-2 lg:mb-0">
             موجود:
           </label>
@@ -97,7 +97,7 @@ export const ToseeDawat = ({ view }) => {
             required
             name={`current`}
             id={`current`}
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+            className="border-b-2 text-center border-dashed   mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
           />
           +
           <input
@@ -106,7 +106,7 @@ export const ToseeDawat = ({ view }) => {
             readOnly={view}
             name={`currentManual`}
             id={`currentManual`}
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+            className="border-b-2 text-center border-dashed   mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
             onChange={() =>
               sumUpTwoValues(
                 parseInt(document.getElementById("current").value),
@@ -123,10 +123,10 @@ export const ToseeDawat = ({ view }) => {
             required
             name={`currentSum`}
             id={`currentSum`}
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+            className="border-b-2 text-center border-dashed   mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
           />
         </div>
-        <div className="flex flex-col lg:flex-row">
+        <div className="flex gap-3 mb-2 overflow-hidden overflow-x-scroll w-full">
           <label className="block text-sm md:text-lg mb-2 lg:mb-0">
             ملاقاتوں کی تعداد:
           </label>
@@ -137,7 +137,7 @@ export const ToseeDawat = ({ view }) => {
             required
             name={`meetings`}
             id={`meetings`}
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+            className="border-b-2 text-center border-dashed   mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
           />
           +
           <input
@@ -146,7 +146,7 @@ export const ToseeDawat = ({ view }) => {
             readOnly={view}
             name={`meetingsManual`}
             id={`meetingsManual`}
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+            className="border-b-2 text-center border-dashed   mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
             onChange={() =>
               sumUpTwoValues(
                 parseInt(document.getElementById("meetings").value),
@@ -163,10 +163,10 @@ export const ToseeDawat = ({ view }) => {
             required
             name={`meetingsSum`}
             id={`meetingsSum`}
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+            className="border-b-2 text-center border-dashed   mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
           />
         </div>
-        <div className="flex flex-col lg:flex-row">
+        <div className="flex gap-3 mb-2 overflow-hidden overflow-x-scroll w-full">
           <label className="block text-sm md:text-lg mb-2 lg:mb-0">
             تقسیم لٹریچر:
           </label>
@@ -177,12 +177,12 @@ export const ToseeDawat = ({ view }) => {
             required
             name={`litrature`}
             id={`litrature`}
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+            className="border-b-2 text-center border-dashed   mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
           />
         </div>
       </div>
       <div className="flex flex-col w-full items-start justify-start">
-        <div className="flex py-2 me-5">
+        <div className="flex py-2 mb-2 me-5">
           <label className="block text-sm md:text-lg sm:mb-2">عام طلبہ:</label>
         </div>
         <div className="flex">
@@ -196,7 +196,7 @@ export const ToseeDawat = ({ view }) => {
             required
             name={`commonLiteratureDistribution`}
             id={`commonLiteratureDistribution`}
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+            className="border-b-2 text-center border-dashed   mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
           />
         </div>
         <div className="flex">
@@ -210,7 +210,7 @@ export const ToseeDawat = ({ view }) => {
             required
             name={`commonStudentMeetings`}
             id={`commonStudentMeetings`}
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+            className="border-b-2 text-center border-dashed   mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
           />
         </div>
       </div>

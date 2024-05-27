@@ -65,6 +65,9 @@ export const UnitReport = () => {
   const editReport = (id) => {
     navigate(`edit/${id}`);
   };
+  const handlePrint = (id) => {
+    window.open(`halqa-report/print/${id}`, "blank");
+  };
   return (
     <>
       <div className="join xs:w-full mb-4">
@@ -207,7 +210,7 @@ export const UnitReport = () => {
                 </button>
               )}
 
-              <button className="btn">
+              <button className="btn" onClick={() => handlePrint(p?._id)}>
                 <FaPrint />
               </button>
             </div>

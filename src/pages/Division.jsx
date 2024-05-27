@@ -32,6 +32,7 @@ export const Division = () => {
   const halqa = useContext(HalqaReportContext);
   const maqam = useContext(MaqamReportContext);
   const division = useContext(DivisionReportContext);
+  const [createData, setCreateData] = useState();
   const [month, setMonth] = useState("");
   const params = useParams();
   const [id, setId] = useState(null);
@@ -51,7 +52,7 @@ export const Division = () => {
     const halq = {};
 
     document.getElementById("division-form").reset();
-    if (halqa.filter((i) => i?.month.includes(month)).length < 1) {
+    if (createData?.filter((i) => i?.month?.includes(month)).length < 1) {
       [
         "rafaqa-start",
         "karkunan-start",
@@ -90,9 +91,9 @@ export const Division = () => {
       document.getElementById("name").value = me?.userAreaId?.name;
     }
 
-    halqa
-      .filter((i) => i?.month.includes(month))
-      .forEach((i) => {
+    createData
+      ?.filter((i) => i?.month.includes(month))
+      ?.forEach((i) => {
         const sim = reverseDataFormat(i);
         Object.keys(sim)?.forEach((j) => {
           if (halq?.[j]) {
@@ -217,6 +218,24 @@ export const Division = () => {
       calcultate(i);
     });
   };
+  // GET REPORTS OF Division HALQA TO CREATE Division REPORT THE COMING REPORTS WILL BE POPULATED
+  const getHalqaReports = async () => {
+    try {
+      const req = await instance.get(`/reports/division`, {
+        params: { areaId: me?.userAreaId?._id },
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          "Content-Type": "application/json",
+        },
+      });
+      const repo = req?.data?.data;
+      setCreateData(repo);
+      dispatch({ type: "SUCCESS", payload: req.data?.message });
+    } catch (err) {
+      dispatch({ type: "ERROR", payload: err.response.data.message });
+    }
+    setLoading(false);
+  };
   // To set values to zero when in create mode
   useEffect(() => {
     const value1 = document.getElementById("litrature");
@@ -231,6 +250,22 @@ export const Division = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const getDivisionReport = async () => {
+    try {
+      const req = await instance.get(`/reports/division/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          "Content-Type": "application/json",
+        },
+      });
+      const repo = req?.data?.data;
+      setData(reverseDataFormat(repo));
+      dispatch({ type: "SUCCESS", payload: req.data?.message });
+    } catch (err) {
+      dispatch({ type: "ERROR", payload: err.response.data.message });
+    }
+    setLoading(false);
+  };
   useEffect(() => {
     const l = location.pathname?.split("/")[2];
     if (l === "view") {
@@ -240,9 +275,9 @@ export const Division = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
   useEffect(() => {
-    if (id) getData("division", id, setData, { halqa, maqam, division });
-    else {
-      setLoading(false);
+    const l = location.pathname?.split("/")[2];
+    if (l === "create") {
+      getHalqaReports();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
@@ -286,9 +321,13 @@ export const Division = () => {
     });
   }, [data]);
   useEffect(() => {
-    if (!id) autoFill();
+    if (!id) {
+      autoFill();
+    } else {
+      getDivisionReport();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, halqa, month]);
+  }, [month, createData, id]);
   // EDIT CODE END
   const handleSubmit = async (e) => {
     e.preventDefault();

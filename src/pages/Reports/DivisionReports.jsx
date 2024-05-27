@@ -4,6 +4,7 @@ import { FaEdit, FaEye, FaPrint } from "react-icons/fa";
 import moment from "moment";
 import { NoReports, months } from "../Reports";
 import { FilterDialog } from "./FilterDialog";
+import { useNavigate } from "react-router-dom";
 
 export const DivisionReports = () => {
   const dReports = useContext(DivisionReportContext);
@@ -14,6 +15,7 @@ export const DivisionReports = () => {
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("2023");
   const me = useContext(MeContext);
+  const navigate = useNavigate();
   const searchResults = () => {
     if (year !== "" && month !== "") {
       let filteredData = { ...dReports };
@@ -55,6 +57,15 @@ export const DivisionReports = () => {
     setYear("2023");
     setFilterAllData(dReports);
     document.getElementById("autocomplete").value = "";
+  };
+  const viewReport = async (reportId) => {
+    navigate(`view/${reportId}`);
+  };
+  const editReport = (reportId) => {
+    navigate(`edit/${reportId}`);
+  };
+  const handlePrint = (id) => {
+    window.open(`division-report/print/${id}`, "blank");
   };
   return (
     <>
@@ -188,15 +199,17 @@ export const DivisionReports = () => {
               <span>Last Modified: {moment(p?.updatedAt).fromNow()}</span>
             </div>
             <div className="flex items-end w-full justify-end gap-3 ">
-              <button className="btn">
+              <button className="btn" onClick={() => viewReport(p?._id)}>
                 <FaEye />
               </button>
 
-              <button className="btn">
-                <FaEdit />
-              </button>
+              {me?.userAreaType === "Division" && (
+                <button className="btn" onClick={() => editReport(p?._id)}>
+                  <FaEdit />
+                </button>
+              )}
 
-              <button className="btn">
+              <button className="btn" onClick={() => handlePrint(p?._id)}>
                 <FaPrint />
               </button>
             </div>

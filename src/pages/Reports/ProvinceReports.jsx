@@ -59,6 +59,9 @@ export const ProvinceReports = () => {
     setFilterAllData(pReports);
     document.getElementById("autocomplete").value = "";
   };
+  const handlePrint = (id) => {
+    window.open(`province-report/print/${id}`, "blank");
+  };
   return (
     <>
       <div className="join xs:w-full mb-4">
@@ -205,10 +208,7 @@ export const ProvinceReports = () => {
                 <FaEdit />
               </button>
 
-              <button
-                className="btn"
-                onClick={() => navigate(`/province-report/print/${p._id}`)}
-              >
+              <button className="btn" onClick={() => handlePrint(p?._id)}>
                 <FaPrint />
               </button>
             </div>
