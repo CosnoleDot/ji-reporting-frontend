@@ -81,7 +81,12 @@ export const Tanzeem = ({ view }) => {
       <table className="w-full table">
         <thead>
           <tr>
-            <Box type={"heading"}>تنظیم</Box>
+            <h3
+              className="border text-sm md:text-md text-center p-3 w-[10rem] lg:max-w-[15rem]"
+              type={"heading"}
+            >
+              تنظیم
+            </h3>
             <Box>آغازمیں</Box>
             <Box>اِضافہ</Box>
             <Box>کمی</Box>
@@ -93,12 +98,13 @@ export const Tanzeem = ({ view }) => {
         </thead>
         <tbody>
           <tr>
-            <Box>رہائشی حلقے</Box>
+            <h3 className="border text-sm md:text-md text-center p-3 w-[10rem] lg:max-w-[15rem]">
+              رہائشی حلقے
+            </h3>
             <Box>
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`rehaishHalqay-start`}
                 id={`rehaishHalqay-start`}
@@ -110,14 +116,13 @@ export const Tanzeem = ({ view }) => {
                     "totalHalqay-start"
                   );
                 }}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`rehaishHalqay-increase`}
                 id={`rehaishHalqay-increase`}
@@ -129,14 +134,13 @@ export const Tanzeem = ({ view }) => {
                     "totalHalqay-increase"
                   );
                 }}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`rehaishHalqay-decrease`}
                 id={`rehaishHalqay-decrease`}
@@ -148,14 +152,13 @@ export const Tanzeem = ({ view }) => {
                     "totalHalqay-decrease"
                   );
                 }}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`rehaishHalqay-end`}
                 onChange={() => {
@@ -166,7 +169,7 @@ export const Tanzeem = ({ view }) => {
                   );
                 }}
                 id={`rehaishHalqay-end`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
 
@@ -174,7 +177,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 onChange={() => {
                   calcultate("taleemHalqay");
@@ -186,15 +188,13 @@ export const Tanzeem = ({ view }) => {
                 }}
                 name={`rehaishHalqay-continue`}
                 id={`rehaishHalqay-continue`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
-              
             </Box>
             <Box>
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`rehaishHalqay-paused`}
                 id={`rehaishHalqay-paused`}
@@ -206,28 +206,28 @@ export const Tanzeem = ({ view }) => {
                     "totalHalqay-paused"
                   );
                 }}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
-            <Box>
-                <input
-                  readOnly={view}
-                  type="number"
-                  defaultValue={0}
-                  required
-                  name={`rehaishHalqay-monthly`}
-                  id={`rehaishHalqay-monthly`}
-                  className="p-1 text-center min-w-full"
-                />
-              </Box>
-          </tr>
-          <tr>
-            <Box>تعلیمی حلقے</Box>
             <Box>
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
+                required
+                name={`rehaishHalqay-monthly`}
+                id={`rehaishHalqay-monthly`}
+                className="p-1 text-center max-w-full"
+              />
+            </Box>
+          </tr>
+          <tr>
+            <h3 className="border text-sm md:text-md text-center p-3 w-[10rem] lg:max-w-[15rem]">
+              تعلیمی حلقے
+            </h3>
+            <Box>
+              <input
+                readOnly={view}
+                type="number"
                 required
                 name={`taleemHalqay-start`}
                 id={`taleemHalqay-start`}
@@ -239,14 +239,13 @@ export const Tanzeem = ({ view }) => {
                     "totalHalqay-start"
                   );
                 }}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`taleemHalqay-increase`}
                 id={`taleemHalqay-increase`}
@@ -258,14 +257,13 @@ export const Tanzeem = ({ view }) => {
                     "totalHalqay-increase"
                   );
                 }}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`taleemHalqay-decrease`}
                 id={`taleemHalqay-decrease`}
@@ -277,14 +275,13 @@ export const Tanzeem = ({ view }) => {
                     "totalHalqay-decrease"
                   );
                 }}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`taleemHalqay-end`}
                 onChange={() => {
@@ -295,14 +292,13 @@ export const Tanzeem = ({ view }) => {
                   );
                 }}
                 id={`taleemHalqay-end`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`taleemHalqay-continue`}
                 id={`taleemHalqay-continue`}
@@ -313,14 +309,13 @@ export const Tanzeem = ({ view }) => {
                     "totalHalqay-continue"
                   )
                 }
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`taleemHalqay-paused`}
                 id={`taleemHalqay-paused`}
@@ -331,108 +326,103 @@ export const Tanzeem = ({ view }) => {
                     "totalHalqay-paused"
                   )
                 }
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`taleemHalqay-monthly`}
                 id={`taleemHalqay-monthly`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
           </tr>
           <tr>
-            <Box>کل حلقے</Box>
+            <h3 className="border text-sm md:text-md text-center p-3 w-[10rem] lg:max-w-[15rem]">
+              کل حلقے
+            </h3>
             <Box>
               <input
                 readOnly
                 type="number"
-                defaultValue={0}
                 required
                 name={`totalHalqay-start`}
                 id={`totalHalqay-start`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly
                 type="number"
-                defaultValue={0}
                 required
                 name={`totalHalqay-increase`}
                 id={`totalHalqay-increase`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly
                 type="number"
-                defaultValue={0}
                 required
                 name={`totalHalqay-decrease`}
                 id={`totalHalqay-decrease`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly
                 type="number"
-                defaultValue={0}
                 required
                 name={`totalHalqay-end`}
                 id={`totalHalqay-end`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly
                 type="number"
-                defaultValue={0}
                 required
                 name={`totalHalqay-continue`}
                 id={`totalHalqay-continue`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly
                 type="number"
-                defaultValue={0}
                 required
                 name={`totalHalqay-paused`}
                 id={`totalHalqay-paused`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`totalHalqay-monthly`}
                 id={`totalHalqay-monthly`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
           </tr>
           <tr>
-            <Box>رہائشی ذیلی حلقے</Box>
+            <h3 className="border text-sm md:text-md text-center p-3 w-[10rem] lg:max-w-[15rem]">
+              رہائشی ذیلی حلقے
+            </h3>
             <Box>
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`subRehaishHalqay-start`}
                 id={`subRehaishHalqay-start`}
@@ -444,14 +434,13 @@ export const Tanzeem = ({ view }) => {
                     "subTotalHalqay-start"
                   );
                 }}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`subRehaishHalqay-increase`}
                 id={`subRehaishHalqay-increase`}
@@ -463,14 +452,13 @@ export const Tanzeem = ({ view }) => {
                     "subTotalHalqay-increase"
                   );
                 }}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`subRehaishHalqay-decrease`}
                 id={`subRehaishHalqay-decrease`}
@@ -482,25 +470,23 @@ export const Tanzeem = ({ view }) => {
                     "subTotalHalqay-decrease"
                   );
                 }}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`subRehaishHalqay-end`}
                 id={`subRehaishHalqay-end`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 onChange={() => {
                   totalCalculate(
@@ -511,14 +497,13 @@ export const Tanzeem = ({ view }) => {
                 }}
                 name={`subRehaishHalqay-continue`}
                 id={`subRehaishHalqay-continue`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 onChange={() => {
                   totalCalculate(
@@ -529,28 +514,28 @@ export const Tanzeem = ({ view }) => {
                 }}
                 name={`subRehaishHalqay-paused`}
                 id={`subRehaishHalqay-paused`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`subRehaishHalqay-monthly`}
                 id={`subRehaishHalqay-monthly`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
           </tr>
           <tr>
-            <Box>تعلیمی ذیلی حلقے</Box>
+            <h3 className="border text-sm md:text-md text-center p-3 w-[10rem] lg:max-w-[15rem]">
+              تعلیمی ذیلی حلقے
+            </h3>
             <Box>
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`subTaleemHalqay-start`}
                 id={`subTaleemHalqay-start`}
@@ -562,14 +547,13 @@ export const Tanzeem = ({ view }) => {
                     "subTotalHalqay-start"
                   );
                 }}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`subTaleemHalqay-increase`}
                 id={`subTaleemHalqay-increase`}
@@ -581,14 +565,13 @@ export const Tanzeem = ({ view }) => {
                     "subTotalHalqay-increase"
                   );
                 }}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`subTaleemHalqay-decrease`}
                 id={`subTaleemHalqay-decrease`}
@@ -600,25 +583,23 @@ export const Tanzeem = ({ view }) => {
                     "subTotalHalqay-decrease"
                   );
                 }}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`subTaleemHalqay-end`}
                 id={`subTaleemHalqay-end`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`subTaleemHalqay-continue`}
                 id={`subTaleemHalqay-continue`}
@@ -629,14 +610,13 @@ export const Tanzeem = ({ view }) => {
                     "subTotalHalqay-continue"
                   );
                 }}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 onChange={() => {
                   totalCalculate(
@@ -647,108 +627,103 @@ export const Tanzeem = ({ view }) => {
                 }}
                 name={`subTaleemHalqay-paused`}
                 id={`subTaleemHalqay-paused`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`subTaleemHalqay-monthly`}
                 id={`subTaleemHalqay-monthly`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
           </tr>
           <tr>
-            <Box>کل ذیلی حلقے</Box>
+            <h3 className="border text-sm md:text-md text-center p-3 w-[10rem] lg:max-w-[15rem]">
+              کل ذیلی حلقے
+            </h3>
             <Box>
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`subTotalHalqay-start`}
                 id={`subTotalHalqay-start`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`subTotalHalqay-increase`}
                 id={`subTotalHalqay-increase`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`subTotalHalqay-decrease`}
                 id={`subTotalHalqay-decrease`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`subTotalHalqay-end`}
                 id={`subTotalHalqay-end`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`subTotalHalqay-continue`}
                 id={`subTotalHalqay-continue`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`subTotalHalqay-paused`}
                 id={`subTotalHalqay-paused`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`subTotalHalqay-monthly`}
                 id={`subTotalHalqay-monthly`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
           </tr>
           <tr>
-            <Box>بزم کے سکول یونٹس</Box>
+            <h3 className="border text-sm md:text-md text-center p-3 w-[10rem] lg:max-w-[15rem]">
+              بزم کے سکول یونٹس
+            </h3>
             <Box>
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`busmSchoolUnits-start`}
                 id={`busmSchoolUnits-start`}
@@ -760,14 +735,13 @@ export const Tanzeem = ({ view }) => {
                     "busmTotalUnits-start"
                   );
                 }}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`busmSchoolUnits-increase`}
                 id={`busmSchoolUnits-increase`}
@@ -779,14 +753,13 @@ export const Tanzeem = ({ view }) => {
                     "busmTotalUnits-increase"
                   );
                 }}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`busmSchoolUnits-decrease`}
                 id={`busmSchoolUnits-decrease`}
@@ -798,25 +771,23 @@ export const Tanzeem = ({ view }) => {
                     "busmTotalUnits-decrease"
                   );
                 }}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`busmSchoolUnits-end`}
                 id={`busmSchoolUnits-end`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 onChange={() => {
                   totalCalculate(
@@ -827,14 +798,13 @@ export const Tanzeem = ({ view }) => {
                 }}
                 name={`busmSchoolUnits-continue`}
                 id={`busmSchoolUnits-continue`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 onChange={() => {
                   calcultate("busmSchoolUnits");
                   totalCalculate(
@@ -846,28 +816,28 @@ export const Tanzeem = ({ view }) => {
                 required
                 name={`busmSchoolUnits-paused`}
                 id={`busmSchoolUnits-paused`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`busmSchoolUnits-monthly`}
                 id={`busmSchoolUnits-monthly`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
           </tr>
           <tr>
-            <Box>بزم کے رہائشی یونٹس</Box>
+            <h3 className="border text-sm md:text-md text-center p-3 w-[10rem] lg:max-w-[15rem]">
+              بزم کے رہائشی یونٹس
+            </h3>
             <Box>
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`busmRehaishUnits-start`}
                 id={`busmRehaishUnits-start`}
@@ -879,14 +849,13 @@ export const Tanzeem = ({ view }) => {
                     "busmTotalUnits-start"
                   );
                 }}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`busmRehaishUnits-increase`}
                 id={`busmRehaishUnits-increase`}
@@ -898,14 +867,13 @@ export const Tanzeem = ({ view }) => {
                     "busmTotalUnits-increase"
                   );
                 }}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`busmRehaishUnits-decrease`}
                 id={`busmRehaishUnits-decrease`}
@@ -917,18 +885,17 @@ export const Tanzeem = ({ view }) => {
                     "busmTotalUnits-decrease"
                   );
                 }}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`busmRehaishUnits-end`}
                 id={`busmRehaishUnits-end`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
@@ -942,18 +909,16 @@ export const Tanzeem = ({ view }) => {
                   );
                 }}
                 type="number"
-                defaultValue={0}
                 required
                 name={`busmRehaishUnits-continue`}
                 id={`busmRehaishUnits-continue`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 onChange={() => {
                   totalCalculate(
                     "busmSchoolUnits",
@@ -964,98 +929,92 @@ export const Tanzeem = ({ view }) => {
                 required
                 name={`busmRehaishUnits-paused`}
                 id={`busmRehaishUnits-paused`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`busmRehaishUnits-monthly`}
                 id={`busmRehaishUnits-monthly`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
           </tr>
           <tr>
-            <Box>بزم کے کل یونٹس</Box>
+            <h3 className="border text-sm md:text-md text-center p-3 w-[10rem] lg:max-w-[15rem]">
+              بزم کے کل یونٹس
+            </h3>
             <Box>
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`busmTotalUnits-start`}
                 id={`busmTotalUnits-start`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`busmTotalUnits-increase`}
                 id={`busmTotalUnits-increase`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`busmTotalUnits-decrease`}
                 id={`busmTotalUnits-decrease`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`busmTotalUnits-end`}
                 id={`busmTotalUnits-end`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`busmTotalUnits-continue`}
                 id={`busmTotalUnits-continue`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`busmTotalUnits-paused`}
                 id={`busmTotalUnits-paused`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`busmTotalUnits-monthly`}
                 id={`busmTotalUnits-monthly`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
           </tr>

@@ -3,9 +3,9 @@ import { maqamRawabitDecided } from "./ToseeDawat";
 export const Box = ({ children, type }) => {
   return (
     <td
-      className={`border  text-sm md:text-lg text-center p-2 ${
+      className={`border  text-sm md:text-md text-center p-2 ${
         type === "heading" ? "text-lg text-black" : ""
-      }`}
+      } w-[10rem]  lg:max-w-[15rem] `}
     >
       {children}
     </td>
@@ -47,7 +47,7 @@ export const IfradiKuwat = ({ view }) => {
                   calcultate("arkan");
                   maqamRawabitDecided();
                 }}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
@@ -61,7 +61,7 @@ export const IfradiKuwat = ({ view }) => {
                   calcultate("arkan");
                   maqamRawabitDecided();
                 }}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
@@ -75,7 +75,7 @@ export const IfradiKuwat = ({ view }) => {
                   calcultate("arkan");
                   maqamRawabitDecided();
                 }}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
@@ -85,7 +85,7 @@ export const IfradiKuwat = ({ view }) => {
                 required
                 name={`arkan-end`}
                 id={`arkan-end`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
@@ -95,7 +95,7 @@ export const IfradiKuwat = ({ view }) => {
                 required
                 name={`arkan-monthly`}
                 id={`arkan-monthly`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
           </tr>
@@ -112,7 +112,7 @@ export const IfradiKuwat = ({ view }) => {
                   calcultate("umeedWaran");
                   maqamRawabitDecided();
                 }}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
@@ -126,7 +126,7 @@ export const IfradiKuwat = ({ view }) => {
                 }}
                 name={`umeedWaran-increase`}
                 id={`umeedWaran-increase`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
@@ -140,7 +140,7 @@ export const IfradiKuwat = ({ view }) => {
                   calcultate("umeedWaran");
                   maqamRawabitDecided();
                 }}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
@@ -150,7 +150,7 @@ export const IfradiKuwat = ({ view }) => {
                 required
                 name={`umeedWaran-end`}
                 id={`umeedWaran-end`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
@@ -160,7 +160,7 @@ export const IfradiKuwat = ({ view }) => {
                 required
                 name={`umeedWaran-monthly`}
                 id={`umeedWaran-monthly`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
           </tr>
@@ -174,7 +174,7 @@ export const IfradiKuwat = ({ view }) => {
                 name={`rafaqa-start`}
                 onChange={() => calcultate("rafaqa")}
                 id={`rafaqa-start`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
@@ -185,7 +185,7 @@ export const IfradiKuwat = ({ view }) => {
                 name={`rafaqa-increase`}
                 id={`rafaqa-increase`}
                 onChange={() => calcultate("rafaqa")}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
@@ -196,7 +196,7 @@ export const IfradiKuwat = ({ view }) => {
                 name={`rafaqa-decrease`}
                 onChange={() => calcultate("rafaqa")}
                 id={`rafaqa-decrease`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
@@ -206,7 +206,7 @@ export const IfradiKuwat = ({ view }) => {
                 required
                 name={`rafaqa-end`}
                 id={`rafaqa-end`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
@@ -216,7 +216,7 @@ export const IfradiKuwat = ({ view }) => {
                 required
                 name={`rafaqa-monthly`}
                 id={`rafaqa-monthly`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
           </tr>
@@ -230,7 +230,7 @@ export const IfradiKuwat = ({ view }) => {
                 name={`karkunan-start`}
                 id={`karkunan-start`}
                 onChange={() => calcultate("karkunan")}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
@@ -241,7 +241,7 @@ export const IfradiKuwat = ({ view }) => {
                 name={`karkunan-increase`}
                 onChange={() => calcultate("karkunan")}
                 id={`karkunan-increase`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
@@ -252,7 +252,7 @@ export const IfradiKuwat = ({ view }) => {
                 name={`karkunan-decrease`}
                 id={`karkunan-decrease`}
                 onChange={() => calcultate("karkunan")}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
@@ -262,7 +262,7 @@ export const IfradiKuwat = ({ view }) => {
                 required
                 name={`karkunan-end`}
                 id={`karkunan-end`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
@@ -272,7 +272,7 @@ export const IfradiKuwat = ({ view }) => {
                 required
                 name={`karkunan-monthly`}
                 id={`karkunan-monthly`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
           </tr>
@@ -286,7 +286,7 @@ export const IfradiKuwat = ({ view }) => {
                 name={`shaheen-start`}
                 onChange={() => calcultate("shaheen")}
                 id={`shaheen-start`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
@@ -297,7 +297,7 @@ export const IfradiKuwat = ({ view }) => {
                 required
                 name={`shaheen-increase`}
                 id={`shaheen-increase`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
@@ -308,7 +308,7 @@ export const IfradiKuwat = ({ view }) => {
                 name={`shaheen-decrease`}
                 id={`shaheen-decrease`}
                 onChange={() => calcultate("shaheen")}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
@@ -318,7 +318,7 @@ export const IfradiKuwat = ({ view }) => {
                 required
                 name={`shaheen-end`}
                 id={`shaheen-end`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
@@ -328,7 +328,7 @@ export const IfradiKuwat = ({ view }) => {
                 required
                 name={`shaheen-monthly`}
                 id={`shaheen-monthly`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
           </tr>
@@ -342,7 +342,7 @@ export const IfradiKuwat = ({ view }) => {
                 name={`members-start`}
                 onChange={() => calcultate("members")}
                 id={`members-start`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
@@ -353,7 +353,7 @@ export const IfradiKuwat = ({ view }) => {
                 name={`members-increase`}
                 onChange={() => calcultate("members")}
                 id={`members-increase`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
@@ -364,7 +364,7 @@ export const IfradiKuwat = ({ view }) => {
                 name={`members-decrease`}
                 onChange={() => calcultate("members")}
                 id={`members-decrease`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
@@ -374,7 +374,7 @@ export const IfradiKuwat = ({ view }) => {
                 required
                 name={`members-end`}
                 id={`members-end`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
             <Box>
@@ -384,7 +384,7 @@ export const IfradiKuwat = ({ view }) => {
                 required
                 name={`members-monthly`}
                 id={`members-monthly`}
-                className="p-1 text-center min-w-full"
+                className="p-1 text-center max-w-full"
               />
             </Box>
           </tr>

@@ -30,7 +30,6 @@ export const Ilaqa = () => {
   const ilaqa = useContext(IlaqaReportContext);
   const maqam = useContext(MaqamReportContext);
   const [createData, setCreateData] = useState();
-  const [createData2, setCreateData2] = useState([]);
   const [month, setMonth] = useState("");
   const params = useParams();
   const [id, setId] = useState(null);

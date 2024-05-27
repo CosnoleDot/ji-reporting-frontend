@@ -25,9 +25,6 @@ import { UIContext } from "../context/ui";
 
 export const Halqa = () => {
   const { dispatch } = useToastState();
-  const halqa = useContext(HalqaReportContext);
-  const maqam = useContext(MaqamReportContext);
-  const division = useContext(DivisionReportContext);
   const me = useContext(MeContext);
   const [id, setId] = useState(null);
   const [view, setView] = useState(false);
@@ -121,7 +118,6 @@ export const Halqa = () => {
     setLoading(false);
   };
   useEffect(() => {
-    const l = location.pathname?.split("/")[2];
     setId(params?.id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
