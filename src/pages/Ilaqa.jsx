@@ -72,6 +72,7 @@ export const Ilaqa = () => {
         "shabBedari",
         "nizamSalah",
         "rawabitDecided",
+        "shabBedari",
         "totalBooks",
         "totalIncrease",
         "totalDecrease",
@@ -81,6 +82,7 @@ export const Ilaqa = () => {
       });
       document.getElementById("name").value = me?.userAreaId?.name;
     }
+    
     createData
       ?.filter((i) => i?.month.includes(month))
       .forEach((i) => {
@@ -110,13 +112,16 @@ export const Ilaqa = () => {
           }
         });
       });
+      
     Object.keys(halq).forEach((i) => {
+      
       let j;
       if (i === "studyCircle-decided") {
         j = "studyCircleMentioned-decided";
       } else if (i === "current") {
         j = "uploadedCurrent";
-      } else if (i === "meetings") {
+      }
+       else if (i === "meetings") {
         j = "uploadedMeetings";
       } else if (i === "literatureDistribution") {
         j = "uploadedLitrature";
@@ -134,6 +139,9 @@ export const Ilaqa = () => {
         j = "studyCircleMentioned-done";
       } else if (i === "studyCircle-attendance") {
         j = "studyCircleMentioned-averageAttendance";
+      }
+      else if (i === "shabBedari") {
+        halq[i]=0
       } else {
         if (i.split("-")[1] === "completed") {
           j = i.split("-")[0] + "-done";
@@ -204,6 +212,7 @@ export const Ilaqa = () => {
   // GET REPORTS OF ILAQA HALQA TO CREATE ILAQA REPORT THE COMING REPORTS WILL BE POPULATED
   const getHalqaReports = async () => {
     try {
+      setLoading(true);
       const req = await instance.get(`/reports/ilaqa`, {
         params: { areaId: me?.userAreaId?._id },
         headers: {
@@ -212,7 +221,9 @@ export const Ilaqa = () => {
         },
       });
       const repo = req?.data?.data;
+      
       setCreateData(repo);
+      console.log('first')
       dispatch({ type: "SUCCESS", payload: req.data?.message });
     } catch (err) {
       dispatch({ type: "ERROR", payload: err.response.data.message });
@@ -221,6 +232,7 @@ export const Ilaqa = () => {
   };
   const getIlaqaReport = async () => {
     try {
+      setLoading(true);
       const req = await instance.get(`/reports/ilaqa/${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("@token")}`,
@@ -228,7 +240,15 @@ export const Ilaqa = () => {
         },
       });
       const repo = req?.data?.data;
-      setData(repo);
+      let unfilter = reverseDataFormat(repo);
+      unfilter.uploadedUmeedwaran = unfilter['umeedwaranFilled'];
+      unfilter.uploadedRafaqa = unfilter['rafaqaFilled'];
+      setData(unfilter);
+      setCreateData(reverseDataFormat(repo));
+
+      if (data) {
+        setLoading(false);
+      }
       dispatch({ type: "SUCCESS", payload: req.data?.message });
     } catch (err) {
       dispatch({ type: "ERROR", payload: err.response.data.message });
@@ -238,22 +258,15 @@ export const Ilaqa = () => {
   useEffect(() => {
     const l = location.pathname?.split("/")[2];
     setId(params?.id);
-    if (l === "view" && id) {
+    if ((l === "view" || l === "edit") && id) {
       getIlaqaReport();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params]);
-  useEffect(() => {
-    const l = location.pathname?.split("/")[2];
-    if (l === "create") {
-      getHalqaReports();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
   useEffect(() => {
-    if (id) getData("ilaqa", id, setData, { ilaqa, maqam });
-    else {
-      setLoading(false);
+    const l = location.pathname?.split("/")[2];
+    if (l === "create") {
+      getHalqaReports();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
@@ -300,13 +313,14 @@ export const Ilaqa = () => {
   useEffect(() => {
     if (!id) autoFill();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, halqa, month]);
+  }, [id, halqa, month, createData]);
   // EDIT CODE END
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
     const jsonData = convertDataFormat(toJson(formData));
+    
     // Replace null values with zero
     for (const key in jsonData) {
       if (jsonData.hasOwnProperty(key) && jsonData[key] === null) {

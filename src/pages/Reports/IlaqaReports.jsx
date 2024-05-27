@@ -65,6 +65,7 @@ export const IlaqaReports = () => {
   const editReport = (id) => {
     navigate(`edit/${id}`);
   };
+  console.log(me.userAreaType);
   return (
     <>
       <div className="join xs:w-full mb-4">
@@ -197,15 +198,21 @@ export const IlaqaReports = () => {
               <span>Last Modified: {moment(p?.updatedAt).fromNow()}</span>
             </div>
             <div className="flex items-end w-full justify-end gap-3 ">
-              <button className="btn">
-                <FaEye onClick={() => viewReport(p?._id)} />
+              <button className="btn" onClick={() => viewReport(p?._id)}>
+                <FaEye />
               </button>
 
-              <button className="btn">
-                <FaEdit onClick={() => editReport(p?._id)} />
-              </button>
+              {me?.userAreaType == "Ilaqa"
+                && 
+                  <button className="btn" onClick={() => editReport(p?._id)}>
+                    <FaEdit />
+                  </button>
+              }
 
-              <button className="btn">
+              <button
+                className="btn"
+                onClick={() => navigate(`/ilaqa-report/print/${p?._id}`)}
+              >
                 <FaPrint />
               </button>
             </div>
