@@ -39,10 +39,10 @@ export const Halqa = () => {
   let navigate = useNavigate();
   useEffect(() => {
     const l = location.pathname?.split("/")[2];
-    if (l === "view") {
+    setId(params?.id);
+    if (l === "view" && id) {
       setView(true);
     }
-    setId(params?.id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
   const handleReportSubmit = async (e) => {
@@ -87,7 +87,6 @@ export const Halqa = () => {
   }, [id, data]);
 
   const autoFill = () => {
-   
     Object.keys(data).forEach((i) => {
       const elem = document.getElementById(i);
       if (elem) {
@@ -110,7 +109,30 @@ export const Halqa = () => {
   useEffect(() => {
     autoFill();
   }, [data]);
-
+  const getHalqaReport = async () => {
+    try {
+      const req = await instance.get(`/reports/halqa/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          "Content-Type": "application/json",
+        },
+      });
+      const repo = req?.data?.data;
+      setData(repo);
+      dispatch({ type: "SUCCESS", payload: req.data?.message });
+    } catch (err) {
+      dispatch({ type: "ERROR", payload: err.response.data.message });
+    }
+    setLoading(false);
+  };
+  useEffect(() => {
+    const l = location.pathname?.split("/")[2];
+    setId(params?.id);
+    if ((l === "view" && id) || l === "edit") {
+      getHalqaReport();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params]);
   return (
     <GeneralLayout>
       <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">

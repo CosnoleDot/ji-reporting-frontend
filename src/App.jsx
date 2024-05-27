@@ -521,6 +521,7 @@ function App() {
         });
         if (req) {
           ilaqaR = req.data.data;
+          console.log(ilaqaR);
           setIlaqaReports(req.data.data);
         }
       } catch (err) {

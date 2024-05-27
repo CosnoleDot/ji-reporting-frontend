@@ -13,9 +13,7 @@ import {
 } from "../../context";
 import instance from "../../api/instrance";
 
-export const FilterDialog = ({ setFilterAllData ,tab  }) => {
-  
-
+export const FilterDialog = ({ setFilterAllData, tab }) => {
   const { active, setActive } = useContext(UIContext);
 
   // const [showNotification, setShowNotification] = useState(false);
@@ -31,34 +29,30 @@ export const FilterDialog = ({ setFilterAllData ,tab  }) => {
   const provinces = useContext(ProvinceContext);
   const halqas = useContext(HalqaContext);
   const ilaqas = useContext(IlaqaContext);
-  const tehsils= useContext(TehsilContext);
+  const tehsils = useContext(TehsilContext);
   const { dispatch } = useToastState();
 
   const getAreaType = (area) => {
-    
     if (area?.parentType === "Maqam") {
-      const name = maqams.find((i) => i?._id === area?.parentId);
+      const name = maqams?.find((i) => i?._id === area?.parentId);
       return `${name?.name}(Maqam)`;
     } else if (area?.parentType === "Tehsil") {
-      
-      const tehsil = tehsils?.find((i)=> i._id === area.parentId);
-      
+      const tehsil = tehsils?.find((i) => i._id === area.parentId);
+
       // const name = getDivisionByTehsil(tehsil, districts);
       return `${tehsil?.district?.division?.name}(Division)`;
     } else if (area?.parentType === "Ilaqa") {
-      const ilaqa = ilaqas?.find((i)=> i._id === area.parentId).maqam.name
+      const ilaqa = ilaqas?.find((i) => i?._id === area?.parentId)?.maqam?.name;
       return `${ilaqa}(Maqam)`;
     } else if (area?.province) {
-      return maqams.find((i) => i?._id === area?._id) ? "Maqam" : "Division";
-    }
-    else if(area?.country) {
-          return ''
-    }
-    else{
-      return `${area?.maqam?.name}`
+      return maqams?.find((i) => i?._id === area?._id) ? "Maqam" : "Division";
+    } else if (area?.country) {
+      return "";
+    } else {
+      return `${area?.maqam?.name}`;
     }
   };
-  
+
   const getFilterData = async () => {
     try {
       const req = await instance.get(`/reports/${userAreaType}/${selectedId}`, {
@@ -95,8 +89,7 @@ export const FilterDialog = ({ setFilterAllData ,tab  }) => {
               return i?.parentType === "Maqam";
             } else if (tab === "division") {
               return i?.parentType === "Tehsil";
-            }
-            else if (tab === "ilaqa") {
+            } else if (tab === "ilaqa") {
               return i?.parentType === "Ilaqa";
             }
             return true;
@@ -224,55 +217,56 @@ export const FilterDialog = ({ setFilterAllData ,tab  }) => {
           id="autocomplete-list"
           className="absolute z-10 hidden max-h-[100px] overflow-y-scroll bg-white border border-gray-300 w-full mt-1"
         >
-          {userAreaType!=="" && areas
-            ?.sort((a, b) => a?.name?.localeCompare(b?.name))
-            ?.filter((item) => {
-              if (searchArea && searchArea !== "") {
-                if (
-                  item?.name
-                    ?.toString()
-                    ?.toLowerCase()
-                    ?.includes(searchArea?.toString()?.toLowerCase())
-                ) {
+          {userAreaType !== "" &&
+            areas
+              ?.sort((a, b) => a?.name?.localeCompare(b?.name))
+              ?.filter((item) => {
+                if (searchArea && searchArea !== "") {
+                  if (
+                    item?.name
+                      ?.toString()
+                      ?.toLowerCase()
+                      ?.includes(searchArea?.toString()?.toLowerCase())
+                  ) {
+                    return true;
+                  }
+                  return false;
+                } else {
                   return true;
                 }
-                return false;
-              } else {
-                return true;
-              }
-            })
-            .map((area, index) => (
-              <div
-                key={index}
-                onClick={() => {
-                  document.getElementById("userAreaId").value = area?._id;
-                  setSelectedId(area?._id);
-                  document.getElementById("autocomplete").value = `${
-                    area?.name
-                  }${
-                    userAreaType === "halqa"
-                      ? ` - ${area?.parentId?.name} (${area?.parentType})`
-                      : ""
-                  }`;
-                  document
-                    .getElementById("autocomplete-list")
-                    .classList.add("hidden");
-                  if (
-                    !document
-                      .getElementById("autocomplete-list")
-                      .classList.contains("hidden")
-                  ) {
+              })
+              .map((area, index) => (
+                <div
+                  key={index}
+                  onClick={() => {
+                    document.getElementById("userAreaId").value = area?._id;
+                    setSelectedId(area?._id);
+                    document.getElementById("autocomplete").value = `${
+                      area?.name
+                    }${
+                      userAreaType === "halqa"
+                        ? ` - ${area?.parentId?.name} (${area?.parentType})`
+                        : ""
+                    }`;
                     document
                       .getElementById("autocomplete-list")
                       .classList.add("hidden");
-                  }
-                }}
-                className="p-2 cursor-pointer hover:bg-gray-100"
-              >
-                {area?.name}
-                {active ? "-" + getAreaType(area) : ""}
-              </div>
-            ))}
+                    if (
+                      !document
+                        .getElementById("autocomplete-list")
+                        .classList.contains("hidden")
+                    ) {
+                      document
+                        .getElementById("autocomplete-list")
+                        .classList.add("hidden");
+                    }
+                  }}
+                  className="p-2 cursor-pointer hover:bg-gray-100"
+                >
+                  {area?.name}
+                  {active ? "-" + getAreaType(area) : ""}
+                </div>
+              ))}
         </div>
         <input
           type="month"
@@ -287,7 +281,7 @@ export const FilterDialog = ({ setFilterAllData ,tab  }) => {
             onClick={() => {
               document.getElementById("filter-area-dialog-close-btn").click();
               getFilterData();
-              setUserAreaType('')
+              setUserAreaType("");
             }}
           >
             ok

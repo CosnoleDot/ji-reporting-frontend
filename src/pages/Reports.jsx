@@ -8,6 +8,7 @@ import {
   DivisionReportContext,
   HalqaContext,
   HalqaReportContext,
+  IlaqaContext,
   IlaqaReportContext,
   MaqamContext,
   MaqamReportContext,
@@ -29,6 +30,8 @@ import { DivisionReports } from "./Reports/DivisionReports";
 import { MaqamReports } from "./Reports/MaqamReports";
 import { IlaqaReports } from "./Reports/IlaqaReports";
 import { HalqaReports } from "./Reports/HalqaReports";
+import { CountryReport } from "./Reports/CountryReport";
+import { UnitReport } from "./Reports/UnitReport";
 
 export const NoReports = () => (
   <div className="card-body flex flex-col items-center justify-center w-full p-2 md:p-5 mb-1 rounded-xl">
@@ -89,9 +92,8 @@ export const months = [
 ];
 
 export const getDivisionByTehsil = (tehsil, districts) => {
-
   const districtId = tehsil?.district;
-  
+
   return districts.find((i) => i?._id === districtId)?.division?.name;
 };
 
@@ -136,6 +138,7 @@ export const Reports = ({ maqam }) => {
   const provinces = useContext(ProvinceContext);
   const tehsils = useContext(TehsilContext);
   const halqas = useContext(HalqaContext);
+  const ilaqas = useContext(IlaqaContext);
   const [userAreaType, setUserAreaType] = useState("halqa");
   const [selectedId, setSelectedId] = useState("");
   const [selectedMonth, setSelectedMonth] = useState("");
@@ -169,12 +172,6 @@ export const Reports = ({ maqam }) => {
     navigate(`/reports/create`);
   };
 
-  const viewReport = async (id) => {
-    navigate(`view/${id}`);
-  };
-  const editReport = (id) => {
-    navigate(`edit/${id}`);
-  };
   const getAreas = async () => {
     switch (active) {
       case "province":
@@ -601,125 +598,6 @@ export const Reports = ({ maqam }) => {
           Reports
         </h3>
         <div className="flex flex-col w-full items-center justify-between md:flex-row">
-          <div className="join xs:w-full">
-            {/* {!isMobileView && (
-              <div className="w-full">
-                <select
-                  className="select select-bordered join-item"
-                  onChange={(e) => setMonth(e.target.value)}
-                  value={month}
-                >
-                  <option value={""}>Month</option>
-                  {months.map((month, index) => (
-                    <option value={month?.value} key={index}>
-                      {month.title}
-                    </option>
-                  ))}
-                </select>
-                <select
-                  className="select select-bordered join-item"
-                  onChange={(e) => setYear(e.target.value)}
-                  value={year}
-                >
-                  <option disabled value={""}>
-                    Year
-                  </option>
-                  {Array(10)
-                    .fill(1)
-                    .map((_, index) => (
-                      <option key={index} value={2023 + index}>
-                        {2023 + index}
-                      </option>
-                    ))}
-                </select>
-              </div>
-            )} */}
-            {/* {search && (
-              <div className="fixed p-3 z-40 rounded-lg top-[140px] left-[5px] w-[calc(100%-10px)] overflow-hidden bg-white min-h-[100px] border">
-                <div className="flex flex-col gap-3">
-                  <div className="w-full flex flex-col">
-                    <select
-                      className="select select-bordered w-full rounded-none rounded-tl-lg rounded-tr-lg"
-                      onChange={(e) => setMonth(e.target.value)}
-                      value={month}
-                    >
-                      <option value={""}>Month</option>
-                      {months.map((month, index) => (
-                        <option value={month?.value} key={index}>
-                          {month.title}
-                        </option>
-                      ))}
-                    </select>
-                    <select
-                      className="select select-bordered w-full rounded-none rounded-bl-lg rounded-br-lg"
-                      value={year}
-                      onChange={(e) => setYear(e.target.value)}
-                    >
-                      <option value={""} disabled>
-                        Year
-                      </option>
-                      {Array(10)
-                        .fill(1)
-                        .map((_, index) => (
-                          <option key={index} value={2023 + index}>
-                            {2023 + index}
-                          </option>
-                        ))}
-                    </select>
-                  </div>
-                  <button className="btn" onClick={searchResults}>
-                    Search
-                  </button>
-                </div>
-              </div>
-            )} */}
-
-            {/* <div className="indicator ">
-              <button
-                className={`btn ${!isMobileView ? "join-item" : ""}`}
-                onClick={() =>
-                  !isMobileView ? searchResults() : toggleSearch()
-                }
-              >
-                Search
-              </button>
-              {me?.userAreaType !== "Halqa" && (
-                <button
-                  onClick={() => {
-                    setUserAreaType("halqa");
-                    document.getElementById("filter-area-dialog").showModal();
-                  }}
-                  className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
-                >
-                  filter
-                </button>
-              )}
-              <button
-                className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
-                onClick={clearFilters}
-              >
-                Clear
-              </button>
-              {isMobileView &&
-                active !== "province" &&
-                !(
-                  active === "maqam" &&
-                  localStorage.getItem("@type") === "maqam"
-                ) &&
-                !(
-                  active === "division" &&
-                  localStorage.getItem("@type") === "division"
-                ) &&
-                localStorage.getItem("@type") !== "halqa" && (
-                  <button
-                    onClick={sendNotification}
-                    className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
-                  >
-                    <AiFillBell />
-                  </button>
-                )}
-            </div> */}
-          </div>
           <div className="flex justify-end items-center gap-4">
             <button className="btn " onClick={handleReport}>
               <FaPlus />
@@ -745,7 +623,22 @@ export const Reports = ({ maqam }) => {
               )}
           </div>
         </div>
-        {/* localStorage.getItem('@type') === 'province' && ( */}
+        {/* )} */}
+
+        {["umeedwar", "rukan", "umeedwaar-nazim", "rukan-nazim"].includes(
+          me?.nazimType
+        ) && (
+          <Link
+            to={"/personalReport"}
+            role="tab"
+            className={`tab flex justify-center items-center w-full ${
+              tab === "personal" ? "tab-active" : ""
+            } font-bold underline`}
+            onClick={() => setTab("personal")}
+          >
+            Personal
+          </Link>
+        )}
         <div
           role="tablist"
           className="w-full flex justify-between items-center overflow-hidden overflow-x-scroll"
@@ -814,10 +707,13 @@ export const Reports = ({ maqam }) => {
                 Maqam
               </Link>
             )}
-          {["country", "ilaqa"].includes(localStorage.getItem("@type")) &&
+          {["country", "maqam", "ilaqa"].includes(
+            localStorage.getItem("@type")
+          ) &&
             ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
               localStorage.getItem("@nazimType")
-            ) && (
+            ) &&
+            ilaqas?.length > 0 && (
               <Link
                 to={"?active=ilaqa"}
                 role="tab"
@@ -829,45 +725,15 @@ export const Reports = ({ maqam }) => {
                 Ilaqa
               </Link>
             )}
-          {["maqam"].includes(localStorage.getItem("@type")) &&
-            maqam &&
-            ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
-              localStorage.getItem("@nazimType")
-            ) && (
-              <Link
-                to={"?active=ilaqa&tab=maqam"}
-                role="tab"
-                className={`tab flex justify-center items-center mb-2 p-2 w-full ${
-                  active === "ilaqa" ? "tab-active" : ""
-                } font-bold underline`}
-                onClick={() => setNotifyTo("ilaqa")}
-              >
-                Ilaqa
-              </Link>
-            )}
-          {["province"].includes(localStorage.getItem("@type")) &&
-            ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
-              localStorage.getItem("@nazimType")
-            ) && (
-              <Link
-                to={"?active=ilaqa&tab=province"}
-                role="tab"
-                className={`tab flex justify-center items-center mb-2 p-2 w-full ${
-                  active === "ilaqa" ? "tab-active" : ""
-                } font-bold underline`}
-                onClick={() => setNotifyTo("ilaqa")}
-              >
-                Ilaqa
-              </Link>
-            )}
-          {["country", "province", "maqam"].includes(
+
+          {["country", "province", "maqam", "ilaqa", "division"].includes(
             localStorage.getItem("@type")
           ) &&
             ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
               localStorage.getItem("@nazimType")
             ) && (
               <Link
-                to={"?active=halqa&tab=maqam"}
+                to={"?active=halqa"}
                 role="tab"
                 className={`tab flex justify-center items-center mb-2 p-2 w-full ${
                   active === "halqa" ? "tab-active" : ""
@@ -877,48 +743,8 @@ export const Reports = ({ maqam }) => {
                 Halqa
               </Link>
             )}
-          {["ilaqa"].includes(localStorage.getItem("@type")) && (
-            <Link
-              to={"?active=halqa&tab=ilaqa"}
-              role="tab"
-              className={`tab flex justify-center items-center mb-2 p-2 w-full ${
-                active === "halqa" ? "tab-active" : ""
-              } font-bold underline`}
-              onClick={() => setNotifyTo("halqa")}
-            >
-              Halqa
-            </Link>
-          )}
-          {localStorage.getItem("@type") === "division" && (
-            <Link
-              to={"?active=halqa&tab=division"}
-              role="tab"
-              className={`tab flex justify-center items-center mb-2 p-2 w-full ${
-                active === "halqa" ? "tab-active" : ""
-              } font-bold underline`}
-              onClick={() => setNotifyTo("halqa")}
-            >
-              Halqa
-            </Link>
-          )}
         </div>
-    
-        {/* )} */}
 
-        {["umeedwar", "rukan", "umeedwaar-nazim", "rukan-nazim"].includes(
-          me?.nazimType
-        ) && (
-          <Link
-            to={"/personalReport"}
-            role="tab"
-            className={`tab flex justify-center items-center w-full ${
-              tab === "personal" ? "tab-active" : ""
-            } font-bold underline`}
-            onClick={() => setTab("personal")}
-          >
-            Personal
-          </Link>
-        )}
         <div className="relative overflow-y-scroll gap-3 w-full items-center p-0 md:p-5 justify-center h-[calc(100vh-65.6px-64px-48px)]">
           {active === "province" ? (
             <ProvinceReports />
@@ -929,9 +755,18 @@ export const Reports = ({ maqam }) => {
           ) : active === "ilaqa" ? (
             <IlaqaReports />
           ) : active === "halqa" ? (
-            <HalqaReports />
+            me?.userAreaType === "Halqa" ||
+            me?.userAreaType === "Ilaqa" ||
+            me?.userAreaType === "Maqam" ||
+            me?.userAreaType === "Division" ? (
+              <UnitReport />
+            ) : (
+              <HalqaReports />
+            )
+          ) : active === "country" ? (
+            <CountryReport />
           ) : (
-            "No"
+            <NoReports />
           )}
         </div>
       </div>

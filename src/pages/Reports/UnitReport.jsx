@@ -4,20 +4,18 @@ import { FaEdit, FaEye, FaPrint } from "react-icons/fa";
 import moment from "moment";
 import { NoReports, months } from "../Reports";
 import { FilterDialog } from "./FilterDialog";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-export const HalqaReports = () => {
+export const UnitReport = () => {
   const hReports = useContext(HalqaReportContext);
-  const [tab, setTab] = useState("maqam");
-  const [filterData, setFilterData] = useState([]);
   const [filterAllData, setFilterAllData] = useState(hReports);
   const { dispatch } = useToastState();
   const [search, showSearch] = useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("2023");
-  const me = useContext(MeContext);
   const navigate = useNavigate();
+  const me = useContext(MeContext);
   const searchResults = () => {
     if (year !== "" && month !== "") {
       let filteredData = { ...hReports };
@@ -62,7 +60,7 @@ export const HalqaReports = () => {
   };
 
   const viewReport = async (id) => {
-    console.log(id)
+    console.log(id);
     navigate(`view/${id}`);
   };
   const editReport = (id) => {
@@ -70,41 +68,6 @@ export const HalqaReports = () => {
   };
   return (
     <>
-      <div
-        role="tablist"
-        className="w-full flex justify-between items-center mb-4"
-      >
-        <Link
-          to={"?active=halqa&tab=maqam"}
-          role="tab"
-          className={`tab flex justify-center items-center w-full ${
-            tab === "maqam" ? "tab-active" : ""
-          }`}
-          onClick={() => setTab("maqam")}
-        >
-          Maqam Halqa
-        </Link>
-        <Link
-          to={"?active=halqa&tab=division"}
-          role="tab"
-          className={`tab flex justify-center items-center w-full ${
-            tab === "division" ? "tab-active" : ""
-          }`}
-          onClick={() => setTab("division")}
-        >
-          Division Halqa
-        </Link>
-        <Link
-          to={"?active=halqa&tab=ilaqa"}
-          role="tab"
-          className={`tab flex justify-center items-center w-full ${
-            tab === "ilaqa" ? "tab-active" : ""
-          }`}
-          onClick={() => setTab("ilaqa")}
-        >
-          Ilaqa Halqa
-        </Link>
-      </div>
       <div className="join xs:w-full mb-4">
         {!isMobileView && (
           <div className="w-full">
@@ -222,45 +185,38 @@ export const HalqaReports = () => {
         </div>
       </div>
       {filterAllData?.length > 0 ? (
-        filterAllData
-          ?.filter((i) =>
-            tab === "division"
-              ? i.halqaAreaId?.parentType === "Tehsil"
-              : i.halqaAreaId?.parentType ===
-                tab.charAt(0).toUpperCase() + tab.slice(1)
-          )
-          .map((p) => (
-            <div
-              key={p?._id}
-              className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
-            >
-              <div className="flex w-full flex-col items-start justify-center">
-                <span className="text-sm lg:text-lg font-semibold">
-                  {p?.halqaAreaId?.name + " "}
-                  {moment(p?.month).format("MMMM YYYY")}
-                </span>
-                <span>Last Modified: {moment(p?.updatedAt).fromNow()}</span>
-              </div>
-              <div className="flex items-end w-full justify-end gap-3 ">
-                <button className="btn">
-                  <FaEye onClick={() => viewReport(p?._id)} />
-                </button>
-
-                <button className="btn">
-                  <FaEdit onClick={() => editReport(p?._id)} />
-                </button>
-
-                <button className="btn">
-                  <FaPrint />
-                </button>
-              </div>
+        filterAllData.map((p) => (
+          <div
+            key={p?._id}
+            className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
+          >
+            <div className="flex w-full flex-col items-start justify-center">
+              <span className="text-sm lg:text-lg font-semibold">
+                {p?.halqaAreaId?.name + " "}
+                {moment(p?.month).format("MMMM YYYY")}
+              </span>
+              <span>Last Modified: {moment(p?.updatedAt).fromNow()}</span>
             </div>
-          ))
+            <div className="flex items-end w-full justify-end gap-3 ">
+              <button className="btn">
+                <FaEye onClick={() => viewReport(p?._id)} />
+              </button>
+
+              <button className="btn">
+                <FaEdit onClick={() => editReport(p?._id)} />
+              </button>
+
+              <button className="btn">
+                <FaPrint />
+              </button>
+            </div>
+          </div>
+        ))
       ) : (
         <NoReports />
       )}
       <dialog id="filter-area-dialog" className="modal">
-        <FilterDialog setFilterAllData={setFilterAllData} tab={tab} />
+        <FilterDialog setFilterAllData={setFilterAllData} />
       </dialog>
     </>
   );

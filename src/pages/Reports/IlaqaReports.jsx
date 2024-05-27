@@ -2,9 +2,9 @@ import React, { useContext, useState } from "react";
 import { IlaqaReportContext, MeContext, useToastState } from "../../context";
 import { FaEdit, FaEye, FaPrint } from "react-icons/fa";
 import moment from "moment";
-import { UIContext } from "../../context/ui";
 import { NoReports, months } from "../Reports";
 import { FilterDialog } from "./FilterDialog";
+import { useNavigate } from "react-router-dom";
 
 export const IlaqaReports = () => {
   const iReports = useContext(IlaqaReportContext);
@@ -15,6 +15,7 @@ export const IlaqaReports = () => {
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("2023");
   const me = useContext(MeContext);
+  const navigate = useNavigate();
   const searchResults = () => {
     if (year !== "" && month !== "") {
       let filteredData = { ...iReports };
@@ -56,6 +57,13 @@ export const IlaqaReports = () => {
     setYear("2023");
     setFilterAllData(iReports);
     document.getElementById("autocomplete").value = "";
+  };
+
+  const viewReport = async (id) => {
+    navigate(`view/${id}`);
+  };
+  const editReport = (id) => {
+    navigate(`edit/${id}`);
   };
   return (
     <>
@@ -190,11 +198,11 @@ export const IlaqaReports = () => {
             </div>
             <div className="flex items-end w-full justify-end gap-3 ">
               <button className="btn">
-                <FaEye />
+                <FaEye onClick={() => viewReport(p?._id)} />
               </button>
 
               <button className="btn">
-                <FaEdit />
+                <FaEdit onClick={() => editReport(p?._id)} />
               </button>
 
               <button className="btn">
