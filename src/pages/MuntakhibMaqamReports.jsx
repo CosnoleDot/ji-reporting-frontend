@@ -41,6 +41,7 @@ export const MuntakhibMaqamReports = () => {
   const ilaqa = useContext(IlaqaReportContext);
   const maqam = useContext(MaqamReportContext);
   const division = useContext(DivisionReportContext);
+  const [createData, setCreateData] = useState();
   const [month, setMonth] = useState("");
   const params = useParams();
   const [id, setId] = useState(null);
@@ -55,7 +56,7 @@ export const MuntakhibMaqamReports = () => {
   const autoFill = () => {
     const halq = {};
     document.getElementById("maqam-form").reset();
-    if (ilaqa.filter((i) => i?.month.includes(month)).length < 1) {
+    if (createData?.filter((i) => i?.month.includes(month)).length < 1) {
       [
         "rafaqa-start",
         "karkunan-start",
@@ -93,8 +94,8 @@ export const MuntakhibMaqamReports = () => {
       });
       document.getElementById("name").value = me?.userAreaId?.name;
     }
-    ilaqa
-      .filter((i) => i?.month.includes(month))
+    createData
+      ?.filter((i) => i?.month.includes(month))
       .forEach((i) => {
         const sim = reverseDataFormat(i);
         Object.keys(sim)?.forEach((j) => {
@@ -150,6 +151,12 @@ export const MuntakhibMaqamReports = () => {
         }
       }
       halq.uploadedCurrent = halq.currentSum;
+      halq['manualCurrent']=0;
+      halq['manualMeetings']=0;
+      halq['manualLitrature']=0;
+      halq['manualCommonLiteratureDistribution']=0;
+      halq['manualCommonStudentMeetings']=0;
+      
       halq.uploadedMeetings = halq.meetingsSum;
       halq.uploadedCommonLiteratureDistribution =
         halq.commonLiteratureDistributionSum;
@@ -158,6 +165,7 @@ export const MuntakhibMaqamReports = () => {
       halq.totalReceived = halq.receivedSum;
       halq.monthlyReceivingGoal = halq.monthlyReceivingGoalSum;
       halq.totalSold = halq.soldSum;
+      console.log(halq)
       document.getElementById("uploadedRafaqa").value = halq.rafaqaFilledSum;
       document.getElementById("uploadedUmeedwaran").value =
         halq.umeedwaranFilledSum;
@@ -250,14 +258,69 @@ export const MuntakhibMaqamReports = () => {
       calcultate(i);
     });
     [
-      "commonLiteratureDistributionSum",
-      "currentSum",
-      "commonStudentMeetingsSum",
-      "meetingsSum",
-      "literatureSum",
       "manualUmeedwaran",
     ].forEach((l) => (document.getElementById(l).value = 0));
   };
+  const getIlaqaReports = async () => {
+    try {
+      setLoading(true);
+      const req = await instance.get(`/reports/maqam`, {
+        params: { areaId: me?.userAreaId?._id },
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          "Content-Type": "application/json",
+        },
+      });
+      const repo = req?.data?.data;
+      
+      setCreateData(repo);
+      dispatch({ type: "SUCCESS", payload: req.data?.message });
+    } catch (err) {
+      dispatch({ type: "ERROR", payload: err.response.data.message });
+    }
+    setLoading(false);
+  };
+  const getMaqamReport = async () => {
+    try {
+      setLoading(true);
+      const req = await instance.get(`/reports/maqam/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          "Content-Type": "application/json",
+        },
+      });
+      const repo = req?.data?.data;
+      let unfilter = reverseDataFormat(repo);
+      unfilter.uploadedUmeedwaran = unfilter['umeedwaranFilled'];
+      unfilter.uploadedRafaqa = unfilter['rafaqaFilled'];
+      setData(unfilter);
+      console.log(data)
+      setCreateData(reverseDataFormat(repo));
+
+      if (data) {
+        setLoading(false);
+      }
+      dispatch({ type: "SUCCESS", payload: req.data?.message });
+    } catch (err) {
+      dispatch({ type: "ERROR", payload: err.response.data.message });
+    }
+    setLoading(false);
+  };
+  useEffect(() => {
+    const l = location.pathname?.split("/")[2];
+    setId(params?.id);
+    if ((l === "view" || l === "edit") && id) {
+      getMaqamReport();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
+  useEffect(() => {
+    const l = location.pathname?.split("/")[2];
+    if (l === "create") {
+      getIlaqaReports();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
   useEffect(() => {
     const l = location.pathname?.split("/")[2];
     if (l === "view") {
@@ -313,6 +376,10 @@ export const MuntakhibMaqamReports = () => {
     if (!id) autoFill();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, halqa, month]);
+  useEffect(() => {
+    if (!id) autoFill();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id, halqa, month, createData]);
   // EDIT CODE END
   const handleSubmit = async (e) => {
     e.preventDefault();
