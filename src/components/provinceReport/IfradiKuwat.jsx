@@ -1,5 +1,4 @@
-import { maqamRawabitDecided } from "../maqamReport/ToseeDawat";
-import { sumUpTwoValues } from "../muntakhibMaqamReports";
+
 
 export const Box = ({ children, type }) => {
   return (
@@ -13,14 +12,8 @@ export const Box = ({ children, type }) => {
   );
 };
 export const IfradiKuwat = ({ view }) => {
-  const calcultate = (v1, v2) => {
-    const s = document.getElementById(`${v1}-${v2}`);
-    const i = document.getElementById(`${v1}-manual${v2.charAt(0).toUpperCase()}`);
-    const d = document.getElementById(`${v1}-${v2}Sum`);
-    if (s && i && d) {
-      const sum = parseInt(s.value) + parseInt(i.value);
-      d.value = sum; // Update the value of the sum input field
-    }
+   const sumUpTwoValues = (val1, val2, final) => {
+    document.getElementById(final).value = val1 + val2;
   };
   return (
     <div className="relative w-full overflow-auto">
@@ -70,7 +63,7 @@ export const IfradiKuwat = ({ view }) => {
                   readOnly={true}
                   type="number"
                   defaultValue={
-                    document.getElementById("arkan-start")?.value
+                    document.getElementById("arkan-startSum")?.value
                   }
                   required
                   name={`arkan-startSum`}
@@ -113,7 +106,7 @@ export const IfradiKuwat = ({ view }) => {
                   readOnly={true}
                   type="number"
                   defaultValue={
-                    document.getElementById("arkan-increase")?.value
+                    document.getElementById("arkan-increaseSum")?.value
                   }
                   required
                   name={`arkan-increaseSum`}
@@ -156,7 +149,7 @@ export const IfradiKuwat = ({ view }) => {
                   readOnly={true}
                   type="number"
                   defaultValue={
-                    document.getElementById("arkan-decrease")?.value
+                    document.getElementById("arkan-decreaseSum")?.value
                   }
                   required
                   name={`arkan-decreaseSum`}
@@ -224,7 +217,7 @@ export const IfradiKuwat = ({ view }) => {
                   readOnly={true}
                   type="number"
                   defaultValue={
-                   document.getElementById("umeedWaran-start")?.value
+                   document.getElementById("umeedWaran-startSum")?.value
                   }
                   required
                   name={`umeedWaran-startSum`}
@@ -266,7 +259,7 @@ export const IfradiKuwat = ({ view }) => {
                   readOnly={true}
                   type="number"
                   defaultValue={
-                    document.getElementById("umeedWaran-increase")?.value
+                    document.getElementById("umeedWaran-increaseSum")?.value
                   }
                   required
                   name={`umeedWaran-increaseSum`}
@@ -307,7 +300,7 @@ export const IfradiKuwat = ({ view }) => {
                   readOnly={true}
                   type="number"
                   defaultValue={
-                    document.getElementById("umeedWaran-decrease")?.value
+                    document.getElementById("umeedWaran-decreaseSum")?.value
                   }
                   required
                   name={`umeedWaran-decreaseSum`}
@@ -376,7 +369,7 @@ export const IfradiKuwat = ({ view }) => {
                   readOnly={true}
                   type="number"
                   defaultValue={
-                    document.getElementById("rafaqa-start")?.value
+                    document.getElementById("rafaqa-startSum")?.value
                   }
                   required
                   name={`rafaqa-startSum`}
@@ -416,7 +409,7 @@ export const IfradiKuwat = ({ view }) => {
                   readOnly={true}
                   type="number"
                   defaultValue={
-                    document.getElementById("rafaqa-increase")?.value
+                    document.getElementById("rafaqa-increaseSum")?.value
                   }
                   required
                   name={`rafaqa-increaseSum`}
@@ -458,7 +451,7 @@ export const IfradiKuwat = ({ view }) => {
                   readOnly={true}
                   type="number"
                   defaultValue={
-                    document.getElementById("rafaqa-decrease")?.value
+                    document.getElementById("rafaqa-decreaseSum")?.value
                   }
                   required
                   name={`rafaqa-decreaseSum`}
@@ -527,7 +520,7 @@ export const IfradiKuwat = ({ view }) => {
                   readOnly={true}
                   type="number"
                   defaultValue={
-                    document.getElementById("karkunan-start")?.value
+                    document.getElementById("karkunan-startSum")?.value
                   }
                   required
                   name={`karkunan-startSum`}
@@ -569,7 +562,7 @@ export const IfradiKuwat = ({ view }) => {
                   readOnly={true}
                   type="number"
                   defaultValue={
-                    document.getElementById("karkunan-increase")?.value
+                    document.getElementById("karkunan-increaseSum")?.value
                   }
                   required
                   name={`karkunan-increaseSum`}
@@ -612,7 +605,7 @@ export const IfradiKuwat = ({ view }) => {
                   readOnly={true}
                   type="number"
                   defaultValue={
-                    document.getElementById("karkunan-decrease")?.value
+                    document.getElementById("karkunan-decreaseSum")?.value
                   }
                   required
                   name={`karkunan-decreaseSum`}
@@ -681,7 +674,7 @@ export const IfradiKuwat = ({ view }) => {
                   readOnly={true}
                   type="number"
                   defaultValue={
-                    document.getElementById("shaheen-start")?.value
+                    document.getElementById("shaheen-startSum")?.value
                   }
                   required
                   name={`shaheen-startSum`}
@@ -725,7 +718,7 @@ export const IfradiKuwat = ({ view }) => {
                   
                   type="number"
                   defaultValue={
-                    document.getElementById("shaheen-increase")?.value
+                    document.getElementById("shaheen-increaseSum")?.value
                   }
                   required
                   name={`shaheen-increaseSum`}
@@ -765,7 +758,7 @@ export const IfradiKuwat = ({ view }) => {
                   readOnly={true}
                   type="number"
                   defaultValue={
-                    document.getElementById("shaheen-decrease")?.value
+                    document.getElementById("shaheen-decreaseSum")?.value
                   }
                   required
                   name={`shaheen-decreaseSum`}
@@ -833,7 +826,7 @@ export const IfradiKuwat = ({ view }) => {
                   readOnly={true}
                   type="number"
                   defaultValue={
-                    document.getElementById("members-start")?.value
+                    document.getElementById("members-startSum")?.value
                   }
                   required
                   name={`members-startSum`}
@@ -873,7 +866,7 @@ export const IfradiKuwat = ({ view }) => {
                   readOnly={true}
                   type="number"
                   defaultValue={
-                    document.getElementById("members-increase")?.value
+                    document.getElementById("members-increaseSum")?.value
                   }
                   required
                   name={`members-increaseSum`}
@@ -913,7 +906,7 @@ export const IfradiKuwat = ({ view }) => {
                   readOnly={true}
                   type="number"
                   defaultValue={
-                    document.getElementById("members-decrease")?.value
+                    document.getElementById("members-decreaseSum")?.value
                   }
                   required
                   name={`members-decreaseSum`}

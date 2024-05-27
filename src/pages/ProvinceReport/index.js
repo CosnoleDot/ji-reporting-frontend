@@ -20,6 +20,7 @@ export const ProvinceReport = () => {
   useEffect(() => {
     if (params?.id) printReport(params?.id);
   }, [params]);
+ 
   return (
     <div className="wrapper reports" style={{ marginBottom: "2rem" }} dir="rtl">
       <PrintDocument />
@@ -81,8 +82,7 @@ export const ProvinceReport = () => {
           <p>{data?.jamiaatId?.jamiaatA?.start}</p>
           <p>{data?.jamiaatId?.jamiaatA?.increase}</p>
           <p>
-            {data?.jamiaatId?.jamiaatA?.start +
-              data?.jamiaatId?.jamiaatA?.increase}
+            {data?.jamiaatId?.jamiaatA?.end}
           </p>
           <p>{data?.jamiaatId?.jamiaatA?.monthly}</p>
           
@@ -92,8 +92,7 @@ export const ProvinceReport = () => {
           <p>{data?.jamiaatId?.jamiaatB?.start}</p>
           <p>{data?.jamiaatId?.jamiaatB?.increase}</p>
           <p>
-            {data?.jamiaatId?.jamiaatB?.start +
-              data?.jamiaatId?.jamiaatB?.increase}
+            {data?.jamiaatId?.jamiaatB?.end}
           </p>
           <p>{data?.jamiaatId?.jamiaatB?.monthly}</p>
           
@@ -103,8 +102,7 @@ export const ProvinceReport = () => {
           <p>{data?.jamiaatId?.jamiaatC?.start}</p>
           <p>{data?.jamiaatId?.jamiaatC?.increase}</p>
           <p>
-            {data?.jamiaatId?.jamiaatC?.start +
-              data?.jamiaatId?.jamiaatC?.increase}
+            {data?.jamiaatId?.jamiaatC?.end}
           </p>
           <p>{data?.jamiaatId?.jamiaatC?.monthly}</p>
           
@@ -114,8 +112,7 @@ export const ProvinceReport = () => {
           <p>{data?.jamiaatId?.jamiaatD?.start}</p>
           <p>{data?.jamiaatId?.jamiaatD?.increase}</p>
           <p>
-            {data?.jamiaatId?.jamiaatD?.start +
-              data?.jamiaatId?.jamiaatD?.increase}
+            {data?.jamiaatId?.jamiaatD?.end}
           </p>
           <p>{data?.jamiaatId?.jamiaatD?.monthly}</p>
           
@@ -125,8 +122,7 @@ export const ProvinceReport = () => {
           <p>{data?.jamiaatId?.jamiaatE?.start}</p>
           <p>{data?.jamiaatId?.jamiaatE?.increase}</p>
           <p>
-            {data?.jamiaatId?.jamiaatE?.start +
-              data?.jamiaatId?.jamiaatE?.increase}
+            {data?.jamiaatId?.jamiaatE?.end}
           </p>
           <p>{data?.jamiaatId?.jamiaatE?.monthly}</p>
           
@@ -174,8 +170,7 @@ export const ProvinceReport = () => {
           <p>{data?.collegesId?.collegesA?.start}</p>
           <p>{data?.collegesId?.collegesA?.increase}</p>
           <p>
-            {data?.collegesId?.collegesA?.start +
-              data?.collegesId?.collegesA?.increase}
+            {data?.collegesId?.collegesA?.end}
           </p>
           <p>{data?.collegesId?.collegesA?.monthly}</p>
           
@@ -185,8 +180,7 @@ export const ProvinceReport = () => {
           <p>{data?.collegesId?.collegesB?.start}</p>
           <p>{data?.collegesId?.collegesB?.increase}</p>
           <p>
-            {data?.collegesId?.collegesB?.start +
-              data?.collegesId?.collegesB?.increase}
+            {data?.collegesId?.collegesB?.end}
           </p>
           <p>{data?.collegesId?.collegesB?.monthly}</p>
           
@@ -196,8 +190,7 @@ export const ProvinceReport = () => {
           <p>{data?.collegesId?.collegesC?.start}</p>
           <p>{data?.collegesId?.collegesC?.increase}</p>
           <p>
-            {data?.collegesId?.collegesC?.start +
-              data?.collegesId?.collegesC?.increase}
+            {data?.collegesId?.collegesC?.end}
           </p>
           <p>{data?.collegesId?.collegesC?.monthly}</p>
           
@@ -207,8 +200,7 @@ export const ProvinceReport = () => {
           <p>{data?.collegesId?.collegesD?.start}</p>
           <p>{data?.collegesId?.collegesD?.increase}</p>
           <p>
-            {data?.collegesId?.collegesD?.start +
-              data?.collegesId?.collegesD?.increase}
+            {data?.collegesId?.collegesD?.end}
           </p>
           <p>{data?.collegesId?.collegesD?.monthly}</p>
           
@@ -617,19 +609,20 @@ export const ProvinceReport = () => {
           <p>{data?.mentionedActivityId?.paighamEvent?.averageAttendance}</p>
         </div>
       </div>
-      <h3
-        style={{ textAlign: "start", fontWeight: "bold", marginBottom: "1rem" }}
+     <div className="flex w-full  justify-start items-start"> <h3
+        style={{  fontWeight: "bold", marginBottom: "1rem" }}
       >
         دیگر سرگرمیاں
       </h3>
+      </div>
       <div
         style={{
-          display: "flex",
-          justifyContent: "flex-start",
-          alignItems: "center",
+          // display: "flex",
+          // justifyContent: "flex-start",
+          // alignItems: "center",
           marginBottom: "1rem",
         }}
-        className="tableContainer"
+        className="tableContainer grid grid-cols-3 gap-4"
       >
         <h6 style={{ width: "100%", textAlign: "start" }}>
           تربیت گاہ:{data?.otherActivityId?.tarbiyatGaah}
@@ -639,6 +632,12 @@ export const ProvinceReport = () => {
         </h6>
         <h6 style={{ width: "100%", textAlign: "start" }}>
           روابط پارٹیز:{data?.otherActivityId?.rawabitParties}
+        </h6>
+        <h6 style={{ width: "100%", textAlign: "start" }}>
+        تربیت گاہوں کے انعقاد کی تعداد:{data?.otherActivityId?.tarbiyatGaahHeldSum}
+        </h6>
+        <h6 style={{ width: "100%", textAlign: "start" }}>
+        تربیت گاہوں کے انعقاد کا ہدف:{data?.otherActivityId?.tarbiyatGaahGoalSum}
         </h6>
         <h6 style={{ width: "100%", textAlign: "start" }}>
           شب بیداری:{data?.otherActivityId?.shabBedari}
@@ -656,7 +655,7 @@ export const ProvinceReport = () => {
           alignItems: "flex-start",
           justifyContent: "flex-start",
           textAlign: "start",
-          flexDirection: "column",
+          flexDirection: "row",
           gap: "10px",
           marginBottom: "1rem",
         }}
@@ -679,10 +678,9 @@ export const ProvinceReport = () => {
         <h3 style={{ textAlign: "start", fontWeight: "bolder",marginTop:"8px" }}>توسیع دعوت</h3>
         <h3 style={{ textAlign: "start", fontWeight: "bold" }}>روابط</h3>
         <div
+        className="grid grid-cols-3 gap-4"
           style={{
-            display: "flex",
-            justifyContent: "flex-start",
-            alignItems: "center",
+           
             marginBottom: "1rem",
             width: "100%",
           }}

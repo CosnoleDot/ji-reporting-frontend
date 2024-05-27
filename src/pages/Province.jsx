@@ -417,6 +417,24 @@ export const Province = () => {
     "darseQuran-averageAttendance",
     "ijtKarkunan-averageAttendance",
     "arkan-manualStart",
+    "arkan-startSum",
+    "arkan-increaseSum",
+    "arkan-decreaseSum",
+    "umeedWaran-startSum",
+    "umeedWaran-increaseSum",
+    "umeedWaran-decreaseSum",
+    "rafaqa-startSum",
+    "rafaqa-increaseSum",
+    "rafaqa-decreaseSum",
+    "karkunan-startSum",
+    "karkunan-increaseSum",
+    "karkunan-decreaseSum",
+    "shaheen-startSum",
+    "shaheen-increaseSum",
+    "shaheen-decreaseSum",
+    "members-startSum",
+    "members-increaseSum",
+    "members-decreaseSum",
     "arkan-manualIncrease",
     "arkan-manualDecrease",
     "umeedWaran-manualStart",
@@ -426,6 +444,7 @@ export const Province = () => {
     "rafaqa-manualStart",
     "rafaqa-manualIncrease",
     "rafaqa-manualDecrease",
+    "tarbiyatGaahGoalSum",
     "karkunan-manualStart",
     "karkunan-manualIncrease",
     "karkunan-manualDecrease",
@@ -433,6 +452,7 @@ export const Province = () => {
     "shaheen-manualIncrease",
     "shaheen-manualDecrease",
     "members-manualStart",
+    "tarbiyatGaahHeldSum",
     "members-manualIncrease",
     "members-manualDecrease",
     "tarbiyatGaahHeldManual",
@@ -483,7 +503,7 @@ export const Province = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
-  useEffect(() => {}, [data]);
+  
   useEffect(() => {
     if (!id) autoFill();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -529,6 +549,7 @@ export const Province = () => {
       data[i] = 0;
     }
   });
+
   return (
     <GeneralLayout>
       <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">
