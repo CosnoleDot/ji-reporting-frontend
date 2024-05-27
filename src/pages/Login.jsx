@@ -16,7 +16,6 @@ export const Login = ({ setAuthenticated }) => {
     const formData = new FormData(e.currentTarget);
     const { email, password } = toJson(formData);
     try {
-      console.log('first')
       const res = await instance.post(
         "/user/login",
         { email, password },

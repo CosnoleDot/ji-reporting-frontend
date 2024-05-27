@@ -223,7 +223,6 @@ export const Ilaqa = () => {
       const repo = req?.data?.data;
       
       setCreateData(repo);
-      console.log('first')
       dispatch({ type: "SUCCESS", payload: req.data?.message });
     } catch (err) {
       dispatch({ type: "ERROR", payload: err.response.data.message });

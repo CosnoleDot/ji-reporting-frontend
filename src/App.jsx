@@ -444,9 +444,7 @@ function App() {
     }
   };
   const filterMuntakhib = (id) => {
-    console.log(id);
     const mT = ilaqas.filter((ilaqa) => ilaqa?.maqam?._id == id);
-    console.log(mT);
     if (mT?.length > 0) {
       setMuntakhibMaqam(true);
     } else {
@@ -454,7 +452,6 @@ function App() {
     }
   };
   useEffect(() => {
-    console.log(muntakhibMaqam);
   }, [muntakhibMaqam]);
   let provinceR, maqamR, divisionR, halqaR, ilaqaR, markazR;
   const getMarkazReport = async () => {
@@ -511,10 +508,8 @@ function App() {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
-        console.log(req);
         if (req) {
           maqamR = req.data.data;
-          console.log(maqamR);
           setMaqamReports(req.data.data);
         }
       } catch (err) {

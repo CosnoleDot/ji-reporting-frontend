@@ -165,7 +165,6 @@ export const MuntakhibMaqamReports = () => {
       halq.totalReceived = halq.receivedSum;
       halq.monthlyReceivingGoal = halq.monthlyReceivingGoalSum;
       halq.totalSold = halq.soldSum;
-      console.log(halq)
       document.getElementById("uploadedRafaqa").value = halq.rafaqaFilledSum;
       document.getElementById("uploadedUmeedwaran").value =
         halq.umeedwaranFilledSum;
@@ -294,7 +293,6 @@ export const MuntakhibMaqamReports = () => {
       unfilter.uploadedUmeedwaran = unfilter['umeedwaranFilled'];
       unfilter.uploadedRafaqa = unfilter['rafaqaFilled'];
       setData(unfilter);
-      console.log(data)
       setCreateData(reverseDataFormat(repo));
 
       if (data) {
