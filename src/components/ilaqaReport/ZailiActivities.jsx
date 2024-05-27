@@ -1,5 +1,6 @@
 import React from "react";
 import { Box } from "./IfradiKuwat";
+import { sumUpTwoValues } from "../muntakhibMaqamReports";
 
 const ZailiActivities = ({ view }) => {
   return (
@@ -116,7 +117,13 @@ const ZailiActivities = ({ view }) => {
                 name={`ijtKarkunan-manual`}
                 id={`ijtKarkunan-manual`}
                 className="p-1 text-center min-w-full"
-                oninput="calculateSum()"
+                onChange={() =>
+                  sumUpTwoValues(
+                    parseInt(document.getElementById("ijtKarkunan-done").value),
+                    parseInt(document.getElementById("ijtKarkunan-manual").value),
+                    "currentSum"
+                  )
+                }
               />
               =
               <input
@@ -179,6 +186,13 @@ const ZailiActivities = ({ view }) => {
                   name={`darseQuran-manual`}
                   id={`darseQuran-manual`}
                   className="p-1 text-center "
+                  onChange={() =>
+                    sumUpTwoValues(
+                      parseInt(document.getElementById("darseQuran-done").value),
+                      parseInt(document.getElementById("darseQuran-manual").value),
+                      "currentSum"
+                    )
+                  }
                 />
                 =
                 <input
