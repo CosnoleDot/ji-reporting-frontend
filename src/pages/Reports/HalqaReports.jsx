@@ -62,7 +62,6 @@ export const HalqaReports = () => {
   };
 
   const viewReport = async (id) => {
-    console.log(id);
     navigate(`view/${id}`);
   };
   const editReport = (id) => {

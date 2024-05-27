@@ -34,9 +34,6 @@ export const getData = async (path, id, setData, data) => {
 
 export const Maqam = () => {
   // EDIT CODE START
-  const halqa = useContext(HalqaReportContext);
-  const maqam = useContext(MaqamReportContext);
-  const division = useContext(DivisionReportContext);
   const [month, setMonth] = useState("");
   const [createData, setCreateData] = useState();
   const params = useParams();

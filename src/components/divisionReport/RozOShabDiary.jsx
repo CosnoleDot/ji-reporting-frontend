@@ -3,23 +3,11 @@ import { sumUpTwoValues } from "../muntakhibMaqamReports";
 
 export const RozOShabDiary = ({ view }) => {
   return (
-    <div className="p-2 py-5 relative w-full overflow-auto">
+    <div className="p-2 py-5">
       <h2 className="text-black py-3 text-lg">روزشب ڈائری</h2>
       <div className="flex flex-col w-full items-start gap-4 justify-start">
-        {/* <div className='flex py-2 ml-4'>
-          <label className='block'> کتنے ارکان فل کرتے ہیں:</label>
-          <input
-            readOnly={view}
-            type='number'
-            defaultValue={0}
-            required
-            name='arkanFilled'
-            id='arkanFilled'
-            className='border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0'
-          />
-        </div> */}
-       <div className="flex-col lg:flex-row">
-                <label className="block text-sm md:text-lg mb-2 lg:mb-0">
+        <div className="w-full flex justify-start items-center overflow-hidden overflow-x-scroll">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2">
             کتنے امیدواران فل کرتے ہیں؟
           </label>
           <input
@@ -51,17 +39,17 @@ export const RozOShabDiary = ({ view }) => {
           <input
             readOnly={true}
             type="number"
-            defaultValue={document.getElementById("umeedwaranFilled")?.value
-            }
+            defaultValue={document.getElementById("umeedwaranFilled")?.value}
             required
             name={`umeedwaranFilledSum`}
             id={`umeedwaranFilledSum`}
             className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
           />
         </div>
-       <div className="flex-col lg:flex-row">
-                <label className="block text-sm md:text-lg mb-2 lg:mb-0">کتنےرفقافل کرتے ہیں:</label>
-
+        <div className="flex w-full overflow-hidden overflow-x-scroll">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2">
+            کتنےرفقافل کرتے ہیں:
+          </label>
           <input
             readOnly={true}
             type="number"
@@ -71,7 +59,6 @@ export const RozOShabDiary = ({ view }) => {
             id={`rafaqaFilled`}
             className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
           />
-
           +
           <input
             type="number"
@@ -92,8 +79,7 @@ export const RozOShabDiary = ({ view }) => {
           <input
             readOnly={true}
             type="number"
-            defaultValue={document.getElementById("rafaqaFilled")?.value
-            }
+            defaultValue={document.getElementById("rafaqaFilled")?.value}
             required
             name={`rafaqaFilledSum`}
             id={`rafaqaFilledSum`}

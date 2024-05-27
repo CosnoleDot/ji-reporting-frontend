@@ -3770,6 +3770,10 @@ html {
   width: 2rem;
 }
 
+.w-\[10rem\] {
+  width: 10rem;
+}
+
 .w-\[200px\] {
   width: 200px;
 }
@@ -3794,16 +3798,8 @@ html {
   width: 100%;
 }
 
-.w-\[15rem\] {
-  width: 15rem;
-}
-
-.w-\[10rem\] {
-  width: 10rem;
-}
-
-.w-\[20rem\] {
-  width: 20rem;
+.w-auto {
+  width: auto;
 }
 
 .min-w-\[10rem\] {
@@ -3822,10 +3818,6 @@ html {
   min-width: 100%;
 }
 
-.max-w-\[5rem\] {
-  max-width: 5rem;
-}
-
 .max-w-\[6rem\] {
   max-width: 6rem;
 }
@@ -3836,10 +3828,6 @@ html {
 
 .max-w-xs {
   max-width: 20rem;
-}
-
-.max-w-\[10rem\] {
-  max-width: 10rem;
 }
 
 .flex-1 {
@@ -3989,6 +3977,14 @@ html {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.whitespace-nowrap {
+  white-space: nowrap;
+}
+
+.break-words {
+  overflow-wrap: break-word;
 }
 
 .rounded-full {
@@ -4909,20 +4905,12 @@ html {
     width: 420px;
   }
 
-  .lg\:max-w-lg {
-    max-width: 32rem;
-  }
-
-  .lg\:max-w-full {
-    max-width: 100%;
-  }
-
-  .lg\:max-w-\[10rem\] {
-    max-width: 10rem;
-  }
-
   .lg\:max-w-\[15rem\] {
     max-width: 15rem;
+  }
+
+  .lg\:max-w-lg {
+    max-width: 32rem;
   }
 
   .lg\:grid-cols-2 {

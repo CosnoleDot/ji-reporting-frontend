@@ -65,6 +65,9 @@ export const IlaqaReports = () => {
   const editReport = (id) => {
     navigate(`edit/${id}`);
   };
+  const handlePrint = (id) => {
+    window.open(`ilaqa-report/print/${id}`, "blank");
+  };
   return (
     <>
       <div className="join xs:w-full mb-4">
@@ -201,15 +204,16 @@ export const IlaqaReports = () => {
                 <FaEye />
               </button>
 
-            
-              {localStorage.getItem("@type") == "ilaqa"
-                &&
-                  <button className="btn" onClick={() => editReport(p?._id)}>
-                    <FaEdit />
-                  </button>
-              }
+              <button className="btn" onClick={() => editReport(p?._id)}>
+                <FaEdit />
+              </button>
+              {me?.userAreaType == "Ilaqa" && (
+                <button className="btn" onClick={() => editReport(p?._id)}>
+                  <FaEdit />
+                </button>
+              )}
 
-              <button className="btn">
+              <button className="btn" onClick={() => handlePrint(p?._id)}>
                 <FaPrint />
               </button>
             </div>
