@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ProvinceContext, useToastState } from "../../context";
 import instance from "../../api/instrance";
 import { FaEdit } from "react-icons/fa";
@@ -7,6 +7,7 @@ export const LocationCountry = () => {
   const provinces = useContext(ProvinceContext);
   const { setLoading, loading, getProvinces } = useContext(UIContext);
   const [editMode, setEditMode] = useState(false);
+  const [data, setData] = useState(provinces);
   const [id, setId] = useState("");
   const { dispatch } = useToastState();
 
@@ -69,6 +70,9 @@ export const LocationCountry = () => {
     }
     setLoading(false);
   };
+  useEffect(() => {
+    setData(provinces);
+  }, [provinces]);
   return (
     <>
       <div className="p-2 grid grid-cols-1">
@@ -99,11 +103,10 @@ export const LocationCountry = () => {
             </tr>
           </thead>
           <tbody>
-            {provinces.map((province, index) => (
+            {data?.map((province, index) => (
               <tr key={index}>
                 <th>{index + 1}</th>
                 <td>{province?.name}</td>
-
                 <td className="flex justify-center items-center gap-4">
                   <button
                     disabled={loading}

@@ -1,25 +1,8 @@
-import { FaEdit, FaEye, FaPlus, FaPrint } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
 import { GeneralLayout } from "../components";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router";
-import {
-  DistrictContext,
-  DivisionContext,
-  DivisionReportContext,
-  HalqaContext,
-  HalqaReportContext,
-  IlaqaContext,
-  IlaqaReportContext,
-  IsMuntakhib,
-  MaqamContext,
-  MaqamReportContext,
-  MarkazReportContext,
-  MeContext,
-  ProvinceContext,
-  ProvinceReportContext,
-  TehsilContext,
-  useToastState,
-} from "../context";
+import { IlaqaContext, MeContext, useToastState } from "../context";
 import instance from "../api/instrance";
 import { Link } from "react-router-dom";
 import { FaRegFileExcel } from "react-icons/fa";
@@ -97,16 +80,10 @@ export const getDivisionByTehsil = (tehsil, districts) => {
   return districts.find((i) => i?._id === districtId)?.division?.name;
 };
 
-export const Reports = ({setPage}) => {
-  const [reports, setReports] = useState([]);
-  const [allReports, setAllReports] = useState([]);
+export const Reports = () => {
   const navigate = useNavigate();
-  const [userType, setUserType] = useState(localStorage.getItem("@type"));
-  const [search, showSearch] = useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
-  const [month, setMonth] = useState("");
-  const [year, setYear] = useState("2024");
-  const [filterData, setFilterData] = useState([]);
+
   const me = useContext(MeContext);
   const { dispatch } = useToastState();
   const [tab, setTab] = useState(
@@ -120,27 +97,8 @@ export const Reports = ({setPage}) => {
   );
   const [id, setId] = useState(null);
   const { active, setActive, filterMuntakhib } = useContext(UIContext);
-  const [filterAllData, setFilterAllData] = useState({});
   const [notifyTo, setNotifyTo] = useState("halqa");
-  const maqamReports = useContext(MaqamReportContext);
-  const markazReports = useContext(MarkazReportContext);
-  const ilaqaReports = useContext(IlaqaReportContext);
-  const divisionReports = useContext(DivisionReportContext);
-  const halqaReports = useContext(HalqaReportContext);
-  const provinceReports = useContext(ProvinceReportContext);
-  const [areas, setAreas] = useState([]);
-  const [searchArea, setSearchArea] = useState("");
-  const maqams = useContext(MaqamContext);
-  const divisions = useContext(DivisionContext);
-  const districts = useContext(DistrictContext);
-  const provinces = useContext(ProvinceContext);
-  const tehsils = useContext(TehsilContext);
-  const halqas = useContext(HalqaContext);
   const ilaqas = useContext(IlaqaContext);
-  const muntakhib = useContext(IsMuntakhib);
-  const [userAreaType, setUserAreaType] = useState("halqa");
-  const [selectedId, setSelectedId] = useState("");
-  const [selectedMonth, setSelectedMonth] = useState("");
   const params = useLocation();
 
   // GENERATE MONTHS
@@ -161,12 +119,7 @@ export const Reports = ({setPage}) => {
     getQueryParams();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
-  const handlePrint = (id) => {
-    window.open(`${active}-report/print/${id}`, "blank");
-  };
-  const toggleSearch = () => {
-    showSearch(!search);
-  };
+
   const handleReport = () => {
     if (me?.userAreaType === "Maqam") {
       filterMuntakhib(me?.userAreaId?._id);
@@ -176,372 +129,6 @@ export const Reports = ({setPage}) => {
     }
   };
 
-  const getAreas = async () => {
-    switch (active) {
-      case "province":
-        setAreas(provinces);
-        break;
-      case "division":
-        setAreas(divisions);
-        break;
-      case "maqam":
-        setAreas(maqams);
-        break;
-      case "halqa":
-        if (halqas?.length > 0) {
-          setAreas(
-            halqas.filter((i) => {
-              if (tab === "maqam") {
-                return i?.parentType === "Maqam";
-              } else if (tab === "division") {
-                return i?.parentType === "Tehsil";
-              }
-              return true;
-            })
-          );
-        } else {
-          setAreas(halqas);
-        }
-
-        break;
-      default:
-        setAreas(provinces);
-        break;
-    }
-  };
-
-  const getAreaWithType = () => {
-    switch (userAreaType) {
-      case "province":
-        setAreas(provinces);
-        break;
-      case "division":
-        setAreas(divisions);
-        break;
-      case "maqam":
-        setAreas(maqams);
-        break;
-      case "halqa":
-        setAreas(
-          halqas.filter((i) => {
-            if (tab === "maqam") {
-              return i?.parentType === "Maqam";
-            } else if (tab === "division") {
-              return i?.parentType === "Tehsil";
-            }
-            return true;
-          })
-        );
-        break;
-      default:
-        break;
-    }
-  };
-  const fetchReports = async () => {
-    try {
-      let response;
-      if (userType !== "halqa") {
-        const m = maqamReports;
-        const h = halqaReports;
-        const d = divisionReports;
-        const p = provinceReports;
-        const i = ilaqaReports;
-        const c = markazReports;
-        setAllReports({
-          maqam: id ? m.filter((i) => i?.maqamAreaId?._id === id) : m,
-          ilaqa: id ? m.filter((i) => i?.ilaqaAreaId?._id === id) : i,
-          halqa: id ? h.filter((i) => i?.halqaAreaId?._id === id) : h,
-          division: id ? d.filter((i) => i?.divisionAreaId?._id === id) : d,
-          province: id ? p.filter((i) => i?.provinceAreaId?._id === id) : p,
-          country: id ? p.filter((i) => i?.countryAreaId?._id === id) : c,
-        });
-        setFilterAllData({
-          maqam: id ? m.filter((i) => i?.maqamAreaId?._id === id) : m,
-          ilaqa: id ? m.filter((i) => i?.ilaqaAreaId?._id === id) : i,
-          halqa: id ? h.filter((i) => i?.halqaAreaId?._id === id) : h,
-          division: id ? d.filter((i) => i?.divisionAreaId?._id === id) : d,
-          province: id ? p.filter((i) => i?.provinceAreaId?._id === id) : p,
-          country: id ? p.filter((i) => i?.countryAreaId?._id === id) : c,
-        });
-
-        // SELECT WITH ID & DATE
-
-        if (selectedId && selectedMonth) {
-          setAllReports({
-            maqam: selectedId
-              ? m.filter(
-                  (i) =>
-                    i?.maqamAreaId?._id === selectedId &&
-                    i?.month?.split("-").slice(0, 2).join("-") === selectedMonth
-                )
-              : m,
-            halqa: selectedId
-              ? h.filter((i) => {
-                  if (userAreaType === "maqam") {
-                    return (
-                      i?.halqaAreaId?.parentId?._id === selectedId &&
-                      i?.month?.split("-").slice(0, 2).join("-") ===
-                        selectedMonth
-                    );
-                  } else if (userAreaType === "division") {
-                    const district = i?.halqaAreaId?.parentId?.district;
-                    const filteredDistricts = districts
-                      .filter((dis) => dis?.division?._id === selectedId)
-                      .map((div) => div?._id);
-                    return (
-                      filteredDistricts.includes(district) &&
-                      i?.month?.split("-").slice(0, 2).join("-") ===
-                        selectedMonth
-                    );
-                  }
-                  return (
-                    i?.halqaAreaId?._id === selectedId &&
-                    i?.month?.split("-").slice(0, 2).join("-") === selectedMonth
-                  );
-                })
-              : h,
-            division: selectedId
-              ? d.filter(
-                  (i) =>
-                    i?.divisionAreaId?._id === selectedId &&
-                    i?.month?.split("-").slice(0, 2).join("-") === selectedMonth
-                )
-              : d,
-            province: selectedId
-              ? p.filter(
-                  (i) =>
-                    i?.provinceAreaId?._id === selectedId &&
-                    i?.month?.split("-").slice(0, 2).join("-") === selectedMonth
-                )
-              : p,
-            country: selectedId
-              ? c.filter(
-                  (i) =>
-                    i?.countryAreaId?._id === selectedId &&
-                    i?.month?.split("-").slice(0, 2).join("-") === selectedMonth
-                )
-              : c,
-          });
-          setFilterAllData({
-            maqam: selectedId
-              ? m.filter(
-                  (i) =>
-                    i?.maqamAreaId?._id === selectedId &&
-                    i?.month?.split("-").slice(0, 2).join("-") === selectedMonth
-                )
-              : m,
-            halqa: selectedId
-              ? h.filter((i) => {
-                  if (userAreaType === "maqam") {
-                    return (
-                      i?.halqaAreaId?.parentId?._id === selectedId &&
-                      i?.month?.split("-").slice(0, 2).join("-") ===
-                        selectedMonth
-                    );
-                  } else if (userAreaType === "division") {
-                    const district = i?.halqaAreaId?.parentId?.district;
-                    const filteredDistricts = districts
-                      .filter((dis) => dis?.division?._id === selectedId)
-                      .map((div) => div?._id);
-                    return (
-                      filteredDistricts.includes(district) &&
-                      i?.month?.split("-").slice(0, 2).join("-") ===
-                        selectedMonth
-                    );
-                  }
-                  return (
-                    i?.halqaAreaId?._id === selectedId &&
-                    i?.month?.split("-").slice(0, 2).join("-") === selectedMonth
-                  );
-                })
-              : h,
-            division: selectedId
-              ? d.filter(
-                  (i) =>
-                    i?.divisionAreaId?._id === selectedId &&
-                    i?.month?.split("-").slice(0, 2).join("-") === selectedMonth
-                )
-              : d,
-            province: selectedId
-              ? p.filter(
-                  (i) =>
-                    i?.provinceAreaId?._id === selectedId &&
-                    i?.month?.split("-").slice(0, 2).join("-") === selectedMonth
-                )
-              : p,
-            country: selectedId
-              ? c.filter(
-                  (i) =>
-                    i?.countryAreaId?._id === selectedId &&
-                    i?.month?.split("-").slice(0, 2).join("-") === selectedMonth
-                )
-              : c,
-          });
-        }
-
-        // SELECT WITHOUT DATE
-
-        if (selectedId && (!selectedMonth || selectedMonth === "")) {
-          setAllReports({
-            maqam: selectedId
-              ? m.filter((i) => i?.maqamAreaId?._id === selectedId)
-              : m,
-            halqa: selectedId
-              ? h.filter((i) => {
-                  if (userAreaType === "maqam") {
-                    return i?.halqaAreaId?.parentId?._id === selectedId;
-                  } else if (userAreaType === "division") {
-                    const district = i?.halqaAreaId?.parentId?.district;
-                    const filteredDistricts = districts
-                      .filter((dis) => dis?.division?._id === selectedId)
-                      .map((div) => div?._id);
-                    return filteredDistricts.includes(district);
-                  }
-                  return i?.halqaAreaId?._id === selectedId;
-                })
-              : h,
-            division: selectedId
-              ? d.filter((i) => i?.divisionAreaId?._id === selectedId)
-              : d,
-            province: selectedId
-              ? p.filter((i) => i?.provinceAreaId?._id === selectedId)
-              : p,
-            country: selectedId
-              ? c.filter((i) => i?.countryAreaId?._id === selectedId)
-              : c,
-          });
-          setFilterAllData({
-            maqam: selectedId
-              ? m.filter((i) => i?.maqamAreaId?._id === selectedId)
-              : m,
-            halqa: selectedId
-              ? h.filter((i) => {
-                  return userAreaType === "maqam"
-                    ? i?.halqaAreaId?.parentId?._id === selectedId
-                    : i?.halqaAreaId?._id === selectedId;
-                })
-              : h,
-            division: selectedId
-              ? d.filter((i) => i?.divisionAreaId?._id === selectedId)
-              : d,
-            province: selectedId
-              ? p.filter((i) => i?.provinceAreaId?._id === selectedId)
-              : p,
-            country: selectedId
-              ? c.filter((i) => i?.countryAreaId?._id === selectedId)
-              : c,
-          });
-        }
-      } else {
-        switch (userType) {
-          case "country":
-            response = markazReports;
-            break;
-          case "province":
-            response = provinceReports;
-            break;
-          case "maqam":
-            response = maqamReports;
-            break;
-          case "ilaqa":
-            response = ilaqaReports;
-            break;
-          case "division":
-            response = divisionReports;
-            break;
-          case "halqa":
-            response = halqaReports;
-            break;
-          default:
-            break;
-        }
-        const data = response;
-        setReports(data);
-        setFilterData(data);
-      }
-    } catch (error) {
-      console.error("Error fetching reports:", error);
-    }
-  };
-  const clearFilters = () => {
-    setMonth("");
-    setYear("2023");
-    setFilterAllData(allReports);
-    setFilterData(reports);
-    setSelectedId(null);
-    setSelectedMonth("");
-    document.getElementById("autocomplete").value = "";
-  };
-  useEffect(() => {
-    fetchReports();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userType, id, active, tab, selectedId, selectedMonth]);
-  // const searchResults = () => {
-  //   if (userType !== "halqa") {
-  //     if (year !== "" && month !== "") {
-  //       const filteredData = { ...allReports };
-  //       filteredData[active] = allReports[active]?.filter((i) => {
-  //         const [f_year, f_month] = [
-  //           i?.month?.split("-")[0],
-  //           i?.month?.split("-")[1],
-  //         ];
-  //         return (
-  //           parseInt(year) === parseInt(f_year) &&
-  //           parseInt(month) === parseInt(f_month)
-  //         );
-  //       });
-  //       showSearch(false);
-  //       setFilterAllData(filteredData);
-  //     } else if (year !== "" && month === "") {
-  //       const filteredData = { ...allReports };
-  //       filteredData[active] = allReports[active]?.filter((i) => {
-  //         const f_year = i?.month?.split("-")[0];
-  //         return parseInt(year) === parseInt(f_year);
-  //       });
-  //       showSearch(false);
-  //       setFilterAllData(filteredData);
-  //     } else if (year === "" && month !== "") {
-  //       dispatch({ type: "ERROR", payload: "Enter year with month" });
-  //       setFilterAllData(allReports);
-  //     } else if (year === "" && month === "") {
-  //       dispatch({ type: "ERROR", payload: "Date is required" });
-  //       setFilterAllData(allReports);
-  //     } else {
-  //       setFilterAllData(allReports);
-  //     }
-  //   } else {
-  //     if (year !== "" && month !== "") {
-  //       const filteredData = reports?.reduce((acc, curr) => {
-  //         const reportYear = parseInt((curr?.month).split("-")[0]);
-  //         const reportMonth = parseInt((curr?.month).split("-")[1]);
-  //         if (
-  //           reportMonth === parseInt(month) &&
-  //           reportYear === parseInt(year)
-  //         ) {
-  //           acc.push(curr);
-  //         }
-  //         return acc;
-  //       }, []);
-  //       showSearch(false);
-  //       setFilterData(filteredData);
-  //     } else if (year !== "" && month === "") {
-  //       const filteredData = reports?.filter((curr) => {
-  //         const reportedYear = (curr?.month).split("-")[0];
-  //         return parseInt(reportedYear) === parseInt(year);
-  //       });
-  //       showSearch(false);
-  //       setFilterData(filteredData);
-  //     } else if (year === "" && month !== "") {
-  //       dispatch({ type: "ERROR", payload: "Enter year with month" });
-  //       setFilterData(reports);
-  //     } else if (year === "" && month === "") {
-  //       dispatch({ type: "ERROR", payload: "Date is required" });
-  //       setFilterData(reports);
-  //     } else {
-  //       setFilterData(reports);
-  //     }
-  //   }
-  // };
   useEffect(() => {
     if (window) {
       if (window.innerWidth < 520) {
@@ -550,10 +137,7 @@ export const Reports = ({setPage}) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [window.innerWidth]);
-  useEffect(() => {
-    setUserType(localStorage.getItem("@type"));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [localStorage]);
+
   const sendNotification = async () => {
     try {
       const req = await instance.post(
@@ -571,27 +155,6 @@ export const Reports = ({setPage}) => {
       dispatch({ type: "ERROR", payload: err.response.data.message });
     }
   };
-  // To get Divisions
-  const getAreaType = (area) => {
-    if (area?.parentType === "Maqam") {
-      const name = maqams.find((i) => i?._id === area?.parentId?._id);
-      return `${name?.name}(Maqam)`;
-    } else if (area?.parentType === "Tehsil") {
-      const name = getDivisionByTehsil(area?.parentId, districts);
-      return `${name}(Division)`;
-    } else if (area?.province) {
-      return maqams.find((i) => i?._id === area?._id) ? "Maqam" : "Division";
-    }
-    return "Province";
-  };
-  useEffect(() => {
-    getAreas();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [active, provinces, maqams, divisions, halqas, tehsils, districts]);
-  useEffect(() => {
-    if (active === "halqa") getAreaWithType();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userAreaType]);
   return (
     <GeneralLayout
       title={me?.userAreaId?.name.toUpperCase()}
@@ -609,15 +172,20 @@ export const Reports = ({setPage}) => {
             </button>
 
             {!isMobileView &&
-              active !== "province" &&
-              !(
-                active === "maqam" && localStorage.getItem("@type") === "maqam"
-              ) &&
-              !(
-                active === "division" &&
-                localStorage.getItem("@type") === "division"
-              ) &&
-              localStorage.getItem("@type") !== "halqa" && (
+              ((active === "province" &&
+                localStorage.getItem("@type") === "country") ||
+                (active === "division" &&
+                  localStorage.getItem("@type") === "province") ||
+                (active === "maqam" &&
+                  localStorage.getItem("@type") === "province") ||
+                (active === "ilaqa" &&
+                  localStorage.getItem("@type") === "maqam") ||
+                (active === "halqa" &&
+                  (localStorage.getItem("@type") === "maqam" ||
+                    localStorage.getItem("@type") === "division" ||
+                    localStorage.getItem("@type") === "ilaqa") &&
+                  localStorage.getItem("@type") !== "province" &&
+                  localStorage.getItem("@type") !== "country")) && (
                 <button
                   onClick={sendNotification}
                   className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
@@ -627,8 +195,6 @@ export const Reports = ({setPage}) => {
               )}
           </div>
         </div>
-        {/* )} */}
-
         {["umeedwar", "rukan", "umeedwaar-nazim", "rukan-nazim"].includes(
           me?.nazimType
         ) && (

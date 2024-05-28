@@ -12,7 +12,7 @@ export const Notifications = ({ userRequests, type }) => {
   const { loading, setLoading } = useContext(UIContext);
   const { dispatch } = useToastState();
   const { getNazim } = useContext(UIContext);
-  const { getAllRequests } = useContext(UIContext);
+  const { getAllRequests, getAllNotifications } = useContext(UIContext);
   const update = async (id, status) => {
     setLoading(true);
     try {
@@ -36,18 +36,34 @@ export const Notifications = ({ userRequests, type }) => {
     }
     setLoading(false);
   };
-
+  const markRead = async (id) => {
+    setLoading(true);
+    try {
+      const req = await instance.patch(`/notifications/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          "Content-Type": "application/json",
+        },
+      });
+      await getAllNotifications();
+      dispatch({ type: "SUCCESS", payload: req.data?.message });
+    } catch (err) {
+      console.log(err);
+      dispatch({ type: "ERROR", payload: err.response.data.message });
+    }
+    setLoading(false);
+  };
   return (
     <div className="card-body max-h-[320px] overflow-y-scroll">
       {type === "request" ? (
         <>
-          {userRequests.length < 1 && (
+          {userRequests?.length < 1 && (
             <h1 className="p-2">No requests found!</h1>
           )}
           {loading ? (
             <Loader />
           ) : (
-            userRequests.map((req, index) => (
+            userRequests?.map((req, index) => (
               <div
                 key={index}
                 className="relative hover:bg-slate-300 flex flex-col lg:flex-col lg:items-center justify-between"
@@ -92,13 +108,13 @@ export const Notifications = ({ userRequests, type }) => {
         </>
       ) : (
         <>
-          {userRequests.length < 1 && (
+          {userRequests?.length < 1 && (
             <h1 className="p-2">No notifications found!</h1>
           )}
           {loading ? (
             <Loader />
           ) : (
-            userRequests.map((req, index) => (
+            userRequests?.map((req, index) => (
               <div
                 key={index}
                 className="p-3 hover:bg-slate-300 flex flex-col lg:flex-row lg:items-center justify-between"
@@ -116,6 +132,15 @@ export const Notifications = ({ userRequests, type }) => {
                       {moment(req?.createdAt).year()}
                     </span>
                   </div>
+                </div>
+                <div className="flex items-end justify-end lg:justify-end gap-3 py-2">
+                  <button
+                    disabled={loading}
+                    onClick={() => markRead(req?._id)}
+                    className="p-2 bg-slate-200 rounded-lg"
+                  >
+                    <FaCheck />
+                  </button>
                 </div>
               </div>
             ))
