@@ -1,10 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { IlaqaReportContext, MeContext, useToastState } from "../../context";
 import { FaEdit, FaEye, FaPrint } from "react-icons/fa";
 import moment from "moment";
 import { NoReports, months } from "../Reports";
 import { FilterDialog } from "./FilterDialog";
 import { useNavigate } from "react-router-dom";
+import { UIContext } from "../../context/ui";
 
 export const IlaqaReports = () => {
   const iReports = useContext(IlaqaReportContext);
@@ -13,9 +14,14 @@ export const IlaqaReports = () => {
   const [search, showSearch] = useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
   const [month, setMonth] = useState("");
-  const [year, setYear] = useState("2023");
+  const [year, setYear] = useState("2024");
   const me = useContext(MeContext);
+  const [currentPage, setCurrentPage] = useState(1);
+  const { getIlaqaReports } = useContext(UIContext);
+  const [disable,setDisable]= useState(false);
+  const [currentData,setCurrentData]=useState([]);
   const navigate = useNavigate();
+  const itemsPerPage = 10;
   const searchResults = () => {
     if (year !== "" && month !== "") {
       let filteredData = { ...iReports };
@@ -48,6 +54,7 @@ export const IlaqaReports = () => {
     } else {
       setFilterAllData(iReports);
     }
+    setCurrentPage(1);
   };
   const toggleSearch = () => {
     showSearch(!search);
@@ -67,6 +74,36 @@ export const IlaqaReports = () => {
   };
   const handlePrint = (id) => {
     window.open(`ilaqa-report/print/${id}`, "blank");
+  };
+
+  let totalPages = currentPage + 1;
+  useEffect(()=>{
+
+    const data = filterAllData?.slice(
+      (currentPage - 1) * itemsPerPage,
+      currentPage * itemsPerPage
+    );
+    setCurrentData(data)
+  },[currentData, filterAllData,currentPage])
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+      const inset = currentPage * itemsPerPage;
+      const offset = itemsPerPage;
+      if (iReports.length <= itemsPerPage * currentPage) {
+        getIlaqaReports(inset, offset);
+      } else {
+        totalPages = currentPage;
+        setDisable(true);
+      }
+    }
   };
   return (
     <>
@@ -186,8 +223,8 @@ export const IlaqaReports = () => {
             )} */}
         </div>
       </div>
-      {filterAllData?.length > 0 ? (
-        filterAllData?.map((p) => (
+      {currentData.length > 0 ? (
+        currentData.map((p) => (
           <div
             key={p?._id}
             className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
@@ -204,9 +241,7 @@ export const IlaqaReports = () => {
                 <FaEye />
               </button>
 
-              <button className="btn" onClick={() => editReport(p?._id)}>
-                <FaEdit />
-              </button>
+              
               {me?.userAreaType == "Ilaqa" && (
                 <button className="btn" onClick={() => editReport(p?._id)}>
                   <FaEdit />
@@ -222,6 +257,21 @@ export const IlaqaReports = () => {
       ) : (
         <NoReports />
       )}
+      <div className="flex justify-between mt-4">
+        <button
+          className="btn"
+          onClick={handlePrevPage}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </button>
+        <span>
+          Page {currentPage} of {totalPages}
+        </span>
+        <button  className="btn" onClick={handleNextPage}>
+          Next
+        </button>
+      </div>
       <dialog id="filter-area-dialog" className="modal">
         <FilterDialog setFilterAllData={setFilterAllData} />
       </dialog>

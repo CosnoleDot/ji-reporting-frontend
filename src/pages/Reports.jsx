@@ -329,7 +329,7 @@ export const Reports = () => {
             me?.userAreaType === "Ilaqa" ||
             me?.userAreaType === "Maqam" ||
             me?.userAreaType === "Division" ? (
-              <UnitReport setPage={setPage}/>
+              <UnitReport />
             ) : (
               <HalqaReports />
             )

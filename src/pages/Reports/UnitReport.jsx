@@ -7,7 +7,7 @@ import { FilterDialog } from "./FilterDialog";
 import { useNavigate } from "react-router-dom";
 import { UIContext } from "../../context/ui";
 
-export const UnitReport = ({ setPage }) => {
+export const UnitReport = () => {
   const hReports = useContext(HalqaReportContext);
   const [filterAllData, setFilterAllData] = useState(hReports);
   const { dispatch } = useToastState();
@@ -55,7 +55,7 @@ export const UnitReport = ({ setPage }) => {
     } else {
       setFilterAllData(hReports);
     }
-    setCurrentPage(1); // Reset to first page after search
+    setCurrentPage(1); 
   };
 
   const toggleSearch = () => {
@@ -106,10 +106,9 @@ export const UnitReport = ({ setPage }) => {
         totalPages = currentPage
         setDisable(true)
       }
-      setPage(currentPage + 1); 
+      
     }
   };
-  console.log(hReports);
   return (
     <>
       <div className="join xs:w-full mb-4">
