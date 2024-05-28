@@ -29,9 +29,6 @@ import { ZailiActivities } from "../components/divisionReport/ZailiActivities";
 
 export const Division = () => {
   // EDIT CODE START
-  const halqa = useContext(HalqaReportContext);
-  const maqam = useContext(MaqamReportContext);
-  const division = useContext(DivisionReportContext);
   const [createData, setCreateData] = useState();
   const [month, setMonth] = useState("");
   const params = useParams();
