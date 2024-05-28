@@ -106,7 +106,7 @@ export const Rawabit1 = ({
               </button>
             </dialog>
 
-            <div className="flex w-full justify-start items-center mb-3 min-h-[30px] border rounded-md border-slate-300">
+            <div className="flex w-full overflow-hidden overflow-x-scroll p-2 justify-start items-center mb-3 min-h-[30px] border rounded-md border-slate-300">
               {rbt1Programs &&
                 rbt1Programs.length > 0 &&
                 rbt1Programs.map((p, index) => (

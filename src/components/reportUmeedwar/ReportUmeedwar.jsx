@@ -235,17 +235,6 @@ export const ReportUmeedwar = () => {
                 value={date}
               />
             </div>
-            <h3 className="mb-2 block text-sm md:text-lg">
-              اس ماہ میں کوئ خصوصی مصروفیت جس کی وجہ سے آپ کئ روٹین متاثر ہوئ ہو
-            </h3>
-            <textarea
-              className="inptut border rounded-md pr-2 w-full"
-              placeholder={"..."}
-              id={"disturbingRoutine"}
-              name={"disturbingRoutine"}
-              type={"textarea"}
-              disabled={view}
-            ></textarea>
           </div>
 
           <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
@@ -260,7 +249,7 @@ export const ReportUmeedwar = () => {
                   readOnly
                   id="name"
                   name="name"
-                  className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
+                  className="border-b-2 text-center border-dashed  mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
                   value={me?.name}
                 />
               </div>
@@ -277,11 +266,11 @@ export const ReportUmeedwar = () => {
                   readOnly
                   id="JamiatRelation"
                   name="JamiatRelation"
-                  className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
+                  className="border-b-2 text-center border-dashed  mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
                   value={localStorage.getItem("@type")}
                 />
               </div>
-              <div className="flex gap-4">
+              <div className="flex gap-4 mb-4">
                 <label
                   className="block text-sm md:text-lg"
                   htmlFor="organizationRelation"
@@ -294,10 +283,22 @@ export const ReportUmeedwar = () => {
                   readOnly
                   id="organizationRelation"
                   name="organizationRelation"
-                  className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
+                  className="border-b-2 text-center border-dashed  mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
                   value={localStorage.getItem("@nazimType")}
                 />
               </div>
+              <h3 className="mb-2 block text-sm md:text-lg">
+                اس ماہ میں کوئ خصوصی مصروفیت جس کی وجہ سے آپ کئ روٹین متاثر ہوئ
+                ہو
+              </h3>
+              <textarea
+                className="inptut border rounded-md pr-2 w-full"
+                placeholder={"..."}
+                id={"disturbingRoutine"}
+                name={"disturbingRoutine"}
+                type={"textarea"}
+                disabled={view}
+              ></textarea>
             </div>
           </div>
           <FajarNamaz view={view} />
@@ -312,7 +313,7 @@ export const ReportUmeedwar = () => {
               <h3 className="mb-2 block w-full text-start text-sm md:text-lg p-3">
                 اجتماعِ امیدواران میں شرکت کی
               </h3>
-              <div className="flex-col lg:flex-row items-center justify-start border border-primary p-2 rounded-lg">
+              <div className="flex flex-row items-center justify-start border border-primary p-2 rounded-lg">
                 <div className="form-control">
                   <label className="label cursor-pointer gap-2">
                     <input
@@ -358,7 +359,7 @@ export const ReportUmeedwar = () => {
               <h3 className="mb-2 block w-full text-start text-sm md:text-lg p-3">
                 سٹڈی سرکل میں شرکت کی
               </h3>
-              <div className="flex-col lg:flex-row items-center justify-start border border-primary p-2 rounded-lg">
+              <div className="flex items-center justify-start border border-primary p-2 rounded-lg">
                 <div className="form-control">
                   <label className="label cursor-pointer gap-2">
                     <input
@@ -408,7 +409,7 @@ export const ReportUmeedwar = () => {
                 اعانت ادا
               </h3>
 
-              <div className="flex-col lg:flex-row items-center justify-start border border-primary p-2 rounded-lg">
+              <div className="flex items-center justify-start border border-primary p-2 rounded-lg">
                 <div className="form-control">
                   <label className="label cursor-pointer gap-2">
                     <input

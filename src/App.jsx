@@ -188,7 +188,7 @@ function App() {
             },
           });
           if (req) {
-            setProvinces([req.data?.data]);
+            setProvinces(req.data?.data);
           }
         } catch (err) {
           console.log(err);
@@ -197,11 +197,6 @@ function App() {
             payload: err?.response?.data?.message || err?.message,
           });
         }
-      } else {
-        dispatch({
-          type: "ERROR",
-          payload: "Not a valid user",
-        });
       }
     }
   };
@@ -406,7 +401,7 @@ function App() {
   const getHalqas = async () => {
     try {
       let req;
-      if (me?.userAreaType === "Halqa") {
+      if (me && me?.userAreaType === "Halqa") {
         req = await instance.get(`/locations/halqa/${me?.userAreaId?._id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
@@ -421,18 +416,14 @@ function App() {
           });
         }
       } else {
-        req = await instance.get("/locations/halqa", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("@token")}`,
-          },
-        });
+        if (me && me.userAreaType !== "Halqa")
+          req = await instance.get("/locations/halqa", {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("@token")}`,
+            },
+          });
         if (req) {
           setHalqas(req?.data?.data);
-        } else {
-          dispatch({
-            type: "ERROR",
-            payload: req?.response?.data?.message,
-          });
         }
       }
     } catch (err) {
@@ -451,8 +442,7 @@ function App() {
       setMuntakhibMaqam(false);
     }
   };
-  useEffect(() => {
-  }, [muntakhibMaqam]);
+  useEffect(() => {}, [muntakhibMaqam]);
   let provinceR, maqamR, divisionR, halqaR, ilaqaR, markazR;
   const getMarkazReport = async () => {
     if (me?.userAreaType === "Country")
