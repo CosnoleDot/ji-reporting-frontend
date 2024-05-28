@@ -25,19 +25,20 @@ import {
 } from "../components/markazReport";
 import { GeneralInfo } from "../components/markazReport/GeneralInfo";
 
-const getData = async (path, id, setData, data) => {
-  const arr = data[path];
-  const obj = arr.filter((i) => i?._id?.toString() === id?.toString());
-  // if (req) {
-  setData(reverseDataFormat(obj[0]));
-  // }F
-};
+// const getData = async (path, id, setData, data) => {
+//   const arr = data[path];
+//   const obj = arr.filter((i) => i?._id?.toString() === id?.toString());
+//   // if (req) {
+//   setData(reverseDataFormat(obj[0]));
+//   // }F
+// };
 
 export const MarkazReport = () => {
   // EDIT CODE START
   const province = useContext(ProvinceReportContext);
   const markaz = useContext(MarkazReportContext);
   const [month, setMonth] = useState("");
+  const [createData, setCreateData] = useState([]);
   const params = useParams();
   const [id, setId] = useState(null);
   const { dispatch } = useToastState();
@@ -52,7 +53,7 @@ export const MarkazReport = () => {
   const autoFill = () => {
     const halq = {};
     document.getElementById("markaz-form").reset();
-    if (province.filter((i) => i?.month.includes(month)).length < 1) {
+    if (createData.filter((i) => i?.month.includes(month)).length < 1) {
       [
         `rafaqa-start`,
         "karkunan-start",
@@ -88,7 +89,7 @@ export const MarkazReport = () => {
       });
       // document.getElementById("name").value = me?.userAreaId?.name;
     }
-    province
+    createData
       .filter((i) => i?.month.includes(month))
       .forEach((i) => {
         const sim = reverseDataFormat(i);
@@ -257,6 +258,63 @@ export const MarkazReport = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
+  const getProvinceReports = async () => {
+    try {
+      setLoading(true);
+      const req = await instance.get(`/reports/markaz`, {
+        params: { areaId: me?.userAreaId?._id },
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          "Content-Type": "application/json",
+        },
+      });
+      const repo = req?.data?.data;
+      
+      setCreateData(repo);
+      dispatch({ type: "SUCCESS", payload: req.data?.message });
+    } catch (err) {
+      dispatch({ type: "ERROR", payload: err.response.data.message });
+    }
+    setLoading(false);
+  };
+  const getCountryReport = async () => {
+    try {
+      setLoading(true);
+      const req = await instance.get(`/reports/markaz/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          "Content-Type": "application/json",
+        },
+      });
+      const repo = req?.data?.data;
+      
+      setData(reverseDataFormat(repo));
+      setCreateData(reverseDataFormat(repo));
+         
+      if (data) {
+        setLoading(false);
+      }
+      dispatch({ type: "SUCCESS", payload: req.data?.message });
+    } catch (err) {
+      dispatch({ type: "ERROR", payload: err.response.data.message });
+    }
+    setLoading(false);
+  };
+  useEffect(() => {
+    const l = location.pathname?.split("/")[2];
+    setId(params?.id);
+    if ((l === "view" || l === "edit") && id) {
+      getCountryReport();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
+  useEffect(() => {
+    const l = location.pathname?.split("/")[2];
+    if (l === "create") {
+      getProvinceReports();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
   useEffect(() => {
     const l = location.pathname?.split("/")[2];
     if (l === "view") {
@@ -265,13 +323,7 @@ export const MarkazReport = () => {
     setId(params?.id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
-  useEffect(() => {
-    if (id) getData("markaz", id, setData, { markaz });
-    else {
-      setLoading(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+ 
   useEffect(() => {
     Object.keys(data).forEach((i) => {
       const elem = document.getElementById(i);
@@ -292,7 +344,7 @@ export const MarkazReport = () => {
   useEffect(() => {
     if (!id) autoFill();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, month]);
+  }, [id, month,createData]);
   // EDIT CODE END
   const handleSubmit = async (e) => {
     e.preventDefault();
