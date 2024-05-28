@@ -66,6 +66,7 @@ function App() {
   const [tehsils, setTehsils] = useState([]);
   const [halqas, setHalqas] = useState([]);
   const [ilaqas, setIlaqas] = useState([]);
+  const [page, setPage] = useState(1);
   const [nazim, setNazim] = useState([]);
   const [markazReport, setMarkazReport] = useState([]);
   const [provinceReports, setProvinceReports] = useState([]);
@@ -557,14 +558,19 @@ function App() {
       }
     return;
   };
-  const getHalqaReports = async () => {
+  const getHalqaReports = async (inset, offset) => {
     try {
-      const req = await instance.get("/reports/halqa", {
+      console.log(inset, offset);
+      const req = await instance.get(`/reports/halqa?inset=${inset}&offset=${offset}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
       });
       if (req) {
         halqaR = req.data.data;
-        setHalqaReports(req.data.data);
+        if(!inset){
+          let a = halqaR[0].total;
+          halqaR.splice(0,1)
+        }
+        setHalqaReports((prevData) => [...prevData, ...halqaR]);
       }
     } catch (err) {
       console.log(err);
@@ -573,7 +579,8 @@ function App() {
         payload: err?.response?.data?.message || err?.message,
       });
     }
-  };
+};
+
   const getNazim = async () => {
     try {
       const req = await instance.get("/user/nazim", {
@@ -852,7 +859,7 @@ function App() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [me, isCompleted, navigate]);
-
+console.log(halqaReports)
   return (
     <MeContext.Provider value={me}>
       <DoubleScrollLeftRefresh />
@@ -948,7 +955,10 @@ function App() {
                                           <Route
                                             path="/reports"
                                             element={
-                                              <Reports maqam={muntakhibMaqam} />
+                                              <Reports
+                                                maqam={muntakhibMaqam}
+                                                setPage={setPage}
+                                              />
                                             }
                                           />
                                           <Route
