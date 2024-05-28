@@ -521,17 +521,22 @@ function App() {
       }
     return;
   };
-  const getIlaqaReports = async () => {
+  const getIlaqaReports = async (inset, offset) => {
     if (me?.userAreaType !== "Halqa" && me?.userAreaType !== "Division")
       try {
-        const req = await instance.get("/reports/ilaqa", {
+        const req = await instance.get(`/reports/ilaqa?inset=${inset}&offset=${offset}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
         if (req) {
           ilaqaR = req.data.data;
-          setIlaqaReports(req.data.data);
+          console.log(ilaqaR.length)
+          // if(!inset){
+          //   let a = ilaqaR[0].total;
+          //   ilaqaR.splice(0,1)
+          // }
+          setIlaqaReports((prevData) => [...prevData, ...ilaqaR]);
         }
       } catch (err) {
         console.log(err);
@@ -569,7 +574,7 @@ function App() {
   };
   const getHalqaReports = async (inset, offset) => {
     try {
-      console.log(inset, offset);
+      
       const req = await instance.get(`/reports/halqa?inset=${inset}&offset=${offset}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
       });
@@ -580,6 +585,7 @@ function App() {
           halqaR.splice(0,1)
         }
         setHalqaReports((prevData) => [...prevData, ...halqaR]);
+        
       }
     } catch (err) {
       console.log(err);
@@ -868,7 +874,7 @@ function App() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [me, isCompleted, navigate]);
-console.log(halqaReports)
+console.log(ilaqaReports)
   return (
     <MeContext.Provider value={me}>
       <DoubleScrollLeftRefresh />
@@ -966,7 +972,7 @@ console.log(halqaReports)
                                             element={
                                               <Reports
                                                 maqam={muntakhibMaqam}
-                                                setPage={setPage}
+                                                
                                               />
                                             }
                                           />
