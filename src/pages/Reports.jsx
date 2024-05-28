@@ -97,7 +97,7 @@ export const getDivisionByTehsil = (tehsil, districts) => {
   return districts.find((i) => i?._id === districtId)?.division?.name;
 };
 
-export const Reports = () => {
+export const Reports = ({setPage}) => {
   const [reports, setReports] = useState([]);
   const [allReports, setAllReports] = useState([]);
   const navigate = useNavigate();
@@ -763,7 +763,7 @@ export const Reports = () => {
             me?.userAreaType === "Ilaqa" ||
             me?.userAreaType === "Maqam" ||
             me?.userAreaType === "Division" ? (
-              <UnitReport />
+              <UnitReport setPage={setPage}/>
             ) : (
               <HalqaReports />
             )
