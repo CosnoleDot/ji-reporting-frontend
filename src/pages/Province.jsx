@@ -25,15 +25,15 @@ import { RozOShabDiary } from "../components/provinceReport/RozOShabDiary";
 import { Jamiaat } from "../components/provinceReport/Jamiaat";
 import { Colleges } from "../components/provinceReport/Colleges";
 
-const getData = async ( data) => {
-  
+const getData = async (data) => {
   // const province = data["province"];
   // const obj = province.filter((i) => i?._id?.toString() === id?.toString());
- return reverseDataFormat(data);
+  return reverseDataFormat(data);
 };
 
 export const Province = () => {
   // EDIT CODE START
+  const [createData, setCreateData] = useState([]);
   const halqa = useContext(HalqaReportContext);
   const maqam = useContext(MaqamReportContext);
   const division = useContext(DivisionReportContext);
@@ -60,8 +60,10 @@ export const Province = () => {
     document.getElementById("province-form").reset();
 
     if (
-      maqam.filter((i) => i?.month.includes(month))?.length < 1 &&
-      division.filter((i) => i?.month.includes(month))?.length < 1
+      createData?.maqamReports?.filter((i) => i?.month?.includes(month))
+        ?.length < 1 &&
+      division?.divisionReports?.filter((i) => i?.month?.includes(month))
+        ?.length < 1
     ) {
       [
         "rafaqa-start",
@@ -211,59 +213,55 @@ export const Province = () => {
       });
       document.getElementById("name").value = me?.userAreaId?.name;
     }
-    const maqamTFiltered = maqam?.map((item) => {
+    const maqamTFiltered = createData?.maqamReports?.map((item) => {
       const { muntakhibTdId, tdId } = item;
-      return { m: muntakhibTdId, t: tdId };
+      return { m: muntakhibTdId || [], t: tdId || [] };
     });
 
-    const divisionTFiltered = division?.map((item) => {
+    const divisionTFiltered = createData?.divisionReports?.map((item) => {
       const { tdId } = item;
-      return { t: tdId };
+      return { t: tdId || [] };
     });
-
     const merged = {};
-
-    [...maqamTFiltered, ...divisionTFiltered].forEach((item) => {
-      const { m, t } = item;
-      if (t) {
-        Object.keys(t).forEach((key) => {
-          if (merged[key]) {
-            merged[key] += t[key];
-          } else {
-            merged[key] = t[key];
-          }
-        });
-      }
-      if (m) {
-        Object.keys(m).forEach((key) => {
-          if (merged[key]) {
-            merged[key] += m[key];
-          } else {
-            merged[key] = m[key];
-          }
-        });
-      }
-    });
+    if (maqamTFiltered && divisionTFiltered) {
+      [...maqamTFiltered, ...divisionTFiltered]?.forEach((item) => {
+        const { m, t } = item;
+        if (t) {
+          Object.keys(t)?.forEach((key) => {
+            if (merged[key]) {
+              merged[key] += t[key];
+            } else {
+              merged[key] = t[key];
+            }
+          });
+        }
+        if (m) {
+          Object.keys(m)?.forEach((key) => {
+            if (merged[key]) {
+              merged[key] += m[key];
+            } else {
+              merged[key] = m[key];
+            }
+          });
+        }
+      });
+    }
 
     for (const key in merged) {
       if (key === "literatureDistribution") {
         setFinalMerged((prevState) => ({
           ...prevState,
-          [key]: merged["literatureDistribution"] + merged["literatureSum"],
+          [key]: merged["literatureDistribution"],
         }));
       } else if (key === "commonLiteratureDistribution") {
         setFinalMerged((prevState) => ({
           ...prevState,
-          [key]:
-            merged["commonLiteratureDistribution"] +
-            merged["commonLiteratureDistributionSum"],
+          [key]: merged["commonLiteratureDistribution"],
         }));
       } else if (key === "commonStudentMeetings") {
         setFinalMerged((prevState) => ({
           ...prevState,
-          [key]:
-            merged["commonStudentMeetingsSum"] +
-            merged["commonStudentMeetings"],
+          [key]: merged["commonStudentMeetings"],
         }));
       } else if (
         key !== "current" &&
@@ -288,9 +286,9 @@ export const Province = () => {
         }));
       }
     }
-    maqam
-      .filter((i) => i?.month.includes(month))
-      .forEach((i) => {
+    createData?.maqamReports
+      ?.filter((i) => i?.month.includes(month))
+      ?.forEach((i) => {
         const sim = reverseDataFormat(i);
         Object.keys(sim)?.forEach((j) => {
           if (provinceFinalData?.[j]) {
@@ -308,7 +306,7 @@ export const Province = () => {
           }
         });
       });
-    division
+    createData?.divisionReports
       ?.filter((i) => i?.month.includes(month))
       ?.forEach((i) => {
         const sim = reverseDataFormat(i);
@@ -343,7 +341,6 @@ export const Province = () => {
         "ijtKarkunan",
       ].map((i) => (provinceFinalData[`${i}-averageAttendance`] = 0));
     }
-
     Object.keys(provinceFinalData).forEach((i) => {
       let j = i;
       const elem = document.getElementById(j);
@@ -366,101 +363,286 @@ export const Province = () => {
         }
       }
     });
-    const afd = [
-      "rehaishHalqay",
-      "taleemHalqay",
-      "totalHalqay",
-      "subRehaishHalqay",
-      "subTaleemHalqay",
-      "subTotalHalqay",
-      "busmSchoolUnits",
-      "busmRehaishUnits",
-      "busmTotalUnits",
-      "arkan",
-      "umeedWaran",
-      "rafaqa",
-      "karkunan",
-      "members",
-      "shaheen",
-    ];
-    afd.forEach((i) => {
-      calcultate(i);
-    });
     if (!id) {
       document.getElementById("comments").value = null;
       document.getElementById("anyOther").value = null;
     }
   };
+  // useEffect(() => {
+  //   const afd = [
+  //     "rehaishHalqay",
+  //     "taleemHalqay",
+  //     "totalHalqay",
+  //     "subRehaishHalqay",
+  //     "subTaleemHalqay",
+  //     "subTotalHalqay",
+  //     "busmSchoolUnits",
+  //     "busmRehaishUnits",
+  //     "busmTotalUnits",
+  //     "arkan",
+  //     "umeedWaran",
+  //     "rafaqa",
+  //     "karkunan",
+  //     "members",
+  //     "shaheen",
+  //   ];
+  //   afd.forEach((i) => {
+  //     calcultate(i);
+  //   });
+  // }, []);
+  // GET REPORTS OF Division and Maqams TO CREATE Province REPORT THE COMING REPORTS WILL BE POPULATED
+  const getReportsForProvinceReport = async () => {
+    try {
+      const req = await instance.get(`/reports/province`, {
+        params: { areaId: me?.userAreaId?._id },
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          "Content-Type": "application/json",
+        },
+      });
+      const repo = req?.data?.data;
+      setCreateData(repo);
+      dispatch({ type: "SUCCESS", payload: req.data?.message });
+    } catch (err) {
+      dispatch({ type: "ERROR", payload: err.response.data.message });
+    }
+    setLoading(false);
+  };
+  const getProvinceSingleReport = async () => {
+    try {
+      const req = await instance.get(`/reports/province/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          "Content-Type": "application/json",
+        },
+      });
+      const repo = req?.data?.data;
+      setData(reverseDataFormat(repo));
+      dispatch({ type: "SUCCESS", payload: req.data?.message });
+    } catch (err) {
+      dispatch({ type: "ERROR", payload: err.response.data.message });
+    }
+    setLoading(false);
+  };
   const paigham = [
-    "totalSoldMarket",
-    "totalSoldTanzeemi",
-    "totalPrinted",
-    "gift",
+    "anyOther",
+    "arkan-decrease",
+    "arkan-decreaseSum",
+    "arkan-increase",
+    "arkan-increaseSum",
+    "arkan-manualDecrease",
+    "arkan-manualIncrease",
+    "arkan-manualStart",
+    "arkan-monthly",
+    "arkan-start",
+    "arkan-startSum",
+    "busmRehaishUnits-continue",
+    "busmRehaishUnits-decrease",
+    "busmRehaishUnits-increase",
+    "busmRehaishUnits-monthly",
+    "busmRehaishUnits-paused",
+    "busmRehaishUnits-start",
+    "busmSchoolUnits-continue",
+    "busmSchoolUnits-decrease",
+    "busmSchoolUnits-increase",
+    "busmSchoolUnits-monthly",
+    "busmSchoolUnits-paused",
+    "busmSchoolUnits-start",
+    "busmTotalUnits-continue",
+    "busmTotalUnits-decrease",
+    "busmTotalUnits-increase",
+    "busmTotalUnits-monthly",
+    "busmTotalUnits-paused",
+    "busmTotalUnits-start",
+    "collegesA-end",
+    "collegesA-increase",
+    "collegesA-monthly",
+    "collegesA-start",
+    "collegesB-end",
+    "collegesB-increase",
+    "collegesB-monthly",
+    "collegesB-start",
+    "collegesC-end",
+    "collegesC-increase",
+    "collegesC-monthly",
+    "collegesC-start",
+    "collegesD-end",
+    "collegesD-increase",
+    "collegesD-monthly",
+    "collegesD-start",
     "comments",
-    "tanzeemiRound",
+    "commonLiteratureDistribution",
+    "commonStudentMeetings",
+    "current",
+    "darseQuran-averageAttendance",
+    "darseQuran-decided",
+    "darseQuran-done",
+    "dawatiWafud",
+    "divMushawarat-averageAttendance",
     "divMushawarat-decided",
     "divMushawarat-done",
-    "divMushawarat-averageAttendance",
+    "gift",
+    "ijtArkan-averageAttendance",
+    "ijtArkan-decided",
+    "ijtArkan-done",
+    "ijtKarkunan-averageAttendance",
+    "ijtKarkunan-decided",
+    "ijtKarkunan-done",
+    "ijtNazmeen-averageAttendance",
+    "ijtNazmeen-decided",
+    "ijtNazmeen-done",
+    "ijtRafaqa-averageAttendance",
+    "ijtRafaqa-decided",
+    "ijtRafaqa-done",
+    "ijtUmeedwaran-averageAttendance",
+    "ijtUmeedwaran-decided",
+    "ijtUmeedwaran-done",
+    "jamiaatA-end",
+    "jamiaatA-increase",
+    "jamiaatA-monthly",
+    "jamiaatA-start",
+    "jamiaatB-end",
+    "jamiaatB-increase",
+    "jamiaatB-monthly",
+    "jamiaatB-start",
+    "jamiaatC-end",
+    "jamiaatC-increase",
+    "jamiaatC-monthly",
+    "jamiaatC-start",
+    "jamiaatD-end",
+    "jamiaatD-increase",
+    "jamiaatD-monthly",
+    "jamiaatD-start",
+    "jamiaatE-end",
+    "jamiaatE-increase",
+    "jamiaatE-monthly",
+    "jamiaatE-start",
+    "karkunan-decrease",
+    "karkunan-decreaseSum",
+    "karkunan-increase",
+    "karkunan-increaseSum",
+    "karkunan-manualDecrease",
+    "karkunan-manualIncrease",
+    "karkunan-manualStart",
+    "karkunan-monthly",
+    "karkunan-start",
+    "karkunan-startSum",
+    "literatureDistribution",
+    "meetings",
+    "members-decrease",
+    "members-decreaseSum",
+    "members-increase",
+    "members-increaseSum",
+    "members-manualDecrease",
+    "members-manualIncrease",
+    "members-manualStart",
+    "members-monthly",
+    "members-start",
+    "members-startSum",
+    "nizamSalah",
+    "paighamEvent-averageAttendance",
+    "paighamEvent-decided",
+    "paighamEvent-done",
+    "rafaqa-decrease",
+    "rafaqa-decreaseSum",
+    "rafaqa-increase",
+    "rafaqa-increaseSum",
+    "rafaqa-manualDecrease",
+    "rafaqa-manualIncrease",
+    "rafaqa-manualStart",
+    "rafaqa-monthly",
+    "rafaqa-start",
+    "rafaqa-startSum",
+    "rafaqaFilled",
+    "rawabitDecided",
+    "rawabitParties",
+    "rehaishHalqay-continue",
+    "rehaishHalqay-decrease",
+    "rehaishHalqay-increase",
+    "rehaishHalqay-monthly",
+    "rehaishHalqay-paused",
+    "rehaishHalqay-start",
+    "rwabitMeetingsGoal",
+    "sadurMeeting-averageAttendance",
+    "sadurMeeting-decided",
+    "sadurMeeting-done",
+    "shabBedari",
+    "shaheen-decrease",
+    "shaheen-decreaseSum",
+    "shaheen-increase",
+    "shaheen-increaseSum",
+    "shaheen-manualDecrease",
+    "shaheen-manualIncrease",
+    "shaheen-manualStart",
+    "shaheen-monthly",
+    "shaheen-start",
+    "shaheen-startSum",
+    "shaheenMeeting-averageAttendance",
+    "shaheenMeeting-decided",
+    "shaheenMeeting-done",
+    "studyCircle-averageAttendance",
+    "studyCircle-decided",
+    "studyCircle-done",
+    "studyCircleMentioned-averageAttendance",
+    "studyCircleMentioned-decided",
+    "studyCircleMentioned-done",
+    "subRehaishHalqay-continue",
+    "subRehaishHalqay-decrease",
+    "subRehaishHalqay-increase",
+    "subRehaishHalqay-monthly",
+    "subRehaishHalqay-paused",
+    "subRehaishHalqay-start",
+    "subTaleemHalqay-continue",
+    "subTaleemHalqay-decrease",
+    "subTaleemHalqay-increase",
+    "subTaleemHalqay-monthly",
+    "subTaleemHalqay-paused",
+    "subTaleemHalqay-start",
+    "subTotalHalqay-continue",
+    "subTotalHalqay-decrease",
+    "subTotalHalqay-increase",
+    "subTotalHalqay-monthly",
+    "subTotalHalqay-paused",
+    "subTotalHalqay-start",
+    "taleemHalqay-continue",
+    "taleemHalqay-decrease",
+    "taleemHalqay-increase",
+    "taleemHalqay-monthly",
+    "taleemHalqay-paused",
+    "taleemHalqay-start",
+    "tanzeemiRound",
     "tarbiyatGaah",
     "tarbiyatGaahGoal",
     "tarbiyatGaahHeld",
-    "anyOther",
-    "ijtArkan-averageAttendance",
-    "studyCircle-averageAttendance",
-    "ijtNazmeen-averageAttendance",
-    "ijtUmeedwaran-averageAttendance",
-    "sadurMeeting-averageAttendance",
-    "ijtRafaqa-averageAttendance",
-    "paighamEvent-averageAttendance",
-    "shaheenMeeting-averageAttendance",
-    "studyCircleMentioned-averageAttendance",
-    "darseQuran-averageAttendance",
-    "ijtKarkunan-averageAttendance",
-    "arkan-manualStart",
-    "arkan-startSum",
-    "arkan-increaseSum",
-    "arkan-decreaseSum",
-    "umeedWaran-startSum",
-    "umeedWaran-increaseSum",
+    "totalBookRent",
+    "totalBooks",
+    "totalDecrease",
+    "totalHalqay-continue",
+    "totalHalqay-decrease",
+    "totalHalqay-increase",
+    "totalHalqay-monthly",
+    "totalHalqay-paused",
+    "totalHalqay-start",
+    "totalIncrease",
+    "totalLibraries",
+    "totalPrinted",
+    "totalSoldMarket",
+    "totalSoldTanzeemi",
+    "umeedWaran-decrease",
     "umeedWaran-decreaseSum",
-    "rafaqa-startSum",
-    "rafaqa-increaseSum",
-    "rafaqa-decreaseSum",
-    "karkunan-startSum",
-    "karkunan-increaseSum",
-    "karkunan-decreaseSum",
-    "shaheen-startSum",
-    "shaheen-increaseSum",
-    "shaheen-decreaseSum",
-    "members-startSum",
-    "members-increaseSum",
-    "members-decreaseSum",
-    "arkan-manualIncrease",
-    "arkan-manualDecrease",
-    "umeedWaran-manualStart",
-    "umeedWaran-manualIncrease",
+    "umeedWaran-increase",
+    "umeedWaran-increaseSum",
     "umeedWaran-manualDecrease",
-    "tarbiyatGaahGoalManual",
-    "rafaqa-manualStart",
-    "rafaqa-manualIncrease",
-    "rafaqa-manualDecrease",
-    "tarbiyatGaahGoalSum",
-    "karkunan-manualStart",
-    "karkunan-manualIncrease",
-    "karkunan-manualDecrease",
-    "shaheen-manualStart",
-    "shaheen-manualIncrease",
-    "shaheen-manualDecrease",
-    "members-manualStart",
-    "tarbiyatGaahHeldSum",
-    "members-manualIncrease",
-    "members-manualDecrease",
-    "tarbiyatGaahHeldManual",
+    "umeedWaran-manualIncrease",
+    "umeedWaran-manualStart",
+    "umeedWaran-monthly",
+    "umeedWaran-start",
+    "umeedWaran-startSum",
+    "umeedwaranFilled",
   ];
-
   useEffect(() => {
     if (data && id) {
-      paigham.forEach((p) => {
+      paigham?.forEach((p) => {
         if (data[p] !== undefined) {
           const fieldValue = data[p];
           document.getElementById(p).value = fieldValue;
@@ -477,41 +659,25 @@ export const Province = () => {
     setId(params?.id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
-  const getProvinceReport = async () => {
-    try {
-      const req = await instance.get(`/reports/province/${id}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("@token")}`,
-          "Content-Type": "application/json",
-        },
-      });
-      const repo = req?.data?.data;
-     setData(reverseDataFormat(repo))
-    
-      dispatch({ type: "SUCCESS", payload: req.data?.message });
-    } catch (err) {
-      dispatch({ type: "ERROR", payload: err.response.data.message });
-    }
-    setLoading(false);
-  };
   useEffect(() => {
-    if (id) {
-      setLoading(true);
-      getProvinceReport();
+    const l = location.pathname?.split("/")[2];
+    if (l === "create") {
+      getReportsForProvinceReport();
     } else {
-      setLoading(false);
+      if (l === "edit") {
+        getProvinceSingleReport();
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
-  
   useEffect(() => {
-    if (!id) autoFill();
+    if (!id) {
+      autoFill();
+    } else {
+      getProvinceSingleReport();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, halqa, month, data]);
-  useEffect(() => {
-    if (location.pathname.split("/")[2] === "edit") autoFill();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [halqa]);
+  }, [month, createData, id]);
   // EDIT CODE END
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -560,7 +726,6 @@ export const Province = () => {
           id="province-form"
         >
           <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
-            
             جائزہ کارکردگی رپورٹ (براے صوبہ)
           </h2>
           <div className="w-full p-4">
@@ -595,7 +760,7 @@ export const Province = () => {
               <OtherActivities view={view} />
             </div>
             <div className="mb-4">
-              <ToseeDawat finalMerged={finalMerged} />
+              <ToseeDawat finalMerged={!id ? finalMerged : null} />
             </div>
             <div className="mb-4">
               <Library />

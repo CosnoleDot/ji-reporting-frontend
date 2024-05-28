@@ -9,97 +9,41 @@ export const OtherActivities = ({ view }) => {
         <div className="flex py-2">
           <label className="block text-sm md:text-lg">تربیت گاہ:</label>
           <input
-            readOnly={true}
+            readOnly={view}
             type="number"
             defaultValue={0}
             required
             name={`tarbiyatGaah`}
             id={`tarbiyatGaah`}
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
+            className="border-b-2 text-center border-dashed mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
           />
         </div>
-        <div className="flex-col lg:flex-row sm:mb-2 py-2">
+        <div className="flex sm:mb-2 py-2 overflow-hidden overflow-x-scroll w-full">
           <label className="block text-sm md:text-lg mb-2 lg:mb-0">
             تربیت گاہوں کے انعقاد کا ہدف:
           </label>
           <input
-            readOnly={true}
+            readOnly={view}
             type="number"
             defaultValue={0}
             required
             name={`tarbiyatGaahGoal`}
             id={`tarbiyatGaahGoal`}
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
-          />
-          +
-          <input
-            type="number"
-            readOnly={view}
-            required
-            name={`tarbiyatGaahGoalManual`}
-            id={`tarbiyatGaahGoalManual`}
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
-            onChange={() =>
-              sumUpTwoValues(
-                parseInt(document.getElementById("tarbiyatGaahGoal").value),
-                parseInt(
-                  document.getElementById("tarbiyatGaahGoalManual").value
-                ),
-                "tarbiyatGaahGoalSum"
-              )
-            }
-          />
-          =
-          <input
-            readOnly={true}
-            type="number"
-            defaultValue={document.getElementById("tarbiyatGaahGoal")?.value}
-            required
-            name={`tarbiyatGaahGoalSum`}
-            id={`tarbiyatGaahGoalSum`}
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
+            className="border-b-2 text-center border-dashed mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
           />
         </div>
-        <div className="flex-col lg:flex-row  py-2">
+        <div className="flex sm:mb-2 py-2 overflow-hidden overflow-x-scroll w-full">
           <label className="block text-sm md:text-lg mb-2 lg:mb-0">
             تربیت گاہوں کے انعقاد کا تعداد:
           </label>
           <input
-            readOnly={true}
+            readOnly={view}
             type="number"
             defaultValue={0}
             required
             name={`tarbiyatGaahHeld`}
             id={`tarbiyatGaahHeld`}
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
-          />
-          +
-          <input
-            type="number"
-            readOnly={view}
-            required
-            name={`tarbiyatGaahHeldManual`}
-            id={`tarbiyatGaahHeldManual`}
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
-            onChange={() =>
-              sumUpTwoValues(
-                parseInt(document.getElementById("tarbiyatGaahHeld").value),
-                parseInt(
-                  document.getElementById("tarbiyatGaahHeldManual").value
-                ),
-                "tarbiyatGaahHeldSum"
-              )
-            }
-          />
-          =
-          <input
-            readOnly={true}
-            type="number"
-            defaultValue={document.getElementById("tarbiyatGaahHeld")?.value}
-            required
-            name={`tarbiyatGaahHeldSum`}
-            id={`tarbiyatGaahHeldSum`}
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
+            className="border-b-2 text-center border-dashed mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
           />
         </div>
         <div className="flex py-2">
@@ -110,7 +54,7 @@ export const OtherActivities = ({ view }) => {
             defaultValue={0}
             name="tanzeemiRound"
             id="tanzeemiRound"
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+            className="border-b-2 text-center border-dashed mb-2 lg:mb-0"
             required
           />
         </div>
@@ -125,7 +69,7 @@ export const OtherActivities = ({ view }) => {
             required
             name="dawatiWafud"
             id="dawatiWafud"
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+            className="border-b-2 text-center border-dashed mb-2 lg:mb-0"
           />
         </div>
         <div className="flex py-2">
@@ -137,7 +81,7 @@ export const OtherActivities = ({ view }) => {
             required
             name="rawabitParties"
             id="rawabitParties"
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+            className="border-b-2 text-center border-dashed mb-2 lg:mb-0"
           />
         </div>
         <div className="flex py-2">
@@ -149,7 +93,7 @@ export const OtherActivities = ({ view }) => {
             required
             name="shabBedari"
             id="shabBedari"
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+            className="border-b-2 text-center border-dashed mb-2 lg:mb-0"
           />
         </div>
         <div className="flex py-2">
@@ -161,7 +105,7 @@ export const OtherActivities = ({ view }) => {
             required
             name="nizamSalah"
             id="nizamSalah"
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+            className="border-b-2 text-center border-dashed mb-2 lg:mb-0"
           />
         </div>
 

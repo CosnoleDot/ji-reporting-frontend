@@ -3794,12 +3794,12 @@ html {
   width: calc(100% - 20px);
 }
 
-.w-full {
-  width: 100%;
-}
-
 .w-auto {
   width: auto;
+}
+
+.w-full {
+  width: 100%;
 }
 
 .min-w-\[10rem\] {
