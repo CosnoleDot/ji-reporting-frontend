@@ -21,7 +21,6 @@ export const ZailiActivities = ({ view, obj }) => {
                 readOnly={true}
                 type="number"
                 required
-                value={obj?.ijtRafaqaDecided || 0}
                 name={`ijtRafaqa-decided`}
                 id={`ijtRafaqa-decided`}
                 className="p-1 text-center min-w-full"
@@ -32,7 +31,6 @@ export const ZailiActivities = ({ view, obj }) => {
                 readOnly={true}
                 type="number"
                 required
-                value={obj?.ijtRafaqaDone || 0}
                 name={`ijtRafaqa-done`}
                 id={`ijtRafaqa-done`}
                 className="p-1 text-center min-w-full"
@@ -55,7 +53,6 @@ export const ZailiActivities = ({ view, obj }) => {
                 readOnly={true}
                 type="number"
                 required
-                value={obj?.studyCircleMentionedDecided || 0}
                 name={`studyCircleMentioned-decided`}
                 id={`studyCircleMentioned-decided`}
                 className="p-1 text-center min-w-full"
@@ -66,7 +63,6 @@ export const ZailiActivities = ({ view, obj }) => {
                 readOnly={true}
                 type="number"
                 required
-                value={obj?.studyCircleMentionedDone || 0}
                 name={`studyCircleMentioned-done`}
                 id={`studyCircleMentioned-done`}
                 className="p-1 text-center min-w-full"
@@ -90,7 +86,6 @@ export const ZailiActivities = ({ view, obj }) => {
                 type="number"
                 defaultValue={0}
                 required
-                value={obj?.ijtKarkunanDecided || 0}
                 name={`ijtKarkunan-decided`}
                 id={`ijtKarkunan-decided`}
                 className="p-1 text-center min-w-full"
@@ -102,7 +97,6 @@ export const ZailiActivities = ({ view, obj }) => {
                 type="number"
                 defaultValue={0}
                 required
-                value={obj?.ijtKarkunanDone || 0}
                 name={`ijtKarkunan-done`}
                 id={`ijtKarkunan-done`}
                 className="p-1 text-center min-w-full"
@@ -128,7 +122,6 @@ export const ZailiActivities = ({ view, obj }) => {
                 type="number"
                 defaultValue={0}
                 required
-                value={obj?.darseQuranDecided || 0}
                 name={`darseQuran-decided`}
                 id={`darseQuran-decided`}
                 className="p-1 text-center min-w-full"
@@ -140,7 +133,6 @@ export const ZailiActivities = ({ view, obj }) => {
                 type="number"
                 defaultValue={0}
                 required
-                value={obj?.darseQuranDone || 0}
                 name={`darseQuran-done`}
                 id={`darseQuran-done`}
                 className="p-1 text-center "
@@ -167,7 +159,6 @@ export const ZailiActivities = ({ view, obj }) => {
                 defaultValue={0}
                 required
                 readOnly
-                value={obj?.shaheenMeetingDecided || 0}
                 name={`shaheenMeeting-decided`}
                 id={`shaheenMeeting-decided`}
                 className="p-1 text-center min-w-full"
@@ -179,7 +170,6 @@ export const ZailiActivities = ({ view, obj }) => {
                 type="number"
                 defaultValue={0}
                 required
-                value={obj?.shaheenMeetingDone || 0}
                 name={`shaheenMeeting-done`}
                 id={`shaheenMeeting-done`}
                 className="p-1 text-center min-w-full"
@@ -206,7 +196,6 @@ export const ZailiActivities = ({ view, obj }) => {
                 defaultValue={0}
                 required
                 readOnly
-                value={obj?.paighamEventDecided || 0}
                 name={`paighamEvent-decided`}
                 id={`paighamEvent-decided`}
                 className="p-1 text-center min-w-full"
@@ -218,7 +207,6 @@ export const ZailiActivities = ({ view, obj }) => {
                 type="number"
                 defaultValue={0}
                 required
-                value={obj?.paighamEventDone || 0}
                 name={`paighamEvent-done`}
                 id={`paighamEvent-done`}
                 className="p-1 text-center min-w-full"

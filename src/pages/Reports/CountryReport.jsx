@@ -193,7 +193,7 @@ export const CountryReport = () => {
           >
             <div className="flex w-full flex-col items-start justify-center">
               <span className="text-sm lg:text-lg font-semibold">
-                {p?.provinceAreaId?.name + " "}
+                {p?.countryAreaId?.name + " "}
                 {moment(p?.month).format("MMMM YYYY")}
               </span>
               <span>Last Modified: {moment(p?.updatedAt).fromNow()}</span>
