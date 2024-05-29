@@ -8,7 +8,10 @@ import { useNavigate } from "react-router-dom";
 import { UIContext } from "../../context/ui";
 
 export const IlaqaReports = () => {
-  const iReports = useContext(IlaqaReportContext);
+  const i = useContext(IlaqaReportContext);
+
+  const iReports = i?.reports;
+  const total = i?.length;
   const [filterAllData, setFilterAllData] = useState(iReports);
   const { dispatch } = useToastState();
   const [search, showSearch] = useState(false);
@@ -19,9 +22,11 @@ export const IlaqaReports = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const { getIlaqaReports } = useContext(UIContext);
   const [disable,setDisable]= useState(false);
-  const [currentData,setCurrentData]=useState([]);
   const navigate = useNavigate();
   const itemsPerPage = 10;
+  useEffect(() => {
+    setFilterAllData(iReports);
+  }, [iReports]);
   const searchResults = () => {
     if (year !== "" && month !== "") {
       let filteredData = { ...iReports };
@@ -76,15 +81,14 @@ export const IlaqaReports = () => {
     window.open(`ilaqa-report/print/${id}`, "blank");
   };
 
-  let totalPages = currentPage + 1;
-  useEffect(()=>{
+  let totalPages =  Math.ceil(total / itemsPerPage);
 
-    const data = filterAllData?.slice(
+
+    const currentData = filterAllData?.slice(
       (currentPage - 1) * itemsPerPage,
       currentPage * itemsPerPage
     );
-    setCurrentData(data)
-  },[currentData, filterAllData,currentPage])
+ 
 
   const handlePrevPage = () => {
     if (currentPage > 1) {
@@ -99,12 +103,10 @@ export const IlaqaReports = () => {
       const offset = itemsPerPage;
       if (iReports.length <= itemsPerPage * currentPage) {
         getIlaqaReports(inset, offset);
-      } else {
-        totalPages = currentPage;
-        setDisable(true);
-      }
+      } 
     }
   };
+  
   return (
     <>
       <div className="join xs:w-full mb-4">
@@ -224,7 +226,9 @@ export const IlaqaReports = () => {
         </div>
       </div>
       {currentData.length > 0 ? (
-        currentData.map((p) => (
+        currentData.map((p,index) => (
+          <div className="flex gap-4">
+            <span>{index+1}</span>
           <div
             key={p?._id}
             className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
@@ -253,6 +257,7 @@ export const IlaqaReports = () => {
               </button>
             </div>
           </div>
+          </div>
         ))
       ) : (
         <NoReports />
@@ -268,7 +273,7 @@ export const IlaqaReports = () => {
         <span>
           Page {currentPage} of {totalPages}
         </span>
-        <button  className="btn" onClick={handleNextPage}>
+        <button  className="btn" onClick={handleNextPage} disabled={currentPage === totalPages}>
           Next
         </button>
       </div>
