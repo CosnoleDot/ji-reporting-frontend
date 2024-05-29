@@ -23,6 +23,7 @@ import { PaighamDigest } from "../components/maqamReport/PaighamDigest";
 import { RozOShabDiary } from "../components/maqamReport/RozOShabDiary";
 import { Jamiaat } from "../components/maqamReport/Jamiaat";
 import { Colleges } from "../components/maqamReport/Colleges";
+import { Baitulmal } from "../components/maqamReport/Baitulmal";
 
 export const getData = async (path, id, setData, data) => {
   const arr = data[path];
@@ -430,6 +431,9 @@ export const Maqam = () => {
             </div>
             <div className="mb-4">
               <PaighamDigest view={view} />
+            </div>
+            <div className="mb-4">
+              <Baitulmal view={view} />
             </div>
             <div className="mb-4">
               <RozOShabDiary view={view} />

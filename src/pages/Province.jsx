@@ -24,18 +24,11 @@ import { PaighamDigest } from "../components/provinceReport/PaighamDigest";
 import { RozOShabDiary } from "../components/provinceReport/RozOShabDiary";
 import { Jamiaat } from "../components/provinceReport/Jamiaat";
 import { Colleges } from "../components/provinceReport/Colleges";
-
-const getData = async (data) => {
-  // const province = data["province"];
-  // const obj = province.filter((i) => i?._id?.toString() === id?.toString());
-  return reverseDataFormat(data);
-};
+import { Baitulmal } from "../components/provinceReport/Baitulmal";
 
 export const Province = () => {
   // EDIT CODE START
   const [createData, setCreateData] = useState([]);
-  const halqa = useContext(HalqaReportContext);
-  const maqam = useContext(MaqamReportContext);
   const division = useContext(DivisionReportContext);
   const province = useContext(ProvinceReportContext);
   const [month, setMonth] = useState("");
@@ -65,152 +58,6 @@ export const Province = () => {
       division?.divisionReports?.filter((i) => i?.month?.includes(month))
         ?.length < 1
     ) {
-      [
-        "rafaqa-start",
-        "karkunan-start",
-        "rafaqa-increase",
-        "karkunan-increase",
-        "rafaqa-decrease",
-        "karkunan-decrease",
-        "rafaqa-end",
-        "karkunan-end",
-        "rafaqa-monthly",
-        "karkunan-monthly",
-        "ijtRafaqa-decided",
-        "ijtRafaqa-done",
-        "ijtRafaqa-averageAttendance",
-        "studyCircleMentioned-decided",
-        "studyCircleMentioned-done",
-        "studyCircleMentioned-averageAttendance",
-        "ijtKarkunan-decided",
-        "ijtKarkunan-done",
-        "ijtKarkunan-averageAttendance",
-        "darseQuran-decided",
-        "darseQuran-done",
-        "darseQuran-averageAttendance",
-        "dawatiWafud",
-        "rawabitParties",
-        "shabBedari",
-        "nizamSalah",
-        "rawabitDecided",
-        "current",
-        "meetings",
-        "literatureDistribution",
-        "commonStudentMeetings",
-        "commonLiteratureDistribution",
-        "totalBooks",
-        "meetings",
-        "totalBooks",
-        "totalIncrease",
-        "totalDecrease",
-        "totalBookRent",
-        "rafaqaFilled",
-        "tanzeemiRound",
-        "tarbiyatGaah",
-        "shaheenMeeting-decided",
-        "shaheenMeeting-done",
-        "shaheenMeeting-averageAttendance",
-        "paighamEvent-decided",
-        "paighamEvent-done",
-        "paighamEvent-averageAttendance",
-        "ijtArkan-decided",
-        "ijtArkan-done",
-        "ijtArkan-averageAttendance",
-        "studyCircle-decided",
-        "studyCircle-done",
-        "studyCircle-averageAttendance",
-        "ijtNazmeen-decided",
-        "ijtNazmeen-done",
-        "ijtNazmeen-averageAttendance",
-        "ijtUmeedwaran-decided",
-        "ijtUmeedwaran-done",
-        "ijtUmeedwaran-averageAttendance",
-        "sadurMeeting-decided",
-        "sadurMeeting-done",
-        "sadurMeeting-averageAttendance",
-        "arkan-start",
-        "arkan-increase",
-        "arkan-decrease",
-        "arkan-end",
-        "arkan-monthly",
-        "umeedWaran-start",
-        "umeedWaran-increase",
-        "umeedWaran-decrease",
-        "umeedWaran-end",
-        "umeedWaran-monthly",
-        "shaheen-start",
-        "shaheen-increase",
-        "shaheen-decrease",
-        "shaheen-end",
-        "shaheen-monthly",
-        "members-start",
-        "members-increase",
-        "members-decrease",
-        "members-end",
-        "members-monthly",
-        "rehaishHalqay-start",
-        "rehaishHalqay-increase",
-        "rehaishHalqay-decrease",
-        "rehaishHalqay-end",
-        "rehaishHalqay-continue",
-        "rehaishHalqay-paused",
-        "taleemHalqay-start",
-        "taleemHalqay-increase",
-        "taleemHalqay-decrease",
-        "taleemHalqay-end",
-        "taleemHalqay-continue",
-        "taleemHalqay-paused",
-        "totalHalqay-start",
-        "totalHalqay-increase",
-        "totalHalqay-decrease",
-        "totalHalqay-end",
-        "totalHalqay-continue",
-        "totalHalqay-paused",
-        "subRehaishHalqay-start",
-        "subRehaishHalqay-increase",
-        "subRehaishHalqay-decrease",
-        "subRehaishHalqay-end",
-        "subRehaishHalqay-continue",
-        "subRehaishHalqay-paused",
-        "subTaleemHalqay-start",
-        "subTaleemHalqay-increase",
-        "subTaleemHalqay-decrease",
-        "subTaleemHalqay-end",
-        "subTaleemHalqay-continue",
-        "subTaleemHalqay-paused",
-        "subTotalHalqay-start",
-        "subTotalHalqay-increase",
-        "subTotalHalqay-decrease",
-        "subTotalHalqay-end",
-        "subTotalHalqay-continue",
-        "subTotalHalqay-paused",
-        "busmSchoolUnits-start",
-        "busmSchoolUnits-increase",
-        "busmSchoolUnits-decrease",
-        "busmSchoolUnits-end",
-        "busmSchoolUnits-continue",
-        "busmSchoolUnits-paused",
-        "busmRehaishUnits-start",
-        "busmRehaishUnits-increase",
-        "busmRehaishUnits-decrease",
-        "busmRehaishUnits-end",
-        "busmRehaishUnits-continue",
-        "busmRehaishUnits-paused",
-        "busmTotalUnits-start",
-        "busmTotalUnits-increase",
-        "busmTotalUnits-decrease",
-        "busmTotalUnits-end",
-        "busmTotalUnits-continue",
-        "busmTotalUnits-paused",
-        "arkanFilled",
-        "umeedwaranFilled",
-        "totalSoldTanzeemi",
-        "totalSoldMarket",
-        "totalPrinted",
-        "gift",
-      ].forEach((i) => {
-        // document.getElementById(i).value = 0;
-      });
       document.getElementById("name").value = me?.userAreaId?.name;
     }
     const maqamTFiltered = createData?.maqamReports?.map((item) => {
@@ -368,28 +215,6 @@ export const Province = () => {
       document.getElementById("anyOther").value = null;
     }
   };
-  // useEffect(() => {
-  //   const afd = [
-  //     "rehaishHalqay",
-  //     "taleemHalqay",
-  //     "totalHalqay",
-  //     "subRehaishHalqay",
-  //     "subTaleemHalqay",
-  //     "subTotalHalqay",
-  //     "busmSchoolUnits",
-  //     "busmRehaishUnits",
-  //     "busmTotalUnits",
-  //     "arkan",
-  //     "umeedWaran",
-  //     "rafaqa",
-  //     "karkunan",
-  //     "members",
-  //     "shaheen",
-  //   ];
-  //   afd.forEach((i) => {
-  //     calcultate(i);
-  //   });
-  // }, []);
   // GET REPORTS OF Division and Maqams TO CREATE Province REPORT THE COMING REPORTS WILL BE POPULATED
   const getReportsForProvinceReport = async () => {
     try {
@@ -639,6 +464,10 @@ export const Province = () => {
     "umeedWaran-start",
     "umeedWaran-startSum",
     "umeedwaranFilled",
+    "monthlyIncome",
+    "monthlyExpenditure",
+    "savings",
+    "loss",
   ];
   useEffect(() => {
     if (data && id) {
@@ -767,6 +596,9 @@ export const Province = () => {
             </div>
             <div className="mb-4">
               <PaighamDigest view={view} />
+            </div>
+            <div className="mb-4">
+              <Baitulmal view={view} />
             </div>
             <div className="mb-4">
               <RozOShabDiary />

@@ -26,6 +26,7 @@ import { RozOShabDiary } from "../components/divisionReport/RozOShabDiary";
 import { Jamiaat } from "../components/divisionReport/Jamiaat";
 import { Colleges } from "../components/divisionReport/Colleges";
 import { ZailiActivities } from "../components/divisionReport/ZailiActivities";
+import { Baitulmal } from "../components/divisionReport/Baitulmal";
 
 export const Division = () => {
   // EDIT CODE START
@@ -463,6 +464,10 @@ export const Division = () => {
             <div className=" mb-4">
               {/* <MessageDigestDivision view={view} /> */}
               <PaighamDigest view={view} />
+            </div>
+            <div className=" mb-4">
+              {/* <MessageDigestDivision view={view} /> */}
+              <Baitulmal view={view} />
             </div>
             <div className=" mb-4">
               {/* <EveningDiaryDivision view={view} /> */}

@@ -121,6 +121,7 @@ export const DeleteUser = () => {
     }
     setLoading(false);
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     document.getElementById("categorize-filter").setAttribute("open", "false");
@@ -279,7 +280,9 @@ export const DeleteUser = () => {
     setData(nazim);
     setBirthYear("");
   };
-
+  useEffect(() => {
+    setData(nazim);
+  }, [nazim]);
   const handleEventClick = (e) => {
     if (e?.target?.id !== "autocomplete0") {
       if (
