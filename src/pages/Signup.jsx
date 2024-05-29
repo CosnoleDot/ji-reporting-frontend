@@ -267,7 +267,7 @@ export const Signup = () => {
                 <option value={"semester 7"}>Semester 7</option>
                 <option value={"semester 8"}>Semester 8</option>
                 <option value={"semester 9"}>Semester 9</option>
-                <option value={"semester10"}>Semester10</option>
+                <option value={"semester 10"}>Semester 10</option>
                 <option value={"semester 11"}>Semester 11</option>
                 <option value={"semester 12"}>Semester 12</option>
                 <option value={"1st year"}>1st Year</option>
