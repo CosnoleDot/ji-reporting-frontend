@@ -28,6 +28,7 @@ import {
   DivisionReportContext,
   HalqaContext,
   HalqaReportContext,
+  HalqaReportTabContext,
   IlaqaContext,
   IlaqaReportContext,
   IsMuntakhib,
@@ -73,7 +74,9 @@ function App() {
   const [maqamReports, setMaqamReports] = useState([]);
   const [ilaqaReports, setIlaqaReports] = useState([]);
   const [divisionReports, setDivisionReports] = useState([]);
-  const [halqaReports, setHalqaReports] = useState([]);
+  const [halqaReports, setHalqaReports] = useState({ reports: [], length: 0 });
+  const [halqaReportsTab, setHalqaReportsTab] = useState({ reports: [], length: 0 });
+
   const [userRequests, setUserRequests] = useState([]);
   const [value, setValue] = useState(null);
   const [active, setActive] = useState("province");
@@ -444,21 +447,34 @@ function App() {
     }
   };
   useEffect(() => {}, [muntakhibMaqam]);
-  let provinceR, maqamR, divisionR, halqaR, ilaqaR, markazR;
-  const getMarkazReport = async () => {
+  let provinceR, maqamR, divisionR, halqaR, ilaqaR, markazR ,halqaT;
+  const getMarkazReport = async (inset, offset) => {
+    setLoading(true);
     if (me?.userAreaType === "Country")
       try {
-        const req = await instance.get("/reports/markaz", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("@token")}`,
-          },
-        });
+        const req = await instance.get(
+          `/reports/markaz?inset=${inset}&offset=${offset}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("@token")}`,
+            },
+          }
+        );
         if (req) {
-          markazR = req.data.data;
-          setMarkazReport(req.data.data);
+          markazR = req.data?.data?.data;
+
+          length = req?.data?.data?.length;
+          setMarkazReport((prevData) => ({
+            reports: prevData.reports
+              ? [...prevData.reports, ...markazR]
+              : markazR,
+            length: length,
+          }));
+          setLoading(false);
         }
       } catch (err) {
         console.log(err);
+        setLoading(false);
         dispatch({
           type: "ERROR",
           payload: err?.response?.data?.message || err?.message,
@@ -466,20 +482,33 @@ function App() {
       }
     return;
   };
-  const getProvinceReports = async () => {
+  const getProvinceReports = async (inset, offset) => {
+    setLoading(true);
     if (me?.userAreaType === "Country" || me?.userAreaType === "Province")
       try {
-        const req = await instance.get("/reports/province", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("@token")}`,
-          },
-        });
+        const req = await instance.get(
+          `/reports/province?inset=${inset}&offset=${offset}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("@token")}`,
+            },
+          }
+        );
         if (req) {
-          provinceR = req.data.data;
-          setProvinceReports(req.data.data);
+          provinceR = req.data?.data?.data;
+
+          length = req?.data?.data?.length;
+          setProvinceReports((prevData) => ({
+            reports: prevData.reports
+              ? [...prevData.reports, ...provinceR]
+              : provinceR,
+            length: length,
+          }));
+          setLoading(false);
         }
       } catch (err) {
         console.log(err);
+        setLoading(false);
         dispatch({
           type: "ERROR",
           payload: err?.response?.data?.message || err?.message,
@@ -487,24 +516,37 @@ function App() {
       }
     return;
   };
-  const getMaqamReports = async () => {
+  const getMaqamReports = async (inset, offset) => {
+    setLoading(true);
     if (
       me?.userAreaType === "Country" ||
       me?.userAreaType === "Province" ||
       me?.userAreaType === "Maqam"
     )
       try {
-        const req = await instance.get("/reports/maqam", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("@token")}`,
-          },
-        });
+        const req = await instance.get(
+          `/reports/maqam?inset=${inset}&offset=${offset}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("@token")}`,
+            },
+          }
+        );
         if (req) {
-          maqamR = req.data.data;
-          setMaqamReports(req.data.data);
+          maqamR = req.data.data?.data;
+
+          length = req?.data?.data?.length;
+          setMaqamReports((prevData) => ({
+            reports: prevData.reports
+              ? [...prevData.reports, ...maqamR]
+              : maqamR,
+            length: length,
+          }));
+          setLoading(false);
         }
       } catch (err) {
         console.log(err);
+        setLoading(false);
         dispatch({
           type: "ERROR",
           payload: err?.response?.data?.message || err?.message,
@@ -513,24 +555,32 @@ function App() {
     return;
   };
   const getIlaqaReports = async (inset, offset) => {
+    setLoading(true);
     if (me?.userAreaType !== "Halqa" && me?.userAreaType !== "Division")
       try {
-        const req = await instance.get(`/reports/ilaqa?inset=${inset}&offset=${offset}`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("@token")}`,
-          },
-        });
+        const req = await instance.get(
+          `/reports/ilaqa?inset=${inset}&offset=${offset}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("@token")}`,
+            },
+          }
+        );
         if (req) {
-          ilaqaR = req.data.data;
-          console.log(ilaqaR.length)
-          // if(!inset){
-          //   let a = ilaqaR[0].total;
-          //   ilaqaR.splice(0,1)
-          // }
-          setIlaqaReports((prevData) => [...prevData, ...ilaqaR]);
+          ilaqaR = req.data.data?.data;
+          
+          length = req?.data?.data?.length;
+          setIlaqaReports((prevData) => ({
+            reports: prevData.reports
+              ? [...prevData.reports, ...ilaqaR]
+              : ilaqaR,
+            length: length,
+          }));
+          setLoading(false);
         }
       } catch (err) {
         console.log(err);
+        setLoading(false);
         dispatch({
           type: "ERROR",
           payload: err?.response?.data?.message || err?.message,
@@ -538,24 +588,37 @@ function App() {
       }
     return;
   };
-  const getDivisionReports = async () => {
+  const getDivisionReports = async (inset, offset) => {
+    setLoading(true);
     if (
       me?.userAreaType === "Country" ||
       me?.userAreaType === "Province" ||
       me?.userAreaType === "Division"
     )
       try {
-        const req = await instance.get("/reports/division", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("@token")}`,
-          },
-        });
+        const req = await instance.get(
+          `/reports/division?inset=${inset}&offset=${offset}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("@token")}`,
+            },
+          }
+        );
         if (req) {
-          divisionR = req.data.data;
-          setDivisionReports(req.data.data);
+          divisionR = req.data.data?.data;
+         
+          length = req?.data?.data?.length;
+          setDivisionReports((prevData) => ({
+            reports: prevData.reports
+              ? [...prevData.reports, ...divisionR]
+              : divisionR,
+            length: length,
+          }));
+          setLoading(false);
         }
       } catch (err) {
         console.log(err);
+        setLoading(false);
         dispatch({
           type: "ERROR",
           payload: err?.response?.data?.message || err?.message,
@@ -564,19 +627,25 @@ function App() {
     return;
   };
   const getHalqaReports = async (inset, offset) => {
+    setLoading(true);
+
     try {
-      
-      const req = await instance.get(`/reports/halqa?inset=${inset}&offset=${offset}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
-      });
-      if (req) {
-        halqaR = req.data.data;
-        if(!inset){
-          let a = halqaR[0].total;
-          halqaR.splice(0,1)
+      const req = await instance.get(
+        `/reports/halqa?inset=${inset}&offset=${offset}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
         }
-        setHalqaReports((prevData) => [...prevData, ...halqaR]);
-        
+      );
+      if (req) {
+        halqaR = req.data.data?.data;
+        length = req?.data?.data?.length;
+        setHalqaReports((prevData) => ({
+          reports: [...prevData.reports, ...halqaR],
+          length: length,
+        }));
+        setLoading(false);
       }
     } catch (err) {
       console.log(err);
@@ -585,7 +654,40 @@ function App() {
         payload: err?.response?.data?.message || err?.message,
       });
     }
-};
+  };
+  const getHalqaReportsTab = async (inset, offset, tab) => {
+    setLoading(true);
+
+    if(tab){
+      try {
+        const req = await instance.get(
+          `/reports/halqa?inset=${inset}&offset=${offset}&tab=${tab}`,
+          { 
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("@token")}`,
+            },
+          }
+        );
+        if (req) {
+          halqaT = req.data.data;
+          length = req?.data?.data?.length;
+          console.log(halqaT)
+          setHalqaReportsTab((prevData) => ({
+            reports: [...prevData.reports, ...halqaT],
+            length: length,
+          }));
+          setLoading(false)
+        }
+      }
+      catch (err) {
+        console.log(err);
+        dispatch({
+          type: "ERROR",
+          payload: err?.response?.data?.message || err?.message,
+        });
+      }
+    }
+  };
 
   const getNazim = async () => {
     try {
@@ -865,7 +967,7 @@ function App() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [me, isCompleted, navigate]);
-console.log(ilaqaReports)
+
   return (
     <MeContext.Provider value={me}>
       <DoubleScrollLeftRefresh />
@@ -882,6 +984,7 @@ console.log(ilaqaReports)
                           <HalqaContext.Provider value={halqas}>
                             <IlaqaReportContext.Provider value={ilaqaReports}>
                               <HalqaReportContext.Provider value={halqaReports}>
+                              <HalqaReportTabContext.Provider value={halqaReportsTab}>
                                 <ViewDetails.Provider value={areaDetails}>
                                   <IsMuntakhib.Provider value={muntakhibMaqam}>
                                     <UIContext.Provider
@@ -909,6 +1012,7 @@ console.log(ilaqaReports)
                                         getDivisionReports,
                                         getHalqaReports,
                                         getAllRequests,
+                                        getHalqaReportsTab,
                                         setReports,
                                         getAllNotifications,
                                         getNazim,
@@ -961,10 +1065,7 @@ console.log(ilaqaReports)
                                           <Route
                                             path="/reports"
                                             element={
-                                              <Reports
-                                                maqam={muntakhibMaqam}
-                                                
-                                              />
+                                              <Reports maqam={muntakhibMaqam} />
                                             }
                                           />
                                           <Route
@@ -1128,7 +1229,9 @@ console.log(ilaqaReports)
                                     </UIContext.Provider>
                                   </IsMuntakhib.Provider>
                                 </ViewDetails.Provider>
+                                </HalqaReportTabContext.Provider>
                               </HalqaReportContext.Provider>
+                             
                             </IlaqaReportContext.Provider>
                           </HalqaContext.Provider>
                         </TehsilContext.Provider>

@@ -8,7 +8,10 @@ import { useNavigate } from "react-router-dom";
 import { UIContext } from "../../context/ui";
 
 export const UnitReport = () => {
-  const hReports = useContext(HalqaReportContext);
+  const h = useContext(HalqaReportContext);
+  const hReports= h?.reports;
+  const total = h?.length;
+
   const [filterAllData, setFilterAllData] = useState(hReports);
   const { dispatch } = useToastState();
   const [search, showSearch] = useState(false);
@@ -20,7 +23,7 @@ export const UnitReport = () => {
   const { getHalqaReports } = useContext(UIContext);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
-  const [disable,setDisable]= useState(false);
+  
   useEffect(() => {
     setFilterAllData(hReports);
   }, [hReports]);
@@ -55,7 +58,7 @@ export const UnitReport = () => {
     } else {
       setFilterAllData(hReports);
     }
-    setCurrentPage(1); 
+    setCurrentPage(1);
   };
 
   const toggleSearch = () => {
@@ -81,8 +84,8 @@ export const UnitReport = () => {
   const handlePrint = (id) => {
     window.open(`halqa-report/print/${id}`, "blank");
   };
-   
-  let totalPages = currentPage + 1;
+
+  let totalPages =  Math.ceil(total / itemsPerPage);
   const currentData = filterAllData?.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
@@ -97,18 +100,15 @@ export const UnitReport = () => {
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
-      const inset = currentPage * itemsPerPage; 
+      const inset = currentPage * itemsPerPage;
       const offset = itemsPerPage;
       if (hReports.length <= itemsPerPage * currentPage) {
-        getHalqaReports(inset, offset); 
-      }
-      else{
-        totalPages = currentPage
-        setDisable(true)
-      }
-      
+        getHalqaReports(inset, offset);
+       
+    } 
     }
   };
+  
   return (
     <>
       <div className="join xs:w-full mb-4">
@@ -253,12 +253,7 @@ export const UnitReport = () => {
         <span>
           Page {currentPage} of {totalPages}
         </span>
-        <button
-    disabled={disable}
-          className="btn"
-          onClick={handleNextPage}
-          
-        >
+        <button className="btn" onClick={handleNextPage} disabled={currentPage === totalPages}>
           Next
         </button>
       </div>

@@ -5,9 +5,12 @@ import moment from "moment";
 import { NoReports, months } from "../Reports";
 import { FilterDialog } from "./FilterDialog";
 import { useNavigate } from "react-router-dom";
+import { UIContext } from "../../context/ui";
 
 export const ProvinceReports = () => {
-  const pReports = useContext(ProvinceReportContext);
+  const p = useContext(ProvinceReportContext);
+  const pReports = p?.reports;
+  const total = p?.length;
   const [filterData, setFilterData] = useState([]);
   const [filterAllData, setFilterAllData] = useState(pReports);
   const { dispatch } = useToastState();
@@ -16,7 +19,14 @@ export const ProvinceReports = () => {
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("2023");
   const me = useContext(MeContext);
+  const { getProvinceReports } = useContext(UIContext);
+  const [disable,setDisable]= useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
+  const itemsPerPage = 10;
+  useEffect(() => {
+    setFilterAllData(pReports);
+  }, [pReports]);
   const searchResults = () => {
     if (year !== "" && month !== "") {
       let filteredData = { ...pReports };
@@ -62,6 +72,31 @@ export const ProvinceReports = () => {
   const handlePrint = (id) => {
     window.open(`province-report/print/${id}`, "blank");
   };
+  let totalPages =  Math.ceil(total / itemsPerPage);
+
+    const currentData = filterAllData?.slice(
+      (currentPage - 1) * itemsPerPage,
+      currentPage * itemsPerPage
+    );
+
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+      const inset = currentPage * itemsPerPage;
+      const offset = itemsPerPage;
+      if (pReports.length <= itemsPerPage * currentPage) {
+        getProvinceReports(inset, offset);
+      } 
+    }
+  };
+
   return (
     <>
       <div className="join xs:w-full mb-4">
@@ -180,8 +215,8 @@ export const ProvinceReports = () => {
             )} */}
         </div>
       </div>
-      {filterAllData?.length > 0 ? (
-        filterAllData?.map((p) => (
+      {currentData?.length > 0 ? (
+        currentData?.map((p) => (
           <div
             key={p?._id}
             className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
@@ -217,6 +252,21 @@ export const ProvinceReports = () => {
       ) : (
         <NoReports />
       )}
+      <div className="flex justify-between mt-4">
+        <button
+          className="btn"
+          onClick={handlePrevPage}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </button>
+        <span>
+          Page {currentPage} of {totalPages}
+        </span>
+        <button  className="btn" onClick={handleNextPage}  disabled={currentPage === totalPages}>
+          Next
+        </button>
+      </div>
       <dialog id="filter-area-dialog" className="modal">
         <FilterDialog setFilterAllData={setFilterAllData} />
       </dialog>
