@@ -26,6 +26,7 @@ import {
   ToseeDawat,
   ZailiActivities,
 } from "../components/muntakhibMaqamReports";
+import { Baitulmal } from "../components/muntakhibMaqamReports/Baitulmal";
 
 export const getData = async (path, id, setData, data) => {
   const arr = data[path];
@@ -151,12 +152,12 @@ export const MuntakhibMaqamReports = () => {
         }
       }
       halq.uploadedCurrent = halq.currentSum;
-      halq['manualCurrent']=0;
-      halq['manualMeetings']=0;
-      halq['manualLitrature']=0;
-      halq['manualCommonLiteratureDistribution']=0;
-      halq['manualCommonStudentMeetings']=0;
-      
+      halq["manualCurrent"] = 0;
+      halq["manualMeetings"] = 0;
+      halq["manualLitrature"] = 0;
+      halq["manualCommonLiteratureDistribution"] = 0;
+      halq["manualCommonStudentMeetings"] = 0;
+
       halq.uploadedMeetings = halq.meetingsSum;
       halq.uploadedCommonLiteratureDistribution =
         halq.commonLiteratureDistributionSum;
@@ -256,9 +257,7 @@ export const MuntakhibMaqamReports = () => {
     afd.forEach((i) => {
       calcultate(i);
     });
-    [
-      "manualUmeedwaran",
-    ].forEach((l) => (document.getElementById(l).value = 0));
+    ["manualUmeedwaran"].forEach((l) => (document.getElementById(l).value = 0));
   };
   const getIlaqaReports = async () => {
     try {
@@ -271,7 +270,7 @@ export const MuntakhibMaqamReports = () => {
         },
       });
       const repo = req?.data?.data;
-      
+
       setCreateData(repo);
       dispatch({ type: "SUCCESS", payload: req.data?.message });
     } catch (err) {
@@ -290,8 +289,8 @@ export const MuntakhibMaqamReports = () => {
       });
       const repo = req?.data?.data;
       let unfilter = reverseDataFormat(repo);
-      unfilter.uploadedUmeedwaran = unfilter['umeedwaranFilled'];
-      unfilter.uploadedRafaqa = unfilter['rafaqaFilled'];
+      unfilter.uploadedUmeedwaran = unfilter["umeedwaranFilled"];
+      unfilter.uploadedRafaqa = unfilter["rafaqaFilled"];
       setData(unfilter);
       setCreateData(reverseDataFormat(repo));
 
@@ -468,7 +467,10 @@ export const MuntakhibMaqamReports = () => {
           onSubmit={handleSubmit}
           id="maqam-form"
         >
-          <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">  جائزہ کارکردگی رپورٹ (برائے منتخب مقام)</h2>
+          <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
+            {" "}
+            جائزہ کارکردگی رپورٹ (برائے منتخب مقام)
+          </h2>
 
           <div className="w-full p-4">
             <div>
@@ -509,6 +511,9 @@ export const MuntakhibMaqamReports = () => {
             </div>
             <div className="mb-4">
               <PaighamDigest view={view} />
+            </div>
+            <div className="mb-4">
+              <Baitulmal view={view} />
             </div>
             <div className="mb-4">
               <RozOShabDiary view={view} />

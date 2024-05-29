@@ -24,6 +24,7 @@ import { PaighamDigest } from "../components/provinceReport/PaighamDigest";
 import { RozOShabDiary } from "../components/provinceReport/RozOShabDiary";
 import { Jamiaat } from "../components/provinceReport/Jamiaat";
 import { Colleges } from "../components/provinceReport/Colleges";
+import { Baitulmal } from "../components/provinceReport/Baitulmal";
 
 const getData = async (data) => {
   // const province = data["province"];
@@ -767,6 +768,9 @@ export const Province = () => {
             </div>
             <div className="mb-4">
               <PaighamDigest view={view} />
+            </div>
+            <div className="mb-4">
+              <Baitulmal view={view} />
             </div>
             <div className="mb-4">
               <RozOShabDiary />
