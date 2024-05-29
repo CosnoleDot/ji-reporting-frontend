@@ -1082,8 +1082,8 @@ export const LocationDivision = () => {
                   : ""}
               </h4>
             </div>
-            {(areaDetails?.parentType === "Tehsil" ||
-              areaDetails?.parentType === "Division") && (
+            {(areaDetails?.parentType === "Tehsil" &&
+              !areaDetails?.parentType === "Division") && (
               <>
                 <div className="w-full flex justify-start items-center gap-5">
                   <h5> District:</h5>

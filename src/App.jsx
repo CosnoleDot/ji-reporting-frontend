@@ -803,10 +803,7 @@ function App() {
           return "halqa";
 
         case "halqa":
-          return "halqa";
-
-        case "":
-          return "halqa";
+          return "halqa"
 
         default:
           return "invalid path";

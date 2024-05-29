@@ -1015,27 +1015,27 @@ export const Dashboard = () => {
               </h4>
             </div>
 
-            {(areaDetails?.parentType === "Tehsil" ||
-              areaDetails?.parentType === "Division") && (
-              <>
-                <div className="w-full flex justify-start items-center gap-5">
-                  <h5> District:</h5>
-                  <h4 className="text-gray-400 font-bold">
-                    {areaDetails?.parentId?.district
-                      ? areaDetails?.parentId?.district?.name
-                      : "Not a District aera"}
-                  </h4>
-                </div>
-                <div className="w-full flex justify-start items-center gap-5">
-                  <h5>Division:</h5>
-                  <h4 className="text-gray-400 font-bold">
-                    {areaDetails?.parentId?.district
-                      ? areaDetails?.parentId?.district?.division?.name
-                      : areaDetails?.division?.name}
-                  </h4>
-                </div>
-              </>
-            )}
+            {areaDetails?.parentType === "Tehsil" &&
+              !areaDetails?.parentType === "Division" && (
+                <>
+                  <div className="w-full flex justify-start items-center gap-5">
+                    <h5> District:</h5>
+                    <h4 className="text-gray-400 font-bold">
+                      {areaDetails?.parentId?.district
+                        ? areaDetails?.parentId?.district?.name
+                        : "Not a District aera"}
+                    </h4>
+                  </div>
+                  <div className="w-full flex justify-start items-center gap-5">
+                    <h5>Division:</h5>
+                    <h4 className="text-gray-400 font-bold">
+                      {areaDetails?.parentId?.district
+                        ? areaDetails?.parentId?.district?.division?.name
+                        : areaDetails?.division?.name}
+                    </h4>
+                  </div>
+                </>
+              )}
             {areaDetails?.parentType === "Ilaqa" && (
               <div className="w-full flex justify-start items-center gap-5">
                 <h5>Maqam:</h5>
