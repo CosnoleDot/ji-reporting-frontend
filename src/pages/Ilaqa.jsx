@@ -23,6 +23,7 @@ import { Library } from "../components/ilaqaReport/Library";
 import { PaighamDigest } from "../components/ilaqaReport/PaighamDigest";
 import { RozOShabDiary } from "../components/ilaqaReport/RozOShabDiary";
 import { getData } from "./Maqam";
+import { Baitulmal } from "../components/ilaqaReport/Baitulmal";
 
 export const Ilaqa = () => {
   // EDIT CODE START
@@ -82,7 +83,7 @@ export const Ilaqa = () => {
       });
       document.getElementById("name").value = me?.userAreaId?.name;
     }
-    
+
     createData
       ?.filter((i) => i?.month.includes(month))
       .forEach((i) => {
@@ -112,16 +113,14 @@ export const Ilaqa = () => {
           }
         });
       });
-      
+
     Object.keys(halq).forEach((i) => {
-      
       let j;
       if (i === "studyCircle-decided") {
         j = "studyCircleMentioned-decided";
       } else if (i === "current") {
         j = "uploadedCurrent";
-      }
-       else if (i === "meetings") {
+      } else if (i === "meetings") {
         j = "uploadedMeetings";
       } else if (i === "literatureDistribution") {
         j = "uploadedLitrature";
@@ -139,9 +138,8 @@ export const Ilaqa = () => {
         j = "studyCircleMentioned-done";
       } else if (i === "studyCircle-attendance") {
         j = "studyCircleMentioned-averageAttendance";
-      }
-      else if (i === "shabBedari") {
-        halq[i]=0
+      } else if (i === "shabBedari") {
+        halq[i] = 0;
       } else {
         if (i.split("-")[1] === "completed") {
           j = i.split("-")[0] + "-done";
@@ -221,7 +219,7 @@ export const Ilaqa = () => {
         },
       });
       const repo = req?.data?.data;
-      
+
       setCreateData(repo);
       dispatch({ type: "SUCCESS", payload: req.data?.message });
     } catch (err) {
@@ -240,8 +238,8 @@ export const Ilaqa = () => {
       });
       const repo = req?.data?.data;
       let unfilter = reverseDataFormat(repo);
-      unfilter.uploadedUmeedwaran = unfilter['umeedwaranFilled'];
-      unfilter.uploadedRafaqa = unfilter['rafaqaFilled'];
+      unfilter.uploadedUmeedwaran = unfilter["umeedwaranFilled"];
+      unfilter.uploadedRafaqa = unfilter["rafaqaFilled"];
       setData(unfilter);
       setCreateData(reverseDataFormat(repo));
 
@@ -319,7 +317,7 @@ export const Ilaqa = () => {
 
     const formData = new FormData(e.currentTarget);
     const jsonData = convertDataFormat(toJson(formData));
-    
+
     // Replace null values with zero
     for (const key in jsonData) {
       if (jsonData.hasOwnProperty(key) && jsonData[key] === null) {
@@ -448,6 +446,9 @@ export const Ilaqa = () => {
             </div>
             <div className="mb-4">
               <PaighamDigest view={view} />
+            </div>
+            <div className="mb-4">
+              <Baitulmal view={view} />
             </div>
             <div className="mb-4">
               <RozOShabDiary view={view} />

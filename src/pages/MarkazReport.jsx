@@ -24,6 +24,7 @@ import {
   ZailiActivities,
 } from "../components/markazReport";
 import { GeneralInfo } from "../components/markazReport/GeneralInfo";
+import { Baitulmal } from "../components/markazReport/Baitulmal";
 
 // const getData = async (path, id, setData, data) => {
 //   const arr = data[path];
@@ -269,7 +270,7 @@ export const MarkazReport = () => {
         },
       });
       const repo = req?.data?.data;
-      
+
       setCreateData(repo);
       dispatch({ type: "SUCCESS", payload: req.data?.message });
     } catch (err) {
@@ -287,10 +288,10 @@ export const MarkazReport = () => {
         },
       });
       const repo = req?.data?.data;
-      
+
       setData(reverseDataFormat(repo));
       setCreateData(reverseDataFormat(repo));
-         
+
       if (data) {
         setLoading(false);
       }
@@ -323,7 +324,7 @@ export const MarkazReport = () => {
     setId(params?.id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
- 
+
   useEffect(() => {
     Object.keys(data).forEach((i) => {
       const elem = document.getElementById(i);
@@ -344,7 +345,7 @@ export const MarkazReport = () => {
   useEffect(() => {
     if (!id) autoFill();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, month,createData]);
+  }, [id, month, createData]);
   // EDIT CODE END
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -443,6 +444,9 @@ export const MarkazReport = () => {
             </div>
             <div className="mb-4">
               <Library />
+            </div>
+            <div className="mb-4">
+              <Baitulmal view={view} />
             </div>
             <div className="mb-4">
               <RozOShabDiary view={view} />

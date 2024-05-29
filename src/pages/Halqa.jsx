@@ -22,6 +22,7 @@ import { convertDataFormat, reverseDataFormat, toJson } from "../utils";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { getData } from "./Maqam";
 import { UIContext } from "../context/ui";
+import { Baitulmal } from "../components/halqa/Baitulmal";
 
 export const Halqa = () => {
   const { dispatch } = useToastState();
@@ -145,6 +146,7 @@ export const Halqa = () => {
           <OtherActivities view={view} />
           <ToseeDawat view={view} />
           <Library view={view} />
+          <Baitulmal view={view} />
           <RozOShabDiary view={view} />
           <div className="w-full flex p-2">
             <label htmlFor="comments">تبصرہ</label>
