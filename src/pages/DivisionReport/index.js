@@ -17,7 +17,7 @@ export const DivisionReport = () => {
       setData(req?.data?.data);
     }
   };
-
+  console.log(data);
   useEffect(() => {
     if (params?.id) printReport(params?.id);
   }, [params]);
@@ -30,23 +30,37 @@ export const DivisionReport = () => {
       <div
         style={{
           display: "flex",
-          justifyContent: "space-around",
+          justifyContent: "space-between",
           alignItems: "center",
           marginBottom: "1rem",
         }}
         className="tableContainer"
       >
-        <h4 className="header" style={{ width: "10rem" }}>
-          ڈویژن کا نام:
-        </h4>
-        <h6>
+        <div
+          style={{
+            display: "flex",
+            justifyItems: "flex-start",
+            alignItems: "flex-start",
+            gap: "1rem",
+          }}
+        >
+          <h4 className="header">ڈویژن کا نام:</h4>
+          <h4 className="header">مرکزکا نام: </h4>
           {data?.divisionAreaId?.name}- ({data?.divisionAreaId?.province?.name})
-        </h6>
-        <h4 className="header">برائے ماہ:</h4>
-        <h6>{data?.month.split("T")[0]}</h6>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            justifyItems: "flex-start",
+            alignItems: "flex-start",
+            gap: "1rem",
+          }}
+        >
+          <h4 className="header">برائے ماہ:</h4>
+          <h6>{data?.month.split("T")[0]}</h6>
+        </div>
       </div>
       <div className="flex w-full p-4 justify-start items-center font-bold text-2xl">
-        
         جامعات
       </div>
       <div
@@ -135,7 +149,6 @@ export const DivisionReport = () => {
         </div>
       </div>
       <div className="flex w-full p-4 justify-start items-center font-bold text-2xl">
-        
         کالجز
       </div>
       <div
@@ -631,9 +644,6 @@ export const DivisionReport = () => {
         className="tableContainer"
       >
         <h6 style={{ width: "100%", textAlign: "start" }}>
-          تربیت گاہ:{data?.otherActivityId?.tarbiyatGaah}
-        </h6>
-        <h6 style={{ width: "100%", textAlign: "start" }}>
           دعوتی وفود:{data?.otherActivityId?.dawatiWafud}
         </h6>
         <h6 style={{ width: "100%", textAlign: "start" }}>
@@ -748,7 +758,7 @@ export const DivisionReport = () => {
           </h6>
         </div>
         <h3 style={{ textAlign: "start", fontWeight: "bolder" }}>
-          پیغام ڈایجیسٹ
+          ہمقدم ڈائجسٹ
         </h3>
         <div
           style={{
@@ -768,6 +778,30 @@ export const DivisionReport = () => {
           <h6 style={{ width: "100%", textAlign: "start" }}>
             موصول کرنے کا ماہانہ ہدف:
             {data?.paighamDigestId?.monthlyReceivingGoal}
+          </h6>
+        </div>
+        <h3 style={{ textAlign: "start", fontWeight: "bolder" }}>بیت المال</h3>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-start",
+            alignItems: "center",
+            marginBottom: "1rem",
+            width: "100%",
+          }}
+        >
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+            ماہانہ آمدن:{data?.baitulmalId?.monthlyIncome}
+          </h6>
+
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+            ماہانہ خرچ:{data?.baitulmalId?.monthlyExpenditure}
+          </h6>
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+            بدست:{data?.baitulmalId?.savings}
+          </h6>
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+            خسارہ:{data?.baitulmalId?.loss}
           </h6>
         </div>
         <h3 style={{ textAlign: "start", fontWeight: "bolder" }}>

@@ -39,10 +39,7 @@ export const getData = async (path, id, setData, data) => {
 export const MuntakhibMaqamReports = () => {
   // EDIT CODE START
   const halqa = useContext(HalqaReportContext);
-  const ilaqa = useContext(IlaqaReportContext);
-  const maqam = useContext(MaqamReportContext);
-  const division = useContext(DivisionReportContext);
-  const [createData, setCreateData] = useState();
+  const [createData, setCreateData] = useState([]);
   const [month, setMonth] = useState("");
   const params = useParams();
   const [id, setId] = useState(null);
@@ -57,7 +54,7 @@ export const MuntakhibMaqamReports = () => {
   const autoFill = () => {
     const halq = {};
     document.getElementById("maqam-form").reset();
-    if (createData?.filter((i) => i?.month.includes(month)).length < 1) {
+    if (createData?.length > 0) {
       [
         "rafaqa-start",
         "karkunan-start",
@@ -95,27 +92,28 @@ export const MuntakhibMaqamReports = () => {
       });
       document.getElementById("name").value = me?.userAreaId?.name;
     }
-    createData
-      ?.filter((i) => i?.month.includes(month))
-      .forEach((i) => {
-        const sim = reverseDataFormat(i);
-        Object.keys(sim)?.forEach((j) => {
-          if (halq?.[j]) {
-            try {
-              halq[j] += parseInt(sim[j]) || 0;
-            } catch {
-              halq[j] += sim[j] || 0;
+    if (createData?.length > 0)
+      createData
+        ?.filter((i) => i?.month.includes(month))
+        .forEach((i) => {
+          const sim = reverseDataFormat(i);
+          Object.keys(sim)?.forEach((j) => {
+            if (halq?.[j]) {
+              try {
+                halq[j] += parseInt(sim[j]) || 0;
+              } catch {
+                halq[j] += sim[j] || 0;
+              }
+            } else {
+              try {
+                halq[j] = parseInt(sim[j]) || 0;
+              } catch {
+                halq[j] = sim[j] || 0;
+              }
             }
-          } else {
-            try {
-              halq[j] = parseInt(sim[j]) || 0;
-            } catch {
-              halq[j] = sim[j] || 0;
-            }
-          }
+          });
         });
-      });
-    Object.keys(halq).forEach((i) => {
+    Object.keys(halq)?.forEach((i) => {
       let j;
 
       if (i === "studyCircle-decided") {
@@ -326,13 +324,6 @@ export const MuntakhibMaqamReports = () => {
     setId(params?.id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
-  useEffect(() => {
-    if (id) getData("maqam", id, setData, { halqa, maqam, division });
-    else {
-      setLoading(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
   useEffect(() => {
     Object.keys(data).forEach((i) => {
       const elem = document.getElementById(i);

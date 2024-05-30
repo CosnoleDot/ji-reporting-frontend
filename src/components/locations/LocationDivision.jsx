@@ -296,10 +296,10 @@ export const LocationDivision = () => {
     if (view === "halqa") {
       const filteredHalqa = halqas
         ?.map((halqa) => halqa)
-        .filter(
+        ?.filter(
           (hal) =>
-            hal?.name.toLowerCase().includes(value.toLowerCase()) ||
-            hal?.parentId?.name.toLowerCase().includes(value.toLowerCase())
+            hal?.name?.toLowerCase().includes(value.toLowerCase()) ||
+            hal?.parentId?.name?.toLowerCase().includes(value.toLowerCase())
         );
       setFilteredData(filteredHalqa);
     } else if (view === "district") {
@@ -690,7 +690,7 @@ export const LocationDivision = () => {
                           className="toggle toggle-error"
                           defaultChecked={halqa?.disabled}
                           onChange={() => {
-                            handleDisable(halqa?._id, halqa?.disabled);
+                            handleDisable(halqa?._id, !halqa?.disabled);
                           }}
                         />
                       </td>
@@ -1082,27 +1082,27 @@ export const LocationDivision = () => {
                   : ""}
               </h4>
             </div>
-            {(areaDetails?.parentType === "Tehsil" &&
-              !areaDetails?.parentType === "Division") && (
-              <>
-                <div className="w-full flex justify-start items-center gap-5">
-                  <h5> District:</h5>
-                  <h4 className="text-gray-400 font-bold">
-                    {areaDetails?.parentId?.district
-                      ? areaDetails?.parentId?.district?.name
-                      : "Not a District aera"}
-                  </h4>
-                </div>
-                <div className="w-full flex justify-start items-center gap-5">
-                  <h5>Division:</h5>
-                  <h4 className="text-gray-400 font-bold">
-                    {areaDetails?.parentId?.district
-                      ? areaDetails?.parentId?.district?.division?.name
-                      : areaDetails?.division?.name}
-                  </h4>
-                </div>
-              </>
-            )}
+            {areaDetails?.parentType === "Tehsil" &&
+              !areaDetails?.parentType === "Division" && (
+                <>
+                  <div className="w-full flex justify-start items-center gap-5">
+                    <h5> District:</h5>
+                    <h4 className="text-gray-400 font-bold">
+                      {areaDetails?.parentId?.district
+                        ? areaDetails?.parentId?.district?.name
+                        : "Not a District aera"}
+                    </h4>
+                  </div>
+                  <div className="w-full flex justify-start items-center gap-5">
+                    <h5>Division:</h5>
+                    <h4 className="text-gray-400 font-bold">
+                      {areaDetails?.parentId?.district
+                        ? areaDetails?.parentId?.district?.division?.name
+                        : areaDetails?.division?.name}
+                    </h4>
+                  </div>
+                </>
+              )}
             {areaDetails?.parentType === "Ilaqa" && (
               <div className="w-full flex justify-start items-center gap-5">
                 <h5>Maqam:</h5>
