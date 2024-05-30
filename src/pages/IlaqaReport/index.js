@@ -21,30 +21,53 @@ export const IlaqaReport = () => {
   useEffect(() => {
     if (params?.id) printReport(params?.id);
   }, [params]);
-  
+
   return (
     <div className="wrapper reports" style={{ marginBottom: "2rem" }} dir="rtl">
       <PrintDocument />
-      <h3 style={{ textAlign: "center", fontWeight: "bold" ,marginBottom:'8px'}}>
+      <h3
+        style={{
+          textAlign: "center",
+          fontWeight: "bold",
+          marginBottom: "1rem",
+        }}
+      >
         جائزہ کارکردگی رپورٹ برائے علاقہ
       </h3>
       <div
         style={{
           display: "flex",
-          justifyContent: "space-around",
+          justifyContent: "space-between",
           alignItems: "center",
           marginBottom: "1rem",
         }}
         className="tableContainer"
       >
-        <h4 className="header"> علاقہ کا نام:</h4>
-        <h6>
-          {data?.ilaqaAreaId?.name}- ({data?.ilaqaAreaId?.maqam?.name})
-        </h6>
-        <h4 className="header">برائے ماہ:</h4>
-        <h6>{data?.month.split("T")[0]}</h6>
+        <div
+          style={{
+            display: "flex",
+            justifyItems: "flex-start",
+            alignItems: "flex-start",
+            gap: "1rem",
+          }}
+        >
+          <h4 className="header"> علاقہ کا نام:</h4>
+          <h6>
+            {data?.ilaqaAreaId?.name}- ({data?.ilaqaAreaId?.maqam?.name})
+          </h6>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            justifyItems: "flex-start",
+            alignItems: "flex-start",
+            gap: "1rem",
+          }}
+        >
+          <h4 className="header">برائے ماہ:</h4>
+          <h6>{data?.month.split("T")[0]}</h6>
+        </div>
       </div>
-     
       <div
         style={{
           display: "flex",
@@ -358,7 +381,6 @@ export const IlaqaReport = () => {
         }}
         className="tableContainer"
       >
-       
         <div className="row">
           <p className="header">سٹڈی سرکل</p>
           <p>{data?.maqamActivityId?.studyCircle?.decided}</p>
@@ -508,29 +530,28 @@ export const IlaqaReport = () => {
             justifyContent: "flex-start",
             alignItems: "center",
             marginBottom: "1rem",
-            flexDirection:'column',
+            flexDirection: "column",
             width: "100%",
           }}
           className="tableContainer"
         >
           <div className="flex w-full gap-4">
-          <h6 style={{ width: "100%", textAlign: "start" }}>
-            طے شدہ:{data?.tdId?.rawabitDecided}
-          </h6>
-          <h6 style={{ width: "100%", textAlign: "start" }}>
-          روابط سے ملاقاتوں کا ہدف:{data?.tdId?.rwabitMeetingsGoal}
-          </h6>
-          <h6 style={{ width: "100%", textAlign: "start" }}>
-            موجودہ :{data?.tdId?.currentSum}
-          </h6>
-          <h6 style={{ width: "100%", textAlign: "start" }}>
-          ملاقاتوں کی تعداد:{data?.tdId?.meetingsSum}
-          </h6>
-          <h6 style={{ width: "100%", textAlign: "start" }}>
-            تقسیم لٹریچر:{data?.tdId?.literatureSum}
-          </h6>
+            <h6 style={{ width: "100%", textAlign: "start" }}>
+              طے شدہ:{data?.tdId?.rawabitDecided}
+            </h6>
+            <h6 style={{ width: "100%", textAlign: "start" }}>
+              روابط سے ملاقاتوں کا ہدف:{data?.tdId?.rwabitMeetingsGoal}
+            </h6>
+            <h6 style={{ width: "100%", textAlign: "start" }}>
+              موجودہ :{data?.tdId?.currentSum}
+            </h6>
+            <h6 style={{ width: "100%", textAlign: "start" }}>
+              ملاقاتوں کی تعداد:{data?.tdId?.meetingsSum}
+            </h6>
+            <h6 style={{ width: "100%", textAlign: "start" }}>
+              تقسیم لٹریچر:{data?.tdId?.literatureSum}
+            </h6>
           </div>
-         
         </div>
         <h3 style={{ textAlign: "start", fontWeight: "bold" }}>عام طلبہ</h3>
         <div
@@ -576,7 +597,7 @@ export const IlaqaReport = () => {
           </h6>
         </div>
         <h3 style={{ textAlign: "start", fontWeight: "bolder" }}>
-          پیغام ڈایجیسٹ
+          ہمقدم ڈائجسٹ
         </h3>
         <div
           style={{
@@ -594,7 +615,32 @@ export const IlaqaReport = () => {
             فروخت کردہ :{data?.paighamDigestId?.soldSum}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-          ڈائجسٹ موصول کرنے کا ہدف:{data?.paighamDigestId?.monthlyReceivingGoalSum}
+            ڈائجسٹ موصول کرنے کا ہدف:
+            {data?.paighamDigestId?.monthlyReceivingGoalSum}
+          </h6>
+        </div>
+        <h3 style={{ textAlign: "start", fontWeight: "bolder" }}>بیت المال</h3>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-start",
+            alignItems: "center",
+            marginBottom: "1rem",
+            width: "100%",
+          }}
+        >
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+            ماہانہ آمدن:{data?.baitulmalId?.monthlyIncome}
+          </h6>
+
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+            ماہانہ خرچ:{data?.baitulmalId?.monthlyExpenditure}
+          </h6>
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+            بدست:{data?.baitulmalId?.savings}
+          </h6>
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+            خسارہ:{data?.baitulmalId?.loss}
           </h6>
         </div>
         <h3 style={{ textAlign: "start", fontWeight: "bolder" }}>
@@ -612,7 +658,7 @@ export const IlaqaReport = () => {
           <h6 style={{ width: "100%", textAlign: "start" }}>
             کتنے امیدوران فل کرتے ہیں :{data?.rsdId?.umeedwaranFilledSum}
           </h6>
-          
+
           <h6 style={{ width: "100%", textAlign: "start" }}>
             کتنےرفقا فل کرتے ہیں :{data?.rsdId?.rafaqaFilledSum}
           </h6>

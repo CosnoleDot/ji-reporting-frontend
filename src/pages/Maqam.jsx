@@ -50,7 +50,7 @@ export const Maqam = () => {
     const halq = {};
 
     document.getElementById("maqam-form").reset();
-    if (createData?.filter((i) => i?.month.includes(month)).length < 1) {
+    if (createData?.length > 0) {
       [
         "rafaqa-start",
         "karkunan-start",

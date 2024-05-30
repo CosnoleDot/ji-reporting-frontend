@@ -747,7 +747,7 @@ export const ProvinceReport = () => {
           </h6>
         </div>
         <h3 style={{ textAlign: "start", fontWeight: "bolder" }}>
-          پیغام ڈایجیسٹ
+          ہمقدم ڈائجسٹ
         </h3>
         <div
           style={{
