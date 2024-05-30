@@ -23,25 +23,48 @@ export const MarkazReportPrint = () => {
   return (
     <div className="wrapper reports" style={{ marginBottom: "2rem" }} dir="rtl">
       <PrintDocument />
-      <h3 style={{ textAlign: "center", fontWeight: "bold" }}>
+      <h3
+        style={{
+          textAlign: "center",
+          fontWeight: "bold",
+          marginBottom: "1rem",
+        }}
+      >
         جائزہ کارکردگی رپورٹ برائے صوبہ
       </h3>
       <div
         style={{
           display: "flex",
-          justifyContent: "space-around",
+          justifyContent: "space-between",
           alignItems: "center",
           marginBottom: "1rem",
         }}
         className="tableContainer"
       >
-        <h4 className="header">صوبے کا نام: </h4>
-        <h6>{data?.provinceAreaId?.name}</h6>
-        <h4 className="header">برائے ماہ:</h4>
-        <h6>{data?.month.split("T")[0]}</h6>
+        <div
+          style={{
+            display: "flex",
+            justifyItems: "flex-start",
+            alignItems: "flex-start",
+            gap: "1rem",
+          }}
+        >
+          <h4 className="header">مرکزکا نام: </h4>
+          <h6>{data?.countryAreaId?.name}</h6>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            justifyItems: "flex-start",
+            alignItems: "flex-start",
+            gap: "1rem",
+          }}
+        >
+          <h4 className="header">برائے ماہ:</h4>
+          <h6>{data?.month.split("T")[0]}</h6>
+        </div>
       </div>
       <div className="flex w-full p-4 justify-start items-center font-bold text-2xl">
-        
         جامعات
       </div>
       <div
@@ -115,7 +138,6 @@ export const MarkazReportPrint = () => {
         </div>
       </div>
       <div className="flex w-full p-4 justify-start items-center font-bold text-2xl">
-        
         کالجز
       </div>
       <div
@@ -605,9 +627,9 @@ export const MarkazReportPrint = () => {
           justifyContent: "flex-start",
           alignItems: "center",
           marginBottom: "1rem",
-          flexDirection:'column',
-          width:'100%',
-          gap:'12px'
+          flexDirection: "column",
+          width: "100%",
+          gap: "12px",
         }}
         className="tableContainer"
       >
@@ -616,10 +638,12 @@ export const MarkazReportPrint = () => {
             تربیت گاہ:{data?.otherActivityId?.tarbiyatGaah}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            تربیت گاہوں کے انعقاد کا ہدف:{data?.otherActivityId?.tarbiyatGaahGoalSum}
+            تربیت گاہوں کے انعقاد کا ہدف:
+            {data?.otherActivityId?.tarbiyatGaahGoalSum}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            تربیت گاہوں کے انعقاد کی تعداد: {data?.otherActivityId?.tarbiyatGaahHeldSum}
+            تربیت گاہوں کے انعقاد کی تعداد:{" "}
+            {data?.otherActivityId?.tarbiyatGaahHeldSum}
           </h6>
         </div>
         <div className="flex gap-4 w-full">
@@ -638,7 +662,6 @@ export const MarkazReportPrint = () => {
           <h6 style={{ width: "100%", textAlign: "start" }}>
             نِطام الصلوۃ:{data?.otherActivityId?.nizamSalah}
           </h6>
-          
         </div>
       </div>
       <div
@@ -693,7 +716,7 @@ export const MarkazReportPrint = () => {
             موجود :{data?.tdId?.current}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-          ملاقاتوں کی تعداد: :{data?.tdId?.meetings}
+            ملاقاتوں کی تعداد: :{data?.tdId?.meetings}
           </h6>
 
           <h6 style={{ width: "100%", textAlign: "start" }}>
@@ -744,7 +767,7 @@ export const MarkazReportPrint = () => {
           </h6>
         </div>
         <h3 style={{ textAlign: "start", fontWeight: "bolder" }}>
-          پیغام ڈایجیسٹ
+          ہمقدم ڈائجسٹ
         </h3>
         <div
           style={{
@@ -767,6 +790,30 @@ export const MarkazReportPrint = () => {
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
             گفٹ:{data?.paighamDigestId?.gift}
+          </h6>
+        </div>
+        <h3 style={{ textAlign: "start", fontWeight: "bolder" }}>بیت المال</h3>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-start",
+            alignItems: "center",
+            marginBottom: "1rem",
+            width: "100%",
+          }}
+        >
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+            ماہانہ آمدن:{data?.baitulmalId?.monthlyIncome}
+          </h6>
+
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+            ماہانہ خرچ:{data?.baitulmalId?.monthlyExpenditure}
+          </h6>
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+            بدست:{data?.baitulmalId?.savings}
+          </h6>
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+            خسارہ:{data?.baitulmalId?.loss}
           </h6>
         </div>
         <h3 style={{ textAlign: "start", fontWeight: "bolder" }}>

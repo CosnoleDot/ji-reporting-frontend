@@ -54,7 +54,7 @@ export const MarkazReport = () => {
   const autoFill = () => {
     const halq = {};
     document.getElementById("markaz-form").reset();
-    if (createData.filter((i) => i?.month.includes(month)).length < 1) {
+    if (createData?.filter((i) => i?.month.includes(month)).length < 1) {
       [
         `rafaqa-start`,
         "karkunan-start",
