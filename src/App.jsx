@@ -452,7 +452,7 @@ function App() {
     }
   };
   useEffect(() => {}, [muntakhibMaqam]);
-  let provinceR, maqamR, divisionR, halqaR, ilaqaR, markazR ,halqaT, length;
+  let provinceR, maqamR, divisionR, halqaR, ilaqaR, markazR ,halqaT;
   const getMarkazReport = async (inset, offset) => {
   
     if (me?.userAreaType === "Country")
@@ -468,7 +468,7 @@ function App() {
         if (req) {
           markazR = req.data?.data?.data;
 
-          length = req?.data?.data?.length;
+         let length = req?.data?.data?.length;
           setMarkazReport((prevData) => ({
             reports: prevData.reports
               ? [...prevData.reports, ...markazR]
@@ -500,7 +500,7 @@ function App() {
         if (req) {
           provinceR = req.data?.data?.data;
 
-          length = req?.data?.data?.length;
+          let length = req?.data?.data?.length;
           setProvinceReports((prevData) => ({
             reports: prevData.reports
               ? [...prevData.reports, ...provinceR]
@@ -536,7 +536,7 @@ function App() {
         if (req) {
           maqamR = req.data.data?.data;
 
-          length = req?.data?.data?.length;
+          let length = req?.data?.data?.length;
           setMaqamReports((prevData) => ({
             reports: prevData.reports
               ? [...prevData.reports, ...maqamR]
@@ -568,7 +568,7 @@ function App() {
         if (req) {
           ilaqaR = req.data.data?.data;
 
-          length = req?.data?.data?.length;
+          let length = req?.data?.data?.length;
           setIlaqaReports((prevData) => ({
             reports: prevData.reports
               ? [...prevData.reports, ...ilaqaR]
@@ -604,7 +604,7 @@ function App() {
         if (req) {
           divisionR = req.data.data?.data;
 
-          length = req?.data?.data?.length;
+          let length = req?.data?.data?.length;
           setDivisionReports((prevData) => ({
             reports: prevData.reports
               ? [...prevData.reports, ...divisionR]
@@ -635,7 +635,7 @@ function App() {
       );
       if (req) {
         halqaR = req.data.data?.data;
-        length = req?.data?.data?.length;
+        let length = req?.data?.data?.length;
         setHalqaReports((prevData) => ({
           reports: [...prevData.reports, ...halqaR],
           length: length,
@@ -665,7 +665,7 @@ function App() {
         );
         if (req) {
           halqaT = req.data.data;
-          length = req?.data?.data?.length;
+          let length = req?.data?.data?.length;
           console.log(halqaT);
           setHalqaReportsTab((prevData) => ({
             reports: [...prevData.reports, ...halqaT],
