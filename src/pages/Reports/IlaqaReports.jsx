@@ -21,7 +21,7 @@ export const IlaqaReports = () => {
   const me = useContext(MeContext);
   const [currentPage, setCurrentPage] = useState(1);
   const { getIlaqaReports } = useContext(UIContext);
-  const [disable,setDisable]= useState(false);
+  const [disable, setDisable] = useState(false);
   const navigate = useNavigate();
   const itemsPerPage = 10;
   useEffect(() => {
@@ -81,14 +81,12 @@ export const IlaqaReports = () => {
     window.open(`ilaqa-report/print/${id}`, "blank");
   };
 
-  let totalPages =  Math.ceil(total / itemsPerPage);
+  let totalPages = Math.ceil(total / itemsPerPage);
 
-
-    const currentData = filterAllData?.slice(
-      (currentPage - 1) * itemsPerPage,
-      currentPage * itemsPerPage
-    );
- 
+  const currentData = filterAllData?.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   const handlePrevPage = () => {
     if (currentPage > 1) {
@@ -103,10 +101,10 @@ export const IlaqaReports = () => {
       const offset = itemsPerPage;
       if (iReports.length <= itemsPerPage * currentPage) {
         getIlaqaReports(inset, offset);
-      } 
+      }
     }
   };
-  
+
   return (
     <>
       <div className="join xs:w-full mb-4">
@@ -226,9 +224,7 @@ export const IlaqaReports = () => {
         </div>
       </div>
       {currentData.length > 0 ? (
-        currentData.map((p,index) => (
-          <div className="flex gap-4">
-            <span>{index+1}</span>
+        currentData.map((p, index) => (
           <div
             key={p?._id}
             className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
@@ -245,7 +241,6 @@ export const IlaqaReports = () => {
                 <FaEye />
               </button>
 
-              
               {me?.userAreaType == "Ilaqa" && (
                 <button className="btn" onClick={() => editReport(p?._id)}>
                   <FaEdit />
@@ -256,7 +251,6 @@ export const IlaqaReports = () => {
                 <FaPrint />
               </button>
             </div>
-          </div>
           </div>
         ))
       ) : (
@@ -273,7 +267,11 @@ export const IlaqaReports = () => {
         <span>
           Page {currentPage} of {totalPages}
         </span>
-        <button  className="btn" onClick={handleNextPage} disabled={currentPage === totalPages}>
+        <button
+          className="btn"
+          onClick={handleNextPage}
+          disabled={currentPage === totalPages}
+        >
           Next
         </button>
       </div>

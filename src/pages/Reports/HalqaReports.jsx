@@ -131,7 +131,9 @@ export const HalqaReports = () => {
     setTab(tab);
     getHalqaReportsTab((currentPage - 1) * itemsPerPage, itemsPerPage, tab);
   };
-
+  const handlePrint = (id) => {
+    window.open(`halqa-report/print/${id}`, "blank");
+  };
   return (
     <>
       <div
@@ -312,7 +314,7 @@ export const HalqaReports = () => {
 
           
 
-                <button className="btn">
+                <button className="btn" onClick={() => handlePrint(p?._id)}>
                   <FaPrint />
                 </button>
               </div>

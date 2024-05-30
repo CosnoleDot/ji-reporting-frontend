@@ -25,11 +25,42 @@ export const OtherActivities = ({ view }) => {
           <input
             readOnly={view}
             type="number"
-            defaultValue={0}
+            defaultValue={document.getElementById("tarbiyatGaahGoalSum")?.value}
             required
             name={`tarbiyatGaahGoal`}
             id={`tarbiyatGaahGoal`}
             className="border-b-2 text-center border-dashed mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
+          />+
+          <input
+            readOnly={view}
+            type="number"
+            defaultValue={0}
+            required
+            name={`tarbiyatGaahGoalManual`}
+            id={`tarbiyatGaahGoalManual`}
+            className="border-b-2 text-center border-dashed mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
+          />
+          =
+          <input
+            readOnly={view}
+            type="number"
+            defaultValue={0}
+            required
+            name={`tarbiyatGaahGoalSum`}
+            id={`tarbiyatGaahGoalSum`}
+            className="border-b-2 text-center border-dashed mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
+          />
+        </div>
+        <div className="flex py-2">
+          <label className="block text-sm md:text-lg">تنظیمی دورہ:</label>
+          <input
+            readOnly={view}
+            type="number"
+            defaultValue={0}
+            name="tanzeemiRound"
+            id="tanzeemiRound"
+            className="border-b-2 text-center border-dashed mb-2 lg:mb-0"
+            required
           />
         </div>
         <div className="flex sm:mb-2 py-2 overflow-hidden overflow-x-scroll w-full">
@@ -39,10 +70,30 @@ export const OtherActivities = ({ view }) => {
           <input
             readOnly={view}
             type="number"
-            defaultValue={0}
+            defaultValue={document.getElementById("tarbiyatGaahHeldSum")?.value}
             required
             name={`tarbiyatGaahHeld`}
             id={`tarbiyatGaahHeld`}
+            className="border-b-2 text-center border-dashed mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
+          />
+          +
+          <input
+            readOnly={view}
+            type="number"
+            defaultValue={0}
+            required
+            name={`tarbiyatGaahHeldManual`}
+            id={`tarbiyatGaahHeldManual`}
+            className="border-b-2 text-center border-dashed mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
+          />
+          =
+          <input
+            readOnly={view}
+            type="number"
+            defaultValue={0}
+            required
+            name={`tarbiyatGaahHeldSum`}
+            id={`tarbiyatGaahHeldSum`}
             className="border-b-2 text-center border-dashed mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
           />
         </div>

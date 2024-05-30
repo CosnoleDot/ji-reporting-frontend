@@ -20,7 +20,7 @@ export const ProvinceReport = () => {
   useEffect(() => {
     if (params?.id) printReport(params?.id);
   }, [params]);
- 
+ console.log(data)
   return (
     <div className="wrapper reports" style={{ marginBottom: "2rem" }} dir="rtl">
       <PrintDocument />
@@ -236,6 +236,9 @@ export const ProvinceReport = () => {
         <p className="header" style={{ width: "100%" }}>
           <strong>فعال</strong>
         </p>
+        <p className="header" style={{ width: "100%" }}>
+          <strong>ماہانہ ہدف</strong>
+        </p>
       </div>
       <div
         style={{
@@ -250,6 +253,7 @@ export const ProvinceReport = () => {
           <p>{data?.provinceTanzeemId?.rehaishHalqay?.start}</p>
           <p>{data?.provinceTanzeemId?.rehaishHalqay?.increase}</p>
           <p>{data?.provinceTanzeemId?.rehaishHalqay?.decrease}</p>
+        
           <p>
             {data?.provinceTanzeemId?.rehaishHalqay?.start +
               data?.provinceTanzeemId?.rehaishHalqay?.increase -
@@ -257,6 +261,7 @@ export const ProvinceReport = () => {
           </p>
           <p>{data?.provinceTanzeemId?.rehaishHalqay?.paused}</p>
           <p>{data?.provinceTanzeemId?.rehaishHalqay?.continue}</p>
+          <p>{data?.provinceTanzeemId?.rehaishHalqay?.monthly}</p>
         </div>
         <div className="row">
           <p className="header"> تعلیمی حلقے</p>
@@ -270,6 +275,7 @@ export const ProvinceReport = () => {
           </p>
           <p>{data?.provinceTanzeemId?.taleemHalqay?.paused}</p>
           <p>{data?.provinceTanzeemId?.taleemHalqay?.continue}</p>
+          <p>{data?.provinceTanzeemId?.taleemHalqay?.monthly}</p>
         </div>
         <div className="row">
           <p className="header">کل حلقے</p>
@@ -283,6 +289,7 @@ export const ProvinceReport = () => {
           </p>
           <p>{data?.provinceTanzeemId?.totalHalqay?.paused}</p>
           <p>{data?.provinceTanzeemId?.totalHalqay?.continue}</p>
+          <p>{data?.provinceTanzeemId?.totalHalqay?.monthly}</p>
         </div>
         <div className="row">
           <p className="header">رِہائشی زیلی حلقے</p>
@@ -296,6 +303,7 @@ export const ProvinceReport = () => {
           </p>
           <p>{data?.provinceTanzeemId?.subRehaishHalqay?.paused}</p>
           <p>{data?.provinceTanzeemId?.subRehaishHalqay?.continue}</p>
+          <p>{data?.provinceTanzeemId?.subRehaishHalqay?.monthly}</p>
         </div>
         <div className="row">
           <p className="header">تعلیمی زیلی حلقے</p>
@@ -309,6 +317,7 @@ export const ProvinceReport = () => {
           </p>
           <p>{data?.provinceTanzeemId?.subTaleemHalqay?.paused}</p>
           <p>{data?.provinceTanzeemId?.subTaleemHalqay?.continue}</p>
+          <p>{data?.provinceTanzeemId?.subTaleemHalqay?.monthly}</p>
         </div>
         <div className="row">
           <p className="header">کل زیلی حلقے</p>
@@ -322,6 +331,7 @@ export const ProvinceReport = () => {
           </p>
           <p>{data?.provinceTanzeemId?.subTotalHalqay?.paused}</p>
           <p>{data?.provinceTanzeemId?.subTotalHalqay?.continue}</p>
+          <p>{data?.provinceTanzeemId?.subTotalHalqay?.monthly}</p>
         </div>
 
         <div className="row">
@@ -336,6 +346,7 @@ export const ProvinceReport = () => {
           </p>
           <p>{data?.provinceTanzeemId?.busmSchoolUnits?.paused}</p>
           <p>{data?.provinceTanzeemId?.busmSchoolUnits?.continue}</p>
+          <p>{data?.provinceTanzeemId?.busmSchoolUnits?.monthly}</p>
         </div>
         <div className="row">
           <p className="header">بزم کے رِہائشی یونٹس</p>
@@ -349,6 +360,7 @@ export const ProvinceReport = () => {
           </p>
           <p>{data?.provinceTanzeemId?.busmRehaishUnits?.paused}</p>
           <p>{data?.provinceTanzeemId?.busmRehaishUnits?.continue}</p>
+          <p>{data?.provinceTanzeemId?.busmRehaishUnits?.monthly}</p>
         </div>
         <div className="row">
           <p className="header">بزم کے کل یونٹس</p>
@@ -362,6 +374,7 @@ export const ProvinceReport = () => {
           </p>
           <p>{data?.provinceTanzeemId?.busmTotalUnits?.paused}</p>
           <p>{data?.provinceTanzeemId?.busmTotalUnits?.continue}</p>
+         < p>{data?.provinceTanzeemId?.busmTotalUnits?.monthly}</p>
         </div>
       </div>
       <div
