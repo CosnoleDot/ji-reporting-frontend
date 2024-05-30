@@ -447,9 +447,9 @@ function App() {
     }
   };
   useEffect(() => {}, [muntakhibMaqam]);
-  let provinceR, maqamR, divisionR, halqaR, ilaqaR, markazR ,halqaT;
+  let provinceR, maqamR, divisionR, halqaR, ilaqaR, markazR ,halqaT, length;
   const getMarkazReport = async (inset, offset) => {
-    setLoading(true);
+  
     if (me?.userAreaType === "Country")
       try {
         const req = await instance.get(
@@ -470,11 +470,9 @@ function App() {
               : markazR,
             length: length,
           }));
-          setLoading(false);
         }
       } catch (err) {
         console.log(err);
-        setLoading(false);
         dispatch({
           type: "ERROR",
           payload: err?.response?.data?.message || err?.message,
@@ -483,7 +481,7 @@ function App() {
     return;
   };
   const getProvinceReports = async (inset, offset) => {
-    setLoading(true);
+  
     if (me?.userAreaType === "Country" || me?.userAreaType === "Province")
       try {
         const req = await instance.get(
@@ -504,11 +502,9 @@ function App() {
               : provinceR,
             length: length,
           }));
-          setLoading(false);
         }
       } catch (err) {
         console.log(err);
-        setLoading(false);
         dispatch({
           type: "ERROR",
           payload: err?.response?.data?.message || err?.message,
@@ -517,7 +513,7 @@ function App() {
     return;
   };
   const getMaqamReports = async (inset, offset) => {
-    setLoading(true);
+  
     if (
       me?.userAreaType === "Country" ||
       me?.userAreaType === "Province" ||
@@ -542,11 +538,9 @@ function App() {
               : maqamR,
             length: length,
           }));
-          setLoading(false);
         }
       } catch (err) {
         console.log(err);
-        setLoading(false);
         dispatch({
           type: "ERROR",
           payload: err?.response?.data?.message || err?.message,
@@ -555,7 +549,7 @@ function App() {
     return;
   };
   const getIlaqaReports = async (inset, offset) => {
-    setLoading(true);
+  
     if (me?.userAreaType !== "Halqa" && me?.userAreaType !== "Division")
       try {
         const req = await instance.get(
@@ -576,11 +570,9 @@ function App() {
               : ilaqaR,
             length: length,
           }));
-          setLoading(false);
         }
       } catch (err) {
         console.log(err);
-        setLoading(false);
         dispatch({
           type: "ERROR",
           payload: err?.response?.data?.message || err?.message,
@@ -589,7 +581,7 @@ function App() {
     return;
   };
   const getDivisionReports = async (inset, offset) => {
-    setLoading(true);
+  
     if (
       me?.userAreaType === "Country" ||
       me?.userAreaType === "Province" ||
@@ -614,11 +606,9 @@ function App() {
               : divisionR,
             length: length,
           }));
-          setLoading(false);
         }
       } catch (err) {
         console.log(err);
-        setLoading(false);
         dispatch({
           type: "ERROR",
           payload: err?.response?.data?.message || err?.message,
@@ -627,7 +617,7 @@ function App() {
     return;
   };
   const getHalqaReports = async (inset, offset) => {
-    setLoading(true);
+   
 
     try {
       const req = await instance.get(
@@ -645,7 +635,7 @@ function App() {
           reports: [...prevData.reports, ...halqaR],
           length: length,
         }));
-        setLoading(false);
+      
       }
     } catch (err) {
       console.log(err);
@@ -656,7 +646,7 @@ function App() {
     }
   };
   const getHalqaReportsTab = async (inset, offset, tab) => {
-    setLoading(true);
+    
 
     if(tab){
       try {
@@ -676,7 +666,7 @@ function App() {
             reports: [...prevData.reports, ...halqaT],
             length: length,
           }));
-          setLoading(false)
+      
         }
       }
       catch (err) {
