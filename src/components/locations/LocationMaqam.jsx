@@ -52,6 +52,7 @@ export const LocationMaqam = () => {
       } else {
         if (queryParams.view) {
           if (queryParams.view === "halqa") {
+            console.log("first");
             setFilteredData(halqas);
           }
           if (queryParams.view === "maqam") {
@@ -69,7 +70,19 @@ export const LocationMaqam = () => {
     getQueryParams();
     // eslint-disable-next-line
   }, [params, view, halqas, maqams, ilaqas]);
-
+  useEffect(() => {
+    if (view) {
+      if (view === "halqa") {
+        setFilteredData(halqas);
+      }
+      if (view === "maqam") {
+        setFilteredData(maqams);
+      }
+      if (view === "ilaqa") {
+        setFilteredData(ilaqas);
+      }
+    }
+  }, [halqas, maqams, ilaqas]);
   const [form, setForm] = useState({
     name: "",
     province: "",
@@ -219,21 +232,24 @@ export const LocationMaqam = () => {
           },
         }
       );
-      switch (view) {
-        case "halqa":
-          getHalqas();
-          break;
-        case "maqam":
-          getMaqams();
-          break;
-        case "ilaqa":
-          getIlaqas();
-          break;
-        default:
-          break;
-      }
+      const getAreas = () => {
+        switch (view) {
+          case "halqa":
+            getHalqas();
+            break;
+          case "maqam":
+            getMaqams();
+            break;
+          case "ilaqa":
+            getIlaqas();
+            break;
+          default:
+            break;
+        }
+      };
+      getAreas();
     } catch (err) {
-      // dispatch({ type: 'ERROR', payload: err?.response?.data?.message });
+      dispatch({ type: "ERROR", payload: err?.response?.data?.message });
     }
     setLoading(false);
   };
