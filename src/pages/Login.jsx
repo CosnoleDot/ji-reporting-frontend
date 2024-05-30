@@ -2,14 +2,17 @@ import instance from "../api/instrance";
 import { useNavigate, Link } from "react-router-dom";
 import { toJson } from "../utils";
 import { useToastState } from "../context";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Loader } from "../components";
 import { UIContext } from "../context/ui";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export const Login = ({ setAuthenticated }) => {
   const navigate = useNavigate();
   const { dispatch } = useToastState();
   const { loading, setLoading } = useContext(UIContext);
+  const [showPass, setShowPass] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -55,16 +58,22 @@ export const Login = ({ setAuthenticated }) => {
               className="w-full input input-bordered input-primary"
             />
           </div>
-          <div>
+          <div className="relative">
             <label className="label">
               <span className="text-base label-text">Password</span>
             </label>
             <input
               name="password"
-              type="password"
+              type={showPass ? "text" : "password"}
               placeholder="Enter Password"
               className="w-full input input-bordered input-primary"
             />
+            <span
+              className="absolute right-[4%] top-[65%]"
+              onClick={() => setShowPass(!showPass)}
+            >
+              {showPass ? <FaEyeSlash /> : <FaEye />}
+            </span>
           </div>
           <div className="flex justify-between items-center">
             <Link

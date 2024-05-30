@@ -3435,6 +3435,34 @@ html {
   top: 60.5px;
 }
 
+.right-10 {
+  right: 2.5rem;
+}
+
+.top-6 {
+  top: 1.5rem;
+}
+
+.top-\[60\%\] {
+  top: 60%;
+}
+
+.right-\[20\%\] {
+  right: 20%;
+}
+
+.right-\[10\%\] {
+  right: 10%;
+}
+
+.right-\[4\%\] {
+  right: 4%;
+}
+
+.top-\[65\%\] {
+  top: 65%;
+}
+
 .z-0 {
   z-index: 0;
 }
