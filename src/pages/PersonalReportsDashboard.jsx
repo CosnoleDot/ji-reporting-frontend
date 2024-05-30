@@ -4,9 +4,9 @@ import { FaEdit, FaEye, FaPrint } from "react-icons/fa";
 import moment from "moment";
 import instance from "../api/instrance";
 import { useNavigate } from "react-router-dom";
-import { DistrictContext, MaqamContext, IlaqaContext } from "../context";
 import { getDivisionByTehsil, months } from "./Reports";
 import { MdCancel } from "react-icons/md";
+import { MeContext } from "../context";
 // import { ProvinceContext } from "../context";
 
 export const PersonalReportsDashboard = () => {
@@ -16,39 +16,10 @@ export const PersonalReportsDashboard = () => {
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("2023");
   const [isMobileView, setIsMobileView] = useState(false);
-  const maqams = useContext(MaqamContext);
-  const districts = useContext(DistrictContext);
-  const ilaqas = useContext(IlaqaContext);
   const [toggle, setToggle] = useState(false);
+  const me = useContext(MeContext);
   // const provinces = useContext(ProvinceContext);
   let navigate = useNavigate();
-  const getAreaType = (area) => {
-    if (area?.parentType === "Maqam") {
-      const name = maqams.find((i) => i?._id === area?.parentId);
-      return `${area?.name} - ${name?.name} (Maqam)`;
-    } else if (area?.parentType === "Tehsil") {
-      const name = getDivisionByTehsil(area?.parentId, districts);
-      return `${area?.name} - ${name} (Division)`;
-    } else if (area?.parentType === "Ilaqa") {
-      const name = ilaqas?.find(
-        (i) => i?._id.toString() === area?.parentId.toString()
-      );
-      if (name) {
-        return `${area?.name} Of Ilaqa ${name?.name} Of Maqam ${name?.maqam?.name}`;
-      } else {
-        return area?.name;
-      }
-    } else if (area?.province) {
-      return `${area?.name} - ${
-        maqams.find((i) => i?._id === area?._id) ? "Maqam" : "Division"
-      }`;
-    } else if (area?.name === "Pakistan") {
-      return `${area?.name} `;
-    } else if (area?.country) {
-      return `${area?.name} `;
-    }
-    return "Pakistan";
-  };
   const getAllReports = async () => {
     const req = await instance.get(`/umeedwar`, {
       headers: {
@@ -56,20 +27,9 @@ export const PersonalReportsDashboard = () => {
         Authorization: `Bearer ${localStorage.getItem("@token")}`,
       },
     });
-    const d = req?.data?.data?.map((obj) => ({
-      title:
-        `${
-          obj?.userId?.name !== undefined && obj?.userId?.name !== "undefined"
-            ? obj?.userId?.name
-            : ""
-        }  ` +
-        " " +
-        getAreaType(obj?.areaId),
-      ...obj,
-    }));
 
-    setFilteredData([...d]);
-    setData([...d]);
+    setFilteredData(req?.data?.data);
+    setData(req?.data?.data);
   };
   useEffect(() => {
     getAllReports();
@@ -119,6 +79,7 @@ export const PersonalReportsDashboard = () => {
     }, []);
     setFilteredData(filData);
   };
+
   return (
     <GeneralLayout title={"PersonalDashboard"} active={"personalReports"}>
       <div className="w-full flex flex-col justify-start items-center mt-5 p-5">
@@ -207,7 +168,7 @@ export const PersonalReportsDashboard = () => {
             >
               <div className="flex w-full flex-col items-start justify-center">
                 <span className="text-lg font-semibold" key={index}>
-                  {`${obj?.title.split("(")[0]} - `}
+                  {`${obj?.userId?.name} from ${obj?.areaId?.name}  `}
                   {moment(obj?.month).format("MMMM YYYY")}
                 </span>
                 <span>Last Modified: {moment(obj?.updatedAt).fromNow()}</span>
@@ -216,9 +177,11 @@ export const PersonalReportsDashboard = () => {
                 <button className="btn" onClick={() => viewReport(obj?._id)}>
                   <FaEye />
                 </button>
-                <button className="btn" onClick={() => editReport(obj?._id)}>
-                  <FaEdit />
-                </button>
+                {me?._id === obj?.userId?._id && (
+                  <button className="btn" onClick={() => editReport(obj?._id)}>
+                    <FaEdit />
+                  </button>
+                )}
                 <button className="btn" onClick={() => printReport(obj?._id)}>
                   <FaPrint />
                 </button>

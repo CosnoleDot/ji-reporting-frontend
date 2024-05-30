@@ -294,18 +294,16 @@ export const Dashboard = () => {
     const validNazim = nazim.filter(
       (n) => n?.nazimType && n?.nazimType !== "nazim"
     );
-
     // Get IDs of validNazim
     const validNazimIds = validNazim.map((n) => n?._id);
     // Get IDs of nazim who have filled personal reports
     const nazimFilledPersonalIds = requiredUmeedwarReports.map(
-      (report) => report?.userId?._id
+      (report) => report?.userId
     );
     // Get IDs of unfilled nazim
     const unfilledIds = validNazimIds.filter(
       (id) => !nazimFilledPersonalIds.includes(id)
     );
-
     // Separate filled and unfilled nazim
     const filledNazim = nazim.filter((n) =>
       nazimFilledPersonalIds.includes(n?._id)

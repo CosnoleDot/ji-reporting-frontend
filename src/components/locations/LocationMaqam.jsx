@@ -69,7 +69,19 @@ export const LocationMaqam = () => {
     getQueryParams();
     // eslint-disable-next-line
   }, [params, view, halqas, maqams, ilaqas]);
-
+  useEffect(() => {
+    if (view) {
+      if (view === "halqa") {
+        setFilteredData(halqas);
+      }
+      if (view === "maqam") {
+        setFilteredData(maqams);
+      }
+      if (view === "ilaqa") {
+        setFilteredData(ilaqas);
+      }
+    }
+  }, [halqas, maqams, ilaqas]);
   const [form, setForm] = useState({
     name: "",
     province: "",
@@ -219,21 +231,24 @@ export const LocationMaqam = () => {
           },
         }
       );
-      switch (view) {
-        case "halqa":
-          getHalqas();
-          break;
-        case "maqam":
-          getMaqams();
-          break;
-        case "ilaqa":
-          getIlaqas();
-          break;
-        default:
-          break;
-      }
+      const getAreas = () => {
+        switch (view) {
+          case "halqa":
+            getHalqas();
+            break;
+          case "maqam":
+            getMaqams();
+            break;
+          case "ilaqa":
+            getIlaqas();
+            break;
+          default:
+            break;
+        }
+      };
+      getAreas();
     } catch (err) {
-      // dispatch({ type: 'ERROR', payload: err?.response?.data?.message });
+      dispatch({ type: "ERROR", payload: err?.response?.data?.message });
     }
     setLoading(false);
   };
@@ -379,7 +394,7 @@ export const LocationMaqam = () => {
             role="tab"
             className={`tab w-full ${view === "ilaqa" ? "tab-active" : ""}`}
           >
-            Ilaqa
+            Ilaqa/Zone
           </Link>
         )}
       </div>
