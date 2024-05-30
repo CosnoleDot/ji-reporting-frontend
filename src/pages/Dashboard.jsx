@@ -282,7 +282,6 @@ export const Dashboard = () => {
       currentMonth.getMonth() + 1,
       1
     );
-    console.log(umeedwarReports);
     // Filter out reports within the current month
     const requiredUmeedwarReports = umeedwarReports.filter((report) => {
       const reportDate = new Date(report?.month);
@@ -291,7 +290,6 @@ export const Dashboard = () => {
         reportDate <= lastDayOfCurrentMonth
       );
     });
-    console.log(requiredUmeedwarReports);
     // Filter out nazim who are not of type "nazim"
     const validNazim = nazim.filter(
       (n) => n?.nazimType && n?.nazimType !== "nazim"
@@ -306,7 +304,6 @@ export const Dashboard = () => {
     const unfilledIds = validNazimIds.filter(
       (id) => !nazimFilledPersonalIds.includes(id)
     );
-    console.log(unfilledIds);
     // Separate filled and unfilled nazim
     const filledNazim = nazim.filter((n) =>
       nazimFilledPersonalIds.includes(n?._id)
@@ -330,8 +327,6 @@ export const Dashboard = () => {
     handlePersonalFilledReports();
     // eslint-disable-next-line
   }, [umeedwarReports, nazim]);
-  console.log(personalFilled)
-  console.log(personalUnfilled)
   return (
     <GeneralLayout title={"Dashboard"} active={"dashboard"}>
       {

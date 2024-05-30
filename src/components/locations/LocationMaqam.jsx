@@ -52,7 +52,6 @@ export const LocationMaqam = () => {
       } else {
         if (queryParams.view) {
           if (queryParams.view === "halqa") {
-            console.log("first");
             setFilteredData(halqas);
           }
           if (queryParams.view === "maqam") {

@@ -666,7 +666,6 @@ function App() {
         if (req) {
           halqaT = req.data.data;
           let length = req?.data?.data?.length;
-          console.log(halqaT);
           setHalqaReportsTab((prevData) => ({
             reports: [...prevData.reports, ...halqaT],
             length: length,
