@@ -41,7 +41,7 @@ export const HalqaReports = () => {
             },
           }
         );
-        console.log(data.length);
+       
         if (req) {
           setData([]);
           setData(req.data.data.data);
@@ -62,9 +62,10 @@ export const HalqaReports = () => {
 
   }, []);
   const searchResults = () => {
+    let filteredData = [...data];
+
     if (year !== "" && month !== "") {
-      let filteredData = { ...data };
-      filteredData = data?.filter((i) => {
+      filteredData = filteredData.filter((i) => {
         const [f_year, f_month] = [
           i?.month?.split("-")[0],
           i?.month?.split("-")[1],
@@ -74,26 +75,20 @@ export const HalqaReports = () => {
           parseInt(month) === parseInt(f_month)
         );
       });
-      showSearch(false);
-      setData(filteredData);
     } else if (year !== "" && month === "") {
-      let filteredData = { ...data };
-      filteredData = data?.filter((i) => {
+      filteredData = filteredData.filter((i) => {
         const f_year = i?.month?.split("-")[0];
         return parseInt(year) === parseInt(f_year);
       });
-      showSearch(false);
-      setData(filteredData);
     } else if (year === "" && month !== "") {
       dispatch({ type: "ERROR", payload: "Enter year with month" });
-      setData(data);
     } else if (year === "" && month === "") {
       dispatch({ type: "ERROR", payload: "Date is required" });
-      setData(data);
-    } else {
-      setData(data);
     }
+
+    setData(filteredData);
   };
+
   const toggleSearch = () => {
     showSearch(!search);
   };
@@ -315,9 +310,7 @@ export const HalqaReports = () => {
                   <FaEye />
                 </button>
 
-                <button className="btn" onClick={() => editReport(p?._id)}>
-                  <FaEdit />
-                </button>
+          
 
                 <button className="btn">
                   <FaPrint />
@@ -348,8 +341,8 @@ export const HalqaReports = () => {
         </button>
       </div>
       <dialog id="filter-area-dialog" className="modal">
-        {/* <FilterDialog setFilterAllData={setFilterAllData} tab={tab} /> */}
-      </dialog>
+      {/* <FilterDialog setFilterAllData={setFilterAllData} tab={tab} />    */}
+         </dialog>
     </>
   );
 };

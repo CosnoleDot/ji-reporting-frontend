@@ -42,7 +42,7 @@ export const MuntakhibMaqamReports = () => {
   const ilaqa = useContext(IlaqaReportContext);
   const maqam = useContext(MaqamReportContext);
   const division = useContext(DivisionReportContext);
-  const [createData, setCreateData] = useState();
+  const [createData, setCreateData] = useState([]);
   const [month, setMonth] = useState("");
   const params = useParams();
   const [id, setId] = useState(null);
@@ -57,7 +57,7 @@ export const MuntakhibMaqamReports = () => {
   const autoFill = () => {
     const halq = {};
     document.getElementById("maqam-form").reset();
-    if (createData?.filter((i) => i?.month.includes(month)).length < 1) {
+    if (createData) {
       [
         "rafaqa-start",
         "karkunan-start",
@@ -270,8 +270,8 @@ export const MuntakhibMaqamReports = () => {
         },
       });
       const repo = req?.data?.data;
-
-      setCreateData(repo);
+       console.log(repo?.data)
+      setCreateData(repo?.data);
       dispatch({ type: "SUCCESS", payload: req.data?.message });
     } catch (err) {
       dispatch({ type: "ERROR", payload: err.response.data.message });
