@@ -1,5 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
-import { HalqaReportContext, HalqaReportTabContext, MeContext, useToastState } from "../../context";
+import {
+  HalqaReportContext,
+  HalqaReportTabContext,
+  MeContext,
+  useToastState,
+} from "../../context";
 import { FaEdit, FaEye, FaPrint } from "react-icons/fa";
 import moment from "moment";
 import { NoReports, months } from "../Reports";
@@ -9,7 +14,6 @@ import { UIContext } from "../../context/ui";
 import instance from "../../api/instrance";
 
 export const HalqaReports = () => {
-  
   const [tab, setTab] = useState("maqam");
   const [filterData, setFilterData] = useState([]);
   const { dispatch } = useToastState();
@@ -17,81 +21,81 @@ export const HalqaReports = () => {
   const [isMobileView, setIsMobileView] = useState(false);
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("2023");
-  const [data, setData]=useState([])
+  const [data, setData] = useState([]);
   const me = useContext(MeContext);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
-  const [length,setLength] = useState(1);
+  const [length, setLength] = useState(1);
   const itemsPerPage = 10;
   const getHalqaReportsTab = async (inset, offset, tab) => {
-    setLoading(true)
-    if(tab){
+    
+    if (tab) {
       try {
+        
         const req = await instance.get(
           `/reports/halqa?inset=${inset}&offset=${offset}&tab=${tab}`,
-          { 
+          {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("@token")}`,
             },
           }
         );
+       
         if (req) {
-         setData(req.data.data.data)
-         setLength(req.data.data.length)
+          setData([]);
+          setData(req.data.data.data);
+          setLength(req.data.data.length);
         }
-      }
-      catch (err) {
+      } catch (err) {
         console.log(err);
         dispatch({
           type: "ERROR",
           payload: err?.response?.data?.message || err?.message,
         });
       }
-      setLoading(false)
+      setLoading(false);
     }
   };
+  useEffect(() => {
+    getHalqaReportsTab(0 * itemsPerPage, itemsPerPage, 'maqam');
 
-  // const searchResults = () => {
-  //   if (year !== "" && month !== "") {
-  //     let filteredData = { ...hReports };
-  //     filteredData = hReports?.filter((i) => {
-  //       const [f_year, f_month] = [
-  //         i?.month?.split("-")[0],
-  //         i?.month?.split("-")[1],
-  //       ];
-  //       return (
-  //         parseInt(year) === parseInt(f_year) &&
-  //         parseInt(month) === parseInt(f_month)
-  //       );
-  //     });
-  //     showSearch(false);
-  //     setFilterAllData(filteredData);
-  //   } else if (year !== "" && month === "") {
-  //     let filteredData = { ...hReports };
-  //     filteredData = hReports?.filter((i) => {
-  //       const f_year = i?.month?.split("-")[0];
-  //       return parseInt(year) === parseInt(f_year);
-  //     });
-  //     showSearch(false);
-  //     setFilterAllData(filteredData);
-  //   } else if (year === "" && month !== "") {
-  //     dispatch({ type: "ERROR", payload: "Enter year with month" });
-  //     setFilterAllData(hReports);
-  //   } else if (year === "" && month === "") {
-  //     dispatch({ type: "ERROR", payload: "Date is required" });
-  //     setFilterAllData(hReports);
-  //   } else {
-  //     setFilterAllData(hReports);
-  //   }
-  // };
+  }, []);
+  const searchResults = () => {
+    let filteredData = [...data];
+
+    if (year !== "" && month !== "") {
+      filteredData = filteredData.filter((i) => {
+        const [f_year, f_month] = [
+          i?.month?.split("-")[0],
+          i?.month?.split("-")[1],
+        ];
+        return (
+          parseInt(year) === parseInt(f_year) &&
+          parseInt(month) === parseInt(f_month)
+        );
+      });
+    } else if (year !== "" && month === "") {
+      filteredData = filteredData.filter((i) => {
+        const f_year = i?.month?.split("-")[0];
+        return parseInt(year) === parseInt(f_year);
+      });
+    } else if (year === "" && month !== "") {
+      dispatch({ type: "ERROR", payload: "Enter year with month" });
+    } else if (year === "" && month === "") {
+      dispatch({ type: "ERROR", payload: "Date is required" });
+    }
+
+    setData(filteredData);
+  };
+
   const toggleSearch = () => {
     showSearch(!search);
   };
   const clearFilters = () => {
     setMonth("");
     setYear("2023");
-    setFilterAllData(hReports);
+    setData(data);
     document.getElementById("autocomplete").value = "";
   };
 
@@ -101,35 +105,33 @@ export const HalqaReports = () => {
   const editReport = (id) => {
     navigate(`edit/${id}`);
   };
-  let totalPages =  Math.ceil(length / itemsPerPage);
- 
+  let totalPages = Math.ceil(length / itemsPerPage);
 
   const handlePrevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
+      setData([]);
+      setTab(tab);
+      getHalqaReportsTab((currentPage-2) * itemsPerPage, itemsPerPage, tab);
     }
   };
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
-      const inset = currentPage * itemsPerPage;
-      const offset = itemsPerPage;
-      setData([])
-      setTab(tab) 
-        tabClick(tab);
-        getHalqaReportsTab(currentPage  * itemsPerPage, itemsPerPage, tab)
-  
+
+      setData([]);
+      setTab(tab);
+      getHalqaReportsTab(currentPage * itemsPerPage, itemsPerPage, tab);
     }
   };
- 
-      const tabClick =(tab)=> {
-       setData([])
-        setTab(tab) 
-        getHalqaReportsTab((currentPage -1) * itemsPerPage, itemsPerPage, tab);
-      
-      }
-    
+
+  const tabClick = (tab) => {
+    setData([]);
+    setTab(tab);
+    getHalqaReportsTab((currentPage - 1) * itemsPerPage, itemsPerPage, tab);
+  };
+
   return (
     <>
       <div
@@ -152,7 +154,7 @@ export const HalqaReports = () => {
           className={`tab flex justify-center items-center w-full ${
             tab === "division" ? "tab-active" : ""
           }`}
-          onClick={() =>  tabClick("division")}
+          onClick={() => tabClick("division")}
         >
           Division Halqa
         </Link>
@@ -308,9 +310,7 @@ export const HalqaReports = () => {
                   <FaEye />
                 </button>
 
-                <button className="btn" onClick={() => editReport(p?._id)}>
-                  <FaEdit />
-                </button>
+          
 
                 <button className="btn">
                   <FaPrint />
@@ -332,13 +332,17 @@ export const HalqaReports = () => {
         <span>
           Page {currentPage} of {totalPages}
         </span>
-        <button className="btn" onClick={handleNextPage} disabled={currentPage === totalPages}>
+        <button
+          className="btn"
+          onClick={handleNextPage}
+          disabled={currentPage === totalPages}
+        >
           Next
         </button>
       </div>
       <dialog id="filter-area-dialog" className="modal">
-        {/* <FilterDialog setFilterAllData={setFilterAllData} tab={tab} /> */}
-      </dialog>
+      {/* <FilterDialog setFilterAllData={setFilterAllData} tab={tab} />    */}
+         </dialog>
     </>
   );
 };

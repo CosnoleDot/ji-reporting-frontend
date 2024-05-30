@@ -268,8 +268,8 @@ export const MuntakhibMaqamReports = () => {
         },
       });
       const repo = req?.data?.data;
-
-      setCreateData(repo);
+       console.log(repo?.data)
+      setCreateData(repo?.data);
       dispatch({ type: "SUCCESS", payload: req.data?.message });
     } catch (err) {
       dispatch({ type: "ERROR", payload: err.response.data.message });
