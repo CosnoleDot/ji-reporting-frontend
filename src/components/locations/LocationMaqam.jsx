@@ -395,7 +395,7 @@ export const LocationMaqam = () => {
             role="tab"
             className={`tab w-full ${view === "ilaqa" ? "tab-active" : ""}`}
           >
-            Ilaqa
+            Ilaqa/Zone
           </Link>
         )}
       </div>

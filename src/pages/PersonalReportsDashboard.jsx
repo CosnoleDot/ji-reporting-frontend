@@ -4,9 +4,9 @@ import { FaEdit, FaEye, FaPrint } from "react-icons/fa";
 import moment from "moment";
 import instance from "../api/instrance";
 import { useNavigate } from "react-router-dom";
-import { DistrictContext, MaqamContext, IlaqaContext } from "../context";
 import { getDivisionByTehsil, months } from "./Reports";
 import { MdCancel } from "react-icons/md";
+import { MeContext } from "../context";
 // import { ProvinceContext } from "../context";
 
 export const PersonalReportsDashboard = () => {
@@ -16,16 +16,10 @@ export const PersonalReportsDashboard = () => {
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("2023");
   const [isMobileView, setIsMobileView] = useState(false);
-  const maqams = useContext(MaqamContext);
-  const districts = useContext(DistrictContext);
-  const ilaqas = useContext(IlaqaContext);
   const [toggle, setToggle] = useState(false);
+  const me = useContext(MeContext);
   // const provinces = useContext(ProvinceContext);
   let navigate = useNavigate();
-
-  useEffect(() => {
-    console.log(filteredData);
-  });
   const getAllReports = async () => {
     const req = await instance.get(`/umeedwar`, {
       headers: {
@@ -85,6 +79,7 @@ export const PersonalReportsDashboard = () => {
     }, []);
     setFilteredData(filData);
   };
+
   return (
     <GeneralLayout title={"PersonalDashboard"} active={"personalReports"}>
       <div className="w-full flex flex-col justify-start items-center mt-5 p-5">
@@ -173,7 +168,7 @@ export const PersonalReportsDashboard = () => {
             >
               <div className="flex w-full flex-col items-start justify-center">
                 <span className="text-lg font-semibold" key={index}>
-                  {`${obj?.areaId?.name} - `}
+                  {`${obj?.userId?.name} from ${obj?.areaId?.name}  `}
                   {moment(obj?.month).format("MMMM YYYY")}
                 </span>
                 <span>Last Modified: {moment(obj?.updatedAt).fromNow()}</span>
@@ -182,11 +177,11 @@ export const PersonalReportsDashboard = () => {
                 <button className="btn" onClick={() => viewReport(obj?._id)}>
                   <FaEye />
                 </button>
-                {
+                {me?._id === obj?.userId?._id && (
                   <button className="btn" onClick={() => editReport(obj?._id)}>
                     <FaEdit />
                   </button>
-                }
+                )}
                 <button className="btn" onClick={() => printReport(obj?._id)}>
                   <FaPrint />
                 </button>
