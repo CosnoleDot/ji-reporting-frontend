@@ -218,7 +218,7 @@ export const Ilaqa = () => {
           "Content-Type": "application/json",
         },
       });
-      const repo = req?.data?.data;
+      const repo = req?.data?.data?.data;
 
       setCreateData(repo);
       dispatch({ type: "SUCCESS", payload: req.data?.message });

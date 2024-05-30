@@ -54,7 +54,7 @@ export const MarkazReport = () => {
   const autoFill = () => {
     const halq = {};
     document.getElementById("markaz-form").reset();
-    if (createData.filter((i) => i?.month.includes(month)).length < 1) {
+    if (createData?.filter((i) => i?.month.includes(month)).length < 1) {
       [
         `rafaqa-start`,
         "karkunan-start",
@@ -269,7 +269,7 @@ export const MarkazReport = () => {
           "Content-Type": "application/json",
         },
       });
-      const repo = req?.data?.data;
+      const repo = req?.data?.data?.data;
 
       setCreateData(repo);
       dispatch({ type: "SUCCESS", payload: req.data?.message });

@@ -49,26 +49,41 @@ export const HalqaReport = () => {
       >
         جائزہ کارکردگی رپورٹ برائے حلقہ
       </h3>
+
       <div
         style={{
           display: "flex",
-          justifyContent: "space-around",
+          justifyContent: "space-between",
           alignItems: "center",
           marginBottom: "1rem",
         }}
         className="tableContainer"
       >
-        <h4 className="header" style={{ width: "10rem" }}>
-          حلقہ کا نام:
-        </h4>
-        <h6>
-          {data?.halqaAreaId?.name}( {getAreaType(data?.halqaAreaId)})
-        </h6>
-
-        <h4 className="header">برائے ماہ:</h4>
-        <h6>{data?.month.split("T")[0]}</h6>
+        <div
+          style={{
+            display: "flex",
+            justifyItems: "flex-start",
+            alignItems: "flex-start",
+            gap: "1rem",
+          }}
+        >
+          <h4 className="header">حلقہ کا نام:</h4>
+          <h6>
+            {data?.halqaAreaId?.name}( {getAreaType(data?.halqaAreaId)})
+          </h6>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            justifyItems: "flex-start",
+            alignItems: "flex-start",
+            gap: "1rem",
+          }}
+        >
+          <h4 className="header">برائے ماہ:</h4>
+          <h6>{data?.month.split("T")[0]}</h6>
+        </div>
       </div>
-
       <div
         style={{
           display: "flex",
@@ -285,7 +300,11 @@ export const HalqaReport = () => {
         }}
         className="tableContainer"
       >
-        <h3 style={{ textAlign: "start", fontWeight: "bolder",marginTop:"8px" }}>توسیع دعوت</h3>
+        <h3
+          style={{ textAlign: "start", fontWeight: "bolder", marginTop: "8px" }}
+        >
+          توسیع دعوت
+        </h3>
         <h3 style={{ textAlign: "start", fontWeight: "bold" }}>روابط</h3>
         <div
           style={{
@@ -303,27 +322,24 @@ export const HalqaReport = () => {
             موجودہ :{data?.tdId?.current}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-          روابط سے ملاقاتوں کا ہدف:{data?.tdId?.rwabitMeetingsGoal}
+            روابط سے ملاقاتوں کا ہدف:{data?.tdId?.rwabitMeetingsGoal}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-          ملاقاتوں کی تعداد:{data?.tdId?.meetings}
+            ملاقاتوں کی تعداد:{data?.tdId?.meetings}
           </h6>
-        
+
           <h6 style={{ width: "100%", textAlign: "start" }}>
             تقسیم لٹریچر:{data?.tdId?.literatureDistribution}
           </h6>
-          
-            <h6 style={{ width: "100%", textAlign: "start", display:"flex" }}>
-             روابط رجسٹر مرتب:
-             <input
+
+          <h6 style={{ width: "100%", textAlign: "start", display: "flex" }}>
+            روابط رجسٹر مرتب:
+            <input
               type="checkbox"
               className="w-8 mr-4 h-8"
               checked={data?.tdId?.registered ? true : false}
             />
-            </h6>
-            
-       
-         
+          </h6>
         </div>
         <h3 style={{ textAlign: "start", fontWeight: "bold" }}>عام طلبہ</h3>
         <div
@@ -350,7 +366,7 @@ export const HalqaReport = () => {
             alignItems: "center",
             marginBottom: "1rem",
             width: "100%",
-            marginTop:"8px"
+            marginTop: "8px",
           }}
         >
           <h6 style={{ width: "100%", textAlign: "start" }}>
@@ -367,15 +383,45 @@ export const HalqaReport = () => {
             اجراےَ کتب :{data?.halqaLibId?.bookRent}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            لائبریری رجسٹر مرتب : <input
+            لائبریری رجسٹر مرتب :
+            <input
               type="checkbox"
               className="w-8 mr-4 h-8"
               checked={data?.halqaLibId?.registered ? true : false}
             />
           </h6>
         </div>
+        <h3 style={{ textAlign: "start", fontWeight: "bolder" }}>بیت المال</h3>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-start",
+            alignItems: "center",
+            marginBottom: "1rem",
+            width: "100%",
+          }}
+        >
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+            ماہانہ آمدن:{data?.baitulmalId?.monthlyIncome}
+          </h6>
 
-        <h3 style={{ textAlign: "start", fontWeight: "bolder",marginBottom:"8px" }}>
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+            ماہانہ خرچ:{data?.baitulmalId?.monthlyExpenditure}
+          </h6>
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+            بدست:{data?.baitulmalId?.savings}
+          </h6>
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+            خسارہ:{data?.baitulmalId?.loss}
+          </h6>
+        </div>
+        <h3
+          style={{
+            textAlign: "start",
+            fontWeight: "bolder",
+            marginBottom: "8px",
+          }}
+        >
           روز شب ڈائری
         </h3>
         <div

@@ -50,7 +50,7 @@ export const Maqam = () => {
     const halq = {};
 
     document.getElementById("maqam-form").reset();
-    if (createData?.filter((i) => i?.month.includes(month)).length < 1) {
+    if (createData?.length > 0) {
       [
         "rafaqa-start",
         "karkunan-start",
@@ -218,7 +218,7 @@ export const Maqam = () => {
           "Content-Type": "application/json",
         },
       });
-      const repo = req?.data?.data;
+      const repo = req?.data?.data?.data;
       setCreateData(repo);
       dispatch({ type: "SUCCESS", payload: req.data?.message });
     } catch (err) {
