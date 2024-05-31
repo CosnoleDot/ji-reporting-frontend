@@ -10,11 +10,10 @@ export const RozOShabDiary = ({ view }) => {
           <input
             readOnly={view}
             type="number"
-            defaultValue={0}
             required
             name="umeedwaranFilled"
             id="umeedwaranFilled"
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
+            className="border-b-2 text-center border-dashed   mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
           />
         </div>
         <div className="flex py-2">
@@ -24,11 +23,10 @@ export const RozOShabDiary = ({ view }) => {
           <input
             readOnly={view}
             type="number"
-            defaultValue={0}
             required
             name="rafaqaFilled"
             id="rafaqaFilled"
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
+            className="border-b-2 text-center border-dashed   mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
           />
         </div>
       </div>

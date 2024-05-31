@@ -39,7 +39,6 @@ export const Activity = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`ijtRafaqa-decided`}
                 id={`ijtRafaqa-decided`}
@@ -51,7 +50,6 @@ export const Activity = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`ijtRafaqa-completed`}
                 id={`ijtRafaqa-completed`}
@@ -62,7 +60,6 @@ export const Activity = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`ijtRafaqa-attendance`}
                 id={`ijtRafaqa-attendance`}
@@ -86,7 +83,6 @@ export const Activity = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`ijtKarkunan-decided`}
                 id={`ijtKarkunan-decided`}
@@ -98,7 +94,6 @@ export const Activity = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`ijtKarkunan-completed`}
                 id={`ijtKarkunan-completed`}
@@ -109,7 +104,6 @@ export const Activity = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`ijtKarkunan-attendance`}
                 id={`ijtKarkunan-attendance`}
@@ -133,7 +127,6 @@ export const Activity = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`studyCircle-decided`}
                 id={`studyCircle-decided`}
@@ -145,7 +138,6 @@ export const Activity = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`studyCircle-completed`}
                 id={`studyCircle-completed`}
@@ -156,7 +148,6 @@ export const Activity = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`studyCircle-attendance`}
                 id={`studyCircle-attendance`}
@@ -180,7 +171,6 @@ export const Activity = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`darseQuran-decided`}
                 id={`darseQuran-decided`}
@@ -192,7 +182,6 @@ export const Activity = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`darseQuran-completed`}
                 id={`darseQuran-completed`}
@@ -203,7 +192,6 @@ export const Activity = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`darseQuran-attendance`}
                 id={`darseQuran-attendance`}
@@ -216,6 +204,92 @@ export const Activity = ({ view }) => {
                 type="text"
                 name={`darseQuran-title`}
                 id={`darseQuran-title`}
+                className="p-1 min-w-full"
+                required
+              />
+            </Box>
+          </tr>
+          <tr>
+            <Box>شاہین میٹنگ</Box>
+            <Box>
+              <input
+                type="number"
+                required
+                readOnly={view}
+                name={`shaheenMeeting-decided`}
+                id={`shaheenMeeting-decided`}
+                className="p-1 text-center max-w-full"
+              />
+            </Box>
+            <Box>
+              <input
+                type="number"
+                required
+                readOnly={view}
+                name={`shaheenMeeting-completed`}
+                id={`shaheenMeeting-completed`}
+                className="p-1 text-center max-w-full"
+              />
+            </Box>
+            <Box>
+              <input
+                readOnly={view}
+                type="number"
+                required
+                name={`shaheenMeeting-attendance`}
+                id={`shaheenMeeting-attendance`}
+                className="p-1 text-center max-w-full"
+              />
+            </Box>
+            <Box>
+              <input
+                readOnly={view}
+                type="text"
+                name={`shaheenMeeting-title`}
+                id={`shaheenMeeting-title`}
+                className="p-1 min-w-full"
+                required
+              />
+            </Box>
+          </tr>
+          <tr>
+            <Box>پیغام محفل</Box>
+            <Box>
+              <input
+                readOnly={view}
+                type="number"
+                required
+                name={`paighamEvent-decided`}
+                id={`paighamEvent-decided`}
+                className="p-1 text-center max-w-full"
+              />
+            </Box>
+            <Box>
+              <input
+                readOnly={view}
+                type="number"
+                required
+                name={`paighamEvent-completed`}
+                id={`paighamEvent-completed`}
+                className="p-1 text-center max-w-full"
+              />
+            </Box>
+            <Box>
+              <input
+                readOnly={view}
+                type="number"
+                required
+                name={`paighamEvent-attendance`}
+                id={`paighamEvent-attendance`}
+                className="p-1 text-center max-w-full"
+              />
+            </Box>
+            <Box>
+              <input
+                readOnly={view}
+                type="text"
+                name={`paighamEvent-title`}
+                id={`paighamEvent-title`}
                 className="p-1 min-w-full"
                 required
               />

@@ -6,8 +6,8 @@ export const RozOShabDiary = ({ view }) => {
     <div className="p-2 py-5 relative w-full overflow-auto">
       <h2 className="text-black py-3 text-lg">روزشب ڈائری</h2>
       <div className="flex-col lg:flex-row gap-4 w-full items-center justify-start">
-        <div className="flex-col lg:flex-row">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0">
+        <div className="flex w-full overflow-hidden overflow-x-scroll gap-3 pb-2">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
             کتنے امیدواران فل کرتے ہیں؟
           </label>
           <input
@@ -54,7 +54,7 @@ export const RozOShabDiary = ({ view }) => {
           />
         </div>
         <div style={{ display: "flex", width: "100%" }}>
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
             کتنےرفقافل کرتے ہیں:
           </label>
 

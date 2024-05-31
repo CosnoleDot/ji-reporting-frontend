@@ -4,7 +4,7 @@ export const PaighamDigest = ({ view }) => {
       <h2 className="text-black py-3 text-lg"> ہمقدم ڈائجسٹ</h2>
       <div className="flex flex-wrap w-full items-center justify-start">
         <div className="flex py-2 ml-4">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0">کل موصولہ:</label>
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">کل موصولہ:</label>
           <input
             readOnly={view}
             type="number"
@@ -16,7 +16,7 @@ export const PaighamDigest = ({ view }) => {
           />
         </div>
         <div className="flex py-2 ml-4">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
             فروخت کردہ:
           </label>
           <input
@@ -30,7 +30,7 @@ export const PaighamDigest = ({ view }) => {
           />
         </div>
         <div className="flex py-2 ml-4">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
             ڈائجسٹ موصول کرنے کا ماہانہ ہدف:
           </label>
           <input

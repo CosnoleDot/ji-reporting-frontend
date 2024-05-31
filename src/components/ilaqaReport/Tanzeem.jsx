@@ -98,7 +98,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`rehaishHalqay-start`}
                 id={`rehaishHalqay-start`}
@@ -117,7 +116,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`rehaishHalqay-increase`}
                 id={`rehaishHalqay-increase`}
@@ -136,7 +134,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`rehaishHalqay-decrease`}
                 id={`rehaishHalqay-decrease`}
@@ -155,7 +152,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`rehaishHalqay-end`}
                 onChange={() => {
@@ -169,12 +165,11 @@ export const Tanzeem = ({ view }) => {
                 className="p-1 text-center min-w-full"
               />
             </Box>
-           
+
             <Box>
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 onChange={() => {
                   calcultate("taleemHalqay");
@@ -193,7 +188,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`rehaishHalqay-paused`}
                 id={`rehaishHalqay-paused`}
@@ -207,13 +201,11 @@ export const Tanzeem = ({ view }) => {
                 }}
                 className="p-1 text-center min-w-full"
               />
-             
             </Box>
             <Box>
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`rehaishHalqay-monthly`}
                 id={`rehaishHalqay-monthly`}
@@ -227,7 +219,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`taleemHalqay-start`}
                 id={`taleemHalqay-start`}
@@ -246,7 +237,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`taleemHalqay-increase`}
                 id={`taleemHalqay-increase`}
@@ -265,7 +255,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`taleemHalqay-decrease`}
                 id={`taleemHalqay-decrease`}
@@ -284,7 +273,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`taleemHalqay-end`}
                 onChange={() => {
@@ -302,7 +290,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`taleemHalqay-continue`}
                 id={`taleemHalqay-continue`}
@@ -320,7 +307,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`taleemHalqay-paused`}
                 id={`taleemHalqay-paused`}
@@ -338,7 +324,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`taleemHalqay-monthly`}
                 id={`taleemHalqay-monthly`}
@@ -352,7 +337,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly
                 type="number"
-                defaultValue={0}
                 required
                 name={`totalHalqay-start`}
                 id={`totalHalqay-start`}
@@ -363,7 +347,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly
                 type="number"
-                defaultValue={0}
                 required
                 name={`totalHalqay-increase`}
                 id={`totalHalqay-increase`}
@@ -374,7 +357,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly
                 type="number"
-                defaultValue={0}
                 required
                 name={`totalHalqay-decrease`}
                 id={`totalHalqay-decrease`}
@@ -385,7 +367,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly
                 type="number"
-                defaultValue={0}
                 required
                 name={`totalHalqay-end`}
                 id={`totalHalqay-end`}
@@ -396,7 +377,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly
                 type="number"
-                defaultValue={0}
                 required
                 name={`totalHalqay-continue`}
                 id={`totalHalqay-continue`}
@@ -407,7 +387,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly
                 type="number"
-                defaultValue={0}
                 required
                 name={`totalHalqay-paused`}
                 id={`totalHalqay-paused`}
@@ -418,7 +397,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`totalHalqay-monthly`}
                 id={`totalHalqay-monthly`}
@@ -432,11 +410,9 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`subRehaishHalqay-start`}
                 id={`subRehaishHalqay-start`}
-                
                 className="p-1 text-center min-w-full"
               />
             </Box>
@@ -444,7 +420,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`subRehaishHalqay-increase`}
                 id={`subRehaishHalqay-increase`}
@@ -463,7 +438,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`subRehaishHalqay-decrease`}
                 id={`subRehaishHalqay-decrease`}
@@ -482,7 +456,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`subRehaishHalqay-end`}
                 id={`subRehaishHalqay-end`}
@@ -493,7 +466,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 onChange={() => {
                   totalCalculate(
@@ -511,7 +483,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 onChange={() => {
                   totalCalculate(
@@ -529,9 +500,7 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
-               
                 name={`subRehaishHalqay-monthly`}
                 id={`subRehaishHalqay-monthly`}
                 className="p-1 text-center min-w-full"
@@ -544,7 +513,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`subTaleemHalqay-start`}
                 id={`subTaleemHalqay-start`}
@@ -563,7 +531,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`subTaleemHalqay-increase`}
                 id={`subTaleemHalqay-increase`}
@@ -582,7 +549,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`subTaleemHalqay-decrease`}
                 id={`subTaleemHalqay-decrease`}
@@ -601,7 +567,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`subTaleemHalqay-end`}
                 id={`subTaleemHalqay-end`}
@@ -612,7 +577,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`subTaleemHalqay-continue`}
                 id={`subTaleemHalqay-continue`}
@@ -630,7 +594,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 onChange={() => {
                   totalCalculate(
@@ -648,7 +611,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`subTaleemHalqay-monthly`}
                 id={`subTaleemHalqay-monthly`}
@@ -662,7 +624,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`subTotalHalqay-start`}
                 id={`subTotalHalqay-start`}
@@ -673,7 +634,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`subTotalHalqay-increase`}
                 id={`subTotalHalqay-increase`}
@@ -684,7 +644,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`subTotalHalqay-decrease`}
                 id={`subTotalHalqay-decrease`}
@@ -695,7 +654,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`subTotalHalqay-end`}
                 id={`subTotalHalqay-end`}
@@ -706,7 +664,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`subTotalHalqay-continue`}
                 id={`subTotalHalqay-continue`}
@@ -717,7 +674,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`subTotalHalqay-paused`}
                 id={`subTotalHalqay-paused`}
@@ -728,7 +684,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`subTotalHalqay-monthly`}
                 id={`subTotalHalqay-monthly`}
@@ -742,7 +697,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`busmSchoolUnits-start`}
                 id={`busmSchoolUnits-start`}
@@ -761,7 +715,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`busmSchoolUnits-increase`}
                 id={`busmSchoolUnits-increase`}
@@ -780,7 +733,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`busmSchoolUnits-decrease`}
                 id={`busmSchoolUnits-decrease`}
@@ -799,7 +751,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`busmSchoolUnits-end`}
                 id={`busmSchoolUnits-end`}
@@ -810,7 +761,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 onChange={() => {
                   totalCalculate(
@@ -828,7 +778,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 onChange={() => {
                   calcultate("busmSchoolUnits");
                   totalCalculate(
@@ -847,7 +796,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`busmSchoolUnits-monthly`}
                 id={`busmSchoolUnits-monthly`}
@@ -861,7 +809,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`busmRehaishUnits-start`}
                 id={`busmRehaishUnits-start`}
@@ -880,7 +827,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`busmRehaishUnits-increase`}
                 id={`busmRehaishUnits-increase`}
@@ -899,7 +845,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`busmRehaishUnits-decrease`}
                 id={`busmRehaishUnits-decrease`}
@@ -918,7 +863,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`busmRehaishUnits-end`}
                 id={`busmRehaishUnits-end`}
@@ -936,7 +880,6 @@ export const Tanzeem = ({ view }) => {
                   );
                 }}
                 type="number"
-                defaultValue={0}
                 required
                 name={`busmRehaishUnits-continue`}
                 id={`busmRehaishUnits-continue`}
@@ -947,7 +890,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 onChange={() => {
                   totalCalculate(
                     "busmSchoolUnits",
@@ -965,7 +907,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`busmRehaishUnits-monthly`}
                 id={`busmRehaishUnits-monthly`}
@@ -979,7 +920,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`busmTotalUnits-start`}
                 id={`busmTotalUnits-start`}
@@ -990,7 +930,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`busmTotalUnits-increase`}
                 id={`busmTotalUnits-increase`}
@@ -1001,7 +940,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`busmTotalUnits-decrease`}
                 id={`busmTotalUnits-decrease`}
@@ -1012,7 +950,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`busmTotalUnits-end`}
                 id={`busmTotalUnits-end`}
@@ -1023,7 +960,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`busmTotalUnits-continue`}
                 id={`busmTotalUnits-continue`}
@@ -1034,7 +970,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`busmTotalUnits-paused`}
                 id={`busmTotalUnits-paused`}
@@ -1045,7 +980,6 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`busmTotalUnits-monthly`}
                 id={`busmTotalUnits-monthly`}

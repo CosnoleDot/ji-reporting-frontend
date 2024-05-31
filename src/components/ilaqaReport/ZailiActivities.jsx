@@ -21,7 +21,6 @@ const ZailiActivities = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`ijtRafaqa-decided`}
                 id={`ijtRafaqa-decided`}
@@ -32,7 +31,6 @@ const ZailiActivities = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`ijtRafaqa-done`}
                 id={`ijtRafaqa-done`}
@@ -42,7 +40,6 @@ const ZailiActivities = ({ view }) => {
             <Box>
               <input
                 type="number"
-                defaultValue={0}
                 required
                 name={`ijtRafaqa-averageAttendance`}
                 id={`ijtRafaqa-averageAttendance`}
@@ -56,7 +53,6 @@ const ZailiActivities = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`studyCircleMentioned-decided`}
                 id={`studyCircleMentioned-decided`}
@@ -67,7 +63,6 @@ const ZailiActivities = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`studyCircleMentioned-done`}
                 id={`studyCircleMentioned-done`}
@@ -77,7 +72,6 @@ const ZailiActivities = ({ view }) => {
             <Box>
               <input
                 type="number"
-                defaultValue={0}
                 required
                 name={`studyCircleMentioned-averageAttendance`}
                 id={`studyCircleMentioned-averageAttendance`}
@@ -91,7 +85,6 @@ const ZailiActivities = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`ijtKarkunan-decided`}
                 id={`ijtKarkunan-decided`}
@@ -102,7 +95,6 @@ const ZailiActivities = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`ijtKarkunan-done`}
                 id={`ijtKarkunan-done`}
@@ -110,7 +102,7 @@ const ZailiActivities = ({ view }) => {
               />
               +
               <input
-              readOnly={view}
+                readOnly={view}
                 type="number"
                 placeholder="کل ذیلی حلقہ جات"
                 required
@@ -120,7 +112,9 @@ const ZailiActivities = ({ view }) => {
                 onChange={() =>
                   sumUpTwoValues(
                     parseInt(document.getElementById("ijtKarkunan-done").value),
-                    parseInt(document.getElementById("ijtKarkunan-manual").value),
+                    parseInt(
+                      document.getElementById("ijtKarkunan-manual").value
+                    ),
                     "currentSum"
                   )
                 }
@@ -131,9 +125,7 @@ const ZailiActivities = ({ view }) => {
                 type="number"
                 defaultValue={
                   parseInt(document.getElementById("ijtKarkunan-done")?.value) +
-                  parseInt(
-                    document.getElementById("ijtKarkunan-manual")?.value
-                  )
+                  parseInt(document.getElementById("ijtKarkunan-manual")?.value)
                 }
                 required
                 name={`ijtKarkunan-sum`}
@@ -145,7 +137,6 @@ const ZailiActivities = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`ijtKarkunan-averageAttendance`}
                 id={`ijtKarkunan-averageAttendance`}
@@ -159,7 +150,6 @@ const ZailiActivities = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`darseQuran-decided`}
                 id={`darseQuran-decided`}
@@ -171,7 +161,6 @@ const ZailiActivities = ({ view }) => {
                 <input
                   readOnly={true}
                   type="number"
-                  defaultValue={0}
                   required
                   name={`darseQuran-done`}
                   id={`darseQuran-done`}
@@ -179,7 +168,7 @@ const ZailiActivities = ({ view }) => {
                 />
                 +
                 <input
-                readOnly={view}
+                  readOnly={view}
                   type="number"
                   placeholder="کل ذیلی حلقہ جات"
                   required
@@ -188,8 +177,12 @@ const ZailiActivities = ({ view }) => {
                   className="p-1 text-center "
                   onChange={() =>
                     sumUpTwoValues(
-                      parseInt(document.getElementById("darseQuran-done").value),
-                      parseInt(document.getElementById("darseQuran-manual").value),
+                      parseInt(
+                        document.getElementById("darseQuran-done").value
+                      ),
+                      parseInt(
+                        document.getElementById("darseQuran-manual").value
+                      ),
                       "currentSum"
                     )
                   }
@@ -217,7 +210,6 @@ const ZailiActivities = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`darseQuran-averageAttendance`}
                 id={`darseQuran-averageAttendance`}
@@ -231,7 +223,6 @@ const ZailiActivities = ({ view }) => {
               <input
                 disabled={view}
                 type="number"
-                defaultValue={0}
                 required
                 readOnly
                 name={`shaheenMeeting-decided`}
@@ -243,7 +234,6 @@ const ZailiActivities = ({ view }) => {
               <input
                 disabled={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`shaheenMeeting-done`}
                 id={`shaheenMeeting-done`}
@@ -254,7 +244,6 @@ const ZailiActivities = ({ view }) => {
               <input
                 disabled={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`shaheenMeeting-averageAttendance`}
                 id={`shaheenMeeting-averageAttendance`}
@@ -268,7 +257,6 @@ const ZailiActivities = ({ view }) => {
               <input
                 disabled={view}
                 type="number"
-                defaultValue={0}
                 required
                 readOnly
                 name={`paighamEvent-decided`}
@@ -280,7 +268,6 @@ const ZailiActivities = ({ view }) => {
               <input
                 disabled={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`paighamEvent-done`}
                 id={`paighamEvent-done`}
@@ -291,7 +278,6 @@ const ZailiActivities = ({ view }) => {
               <input
                 disabled={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`paighamEvent-averageAttendance`}
                 id={`paighamEvent-averageAttendance`}
