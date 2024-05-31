@@ -4,7 +4,7 @@ export const OtherActivities = ({ view }) => {
       <h2 className="text-black py-3 text-lg">دیگر سرگرمیاں</h2>
       <div className="flex flex-wrap w-full items-center justify-start">
         {/* <div className='flex py-2'>
-                 <label className="block text-sm md:text-lg mb-2 lg:mb-0"> تربیت گاہ:</label>
+                 <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2"> تربیت گاہ:</label>
           <input
             readOnly={view}
             type='number'
@@ -16,7 +16,7 @@ export const OtherActivities = ({ view }) => {
           />
         </div> */}
         <div className="flex py-2">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
             دعوتی وفود:
           </label>
           <input
@@ -30,7 +30,7 @@ export const OtherActivities = ({ view }) => {
           />
         </div>
         <div className="flex py-2">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
             روابط پارٹیز:
           </label>
           <input
@@ -44,7 +44,7 @@ export const OtherActivities = ({ view }) => {
           />
         </div>
         <div className="flex py-2">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0">شب بیداری:</label>
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">شب بیداری:</label>
           <input
             readOnly={true}
             type="number"
@@ -56,7 +56,7 @@ export const OtherActivities = ({ view }) => {
           />
         </div>
         <div className="flex py-2">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
             نظام الصلوٰۃ:
           </label>
           <input

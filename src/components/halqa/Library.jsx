@@ -8,7 +8,6 @@ export const Library = ({ view }) => {
           <input
             readOnly={view}
             type="number"
-            defaultValue={0}
             required
             name="books"
             id="books"
@@ -20,7 +19,6 @@ export const Library = ({ view }) => {
           <input
             readOnly={view}
             type="number"
-            defaultValue={0}
             required
             name="increase"
             id="increase"
@@ -32,7 +30,6 @@ export const Library = ({ view }) => {
           <input
             readOnly={view}
             type="number"
-            defaultValue={0}
             required
             name="decrease"
             id="decrease"
@@ -44,7 +41,6 @@ export const Library = ({ view }) => {
           <input
             readOnly={view}
             type="number"
-            defaultValue={0}
             required
             name="bookRent"
             id="bookRent"

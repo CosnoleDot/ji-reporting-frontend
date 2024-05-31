@@ -12,15 +12,11 @@ import {
   calcultate,
 } from "../components";
 import {
-  DivisionReportContext,
-  HalqaReportContext,
-  MaqamReportContext,
   MeContext,
   useToastState,
 } from "../context";
 import { convertDataFormat, reverseDataFormat, toJson } from "../utils";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { getData } from "./Maqam";
 import { UIContext } from "../context/ui";
 import { Baitulmal } from "../components/halqa/Baitulmal";
 

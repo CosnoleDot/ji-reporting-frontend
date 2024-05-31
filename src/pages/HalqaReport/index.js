@@ -243,6 +243,20 @@ export const HalqaReport = () => {
           <p>{data?.halqaActivityId?.darseQuran?.attendance}</p>
           <p>{data?.halqaActivityId?.darseQuran?.title}</p>
         </div>
+        <div className="row">
+          <p className="header"> شاہین میٹینگ</p>
+          <p>{data?.halqaActivityId?.shaheenMeeting?.decided}</p>
+          <p>{data?.halqaActivityId?.shaheenMeeting?.completed}</p>
+          <p>{data?.halqaActivityId?.shaheenMeeting?.attendance}</p>
+          <p>{data?.halqaActivityId?.shaheenMeeting?.title}</p>
+        </div>
+        <div className="row">
+          <p className="header"> پیغام محفل</p>
+          <p>{data?.halqaActivityId?.paighamEvent?.decided}</p>
+          <p>{data?.halqaActivityId?.paighamEvent?.completed}</p>
+          <p>{data?.halqaActivityId?.paighamEvent?.attendance}</p>
+          <p>{data?.halqaActivityId?.paighamEvent?.title}</p>
+        </div>
       </div>
 
       <h3

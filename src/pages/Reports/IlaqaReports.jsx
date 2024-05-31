@@ -26,6 +26,7 @@ export const IlaqaReports = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const { getIlaqaReports } = useContext(UIContext);
   const [disable, setDisable] = useState(false);
+
   const navigate = useNavigate();
   const itemsPerPage = 10;
   useEffect(() => {
@@ -244,11 +245,12 @@ export const IlaqaReports = () => {
                 </button>
               )}
 
-              <button className="btn" onClick={() => handlePrint(p?._id)}>
-                <FaPrint />
-              </button>
+                <button className="btn" onClick={() => handlePrint(p?._id)}>
+                  <FaPrint />
+                </button>
+              </div>
             </div>
-          </div>
+          
         ))
       ) : (
         <NoReports />

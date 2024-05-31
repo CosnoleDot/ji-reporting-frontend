@@ -60,11 +60,10 @@ export const ToseeDawat = ({ view }) => {
           <input
             readOnly
             type="number"
-            defaultValue={0}
             required
             name="rawabitDecided"
             id="rawabitDecided"
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0max-w-[6rem] md:max-w-lg"
+            className="border-b-2 text-center border-dashed  max-w-[6rem] mb-2 lg:mb-0max-w-[6rem] md:max-w-lg"
           />
         </div>
         <div className="flex py-2">
@@ -72,11 +71,10 @@ export const ToseeDawat = ({ view }) => {
           <input
             readOnly={view}
             type="number"
-            defaultValue={0}
             required
             name="current"
             id="current"
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0max-w-[6rem] md:max-w-lg"
+            className="border-b-2 text-center border-dashed  max-w-[6rem] mb-2 lg:mb-0max-w-[6rem] md:max-w-lg"
           />
         </div>
         <div className="flex py-2">
@@ -86,11 +84,10 @@ export const ToseeDawat = ({ view }) => {
           <input
             readOnly
             type="number"
-            defaultValue={0}
             required
             name="rwabitMeetingsGoal"
             id="rwabitMeetingsGoal"
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
+            className="border-b-2 text-center border-dashed   mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
           />
         </div>
         <div className="flex py-2">
@@ -98,11 +95,10 @@ export const ToseeDawat = ({ view }) => {
           <input
             readOnly={view}
             type="number"
-            defaultValue={0}
             required
             name="meetings"
             id="meetings"
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0max-w-[6rem] md:max-w-lg"
+            className="border-b-2 text-center border-dashed  max-w-[6rem] mb-2 lg:mb-0max-w-[6rem] md:max-w-lg"
           />
         </div>
         <div className="flex py-2">
@@ -110,11 +106,10 @@ export const ToseeDawat = ({ view }) => {
           <input
             readOnly={view}
             type="number"
-            defaultValue={0}
             required
             name="literatureDistribution"
             id="literatureDistribution"
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0max-w-[6rem] md:max-w-lg"
+            className="border-b-2 text-center border-dashed  max-w-[6rem] mb-2 lg:mb-0max-w-[6rem] md:max-w-lg"
           />
         </div>
         <div className="flex py-2">
@@ -146,11 +141,10 @@ export const ToseeDawat = ({ view }) => {
           <input
             readOnly={view}
             type="number"
-            defaultValue={0}
             required
             name="commonStudentMeetings"
             id="commonStudentMeetings"
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0max-w-[6rem] md:max-w-lg"
+            className="border-b-2 text-center border-dashed  max-w-[6rem] mb-2 lg:mb-0max-w-[6rem] md:max-w-lg"
           />
         </div>
         <div className="flex py-2">
@@ -158,11 +152,10 @@ export const ToseeDawat = ({ view }) => {
           <input
             readOnly={view}
             type="number"
-            defaultValue={0}
             required
             name="commonLiteratureDistribution"
             id="commonLiteratureDistribution"
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0max-w-[6rem] md:max-w-lg"
+            className="border-b-2 text-center border-dashed  max-w-[6rem] mb-2 lg:mb-0max-w-[6rem] md:max-w-lg"
           />
         </div>
       </div>

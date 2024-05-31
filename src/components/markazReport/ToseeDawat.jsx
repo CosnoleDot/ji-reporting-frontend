@@ -7,7 +7,7 @@ export const ToseeDawat = ({}) => {
           <h3 className="block ml-28 font-bold">روابط:</h3>
         </div>
         <div className="flex py-2">
-                 <label className="block text-sm md:text-lg mb-2 lg:mb-0">طے شدہ:</label>
+                 <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">طے شدہ:</label>
           <input
             readOnly={true}
             type="number"
@@ -17,8 +17,8 @@ export const ToseeDawat = ({}) => {
             className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
           />
         </div>
-       <div className="flex-col lg:flex-row">
-                 <label className="block text-sm md:text-lg mb-2 lg:mb-0">موجود:</label>
+       <div className="flex w-full overflow-hidden overflow-x-scroll gap-3 pb-2">
+                 <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">موجود:</label>
           <input
             readOnly={true}
             type="number"
@@ -30,7 +30,7 @@ export const ToseeDawat = ({}) => {
           />
         </div>
         <div className="flex py-2">
-                 <label className="block text-sm md:text-lg mb-2 lg:mb-0">روابط سےملاقاتوں کاہدف:</label>
+                 <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">روابط سےملاقاتوں کاہدف:</label>
           <input
             readOnly={true}
             type="number"
@@ -45,8 +45,8 @@ export const ToseeDawat = ({}) => {
           />
         </div>
 
-       <div className="flex-col lg:flex-row">
-                 <label className="block text-sm md:text-lg mb-2 lg:mb-0">ملاقاتوں کی تعداد:</label>
+       <div className="flex w-full overflow-hidden overflow-x-scroll gap-3 pb-2">
+                 <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">ملاقاتوں کی تعداد:</label>
           <input
             readOnly={true}
             type="number"
@@ -57,8 +57,8 @@ export const ToseeDawat = ({}) => {
             className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
           />
         </div>
-       <div className="flex-col lg:flex-row">
-                 <label className="block text-sm md:text-lg mb-2 lg:mb-0">تقسیم لٹریچر:</label>
+       <div className="flex w-full overflow-hidden overflow-x-scroll gap-3 pb-2">
+                 <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">تقسیم لٹریچر:</label>
           <input
             readOnly={true}
             type="number"
@@ -74,8 +74,8 @@ export const ToseeDawat = ({}) => {
         <div className="flex py-2 me-5">
           <label className="block ml-16 font-bold">عام طلبہ:</label>
         </div>
-       <div className="flex-col lg:flex-row">
-                 <label className="block text-sm md:text-lg mb-2 lg:mb-0">تقسیم لٹریچر:</label>
+       <div className="flex w-full overflow-hidden overflow-x-scroll gap-3 pb-2">
+                 <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">تقسیم لٹریچر:</label>
           <input
             readOnly={true}
             type="number"
@@ -86,8 +86,8 @@ export const ToseeDawat = ({}) => {
             className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
           />
         </div>
-       <div className="flex-col lg:flex-row">
-                 <label className="block text-sm md:text-lg mb-2 lg:mb-0"> ملاقاتیں :</label>
+       <div className="flex w-full overflow-hidden overflow-x-scroll gap-3 pb-2">
+                 <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2"> ملاقاتیں :</label>
           <input
             readOnly={true}
             type="number"

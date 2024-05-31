@@ -33,7 +33,7 @@ export const ToseeDawat = ({ view }) => {
           <h3 className="block ml-28 font-bold">روابط:</h3>
         </div>
         <div className="flex py-2">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
             طے شدہ:
           </label>
           <input
@@ -47,7 +47,7 @@ export const ToseeDawat = ({ view }) => {
           />
         </div>
         <div className="flex">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
             موجود:
           </label>
           <input
@@ -87,7 +87,7 @@ export const ToseeDawat = ({ view }) => {
           />
         </div>
         <div className="flex py-2">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
             روابط سےملاقاتوں کاہدف:
           </label>
           <input
@@ -141,7 +141,7 @@ export const ToseeDawat = ({ view }) => {
           />
         </div>
         <div className="flex gap-4 items-center">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
             تقسیم لٹریچر:
           </label>
           <input
@@ -186,7 +186,7 @@ export const ToseeDawat = ({ view }) => {
           <label className="block ml-16 font-bold">عام طلبہ:</label>
         </div>
         <div className="flex gap-4 items-center">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
             تقسیم لٹریچر:
           </label>
           <input
@@ -232,7 +232,7 @@ export const ToseeDawat = ({ view }) => {
           />
         </div>
         <div className="flex gap-4 items-center">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
             {" "}
             ملاقاتیں :
           </label>

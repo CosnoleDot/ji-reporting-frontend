@@ -46,6 +46,7 @@ export function GeneralInfo({ me, area, view, newMonth, setMonth }) {
           name="name"
           id="name"
           readOnly
+          value={me?.userAreaId?.name}
         />
       </div>
       {!newMonth ? (
