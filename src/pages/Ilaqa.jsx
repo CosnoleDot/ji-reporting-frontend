@@ -5,10 +5,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useContext, useState } from "react";
 import { useEffect } from "react";
 import {
-  HalqaReportContext,
-  IlaqaReportContext,
-  MaqamReportContext,
-  // MaqamReportContext,
+
   MeContext,
   useToastState,
 } from "../context";
@@ -27,9 +24,6 @@ import { Baitulmal } from "../components/ilaqaReport/Baitulmal";
 
 export const Ilaqa = () => {
   // EDIT CODE START
-  const halqa = useContext(HalqaReportContext);
-  const ilaqa = useContext(IlaqaReportContext);
-  const maqam = useContext(MaqamReportContext);
   const [createData, setCreateData] = useState();
   const [month, setMonth] = useState("");
   const params = useParams();
@@ -44,35 +38,33 @@ export const Ilaqa = () => {
   const autoFill = () => {
     const halq = {};
     document.getElementById("ilaqa-form").reset();
-    createData
-      ?.filter((i) => i?.month.includes(month))
-      .forEach((i) => {
-        const sim = reverseDataFormat(i);
-        Object.keys(sim).forEach((j) => {
-          if (
-            halq?.[j] &&
-            j?.split("-")[1] !== "attendance" &&
-            j?.split("-")[1] !== "monthly"
-          ) {
-            try {
-              halq[j] += parseInt(sim[j]) || 0;
-            } catch {
-              halq[j] += sim[j] || 0;
-            }
-          } else {
-            try {
-              if (
-                j?.split("-")[1] !== "attendance" &&
-                j?.split("-")[1] !== "monthly"
-              ) {
-                halq[j] = parseInt(sim[j]) || 0;
-              }
-            } catch {
-              halq[j] = sim[j] || 0;
-            }
+    createData?.forEach((i) => {
+      const sim = reverseDataFormat(i);
+      Object.keys(sim).forEach((j) => {
+        if (
+          halq?.[j] &&
+          j?.split("-")[1] !== "attendance" &&
+          j?.split("-")[1] !== "monthly"
+        ) {
+          try {
+            halq[j] += parseInt(sim[j]) || 0;
+          } catch {
+            halq[j] += sim[j] || 0;
           }
-        });
+        } else {
+          try {
+            if (
+              j?.split("-")[1] !== "attendance" &&
+              j?.split("-")[1] !== "monthly"
+            ) {
+              halq[j] = parseInt(sim[j]) || 0;
+            }
+          } catch {
+            halq[j] = sim[j] || 0;
+          }
+        }
       });
+    });
 
     Object.keys(halq).forEach((i) => {
       let j;
@@ -117,6 +109,7 @@ export const Ilaqa = () => {
           j = i;
         }
       }
+      console.log(halq, "asd");
       const elem = document.getElementById(j);
       if (elem) {
         if (j === "month") {
@@ -222,6 +215,7 @@ export const Ilaqa = () => {
   }, [id]);
   useEffect(() => {
     const l = location.pathname?.split("/")[2];
+    console.log(l);
     if (l === "create") {
       getHalqaReports();
     }
@@ -268,9 +262,11 @@ export const Ilaqa = () => {
     });
   }, [data]);
   useEffect(() => {
-    if (!id) autoFill();
+    if (!id || window.location.pathname?.split("/")[2] === "create") {
+      autoFill();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, halqa, month, createData]);
+  }, [id]);
   // EDIT CODE END
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -360,7 +356,7 @@ export const Ilaqa = () => {
       data[i] = 0;
     }
   });
-
+  console.log(createData);
   return (
     <GeneralLayout>
       <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">

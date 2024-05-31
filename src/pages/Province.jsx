@@ -51,15 +51,6 @@ export const Province = () => {
   const autoFill = () => {
     const provinceFinalData = {};
     document.getElementById("province-form").reset();
-
-    if (
-      createData?.maqamReports?.filter((i) => i?.month?.includes(month))
-        ?.length < 1 &&
-      division?.divisionReports?.filter((i) => i?.month?.includes(month))
-        ?.length < 1
-    ) {
-      document.getElementById("name").value = me?.userAreaId?.name;
-    }
     const maqamTFiltered = createData?.maqamReports?.map((item) => {
       const { muntakhibTdId, tdId } = item;
       return { m: muntakhibTdId || [], t: tdId || [] };
@@ -133,47 +124,43 @@ export const Province = () => {
         }));
       }
     }
-    createData?.maqamReports
-      ?.filter((i) => i?.month.includes(month))
-      ?.forEach((i) => {
-        const sim = reverseDataFormat(i);
-        Object.keys(sim)?.forEach((j) => {
-          if (provinceFinalData?.[j]) {
-            try {
-              provinceFinalData[j] += parseInt(sim[j]) || 0;
-            } catch {
-              provinceFinalData[j] += sim[j] || 0;
-            }
-          } else {
-            try {
-              provinceFinalData[j] = parseInt(sim[j]) || 0;
-            } catch {
-              provinceFinalData[j] = sim[j] || 0;
-            }
+    createData?.maqamReports?.forEach((i) => {
+      const sim = reverseDataFormat(i);
+      Object.keys(sim)?.forEach((j) => {
+        if (provinceFinalData?.[j]) {
+          try {
+            provinceFinalData[j] += parseInt(sim[j]) || 0;
+          } catch {
+            provinceFinalData[j] += sim[j] || 0;
           }
-        });
-      });
-    createData?.divisionReports
-      ?.filter((i) => i?.month.includes(month))
-      ?.forEach((i) => {
-        const sim = reverseDataFormat(i);
-        Object.keys(sim)?.forEach((j) => {
-          if (provinceFinalData?.[j]) {
-            try {
-              provinceFinalData[j] += parseInt(sim[j]) || 0;
-            } catch {
-              provinceFinalData[j] += sim[j] || 0;
-            }
-          } else {
-            try {
-              provinceFinalData[j] = parseInt(sim[j]) || 0;
-            } catch {
-              provinceFinalData[j] = sim[j] || 0;
-            }
+        } else {
+          try {
+            provinceFinalData[j] = parseInt(sim[j]) || 0;
+          } catch {
+            provinceFinalData[j] = sim[j] || 0;
           }
-        });
+        }
       });
-      
+    });
+    createData?.divisionReports?.forEach((i) => {
+      const sim = reverseDataFormat(i);
+      Object.keys(sim)?.forEach((j) => {
+        if (provinceFinalData?.[j]) {
+          try {
+            provinceFinalData[j] += parseInt(sim[j]) || 0;
+          } catch {
+            provinceFinalData[j] += sim[j] || 0;
+          }
+        } else {
+          try {
+            provinceFinalData[j] = parseInt(sim[j]) || 0;
+          } catch {
+            provinceFinalData[j] = sim[j] || 0;
+          }
+        }
+      });
+    });
+
     if (page === "create") {
       [
         "ijtArkan",

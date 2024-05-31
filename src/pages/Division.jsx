@@ -50,65 +50,25 @@ export const Division = () => {
     const halq = {};
 
     document.getElementById("division-form").reset();
-    if (createData?.filter((i) => i?.month?.includes(month)).length < 1) {
-      [
-        "rafaqa-start",
-        "karkunan-start",
-        "rafaqa-increase",
-        "karkunan-increase",
-        "rafaqa-decrease",
-        "karkunan-decrease",
-        "rafaqa-end",
-        "karkunan-end",
-        "rafaqa-monthly",
-        "karkunan-monthly",
-        "ijtRafaqa-decided",
-        "ijtRafaqa-done",
-        "ijtRafaqa-averageAttendance",
-        "studyCircleMentioned-decided",
-        "studyCircleMentioned-done",
-        "studyCircleMentioned-averageAttendance",
-        "ijtKarkunan-decided",
-        "ijtKarkunan-done",
-        "ijtKarkunan-averageAttendance",
-        "darseQuran-decided",
-        "darseQuran-done",
-        "darseQuran-averageAttendance",
-        "dawatiWafud",
-        "rawabitParties",
-        "shabBedari",
-        "nizamSalah",
-        "rawabitDecided",
-        "totalBooks",
-        "totalIncrease",
-        "totalDecrease",
-        "totalBookRent",
-      ].forEach((i) => {
-        document.getElementById(i).value = 0;
-      });
-      document.getElementById("name").value = me?.userAreaId?.name;
-    }
 
-    createData
-      ?.filter((i) => i?.month.includes(month))
-      ?.forEach((i) => {
-        const sim = reverseDataFormat(i);
-        Object.keys(sim)?.forEach((j) => {
-          if (halq?.[j]) {
-            try {
-              halq[j] += parseInt(sim[j]) || 0;
-            } catch {
-              halq[j] += sim[j] || 0;
-            }
-          } else {
-            try {
-              halq[j] = parseInt(sim[j]) || 0;
-            } catch {
-              halq[j] = sim[j] || 0;
-            }
+    createData?.forEach((i) => {
+      const sim = reverseDataFormat(i);
+      Object.keys(sim)?.forEach((j) => {
+        if (halq?.[j]) {
+          try {
+            halq[j] += parseInt(sim[j]) || 0;
+          } catch {
+            halq[j] += sim[j] || 0;
           }
-        });
+        } else {
+          try {
+            halq[j] = parseInt(sim[j]) || 0;
+          } catch {
+            halq[j] = sim[j] || 0;
+          }
+        }
       });
+    });
     Object.keys(halq).forEach((i) => {
       let j;
       if (i === "studyCircle-decided") {

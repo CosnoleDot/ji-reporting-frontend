@@ -50,65 +50,25 @@ export const Maqam = () => {
     const halq = {};
 
     document.getElementById("maqam-form").reset();
-    if (createData?.length > 0) {
-      [
-        "rafaqa-start",
-        "karkunan-start",
-        "rafaqa-increase",
-        "karkunan-increase",
-        "rafaqa-decrease",
-        "karkunan-decrease",
-        "rafaqa-end",
-        "karkunan-end",
-        "rafaqa-monthly",
-        "karkunan-monthly",
-        "ijtRafaqa-decided",
-        "ijtRafaqa-done",
-        "ijtRafaqa-averageAttendance",
-        "studyCircleMentioned-decided",
-        "studyCircleMentioned-done",
-        "studyCircleMentioned-averageAttendance",
-        "ijtKarkunan-decided",
-        "ijtKarkunan-done",
-        "ijtKarkunan-averageAttendance",
-        "darseQuran-decided",
-        "darseQuran-done",
-        "darseQuran-averageAttendance",
-        "dawatiWafud",
-        "rawabitParties",
-        "shabBedari",
-        "nizamSalah",
-        "rawabitDecided",
-        "totalBooks",
-        "totalIncrease",
-        "totalDecrease",
-        "totalBookRent",
-      ].forEach((i) => {
-        document.getElementById(i).value = 0;
-      });
-      document.getElementById("name").value = me?.userAreaId?.name;
-    }
 
-    createData
-      ?.filter((i) => i?.month?.includes(month))
-      ?.forEach((i) => {
-        const sim = reverseDataFormat(i);
-        Object.keys(sim)?.forEach((j) => {
-          if (halq?.[j]) {
-            try {
-              halq[j] += parseInt(sim[j]) || 0;
-            } catch {
-              halq[j] += sim[j] || 0;
-            }
-          } else {
-            try {
-              halq[j] = parseInt(sim[j]) || 0;
-            } catch {
-              halq[j] = sim[j] || 0;
-            }
+    createData?.forEach((i) => {
+      const sim = reverseDataFormat(i);
+      Object.keys(sim)?.forEach((j) => {
+        if (halq?.[j]) {
+          try {
+            halq[j] += parseInt(sim[j]) || 0;
+          } catch {
+            halq[j] += sim[j] || 0;
           }
-        });
+        } else {
+          try {
+            halq[j] = parseInt(sim[j]) || 0;
+          } catch {
+            halq[j] = sim[j] || 0;
+          }
+        }
       });
+    });
     Object.keys(halq).forEach((i) => {
       let j;
       if (i === "studyCircle-decided") {
@@ -139,7 +99,7 @@ export const Maqam = () => {
         }
       }
       halq.litrature = halq.literatureDistribution;
-      console.log(halq)
+      console.log(halq);
       const elem = document.getElementById(j);
       if (elem) {
         if (j === "month") {
@@ -220,7 +180,7 @@ export const Maqam = () => {
         },
       });
       const repo = req?.data?.data?.data;
-     
+
       setCreateData(repo);
       dispatch({ type: "SUCCESS", payload: req.data?.message });
     } catch (err) {
@@ -229,7 +189,6 @@ export const Maqam = () => {
     setLoading(false);
   };
   const getMaqamReport = async () => {
-    
     try {
       const req = await instance.get(`/reports/maqam/${id}`, {
         headers: {
