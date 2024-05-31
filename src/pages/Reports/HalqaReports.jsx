@@ -12,27 +12,28 @@ import { FilterDialog } from "./FilterDialog";
 import { Link, useNavigate } from "react-router-dom";
 import { UIContext } from "../../context/ui";
 import instance from "../../api/instrance";
+import { SearchPage } from "./SearchPage";
 
 export const HalqaReports = () => {
   const [tab, setTab] = useState("maqam");
   const [filterData, setFilterData] = useState([]);
   const { dispatch } = useToastState();
   const [search, showSearch] = useState(false);
+  const [isSearch, setIsSearch] = useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("2023");
   const [data, setData] = useState([]);
   const me = useContext(MeContext);
+  const [searchData, setSearchData] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [length, setLength] = useState(1);
   const itemsPerPage = 10;
   const getHalqaReportsTab = async (inset, offset, tab) => {
-    
     if (tab) {
       try {
-        
         const req = await instance.get(
           `/reports/halqa?inset=${inset}&offset=${offset}&tab=${tab}`,
           {
@@ -41,7 +42,7 @@ export const HalqaReports = () => {
             },
           }
         );
-       
+
         if (req) {
           setData([]);
           setData(req.data.data.data);
@@ -58,37 +59,62 @@ export const HalqaReports = () => {
     }
   };
   useEffect(() => {
-    getHalqaReportsTab(0 * itemsPerPage, itemsPerPage, 'maqam');
-
+    getHalqaReportsTab(0 * itemsPerPage, itemsPerPage, "maqam");
   }, []);
-  const searchResults = () => {
-    let filteredData = [...data];
+  // const searchResults = () => {
+  //   let filteredData = [...data];
 
+  //   if (year !== "" && month !== "") {
+  //     filteredData = filteredData.filter((i) => {
+  //       const [f_year, f_month] = [
+  //         i?.month?.split("-")[0],
+  //         i?.month?.split("-")[1],
+  //       ];
+  //       return (
+  //         parseInt(year) === parseInt(f_year) &&
+  //         parseInt(month) === parseInt(f_month)
+  //       );
+  //     });
+  //   } else if (year !== "" && month === "") {
+  //     filteredData = filteredData.filter((i) => {
+  //       const f_year = i?.month?.split("-")[0];
+  //       return parseInt(year) === parseInt(f_year);
+  //     });
+  //   } else if (year === "" && month !== "") {
+  //     dispatch({ type: "ERROR", payload: "Enter year with month" });
+  //   } else if (year === "" && month === "") {
+  //     dispatch({ type: "ERROR", payload: "Date is required" });
+  //   }
+
+  //   setData(filteredData);
+  // };
+
+  const searchResults = async () => {
     if (year !== "" && month !== "") {
-      filteredData = filteredData.filter((i) => {
-        const [f_year, f_month] = [
-          i?.month?.split("-")[0],
-          i?.month?.split("-")[1],
-        ];
-        return (
-          parseInt(year) === parseInt(f_year) &&
-          parseInt(month) === parseInt(f_month)
+      try {
+        setIsSearch(true);
+        const req = await instance.get(
+          `/reports/halqa?tab=${tab}&year=${year}&month=${month}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("@token")}`,
+            },
+          }
         );
-      });
-    } else if (year !== "" && month === "") {
-      filteredData = filteredData.filter((i) => {
-        const f_year = i?.month?.split("-")[0];
-        return parseInt(year) === parseInt(f_year);
-      });
-    } else if (year === "" && month !== "") {
-      dispatch({ type: "ERROR", payload: "Enter year with month" });
-    } else if (year === "" && month === "") {
-      dispatch({ type: "ERROR", payload: "Date is required" });
+
+        if (req) {
+          setSearchData([]);
+          setSearchData(req.data.data.data);
+        }
+      } catch (err) {
+        console.log(err);
+        dispatch({
+          type: "ERROR",
+          payload: err?.response?.data?.message || err?.message,
+        });
+      }
     }
-
-    setData(filteredData);
   };
-
   const toggleSearch = () => {
     showSearch(!search);
   };
@@ -96,15 +122,13 @@ export const HalqaReports = () => {
     setMonth("");
     setYear("2023");
     setData(data);
-    document.getElementById("autocomplete").value = "";
+    setIsSearch(false);
   };
 
   const viewReport = async (id) => {
     navigate(`view/${id}`);
   };
-  const editReport = (id) => {
-    navigate(`edit/${id}`);
-  };
+
   let totalPages = Math.ceil(length / itemsPerPage);
 
   const handlePrevPage = () => {
@@ -112,7 +136,7 @@ export const HalqaReports = () => {
       setCurrentPage(currentPage - 1);
       setData([]);
       setTab(tab);
-      getHalqaReportsTab((currentPage-2) * itemsPerPage, itemsPerPage, tab);
+      getHalqaReportsTab((currentPage - 2) * itemsPerPage, itemsPerPage, tab);
     }
   };
 
@@ -126,7 +150,9 @@ export const HalqaReports = () => {
     }
   };
 
+
   const tabClick = (tab) => {
+    clearFilters()
     setData([]);
     setTab(tab);
     getHalqaReportsTab((currentPage - 1) * itemsPerPage, itemsPerPage, tab);
@@ -287,64 +313,70 @@ export const HalqaReports = () => {
             )} */}
         </div>
       </div>
-      {data?.length > 0 ? (
-        data
-          ?.filter((i) =>
-            tab === "division"
-              ? i.halqaAreaId?.parentType === "Tehsil"
-              : i.halqaAreaId?.parentType ===
-                tab.charAt(0).toUpperCase() + tab.slice(1)
-          )
-          .map((p) => (
-            <div
-              key={p?._id}
-              className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
+
+      {!isSearch ? 
+        <>
+          {" "}
+          {data?.length > 0 ? (
+            data
+              ?.filter((i) =>
+                tab === "division"
+                  ? i.halqaAreaId?.parentType === "Tehsil"
+                  : i.halqaAreaId?.parentType ===
+                    tab.charAt(0).toUpperCase() + tab.slice(1)
+              )
+              .map((p) => (
+                <div
+                  key={p?._id}
+                  className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
+                >
+                  <div className="flex w-full flex-col items-start justify-center">
+                    <span className="text-sm lg:text-lg font-semibold">
+                      {p?.halqaAreaId?.name + " "}
+                      {moment(p?.month).format("MMMM YYYY")}
+                    </span>
+                    <span>Last Modified: {moment(p?.updatedAt).fromNow()}</span>
+                  </div>
+                  <div className="flex items-end w-full justify-end gap-3 ">
+                    <button className="btn" onClick={() => viewReport(p?._id)}>
+                      <FaEye />
+                    </button>
+
+                    <button className="btn" onClick={() => handlePrint(p?._id)}>
+                      <FaPrint />
+                    </button>
+                  </div>
+                </div>
+              ))
+          ) : (
+            <NoReports />
+          )}
+          <div className="flex justify-between mt-4">
+            <button
+              className="btn"
+              onClick={handlePrevPage}
+              disabled={currentPage === 1}
             >
-              <div className="flex w-full flex-col items-start justify-center">
-                <span className="text-sm lg:text-lg font-semibold">
-                  {p?.halqaAreaId?.name + " "}
-                  {moment(p?.month).format("MMMM YYYY")}
-                </span>
-                <span>Last Modified: {moment(p?.updatedAt).fromNow()}</span>
-              </div>
-              <div className="flex items-end w-full justify-end gap-3 ">
-                <button className="btn" onClick={() => viewReport(p?._id)}>
-                  <FaEye />
-                </button>
+              Previous
+            </button>
+            <span>
+              Page {currentPage} of {totalPages}
+            </span>
+            <button
+              className="btn"
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </button>
+          </div>
+        </>
+        : <SearchPage data={searchData}/>
+      }
 
-          
-
-                <button className="btn" onClick={() => handlePrint(p?._id)}>
-                  <FaPrint />
-                </button>
-              </div>
-            </div>
-          ))
-      ) : (
-        <NoReports />
-      )}
-      <div className="flex justify-between mt-4">
-        <button
-          className="btn"
-          onClick={handlePrevPage}
-          disabled={currentPage === 1}
-        >
-          Previous
-        </button>
-        <span>
-          Page {currentPage} of {totalPages}
-        </span>
-        <button
-          className="btn"
-          onClick={handleNextPage}
-          disabled={currentPage === totalPages}
-        >
-          Next
-        </button>
-      </div>
       <dialog id="filter-area-dialog" className="modal">
-      {/* <FilterDialog setFilterAllData={setFilterAllData} tab={tab} />    */}
-         </dialog>
+        <FilterDialog  tab={tab} />   
+      </dialog>
     </>
   );
 };

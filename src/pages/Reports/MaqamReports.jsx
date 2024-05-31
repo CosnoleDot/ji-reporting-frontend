@@ -78,6 +78,7 @@ export const MaqamReports = () => {
     navigate(`edit/${reportId}`);
   };
   const handlePrint = (id) => {
+    filterMuntakhib(id);
     window.open(`maqam-report/print/${id}`, "blank");
   };
   let totalPages =  Math.ceil(total / itemsPerPage);
@@ -100,7 +101,7 @@ export const MaqamReports = () => {
       setCurrentPage(currentPage + 1);
       const inset = currentPage * itemsPerPage;
       const offset = itemsPerPage;
-      if (mReports.length <= itemsPerPage * currentPage) {
+      if (mReports?.length <= itemsPerPage * currentPage) {
         getMaqamReports(inset, offset);
       } 
     }
@@ -223,7 +224,7 @@ export const MaqamReports = () => {
             )} */}
         </div>
       </div>
-      {currentData.length > 0 ? (
+      {currentData?.length > 0 ? (
         currentData.map((p) => (
           <div
             key={p?._id}
