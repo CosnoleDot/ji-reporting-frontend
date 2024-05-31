@@ -153,12 +153,14 @@ export const PersonalReportsDashboard = () => {
               </div>
             </div>
           )}
-          <button
-            className="btn btn-primary"
-            onClick={() => navigate("/personalReport/create")}
-          >
-            + New Report
-          </button>
+          {me?.nazimType !== "nazim" && (
+            <button
+              className="btn btn-primary"
+              onClick={() => navigate("/personalReport/create")}
+            >
+              + New Report
+            </button>
+          )}
         </div>
         <div className="w-full overflow-hidden overflow-y-scroll h-[calc(100vh-64px-64px-54px-76px)] flex flex-col justify-start items-start">
           {filteredData?.map((obj, index) => (

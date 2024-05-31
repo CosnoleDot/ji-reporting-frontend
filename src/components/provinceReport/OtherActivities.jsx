@@ -11,7 +11,6 @@ export const OtherActivities = ({ view }) => {
           <input
             readOnly={view}
             type="number"
-            defaultValue={0}
             required
             name={`tarbiyatGaah`}
             id={`tarbiyatGaah`}
@@ -25,26 +24,45 @@ export const OtherActivities = ({ view }) => {
           <input
             readOnly={view}
             type="number"
-            defaultValue={document.getElementById("tarbiyatGaahGoalSum")?.value}
+            defaultValue={
+              document.getElementById("tarbiyatGaahGoalSum").value?.value
+            }
             required
             name={`tarbiyatGaahGoal`}
             id={`tarbiyatGaahGoal`}
+            onChange={() =>
+              sumUpTwoValues(
+                parseInt(document.getElementById("tarbiyatGaahGoal").value),
+                parseInt(
+                  document.getElementById("tarbiyatGaahGoalManual").value
+                ),
+                "tarbiyatGaahGoalSum"
+              )
+            }
             className="border-b-2 text-center border-dashed mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
-          />+
+          />
+          +
           <input
             readOnly={view}
             type="number"
-            defaultValue={0}
             required
             name={`tarbiyatGaahGoalManual`}
             id={`tarbiyatGaahGoalManual`}
+            onChange={() =>
+              sumUpTwoValues(
+                parseInt(document.getElementById("tarbiyatGaahGoal").value),
+                parseInt(
+                  document.getElementById("tarbiyatGaahGoalManual").value
+                ),
+                "tarbiyatGaahGoalSum"
+              )
+            }
             className="border-b-2 text-center border-dashed mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
           />
           =
           <input
             readOnly={view}
             type="number"
-            defaultValue={0}
             required
             name={`tarbiyatGaahGoalSum`}
             id={`tarbiyatGaahGoalSum`}
@@ -56,7 +74,6 @@ export const OtherActivities = ({ view }) => {
           <input
             readOnly={view}
             type="number"
-            defaultValue={0}
             name="tanzeemiRound"
             id="tanzeemiRound"
             className="border-b-2 text-center border-dashed mb-2 lg:mb-0"
@@ -70,27 +87,45 @@ export const OtherActivities = ({ view }) => {
           <input
             readOnly={view}
             type="number"
-            defaultValue={document.getElementById("tarbiyatGaahHeldSum")?.value}
+            defaultValue={
+              document.getElementById("tarbiyatGaahHeldSum").value?.value
+            }
             required
             name={`tarbiyatGaahHeld`}
             id={`tarbiyatGaahHeld`}
             className="border-b-2 text-center border-dashed mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
+            onChange={() =>
+              sumUpTwoValues(
+                parseInt(document.getElementById("tarbiyatGaahHeld").value),
+                parseInt(
+                  document.getElementById("tarbiyatGaahHeldManual").value
+                ),
+                "tarbiyatGaahHeldSum"
+              )
+            }
           />
           +
           <input
             readOnly={view}
             type="number"
-            defaultValue={0}
             required
             name={`tarbiyatGaahHeldManual`}
             id={`tarbiyatGaahHeldManual`}
             className="border-b-2 text-center border-dashed mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
+            onChange={() =>
+              sumUpTwoValues(
+                parseInt(document.getElementById("tarbiyatGaahHeld").value),
+                parseInt(
+                  document.getElementById("tarbiyatGaahHeldManual").value
+                ),
+                "tarbiyatGaahHeldSum"
+              )
+            }
           />
           =
           <input
             readOnly={view}
             type="number"
-            defaultValue={0}
             required
             name={`tarbiyatGaahHeldSum`}
             id={`tarbiyatGaahHeldSum`}
@@ -102,7 +137,6 @@ export const OtherActivities = ({ view }) => {
           <input
             readOnly={view}
             type="number"
-            defaultValue={0}
             name="tanzeemiRound"
             id="tanzeemiRound"
             className="border-b-2 text-center border-dashed mb-2 lg:mb-0"
@@ -116,7 +150,6 @@ export const OtherActivities = ({ view }) => {
           <input
             readOnly={true}
             type="number"
-            defaultValue={0}
             required
             name="dawatiWafud"
             id="dawatiWafud"
@@ -128,7 +161,6 @@ export const OtherActivities = ({ view }) => {
           <input
             readOnly={true}
             type="number"
-            defaultValue={0}
             required
             name="rawabitParties"
             id="rawabitParties"
@@ -140,7 +172,6 @@ export const OtherActivities = ({ view }) => {
           <input
             readOnly={true}
             type="number"
-            defaultValue={0}
             required
             name="shabBedari"
             id="shabBedari"
@@ -152,7 +183,6 @@ export const OtherActivities = ({ view }) => {
           <input
             readOnly={true}
             type="number"
-            defaultValue={0}
             required
             name="nizamSalah"
             id="nizamSalah"

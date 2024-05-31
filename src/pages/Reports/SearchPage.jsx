@@ -11,7 +11,6 @@ import { LuSearchX } from "react-icons/lu";
   </div>
 );
 export const SearchPage = ({ data ,area}) => {
-  console.log(data)
   const itemsPerPage = 10; // Number of items per page
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();

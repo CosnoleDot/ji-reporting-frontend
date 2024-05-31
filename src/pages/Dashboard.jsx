@@ -300,14 +300,11 @@ export const Dashboard = () => {
     const nazimFilledPersonalIds = requiredUmeedwarReports.map(
       (report) => report?.userId
     );
+    const array = nazimFilledPersonalIds?.map((user) => user?._id);
     // Get IDs of unfilled nazim
-    const unfilledIds = validNazimIds.filter(
-      (id) => !nazimFilledPersonalIds.includes(id)
-    );
+    const unfilledIds = validNazimIds?.filter((id) => !array?.includes(id));
     // Separate filled and unfilled nazim
-    const filledNazim = nazim.filter((n) =>
-      nazimFilledPersonalIds.includes(n?._id)
-    );
+    const filledNazim = nazim.filter((n) => array.includes(n?._id));
     const unfilledNazim = nazim.filter((n) => unfilledIds.includes(n?._id));
     // saving the initial data so that on clear filter can set it back
     if (!initialData || !initialData.nazim || initialData.nazim.length === 0) {
@@ -730,9 +727,7 @@ export const Dashboard = () => {
                                   >
                                     <td className="w-[50%]">{obj.name}</td>
                                     <td className="w-[50%]">
-                                      {obj?.parentType
-                                        ? "-" + obj?.parentType
-                                        : ""}
+                                      {obj?.userAreaId?.name}
                                     </td>
                                   </tr>
                                 ))
@@ -754,7 +749,9 @@ export const Dashboard = () => {
                                   key={index}
                                 >
                                   <td className="w-[50%]">{obj.name}</td>
-                                  <td className="w-[50%]">{obj?.parentType}</td>
+                                  <td className="w-[50%]">
+                                    {obj?.userAreaId?.name}
+                                  </td>
                                 </tr>
                               ))
                           ) : (

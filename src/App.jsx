@@ -452,10 +452,8 @@ function App() {
   const filterMuntakhib = (id) => {
     const mT = ilaqas.filter((ilaqa) => ilaqa?.maqam?._id == id);
     if (mT?.length > 0) {
-      console.log("first");
       setMuntakhibMaqam(true);
     } else {
-      console.log("second");
       setMuntakhibMaqam(false);
     }
   };

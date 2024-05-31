@@ -186,6 +186,7 @@ export const Maqam = () => {
     }
     setLoading(false);
   };
+
   const getMaqamReport = async () => {
     try {
       const req = await instance.get(`/reports/maqam/${id}`, {
@@ -274,7 +275,7 @@ export const Maqam = () => {
       getMaqamReport();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [month, createData, id]);
+  }, [month, createData, id, data]);
   // EDIT CODE END
   const handleSubmit = async (e) => {
     e.preventDefault();

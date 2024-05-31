@@ -17,7 +17,6 @@ export const DivisionReport = () => {
       setData(req?.data?.data);
     }
   };
-  console.log(data);
   useEffect(() => {
     if (params?.id) printReport(params?.id);
   }, [params]);
