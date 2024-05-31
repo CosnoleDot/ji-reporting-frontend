@@ -6,6 +6,8 @@ import { NoReports, months } from "../Reports";
 import { FilterDialog } from "./FilterDialog";
 import { useNavigate } from "react-router-dom";
 import { UIContext } from "../../context/ui";
+import instance from "../../api/instrance";
+import { SearchPage } from "./SearchPage";
 
 export const ProvinceReports = () => {
   const p = useContext(ProvinceReportContext);
@@ -17,6 +19,8 @@ export const ProvinceReports = () => {
   const [search, showSearch] = useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
   const [month, setMonth] = useState("");
+  const [isSearch, setIsSearch] = useState(false);
+  const [searchData, setSearchData] = useState([]);
   const [year, setYear] = useState("2023");
   const me = useContext(MeContext);
   const { getProvinceReports } = useContext(UIContext);
@@ -27,37 +31,30 @@ export const ProvinceReports = () => {
   useEffect(() => {
     setFilterAllData(pReports);
   }, [pReports]);
-  const searchResults = () => {
+  const searchResults = async () => {
     if (year !== "" && month !== "") {
-      let filteredData = { ...pReports };
-      filteredData = pReports?.filter((i) => {
-        const [f_year, f_month] = [
-          i?.month?.split("-")[0],
-          i?.month?.split("-")[1],
-        ];
-        return (
-          parseInt(year) === parseInt(f_year) &&
-          parseInt(month) === parseInt(f_month)
+      try {
+        setIsSearch(true);
+        const req = await instance.get(
+          `/reports/province?year=${year}&month=${month}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("@token")}`,
+            },
+          }
         );
-      });
-      showSearch(false);
-      setFilterAllData(filteredData);
-    } else if (year !== "" && month === "") {
-      let filteredData = { ...pReports };
-      filteredData = pReports?.filter((i) => {
-        const f_year = i?.month?.split("-")[0];
-        return parseInt(year) === parseInt(f_year);
-      });
-      showSearch(false);
-      setFilterAllData(filteredData);
-    } else if (year === "" && month !== "") {
-      dispatch({ type: "ERROR", payload: "Enter year with month" });
-      setFilterAllData(pReports);
-    } else if (year === "" && month === "") {
-      dispatch({ type: "ERROR", payload: "Date is required" });
-      setFilterAllData(pReports);
-    } else {
-      setFilterAllData(pReports);
+
+        if (req) {
+          setSearchData([]);
+          setSearchData(req.data.data.data);
+        }
+      } catch (err) {
+        console.log(err);
+        dispatch({
+          type: "ERROR",
+          payload: err?.response?.data?.message || err?.message,
+        });
+      }
     }
   };
   const toggleSearch = () => {
@@ -67,6 +64,7 @@ export const ProvinceReports = () => {
     setMonth("");
     setYear("2023");
     setFilterAllData(pReports);
+    setIsSearch(false);
     document.getElementById("autocomplete").value = "";
   };
   const handlePrint = (id) => {
@@ -176,7 +174,7 @@ export const ProvinceReports = () => {
           {/* <span className='indicator-item badge badge-secondary'>new</span> */}
           <button
             className={`btn ${!isMobileView ? "join-item" : ""}`}
-            onClick={() => (!isMobileView ? searchResults() : toggleSearch())}
+            onClick={() =>searchResults()}
           >
             Search
           </button>
@@ -215,7 +213,7 @@ export const ProvinceReports = () => {
             )} */}
         </div>
       </div>
-      {currentData?.length > 0 ? (
+      {!isSearch ?<> {currentData?.length > 0 ? (
         currentData?.map((p) => (
           <div
             key={p?._id}
@@ -266,7 +264,7 @@ export const ProvinceReports = () => {
         <button  className="btn" onClick={handleNextPage}  disabled={currentPage === totalPages}>
           Next
         </button>
-      </div>
+      </div></> :<SearchPage data={searchData} area={'province'}/> }
       <dialog id="filter-area-dialog" className="modal">
         <FilterDialog setFilterAllData={setFilterAllData} />
       </dialog>
