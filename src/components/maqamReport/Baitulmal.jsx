@@ -8,7 +8,6 @@ export const Baitulmal = ({ view }) => {
           <input
             readOnly={view}
             type="number"
-            defaultValue={0}
             required
             name="monthlyIncome"
             id="monthlyIncome"
@@ -20,7 +19,6 @@ export const Baitulmal = ({ view }) => {
           <input
             readOnly={view}
             type="number"
-            defaultValue={0}
             required
             name="monthlyExpenditure"
             id="monthlyExpenditure"
@@ -32,7 +30,6 @@ export const Baitulmal = ({ view }) => {
           <input
             readOnly={view}
             type="number"
-            defaultValue={0}
             required
             name="savings"
             id="savings"
@@ -44,7 +41,6 @@ export const Baitulmal = ({ view }) => {
           <input
             readOnly={view}
             type="number"
-            defaultValue={0}
             required
             name="loss"
             id="loss"

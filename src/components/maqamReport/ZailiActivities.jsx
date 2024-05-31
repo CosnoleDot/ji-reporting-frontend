@@ -21,7 +21,6 @@ export const ZailiActivities = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`ijtRafaqa-decided`}
                 id={`ijtRafaqa-decided`}
@@ -32,7 +31,6 @@ export const ZailiActivities = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`ijtRafaqa-done`}
                 id={`ijtRafaqa-done`}
@@ -42,7 +40,6 @@ export const ZailiActivities = ({ view }) => {
             <Box>
               <input
                 type="number"
-                defaultValue={0}
                 required
                 name={`ijtRafaqa-averageAttendance`}
                 id={`ijtRafaqa-averageAttendance`}
@@ -56,7 +53,6 @@ export const ZailiActivities = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`studyCircleMentioned-decided`}
                 id={`studyCircleMentioned-decided`}
@@ -67,7 +63,6 @@ export const ZailiActivities = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`studyCircleMentioned-done`}
                 id={`studyCircleMentioned-done`}
@@ -77,7 +72,6 @@ export const ZailiActivities = ({ view }) => {
             <Box>
               <input
                 type="number"
-                defaultValue={0}
                 required
                 name={`studyCircleMentioned-averageAttendance`}
                 id={`studyCircleMentioned-averageAttendance`}
@@ -91,7 +85,6 @@ export const ZailiActivities = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`ijtKarkunan-decided`}
                 id={`ijtKarkunan-decided`}
@@ -102,7 +95,6 @@ export const ZailiActivities = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`ijtKarkunan-done`}
                 id={`ijtKarkunan-done`}
@@ -152,7 +144,6 @@ export const ZailiActivities = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`ijtKarkunan-averageAttendance`}
                 id={`ijtKarkunan-averageAttendance`}
@@ -166,7 +157,6 @@ export const ZailiActivities = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`darseQuran-decided`}
                 id={`darseQuran-decided`}
@@ -178,7 +168,6 @@ export const ZailiActivities = ({ view }) => {
                 <input
                   readOnly={true}
                   type="number"
-                  defaultValue={0}
                   required
                   name={`darseQuran-done`}
                   id={`darseQuran-done`}
@@ -233,7 +222,6 @@ export const ZailiActivities = ({ view }) => {
               <input
                 readOnly={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`darseQuran-averageAttendance`}
                 id={`darseQuran-averageAttendance`}
@@ -247,7 +235,6 @@ export const ZailiActivities = ({ view }) => {
               <input
                 disabled={view}
                 type="number"
-                defaultValue={0}
                 required
                 readOnly
                 name={`shaheenMeeting-decided`}
@@ -259,7 +246,6 @@ export const ZailiActivities = ({ view }) => {
               <input
                 disabled={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`shaheenMeeting-done`}
                 id={`shaheenMeeting-done`}
@@ -270,7 +256,6 @@ export const ZailiActivities = ({ view }) => {
               <input
                 disabled={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`shaheenMeeting-averageAttendance`}
                 id={`shaheenMeeting-averageAttendance`}
@@ -284,7 +269,6 @@ export const ZailiActivities = ({ view }) => {
               <input
                 disabled={view}
                 type="number"
-                defaultValue={0}
                 required
                 readOnly
                 name={`paighamEvent-decided`}
@@ -296,7 +280,6 @@ export const ZailiActivities = ({ view }) => {
               <input
                 disabled={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`paighamEvent-done`}
                 id={`paighamEvent-done`}
@@ -307,7 +290,6 @@ export const ZailiActivities = ({ view }) => {
               <input
                 disabled={view}
                 type="number"
-                defaultValue={0}
                 required
                 name={`paighamEvent-averageAttendance`}
                 id={`paighamEvent-averageAttendance`}

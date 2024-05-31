@@ -1,5 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
-import { MaqamReportContext, MeContext, useToastState } from "../../context";
+import {
+  IlaqaContext,
+  MaqamReportContext,
+  MeContext,
+  useToastState,
+} from "../../context";
 import { FaEdit, FaEye, FaPrint } from "react-icons/fa";
 import moment from "moment";
 import { NoReports, months } from "../Reports";
@@ -10,6 +15,7 @@ import { UIContext } from "../../context/ui";
 export const MaqamReports = () => {
   const { filterMuntakhib } = useContext(UIContext);
   const m = useContext(MaqamReportContext);
+  const ilaqas = useContext(IlaqaContext);
   const mReports = m?.reports;
   const total = m?.length;
   const [filterAllData, setFilterAllData] = useState(mReports);
@@ -20,7 +26,6 @@ export const MaqamReports = () => {
   const [year, setYear] = useState("2023");
   const me = useContext(MeContext);
   const { getMaqamReports } = useContext(UIContext);
-  const [disable,setDisable]= useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
   const itemsPerPage = 10;
@@ -77,17 +82,22 @@ export const MaqamReports = () => {
     filterMuntakhib(areaId);
     navigate(`edit/${reportId}`);
   };
-  const handlePrint = (id) => {
-    window.open(`maqam-report/print/${id}`, "blank");
-  };
-  let totalPages =  Math.ceil(total / itemsPerPage);
-
-
-    const currentData = filterAllData?.slice(
-      (currentPage - 1) * itemsPerPage,
-      currentPage * itemsPerPage
+  const handlePrint = (report) => {
+    const isMuntakhib = ilaqas?.some(
+      (ilaqa) => ilaqa?.maqam?._id === report?.maqamAreaId?._id
     );
+    if (isMuntakhib) {
+      window.open(`muntakhib-maqam-report/print/${report?._id}`, "blank");
+    } else {
+      window.open(`maqam-report/print/${report?._id}`, "blank");
+    }
+  };
+  let totalPages = Math.ceil(total / itemsPerPage);
 
+  const currentData = filterAllData?.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   const handlePrevPage = () => {
     if (currentPage > 1) {
@@ -102,7 +112,7 @@ export const MaqamReports = () => {
       const offset = itemsPerPage;
       if (mReports.length <= itemsPerPage * currentPage) {
         getMaqamReports(inset, offset);
-      } 
+      }
     }
   };
   return (
@@ -223,8 +233,8 @@ export const MaqamReports = () => {
             )} */}
         </div>
       </div>
-      {currentData.length > 0 ? (
-        currentData.map((p) => (
+      {currentData?.length > 0 ? (
+        currentData?.map((p) => (
           <div
             key={p?._id}
             className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
@@ -252,7 +262,7 @@ export const MaqamReports = () => {
                   <FaEdit />
                 </button>
               )}
-              <button className="btn" onClick={() => handlePrint(p?._id)}>
+              <button className="btn" onClick={() => handlePrint(p)}>
                 <FaPrint />
               </button>
             </div>
@@ -261,7 +271,7 @@ export const MaqamReports = () => {
       ) : (
         <NoReports />
       )}
-       <div className="flex justify-between mt-4">
+      <div className="flex justify-between mt-4">
         <button
           className="btn"
           onClick={handlePrevPage}
@@ -272,7 +282,11 @@ export const MaqamReports = () => {
         <span>
           Page {currentPage} of {totalPages}
         </span>
-        <button  className="btn" onClick={handleNextPage} disabled={currentPage === totalPages}>
+        <button
+          className="btn"
+          onClick={handleNextPage}
+          disabled={currentPage === totalPages}
+        >
           Next
         </button>
       </div>
