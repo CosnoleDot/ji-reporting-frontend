@@ -3,8 +3,15 @@ import moment from 'moment';
 import { NoReports } from '../Reports';
 import { FaEye, FaPrint } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-
-export const SearchPage = ({ data }) => {
+import { LuSearchX } from "react-icons/lu";
+ const NoSearch = () => (
+  <div className="card-body flex flex-col items-center justify-center w-full p-2 md:p-5 mb-1 rounded-xl">
+ <LuSearchX className="text-gray-300 w-40 h-40"/> 
+    <span className="text-gray-300 font-bold text-3xl">Not Found!</span>
+  </div>
+);
+export const SearchPage = ({ data ,area}) => {
+  console.log(data)
   const itemsPerPage = 10; // Number of items per page
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
@@ -30,7 +37,7 @@ export const SearchPage = ({ data }) => {
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentPageData = data.slice(startIndex, startIndex + itemsPerPage);
-
+  
   return (
     <>
       {data.length > 0 ? (
@@ -41,7 +48,7 @@ export const SearchPage = ({ data }) => {
           >
             <div className="flex w-full flex-col items-start justify-center">
               <span className="text-sm lg:text-lg font-semibold">
-                {p?.halqaAreaId?.name + " "}
+                {p?.[area + "AreaId"]?.name + " "}
                 {moment(p?.month).format("MMMM YYYY")}
               </span>
               <span>Last Modified: {moment(p?.updatedAt).fromNow()}</span>
@@ -58,7 +65,7 @@ export const SearchPage = ({ data }) => {
           </div>
         ))
       ) : (
-        <NoReports />
+        <NoSearch />
       )}
       <div className="flex justify-between mt-4">
         <button

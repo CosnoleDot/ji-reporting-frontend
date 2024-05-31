@@ -139,6 +139,7 @@ export const Maqam = () => {
         }
       }
       halq.litrature = halq.literatureDistribution;
+      console.log(halq)
       const elem = document.getElementById(j);
       if (elem) {
         if (j === "month") {
@@ -219,6 +220,7 @@ export const Maqam = () => {
         },
       });
       const repo = req?.data?.data?.data;
+     
       setCreateData(repo);
       dispatch({ type: "SUCCESS", payload: req.data?.message });
     } catch (err) {

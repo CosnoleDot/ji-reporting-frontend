@@ -277,7 +277,7 @@ export const Reports = () => {
                 Maqam
               </Link>
             )}
-          {["country", "maqam", "ilaqa"].includes(
+          {["country", "maqam", "ilaqa","province"].includes(
             localStorage.getItem("@type")
           ) &&
             ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(

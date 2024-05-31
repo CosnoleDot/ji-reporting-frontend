@@ -6,6 +6,8 @@ import { NoReports, months } from "../Reports";
 import { FilterDialog } from "./FilterDialog";
 import { useNavigate } from "react-router-dom";
 import { UIContext } from "../../context/ui";
+import instance from "../../api/instrance";
+import { SearchPage } from "./SearchPage";
 
 export const DivisionReports = () => {
   const d = useContext(DivisionReportContext);
@@ -19,6 +21,8 @@ export const DivisionReports = () => {
   const [year, setYear] = useState("2023");
   const me = useContext(MeContext);
   const { getDivisionReports } = useContext(UIContext);
+  const [isSearch, setIsSearch] = useState(false);
+  const [searchData, setSearchData] = useState([]);
   const [disable,setDisable]= useState(false);
   const [currentData,setCurrentData]=useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -27,37 +31,30 @@ export const DivisionReports = () => {
   useEffect(() => {
     setFilterAllData(dReports);
   }, [dReports]);
-  const searchResults = () => {
+  const searchResults = async () => {
     if (year !== "" && month !== "") {
-      let filteredData = { ...dReports };
-      filteredData = dReports?.filter((i) => {
-        const [f_year, f_month] = [
-          i?.month?.split("-")[0],
-          i?.month?.split("-")[1],
-        ];
-        return (
-          parseInt(year) === parseInt(f_year) &&
-          parseInt(month) === parseInt(f_month)
+      try {
+        setIsSearch(true);
+        const req = await instance.get(
+          `/reports/division?year=${year}&month=${month}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("@token")}`,
+            },
+          }
         );
-      });
-      showSearch(false);
-      setFilterAllData(filteredData);
-    } else if (year !== "" && month === "") {
-      let filteredData = { ...dReports };
-      filteredData = dReports?.filter((i) => {
-        const f_year = i?.month?.split("-")[0];
-        return parseInt(year) === parseInt(f_year);
-      });
-      showSearch(false);
-      setFilterAllData(filteredData);
-    } else if (year === "" && month !== "") {
-      dispatch({ type: "ERROR", payload: "Enter year with month" });
-      setFilterAllData(dReports);
-    } else if (year === "" && month === "") {
-      dispatch({ type: "ERROR", payload: "Date is required" });
-      setFilterAllData(dReports);
-    } else {
-      setFilterAllData(dReports);
+
+        if (req) {
+          setSearchData([]);
+          setSearchData(req.data.data.data);
+        }
+      } catch (err) {
+        console.log(err);
+        dispatch({
+          type: "ERROR",
+          payload: err?.response?.data?.message || err?.message,
+        });
+      }
     }
   };
   const toggleSearch = () => {
@@ -66,6 +63,7 @@ export const DivisionReports = () => {
   const clearFilters = () => {
     setMonth("");
     setYear("2023");
+    setIsSearch(false);
     setFilterAllData(dReports);
     document.getElementById("autocomplete").value = "";
   };
@@ -225,7 +223,7 @@ export const DivisionReports = () => {
             )} */}
         </div>
       </div>
-      {currentData.length > 0 ? (
+      {!isSearch ? <>{currentData.length > 0 ? (
         currentData.map((p) => (
           <div
             key={p?._id}
@@ -272,7 +270,7 @@ export const DivisionReports = () => {
         <button  className="btn" onClick={handleNextPage} disabled={currentPage === totalPages}>
           Next
         </button>
-      </div>
+      </div> </> : <SearchPage data={searchData} area={'division'} />}
       <dialog id="filter-area-dialog" className="modal">
         <FilterDialog setFilterAllData={setFilterAllData} />
       </dialog>

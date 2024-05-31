@@ -6,6 +6,8 @@ import { NoReports, months } from "../Reports";
 import { FilterDialog } from "./FilterDialog";
 import { useNavigate } from "react-router-dom";
 import { UIContext } from "../../context/ui";
+import { SearchPage } from "./SearchPage";
+import instance from "../../api/instrance";
 
 export const IlaqaReports = () => {
   const i = useContext(IlaqaReportContext);
@@ -19,6 +21,8 @@ export const IlaqaReports = () => {
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("2024");
   const me = useContext(MeContext);
+  const [isSearch, setIsSearch] = useState(false);
+  const [searchData, setSearchData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const { getIlaqaReports } = useContext(UIContext);
   const [disable, setDisable] = useState(false);
@@ -27,39 +31,31 @@ export const IlaqaReports = () => {
   useEffect(() => {
     setFilterAllData(iReports);
   }, [iReports]);
-  const searchResults = () => {
+  const searchResults = async () => {
     if (year !== "" && month !== "") {
-      let filteredData = { ...iReports };
-      filteredData = iReports?.filter((i) => {
-        const [f_year, f_month] = [
-          i?.month?.split("-")[0],
-          i?.month?.split("-")[1],
-        ];
-        return (
-          parseInt(year) === parseInt(f_year) &&
-          parseInt(month) === parseInt(f_month)
+      try {
+        setIsSearch(true);
+        const req = await instance.get(
+          `/reports/ilaqa?year=${year}&month=${month}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("@token")}`,
+            },
+          }
         );
-      });
-      showSearch(false);
-      setFilterAllData(filteredData);
-    } else if (year !== "" && month === "") {
-      let filteredData = { ...iReports };
-      filteredData = iReports?.filter((i) => {
-        const f_year = i?.month?.split("-")[0];
-        return parseInt(year) === parseInt(f_year);
-      });
-      showSearch(false);
-      setFilterAllData(filteredData);
-    } else if (year === "" && month !== "") {
-      dispatch({ type: "ERROR", payload: "Enter year with month" });
-      setFilterAllData(iReports);
-    } else if (year === "" && month === "") {
-      dispatch({ type: "ERROR", payload: "Date is required" });
-      setFilterAllData(iReports);
-    } else {
-      setFilterAllData(iReports);
+
+        if (req) {
+          setSearchData([]);
+          setSearchData(req.data.data.data);
+        }
+      } catch (err) {
+        console.log(err);
+        dispatch({
+          type: "ERROR",
+          payload: err?.response?.data?.message || err?.message,
+        });
+      }
     }
-    setCurrentPage(1);
   };
   const toggleSearch = () => {
     showSearch(!search);
@@ -68,6 +64,7 @@ export const IlaqaReports = () => {
     setMonth("");
     setYear("2023");
     setFilterAllData(iReports);
+    setIsSearch(false);
     document.getElementById("autocomplete").value = "";
   };
 
@@ -223,7 +220,7 @@ export const IlaqaReports = () => {
             )} */}
         </div>
       </div>
-      {currentData.length > 0 ? (
+      {!isSearch ? <> {currentData?.length > 0 ? (
         currentData.map((p, index) => (
           <div
             key={p?._id}
@@ -274,7 +271,7 @@ export const IlaqaReports = () => {
         >
           Next
         </button>
-      </div>
+      </div></> : <SearchPage data={searchData} area={'ilaqa'} />}
       <dialog id="filter-area-dialog" className="modal">
         <FilterDialog setFilterAllData={setFilterAllData} />
       </dialog>
