@@ -167,8 +167,9 @@ export const Ilaqa = () => {
         },
       });
       const repo = req?.data?.data?.data;
-
+      
       setCreateData(repo);
+    
       dispatch({ type: "SUCCESS", payload: req.data?.message });
     } catch (err) {
       dispatch({ type: "ERROR", payload: err.response.data.message });
@@ -262,7 +263,7 @@ export const Ilaqa = () => {
       autoFill();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  }, [id,createData]);
   // EDIT CODE END
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -351,7 +352,7 @@ export const Ilaqa = () => {
       data[i] = 0;
     }
   });
-  console.log(createData);
+ 
   return (
     <GeneralLayout>
       <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">
