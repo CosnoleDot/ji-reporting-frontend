@@ -11,10 +11,7 @@ import {
   ToseeDawat,
   calcultate,
 } from "../components";
-import {
-  MeContext,
-  useToastState,
-} from "../context";
+import { MeContext, useToastState } from "../context";
 import { convertDataFormat, reverseDataFormat, toJson } from "../utils";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { UIContext } from "../context/ui";
@@ -53,7 +50,6 @@ export const Halqa = () => {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
-        await getHalqaReports();
         dispatch({ type: "SUCCESS", payload: req?.data?.message });
         navigate("/reports");
       } else {
@@ -63,7 +59,7 @@ export const Halqa = () => {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
-        await getHalqaReports();
+        await getHalqaReports(0, 10);
         dispatch({ type: "SUCCESS", payload: req.data?.message });
         navigate("/reports");
       }

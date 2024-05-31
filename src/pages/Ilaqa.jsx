@@ -4,11 +4,7 @@ import instance from "../api/instrance";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useContext, useState } from "react";
 import { useEffect } from "react";
-import {
-
-  MeContext,
-  useToastState,
-} from "../context";
+import { MeContext, useToastState } from "../context";
 import { UIContext } from "../context/ui";
 import { Tanzeem } from "../components/ilaqaReport/Tanzeem";
 import { IfradiKuwat } from "../components/ilaqaReport/IfradiKuwat";
@@ -109,7 +105,6 @@ export const Ilaqa = () => {
           j = i;
         }
       }
-      console.log(halq, "asd");
       const elem = document.getElementById(j);
       if (elem) {
         if (j === "month") {
@@ -215,9 +210,10 @@ export const Ilaqa = () => {
   }, [id]);
   useEffect(() => {
     const l = location.pathname?.split("/")[2];
-    console.log(l);
     if (l === "create") {
       getHalqaReports();
+    } else if (l === "view") {
+      setView(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
@@ -299,7 +295,6 @@ export const Ilaqa = () => {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
-        await getIlaqaReports();
         dispatch({ type: "SUCCESS", payload: req?.data?.message });
       } else {
         const req = await instance.post("/reports/ilaqa", jsonData, {
@@ -308,7 +303,7 @@ export const Ilaqa = () => {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
-        await getIlaqaReports();
+        await getIlaqaReports(0, 10);
         dispatch({ type: "SUCCESS", payload: req.data?.message });
       }
       navigate("/reports");

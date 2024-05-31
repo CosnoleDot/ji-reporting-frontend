@@ -355,7 +355,6 @@ export const MuntakhibMaqamReports = () => {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
-        await getMaqamReports();
         dispatch({ type: "SUCCESS", payload: req?.data?.message });
       } else {
         jsonData.rafaqaFilled = jsonData.uploadedRafaqa;
@@ -368,7 +367,7 @@ export const MuntakhibMaqamReports = () => {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
-        await getMaqamReports();
+        await getMaqamReports(0, 10);
         dispatch({ type: "SUCCESS", payload: req.data?.message });
       }
       navigate("/reports");

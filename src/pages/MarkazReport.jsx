@@ -333,7 +333,6 @@ export const MarkazReport = () => {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
-        await getMarkazReport();
         dispatch({ type: "SUCCESS", payload: req?.data?.message });
       } else {
         const req = await instance.post("/reports/markaz", jsonData, {
@@ -342,7 +341,7 @@ export const MarkazReport = () => {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
-        await getMarkazReport();
+        await getMarkazReport(0, 10);
         dispatch({ type: "SUCCESS", payload: req.data?.message });
       }
       navigate("/reports");
