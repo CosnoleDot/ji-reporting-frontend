@@ -298,7 +298,6 @@ export const Maqam = () => {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
-        await getMaqamReports();
         dispatch({ type: "SUCCESS", payload: req?.data?.message });
       } else {
         const req = await instance.post("/reports/maqam", jsonData, {
@@ -307,7 +306,7 @@ export const Maqam = () => {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
-        await getMaqamReports();
+        await getMaqamReports(0, 10);
         dispatch({ type: "SUCCESS", payload: req.data?.message });
       }
       navigate("/reports");

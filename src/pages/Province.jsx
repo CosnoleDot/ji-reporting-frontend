@@ -509,7 +509,6 @@ export const Province = () => {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
-        await getProvinceReports();
         dispatch({ type: "SUCCESS", payload: req?.data?.message });
       } else {
         const req = await instance.post("/reports/province", jsonData, {
@@ -518,7 +517,7 @@ export const Province = () => {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
-        await getProvinceReports();
+        await getProvinceReports(0, 10);
         dispatch({ type: "SUCCESS", payload: req.data?.message });
       }
       navigate("/reports");
