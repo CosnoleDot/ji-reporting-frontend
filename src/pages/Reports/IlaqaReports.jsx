@@ -21,7 +21,7 @@ export const IlaqaReports = () => {
   const me = useContext(MeContext);
   const [currentPage, setCurrentPage] = useState(1);
   const { getIlaqaReports } = useContext(UIContext);
-  const [disable,setDisable]= useState(false);
+  const [disable, setDisable] = useState(false);
   const navigate = useNavigate();
   const itemsPerPage = 10;
   useEffect(() => {
@@ -81,14 +81,12 @@ export const IlaqaReports = () => {
     window.open(`ilaqa-report/print/${id}`, "blank");
   };
 
-  let totalPages =  Math.ceil(total / itemsPerPage);
+  let totalPages = Math.ceil(total / itemsPerPage);
 
-
-    const currentData = filterAllData?.slice(
-      (currentPage - 1) * itemsPerPage,
-      currentPage * itemsPerPage
-    );
- 
+  const currentData = filterAllData?.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   const handlePrevPage = () => {
     if (currentPage > 1) {
@@ -103,10 +101,10 @@ export const IlaqaReports = () => {
       const offset = itemsPerPage;
       if (iReports.length <= itemsPerPage * currentPage) {
         getIlaqaReports(inset, offset);
-      } 
+      }
     }
   };
-  
+
   return (
     <>
       <div className="join xs:w-full mb-4">
@@ -225,38 +223,37 @@ export const IlaqaReports = () => {
             )} */}
         </div>
       </div>
-      {currentData.length > 0 ? (
-        currentData.map((p,index) => (
+      {currentData?.length > 0 ? (
+        currentData?.map((p, index) => (
           <div className="flex gap-4">
-            <span>{index+1}</span>
-          <div
-            key={p?._id}
-            className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
-          >
-            <div className="flex w-full flex-col items-start justify-center">
-              <span className="text-sm lg:text-lg font-semibold">
-                {p?.ilaqaAreaId?.name + " "}
-                {moment(p?.month).format("MMMM YYYY")}
-              </span>
-              <span>Last Modified: {moment(p?.updatedAt).fromNow()}</span>
-            </div>
-            <div className="flex items-end w-full justify-end gap-3 ">
-              <button className="btn" onClick={() => viewReport(p?._id)}>
-                <FaEye />
-              </button>
-
-              
-              {me?.userAreaType == "Ilaqa" && (
-                <button className="btn" onClick={() => editReport(p?._id)}>
-                  <FaEdit />
+            <span>{index + 1}</span>
+            <div
+              key={p?._id}
+              className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
+            >
+              <div className="flex w-full flex-col items-start justify-center">
+                <span className="text-sm lg:text-lg font-semibold">
+                  {p?.ilaqaAreaId?.name + " "}
+                  {moment(p?.month).format("MMMM YYYY")}
+                </span>
+                <span>Last Modified: {moment(p?.updatedAt).fromNow()}</span>
+              </div>
+              <div className="flex items-end w-full justify-end gap-3 ">
+                <button className="btn" onClick={() => viewReport(p?._id)}>
+                  <FaEye />
                 </button>
-              )}
 
-              <button className="btn" onClick={() => handlePrint(p?._id)}>
-                <FaPrint />
-              </button>
+                {me?.userAreaType == "Ilaqa" && (
+                  <button className="btn" onClick={() => editReport(p?._id)}>
+                    <FaEdit />
+                  </button>
+                )}
+
+                <button className="btn" onClick={() => handlePrint(p?._id)}>
+                  <FaPrint />
+                </button>
+              </div>
             </div>
-          </div>
           </div>
         ))
       ) : (
@@ -273,7 +270,11 @@ export const IlaqaReports = () => {
         <span>
           Page {currentPage} of {totalPages}
         </span>
-        <button  className="btn" onClick={handleNextPage} disabled={currentPage === totalPages}>
+        <button
+          className="btn"
+          onClick={handleNextPage}
+          disabled={currentPage === totalPages}
+        >
           Next
         </button>
       </div>

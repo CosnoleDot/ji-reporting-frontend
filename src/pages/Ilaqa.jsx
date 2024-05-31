@@ -44,46 +44,6 @@ export const Ilaqa = () => {
   const autoFill = () => {
     const halq = {};
     document.getElementById("ilaqa-form").reset();
-    if (createData?.filter((i) => i?.month.includes(month)).length < 1) {
-      [
-        "rafaqa-start",
-        "karkunan-start",
-        "rafaqa-increase",
-        "karkunan-increase",
-        "rafaqa-decrease",
-        "karkunan-decrease",
-        "rafaqa-end",
-        "karkunan-end",
-        "rafaqa-monthly",
-        "karkunan-monthly",
-        "ijtRafaqa-decided",
-        "ijtRafaqa-done",
-        "ijtRafaqa-averageAttendance",
-        "studyCircleMentioned-decided",
-        "studyCircleMentioned-done",
-        "studyCircleMentioned-averageAttendance",
-        "ijtKarkunan-decided",
-        "ijtKarkunan-done",
-        "ijtKarkunan-averageAttendance",
-        "darseQuran-decided",
-        "darseQuran-done",
-        "darseQuran-averageAttendance",
-        "dawatiWafud",
-        "rawabitParties",
-        "shabBedari",
-        "nizamSalah",
-        "rawabitDecided",
-        "shabBedari",
-        "totalBooks",
-        "totalIncrease",
-        "totalDecrease",
-        "totalBookRent",
-      ].forEach((i) => {
-        document.getElementById(i).value = 0;
-      });
-      document.getElementById("name").value = me?.userAreaId?.name;
-    }
-
     createData
       ?.filter((i) => i?.month.includes(month))
       .forEach((i) => {

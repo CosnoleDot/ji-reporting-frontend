@@ -13,7 +13,9 @@ export const Library = () => {
       <h2 className="text-black py-3 text-lg">لائبریری</h2>
       <div className="flex-col lg:flex-row w-full items-center justify-start">
         <div className="flex py-2">
-                 <label className="block text-sm md:text-lg mb-2 lg:mb-0"> کل تعداد لائبریریز:</label>
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
+            کل تعداد لائبریریز:
+          </label>
           <input
             readOnly={true}
             type="number"
@@ -25,7 +27,9 @@ export const Library = () => {
           />
         </div>
         <div className="flex py-2">
-                 <label className="block text-sm md:text-lg mb-2 lg:mb-0">کل تعدادکتب:</label>
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
+            کل تعدادکتب:
+          </label>
           <input
             readOnly={true}
             type="number"
@@ -37,7 +41,9 @@ export const Library = () => {
           />
         </div>
         <div className="flex py-2">
-                 <label className="block text-sm md:text-lg mb-2 lg:mb-0">اضافہ کتب:</label>
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
+            اضافہ کتب:
+          </label>
           <input
             readOnly={true}
             type="number"
@@ -49,7 +55,9 @@ export const Library = () => {
           />
         </div>
         <div className="flex py-2">
-                 <label className="block text-sm md:text-lg mb-2 lg:mb-0">کمی کتب :</label>
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
+            کمی کتب :
+          </label>
           <input
             readOnly={true}
             type="number"
@@ -61,7 +69,9 @@ export const Library = () => {
           />
         </div>
         <div className="flex py-2">
-                 <label className="block text-sm md:text-lg mb-2 lg:mb-0">کل اجرائے کتب:</label>
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
+            کل اجرائے کتب:
+          </label>
           <input
             readOnly={true}
             type="number"

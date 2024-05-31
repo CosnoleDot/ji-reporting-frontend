@@ -7,7 +7,7 @@ export const RozOShabDiary = ({ view }) => {
       <h2 className="text-black py-3 text-lg">روزشب ڈائری</h2>
       <div className="flex flex-col w-full items-start gap-4 justify-start">
         <div className="w-full flex justify-start items-center overflow-hidden overflow-x-scroll">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
             کتنے امیدواران فل کرتے ہیں؟
           </label>
           <input
@@ -47,7 +47,7 @@ export const RozOShabDiary = ({ view }) => {
           />
         </div>
         <div className="flex w-full overflow-hidden overflow-x-scroll">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
             کتنےرفقافل کرتے ہیں:
           </label>
           <input
@@ -87,7 +87,7 @@ export const RozOShabDiary = ({ view }) => {
           />
         </div>
         {/* <div className="flex py-2">
-                <label className="block text-sm md:text-lg mb-2 lg:mb-0">کتنے امیدواران فل کرتے ہیں؟</label>
+                <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">کتنے امیدواران فل کرتے ہیں؟</label>
           <input
             readOnly={view}
             type="number"
@@ -99,7 +99,7 @@ export const RozOShabDiary = ({ view }) => {
           />
         </div>
         <div className="flex py-2 ">
-                <label className="block text-sm md:text-lg mb-2 lg:mb-0">کتنےرفقافل کرتے ہیں:</label>
+                <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">کتنےرفقافل کرتے ہیں:</label>
           <input
             readOnly={true}
             type="number"

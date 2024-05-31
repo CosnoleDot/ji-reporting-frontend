@@ -19,7 +19,7 @@ export const OtherActivities = ({ view }) => {
           />
         </div>
         <div className="flex sm:mb-2 py-2 overflow-hidden overflow-x-scroll w-full">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
             تربیت گاہوں کے انعقاد کا ہدف:
           </label>
           <input
@@ -33,7 +33,7 @@ export const OtherActivities = ({ view }) => {
           />
         </div>
         <div className="flex sm:mb-2 py-2 overflow-hidden overflow-x-scroll w-full">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
             تربیت گاہوں کے انعقاد کا تعداد:
           </label>
           <input

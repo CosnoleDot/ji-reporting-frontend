@@ -431,7 +431,7 @@ export const Signup = () => {
                     value="Ilaqa"
                     onChange={(e) => setUserAreaType(e.target.value)}
                   />
-                  <span className="label-text">Ilaqa</span>
+                  <span className="label-text">Ilaqa/Zone</span>
                 </label>
               </div>
               <div className="form-control">
