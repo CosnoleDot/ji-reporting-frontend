@@ -50,7 +50,6 @@ export const Maqam = () => {
     const halq = {};
 
     document.getElementById("maqam-form").reset();
-
     createData?.forEach((i) => {
       const sim = reverseDataFormat(i);
       Object.keys(sim)?.forEach((j) => {
@@ -99,7 +98,6 @@ export const Maqam = () => {
         }
       }
       halq.litrature = halq.literatureDistribution;
-      console.log(halq);
       const elem = document.getElementById(j);
       if (elem) {
         if (j === "month") {
@@ -220,6 +218,8 @@ export const Maqam = () => {
     const l = location.pathname?.split("/")[2];
     if (l === "view") {
       setView(true);
+    } else if (l === "create") {
+      setView(false);
     }
     setId(params?.id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
