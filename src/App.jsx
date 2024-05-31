@@ -1,4 +1,10 @@
-import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  useNavigate,
+  useLocation,
+  useParams,
+} from "react-router-dom";
 import { Login } from "./pages/Login";
 import { Forget } from "./pages/Forget";
 import { Dashboard } from "./pages/Dashboard";
@@ -92,7 +98,6 @@ function App() {
   const [muntakhibMaqam, setMuntakhibMaqam] = useState(false);
   const [areaDetails, setAreaDetails] = useState({});
   const location = useLocation();
-  let dis;
   let r = [];
   const [authenticated, setAuthenticaated] = useState(
     localStorage.getItem("@token")
@@ -446,15 +451,16 @@ function App() {
   const filterMuntakhib = (id) => {
     const mT = ilaqas.filter((ilaqa) => ilaqa?.maqam?._id == id);
     if (mT?.length > 0) {
+      console.log("first");
       setMuntakhibMaqam(true);
     } else {
+      console.log("second");
       setMuntakhibMaqam(false);
     }
   };
   useEffect(() => {}, [muntakhibMaqam]);
-  let provinceR, maqamR, divisionR, halqaR, ilaqaR, markazR ,halqaT;
+  let provinceR, maqamR, divisionR, halqaR, ilaqaR, markazR, halqaT;
   const getMarkazReport = async (inset, offset) => {
-  
     if (me?.userAreaType === "Country")
       try {
         const req = await instance.get(
@@ -468,7 +474,7 @@ function App() {
         if (req) {
           markazR = req.data?.data?.data;
 
-         let length = req?.data?.data?.length;
+          let length = req?.data?.data?.length;
           setMarkazReport((prevData) => ({
             reports: prevData.reports
               ? [...prevData.reports, ...markazR]
@@ -486,7 +492,6 @@ function App() {
     return;
   };
   const getProvinceReports = async (inset, offset) => {
-  
     if (me?.userAreaType === "Country" || me?.userAreaType === "Province")
       try {
         const req = await instance.get(
@@ -518,7 +523,6 @@ function App() {
     return;
   };
   const getMaqamReports = async (inset, offset) => {
-  
     if (
       me?.userAreaType === "Country" ||
       me?.userAreaType === "Province" ||
@@ -554,7 +558,6 @@ function App() {
     return;
   };
   const getIlaqaReports = async (inset, offset) => {
-  
     if (me?.userAreaType !== "Halqa" && me?.userAreaType !== "Division")
       try {
         const req = await instance.get(
@@ -586,7 +589,6 @@ function App() {
     return;
   };
   const getDivisionReports = async (inset, offset) => {
-  
     if (
       me?.userAreaType === "Country" ||
       me?.userAreaType === "Province" ||
@@ -622,8 +624,6 @@ function App() {
     return;
   };
   const getHalqaReports = async (inset, offset) => {
-   
-
     try {
       const req = await instance.get(
         `/reports/halqa?inset=${inset}&offset=${offset}`,
@@ -640,7 +640,6 @@ function App() {
           reports: [...prevData.reports, ...halqaR],
           length: length,
         }));
-      
       }
     } catch (err) {
       console.log(err);
@@ -651,9 +650,7 @@ function App() {
     }
   };
   const getHalqaReportsTab = async (inset, offset, tab) => {
-  
-
-    if(tab){
+    if (tab) {
       try {
         const req = await instance.get(
           `/reports/halqa?inset=${inset}&offset=${offset}&tab=${tab}`,
@@ -670,7 +667,6 @@ function App() {
             reports: [...prevData.reports, ...halqaT],
             length: length,
           }));
-      
         }
       } catch (err) {
         console.log(err);
@@ -1204,13 +1200,11 @@ function App() {
                                             />
                                             <Route
                                               path="/maqam-report/print/:id"
-                                              element={
-                                                muntakhibMaqam ? (
-                                                  <MuntakhibMaqamReport />
-                                                ) : (
-                                                  <MaqamReport />
-                                                )
-                                              }
+                                              element={<MaqamReport />}
+                                            />
+                                            <Route
+                                              path="/muntakhib-maqam-report/print/:id"
+                                              element={<MuntakhibMaqamReport />}
                                             />
                                             <Route
                                               path="/halqa-report/print/:id"

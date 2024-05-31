@@ -229,6 +229,7 @@ export const Maqam = () => {
     setLoading(false);
   };
   const getMaqamReport = async () => {
+    
     try {
       const req = await instance.get(`/reports/maqam/${id}`, {
         headers: {
