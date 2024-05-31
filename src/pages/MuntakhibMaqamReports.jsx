@@ -320,14 +320,13 @@ export const MuntakhibMaqamReports = () => {
       calcultate(i);
     });
   }, [data]);
+ 
   useEffect(() => {
-    if (!id) autoFill();
+    if (!id || window.location.pathname?.split("/")[2] === "create") {
+      autoFill();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, halqa, month]);
-  useEffect(() => {
-    if (!id) autoFill();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, halqa, month, createData]);
+  }, [id,createData]);
   // EDIT CODE END
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -319,7 +319,6 @@ export const Division = () => {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
-        await getDivisionReports();
         dispatch({ type: "SUCCESS", payload: req.data?.message });
         navigate("/reports");
       } else {
@@ -329,7 +328,7 @@ export const Division = () => {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
-        await getDivisionReports();
+        await getDivisionReports(0, 10);
         dispatch({ type: "SUCCESS", payload: req.data?.message });
         navigate("/reports");
       }
