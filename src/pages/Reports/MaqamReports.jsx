@@ -6,6 +6,8 @@ import { NoReports, months } from "../Reports";
 import { FilterDialog } from "./FilterDialog";
 import { useNavigate } from "react-router-dom";
 import { UIContext } from "../../context/ui";
+import { SearchPage } from "./SearchPage";
+import instance from "../../api/instrance";
 
 export const MaqamReports = () => {
   const { filterMuntakhib } = useContext(UIContext);
@@ -19,6 +21,8 @@ export const MaqamReports = () => {
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("2023");
   const me = useContext(MeContext);
+  const [isSearch, setIsSearch] = useState(false);
+  const [searchData, setSearchData] = useState([]);
   const { getMaqamReports } = useContext(UIContext);
   const [disable,setDisable]= useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -27,37 +31,30 @@ export const MaqamReports = () => {
   useEffect(() => {
     setFilterAllData(mReports);
   }, [mReports]);
-  const searchResults = () => {
+  const searchResults = async () => {
     if (year !== "" && month !== "") {
-      let filteredData = { ...mReports };
-      filteredData = mReports?.filter((i) => {
-        const [f_year, f_month] = [
-          i?.month?.split("-")[0],
-          i?.month?.split("-")[1],
-        ];
-        return (
-          parseInt(year) === parseInt(f_year) &&
-          parseInt(month) === parseInt(f_month)
+      try {
+        setIsSearch(true);
+        const req = await instance.get(
+          `/reports/maqam?year=${year}&month=${month}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("@token")}`,
+            },
+          }
         );
-      });
-      showSearch(false);
-      setFilterAllData(filteredData);
-    } else if (year !== "" && month === "") {
-      let filteredData = { ...mReports };
-      filteredData = mReports?.filter((i) => {
-        const f_year = i?.month?.split("-")[0];
-        return parseInt(year) === parseInt(f_year);
-      });
-      showSearch(false);
-      setFilterAllData(filteredData);
-    } else if (year === "" && month !== "") {
-      dispatch({ type: "ERROR", payload: "Enter year with month" });
-      setFilterAllData(mReports);
-    } else if (year === "" && month === "") {
-      dispatch({ type: "ERROR", payload: "Date is required" });
-      setFilterAllData(mReports);
-    } else {
-      setFilterAllData(mReports);
+
+        if (req) {
+          setSearchData([]);
+          setSearchData(req.data.data.data);
+        }
+      } catch (err) {
+        console.log(err);
+        dispatch({
+          type: "ERROR",
+          payload: err?.response?.data?.message || err?.message,
+        });
+      }
     }
   };
   const toggleSearch = () => {
@@ -66,6 +63,7 @@ export const MaqamReports = () => {
   const clearFilters = () => {
     setMonth("");
     setYear("2023");
+    setIsSearch(false);
     setFilterAllData(mReports);
     document.getElementById("autocomplete").value = "";
   };
@@ -78,6 +76,7 @@ export const MaqamReports = () => {
     navigate(`edit/${reportId}`);
   };
   const handlePrint = (id) => {
+    filterMuntakhib(id);
     window.open(`maqam-report/print/${id}`, "blank");
   };
   let totalPages =  Math.ceil(total / itemsPerPage);
@@ -100,7 +99,7 @@ export const MaqamReports = () => {
       setCurrentPage(currentPage + 1);
       const inset = currentPage * itemsPerPage;
       const offset = itemsPerPage;
-      if (mReports.length <= itemsPerPage * currentPage) {
+      if (mReports?.length <= itemsPerPage * currentPage) {
         getMaqamReports(inset, offset);
       } 
     }
@@ -223,7 +222,7 @@ export const MaqamReports = () => {
             )} */}
         </div>
       </div>
-      {currentData.length > 0 ? (
+      {!isSearch ? <>{currentData?.length > 0 ? (
         currentData.map((p) => (
           <div
             key={p?._id}
@@ -275,7 +274,7 @@ export const MaqamReports = () => {
         <button  className="btn" onClick={handleNextPage} disabled={currentPage === totalPages}>
           Next
         </button>
-      </div>
+      </div></> : <SearchPage data={searchData} area={'maqam'}/>}
       <dialog id="filter-area-dialog" className="modal">
         <FilterDialog setFilterAllData={setFilterAllData} />
       </dialog>

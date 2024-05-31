@@ -173,6 +173,7 @@ export const Province = () => {
           }
         });
       });
+      
     if (page === "create") {
       [
         "ijtArkan",
