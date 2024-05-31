@@ -103,6 +103,7 @@ function App() {
     localStorage.getItem("@token")
   );
   let length;
+  let dis;
   const getMe = async () => {
     try {
       sessionStorage.removeItem("storedData");
