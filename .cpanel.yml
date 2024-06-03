@@ -10,6 +10,4 @@ deployment:
     # Remove previous old files, if any.
     - rm -Rf ${DEPLOYPATH}_old
     # Copy old site files to another directory.
-    - cp -R ${DEPLOYPATH} ${DEPLOYPATH}_old
-    - cd /home/jamiatre/public_html/test-ci-cd2
-    - tar cvf new.tar *
+    - cp -R ${DEPLOYPATH} ${DEPLOYPATH}_old_%date:~-10,2%"-"%date:~-7,2%"-"%date:~-4,4%
