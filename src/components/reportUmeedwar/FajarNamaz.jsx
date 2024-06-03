@@ -41,7 +41,7 @@ export const FajarNamaz = ({ view }) => {
         نمازِفجر
       </h3>
       <div className=" w-full lg:flex md:flex-row sm:flex-col mb-4 gap-2">
-        {fajarNamaz.map((obj, index) => (
+        {fajarNamaz?.map((obj, index) => (
           <div className="w-full md:pr-0 mb-2" key={index}>
             <InputWithLabel
               readOnly={view || obj?.key === "fajarTotal"}

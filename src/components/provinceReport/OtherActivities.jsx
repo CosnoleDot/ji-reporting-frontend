@@ -24,9 +24,6 @@ export const OtherActivities = ({ view }) => {
           <input
             readOnly={view}
             type="number"
-            defaultValue={
-              document.getElementById("tarbiyatGaahGoalSum").value?.value
-            }
             required
             name={`tarbiyatGaahGoal`}
             id={`tarbiyatGaahGoal`}
@@ -87,9 +84,6 @@ export const OtherActivities = ({ view }) => {
           <input
             readOnly={view}
             type="number"
-            defaultValue={
-              document.getElementById("tarbiyatGaahHeldSum").value?.value
-            }
             required
             name={`tarbiyatGaahHeld`}
             id={`tarbiyatGaahHeld`}

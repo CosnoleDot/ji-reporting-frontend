@@ -82,7 +82,7 @@ const Dates = ({
             ))}
           </div>
           <div className="w-full h-[calc(100vh-72.8px-64px)] overflow-hidden overflow-y-scroll">
-            {durationMonths.map((i, index) => (
+            {durationMonths?.map((i, index) => (
               <div
                 key={index}
                 onClick={() =>
@@ -107,7 +107,7 @@ const Dates = ({
           <div className="w-full h-[calc(100vh-72.8px-64px)] overflow-hidden overflow-y-scroll">
             {Array(10)
               .fill(1)
-              .map((_, index) => (
+              ?.map((_, index) => (
                 <div
                   key={index}
                   className="flex p-3 hover:bg-slate-200 items-center justify-between"
@@ -121,7 +121,7 @@ const Dates = ({
               ))}
           </div>
           <div className="w-full h-[calc(100vh-72.8px-64px)] overflow-hidden overflow-y-scroll">
-            {durationYears.map((i, index) => (
+            {durationYears?.map((i, index) => (
               <div
                 key={index}
                 onClick={() =>

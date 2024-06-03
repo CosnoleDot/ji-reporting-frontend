@@ -59,7 +59,7 @@ export const Rawabit1 = ({
       <h2 className="block w-full text-center font-bold mb-3">ربط نمبر۱</h2>
       <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
         <div className="w-full md:pr-0 mb-2 flex flex-col flex-wrap">
-          {rbt1.map((obj, index) => (
+          {rbt1?.map((obj, index) => (
             <InputWithLabel
               key={index}
               readOnly={view}
@@ -108,8 +108,8 @@ export const Rawabit1 = ({
 
             <div className="flex w-full overflow-hidden overflow-x-scroll p-2 justify-start items-center mb-3 min-h-[30px] border rounded-md border-slate-300">
               {rbt1Programs &&
-                rbt1Programs.length > 0 &&
-                rbt1Programs.map((p, index) => (
+                rbt1Programs?.length > 0 &&
+                rbt1Programs?.map((p, index) => (
                   <p
                     className="relative input p-2 m-2 border border-slate-200 underline  underline-bg-slate-100"
                     key={index}

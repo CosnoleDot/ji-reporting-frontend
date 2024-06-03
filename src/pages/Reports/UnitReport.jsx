@@ -9,7 +9,7 @@ import { UIContext } from "../../context/ui";
 
 export const UnitReport = () => {
   const h = useContext(HalqaReportContext);
-  const hReports= h?.reports;
+  const hReports = h?.reports;
   const total = h?.length;
 
   const [filterAllData, setFilterAllData] = useState(hReports);
@@ -22,15 +22,19 @@ export const UnitReport = () => {
   const me = useContext(MeContext);
   const { getHalqaReports } = useContext(UIContext);
   const [currentPage, setCurrentPage] = useState(1);
+  const [currentData, setCurrentData] = useState();
   const itemsPerPage = 10;
-  
+
   useEffect(() => {
     setFilterAllData(hReports);
   }, [hReports]);
+  useEffect(() => {
+    setCurrentData(filterAllData);
+  }, [filterAllData]);
 
   const searchResults = () => {
     if (year !== "" && month !== "") {
-      let filteredData = hReports.filter((i) => {
+      let filteredData = hReports?.data?.filter((i) => {
         const [f_year, f_month] = [
           i?.month?.split("-")[0],
           i?.month?.split("-")[1],
@@ -48,7 +52,7 @@ export const UnitReport = () => {
         return parseInt(year) === parseInt(f_year);
       });
       showSearch(false);
-      setFilterAllData(filteredData);
+      setFilterAllData(filteredData?.data);
     } else if (year === "" && month !== "") {
       dispatch({ type: "ERROR", payload: "Enter year with month" });
       setFilterAllData(hReports);
@@ -68,7 +72,7 @@ export const UnitReport = () => {
   const clearFilters = () => {
     setMonth("");
     setYear("2023");
-    setFilterAllData(hReports);
+    setFilterAllData(hReports?.data);
     document.getElementById("autocomplete").value = "";
     setCurrentPage(1); // Reset to first page after clearing filters
   };
@@ -85,12 +89,17 @@ export const UnitReport = () => {
     window.open(`halqa-report/print/${id}`, "blank");
   };
 
-  let totalPages =  Math.ceil(total / itemsPerPage);
-  const currentData = filterAllData?.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
-
+  let totalPages = Math.ceil(total / itemsPerPage);
+  useEffect(() => {
+    if (filterAllData?.length > 0) {
+      setCurrentData(
+        filterAllData?.data?.slice(
+          (currentPage - 1) * itemsPerPage,
+          currentPage * itemsPerPage
+        )
+      );
+    }
+  }, []);
   const handlePrevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
@@ -104,11 +113,10 @@ export const UnitReport = () => {
       const offset = itemsPerPage;
       if (hReports.length <= itemsPerPage * currentPage) {
         getHalqaReports(inset, offset);
-       
-    } 
+      }
     }
   };
-  
+
   return (
     <>
       <div className="join xs:w-full mb-4">
@@ -209,8 +217,8 @@ export const UnitReport = () => {
           </button>
         </div>
       </div>
-      {currentData.length > 0 ? (
-        currentData.map((p) => (
+      {currentData?.length ? (
+        currentData?.map((p) => (
           <div
             key={p?._id}
             className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
@@ -253,7 +261,11 @@ export const UnitReport = () => {
         <span>
           Page {currentPage} of {totalPages}
         </span>
-        <button className="btn" onClick={handleNextPage} disabled={currentPage === totalPages}>
+        <button
+          className="btn"
+          onClick={handleNextPage}
+          disabled={currentPage === totalPages}
+        >
           Next
         </button>
       </div>

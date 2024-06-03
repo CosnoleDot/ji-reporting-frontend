@@ -41,7 +41,7 @@ export const OtherNamaz = ({ view }) => {
         دیگرنمازیں
       </h3>
       <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
-        {otherNamaz.map((obj, index) => (
+        {otherNamaz?.map((obj, index) => (
           <div className="w-full md:pr-0 mb-2" key={index}>
             <InputWithLabel
               readOnly={view || obj?.key === "otherPrayersTotal"}

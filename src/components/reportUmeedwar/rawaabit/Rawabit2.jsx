@@ -97,8 +97,8 @@ export const Rawabit2 = ({
             </dialog>
             <div className="flex w-full overflow-hidden overflow-x-scroll p-2 justify-start items-center mb-3 min-h-[30px] border rounded-md border-slate-300">
               {rbt2Programs &&
-                rbt2Programs.length > 0 &&
-                rbt2Programs.map((p, index) => (
+                rbt2Programs?.length > 0 &&
+                rbt2Programs?.map((p, index) => (
                   <p
                     className="relative input p-2 m-2 border border-slate-200 underline  underline-bg-slate-100"
                     key={index}

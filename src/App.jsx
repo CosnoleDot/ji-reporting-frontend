@@ -476,7 +476,12 @@ function App() {
           let length = req?.data?.data?.length;
           setMarkazReport((prevData) => ({
             reports: prevData.reports
-              ? [...prevData.reports, ...markazR]
+              ? [
+                  ...(prevData?.reports.length > 0
+                    ? prevData?.reports.length
+                    : []),
+                  ...markazR,
+                ]
               : markazR,
             length: length,
           }));
@@ -493,6 +498,7 @@ function App() {
   const getProvinceReports = async (inset, offset) => {
     if (me?.userAreaType === "Country" || me?.userAreaType === "Province")
       try {
+        setLoading(true);
         const req = await instance.get(
           `/reports/province?inset=${inset}&offset=${offset}`,
           {
@@ -507,11 +513,17 @@ function App() {
           let length = req?.data?.data?.length;
           setProvinceReports((prevData) => ({
             reports: prevData.reports
-              ? [...prevData.reports, ...provinceR]
+              ? [
+                  ...(prevData?.reports.length > 0
+                    ? prevData?.reports.length
+                    : []),
+                  ...provinceR,
+                ]
               : provinceR,
             length: length,
           }));
         }
+        setLoading(false);
       } catch (err) {
         console.log(err);
         dispatch({
@@ -542,7 +554,12 @@ function App() {
           let length = req?.data?.data?.length;
           setMaqamReports((prevData) => ({
             reports: prevData.reports
-              ? [...prevData.reports, ...maqamR]
+              ? [
+                  ...(prevData?.reports.length > 0
+                    ? prevData?.reports.length
+                    : []),
+                  ...maqamR,
+                ]
               : maqamR,
             length: length,
           }));
@@ -573,7 +590,12 @@ function App() {
           let length = req?.data?.data?.length;
           setIlaqaReports((prevData) => ({
             reports: prevData.reports
-              ? [...prevData.reports, ...ilaqaR]
+              ? [
+                  ...(prevData?.reports.length > 0
+                    ? prevData?.reports.length
+                    : []),
+                  ...ilaqaR,
+                ]
               : ilaqaR,
             length: length,
           }));
@@ -603,12 +625,16 @@ function App() {
           }
         );
         if (req) {
-          divisionR = req.data.data?.data;
-
+          divisionR = req.data.data;
           let length = req?.data?.data?.length;
           setDivisionReports((prevData) => ({
             reports: prevData.reports
-              ? [...prevData.reports, ...divisionR]
+              ? [
+                  ...(prevData?.reports.length > 0
+                    ? prevData?.reports.length
+                    : []),
+                  ...divisionR,
+                ]
               : divisionR,
             length: length,
           }));
@@ -624,6 +650,7 @@ function App() {
   };
   const getHalqaReports = async (inset, offset) => {
     try {
+      setLoading(true);
       const req = await instance.get(
         `/reports/halqa?inset=${inset}&offset=${offset}`,
         {
@@ -633,13 +660,23 @@ function App() {
         }
       );
       if (req) {
-        halqaR = req.data.data?.data;
+        halqaR = req.data.data;
         let length = req?.data?.data?.length;
-        setHalqaReports((prevData) => ({
-          reports: [...prevData.reports, ...halqaR],
-          length: length,
-        }));
+        setHalqaReports((prevData = { reports: [] }) => {
+          return {
+            reports: prevData.reports
+              ? [
+                  ...(prevData?.reports.length > 0
+                    ? prevData?.reports.length
+                    : []),
+                  ...halqaR,
+                ]
+              : halqaR,
+            length: length,
+          };
+        });
       }
+      setLoading(false);
     } catch (err) {
       console.log(err);
       dispatch({
@@ -662,10 +699,19 @@ function App() {
         if (req) {
           halqaT = req.data.data;
           let length = req?.data?.data?.length;
-          setHalqaReportsTab((prevData) => ({
-            reports: [...prevData.reports, ...halqaT],
-            length: length,
-          }));
+          setHalqaReportsTab((prevData = { reports: [] }) => {
+            return {
+              reports: prevData.reports
+                ? [
+                    ...(prevData?.reports.length > 0
+                      ? prevData?.reports.length
+                      : []),
+                    ...halqaT,
+                  ]
+                : halqaT,
+              length: length,
+            };
+          });
         }
       } catch (err) {
         console.log(err);
@@ -693,7 +739,7 @@ function App() {
     }
   };
   const getAllRequests = async () => {
-    if (localStorage.getItem("@token")) {
+    if (localStorage.getItem("@token") && me?.userAreaType !== "Halqa") {
       try {
         const req = await instance.get("/user/user-requests", {
           headers: {
@@ -750,7 +796,7 @@ function App() {
     }
   };
   const getAllNotifications = async () => {
-    if (localStorage.getItem("@token")) {
+    if (localStorage.getItem("@token") && me?.userAreaType !== "Halqa") {
       try {
         const req = await instance.get(
           "/notifications?type=" + localStorage.getItem("@type").toLowerCase(),

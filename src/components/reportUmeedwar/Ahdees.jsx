@@ -17,7 +17,7 @@ export const Ahdees = ({ view }) => {
     <div className="w-full">
       <h3 className="block w-full text-start text-lg md:text-xl p-3">حدیث</h3>
       <div className=" w-full  lg:flex md:flex-row sm:flex-col mb-4 gap-2">
-        {ahdees.map((obj, index) => (
+        {ahdees?.map((obj, index) => (
           <div className="w-full md:pr-0 mb-2" key={index}>
             <InputWithLabel
               readOnly={view}

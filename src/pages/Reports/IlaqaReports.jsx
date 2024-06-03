@@ -221,59 +221,64 @@ export const IlaqaReports = () => {
             )} */}
         </div>
       </div>
-      {!isSearch ? <> {currentData?.length > 0 ? (
-        currentData.map((p, index) => (
-          <div
-            key={p?._id}
-            className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
-          >
-            <div className="flex w-full flex-col items-start justify-center">
-              <span className="text-sm lg:text-lg font-semibold">
-                {p?.ilaqaAreaId?.name + " "}
-                {moment(p?.month).format("MMMM YYYY")}
-              </span>
-              <span>Last Modified: {moment(p?.updatedAt).fromNow()}</span>
-            </div>
-            <div className="flex items-end w-full justify-end gap-3 ">
-              <button className="btn" onClick={() => viewReport(p?._id)}>
-                <FaEye />
-              </button>
+      {!isSearch ? (
+        <>
+          {currentData?.length > 0 ? (
+            currentData?.map((p, index) => (
+              <div
+                key={p?._id}
+                className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
+              >
+                <div className="flex w-full flex-col items-start justify-center">
+                  <span className="text-sm lg:text-lg font-semibold">
+                    {p?.ilaqaAreaId?.name + " "}
+                    {moment(p?.month).format("MMMM YYYY")}
+                  </span>
+                  <span>Last Modified: {moment(p?.updatedAt).fromNow()}</span>
+                </div>
+                <div className="flex items-end w-full justify-end gap-3 ">
+                  <button className="btn" onClick={() => viewReport(p?._id)}>
+                    <FaEye />
+                  </button>
 
-              {me?.userAreaType == "Ilaqa" && (
-                <button className="btn" onClick={() => editReport(p?._id)}>
-                  <FaEdit />
-                </button>
-              )}
+                  {me?.userAreaType == "Ilaqa" && (
+                    <button className="btn" onClick={() => editReport(p?._id)}>
+                      <FaEdit />
+                    </button>
+                  )}
 
-                <button className="btn" onClick={() => handlePrint(p?._id)}>
-                  <FaPrint />
-                </button>
+                  <button className="btn" onClick={() => handlePrint(p?._id)}>
+                    <FaPrint />
+                  </button>
+                </div>
               </div>
-            </div>
-          
-        ))
+            ))
+          ) : (
+            <NoReports />
+          )}
+          <div className="flex justify-between mt-4">
+            <button
+              className="btn"
+              onClick={handlePrevPage}
+              disabled={currentPage === 1}
+            >
+              Previous
+            </button>
+            <span>
+              Page {currentPage} of {totalPages}
+            </span>
+            <button
+              className="btn"
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </button>
+          </div>
+        </>
       ) : (
-        <NoReports />
+        <SearchPage data={searchData} area={"ilaqa"} />
       )}
-      <div className="flex justify-between mt-4">
-        <button
-          className="btn"
-          onClick={handlePrevPage}
-          disabled={currentPage === 1}
-        >
-          Previous
-        </button>
-        <span>
-          Page {currentPage} of {totalPages}
-        </span>
-        <button
-          className="btn"
-          onClick={handleNextPage}
-          disabled={currentPage === totalPages}
-        >
-          Next
-        </button>
-      </div></> : <SearchPage data={searchData} area={'ilaqa'} />}
       <dialog id="filter-area-dialog" className="modal">
         <FilterDialog setFilterAllData={setFilterAllData} />
       </dialog>

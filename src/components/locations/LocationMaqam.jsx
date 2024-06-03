@@ -411,7 +411,7 @@ export const LocationMaqam = () => {
               </tr>
             </thead>
             <tbody className="mt-5">
-              {filteredData.length > 0 ? (
+              {filteredData?.length > 0 ? (
                 filteredData?.map((maqam, index) => (
                   <tr
                     key={index}
@@ -535,13 +535,13 @@ export const LocationMaqam = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredData.length > 0 ? (
+              {filteredData?.length > 0 ? (
                 filteredData
                   ?.filter(
                     (i) =>
                       i?.parentType === "Maqam" || i?.parentType === "Ilaqa"
                   )
-                  .map((halqa, index) => (
+                  ?.map((halqa, index) => (
                     <tr
                       key={index}
                       className="flex w-full justify-between items-center"
@@ -714,8 +714,8 @@ export const LocationMaqam = () => {
                     Select Ilaqa
                   </option>
                   {ilaqas
-                    .filter((i) => !i?.disabled)
-                    .map((i, index) => (
+                    ?.filter((i) => !i?.disabled)
+                    ?.map((i, index) => (
                       <option value={i?._id} key={index}>
                         {i?.name}
                       </option>
