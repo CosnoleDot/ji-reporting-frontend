@@ -518,19 +518,18 @@ function App() {
         );
         if (req) {
           markazR = req.data?.data?.data;
-
           let length = req?.data?.data?.length;
-          setMarkazReport((prevData) => ({
-            reports: prevData.reports
-              ? [
-                  ...(prevData?.reports.length > 0
-                    ? prevData?.reports.length
-                    : []),
-                  ...markazR,
-                ]
-              : markazR,
-            length: length,
-          }));
+          setMarkazReport((prevData) => {
+            const reports = Array.isArray(prevData.reports)
+              ? prevData.reports
+              : [];
+            const newReports = Array.isArray(markazR) ? markazR : [];
+
+            return {
+              reports: [...reports, ...newReports],
+              length: length,
+            };
+          });
           setLoading(false);
         }
       } catch (err) {
@@ -557,7 +556,6 @@ function App() {
         );
         if (req) {
           provinceR = req.data?.data?.data;
-
           let length = req?.data?.data?.length;
           setProvinceReports((prevData) => {
             const reports = Array.isArray(prevData.reports)
@@ -601,19 +599,18 @@ function App() {
         );
         if (req) {
           maqamR = req.data.data?.data;
-
           let length = req?.data?.data?.length;
-          setMaqamReports((prevData) => ({
-            reports: prevData.reports
-              ? [
-                  ...(prevData?.reports.length > 0
-                    ? prevData?.reports.length
-                    : []),
-                  ...maqamR,
-                ]
-              : maqamR,
-            length: length,
-          }));
+          setMaqamReports((prevData) => {
+            const reports = Array.isArray(prevData.reports)
+              ? prevData.reports
+              : [];
+            const newReports = Array.isArray(maqamR) ? maqamR : [];
+
+            return {
+              reports: [...reports, ...newReports],
+              length: length,
+            };
+          });
           setLoading(false);
         }
       } catch (err) {
@@ -640,19 +637,18 @@ function App() {
         );
         if (req) {
           ilaqaR = req.data.data?.data;
-
           let length = req?.data?.data?.length;
-          setIlaqaReports((prevData) => ({
-            reports: prevData.reports
-              ? [
-                  ...(prevData?.reports.length > 0
-                    ? prevData?.reports.length
-                    : []),
-                  ...ilaqaR,
-                ]
-              : ilaqaR,
-            length: length,
-          }));
+          setIlaqaReports((prevData) => {
+            const reports = Array.isArray(prevData.reports)
+              ? prevData.reports
+              : [];
+            const newReports = Array.isArray(ilaqaR) ? ilaqaR : [];
+
+            return {
+              reports: [...reports, ...newReports],
+              length: length,
+            };
+          });
           setLoading(false);
         }
       } catch (err) {
@@ -682,19 +678,19 @@ function App() {
           }
         );
         if (req) {
-          divisionR = req.data.data;
+          divisionR = req.data.data.data;
           let length = req?.data?.data?.length;
-          setDivisionReports((prevData) => ({
-            reports: prevData.reports
-              ? [
-                  ...(prevData?.reports.length > 0
-                    ? prevData?.reports.length
-                    : []),
-                  ...divisionR,
-                ]
-              : divisionR,
-            length: length,
-          }));
+          setDivisionReports((prevData) => {
+            const reports = Array.isArray(prevData.reports)
+              ? prevData.reports
+              : [];
+            const newReports = Array.isArray(divisionR) ? divisionR : [];
+
+            return {
+              reports: [...reports, ...newReports],
+              length: length,
+            };
+          });
           setLoading(false);
         }
       } catch (err) {
@@ -719,12 +715,19 @@ function App() {
         }
       );
       if (req) {
-        halqaR = req.data.data;
+        halqaR = req.data.data?.data;
         let length = req?.data?.data?.length;
-        setHalqaReports((prevData) => ({
-          reports: [...prevData.reports, ...halqaR],
-          length: length,
-        }));
+        setHalqaReports((prevData) => {
+          const reports = Array.isArray(prevData.reports)
+            ? prevData.reports
+            : [];
+          const newReports = Array.isArray(halqaR) ? halqaR : [];
+
+          return {
+            reports: [...reports, ...newReports],
+            length: length,
+          };
+        });
         setLoading(false);
       }
       setLoading(false);
@@ -752,10 +755,17 @@ function App() {
         if (req) {
           halqaT = req.data.data;
           let length = req?.data?.data?.length;
-          setHalqaReportsTab((prevData) => ({
-            reports: [...prevData.reports, ...halqaT],
-            length: length,
-          }));
+          setHalqaReportsTab((prevData) => {
+            const reports = Array.isArray(prevData.reports)
+              ? prevData.reports
+              : [];
+            const newReports = Array.isArray(halqaT) ? halqaT : [];
+
+            return {
+              reports: [...reports, ...newReports],
+              length: length,
+            };
+          });
           setLoading(false);
         }
       } catch (err) {
@@ -1066,9 +1076,7 @@ function App() {
                         <TehsilContext.Provider value={tehsils}>
                           <HalqaContext.Provider value={halqas}>
                             <IlaqaReportContext.Provider value={ilaqaReports}>
-                              <HalqaReportContext.Provider
-                                value={halqaReports}
-                              >
+                              <HalqaReportContext.Provider value={halqaReports}>
                                 <HalqaReportTabContext.Provider
                                   value={halqaReportsTab}
                                 >

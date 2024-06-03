@@ -11,6 +11,7 @@ import { SearchPage } from "./SearchPage";
 
 export const DivisionReports = () => {
   const d = useContext(DivisionReportContext);
+  console.log(d)
   const dReports = d?.reports;
   const total = d?.length;
   const [filterAllData, setFilterAllData] = useState(dReports);
@@ -78,9 +79,9 @@ export const DivisionReports = () => {
   };
   let totalPages = Math.ceil(total / itemsPerPage);
   useEffect(() => {
-    if (filterAllData?.data?.length > 0) {
+    if (filterAllData?.length > 0) {
       setCurrentData(
-        filterAllData?.data?.slice(
+        filterAllData?.slice(
           (currentPage - 1) * itemsPerPage,
           currentPage * itemsPerPage
         )

@@ -15,8 +15,8 @@ import { UIContext } from "../../context/ui";
 export const CountryReport = () => {
   const c = useContext(MarkazReportContext);
   const cReports = c?.reports;
+
   const total = c?.length;
-  const [filterData, setFilterData] = useState([]);
   const [filterAllData, setFilterAllData] = useState(cReports);
   const { dispatch } = useToastState();
   const [search, showSearch] = useState(false);
@@ -85,7 +85,7 @@ export const CountryReport = () => {
   useEffect(() => {
     if (filterAllData?.length > 0) {
       setCurrentData(
-        filterAllData?.data?.slice(
+        filterAllData?.slice(
           (currentPage - 1) * itemsPerPage,
           currentPage * itemsPerPage
         )
