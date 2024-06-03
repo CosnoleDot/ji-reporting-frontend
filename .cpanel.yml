@@ -1,9 +1,13 @@
-##### THIS ALLOWS US TO DEPLOY THE SITE FROM A GIT REPO ######
----
+
 deployment:
   tasks:
-    # - export DEPLOYPATH=/home/jamiatre/public_html/temp_deploy_path/
-    - /bin/cd /home/jamiatre/public_html/
-    - /bin/cp * /home/jamiatre/public_html/backup_test/
-    # - /bin/gzip backup_test.zip
-    # - /bin/cp * $DEPLOYPATH
+    # NOTE: public_html on cPanel must not be removed or renamed.
+    # This folder has owner USER:nobody, and the USER user does not have
+    # access to change owner. So this folder must stay as-is to keep the nobody
+    # group, which is critical to the site working. A new folder won't work.
+    - export DEPLOYPATH=/home/jamiatre/public_html/temp_deploy_path/
+    - export REPOPATH=/home/jamiatre/public_html/test-ci-cd/ji-reporting-frontend
+    # Remove previous old files, if any.
+    - /bin/rm -Rf ${DEPLOYPATH}_old
+    # Copy old site files to another directory.
+    - /bin/cp -R ${DEPLOYPATH} ${DEPLOYPATH}_old
