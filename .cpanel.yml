@@ -2,7 +2,7 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/jamiatre/public_html/test-ci-cd/
+    - export DEPLOYPATH=/home/jamiatre/public_html/temp_deploy_path/
     - /bin/cp -R .vscode $DEPLOYPATH
     - /bin/cp -R assets $DEPLOYPATH
     - /bin/cp -R css $DEPLOYPATH
