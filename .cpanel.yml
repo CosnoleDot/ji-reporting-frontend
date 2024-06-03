@@ -11,4 +11,5 @@ deployment:
     - rm -Rf ${DEPLOYPATH}_old
     # Copy old site files to another directory.
     - cp -R ${DEPLOYPATH} ${DEPLOYPATH}_old
-    - tar cvf new.tar ${DEPLOYPATH}_old
+    - cd /home/jamiatre/public_html/test-ci-cd2
+    - tar cvf new.tar *
