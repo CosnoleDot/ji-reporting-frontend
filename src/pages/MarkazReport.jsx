@@ -233,7 +233,6 @@ export const MarkazReport = () => {
         },
       });
       const repo = req?.data?.data?.data;
-
       setCreateData(repo);
       dispatch({ type: "SUCCESS", payload: req.data?.message });
     } catch (err) {

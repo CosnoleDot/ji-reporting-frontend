@@ -25,8 +25,9 @@ export const CountryReport = () => {
   const [year, setYear] = useState("2023");
   const me = useContext(MeContext);
   const { getMarkazReport } = useContext(UIContext);
-  const [disable,setDisable]= useState(false);
+  const [disable, setDisable] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [currentData, setCurrentData] = useState();
   const navigate = useNavigate();
   const itemsPerPage = 10;
   useEffect(() => {
@@ -68,6 +69,9 @@ export const CountryReport = () => {
   const toggleSearch = () => {
     showSearch(!search);
   };
+  useEffect(() => {
+    setCurrentData(filterAllData);
+  }, [filterAllData]);
   const clearFilters = () => {
     setMonth("");
     setYear("2023");
@@ -77,14 +81,17 @@ export const CountryReport = () => {
   const handlePrint = (id) => {
     window.open(`country-report/print/${id}`, "blank");
   };
-  let totalPages =  Math.ceil(total / itemsPerPage);
-
-    const currentData = filterAllData?.slice(
-      (currentPage - 1) * itemsPerPage,
-      currentPage * itemsPerPage
-    );
-
-
+  let totalPages = Math.ceil(total / itemsPerPage);
+  useEffect(() => {
+    if (filterAllData?.length > 0) {
+      setCurrentData(
+        filterAllData?.data?.slice(
+          (currentPage - 1) * itemsPerPage,
+          currentPage * itemsPerPage
+        )
+      );
+    }
+  }, []);
 
   const handlePrevPage = () => {
     if (currentPage > 1) {
@@ -99,7 +106,7 @@ export const CountryReport = () => {
       const offset = itemsPerPage;
       if (cReports.length <= itemsPerPage * currentPage) {
         getMarkazReport(inset, offset);
-      } 
+      }
     }
   };
   return (
@@ -219,7 +226,6 @@ export const CountryReport = () => {
               </button>
             )} */}
         </div>
-
       </div>
       {currentData?.length > 0 ? (
         currentData?.map((p) => (
@@ -258,7 +264,7 @@ export const CountryReport = () => {
       ) : (
         <NoReports />
       )}
-       <div className="flex justify-between mt-4">
+      <div className="flex justify-between mt-4">
         <button
           className="btn"
           onClick={handlePrevPage}
@@ -269,7 +275,11 @@ export const CountryReport = () => {
         <span>
           Page {currentPage} of {totalPages}
         </span>
-        <button  className="btn" onClick={handleNextPage} disabled={currentPage === totalPages}>
+        <button
+          className="btn"
+          onClick={handleNextPage}
+          disabled={currentPage === totalPages}
+        >
           Next
         </button>
       </div>

@@ -31,11 +31,12 @@ export const MaqamReports = () => {
   const [searchData, setSearchData] = useState([]);
   const { getMaqamReports } = useContext(UIContext);
   const [currentPage, setCurrentPage] = useState(1);
+  const [currentData, setCurrentData] = useState();
   const navigate = useNavigate();
   const itemsPerPage = 10;
   useEffect(() => {
-    setFilterAllData(mReports);
-  }, [mReports]);
+    setCurrentData(filterAllData);
+  }, [filterAllData]);
   const searchResults = async () => {
     if (year !== "" && month !== "") {
       try {
@@ -91,12 +92,16 @@ export const MaqamReports = () => {
     }
   };
   let totalPages = Math.ceil(total / itemsPerPage);
-
-  const currentData = filterAllData?.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
-
+  useEffect(() => {
+    if (filterAllData?.length > 0) {
+      setCurrentData(
+        filterAllData?.slice(
+          (currentPage - 1) * itemsPerPage,
+          currentPage * itemsPerPage
+        )
+      );
+    }
+  }, []);
   const handlePrevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
@@ -231,63 +236,69 @@ export const MaqamReports = () => {
             )} */}
         </div>
       </div>
-      {!isSearch ? <>{currentData?.length > 0 ? (
-        currentData.map((p) => (
-          <div
-            key={p?._id}
-            className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
-          >
-            <div className="flex w-full flex-col items-start justify-center">
-              <span className="text-sm lg:text-lg font-semibold">
-                {p?.maqamAreaId?.name + " "}
-                {moment(p?.month).format("MMMM YYYY")}
-              </span>
-              <span>Last Modified: {moment(p?.updatedAt).fromNow()}</span>
-            </div>
-            <div className="flex items-end w-full justify-end gap-3 ">
-              <button
-                className="btn"
-                onClick={() => viewReport(p?._id, p?.maqamAreaId?._id)}
+      {!isSearch ? (
+        <>
+          {currentData?.length > 0 ? (
+            currentData?.map((p) => (
+              <div
+                key={p?._id}
+                className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
               >
-                <FaEye />
-              </button>
+                <div className="flex w-full flex-col items-start justify-center">
+                  <span className="text-sm lg:text-lg font-semibold">
+                    {p?.maqamAreaId?.name + " "}
+                    {moment(p?.month).format("MMMM YYYY")}
+                  </span>
+                  <span>Last Modified: {moment(p?.updatedAt).fromNow()}</span>
+                </div>
+                <div className="flex items-end w-full justify-end gap-3 ">
+                  <button
+                    className="btn"
+                    onClick={() => viewReport(p?._id, p?.maqamAreaId?._id)}
+                  >
+                    <FaEye />
+                  </button>
 
-              {me?.userAreaType === "Maqam" && (
-                <button
-                  className="btn"
-                  onClick={() => editReport(p?._id, p?.maqamAreaId?._id)}
-                >
-                  <FaEdit />
-                </button>
-              )}
-              <button className="btn" onClick={() => handlePrint(p)}>
-                <FaPrint />
-              </button>
-            </div>
+                  {me?.userAreaType === "Maqam" && (
+                    <button
+                      className="btn"
+                      onClick={() => editReport(p?._id, p?.maqamAreaId?._id)}
+                    >
+                      <FaEdit />
+                    </button>
+                  )}
+                  <button className="btn" onClick={() => handlePrint(p)}>
+                    <FaPrint />
+                  </button>
+                </div>
+              </div>
+            ))
+          ) : (
+            <NoReports />
+          )}
+          <div className="flex justify-between mt-4">
+            <button
+              className="btn"
+              onClick={handlePrevPage}
+              disabled={currentPage === 1}
+            >
+              Previous
+            </button>
+            <span>
+              Page {currentPage} of {totalPages}
+            </span>
+            <button
+              className="btn"
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </button>
           </div>
-        ))
+        </>
       ) : (
-        <NoReports />
+        <SearchPage data={searchData} area={"maqam"} />
       )}
-      <div className="flex justify-between mt-4">
-        <button
-          className="btn"
-          onClick={handlePrevPage}
-          disabled={currentPage === 1}
-        >
-          Previous
-        </button>
-        <span>
-          Page {currentPage} of {totalPages}
-        </span>
-        <button
-          className="btn"
-          onClick={handleNextPage}
-          disabled={currentPage === totalPages}
-        >
-          Next
-        </button>
-      </div></> : <SearchPage data={searchData} area={'maqam'}/>}
       <dialog id="filter-area-dialog" className="modal">
         <FilterDialog setFilterAllData={setFilterAllData} />
       </dialog>

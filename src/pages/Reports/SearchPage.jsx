@@ -1,20 +1,19 @@
-import React, { useState } from 'react';
-import moment from 'moment';
-import { NoReports } from '../Reports';
-import { FaEye, FaPrint } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import moment from "moment";
+import { FaEye, FaPrint } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import { LuSearchX } from "react-icons/lu";
- const NoSearch = () => (
+const NoSearch = () => (
   <div className="card-body flex flex-col items-center justify-center w-full p-2 md:p-5 mb-1 rounded-xl">
- <LuSearchX className="text-gray-300 w-40 h-40"/> 
+    <LuSearchX className="text-gray-300 w-40 h-40" />
     <span className="text-gray-300 font-bold text-3xl">Not Found!</span>
   </div>
 );
-export const SearchPage = ({ data ,area}) => {
+export const SearchPage = ({ data = [], area }) => {
   const itemsPerPage = 10; // Number of items per page
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
-  const totalPages = Math.ceil(data.length / itemsPerPage);
+  const totalPages = Math.ceil(data?.length / itemsPerPage);
 
   const viewReport = async (id) => {
     navigate(`view/${id}`);
@@ -35,12 +34,15 @@ export const SearchPage = ({ data ,area}) => {
   };
 
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentPageData = data.slice(startIndex, startIndex + itemsPerPage);
-  
+  const currentPageData =
+    data?.length >= 0
+      ? data?.slice(startIndex, startIndex + itemsPerPage)
+      : data?.data?.slice(startIndex, startIndex + itemsPerPage);
+
   return (
     <>
-      {data.length > 0 ? (
-        currentPageData.map((p) => (
+      {currentPageData?.length > 0 ? (
+        currentPageData?.map((p) => (
           <div
             key={p?._id}
             className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
