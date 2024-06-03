@@ -15,31 +15,20 @@ export const OtherActivities = ({ view }) => {
           <input
             readOnly={true}
             type="number"
-            defaultValue={0}
             required
             name={`tarbiyatGaah`}
             id={`tarbiyatGaah`}
             className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
           />
         </div>
-        <div className="flex flex-col lg:flex-row py-2">
+        <div className="flex w-full overflow-hidden overflow-x-scroll gap-3 pb-2">
           <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
             تربیت گاہوں کے انعقاد کا ہدف:
           </label>
           <input
             readOnly={true}
             type="number"
-            defaultValue={0}
             required
-            onChange={() =>
-              sumUpTwoValues(
-                parseInt(document.getElementById("tarbiyatGaahGoal").value),
-                parseInt(
-                  document.getElementById("tarbiyatGaahGoalManual").value
-                ),
-                "tarbiyatGaahGoalSum"
-              )
-            }
             name={`tarbiyatGaahGoal`}
             id={`tarbiyatGaahGoal`}
             className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
@@ -73,24 +62,14 @@ export const OtherActivities = ({ view }) => {
             className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
           />
         </div>
-        <div className="flex flex-col lg:flex-row py-2">
+        <div className="flex w-full overflow-hidden overflow-x-scroll gap-3 pb-2">
           <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
             تربیت گاہوں کے انعقاد کا تعداد:
           </label>
           <input
             readOnly={true}
             type="number"
-            defaultValue={0}
             required
-            onChange={() =>
-              sumUpTwoValues(
-                parseInt(document.getElementById("tarbiyatGaahHeld").value),
-                parseInt(
-                  document.getElementById("tarbiyatGaahHeldManual").value
-                ),
-                "tarbiyatGaahHeldSum"
-              )
-            }
             name={`tarbiyatGaahHeld`}
             id={`tarbiyatGaahHeld`}
             className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
@@ -133,7 +112,6 @@ export const OtherActivities = ({ view }) => {
           <input
             readOnly={view}
             type="number"
-            defaultValue={0}
             required
             name="tanzeemiRound"
             id="tanzeemiRound"
@@ -147,7 +125,6 @@ export const OtherActivities = ({ view }) => {
           <input
             readOnly={true}
             type="number"
-            defaultValue={0}
             required
             name="dawatiWafud"
             id="dawatiWafud"
@@ -161,7 +138,6 @@ export const OtherActivities = ({ view }) => {
           <input
             readOnly={true}
             type="number"
-            defaultValue={0}
             required
             name="rawabitParties"
             id="rawabitParties"
@@ -175,7 +151,6 @@ export const OtherActivities = ({ view }) => {
           <input
             readOnly={true}
             type="number"
-            defaultValue={0}
             required
             name="shabBedari"
             id="shabBedari"
@@ -189,7 +164,6 @@ export const OtherActivities = ({ view }) => {
           <input
             readOnly={true}
             type="number"
-            defaultValue={0}
             required
             name="nizamSalah"
             id="nizamSalah"

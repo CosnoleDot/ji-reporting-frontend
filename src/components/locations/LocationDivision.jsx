@@ -583,7 +583,7 @@ export const LocationDivision = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredData.map((district, index) => (
+              {filteredData?.map((district, index) => (
                 <tr
                   key={index}
                   className="flex w-full justify-between items-start"
@@ -643,7 +643,7 @@ export const LocationDivision = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredData.length > 0 ? (
+              {filteredData?.length > 0 ? (
                 filteredData
                   ?.filter(
                     (i) =>

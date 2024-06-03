@@ -642,8 +642,8 @@ export const Signup = () => {
                 class="absolute hidden z-10 max-h-[100px] overflow-y-scroll bg-white border text-start border-gray-300 w-full mt-1"
               >
                 {areas
-                  .sort((a, b) => a?.name?.localeCompare(b?.name))
-                  .filter((item) => {
+                  ?.sort((a, b) => a?.name?.localeCompare(b?.name))
+                  ?.filter((item) => {
                     if (searchArea && searchArea !== "") {
                       if (
                         item?.name
@@ -658,7 +658,7 @@ export const Signup = () => {
                       return true;
                     }
                   })
-                  .map((area, index) => (
+                  ?.map((area, index) => (
                     <div
                       key={index}
                       onClick={() => {

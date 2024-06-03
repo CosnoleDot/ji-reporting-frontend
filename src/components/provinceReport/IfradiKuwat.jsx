@@ -358,7 +358,7 @@ export const IfradiKuwat = ({ view }) => {
                   className="p-1 text-center "
                   onChange={() =>
                     sumUpTwoValues(
-                      parseInt(document.getElementById("rafaqa-manualStart").value),
+                      parseInt(document.getElementById("rafaqa-start").value),
                       parseInt(document.getElementById("rafaqa-manualStart").value),
                       "rafaqa-startSum"
                     )
@@ -508,7 +508,7 @@ export const IfradiKuwat = ({ view }) => {
                   id={`karkunan-manualStart`}
                   onChange={() =>
                     sumUpTwoValues(
-                      parseInt(document.getElementById("karkunan-manualStart").value),
+                      parseInt(document.getElementById("karkunan-start").value),
                       parseInt(document.getElementById("karkunan-manualStart").value),
                       "karkunan-startSum"
                     )

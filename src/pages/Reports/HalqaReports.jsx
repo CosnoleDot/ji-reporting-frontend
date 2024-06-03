@@ -1,7 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import {
-  HalqaReportContext,
-  HalqaReportTabContext,
   MeContext,
   useToastState,
 } from "../../context";
@@ -16,7 +14,7 @@ import { SearchPage } from "./SearchPage";
 
 export const HalqaReports = () => {
   const [tab, setTab] = useState("maqam");
-  const [filterData, setFilterData] = useState([]);
+  const { setLoading } = useContext(UIContext);
   const { dispatch } = useToastState();
   const [search, showSearch] = useState(false);
   const [isSearch, setIsSearch] = useState(false);
@@ -26,13 +24,13 @@ export const HalqaReports = () => {
   const [data, setData] = useState([]);
   const me = useContext(MeContext);
   const [searchData, setSearchData] = useState([]);
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [length, setLength] = useState(1);
   const itemsPerPage = 10;
   const getHalqaReportsTab = async (inset, offset, tab) => {
     if (tab) {
+      setLoading(true);
       try {
         const req = await instance.get(
           `/reports/halqa?inset=${inset}&offset=${offset}&tab=${tab}`,
@@ -150,9 +148,8 @@ export const HalqaReports = () => {
     }
   };
 
-
   const tabClick = (tab) => {
-    clearFilters()
+    clearFilters();
     setData([]);
     setTab(tab);
     getHalqaReportsTab((currentPage - 1) * itemsPerPage, itemsPerPage, tab);
@@ -314,7 +311,7 @@ export const HalqaReports = () => {
         </div>
       </div>
 
-      {!isSearch ? 
+      {!isSearch ? (
         <>
           {" "}
           {data?.length > 0 ? (
@@ -371,11 +368,12 @@ export const HalqaReports = () => {
             </button>
           </div>
         </>
-        : <SearchPage data={searchData}/>
-      }
+      ) : (
+        <SearchPage data={searchData} />
+      )}
 
       <dialog id="filter-area-dialog" className="modal">
-        <FilterDialog  tab={tab} />   
+        <FilterDialog tab={tab} />
       </dialog>
     </>
   );

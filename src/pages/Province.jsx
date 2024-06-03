@@ -213,7 +213,7 @@ export const Province = () => {
           "Content-Type": "application/json",
         },
       });
-      const repo = req?.data?.data?.data;
+      const repo = req?.data?.data;
       setCreateData(repo);
       dispatch({ type: "SUCCESS", payload: req.data?.message });
     } catch (err) {
@@ -231,6 +231,7 @@ export const Province = () => {
       });
       const repo = req?.data?.data;
       setData(reverseDataFormat(repo));
+      
       dispatch({ type: "SUCCESS", payload: req.data?.message });
     } catch (err) {
       dispatch({ type: "ERROR", payload: err.response.data.message });
@@ -426,7 +427,11 @@ export const Province = () => {
     "tanzeemiRound",
     "tarbiyatGaah",
     "tarbiyatGaahGoal",
+    "tarbiyatGaahGoalManual",
+    "tarbiyatGaahGoalSum",
     "tarbiyatGaahHeld",
+    "tarbiyatGaahHeldManual",
+    "tarbiyatGaahHeldSum",
     "totalBookRent",
     "totalBooks",
     "totalDecrease",

@@ -55,6 +55,7 @@ export const Dashboard = () => {
   const [personalFilled, setPersonalFilled] = useState([]);
   const [initialData, setInitialData] = useState(null);
   const [show, setShow] = useState(true);
+  const [showData, setShowData] = useState(false);
   const [month, setMonth] = useState();
   let date;
   useEffect(() => {
@@ -80,6 +81,8 @@ export const Dashboard = () => {
     getHalqas();
   }, []);
   const getData = async () => {
+    setShowData(true);
+    setLoading(true);
     // Check if data is already stored in session storage
     if (userAreaType === "personal" && queryDate !== "") {
       handlePersonalFilledReports();
@@ -178,12 +181,13 @@ export const Dashboard = () => {
             sessionStorage.setItem("storedData", JSON.stringify(temp));
           }
           setData({ ...temp });
-
+          setLoading(false);
           // saving the initial data so that on clear filter can set it back
           if (!initialData?.data) {
             setInitialData({ ...initialData, data: temp });
           }
         } catch (error) {
+          setLoading(false);
           console.log(error);
         }
       } else {
@@ -198,12 +202,6 @@ export const Dashboard = () => {
       setData(JSON.parse(storedData));
     }
   }, []);
-  useEffect(() => {
-    if (data.length === 0) {
-      getData();
-    }
-    // eslint-disable-next-line
-  }, [me, data]);
   const clearFilter = () => {
     // setting back the data from initial state back to the respective sates
     setQuerydate("");
@@ -319,6 +317,7 @@ export const Dashboard = () => {
       }));
     }
     // Set the state variables
+    setLoading(false);
     setUmeedwars(validNazim);
     setPersonalFilled(filledNazim);
     setPersonalUnfilled(unfilledNazim);
@@ -611,31 +610,78 @@ export const Dashboard = () => {
                     Clear Filter
                   </button>
                 </div>
-                <div className="overflow-x-auto grid grid-cols-1 gap-4  mt-8 sm:grid-cols-1 sm:px-4 w-full">
-                  <div className="w-full mb-3 h-[300px] overflow-auto overflow-y-scroll">
-                    <p className="text-slate-500">Reports of {month}</p>
-                    {show && (
-                      <table className="table mb-7">
-                        {/* head */}
-                        <thead className="">
-                          <tr className="w-full flex">
-                            <th className="w-[50%]">Area</th>
-                            <th className="w-[50%]">Nazim</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {toggle === "filled" ? (
-                            data?.filled?.length > 0 ? (
-                              data?.filled
+                <button onClick={getData} className="btn btn-neutral">
+                  See Reports Status
+                </button>
+                {showData && (
+                  <div className="overflow-x-auto grid grid-cols-1 gap-4  mt-8 sm:grid-cols-1 sm:px-4 w-full">
+                    <div className="w-full mb-3 h-[300px] overflow-auto overflow-y-scroll">
+                      <p className="text-slate-500">Reports of {month}</p>
+                      {show && (
+                        <table className="table mb-7">
+                          {/* head */}
+                          <thead className="">
+                            <tr className="w-full flex">
+                              <th className="w-[50%]">Area</th>
+                              <th className="w-[50%]">Nazim</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {toggle === "filled" ? (
+                              data?.filled?.length > 0 ? (
+                                data?.filled
+                                  ?.filter((i) => !i?.disabled)
+                                  ?.map((obj, index) => (
+                                    <tr
+                                      key={index}
+                                      className={`w-full flex ${
+                                        index % 2 === 0 && "bg-[#B2D5FF]"
+                                      }`}
+                                    >
+                                      <td className="w-[50%]">{obj.name}</td>
+                                      <td className="w-[50%]">
+                                        {nazim.find(
+                                          (i) => i?.userAreaId?._id === obj?._id
+                                        )?.name || (
+                                          <span className="text-red-400 font-semibold">
+                                            User Not Registered Yet
+                                          </span>
+                                        )}
+                                      </td>
+                                      <td className="">
+                                        <div
+                                          onClick={() => {
+                                            getAreaDetails(obj);
+                                          }}
+                                        >
+                                          <FcViewDetails className="cursor-pointer text-2xl p-0 m-0" />
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  ))
+                              ) : (
+                                <tr>
+                                  <td colSpan="2">
+                                    No one has filled report yet
+                                  </td>
+                                </tr>
+                              )
+                            ) : data?.unfilled?.length > 0 ? (
+                              data?.unfilled
                                 .filter((i) => !i?.disabled)
                                 .map((obj, index) => (
                                   <tr
-                                    key={index}
                                     className={`w-full flex ${
                                       index % 2 === 0 && "bg-[#B2D5FF]"
                                     }`}
+                                    key={index}
                                   >
-                                    <td className="w-[50%]">{obj.name}</td>
+                                    <td className="w-[50%]">
+                                      {obj.name}
+                                      {obj?.parentType
+                                        ? "-" + obj?.parentType
+                                        : ""}
+                                    </td>
                                     <td className="w-[50%]">
                                       {nazim.find(
                                         (i) => i?.userAreaId?._id === obj?._id
@@ -651,124 +697,84 @@ export const Dashboard = () => {
                                           getAreaDetails(obj);
                                         }}
                                       >
-                                        <FcViewDetails className="cursor-pointer text-2xl p-0 m-0" />
+                                        <FcViewDetails className="cursor-pointer text-2xl" />
                                       </div>
                                     </td>
                                   </tr>
                                 ))
                             ) : (
                               <tr>
-                                <td colSpan="2">
-                                  No one has filled report yet
-                                </td>
+                                <td colSpan="2">All have filled reports</td>
                               </tr>
-                            )
-                          ) : data?.unfilled?.length > 0 ? (
-                            data?.unfilled
-                              .filter((i) => !i?.disabled)
-                              .map((obj, index) => (
-                                <tr
-                                  className={`w-full flex ${
-                                    index % 2 === 0 && "bg-[#B2D5FF]"
-                                  }`}
-                                  key={index}
-                                >
-                                  <td className="w-[50%]">
-                                    {obj.name}
-                                    {obj?.parentType
-                                      ? "-" + obj?.parentType
-                                      : ""}
-                                  </td>
-                                  <td className="w-[50%]">
-                                    {nazim.find(
-                                      (i) => i?.userAreaId?._id === obj?._id
-                                    )?.name || (
-                                      <span className="text-red-400 font-semibold">
-                                        User Not Registered Yet
-                                      </span>
-                                    )}
-                                  </td>
-                                  <td className="">
-                                    <div
-                                      onClick={() => {
-                                        getAreaDetails(obj);
-                                      }}
+                            )}
+                          </tbody>
+                        </table>
+                      )}
+                      {!show && (
+                        <table className="table mb-7">
+                          {/* head */}
+                          <thead className="">
+                            <tr className="w-full flex">
+                              <th className="w-[50%]">Name</th>
+                              <th className="w-[50%]">Area</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {toggle === "pFilled" ? (
+                              personalFilled?.length > 0 ? (
+                                personalFilled
+                                  .filter((i) => !i?.disabled)
+                                  .map((obj, index) => (
+                                    <tr
+                                      key={index}
+                                      className={`w-full flex ${
+                                        index % 2 === 0 && "bg-[#B2D5FF]"
+                                      }`}
                                     >
-                                      <FcViewDetails className="cursor-pointer text-2xl" />
-                                    </div>
+                                      <td className="w-[50%]">{obj.name}</td>
+                                      <td className="w-[50%]">
+                                        {obj?.parentType
+                                          ? "-" + obj?.parentType
+                                          : ""}
+                                      </td>
+                                    </tr>
+                                  ))
+                              ) : (
+                                <tr>
+                                  <td colSpan="2">
+                                    No one has filled personal report yet
                                   </td>
                                 </tr>
-                              ))
-                          ) : (
-                            <tr>
-                              <td colSpan="2">All have filled reports</td>
-                            </tr>
-                          )}
-                        </tbody>
-                      </table>
-                    )}
-                    {!show && (
-                      <table className="table mb-7">
-                        {/* head */}
-                        <thead className="">
-                          <tr className="w-full flex">
-                            <th className="w-[50%]">Name</th>
-                            <th className="w-[50%]">Area</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {toggle === "pFilled" ? (
-                            personalFilled?.length > 0 ? (
-                              personalFilled
+                              )
+                            ) : personalUnfilled?.length > 0 ? (
+                              personalUnfilled
                                 .filter((i) => !i?.disabled)
                                 .map((obj, index) => (
                                   <tr
-                                    key={index}
                                     className={`w-full flex ${
                                       index % 2 === 0 && "bg-[#B2D5FF]"
                                     }`}
+                                    key={index}
                                   >
                                     <td className="w-[50%]">{obj.name}</td>
                                     <td className="w-[50%]">
-                                      {obj?.parentType
-                                        ? "-" + obj?.parentType
-                                        : ""}
+                                      {obj?.parentType}
                                     </td>
                                   </tr>
                                 ))
                             ) : (
                               <tr>
                                 <td colSpan="2">
-                                  No one has filled personal report yet
+                                  All have filled thier personal Reports
                                 </td>
                               </tr>
-                            )
-                          ) : personalUnfilled?.length > 0 ? (
-                            personalUnfilled
-                              .filter((i) => !i?.disabled)
-                              .map((obj, index) => (
-                                <tr
-                                  className={`w-full flex ${
-                                    index % 2 === 0 && "bg-[#B2D5FF]"
-                                  }`}
-                                  key={index}
-                                >
-                                  <td className="w-[50%]">{obj.name}</td>
-                                  <td className="w-[50%]">{obj?.parentType}</td>
-                                </tr>
-                              ))
-                          ) : (
-                            <tr>
-                              <td colSpan="2">
-                                All have filled thier personal Reports
-                              </td>
-                            </tr>
-                          )}
-                        </tbody>
-                      </table>
-                    )}
+                            )}
+                          </tbody>
+                        </table>
+                      )}
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             )}
         </div>

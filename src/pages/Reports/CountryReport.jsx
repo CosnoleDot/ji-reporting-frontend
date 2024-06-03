@@ -113,7 +113,7 @@ export const CountryReport = () => {
               value={month}
             >
               <option value={""}>Month</option>
-              {months.map((month, index) => (
+              {months?.map((month, index) => (
                 <option value={month?.value} key={index}>
                   {month.title}
                 </option>
@@ -128,7 +128,7 @@ export const CountryReport = () => {
                 Year
               </option>
               {Array(10)
-                .fill(1)
+                ?.fill(1)
                 .map((_, index) => (
                   <option key={index} value={2023 + index}>
                     {2023 + index}
@@ -147,7 +147,7 @@ export const CountryReport = () => {
                   value={month}
                 >
                   <option value={""}>Month</option>
-                  {months.map((month, index) => (
+                  {months?.map((month, index) => (
                     <option value={month?.value} key={index}>
                       {month.title}
                     </option>
@@ -162,7 +162,7 @@ export const CountryReport = () => {
                     Year
                   </option>
                   {Array(10)
-                    .fill(1)
+                    ?.fill(1)
                     .map((_, index) => (
                       <option key={index} value={2023 + index}>
                         {2023 + index}

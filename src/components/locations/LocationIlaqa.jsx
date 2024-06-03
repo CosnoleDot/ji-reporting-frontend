@@ -140,8 +140,8 @@ export const LocationIlaqa = () => {
           </thead>
           <tbody>
             {halqas
-              .filter((i) => i?.parentType === "Ilaqa")
-              .map((halqa, index) => (
+              ?.filter((i) => i?.parentType === "Ilaqa")
+              ?.map((halqa, index) => (
                 <tr
                   key={index}
                   className="flex w-full justify-between items-start"
