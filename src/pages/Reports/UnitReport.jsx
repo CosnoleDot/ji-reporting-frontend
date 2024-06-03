@@ -11,9 +11,9 @@ import { SearchPage } from "./SearchPage";
 
 export const UnitReport = () => {
   const h = useContext(HalqaReportContext);
+  console.log(h);
   const hReports = h?.reports;
   const total = h?.length;
-
   const [filterAllData, setFilterAllData] = useState(hReports);
   const { dispatch } = useToastState();
   const [search, showSearch] = useState(false);
@@ -233,7 +233,7 @@ export const UnitReport = () => {
           {currentData?.length > 0 ? (
             currentData.map((p, index) => (
               <div
-                key={p?._id}
+                key={index}
                 className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
               >
                 <div className="flex w-full flex-col items-start justify-center">

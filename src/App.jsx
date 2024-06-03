@@ -715,8 +715,8 @@ function App() {
         }
       );
       if (req) {
-        halqaR = req.data.data?.data;
-        let length = req?.data?.data?.length;
+        halqaR = req.data.data?.reports;
+        const len = req?.data?.data?.totalReports;
         setHalqaReports((prevData) => {
           const reports = Array.isArray(prevData.reports)
             ? prevData.reports
@@ -725,7 +725,7 @@ function App() {
 
           return {
             reports: [...reports, ...newReports],
-            length: length,
+            length: len,
           };
         });
         setLoading(false);
