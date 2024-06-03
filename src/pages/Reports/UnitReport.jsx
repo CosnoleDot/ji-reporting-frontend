@@ -12,6 +12,7 @@ import { SearchPage } from "./SearchPage";
 export const UnitReport = () => {
   const h = useContext(HalqaReportContext);
   const hReports = h?.reports;
+  const hReports = h?.reports;
   const total = h?.length;
 
   const [filterAllData, setFilterAllData] = useState(hReports);

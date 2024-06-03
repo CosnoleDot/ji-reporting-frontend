@@ -9,7 +9,7 @@ export function GeneralInfo({ me, area, view, newMonth, setMonth }) {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [me]);
+  });
   const setDateFn = () => {
     const date0 = new Date();
     date0.setMonth(date0.getMonth() - 1);
@@ -46,7 +46,6 @@ export function GeneralInfo({ me, area, view, newMonth, setMonth }) {
           name="name"
           id="name"
           readOnly
-          value={me?.userAreaId?.name}
         />
       </div>
       {!newMonth ? (

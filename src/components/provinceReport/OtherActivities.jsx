@@ -24,10 +24,18 @@ export const OtherActivities = ({ view }) => {
           <input
             readOnly={view}
             type="number"
-            defaultValue={document.getElementById("tarbiyatGaahGoalSum")?.value}
             required
             name={`tarbiyatGaahGoal`}
             id={`tarbiyatGaahGoal`}
+            onChange={() =>
+              sumUpTwoValues(
+                parseInt(document.getElementById("tarbiyatGaahGoal").value),
+                parseInt(
+                  document.getElementById("tarbiyatGaahGoalManual").value
+                ),
+                "tarbiyatGaahGoalSum"
+              )
+            }
             className="border-b-2 text-center border-dashed mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
           />
           +
@@ -46,6 +54,15 @@ export const OtherActivities = ({ view }) => {
             }
             name={`tarbiyatGaahGoalManual`}
             id={`tarbiyatGaahGoalManual`}
+            onChange={() =>
+              sumUpTwoValues(
+                parseInt(document.getElementById("tarbiyatGaahGoal").value),
+                parseInt(
+                  document.getElementById("tarbiyatGaahGoalManual").value
+                ),
+                "tarbiyatGaahGoalSum"
+              )
+            }
             className="border-b-2 text-center border-dashed mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
           />
           =
@@ -76,11 +93,19 @@ export const OtherActivities = ({ view }) => {
           <input
             readOnly={view}
             type="number"
-            defaultValue={document.getElementById("tarbiyatGaahHeldSum")?.value}
             required
             name={`tarbiyatGaahHeld`}
             id={`tarbiyatGaahHeld`}
             className="border-b-2 text-center border-dashed mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
+            onChange={() =>
+              sumUpTwoValues(
+                parseInt(document.getElementById("tarbiyatGaahHeld").value),
+                parseInt(
+                  document.getElementById("tarbiyatGaahHeldManual").value
+                ),
+                "tarbiyatGaahHeldSum"
+              )
+            }
           />
           +
           <input
@@ -99,6 +124,15 @@ export const OtherActivities = ({ view }) => {
             name={`tarbiyatGaahHeldManual`}
             id={`tarbiyatGaahHeldManual`}
             className="border-b-2 text-center border-dashed mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
+            onChange={() =>
+              sumUpTwoValues(
+                parseInt(document.getElementById("tarbiyatGaahHeld").value),
+                parseInt(
+                  document.getElementById("tarbiyatGaahHeldManual").value
+                ),
+                "tarbiyatGaahHeldSum"
+              )
+            }
           />
           =
           <input

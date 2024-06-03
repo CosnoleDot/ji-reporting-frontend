@@ -43,7 +43,7 @@ export const HalqaReports = () => {
 
         if (req) {
           setData([]);
-          setData(req.data.data.data);
+          setData(req.data.data?.data);
           setLength(req.data.data.length);
         }
       } catch (err) {
@@ -102,7 +102,7 @@ export const HalqaReports = () => {
 
         if (req) {
           setSearchData([]);
-          setSearchData(req.data.data.data);
+          setSearchData(req.data.data?.data);
         }
       } catch (err) {
         console.log(err);
@@ -141,7 +141,6 @@ export const HalqaReports = () => {
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
-
       setData([]);
       setTab(tab);
       getHalqaReportsTab(currentPage * itemsPerPage, itemsPerPage, tab);
@@ -313,7 +312,6 @@ export const HalqaReports = () => {
 
       {!isSearch ? (
         <>
-          {" "}
           {data?.length > 0 ? (
             data
               ?.filter((i) =>
@@ -322,7 +320,7 @@ export const HalqaReports = () => {
                   : i.halqaAreaId?.parentType ===
                     tab.charAt(0).toUpperCase() + tab.slice(1)
               )
-              .map((p) => (
+              ?.map((p) => (
                 <div
                   key={p?._id}
                   className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
@@ -369,7 +367,7 @@ export const HalqaReports = () => {
           </div>
         </>
       ) : (
-        <SearchPage data={searchData} />
+        <SearchPage data={searchData} area={tab} />
       )}
 
       <dialog id="filter-area-dialog" className="modal">

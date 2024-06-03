@@ -206,8 +206,8 @@ export const LocationIlaqa = () => {
                   Select Ilaqa
                 </option>
                 {ilaqas
-                  .filter((i) => !i?.disabled)
-                  .map((i, index) => (
+                  ?.filter((i) => !i?.disabled)
+                  ?.map((i, index) => (
                     <option value={i?._id} key={index}>
                       {i?.name}
                     </option>

@@ -195,9 +195,13 @@ export const Reports = () => {
               )}
           </div>
         </div>
-        {["umeedwar", "rukan", "umeedwaar-nazim", "rukan-nazim"].includes(
-          me?.nazimType
-        ) && (
+        {[
+          "umeedwar",
+          "rukan",
+          "umeedwaar-nazim",
+          "rukan-nazim",
+          "nazim",
+        ].includes(me?.nazimType) && (
           <Link
             to={"/personalReport"}
             role="tab"
@@ -277,7 +281,7 @@ export const Reports = () => {
                 Maqam
               </Link>
             )}
-          {["country", "maqam", "ilaqa","province"].includes(
+          {["country", "maqam", "ilaqa", "province"].includes(
             localStorage.getItem("@type")
           ) &&
             ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(

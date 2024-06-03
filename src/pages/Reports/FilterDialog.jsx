@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UIContext } from "../../context/ui";
-import { getDivisionByTehsil } from "../Reports";
 import {
-  DistrictContext,
   DivisionContext,
   HalqaContext,
   IlaqaContext,
@@ -25,7 +23,6 @@ export const FilterDialog = ({ setFilterAllData, tab }) => {
   const [selectedMonth, setSelectedMonth] = useState("");
   const maqams = useContext(MaqamContext);
   const divisions = useContext(DivisionContext);
-  const districts = useContext(DistrictContext);
   const provinces = useContext(ProvinceContext);
   const halqas = useContext(HalqaContext);
   const ilaqas = useContext(IlaqaContext);

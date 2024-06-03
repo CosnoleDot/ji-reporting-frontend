@@ -3594,10 +3594,6 @@ html {
   margin-bottom: -0.375rem;
 }
 
-.mb-0 {
-  margin-bottom: 0px;
-}
-
 .mb-1 {
   margin-bottom: 0.25rem;
 }
@@ -3691,10 +3687,6 @@ html {
 
 .mt-8 {
   margin-top: 2rem;
-}
-
-.ml-2 {
-  margin-left: 0.5rem;
 }
 
 .block {
@@ -4380,6 +4372,10 @@ html {
   padding-bottom: 1.25rem;
 }
 
+.pb-2 {
+  padding-bottom: 0.5rem;
+}
+
 .pl-3 {
   padding-left: 0.75rem;
 }
@@ -4402,10 +4398,6 @@ html {
 
 .pt-0 {
   padding-top: 0px;
-}
-
-.pb-2 {
-  padding-bottom: 0.5rem;
 }
 
 .pt-2 {

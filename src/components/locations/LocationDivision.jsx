@@ -649,7 +649,7 @@ export const LocationDivision = () => {
                     (i) =>
                       i?.parentType === "Tehsil" || i?.parentType === "Division"
                   )
-                  .map((halqa, index) => (
+                  ?.map((halqa, index) => (
                     <tr
                       key={index}
                       className="flex w-full justify-between items-start"
@@ -727,7 +727,7 @@ export const LocationDivision = () => {
                   ?.filter(
                     (i) => !i?.disabled && i?._id === me?.userAreaId?._id
                   )
-                  .map((i, index) => (
+                  ?.map((i, index) => (
                     <option value={i?._id} key={index}>
                       {i?.name}
                     </option>
@@ -789,8 +789,8 @@ export const LocationDivision = () => {
                   Select Division
                 </option>
                 {divisions
-                  .filter((i) => !i?.disabled)
-                  .map((i, index) => (
+                  ?.filter((i) => !i?.disabled)
+                  ?.map((i, index) => (
                     <option value={i?._id} key={index}>
                       {i?.name}
                     </option>
@@ -854,8 +854,8 @@ export const LocationDivision = () => {
                   Select District
                 </option>
                 {districts
-                  .filter((i) => !i?.disabled)
-                  .map((i, index) => (
+                  ?.filter((i) => !i?.disabled)
+                  ?.map((i, index) => (
                     <option value={i?._id} key={index}>
                       {i?.name}
                     </option>
@@ -948,8 +948,8 @@ export const LocationDivision = () => {
                     Select Division
                   </option>
                   {divisions
-                    .filter((i) => !i?.disabled)
-                    .map((i, index) => (
+                    ?.filter((i) => !i?.disabled)
+                    ?.map((i, index) => (
                       <option value={i?._id} key={index}>
                         {i?.name}
                       </option>

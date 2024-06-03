@@ -24,7 +24,6 @@ export const ProvinceReports = () => {
   const [year, setYear] = useState("2023");
   const me = useContext(MeContext);
   const { getProvinceReports } = useContext(UIContext);
-  const [disable, setDisable] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
   const itemsPerPage = 10;
@@ -46,7 +45,7 @@ export const ProvinceReports = () => {
 
         if (req) {
           setSearchData([]);
-          setSearchData(req.data.data.data);
+          setSearchData(req.data?.data);
         }
       } catch (err) {
         console.log(err);

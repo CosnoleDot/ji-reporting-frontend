@@ -50,7 +50,6 @@ export const Maqam = () => {
     const halq = {};
 
     document.getElementById("maqam-form").reset();
-
     createData?.forEach((i) => {
       const sim = reverseDataFormat(i);
       Object.keys(sim)?.forEach((j) => {
@@ -186,6 +185,7 @@ export const Maqam = () => {
     }
     setLoading(false);
   };
+
   const getMaqamReport = async () => {
     try {
       const req = await instance.get(`/reports/maqam/${id}`, {
@@ -218,6 +218,8 @@ export const Maqam = () => {
     const l = location.pathname?.split("/")[2];
     if (l === "view") {
       setView(true);
+    } else if (l === "create") {
+      setView(false);
     }
     setId(params?.id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -272,7 +274,7 @@ export const Maqam = () => {
       getMaqamReport();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [month, createData, id]);
+  }, [month, createData, id, data]);
   // EDIT CODE END
   const handleSubmit = async (e) => {
     e.preventDefault();
