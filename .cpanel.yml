@@ -3,6 +3,6 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/jamiatre/public_html/temp_deploy_path/
-    - /bin/cp /home/jamiatre/public_html/* /home/jamiatre/public_html/backup_test/
+    # - /bin/cp /home/jamiatre/public_html/* /home/jamiatre/public_html/backup_test/
     # - /bin/gzip backup_test.zip
     - /bin/cp * $DEPLOYPATH
