@@ -8,7 +8,7 @@ deployment:
     - export DEPLOYPATH=/home/jamiatre/public_html/temp_deploy_path/
     - export REPOPATH=/home/jamiatre/public_html/test-ci-cd/ji-reporting-frontend
     # Remove previous old files, if any.
-    - /bin/rm -Rf ${DEPLOYPATH}_old
+    - rm -Rf ${DEPLOYPATH}_old
     # Copy old site files to another directory.
-    - /bin/cp -R ${DEPLOYPATH} ${DEPLOYPATH}_old
+    # - /bin/cp -R ${DEPLOYPATH} ${DEPLOYPATH}_old
     # - /bin/zip -R new.zip ${DEPLOYPATH}*
