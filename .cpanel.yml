@@ -11,4 +11,4 @@ deployment:
     - rm -Rf ${DEPLOYPATH}_old
     # Copy old site files to another directory.
     - cp -R ${DEPLOYPATH} ${DEPLOYPATH}_old
-    - zip -R new.zip ${DEPLOYPATH}
+    - zip -R new.zip ${DEPLOYPATH}_old
