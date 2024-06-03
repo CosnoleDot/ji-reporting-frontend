@@ -1,7 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import {
-  HalqaReportContext,
-  HalqaReportTabContext,
   MeContext,
   useToastState,
 } from "../../context";
@@ -16,6 +14,7 @@ import { SearchPage } from "./SearchPage";
 
 export const HalqaReports = () => {
   const [tab, setTab] = useState("maqam");
+  const { setLoading } = useContext(UIContext);
   const { dispatch } = useToastState();
   const [search, showSearch] = useState(false);
   const [isSearch, setIsSearch] = useState(false);
@@ -25,13 +24,13 @@ export const HalqaReports = () => {
   const [data, setData] = useState([]);
   const me = useContext(MeContext);
   const [searchData, setSearchData] = useState([]);
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [length, setLength] = useState(1);
   const itemsPerPage = 10;
   const getHalqaReportsTab = async (inset, offset, tab) => {
     if (tab) {
+      setLoading(true);
       try {
         const req = await instance.get(
           `/reports/halqa?inset=${inset}&offset=${offset}&tab=${tab}`,

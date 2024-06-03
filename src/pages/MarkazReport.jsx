@@ -73,6 +73,8 @@ export const MarkazReport = () => {
         }
       });
     });
+    delete halq.tarbiyatGaahHeldManual
+    delete halq.tarbiyatGaahGoalManual
     Object.keys(halq).forEach((i) => {
       let j;
       if (i === "current") {
@@ -82,6 +84,10 @@ export const MarkazReport = () => {
           j = i.split("-")[0] + "-done";
         } else if (i.split("-")[1] === "attendance") {
           j = i.split("-")[0] + "-averageAttendance";
+        } else if (i === "tarbiyatGaahHeldSum") {
+          j = "tarbiyatGaahHeld";
+        } else if (i === "tarbiyatGaahGoalSum") {
+          j = "tarbiyatGaahGoal";
         } else if (i === "books") {
           j = "totalBooks";
         } else if (i === "bookRent") {
@@ -95,7 +101,6 @@ export const MarkazReport = () => {
         }
       }
       //  there
-
       const afd = [
         "rehaishHalqay",
         "taleemHalqay",
@@ -196,12 +201,6 @@ export const MarkazReport = () => {
   };
 
   const paigham = [
-    "tarbiyatGaahGoalManual",
-    "tarbiyatGaahHeldManual",
-    "tarbiyatGaahGoalSum",
-    "tarbiyatGaahHeldSum",
-    "tarbiyatGaahGoal",
-    "tarbiyatGaahHeld",
     "divMushawarat-averageAttendance",
     "ijtArkan-averageAttendance",
     "ijtNazmeen-averageAttendance",

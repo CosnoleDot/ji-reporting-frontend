@@ -15,8 +15,8 @@ import { UIContext } from "../../context/ui";
 export const CountryReport = () => {
   const c = useContext(MarkazReportContext);
   const cReports = c?.reports;
+
   const total = c?.length;
-  const [filterData, setFilterData] = useState([]);
   const [filterAllData, setFilterAllData] = useState(cReports);
   const { dispatch } = useToastState();
   const [search, showSearch] = useState(false);
@@ -85,7 +85,7 @@ export const CountryReport = () => {
   useEffect(() => {
     if (filterAllData?.length > 0) {
       setCurrentData(
-        filterAllData?.data?.slice(
+        filterAllData?.slice(
           (currentPage - 1) * itemsPerPage,
           currentPage * itemsPerPage
         )
@@ -120,7 +120,7 @@ export const CountryReport = () => {
               value={month}
             >
               <option value={""}>Month</option>
-              {months.map((month, index) => (
+              {months?.map((month, index) => (
                 <option value={month?.value} key={index}>
                   {month.title}
                 </option>
@@ -135,7 +135,7 @@ export const CountryReport = () => {
                 Year
               </option>
               {Array(10)
-                .fill(1)
+                ?.fill(1)
                 .map((_, index) => (
                   <option key={index} value={2023 + index}>
                     {2023 + index}
@@ -154,7 +154,7 @@ export const CountryReport = () => {
                   value={month}
                 >
                   <option value={""}>Month</option>
-                  {months.map((month, index) => (
+                  {months?.map((month, index) => (
                     <option value={month?.value} key={index}>
                       {month.title}
                     </option>
@@ -169,7 +169,7 @@ export const CountryReport = () => {
                     Year
                   </option>
                   {Array(10)
-                    .fill(1)
+                    ?.fill(1)
                     .map((_, index) => (
                       <option key={index} value={2023 + index}>
                         {2023 + index}

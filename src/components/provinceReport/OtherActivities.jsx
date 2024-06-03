@@ -43,6 +43,15 @@ export const OtherActivities = ({ view }) => {
             readOnly={view}
             type="number"
             required
+            onChange={() =>
+              sumUpTwoValues(
+                parseInt(document.getElementById("tarbiyatGaahGoal").value),
+                parseInt(
+                  document.getElementById("tarbiyatGaahGoalManual").value
+                ),
+                "tarbiyatGaahGoalSum"
+              )
+            }
             name={`tarbiyatGaahGoalManual`}
             id={`tarbiyatGaahGoalManual`}
             onChange={() =>
@@ -103,6 +112,15 @@ export const OtherActivities = ({ view }) => {
             readOnly={view}
             type="number"
             required
+            onChange={() =>
+              sumUpTwoValues(
+                parseInt(document.getElementById("tarbiyatGaahHeld").value),
+                parseInt(
+                  document.getElementById("tarbiyatGaahHeldManual").value
+                ),
+                "tarbiyatGaahHeldSum"
+              )
+            }
             name={`tarbiyatGaahHeldManual`}
             id={`tarbiyatGaahHeldManual`}
             className="border-b-2 text-center border-dashed mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"

@@ -234,13 +234,14 @@ export const ProvinceReports = () => {
                   >
                     <FaEye />
                   </button>
-
-                  <button
-                    className="btn"
-                    onClick={() => navigate(`/reports/edit/${p._id}`)}
-                  >
-                    <FaEdit />
-                  </button>
+                  {me?.userAreaType === "Province" && (
+                    <button
+                      className="btn"
+                      onClick={() => navigate(`/reports/edit/${p._id}`)}
+                    >
+                      <FaEdit />
+                    </button>
+                  )}
 
                   <button className="btn" onClick={() => handlePrint(p?._id)}>
                     <FaPrint />

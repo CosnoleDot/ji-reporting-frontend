@@ -9,7 +9,7 @@ const NoSearch = () => (
     <span className="text-gray-300 font-bold text-3xl">Not Found!</span>
   </div>
 );
-export const SearchPage = ({ data = [], area }) => {
+export const SearchPage = ({ data ,area}) => {
   const itemsPerPage = 10; // Number of items per page
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
