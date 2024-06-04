@@ -103,7 +103,6 @@ export const Halqa = () => {
         },
       });
       const repo = req?.data?.data;
-      console.log(repo?.halqaAreaId?.name);
       document.getElementById("name").value = repo?.halqaAreaId?.name;
       setData(reverseDataFormat(repo));
       dispatch({ type: "SUCCESS", payload: req.data?.message });
