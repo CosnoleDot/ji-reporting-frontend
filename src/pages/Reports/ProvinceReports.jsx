@@ -13,7 +13,6 @@ export const ProvinceReports = () => {
   const p = useContext(ProvinceReportContext);
   const pReports = p?.reports;
   const total = p?.length;
-  const [filterData, setFilterData] = useState([]);
   const [filterAllData, setFilterAllData] = useState(pReports);
   const { dispatch } = useToastState();
   const [search, showSearch] = useState(false);
@@ -24,6 +23,7 @@ export const ProvinceReports = () => {
   const [year, setYear] = useState("2024");
   const me = useContext(MeContext);
   const { getProvinceReports } = useContext(UIContext);
+  
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
   const itemsPerPage = 10;
@@ -180,6 +180,7 @@ export const ProvinceReports = () => {
             <button
               onClick={() => {
                 document.getElementById("filter-area-dialog").showModal();
+                setIsSearch(false)
               }}
               className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
             >

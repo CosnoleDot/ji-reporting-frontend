@@ -28,8 +28,9 @@ export const FilterDialog = ({ setFilterAllData, tab }) => {
   const ilaqas = useContext(IlaqaContext);
   const tehsils = useContext(TehsilContext);
   const { dispatch } = useToastState();
-
+  
   const getAreaType = (area) => {
+    
     if (area?.parentType === "Maqam") {
       const name = maqams?.find((i) => i?._id === area?.parentId);
       return `${name?.name}(Maqam)`;
@@ -39,11 +40,12 @@ export const FilterDialog = ({ setFilterAllData, tab }) => {
       // const name = getDivisionByTehsil(tehsil, districts);
       return `${tehsil?.district?.division?.name}(Division)`;
     } else if (area?.parentType === "Ilaqa") {
-      const ilaqa = ilaqas?.find((i) => i?._id === area?.parentId)?.maqam?.name;
-      return `${ilaqa}(Maqam)`;
+      const ilaqa = ilaqas?.find((i) => i?._id === area?.parentId)?.name;
+      console.log(ilaqa)
+      return `${ilaqa}(Ilaqa)`;
     } else if (area?.province) {
       return maqams?.find((i) => i?._id === area?._id) ? "Maqam" : "Division";
-    } else if (area?.country) {
+    } else if (area?.name === "Pakistan") {
       return "";
     } else {
       return `${area?.maqam?.name}`;
@@ -76,6 +78,9 @@ export const FilterDialog = ({ setFilterAllData, tab }) => {
       case "division":
         setAreas(divisions);
         break;
+        case "country":
+        setAreas([{name: "Pakistan"}]);
+        break;
       case "maqam":
         setAreas(maqams);
         break;
@@ -97,10 +102,12 @@ export const FilterDialog = ({ setFilterAllData, tab }) => {
         break;
     }
   };
+
   useEffect(() => {
     if (active) getAreaWithType();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAreaType]);
+  
   return (
     <div className="modal-box min-h-[300px]">
       <form method="dialog" className="mb-3">
@@ -142,48 +149,6 @@ export const FilterDialog = ({ setFilterAllData, tab }) => {
               <span className="label-text">{active} </span>
             </label>
           </div>
-          {/* <div className="form-control">
-            <label className="label cursor-pointer gap-2">
-              <input
-                type="radio"
-                name="userAreaType"
-                className="radio checked:bg-blue-500"
-                value="division"
-                checked={userAreaType === "division"}
-                onChange={(e) => setUserAreaType(e.target.value)}
-              />
-              <span className="label-text">Division</span>
-            </label>
-          </div>
-
-          <div className="form-control">
-            <label className="label cursor-pointer gap-2">
-              <input
-                type="radio"
-                name="userAreaType"
-                className="radio checked:bg-blue-500"
-                value="maqam"
-                checked={userAreaType === "maqam"}
-                onChange={(e) => setUserAreaType(e.target.value)}
-              />
-              <span className="label-text">Maqam</span>
-            </label>
-          </div>
-
-          <div className="form-control">
-            <label className="label cursor-pointer gap-2">
-              <input
-                type="radio"
-                name="userAreaType"
-                className="radio checked:bg-blue-500"
-                value="halqa"
-                checked={userAreaType === "halqa"}
-                onChange={(e) => setUserAreaType(e.target.value)}
-                defaultChecked
-              />
-              <span className="label-text">Halqa</span>
-            </label>
-          </div> */}
         </div>
 
         <input type="hidden" name="userAreaId" id="userAreaId" />

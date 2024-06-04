@@ -195,6 +195,7 @@ export const DivisionReports = () => {
             <button
               onClick={() => {
                 document.getElementById("filter-area-dialog").showModal();
+                setIsSearch(false)
               }}
               className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
             >

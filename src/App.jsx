@@ -530,6 +530,7 @@ function App() {
               length: length,
             };
           });
+          console.log(markazReport)
           setLoading(false);
         }
       } catch (err) {
