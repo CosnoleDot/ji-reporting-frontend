@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.2",
     "chart.js": "^4.4.0",
+    "d3": "^7.9.0",
     "gridjs": "^6.0.6",
     "gridjs-react": "^6.0.1",
     "howler": "^2.2.4",

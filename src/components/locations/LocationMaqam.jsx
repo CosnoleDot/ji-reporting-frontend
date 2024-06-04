@@ -414,7 +414,7 @@ export const LocationMaqam = () => {
               {filteredData?.length > 0 ? (
                 filteredData?.map((maqam, index) => (
                   <tr
-                    key={index}
+                    key={maqam?._id}
                     className="flex w-full justify-between items-start"
                   >
                     <th>{index + 1}</th>
@@ -473,7 +473,7 @@ export const LocationMaqam = () => {
               {filteredData?.length > 0 ? (
                 filteredData?.map((ilaqa, index) => (
                   <tr
-                    key={index}
+                    key={ilaqa?._id}
                     className="flex w-full justify-between items-center"
                   >
                     <th>{index + 1}</th>
@@ -543,7 +543,7 @@ export const LocationMaqam = () => {
                   )
                   ?.map((halqa, index) => (
                     <tr
-                      key={index}
+                      key={halqa?._id}
                       className="flex w-full justify-between items-center"
                     >
                       <th>{index + 1}</th>

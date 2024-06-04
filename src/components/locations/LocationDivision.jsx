@@ -473,7 +473,7 @@ export const LocationDivision = () => {
             </thead>
             <tbody>
               {filteredData.map((division, index) => (
-                <tr key={index}>
+                <tr key={division?._id}>
                   <th>{index + 1}</th>
                   <td>{division?.name}</td>
                   <td>{division?.province?.name || "-"}</td>
@@ -524,7 +524,7 @@ export const LocationDivision = () => {
               {filteredData.length > 0 ? (
                 filteredData?.map((tehsil, index) => (
                   <tr
-                    key={index}
+                    key={tehsil?._id}
                     className="flex w-full justify-between items-start"
                   >
                     <th>{index + 1}</th>
@@ -585,7 +585,7 @@ export const LocationDivision = () => {
             <tbody>
               {filteredData?.map((district, index) => (
                 <tr
-                  key={index}
+                  key={district?._id}
                   className="flex w-full justify-between items-start"
                 >
                   <th>{index + 1}</th>
@@ -651,7 +651,7 @@ export const LocationDivision = () => {
                   )
                   ?.map((halqa, index) => (
                     <tr
-                      key={index}
+                      key={halqa?._id}
                       className="flex w-full justify-between items-start"
                     >
                       <th>{index + 1}</th>

@@ -34,7 +34,7 @@ export const CountryReport = () => {
   const navigate = useNavigate();
   const itemsPerPage = 10;
   useEffect(() => {
-    const uniqueArray = cReports.reduce((acc, current) => {
+    const uniqueArray = cReports?.reduce((acc, current) => {
       const x = acc.find((item) => item?._id === current?._id);
       if (!x) {
         acc.push(current);

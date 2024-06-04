@@ -20,7 +20,7 @@ export const MaqamReports = () => {
   const ilaqas = useContext(IlaqaContext);
   const mReports = m?.reports;
   const total = m?.length;
-  const [filterAllData, setFilterAllData] = useState(mReports);
+  const [filterAllData, setFilterAllData] = useState([]);
   const { dispatch } = useToastState();
   const [search, showSearch] = useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
@@ -36,7 +36,7 @@ export const MaqamReports = () => {
   const navigate = useNavigate();
   const itemsPerPage = 10;
   useEffect(() => {
-    const uniqueArray = mReports.reduce((acc, current) => {
+    const uniqueArray = mReports?.reduce((acc, current) => {
       const x = acc.find((item) => item?._id === current?._id);
       if (!x) {
         acc.push(current);
