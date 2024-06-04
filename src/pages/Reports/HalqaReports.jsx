@@ -42,6 +42,7 @@ export const HalqaReports = () => {
         );
 
         if (req) {
+          console.log(req.data.data?.data)
           setData([]);
           setData(req.data.data?.data);
           setLength(req.data.data.length);
@@ -367,7 +368,7 @@ export const HalqaReports = () => {
           </div>
         </>
       ) : (
-        <SearchPage data={searchData} area={tab} />
+        <SearchPage data={searchData} area={'halqa'} />
       )}
 
       <dialog id="filter-area-dialog" className="modal">

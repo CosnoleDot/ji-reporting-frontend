@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment";
-import { FaEye, FaPrint } from "react-icons/fa";
+import { FaEdit, FaEye, FaPrint } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { LuSearchX } from "react-icons/lu";
 const NoSearch = () => (
@@ -10,6 +10,7 @@ const NoSearch = () => (
   </div>
 );
 export const SearchPage = ({ data ,area}) => {
+  console.log(data)
   const itemsPerPage = 10; // Number of items per page
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
@@ -58,7 +59,14 @@ export const SearchPage = ({ data ,area}) => {
               <button className="btn" onClick={() => viewReport(p?._id)}>
                 <FaEye />
               </button>
-
+              {localStorage.getItem("@type")=== area && (
+                    <button
+                      className="btn"
+                      onClick={() => navigate(`/reports/edit/${p._id}`)}
+                    >
+                      <FaEdit />
+                    </button>
+                  )}
               <button className="btn" onClick={() => handlePrint(p?._id)}>
                 <FaPrint />
               </button>
