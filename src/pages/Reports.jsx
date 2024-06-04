@@ -96,7 +96,17 @@ export const Reports = () => {
       : "halqa"
   );
   const [id, setId] = useState(null);
-  const { active, setActive, filterMuntakhib } = useContext(UIContext);
+  const {
+    active,
+    setActive,
+    filterMuntakhib,
+    getHalqaReports,
+    getIlaqaReports,
+    getMaqamReports,
+    getDivisionReports,
+    getProvinceReports,
+    getMarkazReports,
+  } = useContext(UIContext);
   const [notifyTo, setNotifyTo] = useState("halqa");
   const ilaqas = useContext(IlaqaContext);
   const params = useLocation();
@@ -155,6 +165,30 @@ export const Reports = () => {
       dispatch({ type: "ERROR", payload: err.response.data.message });
     }
   };
+  useEffect(() => {
+    switch (active) {
+      case "country":
+        getMarkazReports();
+        break;
+      case "province":
+        getProvinceReports();
+        break;
+      case "division":
+        getDivisionReports();
+        break;
+      case "maqam":
+        getMaqamReports();
+        break;
+      case "ilaqa":
+        getIlaqaReports();
+        break;
+      case "ilaqa":
+        getHalqaReports();
+        break;
+      default:
+        break;
+    }
+  }, [active]);
   return (
     <GeneralLayout
       title={me?.userAreaId?.name.toUpperCase()}

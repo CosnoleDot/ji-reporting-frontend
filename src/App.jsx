@@ -62,6 +62,7 @@ import { MuntakhibMaqamReport } from "./pages/MuntakhibMaqamReport";
 import { MaqamReport } from "./pages/MaqamReport";
 import { MarkazReportPrint } from "./pages/MarkazReportPrint";
 import { Page404 } from "./pages/PageNotFound/Page404";
+import { SpiderChart } from "./pages/SpiderChart";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -86,7 +87,46 @@ function App() {
     reports: [],
     length: 0,
   });
-
+  const data2023 = [
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 34, 4, 35, 5, 44, 12, 43, 42, 43, 41,
+    43, 4, 45, 34, 6, 14, 24, 26,
+  ];
+  const data2024 = [
+    3, 5, 2, 8, 14, 22, 11, 5, 8, 13, 14, 19, 22, 25, 14, 12, 9, 11, 15, 18, 17,
+    14, 12, 10, 11, 14, 16, 19, 23, 25,
+  ];
+  const labels = [
+    "arkan",
+    "umeedwar",
+    "start",
+    "end",
+    "ifradi quwat",
+    "kaleem ",
+    "hassan",
+    "shera",
+    "lora",
+    "hairan",
+    "preshan",
+    "umeed",
+    "kharab",
+    "N",
+    "O",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+    "Z",
+    "AA",
+    "BB",
+    "CC",
+    "DD",
+  ];
   const [userRequests, setUserRequests] = useState([]);
   const [value, setValue] = useState(null);
   const [active, setActive] = useState("province");
@@ -502,9 +542,9 @@ function App() {
       setMuntakhibMaqam(false);
     }
   };
-  useEffect(() => {}, [muntakhibMaqam]);
+
   let provinceR, maqamR, divisionR, halqaR, ilaqaR, markazR, halqaT;
-  const getMarkazReport = async (inset, offset) => {
+  const getMarkazReports = async (inset, offset) => {
     if (me?.userAreaType === "Country")
       try {
         setLoading(true);
@@ -715,8 +755,8 @@ function App() {
         }
       );
       if (req) {
-        halqaR = req.data.data?.reports;
-        const len = req?.data?.data?.totalReports;
+        halqaR = req.data.data?.data;
+        let length = req?.data?.data?.length;
         setHalqaReports((prevData) => {
           const reports = Array.isArray(prevData.reports)
             ? prevData.reports
@@ -725,7 +765,7 @@ function App() {
 
           return {
             reports: [...reports, ...newReports],
-            length: len,
+            length: length,
           };
         });
         setLoading(false);
@@ -999,28 +1039,28 @@ function App() {
       setValue("Fetching halqas");
       await getHalqas();
       setLoading(false);
-      setCount((100 / 16) * 8);
-      setValue("Fetching markaz reports");
-      await getMarkazReport();
-      setCount((100 / 16) * 8);
-      setValue("Fetching province reports");
-      await getProvinceReports();
-      setCount((100 / 16) * 9);
-      setValue("Fetching maqam reports");
-      await getMaqamReports();
-      setCount((100 / 16) * 10);
-      setValue("Fetching division reports");
-      await getDivisionReports();
-      setCount((100 / 16) * 11);
-      setValue("Fetching halqa reports");
-      await getHalqaReports();
-      setCount((100 / 16) * 12);
-      setValue("Fetching nazims");
-      setValue(null);
-      setValue("Fetching all Ilaqa Reports");
-      await getIlaqaReports();
-      setCount((100 / 16) * 13);
-      setValue(null);
+      // setCount((100 / 16) * 8);
+      // setValue("Fetching markaz reports");
+      // await getMarkazReports();
+      // setCount((100 / 16) * 8);
+      // setValue("Fetching province reports");
+      // await getProvinceReports();
+      // setCount((100 / 16) * 9);
+      // setValue("Fetching maqam reports");
+      // await getMaqamReports();
+      // setCount((100 / 16) * 10);
+      // setValue("Fetching division reports");
+      // await getDivisionReports();
+      // setCount((100 / 16) * 11);
+      // setValue("Fetching halqa reports");
+      // await getHalqaReports();
+      // setCount((100 / 16) * 12);
+      // setValue("Fetching nazims");
+      // setValue(null);
+      // setValue("Fetching all Ilaqa Reports");
+      // await getIlaqaReports();
+      // setCount((100 / 16) * 13);
+      // setValue(null);
       await getNazim();
       setCount((100 / 16) * 14);
       setValue("Fetching user requests");
@@ -1102,7 +1142,7 @@ function App() {
                                           getTehsils,
                                           getHalqas,
                                           getIlaqas,
-                                          getMarkazReport,
+                                          getMarkazReports,
                                           getProvinceReports,
                                           getMaqamReports,
                                           getIlaqaReports,
@@ -1320,6 +1360,16 @@ function App() {
                                             <Route
                                               path="/country-report/print/:id"
                                               element={<MarkazReportPrint />}
+                                            />
+                                            <Route
+                                              path="/spider"
+                                              element={
+                                                <SpiderChart
+                                                  data2023={data2023}
+                                                  data2024={data2024}
+                                                  labels={labels}
+                                                />
+                                              }
                                             />
                                           </Routes>
                                           <LoadingScreen

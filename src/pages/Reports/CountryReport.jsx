@@ -31,7 +31,14 @@ export const CountryReport = () => {
   const navigate = useNavigate();
   const itemsPerPage = 10;
   useEffect(() => {
-    setFilterAllData(cReports);
+    const uniqueArray = cReports?.reduce((acc, current) => {
+      const x = acc.find((item) => item?._id === current?._id);
+      if (!x) {
+        acc.push(current);
+      }
+      return acc;
+    }, []);
+    setFilterAllData(uniqueArray);
   }, [cReports]);
   const searchResults = () => {
     if (year !== "" && month !== "") {

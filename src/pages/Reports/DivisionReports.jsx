@@ -11,7 +11,6 @@ import { SearchPage } from "./SearchPage";
 
 export const DivisionReports = () => {
   const d = useContext(DivisionReportContext);
-  console.log(d)
   const dReports = d?.reports;
   const total = d?.length;
   const [filterAllData, setFilterAllData] = useState(dReports);
@@ -30,7 +29,14 @@ export const DivisionReports = () => {
   const navigate = useNavigate();
   const itemsPerPage = 10;
   useEffect(() => {
-    setFilterAllData(dReports);
+    const uniqueArray = dReports?.reduce((acc, current) => {
+      const x = acc.find((item) => item?._id === current?._id);
+      if (!x) {
+        acc.push(current);
+      }
+      return acc;
+    }, []);
+    setFilterAllData(uniqueArray);
   }, [dReports]);
   const searchResults = async () => {
     if (year !== "" && month !== "") {
