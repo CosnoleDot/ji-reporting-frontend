@@ -41,7 +41,7 @@ export const FilterDialog = ({ setFilterAllData, tab ,setIsFilter}) => {
       return `${tehsil?.district?.division?.name}(Division)`;
     } else if (area?.parentType === "Ilaqa") {
       const ilaqa = ilaqas?.find((i) => i?._id === area?.parentId)?.name;
-      console.log(ilaqa)
+      
       return `${ilaqa}(Ilaqa)`;
     } else if (area?.province) {
       return maqams?.find((i) => i?._id === area?._id) ? "Maqam" : "Division";
