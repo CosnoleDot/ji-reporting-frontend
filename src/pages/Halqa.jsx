@@ -103,6 +103,8 @@ export const Halqa = () => {
         },
       });
       const repo = req?.data?.data;
+      console.log(repo?.halqaAreaId?.name);
+      document.getElementById("name").value = repo?.halqaAreaId?.name;
       setData(reverseDataFormat(repo));
       dispatch({ type: "SUCCESS", payload: req.data?.message });
     } catch (err) {
@@ -132,7 +134,12 @@ export const Halqa = () => {
           onSubmit={handleReportSubmit}
           dir="rtl"
         >
-          <GeneralInfo me={me} area={"حلقہ"} newMonth={data?.month} />
+          <GeneralInfo
+            me={me}
+            area={"حلقہ"}
+            newMonth={data?.month}
+            view={view}
+          />
           <IfradiKuwat view={view} />
           <Activity view={view} />
           <OtherActivities view={view} />

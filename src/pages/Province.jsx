@@ -231,7 +231,7 @@ export const Province = () => {
       });
       const repo = req?.data?.data;
       setData(reverseDataFormat(repo));
-      
+
       dispatch({ type: "SUCCESS", payload: req.data?.message });
     } catch (err) {
       dispatch({ type: "ERROR", payload: err.response.data.message });
@@ -549,7 +549,7 @@ export const Province = () => {
           <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
             جائزہ کارکردگی رپورٹ (براے صوبہ)
           </h2>
-          <div className="w-full p-4">
+          <div className="w-full">
             <div>
               <GeneralInfo
                 setMonth={setMonth}
@@ -559,40 +559,40 @@ export const Province = () => {
                 view={view}
               />
             </div>
-            <div className="mb-4">
+            <div>
               <Jamiaat view={view} />
             </div>
-            <div className="mb-4">
+            <div>
               <Colleges view={view} />
             </div>
-            <div className="mb-4">
+            <div>
               <Tanzeem view={view} id={id} />
             </div>
-            <div className="mb-4">
+            <div>
               <IfradiKuwat view={view} id={id} />
             </div>
-            <div className="mb-4">
+            <div>
               <MarkaziActivities view={view} />
             </div>
-            <div className="mb-4">
+            <div>
               <ZailiActivities view={view} />
             </div>
-            <div className="mb-4">
+            <div>
               <OtherActivities view={view} />
             </div>
-            <div className="mb-4">
+            <div>
               <ToseeDawat finalMerged={!id ? finalMerged : null} />
             </div>
-            <div className="mb-4">
+            <div>
               <Library />
             </div>
-            <div className="mb-4">
+            <div>
               <PaighamDigest view={view} />
             </div>
-            <div className="mb-4">
+            <div>
               <Baitulmal view={view} />
             </div>
-            <div className="mb-4">
+            <div>
               <RozOShabDiary />
             </div>
             <div className="w-full flex p-2">

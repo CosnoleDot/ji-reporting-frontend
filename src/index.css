@@ -3694,6 +3694,10 @@ html {
   margin-bottom: -0.375rem;
 }
 
+.mb-0 {
+  margin-bottom: 0px;
+}
+
 .mb-1 {
   margin-bottom: 0.25rem;
 }
@@ -4400,6 +4404,10 @@ html {
   background-image: none;
 }
 
+.fill-none {
+  fill: none;
+}
+
 .p-0 {
   padding: 0px;
 }
@@ -5060,6 +5068,18 @@ html {
     width: auto;
   }
 
+  .md\:w-\[40\%\] {
+    width: 40%;
+  }
+
+  .md\:w-\[20\%\] {
+    width: 20%;
+  }
+
+  .md\:w-\[80\%\] {
+    width: 80%;
+  }
+
   .md\:max-w-\[228px\] {
     max-width: 228px;
   }
@@ -5082,6 +5102,10 @@ html {
 
   .md\:justify-center {
     justify-content: center;
+  }
+
+  .md\:gap-3 {
+    gap: 0.75rem;
   }
 
   .md\:p-5 {

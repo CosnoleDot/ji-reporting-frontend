@@ -12,6 +12,7 @@ import instance from "../../api/instrance";
 import { FaEdit } from "react-icons/fa";
 import { UIContext } from "../../context/ui";
 import { FcViewDetails } from "react-icons/fc";
+import { Loader } from "../Loader";
 export const LocationMaqam = () => {
   const provinces = useContext(ProvinceContext);
   const maqams = useContext(MaqamContext);
@@ -452,7 +453,7 @@ export const LocationMaqam = () => {
                   </tr>
                 ))
               ) : (
-                <div>No Record Found</div>
+                <Loader />
               )}
             </tbody>
           </table>
@@ -517,7 +518,7 @@ export const LocationMaqam = () => {
                   </tr>
                 ))
               ) : (
-                <div>No Record Found</div>
+                <Loader />
               )}
             </tbody>
           </table>
@@ -588,7 +589,7 @@ export const LocationMaqam = () => {
                     </tr>
                   ))
               ) : (
-                <div>No Record Found</div>
+                <Loader />
               )}
             </tbody>
           </table>
@@ -907,7 +908,7 @@ export const LocationMaqam = () => {
                   ? "(Ilaqa)"
                   : areaDetails?.country
                   ? "(Province)"
-                  : "(Country)"}
+                  : `(${areaDetails?.areaType})`}
               </h4>
             </div>
             <div className="w-full flex justify-start items-center gap-5">

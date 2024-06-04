@@ -21,87 +21,91 @@ export const OtherActivities = ({ view }) => {
             className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
           />
         </div>
-        <div className="flex w-full overflow-hidden overflow-x-scroll gap-3 pb-2">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
+        <div className="flex md:flex-row flex-col w-full gap-1 md:gap-3 pb-2">
+          <label className="block md:w-[20%] w-full text-sm md:text-lg mb-0 pt-2">
             تربیت گاہوں کے انعقاد کا ہدف:
           </label>
-          <input
-            readOnly={true}
-            type="number"
-            required
-            name={`tarbiyatGaahGoal`}
-            id={`tarbiyatGaahGoal`}
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
-          />
-          +
-          <input
-            type="number"
-            readOnly={view}
-            required
-            onChange={() =>
-              sumUpTwoValues(
-                parseInt(document.getElementById("tarbiyatGaahGoal").value),
-                parseInt(
-                  document.getElementById("tarbiyatGaahGoalManual").value
-                ),
-                "tarbiyatGaahGoalSum"
-              )
-            }
-            name={`tarbiyatGaahGoalManual`}
-            id={`tarbiyatGaahGoalManual`}
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
-          />
-          =
-          <input
-            readOnly={true}
-            type="number"
-            defaultValue={document.getElementById("tarbiyatGaahGoal")?.value}
-            required
-            name={`tarbiyatGaahGoalSum`}
-            id={`tarbiyatGaahGoalSum`}
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
-          />
+          <div className="w-full md:w-[80%] flex overflow-hidden overflow-x-scroll">
+            <input
+              readOnly={true}
+              type="number"
+              required
+              name={`tarbiyatGaahGoal`}
+              id={`tarbiyatGaahGoal`}
+              className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+            />
+            +
+            <input
+              type="number"
+              readOnly={view}
+              required
+              onChange={() =>
+                sumUpTwoValues(
+                  parseInt(document.getElementById("tarbiyatGaahGoal").value),
+                  parseInt(
+                    document.getElementById("tarbiyatGaahGoalManual").value
+                  ),
+                  "tarbiyatGaahGoalSum"
+                )
+              }
+              name={`tarbiyatGaahGoalManual`}
+              id={`tarbiyatGaahGoalManual`}
+              className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+            />
+            =
+            <input
+              readOnly={true}
+              type="number"
+              defaultValue={document.getElementById("tarbiyatGaahGoal")?.value}
+              required
+              name={`tarbiyatGaahGoalSum`}
+              id={`tarbiyatGaahGoalSum`}
+              className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+            />
+          </div>
         </div>
-        <div className="flex w-full overflow-hidden overflow-x-scroll gap-3 pb-2">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
+        <div className="flex md:flex-row flex-col w-full gap-1 md:gap-3 pb-2">
+          <label className="block md:w-[20%] w-full text-sm md:text-lg mb-0 pt-2">
             تربیت گاہوں کے انعقاد کا تعداد:
           </label>
-          <input
-            readOnly={true}
-            type="number"
-            required
-            name={`tarbiyatGaahHeld`}
-            id={`tarbiyatGaahHeld`}
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
-          />
-          +
-          <input
-            type="number"
-            readOnly={view}
-            required
-            onChange={() =>
-              sumUpTwoValues(
-                parseInt(document.getElementById("tarbiyatGaahHeld").value),
-                parseInt(
-                  document.getElementById("tarbiyatGaahHeldManual").value
-                ),
-                "tarbiyatGaahHeldSum"
-              )
-            }
-            name={`tarbiyatGaahHeldManual`}
-            id={`tarbiyatGaahHeldManual`}
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
-          />
-          =
-          <input
-            readOnly={true}
-            type="number"
-            defaultValue={document.getElementById("tarbiyatGaahHeld")?.value}
-            required
-            name={`tarbiyatGaahHeldSum`}
-            id={`tarbiyatGaahHeldSum`}
-            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
-          />
+          <div className="w-full md:w-[80%] flex overflow-hidden overflow-x-scroll">
+            <input
+              readOnly={true}
+              type="number"
+              required
+              name={`tarbiyatGaahHeld`}
+              id={`tarbiyatGaahHeld`}
+              className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+            />
+            +
+            <input
+              type="number"
+              readOnly={view}
+              required
+              onChange={() =>
+                sumUpTwoValues(
+                  parseInt(document.getElementById("tarbiyatGaahHeld").value),
+                  parseInt(
+                    document.getElementById("tarbiyatGaahHeldManual").value
+                  ),
+                  "tarbiyatGaahHeldSum"
+                )
+              }
+              name={`tarbiyatGaahHeldManual`}
+              id={`tarbiyatGaahHeldManual`}
+              className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+            />
+            =
+            <input
+              readOnly={true}
+              type="number"
+              defaultValue={document.getElementById("tarbiyatGaahHeld")?.value}
+              required
+              name={`tarbiyatGaahHeldSum`}
+              id={`tarbiyatGaahHeldSum`}
+              className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+            />
+          </div>
         </div>
       </div>
       <div className="flex-col lg:flex-row w-full items-center justify-start">
