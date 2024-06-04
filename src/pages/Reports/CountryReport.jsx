@@ -17,23 +17,31 @@ import { SearchPage } from "./SearchPage";
 export const CountryReport = () => {
   const c = useContext(MarkazReportContext);
   const cReports = c?.reports;
-  console.log(cReports)
+ 
   const total = c?.length;
   const [filterAllData, setFilterAllData] = useState(cReports);
   const { dispatch } = useToastState();
   const [search, showSearch] = useState(false);
+  const [isFilter,setIsFilter]=useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
   const [month, setMonth] = useState("");
   const [isSearch, setIsSearch] = useState(false);
   const [searchData, setSearchData] = useState([]);
   const [year, setYear] = useState("2024");
   const me = useContext(MeContext);
-  const { getProvinceReports } = useContext(UIContext);
+  const { getMarkazReport } = useContext(UIContext);
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
   const itemsPerPage = 10;
   useEffect(() => {
-    setFilterAllData(cReports);
+    const uniqueArray = cReports.reduce((acc, current) => {
+      const x = acc.find((item) => item?._id === current?._id);
+      if (!x) {
+        acc.push(current);
+      }
+      return acc;
+    }, []);
+    setFilterAllData(uniqueArray);
   }, [cReports]);
   const searchResults = async () => {
     if (year !== "" && month !== "") {
@@ -68,6 +76,7 @@ export const CountryReport = () => {
     setMonth("");
     setYear("2024");
     setFilterAllData(cReports);
+    setIsFilter(false)
     setIsSearch(false);
     document.getElementById("autocomplete").value = "";
   };
@@ -93,7 +102,7 @@ export const CountryReport = () => {
       const inset = currentPage * itemsPerPage;
       const offset = itemsPerPage;
       if (cReports.length <= itemsPerPage * currentPage) {
-        getProvinceReports(inset, offset);
+        getMarkazReport(inset, offset);
       }
     }
   };
@@ -253,7 +262,7 @@ export const CountryReport = () => {
       ) : (
         <NoReports />
       )}
-      <div className="flex justify-between mt-4">
+      {!isFilter && <div className="flex justify-between mt-4">
         <button
           className="btn"
           onClick={handlePrevPage}
@@ -271,9 +280,9 @@ export const CountryReport = () => {
         >
           Next
         </button>
-      </div></> : <SearchPage data={searchData?.data} area={'country'} />}
+      </div>}</> : <SearchPage data={searchData?.data} area={'country'} />}
       <dialog id="filter-area-dialog" className="modal">
-        <FilterDialog setFilterAllData={setFilterAllData} />
+        <FilterDialog setFilterAllData={setFilterAllData} setIsFilter={setIsFilter} />
       </dialog>
     </>
   );

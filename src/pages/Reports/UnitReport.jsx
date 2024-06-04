@@ -26,7 +26,7 @@ export const UnitReport = () => {
   const [searchData, setSearchData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const { getHalqaReports } = useContext(UIContext);
-
+  const [isFilter,setIsFilter]=useState(false);
   const itemsPerPage = 10;
   useEffect(() => {
     const uniqueArray = hReports.reduce((acc, current) => {
@@ -71,6 +71,7 @@ export const UnitReport = () => {
     setMonth("");
     setYear("2023");
     setFilterAllData(hReports);
+    setIsFilter(false)
     setIsSearch(false);
     document.getElementById("autocomplete").value = "";
   };
@@ -288,7 +289,7 @@ export const UnitReport = () => {
         <SearchPage data={searchData} area={"halqa"} />
       )}
       <dialog id="filter-area-dialog" className="modal">
-        <FilterDialog setFilterAllData={setFilterAllData} />
+        <FilterDialog setFilterAllData={setFilterAllData} setIsFilter={setIsFilter}/>
       </dialog>
     </>
   );

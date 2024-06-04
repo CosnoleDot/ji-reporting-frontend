@@ -11,7 +11,7 @@ import {
 } from "../../context";
 import instance from "../../api/instrance";
 
-export const FilterDialog = ({ setFilterAllData, tab }) => {
+export const FilterDialog = ({ setFilterAllData, tab ,setIsFilter}) => {
   const { active, setActive } = useContext(UIContext);
 
   // const [showNotification, setShowNotification] = useState(false);
@@ -54,7 +54,7 @@ export const FilterDialog = ({ setFilterAllData, tab }) => {
 
   const getFilterData = async () => {
     try {
-      const req = await instance.get(`/reports/${userAreaType}/${selectedId}`, {
+      const req = await instance.get(`/reports/${userAreaType ==="country" ? "markaz": userAreaType}/${selectedId}`, {
         params: { date: selectedMonth },
         headers: {
           Authorization: `Bearer ${localStorage.getItem("@token")}`,
@@ -79,7 +79,7 @@ export const FilterDialog = ({ setFilterAllData, tab }) => {
         setAreas(divisions);
         break;
         case "country":
-        setAreas([{name: "Pakistan"}]);
+        setAreas([{name: "Pakistan", _id: "66011a6296a6587786ad2e49"}]);
         break;
       case "maqam":
         setAreas(maqams);
@@ -244,6 +244,7 @@ export const FilterDialog = ({ setFilterAllData, tab }) => {
               document.getElementById("filter-area-dialog-close-btn").click();
               getFilterData();
               setUserAreaType("");
+              setIsFilter(true)
             }}
           >
             ok

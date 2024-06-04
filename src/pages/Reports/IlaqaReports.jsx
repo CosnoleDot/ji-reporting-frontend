@@ -26,11 +26,18 @@ export const IlaqaReports = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const { getIlaqaReports } = useContext(UIContext);
   const [disable, setDisable] = useState(false);
-
+  const [isFilter,setIsFilter]=useState(false);
   const navigate = useNavigate();
   const itemsPerPage = 10;
   useEffect(() => {
-    setFilterAllData(iReports);
+    const uniqueArray = iReports.reduce((acc, current) => {
+      const x = acc.find((item) => item?._id === current?._id);
+      if (!x) {
+        acc.push(current);
+      }
+      return acc;
+    }, []);
+    setFilterAllData(uniqueArray);
   }, [iReports]);
   const searchResults = async () => {
     if (year !== "" && month !== "") {
@@ -65,6 +72,7 @@ export const IlaqaReports = () => {
     setMonth("");
     setYear("2023");
     setFilterAllData(iReports);
+    setIsFilter(false)
     setIsSearch(false);
     document.getElementById("autocomplete").value = "";
   };
@@ -257,7 +265,7 @@ export const IlaqaReports = () => {
           ) : (
             <NoReports />
           )}
-          <div className="flex justify-between mt-4">
+         {!isFilter && <div className="flex justify-between mt-4">
             <button
               className="btn"
               onClick={handlePrevPage}
@@ -275,13 +283,13 @@ export const IlaqaReports = () => {
             >
               Next
             </button>
-          </div>
+          </div>}
         </>
       ) : (
         <SearchPage data={searchData} area={"ilaqa"} />
       )}
       <dialog id="filter-area-dialog" className="modal">
-        <FilterDialog setFilterAllData={setFilterAllData} />
+        <FilterDialog setFilterAllData={setFilterAllData} setIsFilter={setIsFilter}/>
       </dialog>
     </>
   );

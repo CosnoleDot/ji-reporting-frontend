@@ -42,7 +42,6 @@ export const HalqaReports = () => {
         );
 
         if (req) {
-          console.log(req.data.data?.data)
           setData([]);
           setData(req.data.data?.data);
           setLength(req.data.data.length);
