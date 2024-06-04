@@ -1,9 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import {
-  HalqaContext,
-  IlaqaContext,
-  useToastState,
-} from "../../context";
+import { HalqaContext, IlaqaContext, useToastState } from "../../context";
 import { Link, useLocation } from "react-router-dom";
 import instance from "../../api/instrance";
 import { FaEdit } from "react-icons/fa";
@@ -143,7 +139,7 @@ export const LocationIlaqa = () => {
               ?.filter((i) => i?.parentType === "Ilaqa")
               ?.map((halqa, index) => (
                 <tr
-                  key={index}
+                  key={halqa?._id}
                   className="flex w-full justify-between items-start"
                 >
                   <th>{index + 1}</th>

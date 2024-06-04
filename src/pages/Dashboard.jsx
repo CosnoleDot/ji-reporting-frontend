@@ -359,7 +359,7 @@ export const Dashboard = () => {
                   </div>
                 </div>
               )}
-            <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
+            {/* <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
               <div className="p-4 bg-blue-400">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -380,7 +380,7 @@ export const Dashboard = () => {
                 <h3 className="text-sm tracking-wider">Total Reports</h3>
                 <p className="text-3xl">{count}</p>
               </div>
-            </div>
+            </div> */}
             {["country"].includes(localStorage.getItem("@type")) &&
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")

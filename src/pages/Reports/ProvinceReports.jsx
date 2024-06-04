@@ -28,7 +28,14 @@ export const ProvinceReports = () => {
   const navigate = useNavigate();
   const itemsPerPage = 10;
   useEffect(() => {
-    setFilterAllData(pReports);
+    const uniqueArray = pReports?.reduce((acc, current) => {
+      const x = acc.find((item) => item?._id === current?._id);
+      if (!x) {
+        acc.push(current);
+      }
+      return acc;
+    }, []);
+    setFilterAllData(uniqueArray);
   }, [pReports]);
   const searchResults = async () => {
     if (year !== "" && month !== "") {
