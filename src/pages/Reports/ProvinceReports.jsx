@@ -21,7 +21,7 @@ export const ProvinceReports = () => {
   const [month, setMonth] = useState("");
   const [isSearch, setIsSearch] = useState(false);
   const [searchData, setSearchData] = useState([]);
-  const [year, setYear] = useState("2023");
+  const [year, setYear] = useState("2024");
   const me = useContext(MeContext);
   const { getProvinceReports } = useContext(UIContext);
   const [currentPage, setCurrentPage] = useState(1);
@@ -273,7 +273,7 @@ export const ProvinceReports = () => {
           </div>
         </>
       ) : (
-        <SearchPage data={searchData} area={"province"} />
+        <SearchPage data={searchData?.data} area={"province"} />
       )}
       <dialog id="filter-area-dialog" className="modal">
         <FilterDialog setFilterAllData={setFilterAllData} />
