@@ -1017,34 +1017,37 @@ function App() {
     }
     const fetchData = async () => {
       setLoading(true);
-      setCount((100 / 16) * 1);
+      setCount((100 / 11) * 1);
       setValue("Fetching provinces");
       await getProvinces();
-      setCount((100 / 16) * 2);
+      setCount((100 / 11) * 2);
       setValue("Fetching maqams");
       await getMaqams();
-      setCount((100 / 16) * 3);
+      setCount((100 / 11) * 3);
       setValue("Fetching Ilaqas");
       await getIlaqas();
-      setCount((100 / 16) * 4);
+      setCount((100 / 11) * 4);
       setValue("Fetching divisions");
       await getDivisions();
-      setCount((100 / 16) * 5);
+      setCount((100 / 11) * 5);
       setValue("Fetching districts");
       await getDistricts();
-      setCount((100 / 16) * 6);
+      setCount((100 / 11) * 6);
       setValue("Fetching tehsils");
       await getTehsils();
-      setCount((100 / 16) * 7);
+      setCount((100 / 11) * 7);
       setValue("Fetching Nazims");
       await getNazim();
-      setCount((100 / 16) * 8);
+      setCount((100 / 11) * 8);
       setValue("Fetching user requests");
       await getAllRequests();
-      setCount((100 / 16) * 9);
+      setCount((100 / 11) * 9);
       setValue("Fetching all notifications");
       await getAllNotifications();
-      setCount((100 / 16) * 10);
+      setCount((100 / 11) * 10);
+      setValue("Fetching all Halqas");
+      await getHalqas();
+      setCount((100 / 11) * 10);
       setValue(null);
       setLoading(false);
 
