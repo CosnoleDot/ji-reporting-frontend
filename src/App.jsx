@@ -1036,41 +1036,17 @@ function App() {
       setValue("Fetching tehsils");
       await getTehsils();
       setCount((100 / 16) * 7);
-      setValue("Fetching halqas");
-      await getHalqas();
-      setLoading(false);
-      // setCount((100 / 16) * 8);
-      // setValue("Fetching markaz reports");
-      // await getMarkazReports();
-      // setCount((100 / 16) * 8);
-      // setValue("Fetching province reports");
-      // await getProvinceReports();
-      // setCount((100 / 16) * 9);
-      // setValue("Fetching maqam reports");
-      // await getMaqamReports();
-      // setCount((100 / 16) * 10);
-      // setValue("Fetching division reports");
-      // await getDivisionReports();
-      // setCount((100 / 16) * 11);
-      // setValue("Fetching halqa reports");
-      // await getHalqaReports();
-      // setCount((100 / 16) * 12);
-      // setValue("Fetching nazims");
-      // setValue(null);
-      // setValue("Fetching all Ilaqa Reports");
-      // await getIlaqaReports();
-      // setCount((100 / 16) * 13);
-      // setValue(null);
+      setValue("Fetching Nazims");
       await getNazim();
-      setCount((100 / 16) * 14);
+      setCount((100 / 16) * 8);
       setValue("Fetching user requests");
       await getAllRequests();
-      setCount((100 / 16) * 15);
-      setValue(null);
+      setCount((100 / 16) * 9);
       setValue("Fetching all notifications");
       await getAllNotifications();
-      setCount((100 / 16) * 16);
+      setCount((100 / 16) * 10);
       setValue(null);
+      setLoading(false);
 
       if (
         location.pathname?.split("/")[2] === "view" ||
