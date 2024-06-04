@@ -182,7 +182,7 @@ export const Reports = () => {
       case "ilaqa":
         getIlaqaReports();
         break;
-      case "ilaqa":
+      case "halqa":
         getHalqaReports();
         break;
       default:

@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { GeneralLayout } from "../components";
 import { UIContext } from "../context/ui";
-import { FaEye, FaFile, FaTrash } from "react-icons/fa";
+import { FaEye, FaTrash } from "react-icons/fa";
 import {
   DivisionContext,
   HalqaContext,
@@ -11,11 +11,12 @@ import {
   useToastState,
   IlaqaContext,
   TehsilContext,
+  ViewDetails,
 } from "../context";
 import instance from "../api/instrance";
-import { Link } from "react-router-dom";
 import { MdOutlineUpgrade } from "react-icons/md";
 import { RiDeviceRecoverFill } from "react-icons/ri";
+import { FcViewDetails } from "react-icons/fc";
 export const DeleteUser = () => {
   const me = useContext(MeContext);
   const halqas = useContext(HalqaContext);
@@ -24,7 +25,9 @@ export const DeleteUser = () => {
   const maqams = useContext(MaqamContext);
   const provinces = useContext(ProvinceContext);
   const divisions = useContext(DivisionContext);
-  const { nazim, loading, setLoading, getNazim } = useContext(UIContext);
+  const areaDetails = useContext(ViewDetails);
+  const { nazim, loading, setLoading, getNazim, getAreaDetails } =
+    useContext(UIContext);
   const [data, setData] = useState(nazim);
   const [userAreaType, setUserAreaType] = useState("");
   const [nazimType, setNazimType] = useState("");
@@ -68,33 +71,6 @@ export const DeleteUser = () => {
     getAreas();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAreaType]);
-
-  const getAreaTypeWithoutName = (area) => {
-    if (area?.parentType === "Maqam") {
-      const maqam = maqams.find((i) => i?._id === area?.parentId);
-      return `${area?.name} Of Maqam ${maqam?.name} (${maqam?.province?.name})`;
-    } else if (area?.parentType === "Tehsil") {
-      const tehsil = tehsils.find((teh) => teh?._id === area?.parentId);
-      return `Halqa ${area?.name?.toUpperCase()} Of Division ${
-        tehsil?.district?.division?.name
-      } (${tehsil?.district?.division?.province?.name})`;
-    } else if (area?.parentType === "Ilaqa") {
-      const ilaqa = ilaqas?.find((maq) => maq?._id === area?.parentId);
-      return `${area?.name} Of Maqam ${ilaqa?.maqam?.name}`;
-    } else if (area?.province) {
-      return maqams.find((i) => i?._id === area?._id)
-        ? `${area?.name} Maqam Of   ${
-            maqams.find((i) => i?._id === area?._id).province?.name
-          } `
-        : `${area?.name} Division Of  ${
-            divisions.find((i) => i?._id === area?._id).province?.name
-          } `;
-    } else if (area?.maqam && !area?.parentType) {
-      const ilaqa = maqams.find((i) => i?._id === area?.maqam);
-      return `${area?.name} Ilaqa of ${ilaqa?.name} (${ilaqa?.province?.name})`;
-    }
-    return `Province ${area?.name}`;
-  };
   const deleteUser = async (user) => {
     setLoading(true);
     try {
@@ -339,11 +315,7 @@ export const DeleteUser = () => {
                   <th>Name</th>
                   <th>Nazim Type</th>
                   <th>Email</th>
-                  <th>
-                    {localStorage.getItem("@type") === "province"
-                      ? "Area"
-                      : "Halqa"}
-                  </th>
+                  <th>Are Details</th>
                   <th>Status</th>
                   <th className="text-center">Actions</th>
                 </tr>
@@ -352,7 +324,7 @@ export const DeleteUser = () => {
                 {data
                   .filter((i) => i?.userAreaId?._id !== me?.userAreaId?._id)
                   .map((user, index) => (
-                    <tr key={index}>
+                    <tr key={user?._id}>
                       <th>{index + 1}</th>
                       <td>{user?.name || "-"}</td>
                       <td className="min-w-[10rem]">
@@ -368,7 +340,19 @@ export const DeleteUser = () => {
                       </td>
 
                       <td>{user?.email || "-"}</td>
-                      <td>{`${getAreaTypeWithoutName(user?.userAreaId)}`}</td>
+                      <td>
+                        {" "}
+                        <div
+                          onClick={() => {
+                            getAreaDetails(user?.userAreaId);
+                          }}
+                        >
+                          <FcViewDetails
+                            className="cursor-pointer text-2xl p-0 m-0"
+                            id="sv"
+                          />
+                        </div>
+                      </td>
                       <td>
                         {user?.isDeleted ? (
                           <div className="badge badge-error">inActive</div>
@@ -914,7 +898,7 @@ export const DeleteUser = () => {
                   <span className="px-1 py-2 block font-semibold">
                     Organization pocket:
                   </span>
-                  <div className="flex-col lg:flex-row items-center justify-start border border-primary p-2 rounded-lg">
+                  <div className="flex flex-wrap items-center justify-start border border-primary p-2 rounded-lg">
                     {me?.nazim.toLowerCase() === "country" && (
                       <div className="form-control">
                         <label className="label cursor-pointer gap-2">
@@ -1040,21 +1024,19 @@ export const DeleteUser = () => {
                         <span className="label-text">Rafiq-Nazim</span>
                       </label>
                     </div>
-                    {userAreaType !== "Halqa" && (
-                      <div className="form-control">
-                        <label className="label cursor-pointer gap-2">
-                          <input
-                            type="radio"
-                            name="nazimType"
-                            className="radio checked:bg-blue-500"
-                            value="umeedwaar"
-                            checked={nazimType === "umeedwar"}
-                            onChange={() => setNazimType("umeedwar")}
-                          />
-                          <span className="label-text">Umeedwaar</span>
-                        </label>
-                      </div>
-                    )}
+                    <div className="form-control">
+                      <label className="label cursor-pointer gap-2">
+                        <input
+                          type="radio"
+                          name="nazimType"
+                          className="radio checked:bg-blue-500"
+                          value="umeedwaar"
+                          checked={nazimType === "umeedwar"}
+                          onChange={() => setNazimType("umeedwar")}
+                        />
+                        <span className="label-text">Umeedwaar</span>
+                      </label>
+                    </div>
                     <div className="form-control">
                       <label className="label cursor-pointer gap-2">
                         <input
@@ -1067,21 +1049,19 @@ export const DeleteUser = () => {
                         <span className="label-text">Umeedwaar-Nazim</span>
                       </label>
                     </div>
-                    {userAreaType !== "Halqa" && (
-                      <div className="form-control">
-                        <label className="label cursor-pointer gap-2">
-                          <input
-                            type="radio"
-                            name="nazimType"
-                            className="radio checked:bg-blue-500"
-                            value="rukan"
-                            checked={nazimType === "rukan"}
-                            onChange={() => setNazimType("rukan")}
-                          />
-                          <span className="label-text">Rukan</span>
-                        </label>
-                      </div>
-                    )}
+                    <div className="form-control">
+                      <label className="label cursor-pointer gap-2">
+                        <input
+                          type="radio"
+                          name="nazimType"
+                          className="radio checked:bg-blue-500"
+                          value="rukan"
+                          checked={nazimType === "rukan"}
+                          onChange={() => setNazimType("rukan")}
+                        />
+                        <span className="label-text">Rukan</span>
+                      </label>
+                    </div>
                     <div className="form-control">
                       <label className="label cursor-pointer gap-2">
                         <input
@@ -1202,6 +1182,108 @@ export const DeleteUser = () => {
                 </button>
               </div>
             </form>
+          </div>
+        </dialog>
+        <dialog id="area_details" className="modal">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg mb-3">Details of the area</h3>
+            <div className="w-full  flex flex-col justify-between items-start text-left gap-4  flex-wrap">
+              <div className="w-full flex justify-start items-center gap-5">
+                <h5>Area Name:</h5>
+                <h4 className="text-gray-400 font-bold">{areaDetails?.name}</h4>
+                <h4 className="text-gray-400 font-semibold">
+                  {areaDetails?.parentType === "Ilaqa" ||
+                  areaDetails?.parentType === "Tehsil" ||
+                  areaDetails?.parentType === "Division" ||
+                  areaDetails?.parentType === "Maqam"
+                    ? "(Halqa)"
+                    : !areaDetails?.parentId && areaDetails?.maqam
+                    ? "(Ilaqa)"
+                    : areaDetails?.country
+                    ? "(Province)"
+                    : `(${areaDetails?.areaType})`}
+                </h4>
+              </div>
+              <div className="w-full flex justify-start items-center gap-5">
+                {areaDetails?.parentType ? areaDetails?.parentType + ":" : ""}
+                <h4 className="text-gray-400 font-bold">
+                  {areaDetails?.parentType === "Ilaqa"
+                    ? areaDetails?.parentId?.name
+                    : areaDetails?.parentType === "Maqam"
+                    ? areaDetails?.parentId?.name
+                    : areaDetails?.parentType === "Tehsil"
+                    ? areaDetails?.parentId?.name
+                    : areaDetails?.parentType === "Division"
+                    ? areaDetails?.parentId?.name
+                    : ""}
+                </h4>
+              </div>
+
+              {areaDetails?.parentType === "Tehsil" &&
+                !areaDetails?.parentType === "Division" && (
+                  <>
+                    <div className="w-full flex justify-start items-center gap-5">
+                      <h5> District:</h5>
+                      <h4 className="text-gray-400 font-bold">
+                        {areaDetails?.parentId?.district
+                          ? areaDetails?.parentId?.district?.name
+                          : "Not a District aera"}
+                      </h4>
+                    </div>
+                    <div className="w-full flex justify-start items-center gap-5">
+                      <h5>Division:</h5>
+                      <h4 className="text-gray-400 font-bold">
+                        {areaDetails?.parentId?.district
+                          ? areaDetails?.parentId?.district?.division?.name
+                          : areaDetails?.division?.name}
+                      </h4>
+                    </div>
+                  </>
+                )}
+              {areaDetails?.parentType === "Ilaqa" && (
+                <div className="w-full flex justify-start items-center gap-5">
+                  <h5>Maqam:</h5>
+                  <h4 className="text-gray-400 font-bold">
+                    {areaDetails?.parentType === "Ilaqa"
+                      ? areaDetails?.parentId?.maqam?.name
+                      : ""}
+                  </h4>
+                </div>
+              )}
+              {!areaDetails?.country && (
+                <div className="w-full flex justify-start items-center gap-5">
+                  <h4>Province:</h4>
+                  <h4 className="text-gray-400 font-bold">
+                    {areaDetails?.parentType === "Ilaqa"
+                      ? areaDetails?.parentId?.maqam?.province?.name
+                      : areaDetails?.parentType === "Maqam"
+                      ? areaDetails?.parentId?.province?.name
+                      : areaDetails?.parentType === "Tehsil"
+                      ? areaDetails?.parentId?.district?.division?.province
+                          ?.name
+                      : areaDetails?.parentType === "Division"
+                      ? areaDetails?.parentId?.province?.name
+                      : areaDetails?.province?.name}
+                  </h4>
+                </div>
+              )}
+              <div className="w-full flex justify-start items-center gap-5">
+                <h5>Country:</h5>
+                <h4 className="text-gray-400 font-bold">Pakistan</h4>
+              </div>
+            </div>
+            <div className="modal-action w-full">
+              <form method="dialog" className="w-full">
+                <div className=" w-full flex justify-end gap-3 items-center">
+                  <button
+                    id="close-details-modal"
+                    className="btn ms-3 capitalize"
+                  >
+                    Close
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </dialog>
       </div>

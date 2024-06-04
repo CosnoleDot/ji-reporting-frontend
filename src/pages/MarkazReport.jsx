@@ -73,8 +73,8 @@ export const MarkazReport = () => {
         }
       });
     });
-    delete halq.tarbiyatGaahHeldManual
-    delete halq.tarbiyatGaahGoalManual
+    delete halq.tarbiyatGaahHeldManual;
+    delete halq.tarbiyatGaahGoalManual;
     Object.keys(halq).forEach((i) => {
       let j;
       if (i === "current") {
@@ -368,7 +368,7 @@ export const MarkazReport = () => {
             جائزہ کارکردگی رپورٹ (برائے مرکز)
           </h2>
 
-          <div className="w-full ">
+          <div className="w-full">
             <div>
               <GeneralInfo
                 setMonth={setMonth}
@@ -378,37 +378,37 @@ export const MarkazReport = () => {
                 view={view}
               />
             </div>
-            <div className="mb-4">
+            <div>
               <Jamiaat view={view} />
             </div>
-            <div className="mb-4">
+            <div>
               <Colleges view={view} />
             </div>
-            <div className="mb-4">
+            <div>
               <Tanzeem view={view} />
             </div>
-            <div className="mb-4">
+            <div>
               <IfradiKuwat view={view} />
             </div>
-            <div className="mb-4">
+            <div>
               <MarkaziActivities view={view} />
             </div>
-            <div className="mb-4">
+            <div>
               <ZailiActivities view={view} obj={obj} />
             </div>
-            <div className="mb-4">
+            <div>
               <OtherActivities view={view} />
             </div>
-            <div className="mb-4">
+            <div>
               <ToseeDawat />
             </div>
-            <div className="mb-4">
+            <div>
               <Library />
             </div>
-            <div className="mb-4">
+            <div>
               <Baitulmal view={view} />
             </div>
-            <div className="mb-4">
+            <div>
               <RozOShabDiary view={view} />
             </div>
             <div className="w-full flex p-2">

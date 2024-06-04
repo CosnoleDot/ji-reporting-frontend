@@ -472,39 +472,45 @@ export const LocationDivision = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredData.map((division, index) => (
-                <tr key={division?._id}>
-                  <th>{index + 1}</th>
-                  <td>{division?.name}</td>
-                  <td>{division?.province?.name || "-"}</td>
-                  <td className="flex justify-center gap-4 items-center">
-                    <button
-                      onClick={() => {
-                        setEditMode(true);
-                        setId(division?._id);
-                        document
-                          .getElementById("add_division_modal")
-                          .showModal();
-                        setForm({
-                          province: division?.province?._id || "",
-                          name: division?.name || "",
-                        });
-                      }}
-                      className="btn"
-                    >
-                      <FaEdit />
-                    </button>
-                    <input
-                      type="checkbox"
-                      className="toggle toggle-error"
-                      defaultChecked={division?.disabled}
-                      onChange={() => {
-                        handleDisable(division?._id, !division?.disabled);
-                      }}
-                    />
-                  </td>
-                </tr>
-              ))}
+              {filteredData?.length > 0 ? (
+                filteredData.map((division, index) => (
+                  <tr key={division?._id}>
+                    <th>{index + 1}</th>
+                    <td>{division?.name}</td>
+                    <td>{division?.province?.name || "-"}</td>
+                    <td className="flex justify-center gap-4 items-center">
+                      <button
+                        onClick={() => {
+                          setEditMode(true);
+                          setId(division?._id);
+                          document
+                            .getElementById("add_division_modal")
+                            .showModal();
+                          setForm({
+                            province: division?.province?._id || "",
+                            name: division?.name || "",
+                          });
+                        }}
+                        className="btn"
+                      >
+                        <FaEdit />
+                      </button>
+                      <input
+                        type="checkbox"
+                        className="toggle toggle-error"
+                        defaultChecked={division?.disabled}
+                        onChange={() => {
+                          handleDisable(division?._id, !division?.disabled);
+                        }}
+                      />
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <>
+                  <Loader />
+                </>
+              )}
             </tbody>
           </table>
         </div>
@@ -583,48 +589,54 @@ export const LocationDivision = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredData?.map((district, index) => (
-                <tr
-                  key={district?._id}
-                  className="flex w-full justify-between items-start"
-                >
-                  <th>{index + 1}</th>
-                  <td className="w-full text-start">{district?.name}</td>
-                  <td className="w-full text-start">{` ${
-                    district?.division?.name
-                  }( ${
-                    district?.division?.province?.name
-                      ? district?.division?.province?.name
-                      : district?.parentId?.name
-                  }) `}</td>
-                  <td className="flex w-full justify-center items-center gap-4">
-                    <button
-                      onClick={() => {
-                        setEditMode(true);
-                        setId(district?._id);
-                        document
-                          .getElementById("add_district_modal")
-                          .showModal();
-                        setFormDistrict({
-                          district: district?.division?._id || "",
-                          name: district?.name || "",
-                        });
-                      }}
-                      className="btn"
-                    >
-                      <FaEdit />
-                    </button>
-                    <input
-                      type="checkbox"
-                      className="toggle toggle-error"
-                      defaultChecked={district?.disabled}
-                      onChange={() => {
-                        handleDisable(district?._id, !district?.disabled);
-                      }}
-                    />
-                  </td>
-                </tr>
-              ))}
+              {filteredData?.length > 0 ? (
+                filteredData?.map((district, index) => (
+                  <tr
+                    key={district?._id}
+                    className="flex w-full justify-between items-start"
+                  >
+                    <th>{index + 1}</th>
+                    <td className="w-full text-start">{district?.name}</td>
+                    <td className="w-full text-start">{` ${
+                      district?.division?.name
+                    }( ${
+                      district?.division?.province?.name
+                        ? district?.division?.province?.name
+                        : district?.parentId?.name
+                    }) `}</td>
+                    <td className="flex w-full justify-center items-center gap-4">
+                      <button
+                        onClick={() => {
+                          setEditMode(true);
+                          setId(district?._id);
+                          document
+                            .getElementById("add_district_modal")
+                            .showModal();
+                          setFormDistrict({
+                            district: district?.division?._id || "",
+                            name: district?.name || "",
+                          });
+                        }}
+                        className="btn"
+                      >
+                        <FaEdit />
+                      </button>
+                      <input
+                        type="checkbox"
+                        className="toggle toggle-error"
+                        defaultChecked={district?.disabled}
+                        onChange={() => {
+                          handleDisable(district?._id, !district?.disabled);
+                        }}
+                      />
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <>
+                  <Loader />
+                </>
+              )}
             </tbody>
           </table>
         </div>
@@ -1065,7 +1077,7 @@ export const LocationDivision = () => {
                   ? "(Ilaqa)"
                   : areaDetails?.country
                   ? "(Province)"
-                  : "(Country)"}
+                  : `(${areaDetails?.areaType})`}
               </h4>
             </div>
             <div className="w-full flex justify-start items-center gap-5">

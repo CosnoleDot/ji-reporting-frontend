@@ -998,7 +998,7 @@ export const Dashboard = () => {
                   ? "(Ilaqa)"
                   : areaDetails?.country
                   ? "(Province)"
-                  : "(Country)"}
+                  : `(${areaDetails?.areaType})`}
               </h4>
             </div>
             <div className="w-full flex justify-start items-center gap-5">

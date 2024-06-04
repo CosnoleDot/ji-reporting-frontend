@@ -6,11 +6,11 @@ export const PaighamDigest = ({ view }) => {
     <div className="p-2 py-5 relative w-full overflow-auto">
       <h2 className="text-black py-3 text-lg"> ہمقدم ڈائجسٹ</h2>
       <div className="flex-col lg:flex-row w-full items-center justify-start">
-        <div className="flex w-full overflow-hidden overflow-x-scroll gap-3 pb-2">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
+        <div className="flex md:flex-row flex-col w-full gap-1 md:gap-3 pb-2">
+          <label className="block md:w-[20%] w-full text-sm md:text-lg mb-0 pt-2">
             کل موصولہ:
           </label>
-          <div className="flex">
+          <div className="w-full md:w-[80%] flex overflow-hidden overflow-x-scroll">
             <input
               type="number"
               readOnly={view}
@@ -51,11 +51,11 @@ export const PaighamDigest = ({ view }) => {
             />
           </div>
         </div>
-        <div className="flex w-full overflow-hidden overflow-x-scroll gap-3 pb-2">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
+        <div className="flex md:flex-row flex-col w-full gap-1 md:gap-3 pb-2">
+          <label className="block md:w-[20%] w-full text-sm md:text-lg mb-0 pt-2">
             فروخت کردہ:
           </label>
-          <div className="flex">
+          <div className="w-full md:w-[80%] flex overflow-hidden overflow-x-scroll">
             <input
               type="number"
               readOnly={view}
@@ -96,11 +96,11 @@ export const PaighamDigest = ({ view }) => {
             />
           </div>
         </div>
-        <div className="flex w-full overflow-hidden overflow-x-scroll gap-3 pb-2">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
+        <div className="flex md:flex-row flex-col w-full gap-1 md:gap-3 pb-2">
+          <label className="block md:w-[20%] w-full text-sm md:text-lg mb-0 pt-2">
             ڈائجسٹ موصول کرنے کا ماہانہ ہدف:
           </label>
-          <div className="flex">
+          <div className="w-full md:w-[80%] flex overflow-hidden overflow-x-scroll">
             <input
               type="number"
               readOnly={view}
