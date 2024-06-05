@@ -1,8 +1,14 @@
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { GeneralLayout } from "../components";
 import { FaLocationDot } from "react-icons/fa6";
 import { CiLocationOn } from "react-icons/ci";
-import { FaFilter, FaLocationArrow, FaPlus } from "react-icons/fa";
+import {
+  FaArrowDown,
+  FaArrowUp,
+  FaFilter,
+  FaLocationArrow,
+  FaPlus,
+} from "react-icons/fa";
 import { FcViewDetails } from "react-icons/fc";
 import { useEffect } from "react";
 import {
@@ -58,6 +64,7 @@ export const Dashboard = () => {
   const [showData, setShowData] = useState(false);
   const [month, setMonth] = useState();
   let date;
+  const tableRef = useRef();
   useEffect(() => {
     if (queryDate) {
       date = new Date(queryDate);
@@ -81,8 +88,14 @@ export const Dashboard = () => {
     getHalqas();
   }, []);
   const getData = async () => {
+    if (showData) {
+      setShowData(false);
+      return;
+    }
+    tableRef?.current?.scrollIntoView({ behavior: "smooth" });
     setShowData(true);
     setLoading(true);
+
     // Check if data is already stored in session storage
     if (userAreaType === "personal" && queryDate !== "") {
       handlePersonalFilledReports();
@@ -202,6 +215,7 @@ export const Dashboard = () => {
       setData(JSON.parse(storedData));
     }
   }, []);
+
   const clearFilter = () => {
     // setting back the data from initial state back to the respective sates
     setQuerydate("");
@@ -214,6 +228,9 @@ export const Dashboard = () => {
     setPersonalUnfilled(initialData?.personalU);
     setUmeedwars(initialData?.validNazim);
   };
+
+  // FETCH PERSONAL REPORTS
+
   const getPsersonalReports = async () => {
     const req = await instance.get(`/umeedwar`, {
       headers: {
@@ -327,7 +344,7 @@ export const Dashboard = () => {
     <GeneralLayout title={"Dashboard"} active={"dashboard"}>
       {
         <div className="relative flex flex-col w-full gap-3 items-center p-5 justify-start h-[calc(100vh-65.6px-64px)] overflow-hidden overflow-y-scroll bg-blue-50">
-          <div className="grid grid-cols-1 gap-4 px-4 mt-8 sm:grid-cols-4 sm:px-8 w-full">
+          <div className="grid grid-cols-1 gap-4 mt-8 sm:grid-cols-4 sm:px-8 w-full">
             {["province", "country", "maqam", "division"].includes(
               localStorage.getItem("@type")
             ) &&
@@ -359,28 +376,7 @@ export const Dashboard = () => {
                   </div>
                 </div>
               )}
-            {/* <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
-              <div className="p-4 bg-blue-400">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-12 w-12 text-white"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"
-                  ></path>
-                </svg>
-              </div>
-              <div className="px-4 text-gray-700">
-                <h3 className="text-sm tracking-wider">Total Reports</h3>
-                <p className="text-3xl">{count}</p>
-              </div>
-            </div> */}
+
             {["country"].includes(localStorage.getItem("@type")) &&
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
@@ -537,153 +533,136 @@ export const Dashboard = () => {
             ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
               localStorage.getItem("@nazimType")
             ) && (
-              <div className=" gap-4 px-4 mt-8  sm:px-8 w-full">
-                <div className="w-full  gap-2 grid grid-cols-2 sm:grid-cols-2 mb-2">
+              <button
+                onClick={getData}
+                className="btn btn-neutral w-full md:w-auto border-none capitalize"
+              >
+                See Reports Status
+                {showData ? <FaArrowUp /> : <FaArrowDown />}
+              </button>
+            )}
+          {showData && (
+            <div className=" gap-4 mt-4 sm:px-8 w-full flex flex-col ">
+              <div className="w-full flex justify-end items-center">
+                <button
+                  className="btn"
+                  onClick={() => {
+                    document
+                      .getElementById("filter_filled_unfilled_modal")
+                      .showModal();
+                  }}
+                >
+                  Filter <FaFilter />
+                </button>
+                <button className="btn" onClick={clearFilter}>
+                  Clear Filter
+                </button>
+              </div>
+
+              {showData && (
+                <div className="w-full flex justify-between items-center flex-wrap">
                   <div
                     style={{
-                      backgroundColor: toggle === "pFilled" ? "" : "#7a7a7a",
+                      color: toggle === "pFilled" ? "" : "#3B82F6",
                     }}
                     onClick={() => {
                       setToggle("pFilled");
                       setUserAreaType("personal");
                       setShow(false);
                     }}
-                    className="flex justify-center capitalize items-center h-10 btn bg-[#cacaca] w-full text-center "
+                    className="capitalize items-center text-start underline w-[50%] md:w-auto font-semibold cursor-pointer pb-1"
                   >
                     Personal Filled {personalFilled?.length}
                   </div>
                   <div
                     style={{
-                      backgroundColor: toggle === "pUnFilled" ? "" : "#7a7a7a",
+                      color: toggle === "pUnFilled" ? "" : "#3B82F6",
                     }}
                     onClick={() => {
                       setToggle("pUnFilled");
                       setUserAreaType("personal");
                       setShow(false);
                     }}
-                    className="flex justify-center capitalize items-center h-10 btn bg-[#cacaca] w-full text-center "
+                    className="capitalize items-center text-start underline w-[50%] md:w-auto font-semibold cursor-pointer pb-1"
                   >
                     Personal Unfilled {personalUnfilled?.length}
                   </div>
-                </div>
-                <div className="w-full  gap-2 grid grid-cols-2 sm:grid-cols-2 mb-2">
+
                   <div
                     style={{
-                      backgroundColor: toggle === "filled" ? "" : "#7a7a7a",
+                      color: toggle === "filled" ? "" : "#3B82F6",
                     }}
                     onClick={() => {
                       setShow(true);
                       setToggle("filled");
                     }}
-                    className="flex justify-center capitalize items-center h-10 btn bg-[#cacaca] w-full text-center "
+                    className="capitalize items-center text-start underline w-[50%] md:w-auto font-semibold cursor-pointer pb-1"
                   >
                     Filled {data?.filled?.length}
                   </div>
                   <div
                     style={{
-                      backgroundColor: toggle === "unFilled" ? "" : "#7a7a7a",
+                      color: toggle === "unFilled" ? "" : "#3B82F6",
                     }}
                     onClick={() => {
                       setShow(true);
                       setToggle("unFilled");
                     }}
-                    className="flex justify-center capitalize items-center h-10 btn bg-[#cacaca] w-full text-center "
+                    className="capitalize items-center text-start underline w-[50%] md:w-auto font-semibold cursor-pointer pb-1"
                   >
                     Unfilled {data?.unfilled?.length}
                   </div>
                 </div>
-                <div className="w-full flex justify-end items-center">
-                  <button
-                    className="btn"
-                    onClick={() => {
-                      document
-                        .getElementById("filter_filled_unfilled_modal")
-                        .showModal();
-                    }}
-                  >
-                    Filter <FaFilter />
-                  </button>
-                  <button className="btn" onClick={clearFilter}>
-                    Clear Filter
-                  </button>
-                </div>
-                <button onClick={getData} className="btn btn-neutral">
-                  See Reports Status
-                </button>
-                {showData && (
-                  <div className="overflow-x-auto grid grid-cols-1 gap-4  mt-8 sm:grid-cols-1 sm:px-4 w-full">
-                    <div className="w-full mb-3 h-[300px] overflow-auto overflow-y-scroll">
-                      <p className="text-slate-500">Reports of {month}</p>
-                      {show && (
-                        <table className="table mb-7">
-                          {/* head */}
-                          <thead className="">
-                            <tr className="w-full flex">
-                              <th className="w-[50%]">Area</th>
-                              <th className="w-[50%]">Nazim</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {toggle === "filled" ? (
-                              data?.filled?.length > 0 ? (
-                                data?.filled
-                                  ?.filter((i) => !i?.disabled)
-                                  ?.map((obj, index) => (
-                                    <tr
-                                      key={index}
-                                      className={`w-full flex ${
-                                        index % 2 === 0 && "bg-[#B2D5FF]"
-                                      }`}
-                                    >
-                                      <td className="w-[50%]">{obj.name}</td>
-                                      <td className="w-[50%]">
-                                        {nazim.find(
-                                          (i) => i?.userAreaId?._id === obj?._id
-                                        )?.name || (
-                                          <span className="text-red-400 font-semibold">
-                                            User Not Registered Yet
-                                          </span>
-                                        )}
-                                      </td>
-                                      <td className="">
-                                        <div
-                                          onClick={() => {
-                                            getAreaDetails(obj);
-                                          }}
-                                        >
-                                          <FcViewDetails className="cursor-pointer text-2xl p-0 m-0" />
-                                        </div>
-                                      </td>
-                                    </tr>
-                                  ))
-                              ) : (
-                                <tr>
-                                  <td colSpan="2">
-                                    No one has filled report yet
-                                  </td>
-                                </tr>
-                              )
-                            ) : data?.unfilled?.length > 0 ? (
-                              data?.unfilled
-                                .filter((i) => !i?.disabled)
-                                .map((obj, index) => (
+              )}
+              <hr />
+              {showData && (
+                <div className="overflow-x-auto grid grid-cols-1 gap-4 mt-3 sm:grid-cols-1 sm:px-4 w-full transition ease-in-out duration-300">
+                  <div className="w-full mb-3 h-[300px] overflow-auto overflow-y-scroll">
+                    <p className="text-slate-500 ">Reports of {month}</p>
+                    {show && (
+                      <table className="table mb-7" ref={tableRef}>
+                        {/* head */}
+                        <thead className="">
+                          <tr className="w-full flex justify-between">
+                            <th className="text-start">Area</th>
+                            <th className="text-center">Nazim</th>
+                            <th className="text-right">View</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {toggle === "filled" ? (
+                            data?.filled?.length > 0 ? (
+                              data?.filled
+                                ?.filter((i) => !i?.disabled)
+                                ?.map((obj, index) => (
                                   <tr
-                                    className={`w-full flex ${
+                                    key={index}
+                                    className={`w-full flex  ${
                                       index % 2 === 0 && "bg-[#B2D5FF]"
                                     }`}
-                                    key={index}
                                   >
-                                    <td className="w-[50%]">
-                                      {obj.name}
-                                      {obj?.parentType
-                                        ? "-" + obj?.parentType
-                                        : ""}
+                                    <td className="w-[50%] ">
+                                      <p
+                                        className="text-xs w-full"
+                                        style={{
+                                          textTransform: "capitalize",
+                                          fontSize: "smaller",
+                                        }}
+                                      >
+                                        {obj.name}
+                                      </p>
                                     </td>
                                     <td className="w-[50%]">
                                       {nazim.find(
                                         (i) => i?.userAreaId?._id === obj?._id
                                       )?.name || (
-                                        <span className="text-red-400 font-semibold">
+                                        <span
+                                          style={{
+                                            textTransform: "capitalize",
+                                            fontSize: "smaller",
+                                          }}
+                                          className="text-start text-error"
+                                        >
                                           User Not Registered Yet
                                         </span>
                                       )}
@@ -694,86 +673,139 @@ export const Dashboard = () => {
                                           getAreaDetails(obj);
                                         }}
                                       >
-                                        <FcViewDetails className="cursor-pointer text-2xl" />
+                                        <FcViewDetails className="cursor-pointer text-2xl p-0 m-0" />
                                       </div>
                                     </td>
                                   </tr>
                                 ))
                             ) : (
                               <tr>
-                                <td colSpan="2">All have filled reports</td>
+                                <td colSpan="2">
+                                  No one has filled report yet
+                                </td>
                               </tr>
-                            )}
-                          </tbody>
-                        </table>
-                      )}
-                      {!show && (
-                        <table className="table mb-7">
-                          {/* head */}
-                          <thead className="">
-                            <tr className="w-full flex">
-                              <th className="w-[50%]">Name</th>
-                              <th className="w-[50%]">Area</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {toggle === "pFilled" ? (
-                              personalFilled?.length > 0 ? (
-                                personalFilled
-                                  .filter((i) => !i?.disabled)
-                                  .map((obj, index) => (
-                                    <tr
-                                      key={index}
-                                      className={`w-full flex ${
-                                        index % 2 === 0 && "bg-[#B2D5FF]"
-                                      }`}
+                            )
+                          ) : data?.unfilled?.length > 0 ? (
+                            data?.unfilled
+                              .filter((i) => !i?.disabled)
+                              .map((obj, index) => (
+                                <tr
+                                  className={`w-full flex items-center ${
+                                    index % 2 === 0 && "bg-[#B2D5FF]"
+                                  }`}
+                                  key={obj?._id}
+                                >
+                                  <td className="w-[50%] ">
+                                    <p
+                                      className="text-xs w-full"
+                                      style={{
+                                        textTransform: "capitalize",
+                                        fontSize: "smaller",
+                                      }}
                                     >
-                                      <td className="w-[50%]">{obj.name}</td>
-                                      <td className="w-[50%]">
-                                        {obj?.parentType
-                                          ? "-" + obj?.parentType
-                                          : ""}
-                                      </td>
-                                    </tr>
-                                  ))
-                              ) : (
-                                <tr>
-                                  <td colSpan="2">
-                                    No one has filled personal report yet
+                                      {obj.name}
+                                      {obj?.parentType
+                                        ? "-" + obj?.parentType
+                                        : ""}
+                                    </p>
+                                  </td>
+                                  <td className="w-[50%]">
+                                    {nazim.find(
+                                      (i) => i?.userAreaId?._id === obj?._id
+                                    )?.name || (
+                                      <span
+                                        style={{
+                                          textTransform: "capitalize",
+                                          fontSize: "smaller",
+                                        }}
+                                        className="text-start text-error"
+                                      >
+                                        User Not Registered
+                                      </span>
+                                    )}
+                                  </td>
+                                  <td className="">
+                                    <div
+                                      onClick={() => {
+                                        getAreaDetails(obj);
+                                      }}
+                                    >
+                                      <FcViewDetails className="cursor-pointer text-2xl" />
+                                    </div>
                                   </td>
                                 </tr>
-                              )
-                            ) : personalUnfilled?.length > 0 ? (
-                              personalUnfilled
+                              ))
+                          ) : (
+                            <tr>
+                              <td colSpan="2">All have filled reports</td>
+                            </tr>
+                          )}
+                        </tbody>
+                      </table>
+                    )}
+                    {!show && (
+                      <table className="table mb-7 ">
+                        {/* head */}
+                        <thead className="">
+                          <tr className="w-full flex">
+                            <th className="w-[50%]">Name</th>
+                            <th className="w-[50%]">Area</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {toggle === "pFilled" ? (
+                            personalFilled?.length > 0 ? (
+                              personalFilled
                                 .filter((i) => !i?.disabled)
                                 .map((obj, index) => (
                                   <tr
-                                    className={`w-full flex ${
+                                    key={index}
+                                    className={`w-full flex items-center ${
                                       index % 2 === 0 && "bg-[#B2D5FF]"
                                     }`}
-                                    key={index}
                                   >
                                     <td className="w-[50%]">{obj.name}</td>
                                     <td className="w-[50%]">
-                                      {obj?.parentType}
+                                      {obj?.userAreaId?.name}
                                     </td>
                                   </tr>
                                 ))
                             ) : (
                               <tr>
                                 <td colSpan="2">
-                                  All have filled thier personal Reports
+                                  No one has filled personal report yet
                                 </td>
                               </tr>
-                            )}
-                          </tbody>
-                        </table>
-                      )}
-                    </div>
+                            )
+                          ) : personalUnfilled?.length > 0 ? (
+                            personalUnfilled
+                              .filter((i) => !i?.disabled)
+                              .map((obj, index) => (
+                                <tr
+                                  className={`w-full flex  items-center ${
+                                    index % 2 === 0 && "bg-[#B2D5FF]"
+                                  }`}
+                                  key={index}
+                                >
+                                  <td className="w-[50%]">{obj.name}</td>
+                                  {obj?.userAreaId?.name}
+                                </tr>
+                              ))
+                          ) : (
+                            <tr>
+                              <td colSpan="2">
+                                All have filled their personal Reports
+                              </td>
+                            </tr>
+                          )}
+                        </tbody>
+                      </table>
+                    )}
                   </div>
-                )}
-              </div>
-            )}
+                </div>
+              )}
+            </div>
+          )}
         </div>
       }
       <dialog id="filter_filled_unfilled_modal" className="modal">
@@ -988,7 +1020,7 @@ export const Dashboard = () => {
             <div className="w-full flex justify-start items-center gap-5">
               <h5>Name:</h5>
               <h4 className="text-gray-400 font-bold">{areaDetails?.name}</h4>
-              <h4 className="text-gray-400 font-semibold">
+              <h4 className="text-grstart underline w-[50%] md:w-auto font-semibold">
                 {areaDetails?.parentType === "Ilaqa" ||
                 areaDetails?.parentType === "Tehsil" ||
                 areaDetails?.parentType === "Division" ||
