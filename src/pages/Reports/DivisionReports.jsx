@@ -104,7 +104,7 @@ export const DivisionReports = () => {
       setCurrentPage(currentPage + 1);
       const inset = currentPage * itemsPerPage;
       const offset = itemsPerPage;
-      if (dReports.length <= itemsPerPage * currentPage) {
+      if (filterAllData?.length <= total) {
         getDivisionReports(inset, offset);
       }
     }
