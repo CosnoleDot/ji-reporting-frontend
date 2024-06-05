@@ -111,7 +111,7 @@ export const MaqamReports = () => {
       setCurrentPage(currentPage + 1);
       const inset = currentPage * itemsPerPage;
       const offset = itemsPerPage;
-      if (mReports.length <= itemsPerPage * currentPage) {
+      if (filterAllData?.length <= total) {
         getMaqamReports(inset, offset);
       }
     }

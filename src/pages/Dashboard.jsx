@@ -81,7 +81,7 @@ export const Dashboard = () => {
         Authorization: `Bearer ${localStorage.getItem("@token")}`,
       },
     });
-    setUmeedwarReports(req?.data?.data);
+    setUmeedwarReports(req?.data?.data?.data);
   };
   useEffect(() => {
     getAllReports();
@@ -304,7 +304,7 @@ export const Dashboard = () => {
       1
     );
     // Filter out reports within the current month
-    const requiredUmeedwarReports = umeedwarReports.filter((report) => {
+    const requiredUmeedwarReports = umeedwarReports?.filter((report) => {
       const reportDate = new Date(report?.month);
       return (
         reportDate >= firstDayOfCurrentMonth &&

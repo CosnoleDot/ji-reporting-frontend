@@ -95,7 +95,7 @@ export const ProvinceReports = () => {
       setCurrentPage(currentPage + 1);
       const inset = currentPage * itemsPerPage;
       const offset = itemsPerPage;
-      if (pReports.length <= itemsPerPage * currentPage) {
+      if (filterAllData?.length <= total) {
         getProvinceReports(inset, offset);
       }
     }

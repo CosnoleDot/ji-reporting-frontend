@@ -104,7 +104,7 @@ export const UnitReport = () => {
       setCurrentPage(currentPage + 1);
       const inset = currentPage * itemsPerPage;
       const offset = itemsPerPage;
-      if (hReports.length <= itemsPerPage * currentPage) {
+      if (filterAllData.length <= total) {
         getHalqaReports(inset, offset);
       }
     }

@@ -22,7 +22,6 @@ export const CountryReport = () => {
   const [filterAllData, setFilterAllData] = useState(cReports);
   const { dispatch } = useToastState();
   const [search, showSearch] = useState(false);
-  const [isFilter,setIsFilter]=useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
   const [month, setMonth] = useState("");
   const [isSearch, setIsSearch] = useState(false);
@@ -30,6 +29,7 @@ export const CountryReport = () => {
   const [year, setYear] = useState("2024");
   const me = useContext(MeContext);
   const { getMarkazReport } = useContext(UIContext);
+  const [isFilter,setIsFilter]=useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
   const itemsPerPage = 10;
@@ -74,7 +74,7 @@ export const CountryReport = () => {
   };
   const clearFilters = () => {
     setMonth("");
-    setYear("2024");
+    setYear("2023");
     setFilterAllData(cReports);
     setIsFilter(false)
     setIsSearch(false);
@@ -100,8 +100,10 @@ export const CountryReport = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
       const inset = currentPage * itemsPerPage;
+   
       const offset = itemsPerPage;
-      if (cReports.length <= itemsPerPage * currentPage) {
+      if (filterAllData?.length <= total) {
+        
         getMarkazReport(inset, offset);
       }
     }

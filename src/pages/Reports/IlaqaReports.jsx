@@ -105,7 +105,7 @@ export const IlaqaReports = () => {
       setCurrentPage(currentPage + 1);
       const inset = currentPage * itemsPerPage;
       const offset = itemsPerPage;
-      if (iReports.length <= itemsPerPage * currentPage) {
+      if (filterAllData?.length <= total) {
         getIlaqaReports(inset, offset);
       }
     }
