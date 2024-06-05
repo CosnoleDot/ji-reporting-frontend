@@ -105,7 +105,7 @@ export const Reports = () => {
     getMaqamReports,
     getDivisionReports,
     getProvinceReports,
-    getMarkazReports,
+    getMarkazReport,
   } = useContext(UIContext);
   const [notifyTo, setNotifyTo] = useState("halqa");
   const ilaqas = useContext(IlaqaContext);
@@ -168,7 +168,7 @@ export const Reports = () => {
   useEffect(() => {
     switch (active) {
       case "country":
-        getMarkazReports();
+        getMarkazReport();
         break;
       case "province":
         getProvinceReports();

@@ -4,7 +4,7 @@ export const PaighamDigest = ({ view }) => {
       <h2 className="text-black py-3 text-lg"> ہمقدم ڈائجسٹ</h2>
       <div className="flex-col lg:flex-row w-full items-center justify-start">
         <div className="flex py-2 ml-4">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
+       <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">
             کل پرنٹ کردہ:
           </label>
           <input
@@ -18,7 +18,7 @@ export const PaighamDigest = ({ view }) => {
           />
         </div>
         <div className="flex py-2 ml-4">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
+       <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">
             کل فروخت کردہ (تنظیمی):
           </label>
           <input
@@ -32,7 +32,7 @@ export const PaighamDigest = ({ view }) => {
           />
         </div>
         <div className="flex py-2 ml-4">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
+       <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">
             کل فروخت کردہ (مارکیٹ):
           </label>
           <input
@@ -46,7 +46,7 @@ export const PaighamDigest = ({ view }) => {
           />
         </div>
         <div className="flex py-2 ml-4">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">گفٹ:</label>
+       <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">گفٹ:</label>
           <input
             type="number"
             defaultValue={0}

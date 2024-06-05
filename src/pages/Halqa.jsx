@@ -133,19 +133,35 @@ export const Halqa = () => {
           onSubmit={handleReportSubmit}
           dir="rtl"
         >
-          <GeneralInfo
-            me={me}
-            area={"حلقہ"}
-            newMonth={data?.month}
-            view={view}
-          />
-          <IfradiKuwat view={view} />
-          <Activity view={view} />
-          <OtherActivities view={view} />
-          <ToseeDawat view={view} />
-          <Library view={view} />
-          <Baitulmal view={view} />
-          <RozOShabDiary view={view} />
+          <div className="mb-4">
+            <GeneralInfo
+              me={me}
+              area={"حلقہ"}
+              newMonth={data?.month}
+              view={view}
+            />
+          </div>
+          <div className="mb-4">
+            <IfradiKuwat view={view} />
+          </div>
+          <div className="mb-4">
+            <Activity view={view} />
+          </div>
+          <div className="mb-4">
+            <OtherActivities view={view} />
+          </div>
+          <div className="mb-4">
+            <ToseeDawat view={view} />
+          </div>
+          <div className="mb-4">
+            <Library view={view} />
+          </div>
+          <div className="mb-4">
+            <Baitulmal view={view} />
+          </div>
+          <div className="mb-4">
+            <RozOShabDiary view={view} />
+          </div>
           <div className="w-full flex p-2">
             <label htmlFor="comments">تبصرہ</label>
             <input

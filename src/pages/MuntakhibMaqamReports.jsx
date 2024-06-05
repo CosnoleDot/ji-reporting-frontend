@@ -421,7 +421,7 @@ export const MuntakhibMaqamReports = () => {
             جائزہ کارکردگی رپورٹ (برائے منتخب مقام)
           </h2>
 
-          <div className="w-full p-4">
+          <div className="w-full">
             <div>
               <GeneralInfo
                 setMonth={setMonth}

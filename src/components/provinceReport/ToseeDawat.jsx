@@ -7,7 +7,7 @@ export const ToseeDawat = ({ finalMerged }) => {
           <h3 className="block ml-28 font-bold">روابط:</h3>
         </div>
         <div className="flex py-2">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
+       <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">
             طے شدہ:
           </label>
           <input
@@ -20,7 +20,7 @@ export const ToseeDawat = ({ finalMerged }) => {
           />
         </div>
         <div className="flex py-2">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
+       <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">
             موجود:
           </label>
           <input
@@ -33,7 +33,7 @@ export const ToseeDawat = ({ finalMerged }) => {
           />
         </div>
         <div className="flex py-2">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
+       <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">
             روابط سےملاقاتوں کاہدف:
           </label>
           <input
@@ -47,7 +47,7 @@ export const ToseeDawat = ({ finalMerged }) => {
         </div>
 
         <div className="flex py-2">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
+       <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">
             ملاقاتوں کی تعداد:
           </label>
           <input
@@ -60,7 +60,7 @@ export const ToseeDawat = ({ finalMerged }) => {
           />
         </div>
         <div className="flex py-2">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
+       <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">
             تقسیم لٹریچر:
           </label>
           <input
@@ -78,7 +78,7 @@ export const ToseeDawat = ({ finalMerged }) => {
           <label className="block ml-28 font-bold">عام طلبہ:</label>
         </div>
         <div className="flex py-2">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
+       <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">
             ملاقاتیں :
           </label>
           <input
@@ -91,7 +91,7 @@ export const ToseeDawat = ({ finalMerged }) => {
           />
         </div>
         <div className="flex py-2">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
+       <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">
             تقسیم لٹریچر:
           </label>
           <input

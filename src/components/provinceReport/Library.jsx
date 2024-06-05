@@ -9,7 +9,7 @@ export const Library = () => {
       <h2 className="text-black py-3 text-lg">لائبریری</h2>
       <div className="flex-col lg:flex-row w-full items-center justify-start">
         <div className="flex py-2">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
+       <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">
             کل تعداد لائبریریز:
           </label>
           <input
@@ -23,7 +23,7 @@ export const Library = () => {
           />
         </div>
         <div className="flex py-2">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
+       <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">
             کل تعدادکتب:
           </label>
           <input
@@ -37,7 +37,7 @@ export const Library = () => {
           />
         </div>
         <div className="flex py-2">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
+       <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">
             اضافہ کتب:
           </label>
           <input
@@ -51,7 +51,7 @@ export const Library = () => {
           />
         </div>
         <div className="flex py-2">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
+       <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">
             کمی کتب :
           </label>
           <input
@@ -65,7 +65,7 @@ export const Library = () => {
           />
         </div>
         <div className="flex py-2">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
+       <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">
             کل اجرائے کتب:
           </label>
           <input

@@ -369,7 +369,7 @@ export const MarkazReport = () => {
           </h2>
 
           <div className="w-full">
-            <div>
+            <div className="mb-4">
               <GeneralInfo
                 setMonth={setMonth}
                 month={month}
@@ -378,37 +378,37 @@ export const MarkazReport = () => {
                 view={view}
               />
             </div>
-            <div>
+            <div className="mb-4">
               <Jamiaat view={view} />
             </div>
-            <div>
+            <div className="mb-4">
               <Colleges view={view} />
             </div>
-            <div>
+            <div className="mb-4">
               <Tanzeem view={view} />
             </div>
-            <div>
+            <div className="mb-4">
               <IfradiKuwat view={view} />
             </div>
-            <div>
+            <div className="mb-4">
               <MarkaziActivities view={view} />
             </div>
-            <div>
+            <div className="mb-4">
               <ZailiActivities view={view} obj={obj} />
             </div>
-            <div>
+            <div className="mb-4">
               <OtherActivities view={view} />
             </div>
-            <div>
+            <div className="mb-4">
               <ToseeDawat />
             </div>
-            <div>
+            <div className="mb-4">
               <Library />
             </div>
-            <div>
+            <div className="mb-4">
               <Baitulmal view={view} />
             </div>
-            <div>
+            <div className="mb-4">
               <RozOShabDiary view={view} />
             </div>
             <div className="w-full flex p-2">

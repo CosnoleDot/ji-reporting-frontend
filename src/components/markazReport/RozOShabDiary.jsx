@@ -4,7 +4,7 @@ export const RozOShabDiary = ({ view }) => {
       <h2 className="text-black py-3 text-lg">روزشب ڈائری</h2>
       <div className="flex-col lg:flex-row w-full items-center justify-start">
         <div className="flex mb-4">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
+       <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">
             کتنے امیدواران فل کرتے ہیں؟
           </label>
           <input
@@ -18,7 +18,7 @@ export const RozOShabDiary = ({ view }) => {
           />
         </div>
         <div className="flex mb-4">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
+       <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">
             کتنےرفقافل کرتے ہیں:
           </label>
           <input

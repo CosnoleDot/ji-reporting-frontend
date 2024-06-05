@@ -245,7 +245,7 @@ export const CountryReport = () => {
               >
                 <FaEye />
               </button>
-              {me?.userAreaType === "country" && (
+              {me?.userAreaType === "Country" && (
               <button
                 className="btn"
                 onClick={() => navigate(`/reports/edit/${p._id}`)}

@@ -270,11 +270,15 @@ export const Maqam = () => {
   useEffect(() => {
     if (!id) {
       autoFill();
-    } else {
-      getMaqamReport();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [month, createData, id, data]);
+  useEffect(() => {
+    if (id) {
+      getMaqamReport();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
   // EDIT CODE END
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -353,7 +357,7 @@ export const Maqam = () => {
             {" "}
             جائزہ کارکردگی رپورٹ (براے مقام)
           </h2>
-          <div className="w-full p-4">
+          <div className="w-full">
             <div>
               <GeneralInfo
                 setMonth={setMonth}

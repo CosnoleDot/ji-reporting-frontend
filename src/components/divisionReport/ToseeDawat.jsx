@@ -59,7 +59,7 @@ export const ToseeDawat = ({ view }) => {
           <h3 className="block ml-28 font-bold">روابط:</h3>
         </div>
         <div className="flex py-2 mb-2">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">
             طے شدہ:
           </label>
           <input
@@ -73,7 +73,7 @@ export const ToseeDawat = ({ view }) => {
           />
         </div>
         <div className="flex py-2 mb-2">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">
             روابط سےملاقاتوں کاہدف:
           </label>
           <input
@@ -87,7 +87,7 @@ export const ToseeDawat = ({ view }) => {
           />
         </div>
         <div className="flex gap-3 mb-2 overflow-hidden overflow-x-scroll w-full">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">
             موجود:
           </label>
           <input
@@ -126,48 +126,50 @@ export const ToseeDawat = ({ view }) => {
             className="border-b-2 text-center border-dashed   mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
           />
         </div>
-        <div className="flex gap-3 mb-2 overflow-hidden overflow-x-scroll w-full">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
+        <div className="flex md:flex-row flex-col w-full gap-1 md:gap-3 pb-2">
+          <label className="block md:w-[20%] w-full text-sm md:text-lg mb-0 p-2">
             ملاقاتوں کی تعداد:
           </label>
-          <input
-            readOnly={true}
-            type="number"
-            defaultValue={0}
-            required
-            name={`meetings`}
-            id={`meetings`}
-            className="border-b-2 text-center border-dashed   mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
-          />
-          +
-          <input
-            type="number"
-            required
-            readOnly={view}
-            name={`meetingsManual`}
-            id={`meetingsManual`}
-            className="border-b-2 text-center border-dashed   mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
-            onChange={() =>
-              sumUpTwoValues(
-                parseInt(document.getElementById("meetings").value),
-                parseInt(document.getElementById("meetingsManual").value),
-                "meetingsSum"
-              )
-            }
-          />
-          =
-          <input
-            readOnly={true}
-            type="number"
-            defaultValue={document.getElementById("meetings")?.value}
-            required
-            name={`meetingsSum`}
-            id={`meetingsSum`}
-            className="border-b-2 text-center border-dashed   mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
-          />
+          <div className="w-full md:w-[80%] flex overflow-hidden overflow-x-scroll">
+            <input
+              readOnly={true}
+              type="number"
+              defaultValue={0}
+              required
+              name={`meetings`}
+              id={`meetings`}
+              className="border-b-2 text-center border-dashed   mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
+            />
+            +
+            <input
+              type="number"
+              required
+              readOnly={view}
+              name={`meetingsManual`}
+              id={`meetingsManual`}
+              className="border-b-2 text-center border-dashed   mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
+              onChange={() =>
+                sumUpTwoValues(
+                  parseInt(document.getElementById("meetings").value),
+                  parseInt(document.getElementById("meetingsManual").value),
+                  "meetingsSum"
+                )
+              }
+            />
+            =
+            <input
+              readOnly={true}
+              type="number"
+              defaultValue={document.getElementById("meetings")?.value}
+              required
+              name={`meetingsSum`}
+              id={`meetingsSum`}
+              className="border-b-2 text-center border-dashed   mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
+            />
+          </div>
         </div>
         <div className="flex gap-3 mb-2 overflow-hidden overflow-x-scroll w-full">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">
             تقسیم لٹریچر:
           </label>
           <input
@@ -186,7 +188,7 @@ export const ToseeDawat = ({ view }) => {
           <label className="block text-sm md:text-lg sm:mb-2">عام طلبہ:</label>
         </div>
         <div className="flex">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">
             تقسیم لٹریچر:
           </label>
           <input
@@ -200,7 +202,7 @@ export const ToseeDawat = ({ view }) => {
           />
         </div>
         <div className="flex">
-          <label className="block text-sm md:text-lg mb-2 lg:mb-0 pt-2">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">
             ملاقاتوں کی تعداد:
           </label>
           <input

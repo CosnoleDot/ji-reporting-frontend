@@ -3,7 +3,7 @@ import { Box } from "../halqa";
 export const Colleges = ({ view }) => {
   return (
     <div className="relative w-full overflow-auto">
-      <h2 className="mb-2 text-lg">کالجز </h2>
+      <h2 className="mb-2 text-lg ">کالجز </h2>
       <table className="w-full table">
         <thead>
           <tr>
