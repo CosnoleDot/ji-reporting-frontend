@@ -1298,7 +1298,7 @@ function App() {
                                               element={<HalqaReport />}
                                             />
                                             <Route
-                                              path="/country-report/print/:id"
+                                              path="/markaz-report/print/:id"
                                               element={<MarkazReportPrint />}
                                             />
                                           </Routes>
