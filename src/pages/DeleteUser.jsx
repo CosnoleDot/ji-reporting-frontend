@@ -45,6 +45,7 @@ export const DeleteUser = () => {
   const [selectedYear, setSelectedYear] = useState(null);
   const [birthYear, setBirthYear] = useState(null);
   const [openYears, setOpenYears] = useState(false);
+  const [withArea, setWithArea] = useState(false);
   const [openBirthYears, setOpenBirthYears] = useState(false);
   //year calender
   const YearCalender = (val) => {
@@ -360,7 +361,14 @@ export const DeleteUser = () => {
                           <div className="badge badge-accent">active</div>
                         )}
                       </td>
-                      <td className="flex row justify-center items-center gap-3">
+                      <td
+                        className="w-full flex row justify-evenly items-center gap-3"
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-evenly",
+                        }}
+                      >
                         <div className="flex justify-center items-center">
                           <button
                             onClick={() => {
@@ -441,196 +449,512 @@ export const DeleteUser = () => {
               id="filter-form"
             >
               <h1 className="font-semibold text-2xl">Categorize Users</h1>
-
-              <div>
-                <label className="label">
-                  <span className="text-base label-text">Full Name</span>
-                </label>
-                <input
-                  type="text"
-                  placeholder="Full Name"
-                  name="name"
-                  className="w-full input input-bordered input-primary"
-                />
+              <div className="flex justify-between items-center">
+                <button
+                  className="btn btn-primary border-none capitalize"
+                  onClick={(e) => {
+                    setWithArea(true);
+                    e.preventDefault();
+                  }}
+                >
+                  Categorize with area
+                </button>
+                <button
+                  className="btn btn-primary border-none capitalize"
+                  onClick={(e) => {
+                    setWithArea(false);
+                    e.preventDefault();
+                  }}
+                >
+                  Categorize with details
+                </button>
               </div>
-
-              <div className="relative">
-                <label className="label">
-                  <span className="text-base label-text">
-                    Year of becoming rukan/umeedwar
-                  </span>
-                </label>
-                <input
-                  type="text"
-                  id="year-of-joining"
-                  placeholder={"Select year"}
-                  name="joiningDate"
-                  className="w-full select select-bordered select-primary"
-                  value={selectedYear}
-                  onClick={() => setOpenYears(!openYears)}
-                />
-                {openYears && (
-                  <div className="absolute bg-white border w-20 p-0 right-0 select-none z-10">
-                    <span
-                      id="minus-year"
-                      className="w-full p-1 bg-[#eee] hover:bg-[#aaa] block text-center"
-                      onClick={() => YearCalender(-1)}
-                    >
-                      -
-                    </span>
-
-                    {years.map((obj) => (
-                      <p
-                        key={obj}
-                        className={`year-item hover:bg-slate-400 w-full flex justify-start px-4 items-center cursor-pointer ${
-                          obj === selectedYear ? "bg-slate-400" : ""
-                        }`}
-                        data-year={obj}
-                        onClick={(e) => {
-                          setSelectedYear(
-                            parseInt(e.currentTarget.getAttribute("data-year"))
-                          );
-                          setOpenYears(false);
-                        }}
-                      >
-                        {obj}
-                      </p>
-                    ))}
-                    <span
-                      id="plus-year"
-                      className="w-full p-1 bg-[#eee] hover:bg-[#aaa] block text-center"
-                      onClick={() => YearCalender(1)}
-                    >
-                      +
-                    </span>
+              {!withArea && (
+                <div>
+                  <div>
+                    <label className="label">
+                      <span className="text-base label-text">Full Name</span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Full Name"
+                      name="name"
+                      className="w-full input input-bordered input-primary"
+                    />
                   </div>
-                )}
-              </div>
-              <div className="relative">
-                <label className="label">
-                  <span className="text-base label-text">Year of birth</span>
-                </label>
-                <input
-                  type="text"
-                  id="year-of-joining"
-                  placeholder={"Select year"}
-                  name="dob"
-                  className="w-full select select-bordered select-primary"
-                  value={birthYear}
-                  onClick={() => setOpenBirthYears(!openBirthYears)}
-                />
-                {openBirthYears && (
-                  <div className="absolute bg-white border w-20 p-0 right-0 select-none">
-                    <span
-                      id="minus-year"
-                      className="w-full p-1 bg-[#eee] hover:bg-[#aaa] block text-center"
-                      onClick={() => YearCalender(-1)}
-                    >
-                      -
-                    </span>
 
-                    {years.map((obj) => (
-                      <p
-                        key={obj}
-                        className={`year-item hover:bg-slate-400 w-full flex justify-start px-4 items-center cursor-pointer ${
-                          obj === birthYear ? "bg-slate-400" : ""
-                        }`}
-                        data-year={obj}
-                        onClick={(e) => {
-                          setBirthYear(
-                            parseInt(e.currentTarget.getAttribute("data-year"))
-                          );
-                          setOpenBirthYears(false);
-                        }}
-                      >
-                        {obj}
-                      </p>
-                    ))}
-                    <span
-                      id="plus-year"
-                      className="w-full p-1 bg-[#eee] hover:bg-[#aaa] block text-center"
-                      onClick={() => YearCalender(1)}
-                    >
-                      +
-                    </span>
+                  <div className="relative">
+                    <label className="label">
+                      <span className="text-base label-text">
+                        Year of becoming rukan/umeedwar
+                      </span>
+                    </label>
+                    <input
+                      type="text"
+                      id="year-of-joining"
+                      placeholder={"Select year"}
+                      name="joiningDate"
+                      className="w-full select select-bordered select-primary"
+                      value={selectedYear}
+                      onClick={() => setOpenYears(!openYears)}
+                    />
+                    {openYears && (
+                      <div className="absolute bg-white border w-20 p-0 right-0 select-none z-10">
+                        <span
+                          id="minus-year"
+                          className="w-full p-1 bg-[#eee] hover:bg-[#aaa] block text-center"
+                          onClick={() => YearCalender(-1)}
+                        >
+                          -
+                        </span>
+
+                        {years.map((obj) => (
+                          <p
+                            key={obj}
+                            className={`year-item hover:bg-slate-400 w-full flex justify-start px-4 items-center cursor-pointer ${
+                              obj === selectedYear ? "bg-slate-400" : ""
+                            }`}
+                            data-year={obj}
+                            onClick={(e) => {
+                              setSelectedYear(
+                                parseInt(
+                                  e.currentTarget.getAttribute("data-year")
+                                )
+                              );
+                              setOpenYears(false);
+                            }}
+                          >
+                            {obj}
+                          </p>
+                        ))}
+                        <span
+                          id="plus-year"
+                          className="w-full p-1 bg-[#eee] hover:bg-[#aaa] block text-center"
+                          onClick={() => YearCalender(1)}
+                        >
+                          +
+                        </span>
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
-              <div className="w-full">
-                <label className="label">
-                  <span className="text-base label-text">Qualifications</span>
-                </label>
-                <select
-                  name="qualification"
-                  className="select select-bordered select-primary w-full"
-                  defaultValue={""}
-                >
-                  {/* <button>add</button> */}
-                  <option value={""}>Qualification</option>
-                  <option value={"matric"}>Matric</option>
-                  <option value={"intermediate"}>Intermediate</option>
-                  <option value={"bachelors"}>Bachelors</option>
-                  <option value={"masters"}>Masters</option>
-                  <option value={"phd"}>PHD</option>
-                </select>
-              </div>
-              <div className="w-full">
-                <select
-                  name="subject"
-                  id="subject"
-                  className="select select-bordered select-primary w-full"
-                  value={selectedSubject}
-                  onChange={(e) => setSelectedSubject(e.target.value)}
-                >
-                  <option value={""}>Select subject</option>
-                  {subjects?.map((sub, index) => (
-                    <option value={sub?._id} key={index} className="capitalize">
-                      {sub?.title?.split("_").join(" ")}
-                    </option>
-                  ))}
-                </select>
-              </div>
+                  <div className="relative">
+                    <label className="label">
+                      <span className="text-base label-text">
+                        Year of birth
+                      </span>
+                    </label>
+                    <input
+                      type="text"
+                      id="year-of-joining"
+                      placeholder={"Select year"}
+                      name="dob"
+                      className="w-full select select-bordered select-primary"
+                      value={birthYear}
+                      onClick={() => setOpenBirthYears(!openBirthYears)}
+                    />
+                    {openBirthYears && (
+                      <div className="absolute bg-white border w-20 p-0 right-0 select-none">
+                        <span
+                          id="minus-year"
+                          className="w-full p-1 bg-[#eee] hover:bg-[#aaa] block text-center"
+                          onClick={() => YearCalender(-1)}
+                        >
+                          -
+                        </span>
 
-              <div className="w-full">
-                <label className="label">
-                  <span className="text-base label-text">Semester/Year</span>
-                </label>
-                <select
-                  name="semester"
-                  className="select select-bordered select-primary w-full "
-                  defaultValue={""}
-                >
-                  <option value={""}>Semester/Year</option>
-                  <option value={"semester 1"}>Semester 1</option>
-                  <option value={"semester 2"}>Semester 2</option>
-                  <option value={"semester 3"}>Semester 3</option>
-                  <option value={"semester 4"}>Semester 4</option>
-                  <option value={"semester 5"}>Semester 5</option>
-                  <option value={"semester 6"}>Semester 6</option>
-                  <option value={"semester 7"}>Semester 7</option>
-                  <option value={"semester 8"}>Semester 8</option>
-                  <option value={"semester 9"}>Semester 9</option>
-                  <option value={"semester10"}>Semester10</option>
-                  <option value={"semester 11"}>Semester 11</option>
-                  <option value={"semester 12"}>Semester 12</option>
-                  <option value={"1st year"}>1st Year</option>
-                  <option value={"2nd year"}>2nd Year</option>
-                  <option value={"3rd year"}>3rd Year</option>
-                  <option value={"4th year"}>4th Year</option>
-                  <option value={"5th year"}>5th Year</option>
-                </select>
-              </div>
-              <div className="w-full">
-                <label className="label">
-                  <span className="text-base label-text">Institution</span>
-                </label>
-                <input
-                  type="text"
-                  placeholder="Institution"
-                  name="institution"
-                  className="w-full input input-bordered input-primary"
-                />
-              </div>
+                        {years.map((obj) => (
+                          <p
+                            key={obj}
+                            className={`year-item hover:bg-slate-400 w-full flex justify-start px-4 items-center cursor-pointer ${
+                              obj === birthYear ? "bg-slate-400" : ""
+                            }`}
+                            data-year={obj}
+                            onClick={(e) => {
+                              setBirthYear(
+                                parseInt(
+                                  e.currentTarget.getAttribute("data-year")
+                                )
+                              );
+                              setOpenBirthYears(false);
+                            }}
+                          >
+                            {obj}
+                          </p>
+                        ))}
+                        <span
+                          id="plus-year"
+                          className="w-full p-1 bg-[#eee] hover:bg-[#aaa] block text-center"
+                          onClick={() => YearCalender(1)}
+                        >
+                          +
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="w-full">
+                    <label className="label">
+                      <span className="text-base label-text">
+                        Qualifications
+                      </span>
+                    </label>
+                    <select
+                      name="qualification"
+                      className="select select-bordered select-primary w-full"
+                      defaultValue={""}
+                    >
+                      {/* <button>add</button> */}
+                      <option value={""}>Qualification</option>
+                      <option value={"matric"}>Matric</option>
+                      <option value={"intermediate"}>Intermediate</option>
+                      <option value={"bachelors"}>Bachelors</option>
+                      <option value={"masters"}>Masters</option>
+                      <option value={"phd"}>PHD</option>
+                    </select>
+                  </div>
+                  <div className="w-full">
+                    <select
+                      name="subject"
+                      id="subject"
+                      className="select select-bordered select-primary w-full"
+                      value={selectedSubject}
+                      onChange={(e) => setSelectedSubject(e.target.value)}
+                    >
+                      <option value={""}>Select subject</option>
+                      {subjects?.map((sub, index) => (
+                        <option
+                          value={sub?._id}
+                          key={index}
+                          className="capitalize"
+                        >
+                          {sub?.title?.split("_").join(" ")}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="w-full">
+                    <label className="label">
+                      <span className="text-base label-text">
+                        Semester/Year
+                      </span>
+                    </label>
+                    <select
+                      name="semester"
+                      className="select select-bordered select-primary w-full "
+                      defaultValue={""}
+                    >
+                      <option value={""}>Semester/Year</option>
+                      <option value={"semester 1"}>Semester 1</option>
+                      <option value={"semester 2"}>Semester 2</option>
+                      <option value={"semester 3"}>Semester 3</option>
+                      <option value={"semester 4"}>Semester 4</option>
+                      <option value={"semester 5"}>Semester 5</option>
+                      <option value={"semester 6"}>Semester 6</option>
+                      <option value={"semester 7"}>Semester 7</option>
+                      <option value={"semester 8"}>Semester 8</option>
+                      <option value={"semester 9"}>Semester 9</option>
+                      <option value={"semester10"}>Semester10</option>
+                      <option value={"semester 11"}>Semester 11</option>
+                      <option value={"semester 12"}>Semester 12</option>
+                      <option value={"1st year"}>1st Year</option>
+                      <option value={"2nd year"}>2nd Year</option>
+                      <option value={"3rd year"}>3rd Year</option>
+                      <option value={"4th year"}>4th Year</option>
+                      <option value={"5th year"}>5th Year</option>
+                    </select>
+                  </div>
+                  <div className="w-full">
+                    <label className="label">
+                      <span className="text-base label-text">Institution</span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Institution"
+                      name="institution"
+                      className="w-full input input-bordered input-primary"
+                    />
+                  </div>
+                </div>
+              )}
+              {withArea && (
+                <div>
+                  <div>
+                    <span className="px-1 py-2 block font-semibold">
+                      Organization pocket:
+                    </span>
+                    <div className="flex flex-wrap items-center justify-start border border-primary p-2 rounded-lg">
+                      {me?.nazim.toLowerCase() === "country" && (
+                        <div className="form-control">
+                          <label className="label cursor-pointer gap-2">
+                            <input
+                              type="radio"
+                              name="userAreaType"
+                              className="radio checked:bg-blue-500"
+                              checked={userAreaType === "Province"}
+                              value="Province"
+                              onChange={(e) => {
+                                setUserAreaType(e.target.value);
+                                setSearchArea("");
+                                document.getElementById("autocomplete0").value =
+                                  "";
+                              }}
+                            />
+                            <span className="label-text">Province</span>
+                          </label>
+                        </div>
+                      )}
+
+                      {(me?.nazim?.toLowerCase() === "country" ||
+                        me?.nazim?.toLowerCase() === "province") && (
+                        <div className="form-control">
+                          <label className="label cursor-pointer gap-2">
+                            <input
+                              type="radio"
+                              name="userAreaType"
+                              className="radio checked:bg-blue-500"
+                              checked={userAreaType === "Division"}
+                              value="Division"
+                              onChange={(e) => {
+                                setUserAreaType(e.target.value);
+                                setSearchArea("");
+                                document.getElementById("autocomplete0").value =
+                                  "";
+                              }}
+                            />
+                            <span className="label-text">Division</span>
+                          </label>
+                        </div>
+                      )}
+                      {(me?.nazim?.toLowerCase() === "maqam" ||
+                        me?.nazim?.toLowerCase() === "country" ||
+                        me?.nazim?.toLowerCase() === "province") &&
+                        ilaqas?.length > 0 && (
+                          <div className="form-control">
+                            <label className="label cursor-pointer gap-2">
+                              <input
+                                type="radio"
+                                name="userAreaType"
+                                className="radio checked:bg-blue-500"
+                                checked={userAreaType === "Ilaqa"}
+                                value="Ilaqa"
+                                onChange={(e) => {
+                                  setUserAreaType(e.target.value);
+                                  setSearchArea("");
+                                  document.getElementById(
+                                    "autocomplete0"
+                                  ).value = "";
+                                }}
+                              />
+                              <span className="label-text">Ilaqa</span>
+                            </label>
+                          </div>
+                        )}
+                      {(me?.nazim?.toLowerCase() === "country" ||
+                        me?.nazim?.toLowerCase() === "province") && (
+                        <div className="form-control">
+                          <label className="label cursor-pointer gap-2">
+                            <input
+                              type="radio"
+                              name="userAreaType"
+                              className="radio checked:bg-blue-500"
+                              checked={userAreaType === "Maqam"}
+                              value="Maqam"
+                              onChange={(e) => {
+                                setUserAreaType(e.target.value);
+                                setSearchArea("");
+                                document.getElementById("autocomplete0").value =
+                                  "";
+                              }}
+                            />
+                            <span className="label-text">Maqam</span>
+                          </label>
+                        </div>
+                      )}
+                      <div className="form-control">
+                        <label className="label cursor-pointer gap-2">
+                          <input
+                            type="radio"
+                            name="userAreaType"
+                            className="radio checked:bg-blue-500"
+                            checked={userAreaType === "Halqa"}
+                            value="Halqa"
+                            onChange={(e) => {
+                              setUserAreaType(e.target.value);
+                              setSearchArea("");
+                              document.getElementById("autocomplete0").value =
+                                "";
+                            }}
+                          />
+                          <span className="label-text">Halqa</span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* NAZIM TYPES */}
+                  <div className="w-full">
+                    <span className="px-1 py-2 block font-semibold">
+                      Change status to:
+                    </span>
+                    <div className="flex  items-center justify-start flex-wrap border border-primary p-2 rounded-lg">
+                      <div className="form-control">
+                        <label className="label cursor-pointer gap-2">
+                          <input
+                            type="radio"
+                            name="nazimType"
+                            className="radio checked:bg-blue-500"
+                            value="nazim"
+                            checked={nazimType === "nazim"}
+                            onChange={() => setNazimType("nazim")}
+                          />
+                          <span className="label-text">Rafiq-Nazim</span>
+                        </label>
+                      </div>
+                      <div className="form-control">
+                        <label className="label cursor-pointer gap-2">
+                          <input
+                            type="radio"
+                            name="nazimType"
+                            className="radio checked:bg-blue-500"
+                            value="umeedwaar"
+                            checked={nazimType === "umeedwar"}
+                            onChange={() => setNazimType("umeedwar")}
+                          />
+                          <span className="label-text">Umeedwaar</span>
+                        </label>
+                      </div>
+                      <div className="form-control">
+                        <label className="label cursor-pointer gap-2">
+                          <input
+                            type="radio"
+                            name="nazimType"
+                            className="radio checked:bg-blue-500"
+                            value="umeedwaar-nazim"
+                            onChange={() => setNazimType("umeedwaar-nazim")}
+                          />
+                          <span className="label-text">Umeedwaar-Nazim</span>
+                        </label>
+                      </div>
+                      <div className="form-control">
+                        <label className="label cursor-pointer gap-2">
+                          <input
+                            type="radio"
+                            name="nazimType"
+                            className="radio checked:bg-blue-500"
+                            value="rukan"
+                            checked={nazimType === "rukan"}
+                            onChange={() => setNazimType("rukan")}
+                          />
+                          <span className="label-text">Rukan</span>
+                        </label>
+                      </div>
+                      <div className="form-control">
+                        <label className="label cursor-pointer gap-2">
+                          <input
+                            type="radio"
+                            name="nazimType"
+                            className="radio checked:bg-blue-500"
+                            value="rukan-nazim"
+                            checked={nazimType === "rukan-nazim"}
+                            onChange={() => setNazimType("rukan-nazim")}
+                          />
+                          <span className="label-text">Rukan-Nazim</span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="relative ">
+                    <span className="px-1 py-2 block font-semibold">Area:</span>
+                    <input type="hidden" name="userAreaId" id="userAreaId" />
+                    <input
+                      id="autocomplete0"
+                      type="search"
+                      className="input input-bordered input-primary w-full"
+                      placeholder="Select area"
+                      onChange={(e) => setSearchArea(e.target.value)}
+                      onClick={() => {
+                        if (
+                          document
+                            .getElementById("autocomplete0-list")
+                            .classList.contains("hidden")
+                        ) {
+                          document
+                            .getElementById("autocomplete0-list")
+                            .classList.remove("hidden");
+                        } else {
+                          document
+                            .getElementById("autocomplete0-list")
+                            .classList.add("hidden");
+                        }
+                      }}
+                    />
+                    <div
+                      id="autocomplete0-list"
+                      className="absolute hidden z-10 max-h-[150px] overflow-y-scroll bg-white border border-gray-300 w-full mt-1"
+                    >
+                      {areas?.length > 0
+                        ? areas
+                            .sort((a, b) => a?.name?.localeCompare(b?.name))
+                            .filter((item) => {
+                              if (searchArea && searchArea !== "") {
+                                if (
+                                  item?.name
+                                    ?.toString()
+                                    ?.toLowerCase()
+                                    ?.includes(
+                                      searchArea?.toString()?.toLowerCase()
+                                    )
+                                ) {
+                                  return true;
+                                }
+                                return false;
+                              } else {
+                                return true;
+                              }
+                            })
+                            .map((area, index) => (
+                              <div
+                                key={index}
+                                onClick={() => {
+                                  document.getElementById("userAreaId").value =
+                                    area?._id;
+                                  setSelectedId(area?._id);
+                                  document.getElementById(
+                                    "autocomplete0"
+                                  ).value = `${area?.name}${
+                                    userAreaType === "Halqa"
+                                      ? ` - ${area?.parentId?.name} (${area?.parentType})`
+                                      : userAreaType === "Ilaqa"
+                                      ? ` - ${area?.maqam?.name} (${area?.maqam?.province?.name})`
+                                      : userAreaType === "Maqam"
+                                      ? ` - ${area?.province?.name} `
+                                      : userAreaType === "Division"
+                                      ? ` - ${area?.province?.name}`
+                                      : ""
+                                  }`;
+                                  document
+                                    .getElementById("autocomplete0-list")
+                                    .classList.add("hidden");
+                                }}
+                                className="p-2 cursor-pointer hover:bg-gray-100"
+                              >
+                                {area?.name}
+                                {userAreaType === "Halqa"
+                                  ? ` - ${area?.parentId?.name} (${area?.parentType})`
+                                  : userAreaType === "Ilaqa"
+                                  ? ` - ${area?.maqam?.name} (${area?.maqam?.province?.name})`
+                                  : userAreaType === "Maqam"
+                                  ? ` - ${area?.province?.name} `
+                                  : userAreaType === "Division"
+                                  ? ` - ${area?.province?.name}`
+                                  : ""}
+                              </div>
+                            ))
+                        : "No Area found"}
+                    </div>
+                  </div>
+                </div>
+              )}
               <button
                 type="submit"
                 className="btn btn-primary"
