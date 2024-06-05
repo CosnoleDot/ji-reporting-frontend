@@ -88,14 +88,8 @@ export const Dashboard = () => {
     getHalqas();
   }, []);
   const getData = async () => {
-    if (showData) {
-      setShowData(false);
-      return;
-    }
-    tableRef?.current?.scrollIntoView({ behavior: "smooth" });
     setShowData(true);
     setLoading(true);
-
     // Check if data is already stored in session storage
     if (userAreaType === "personal" && queryDate !== "") {
       handlePersonalFilledReports();
@@ -125,12 +119,12 @@ export const Dashboard = () => {
           const maqamData = maqam?.data?.data?.allMaqams || [];
           const halqaData = halqa?.data?.data?.allHalqas || [];
           const divisionData = division?.data?.data?.allDivisions || [];
-          const ilaqaData = division?.data?.data?.allIlaqas || [];
+          const ilaqaData = ilaqa?.data?.data?.allIlaqas || [];
           const getFilteredHalqas = (halqaData) => [
             ...halqaData.filter((h) => {
               if (userAreaType === "Maqam") {
                 if (
-                  (h.parentType === "Maqam" || h.parentType === "Ilaqa") &&
+                  (h?.parentType === "Maqam" || h.parentType === "Ilaqa") &&
                   (h?.parentId?._id === selectedId ||
                     h.parentId?.maqam === selectedId)
                 ) {
@@ -205,8 +199,20 @@ export const Dashboard = () => {
         }
       } else {
         setData(JSON.parse(storedData));
+        window.scroll({
+          top: document.body.offsetHeight,
+          left: 0,
+          bottom: 0,
+          behavior: "smooth",
+        });
       }
       setLoading(false);
+      window.scroll({
+        top: document.body.offsetHeight,
+        left: 0,
+        bottom: 0,
+        behavior: "smooth",
+      });
     }
   };
   useEffect(() => {
@@ -530,6 +536,7 @@ export const Dashboard = () => {
             )}
           </div>
           {localStorage.getItem("@type") !== "halqa" &&
+            !showData &&
             ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
               localStorage.getItem("@nazimType")
             ) && (
@@ -538,7 +545,20 @@ export const Dashboard = () => {
                 className="btn btn-neutral w-full md:w-auto border-none capitalize"
               >
                 See Reports Status
-                {showData ? <FaArrowUp /> : <FaArrowDown />}
+                <FaArrowDown />
+              </button>
+            )}
+          {localStorage.getItem("@type") !== "halqa" &&
+            showData &&
+            ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
+              localStorage.getItem("@nazimType")
+            ) && (
+              <button
+                onClick={() => setShowData(false)}
+                className="btn btn-neutral w-full md:w-auto border-none capitalize"
+              >
+                Close Reports Status
+                <FaArrowUp />
               </button>
             )}
           {showData && (
@@ -1034,7 +1054,11 @@ export const Dashboard = () => {
               </h4>
             </div>
             <div className="w-full flex justify-start items-center gap-5">
-              {areaDetails?.parentType ? areaDetails?.parentType + ":" : ""}
+              {areaDetails?.parentType
+                ? areaDetails?.parentType + ":"
+                : areaDetails?.maqam
+                ? "Maqam"
+                : ""}
               <h4 className="text-gray-400 font-bold">
                 {areaDetails?.parentType === "Ilaqa"
                   ? areaDetails?.parentId?.name
@@ -1044,6 +1068,8 @@ export const Dashboard = () => {
                   ? areaDetails?.parentId?.name
                   : areaDetails?.parentType === "Division"
                   ? areaDetails?.parentId?.name
+                  : areaDetails?.maqam
+                  ? areaDetails?.maqam?.name
                   : ""}
               </h4>
             </div>
@@ -1091,7 +1117,9 @@ export const Dashboard = () => {
                     ? areaDetails?.parentId?.district?.division?.province?.name
                     : areaDetails?.parentType === "Division"
                     ? areaDetails?.parentId?.province?.name
-                    : areaDetails?.province?.name}
+                    : areaDetails?.maqam
+                    ? areaDetails?.maqam?.province?.name
+                    : ""}
                 </h4>
               </div>
             )}
