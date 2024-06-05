@@ -1205,7 +1205,11 @@ export const DeleteUser = () => {
                 </h4>
               </div>
               <div className="w-full flex justify-start items-center gap-5">
-                {areaDetails?.parentType ? areaDetails?.parentType + ":" : ""}
+                {areaDetails?.parentType
+                  ? areaDetails?.parentType + ":"
+                  : areaDetails?.maqam
+                  ? "Maqam"
+                  : ""}
                 <h4 className="text-gray-400 font-bold">
                   {areaDetails?.parentType === "Ilaqa"
                     ? areaDetails?.parentId?.name
@@ -1215,6 +1219,8 @@ export const DeleteUser = () => {
                     ? areaDetails?.parentId?.name
                     : areaDetails?.parentType === "Division"
                     ? areaDetails?.parentId?.name
+                    : areaDetails?.maqam
+                    ? areaDetails?.maqam?.name
                     : ""}
                 </h4>
               </div>
@@ -1263,7 +1269,9 @@ export const DeleteUser = () => {
                           ?.name
                       : areaDetails?.parentType === "Division"
                       ? areaDetails?.parentId?.province?.name
-                      : areaDetails?.province?.name}
+                      : areaDetails?.maqam
+                      ? areaDetails?.maqam?.province?.name
+                      : ""}
                   </h4>
                 </div>
               )}
