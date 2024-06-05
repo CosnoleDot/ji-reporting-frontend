@@ -43,7 +43,6 @@ export const CountryReport = () => {
     }, []);
     setFilterAllData(uniqueArray);
   }, [cReports]);
-    console.log(filterAllData)
   const searchResults = async () => {
     if (year !== "" && month !== "") {
       try {
