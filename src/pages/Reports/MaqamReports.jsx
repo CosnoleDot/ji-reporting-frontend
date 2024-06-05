@@ -29,9 +29,10 @@ export const MaqamReports = () => {
   const me = useContext(MeContext);
   const [isSearch, setIsSearch] = useState(false);
   const [searchData, setSearchData] = useState([]);
-  const { getMaqamReports } = useContext(UIContext);
   const [currentPage, setCurrentPage] = useState(1);
-  const [currentData, setCurrentData] = useState();
+  const { getMaqamReports } = useContext(UIContext);
+  const [disable, setDisable] = useState(false);
+  const [isFilter,setIsFilter]=useState(false);
   const navigate = useNavigate();
   const itemsPerPage = 10;
   useEffect(() => {
@@ -76,39 +77,29 @@ export const MaqamReports = () => {
   const clearFilters = () => {
     setMonth("");
     setYear("2023");
-    setIsSearch(false);
     setFilterAllData(mReports);
+    setIsFilter(false)
+    setIsSearch(false);
     document.getElementById("autocomplete").value = "";
   };
-  const viewReport = async (reportId, areaId) => {
-    filterMuntakhib(areaId);
-    navigate(`view/${reportId}`);
+
+  const viewReport = async (id) => {
+    navigate(`view/${id}`);
   };
-  const editReport = (reportId, areaId) => {
-    filterMuntakhib(areaId);
-    navigate(`edit/${reportId}`);
+  const editReport = (id) => {
+    navigate(`edit/${id}`);
   };
-  const handlePrint = (report) => {
-    const isMuntakhib = ilaqas?.some(
-      (ilaqa) => ilaqa?.maqam?._id === report?.maqamAreaId?._id
-    );
-    if (isMuntakhib) {
-      window.open(`muntakhib-maqam-report/print/${report?._id}`, "blank");
-    } else {
-      window.open(`maqam-report/print/${report?._id}`, "blank");
-    }
+  const handlePrint = (id) => {
+    window.open(`maqam-report/print/${id}`, "blank");
   };
+
   let totalPages = Math.ceil(total / itemsPerPage);
-  useEffect(() => {
-    if (filterAllData?.length > 0) {
-      setCurrentData(
-        filterAllData?.slice(
-          (currentPage - 1) * itemsPerPage,
-          currentPage * itemsPerPage
-        )
-      );
-    }
-  }, []);
+
+  const currentData = filterAllData?.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   const handlePrevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
@@ -120,11 +111,12 @@ export const MaqamReports = () => {
       setCurrentPage(currentPage + 1);
       const inset = currentPage * itemsPerPage;
       const offset = itemsPerPage;
-      if (mReports?.length <= itemsPerPage * currentPage) {
+      if (mReports.length <= itemsPerPage * currentPage) {
         getMaqamReports(inset, offset);
       }
     }
   };
+
   return (
     <>
       <div className="join xs:w-full mb-4">
@@ -212,6 +204,7 @@ export const MaqamReports = () => {
             <button
               onClick={() => {
                 document.getElementById("filter-area-dialog").showModal();
+                setIsSearch(false)
               }}
               className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
             >
@@ -283,7 +276,7 @@ export const MaqamReports = () => {
           ) : (
             <NoReports />
           )}
-          <div className="flex justify-between mt-4">
+         {!isFilter && <div className="flex justify-between mt-4">
             <button
               className="btn"
               onClick={handlePrevPage}
@@ -301,13 +294,13 @@ export const MaqamReports = () => {
             >
               Next
             </button>
-          </div>
+          </div>}
         </>
       ) : (
         <SearchPage data={searchData} area={"maqam"} />
       )}
       <dialog id="filter-area-dialog" className="modal">
-        <FilterDialog setFilterAllData={setFilterAllData} />
+        <FilterDialog setFilterAllData={setFilterAllData} setIsFilter={setIsFilter}/>
       </dialog>
     </>
   );

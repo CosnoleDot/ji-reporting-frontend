@@ -42,7 +42,6 @@ export const HalqaReports = () => {
         );
 
         if (req) {
-          console.log(req.data.data?.data)
           setData([]);
           setData(req.data.data?.data);
           setLength(req.data.data.length);
@@ -279,6 +278,7 @@ export const HalqaReports = () => {
             <button
               onClick={() => {
                 document.getElementById("filter-area-dialog").showModal();
+                setIsSearch(false)
               }}
               className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
             >

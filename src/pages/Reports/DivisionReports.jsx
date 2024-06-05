@@ -20,12 +20,12 @@ export const DivisionReports = () => {
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("2023");
   const me = useContext(MeContext);
-  const { getDivisionReports } = useContext(UIContext);
   const [isSearch, setIsSearch] = useState(false);
   const [searchData, setSearchData] = useState([]);
-  const [disable, setDisable] = useState(false);
-  const [currentData, setCurrentData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const { getDivisionReports } = useContext(UIContext);
+  const [disable, setDisable] = useState(false);
+  const [isFilter,setIsFilter]=useState(false);
   const navigate = useNavigate();
   const itemsPerPage = 10;
   useEffect(() => {
@@ -70,30 +70,28 @@ export const DivisionReports = () => {
   const clearFilters = () => {
     setMonth("");
     setYear("2023");
-    setIsSearch(false);
     setFilterAllData(dReports);
+    setIsFilter(false)
+    setIsSearch(false);
     document.getElementById("autocomplete").value = "";
   };
-  const viewReport = async (reportId) => {
-    navigate(`view/${reportId}`);
+
+  const viewReport = async (id) => {
+    navigate(`view/${id}`);
   };
-  const editReport = (reportId) => {
-    navigate(`edit/${reportId}`);
+  const editReport = (id) => {
+    navigate(`edit/${id}`);
   };
   const handlePrint = (id) => {
     window.open(`division-report/print/${id}`, "blank");
   };
+
   let totalPages = Math.ceil(total / itemsPerPage);
-  useEffect(() => {
-    if (filterAllData?.length > 0) {
-      setCurrentData(
-        filterAllData?.slice(
-          (currentPage - 1) * itemsPerPage,
-          currentPage * itemsPerPage
-        )
-      );
-    }
-  }, []);
+
+  const currentData = filterAllData?.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   const handlePrevPage = () => {
     if (currentPage > 1) {
@@ -108,12 +106,10 @@ export const DivisionReports = () => {
       const offset = itemsPerPage;
       if (dReports.length <= itemsPerPage * currentPage) {
         getDivisionReports(inset, offset);
-      } else {
-        totalPages = currentPage;
-        setDisable(true);
       }
     }
   };
+
   return (
     <>
       <div className="join xs:w-full mb-4">
@@ -201,6 +197,7 @@ export const DivisionReports = () => {
             <button
               onClick={() => {
                 document.getElementById("filter-area-dialog").showModal();
+                setIsSearch(false);
               }}
               className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
             >
@@ -267,7 +264,7 @@ export const DivisionReports = () => {
           ) : (
             <NoReports />
           )}
-          <div className="flex justify-between mt-4">
+          {!isFilter && <div className="flex justify-between mt-4">
             <button
               className="btn"
               onClick={handlePrevPage}
@@ -285,13 +282,13 @@ export const DivisionReports = () => {
             >
               Next
             </button>
-          </div>{" "}
+          </div>}{" "}
         </>
       ) : (
         <SearchPage data={searchData} area={"division"} />
       )}
       <dialog id="filter-area-dialog" className="modal">
-        <FilterDialog setFilterAllData={setFilterAllData} />
+        <FilterDialog setFilterAllData={setFilterAllData} setIsFilter={setIsFilter}/>
       </dialog>
     </>
   );

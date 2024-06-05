@@ -11,23 +11,26 @@ import { NoReports, months } from "../Reports";
 import { FilterDialog } from "./FilterDialog";
 import { useNavigate } from "react-router-dom";
 import { UIContext } from "../../context/ui";
+import instance from "../../api/instrance";
+import { SearchPage } from "./SearchPage";
 
 export const CountryReport = () => {
   const c = useContext(MarkazReportContext);
   const cReports = c?.reports;
-
+ 
   const total = c?.length;
   const [filterAllData, setFilterAllData] = useState(cReports);
   const { dispatch } = useToastState();
   const [search, showSearch] = useState(false);
+  const [isFilter,setIsFilter]=useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
   const [month, setMonth] = useState("");
-  const [year, setYear] = useState("2023");
+  const [isSearch, setIsSearch] = useState(false);
+  const [searchData, setSearchData] = useState([]);
+  const [year, setYear] = useState("2024");
   const me = useContext(MeContext);
   const { getMarkazReport } = useContext(UIContext);
-  const [disable, setDisable] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [currentData, setCurrentData] = useState();
   const navigate = useNavigate();
   const itemsPerPage = 10;
   useEffect(() => {
@@ -40,65 +43,52 @@ export const CountryReport = () => {
     }, []);
     setFilterAllData(uniqueArray);
   }, [cReports]);
-  const searchResults = () => {
+  const searchResults = async () => {
     if (year !== "" && month !== "") {
-      let filteredData = { ...cReports };
-      filteredData = cReports?.filter((i) => {
-        const [f_year, f_month] = [
-          i?.month?.split("-")[0],
-          i?.month?.split("-")[1],
-        ];
-        return (
-          parseInt(year) === parseInt(f_year) &&
-          parseInt(month) === parseInt(f_month)
+      try {
+        setIsSearch(true);
+        const req = await instance.get(
+          `/reports/markaz?year=${year}&month=${month}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("@token")}`,
+            },
+          }
         );
-      });
-      showSearch(false);
-      setFilterAllData(filteredData);
-    } else if (year !== "" && month === "") {
-      let filteredData = { ...cReports };
-      filteredData = cReports?.filter((i) => {
-        const f_year = i?.month?.split("-")[0];
-        return parseInt(year) === parseInt(f_year);
-      });
-      showSearch(false);
-      setFilterAllData(filteredData);
-    } else if (year === "" && month !== "") {
-      dispatch({ type: "ERROR", payload: "Enter year with month" });
-      setFilterAllData(cReports);
-    } else if (year === "" && month === "") {
-      dispatch({ type: "ERROR", payload: "Date is required" });
-      setFilterAllData(cReports);
-    } else {
-      setFilterAllData(cReports);
+
+        if (req) {
+          setSearchData([]);
+          setSearchData(req.data?.data);
+        }
+      } catch (err) {
+        console.log(err);
+        dispatch({
+          type: "ERROR",
+          payload: err?.response?.data?.message || err?.message,
+        });
+      }
     }
   };
   const toggleSearch = () => {
     showSearch(!search);
   };
-  useEffect(() => {
-    setCurrentData(filterAllData);
-  }, [filterAllData]);
   const clearFilters = () => {
     setMonth("");
-    setYear("2023");
+    setYear("2024");
     setFilterAllData(cReports);
+    setIsFilter(false)
+    setIsSearch(false);
     document.getElementById("autocomplete").value = "";
   };
   const handlePrint = (id) => {
-    window.open(`country-report/print/${id}`, "blank");
+    window.open(`markaz-report/print/${id}`, "blank");
   };
   let totalPages = Math.ceil(total / itemsPerPage);
-  useEffect(() => {
-    if (filterAllData?.length > 0) {
-      setCurrentData(
-        filterAllData?.slice(
-          (currentPage - 1) * itemsPerPage,
-          currentPage * itemsPerPage
-        )
-      );
-    }
-  }, []);
+
+  const currentData = filterAllData?.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   const handlePrevPage = () => {
     if (currentPage > 1) {
@@ -203,6 +193,7 @@ export const CountryReport = () => {
             <button
               onClick={() => {
                 document.getElementById("filter-area-dialog").showModal();
+                
               }}
               className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
             >
@@ -234,7 +225,7 @@ export const CountryReport = () => {
             )} */}
         </div>
       </div>
-      {currentData?.length > 0 ? (
+      {!isSearch ? <>{currentData?.length > 0 ? (
         currentData?.map((p) => (
           <div
             key={p?._id}
@@ -254,14 +245,14 @@ export const CountryReport = () => {
               >
                 <FaEye />
               </button>
-
+              {me?.userAreaType === "country" && (
               <button
                 className="btn"
                 onClick={() => navigate(`/reports/edit/${p._id}`)}
               >
                 <FaEdit />
               </button>
-
+)}
               <button className="btn" onClick={() => handlePrint(p?._id)}>
                 <FaPrint />
               </button>
@@ -271,7 +262,7 @@ export const CountryReport = () => {
       ) : (
         <NoReports />
       )}
-      <div className="flex justify-between mt-4">
+      {!isFilter && <div className="flex justify-between mt-4">
         <button
           className="btn"
           onClick={handlePrevPage}
@@ -289,9 +280,9 @@ export const CountryReport = () => {
         >
           Next
         </button>
-      </div>
+      </div>}</> : <SearchPage data={searchData?.data} area={'country'} />}
       <dialog id="filter-area-dialog" className="modal">
-        <FilterDialog setFilterAllData={setFilterAllData} />
+        <FilterDialog setFilterAllData={setFilterAllData} setIsFilter={setIsFilter} />
       </dialog>
     </>
   );

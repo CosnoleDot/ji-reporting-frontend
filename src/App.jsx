@@ -651,6 +651,7 @@ function App() {
               length: length,
             };
           });
+          console.log(maqamReports)
           setLoading(false);
         }
       } catch (err) {
