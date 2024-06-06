@@ -15,13 +15,17 @@ import { FaEdit } from "react-icons/fa";
 import { UIContext } from "../../context/ui";
 import { Loader } from "../Loader";
 import { FcViewDetails } from "react-icons/fc";
+
 export const LocationDivision = () => {
   const provinces = useContext(ProvinceContext);
   const me = useContext(MeContext);
   const tehsils = useContext(TehsilContext);
   const divisions = useContext(DivisionContext);
   const areaDetails = useContext(ViewDetails);
-  const halqas = useContext(HalqaContext);
+  const halqa = useContext(HalqaContext);
+  const halqas = halqa.filter((i)=> i.parentType ==="Tehsil" || i.parentType ==="Division")
+  const [searchData, setSearchData] =useState([]);
+  const [value, setValue]=useState('');
   const districts = useContext(DistrictContext);
   const [filteredData, setFilteredData] = useState(halqas);
   const [isDivision, setIsDivision] = useState(false);
@@ -43,7 +47,24 @@ export const LocationDivision = () => {
       : "halqa"
   );
   const params = useLocation();
+
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10; // Adjust this as needed
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+
+  // Compute the displayed items based on the current page
+  const paginatedData =value === '' ? filteredData.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  ) : searchData.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+ 
+
   useEffect(() => {
+    setLoading(true);
     // Function to parse query parameters
     const getQueryParams = () => {
       const searchParams = new URLSearchParams(params.search);
@@ -74,11 +95,28 @@ export const LocationDivision = () => {
           }
         }
       }
+      setLoading(false);
     };
 
     // Call the function when the component mounts or when the location changes
     getQueryParams();
   }, [params, view, districts, divisions, halqas, tehsils]);
+  useEffect(() => {
+    if (view) {
+      if (view === "halqa") {
+        setFilteredData(halqas);
+      }
+      if (view === "district") {
+        setFilteredData(districts);
+      }
+      if (view === "tehsil") {
+        setFilteredData(tehsils);
+      }
+      if (view === "division") {
+        setFilteredData(divisions);
+      }
+    }
+  }, [halqas, tehsils, districts]);
   const [form, setForm] = useState({
     name: "",
     province: "",
@@ -293,7 +331,9 @@ export const LocationDivision = () => {
     setLoading(false);
   };
   const handleSearch = (value) => {
+   setValue(value)
     if (view === "halqa") {
+      console.log(value)
       const filteredHalqa = halqas
         ?.map((halqa) => halqa)
         ?.filter(
@@ -301,7 +341,10 @@ export const LocationDivision = () => {
             hal?.name?.toLowerCase().includes(value.toLowerCase()) ||
             hal?.parentId?.name?.toLowerCase().includes(value.toLowerCase())
         );
+       
+      
       setFilteredData(filteredHalqa);
+      setSearchData(filteredHalqa)
     } else if (view === "district") {
       const filteredDistricts = districts
         ?.map((district) => district)
@@ -312,6 +355,7 @@ export const LocationDivision = () => {
         );
 
       setFilteredData(filteredDistricts);
+      setSearchData(filteredDistricts)
     } else if (view === "tehsil") {
       const filteredTehsils = tehsils
         ?.map((tehsil) => tehsil)
@@ -321,6 +365,7 @@ export const LocationDivision = () => {
             teh?.maqam?.name.toLowerCase().includes(value.toLowerCase())
         );
       setFilteredData(filteredTehsils);
+      setSearchData(filteredTehsils)
     } else if (view === "division") {
       const filteredDivisions = divisions
         ?.map((div) => div)
@@ -330,8 +375,11 @@ export const LocationDivision = () => {
             div?.maqam?.name.toLowerCase().includes(value.toLowerCase())
         );
       setFilteredData(filteredDivisions);
+      setSearchData(filteredDivisions)
     }
+    setCurrentPage(1); // Reset to the first page after search
   };
+
   return (
     <>
       <div
@@ -460,6 +508,7 @@ export const LocationDivision = () => {
           Halqa
         </Link>
       </div>
+
       {view === "division" && (
         <div className="w-full overflow-x-auto">
           <table className="table table-zebra">
@@ -472,10 +521,10 @@ export const LocationDivision = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredData?.length > 0 ? (
-                filteredData.map((division, index) => (
+              {paginatedData?.length > 0 ? (
+                paginatedData.map((division, index) => (
                   <tr key={division?._id}>
-                    <th>{index + 1}</th>
+                    <th>{(currentPage - 1) * itemsPerPage + index + 1}</th>
                     <td>{division?.name}</td>
                     <td>{division?.province?.name || "-"}</td>
                     <td className="flex justify-center gap-4 items-center">
@@ -527,13 +576,13 @@ export const LocationDivision = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredData.length > 0 ? (
-                filteredData?.map((tehsil, index) => (
+              {paginatedData.length > 0 ? (
+                paginatedData?.map((tehsil, index) => (
                   <tr
                     key={tehsil?._id}
                     className="flex w-full justify-between items-start"
                   >
-                    <th>{index + 1}</th>
+                    <th>{(currentPage - 1) * itemsPerPage + index + 1}</th>
                     <td className="w-full text-start">{tehsil?.name}</td>
                     <td className="w-full text-start">{` ${
                       tehsil?.district?.name
@@ -589,13 +638,13 @@ export const LocationDivision = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredData?.length > 0 ? (
-                filteredData?.map((district, index) => (
+              {paginatedData?.length > 0 ? (
+                paginatedData?.map((district, index) => (
                   <tr
                     key={district?._id}
                     className="flex w-full justify-between items-start"
                   >
-                    <th>{index + 1}</th>
+                    <th>{(currentPage - 1) * itemsPerPage + index + 1}</th>
                     <td className="w-full text-start">{district?.name}</td>
                     <td className="w-full text-start">{` ${
                       district?.division?.name
@@ -655,18 +704,18 @@ export const LocationDivision = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredData?.length > 0 ? (
-                filteredData
+              {paginatedData?.length > 0 ? (
+                paginatedData
                   ?.filter(
                     (i) =>
-                      i?.parentType === "Tehsil" || i?.parentType === "Division"
+                      i?.parentType === "Tehsil"
                   )
                   ?.map((halqa, index) => (
                     <tr
                       key={halqa?._id}
                       className="flex w-full justify-between items-start"
                     >
-                      <th>{index + 1}</th>
+                      <th>{(currentPage - 1) * itemsPerPage + index + 1}</th>
                       <td className="w-full">{halqa?.name}</td>
                       <td className="">
                         <div
@@ -717,6 +766,28 @@ export const LocationDivision = () => {
           </table>
         </div>
       )}
+
+      {/* Pagination Controls */}
+      <div className="flex w-full px-4 justify-between items-center mt-4">
+        <button
+          className="btn"
+          disabled={currentPage === 1}
+          onClick={() => setCurrentPage((prev) => prev - 1)}
+        >
+          Previous
+        </button>
+        <span className="mx-4">
+          Page {currentPage} of {totalPages}
+        </span>
+        <button
+          className="btn"
+          disabled={currentPage === totalPages}
+          onClick={() => setCurrentPage((prev) => prev + 1)}
+        >
+          Next
+        </button>
+      </div>
+
       <dialog id="add_division_modal" className="modal">
         <div className="modal-box">
           <h3 className="font-bold text-lg">Add Division</h3>
