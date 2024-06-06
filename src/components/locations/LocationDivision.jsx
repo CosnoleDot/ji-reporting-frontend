@@ -333,7 +333,6 @@ export const LocationDivision = () => {
   const handleSearch = (value) => {
    setValue(value)
     if (view === "halqa") {
-      console.log(value)
       const filteredHalqa = halqas
         ?.map((halqa) => halqa)
         ?.filter(
