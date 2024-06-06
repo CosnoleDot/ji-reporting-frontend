@@ -102,6 +102,16 @@ export const LocationIlaqa = () => {
     }
     setLoading(false);
   };
+
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10; // Change this value according to your preference
+  const totalPages = Math.ceil(halqas?.length / itemsPerPage);
+  // Calculate pagination
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = halqas.slice(indexOfFirstItem, indexOfLastItem);
+
   return (
     <>
       <div className="p-5 grid grid-cols-1">
@@ -135,14 +145,14 @@ export const LocationIlaqa = () => {
             </tr>
           </thead>
           <tbody>
-            {halqas
+            {currentItems
               ?.filter((i) => i?.parentType === "Ilaqa")
               ?.map((halqa, index) => (
                 <tr
                   key={halqa?._id}
                   className="flex w-full justify-between items-start"
                 >
-                  <th>{index + 1}</th>
+                  <th>{indexOfFirstItem + index + 1}</th>
                   <td className="w-full text-start">{halqa?.name}</td>
                   <td className="w-full text-start">
                     {halqa?.parentId?.name || "-"}
@@ -179,6 +189,26 @@ export const LocationIlaqa = () => {
               ))}
           </tbody>
         </table>
+      </div>
+
+      <div className="flex w-full px-4 justify-between items-center mt-4">
+        <button
+          className="btn"
+          disabled={currentPage === 1}
+          onClick={() => setCurrentPage((prev) => prev - 1)}
+        >
+          Previous
+        </button>
+        <span className="mx-4">
+          Page {currentPage} of {totalPages}
+        </span>
+        <button
+          className="btn"
+          disabled={currentPage === totalPages}
+          onClick={() => setCurrentPage((prev) => prev + 1)}
+        >
+          Next
+        </button>
       </div>
 
       <dialog id="add_halqa_modal" className="modal">

@@ -13,6 +13,7 @@ import { FaEdit } from "react-icons/fa";
 import { UIContext } from "../../context/ui";
 import { FcViewDetails } from "react-icons/fc";
 import { Loader } from "../Loader";
+
 export const LocationMaqam = () => {
   const provinces = useContext(ProvinceContext);
   const maqams = useContext(MaqamContext);
@@ -35,8 +36,18 @@ export const LocationMaqam = () => {
   const [isIlaqa, setIsIlaqa] = useState(false);
   const params = useLocation();
   const [muntakhib, setMuntakhib] = useState(ilaqas?.length > 0 ? true : false);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10; // Adjust this as needed
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+
+  // Compute the displayed items based on the current page
+  const paginatedData = filteredData.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   useEffect(() => {
-    // Function to parse query parameters
     setLoading(true); // Set loading to true before fetching data
     const getQueryParams = () => {
       const searchParams = new URLSearchParams(params.search);
@@ -70,6 +81,7 @@ export const LocationMaqam = () => {
     getQueryParams();
     // eslint-disable-next-line
   }, [params, view, halqas, maqams, ilaqas]);
+
   useEffect(() => {
     if (view) {
       if (view === "halqa") {
@@ -83,14 +95,17 @@ export const LocationMaqam = () => {
       }
     }
   }, [halqas, maqams, ilaqas]);
+
   const [form, setForm] = useState({
     name: "",
     province: "",
   });
+
   const [ilaqaForm, setIlaqaForm] = useState({
     name: "",
     maqam: "",
   });
+
   const [formHalqa, setFormHalqa] = useState({
     name: "",
     parentId: "",
@@ -98,7 +113,6 @@ export const LocationMaqam = () => {
     unitType: "",
   });
 
-  // To handel the add and update of maqam
   const handleSubmit = async () => {
     setLoading(true);
     try {
@@ -119,6 +133,7 @@ export const LocationMaqam = () => {
     }
     setLoading(false);
   };
+
   const handleSubmitEdit = async () => {
     setLoading(true);
     try {
@@ -135,8 +150,6 @@ export const LocationMaqam = () => {
     }
     setLoading(false);
   };
-
-  // To handel the add and update of halqa
 
   const handleSubmitHalqa = async () => {
     setLoading(true);
@@ -178,7 +191,6 @@ export const LocationMaqam = () => {
     setLoading(false);
   };
 
-  // To handel the add and update of ilaqa
   const handleSubmitIlaqa = async () => {
     setLoading(true);
     try {
@@ -189,7 +201,6 @@ export const LocationMaqam = () => {
         },
       });
       dispatch({ type: "SUCCESS", payload: req?.data?.message });
-
       setIlaqaForm({
         name: "",
         maqam: "",
@@ -200,6 +211,7 @@ export const LocationMaqam = () => {
     }
     setLoading(false);
   };
+
   const handleSubmitEditIlaqa = async () => {
     setLoading(true);
     try {
@@ -220,6 +232,7 @@ export const LocationMaqam = () => {
     }
     setLoading(false);
   };
+
   const handleDisable = async (id, disabled) => {
     setLoading(true);
     try {
@@ -253,6 +266,7 @@ export const LocationMaqam = () => {
     }
     setLoading(false);
   };
+
   const handleSearch = (value) => {
     if (view === "halqa") {
       const filteredHalqa = halqas?.filter((hal) => {
@@ -286,6 +300,7 @@ export const LocationMaqam = () => {
         );
       setFilteredData(filteredIlaqa);
     }
+    setCurrentPage(1); // Reset to the first page after search
   };
 
   return (
@@ -378,6 +393,7 @@ export const LocationMaqam = () => {
             to={"?active=maqam&view=maqam"}
             role="tab"
             className={`tab w-full ${view === "maqam" ? "tab-active" : ""}`}
+            onClick={() => setCurrentPage(1)}
           >
             Maqam
           </Link>
@@ -386,6 +402,7 @@ export const LocationMaqam = () => {
           to={"?active=maqam&view=halqa"}
           role="tab"
           className={`tab w-full ${view === "halqa" ? "tab-active" : ""}`}
+          onClick={() => setCurrentPage(1)}
         >
           Halqa
         </Link>
@@ -394,6 +411,7 @@ export const LocationMaqam = () => {
             to={"?active=maqam&view=ilaqa"}
             role="tab"
             className={`tab w-full ${view === "ilaqa" ? "tab-active" : ""}`}
+            onClick={() => setCurrentPage(1)}
           >
             Ilaqa/Zone
           </Link>
@@ -412,13 +430,13 @@ export const LocationMaqam = () => {
               </tr>
             </thead>
             <tbody className="mt-5">
-              {filteredData?.length > 0 ? (
-                filteredData?.map((maqam, index) => (
+              {paginatedData?.length > 0 ? (
+                paginatedData?.map((maqam, index) => (
                   <tr
                     key={maqam?._id}
                     className="flex w-full justify-between items-start"
                   >
-                    <th>{index + 1}</th>
+                    <th>{(currentPage - 1) * itemsPerPage + index + 1}</th>
                     <td className="w-full text-start">{maqam?.name}</td>
                     <td className="w-full text-center">
                       {maqam?.province?.name || "-"}
@@ -471,13 +489,13 @@ export const LocationMaqam = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredData?.length > 0 ? (
-                filteredData?.map((ilaqa, index) => (
+              {paginatedData?.length > 0 ? (
+                paginatedData?.map((ilaqa, index) => (
                   <tr
                     key={ilaqa?._id}
                     className="flex w-full justify-between items-center"
                   >
-                    <th>{index + 1}</th>
+                    <th>{(currentPage - 1) * itemsPerPage + index + 1}</th>
                     <td className="w-full text-start">{ilaqa?.name}</td>
                     <td className="w-full text-start">
                       <div
@@ -536,8 +554,8 @@ export const LocationMaqam = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredData?.length > 0 ? (
-                filteredData
+              {paginatedData?.length > 0 ? (
+                paginatedData
                   ?.filter(
                     (i) =>
                       i?.parentType === "Maqam" || i?.parentType === "Ilaqa"
@@ -547,7 +565,7 @@ export const LocationMaqam = () => {
                       key={halqa?._id}
                       className="flex w-full justify-between items-center"
                     >
-                      <th>{index + 1}</th>
+                      <th>{(currentPage - 1) * itemsPerPage + index + 1}</th>
                       <td className="w-full text-start">{halqa?.name}</td>
                       <td className="w-full text-start">
                         <div
@@ -595,6 +613,27 @@ export const LocationMaqam = () => {
           </table>
         </div>
       )}
+
+      {/* Pagination Controls */}
+      <div className="flex w-full px-4 justify-between items-center mt-4">
+        <button
+          className="btn"
+          disabled={currentPage === 1}
+          onClick={() => setCurrentPage((prev) => prev - 1)}
+        >
+          Previous
+        </button>
+        <span className="mx-4">
+          Page {currentPage} of {totalPages}
+        </span>
+        <button
+          className="btn"
+          disabled={currentPage === totalPages}
+          onClick={() => setCurrentPage((prev) => prev + 1)}
+        >
+          Next
+        </button>
+      </div>
 
       <dialog id="add_maqam_modal" className="modal">
         <div className="modal-box">
