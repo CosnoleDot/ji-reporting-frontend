@@ -25,7 +25,7 @@ export const DivisionReports = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const { getDivisionReports } = useContext(UIContext);
   const [disable, setDisable] = useState(false);
-  const [isFilter,setIsFilter]=useState(false);
+  const [isFilter, setIsFilter] = useState(false);
   const navigate = useNavigate();
   const itemsPerPage = 10;
   useEffect(() => {
@@ -39,6 +39,7 @@ export const DivisionReports = () => {
     setFilterAllData(uniqueArray);
   }, [dReports]);
   const searchResults = async () => {
+    showSearch(false);
     if (year !== "" && month !== "") {
       try {
         setIsSearch(true);
@@ -71,7 +72,7 @@ export const DivisionReports = () => {
     setMonth("");
     setYear("2023");
     setFilterAllData(dReports);
-    setIsFilter(false)
+    setIsFilter(false);
     setIsSearch(false);
     document.getElementById("autocomplete").value = "";
   };
@@ -109,10 +110,17 @@ export const DivisionReports = () => {
       }
     }
   };
-
+  useEffect(() => {
+    if (window) {
+      if (window.innerWidth < 520) {
+        setIsMobileView(true);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [window.innerWidth]);
   return (
     <>
-      <div className="join xs:w-full mb-4">
+      <div className="md:join xs:w-full mb-4 flex justify-between items-center">
         {!isMobileView && (
           <div className="w-full">
             <select
@@ -185,7 +193,7 @@ export const DivisionReports = () => {
           </div>
         )}
 
-        <div className="indicator ">
+        <div className="indicator flex justify-between items-center w-full">
           {/* <span className='indicator-item badge badge-secondary'>new</span> */}
           <button
             className={`btn ${!isMobileView ? "join-item" : ""}`}
@@ -210,23 +218,6 @@ export const DivisionReports = () => {
           >
             Clear
           </button>
-          {/* {isMobileView &&
-            active !== "province" &&
-            !(
-              active === "maqam" && localStorage.getItem("@type") === "maqam"
-            ) &&
-            !(
-              active === "division" &&
-              localStorage.getItem("@type") === "division"
-            ) &&
-            localStorage.getItem("@type") !== "halqa" && (
-              <button
-                onClick={sendNotification}
-                className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
-              >
-                <AiFillBell />
-              </button>
-            )} */}
         </div>
       </div>
       {!isSearch ? (
@@ -264,31 +255,36 @@ export const DivisionReports = () => {
           ) : (
             <NoReports />
           )}
-          {!isFilter && <div className="flex justify-between mt-4">
-            <button
-              className="btn"
-              onClick={handlePrevPage}
-              disabled={currentPage === 1}
-            >
-              Previous
-            </button>
-            <span>
-              Page {currentPage} of {totalPages}
-            </span>
-            <button
-              className="btn"
-              onClick={handleNextPage}
-              disabled={currentPage === totalPages}
-            >
-              Next
-            </button>
-          </div>}{" "}
+          {!isFilter && (
+            <div className="flex justify-between mt-4">
+              <button
+                className="btn"
+                onClick={handlePrevPage}
+                disabled={currentPage === 1}
+              >
+                Previous
+              </button>
+              <span>
+                Page {currentPage} of {totalPages}
+              </span>
+              <button
+                className="btn"
+                onClick={handleNextPage}
+                disabled={currentPage === totalPages}
+              >
+                Next
+              </button>
+            </div>
+          )}{" "}
         </>
       ) : (
         <SearchPage data={searchData} area={"division"} />
       )}
       <dialog id="filter-area-dialog" className="modal">
-        <FilterDialog setFilterAllData={setFilterAllData} setIsFilter={setIsFilter}/>
+        <FilterDialog
+          setFilterAllData={setFilterAllData}
+          setIsFilter={setIsFilter}
+        />
       </dialog>
     </>
   );

@@ -1,8 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import {
-  MeContext,
-  useToastState,
-} from "../../context";
+import { MeContext, useToastState } from "../../context";
 import { FaEdit, FaEye, FaPrint } from "react-icons/fa";
 import moment from "moment";
 import { NoReports, months } from "../Reports";
@@ -59,33 +56,6 @@ export const HalqaReports = () => {
   useEffect(() => {
     getHalqaReportsTab(0 * itemsPerPage, itemsPerPage, "maqam");
   }, []);
-  // const searchResults = () => {
-  //   let filteredData = [...data];
-
-  //   if (year !== "" && month !== "") {
-  //     filteredData = filteredData.filter((i) => {
-  //       const [f_year, f_month] = [
-  //         i?.month?.split("-")[0],
-  //         i?.month?.split("-")[1],
-  //       ];
-  //       return (
-  //         parseInt(year) === parseInt(f_year) &&
-  //         parseInt(month) === parseInt(f_month)
-  //       );
-  //     });
-  //   } else if (year !== "" && month === "") {
-  //     filteredData = filteredData.filter((i) => {
-  //       const f_year = i?.month?.split("-")[0];
-  //       return parseInt(year) === parseInt(f_year);
-  //     });
-  //   } else if (year === "" && month !== "") {
-  //     dispatch({ type: "ERROR", payload: "Enter year with month" });
-  //   } else if (year === "" && month === "") {
-  //     dispatch({ type: "ERROR", payload: "Date is required" });
-  //   }
-
-  //   setData(filteredData);
-  // };
 
   const searchResults = async () => {
     if (year !== "" && month !== "") {
@@ -156,6 +126,14 @@ export const HalqaReports = () => {
   const handlePrint = (id) => {
     window.open(`halqa-report/print/${id}`, "blank");
   };
+  useEffect(() => {
+    if (window) {
+      if (window.innerWidth < 520) {
+        setIsMobileView(true);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [window.innerWidth]);
   return (
     <>
       <div
@@ -165,8 +143,8 @@ export const HalqaReports = () => {
         <Link
           to={"?active=halqa&tab=maqam"}
           role="tab"
-          className={`tab flex justify-center items-center w-full ${
-            tab === "maqam" ? "tab-active" : ""
+          className={` flex justify-center items-center w-full ${
+            tab === "maqam" ? "text-slate-400 underline" : ""
           }`}
           onClick={() => tabClick("maqam")}
         >
@@ -175,8 +153,8 @@ export const HalqaReports = () => {
         <Link
           to={"?active=halqa&tab=division"}
           role="tab"
-          className={`tab flex justify-center items-center w-full ${
-            tab === "division" ? "tab-active" : ""
+          className={` flex justify-center items-center w-full ${
+            tab === "division" ? "text-slate-400 underline" : ""
           }`}
           onClick={() => tabClick("division")}
         >
@@ -185,15 +163,15 @@ export const HalqaReports = () => {
         <Link
           to={"?active=halqa&tab=ilaqa"}
           role="tab"
-          className={`tab flex justify-center items-center w-full ${
-            tab === "ilaqa" ? "tab-active" : ""
+          className={` flex justify-center items-center w-full ${
+            tab === "ilaqa" ? "text-slate-400 underline" : ""
           }`}
           onClick={() => tabClick("ilaqa")}
         >
           Ilaqa Halqa
         </Link>
       </div>
-      <div className="join xs:w-full mb-4">
+      <div className="md:join xs:w-full mb-4 flex justify-between items-center">
         {!isMobileView && (
           <div className="w-full">
             <select
@@ -266,7 +244,7 @@ export const HalqaReports = () => {
           </div>
         )}
 
-        <div className="indicator ">
+        <div className="indicator flex justify-between items-center w-full">
           {/* <span className='indicator-item badge badge-secondary'>new</span> */}
           <button
             className={`btn ${!isMobileView ? "join-item" : ""}`}
@@ -278,7 +256,7 @@ export const HalqaReports = () => {
             <button
               onClick={() => {
                 document.getElementById("filter-area-dialog").showModal();
-                setIsSearch(false)
+                setIsSearch(false);
               }}
               className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
             >
@@ -291,23 +269,6 @@ export const HalqaReports = () => {
           >
             Clear
           </button>
-          {/* {isMobileView &&
-            active !== "province" &&
-            !(
-              active === "maqam" && localStorage.getItem("@type") === "maqam"
-            ) &&
-            !(
-              active === "division" &&
-              localStorage.getItem("@type") === "division"
-            ) &&
-            localStorage.getItem("@type") !== "halqa" && (
-              <button
-                onClick={sendNotification}
-                className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
-              >
-                <AiFillBell />
-              </button>
-            )} */}
         </div>
       </div>
 
@@ -368,7 +329,7 @@ export const HalqaReports = () => {
           </div>
         </>
       ) : (
-        <SearchPage data={searchData} area={'halqa'} />
+        <SearchPage data={searchData} area={"halqa"} />
       )}
 
       <dialog id="filter-area-dialog" className="modal">
