@@ -17,7 +17,7 @@ import { SearchPage } from "./SearchPage";
 export const CountryReport = () => {
   const c = useContext(MarkazReportContext);
   const cReports = c?.reports;
- 
+
   const total = c?.length;
   const [filterAllData, setFilterAllData] = useState(cReports);
   const { dispatch } = useToastState();
@@ -29,7 +29,7 @@ export const CountryReport = () => {
   const [year, setYear] = useState("2024");
   const me = useContext(MeContext);
   const { getMarkazReport } = useContext(UIContext);
-  const [isFilter,setIsFilter]=useState(false);
+  const [isFilter, setIsFilter] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
   const itemsPerPage = 10;
@@ -44,6 +44,7 @@ export const CountryReport = () => {
     setFilterAllData(uniqueArray);
   }, [cReports]);
   const searchResults = async () => {
+    showSearch(false);
     if (year !== "" && month !== "") {
       try {
         setIsSearch(true);
@@ -76,7 +77,7 @@ export const CountryReport = () => {
     setMonth("");
     setYear("2023");
     setFilterAllData(cReports);
-    setIsFilter(false)
+    setIsFilter(false);
     setIsSearch(false);
     document.getElementById("autocomplete").value = "";
   };
@@ -100,17 +101,24 @@ export const CountryReport = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
       const inset = currentPage * itemsPerPage;
-   
+
       const offset = itemsPerPage;
       if (filterAllData?.length <= total) {
-        
         getMarkazReport(inset, offset);
       }
     }
   };
+  useEffect(() => {
+    if (window) {
+      if (window.innerWidth < 520) {
+        setIsMobileView(true);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [window.innerWidth]);
   return (
     <>
-      <div className="join xs:w-full mb-4">
+      <div className="md:join xs:w-full mb-4 flex justify-between items-center">
         {!isMobileView && (
           <div className="w-full">
             <select
@@ -183,7 +191,7 @@ export const CountryReport = () => {
           </div>
         )}
 
-        <div className="indicator ">
+        <div className="indicator flex justify-between items-center w-full">
           {/* <span className='indicator-item badge badge-secondary'>new</span> */}
           <button
             className={`btn ${!isMobileView ? "join-item" : ""}`}
@@ -195,7 +203,6 @@ export const CountryReport = () => {
             <button
               onClick={() => {
                 document.getElementById("filter-area-dialog").showModal();
-                
               }}
               className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
             >
@@ -208,83 +215,77 @@ export const CountryReport = () => {
           >
             Clear
           </button>
-          {/* {isMobileView &&
-            active !== "province" &&
-            !(
-              active === "maqam" && localStorage.getItem("@type") === "maqam"
-            ) &&
-            !(
-              active === "division" &&
-              localStorage.getItem("@type") === "division"
-            ) &&
-            localStorage.getItem("@type") !== "halqa" && (
-              <button
-                onClick={sendNotification}
-                className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
-              >
-                <AiFillBell />
-              </button>
-            )} */}
         </div>
       </div>
-      {!isSearch ? <>{currentData?.length > 0 ? (
-        currentData?.map((p) => (
-          <div
-            key={p?._id}
-            className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
-          >
-            <div className="flex w-full flex-col items-start justify-center">
-              <span className="text-sm lg:text-lg font-semibold">
-                {p?.countryAreaId?.name + " "}
-                {moment(p?.month).format("MMMM YYYY")}
+      {!isSearch ? (
+        <>
+          {currentData?.length > 0 ? (
+            currentData?.map((p) => (
+              <div
+                key={p?._id}
+                className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
+              >
+                <div className="flex w-full flex-col items-start justify-center">
+                  <span className="text-sm lg:text-lg font-semibold">
+                    {p?.countryAreaId?.name + " "}
+                    {moment(p?.month).format("MMMM YYYY")}
+                  </span>
+                  <span>Last Modified: {moment(p?.updatedAt).fromNow()}</span>
+                </div>
+                <div className="flex items-end w-full justify-end gap-3 ">
+                  <button
+                    className="btn"
+                    onClick={() => navigate(`/reports/view/${p._id}`)}
+                  >
+                    <FaEye />
+                  </button>
+                  {me?.userAreaType === "Country" && (
+                    <button
+                      className="btn"
+                      onClick={() => navigate(`/reports/edit/${p._id}`)}
+                    >
+                      <FaEdit />
+                    </button>
+                  )}
+                  <button className="btn" onClick={() => handlePrint(p?._id)}>
+                    <FaPrint />
+                  </button>
+                </div>
+              </div>
+            ))
+          ) : (
+            <NoReports />
+          )}
+          {!isFilter && (
+            <div className="flex justify-between mt-4">
+              <button
+                className="btn"
+                onClick={handlePrevPage}
+                disabled={currentPage === 1}
+              >
+                Previous
+              </button>
+              <span>
+                Page {currentPage} of {totalPages}
               </span>
-              <span>Last Modified: {moment(p?.updatedAt).fromNow()}</span>
-            </div>
-            <div className="flex items-end w-full justify-end gap-3 ">
               <button
                 className="btn"
-                onClick={() => navigate(`/reports/view/${p._id}`)}
+                onClick={handleNextPage}
+                disabled={currentPage === totalPages}
               >
-                <FaEye />
-              </button>
-              {me?.userAreaType === "Country" && (
-              <button
-                className="btn"
-                onClick={() => navigate(`/reports/edit/${p._id}`)}
-              >
-                <FaEdit />
-              </button>
-)}
-              <button className="btn" onClick={() => handlePrint(p?._id)}>
-                <FaPrint />
+                Next
               </button>
             </div>
-          </div>
-        ))
+          )}
+        </>
       ) : (
-        <NoReports />
+        <SearchPage data={searchData?.data} area={"country"} />
       )}
-      {!isFilter && <div className="flex justify-between mt-4">
-        <button
-          className="btn"
-          onClick={handlePrevPage}
-          disabled={currentPage === 1}
-        >
-          Previous
-        </button>
-        <span>
-          Page {currentPage} of {totalPages}
-        </span>
-        <button
-          className="btn"
-          onClick={handleNextPage}
-          disabled={currentPage === totalPages}
-        >
-          Next
-        </button>
-      </div>}</> : <SearchPage data={searchData?.data} area={'country'} />}
       <dialog id="filter-area-dialog" className="modal">
-        <FilterDialog setFilterAllData={setFilterAllData} setIsFilter={setIsFilter} />
+        <FilterDialog
+          setFilterAllData={setFilterAllData}
+          setIsFilter={setIsFilter}
+        />
       </dialog>
     </>
   );

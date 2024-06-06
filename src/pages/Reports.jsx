@@ -205,28 +205,27 @@ export const Reports = () => {
               <span className="hidden lg:block xl:block">New Report</span>
             </button>
 
-            {!isMobileView &&
-              ((active === "province" &&
-                localStorage.getItem("@type") === "country") ||
-                (active === "division" &&
-                  localStorage.getItem("@type") === "province") ||
-                (active === "maqam" &&
-                  localStorage.getItem("@type") === "province") ||
-                (active === "ilaqa" &&
-                  localStorage.getItem("@type") === "maqam") ||
-                (active === "halqa" &&
-                  (localStorage.getItem("@type") === "maqam" ||
-                    localStorage.getItem("@type") === "division" ||
-                    localStorage.getItem("@type") === "ilaqa") &&
-                  localStorage.getItem("@type") !== "province" &&
-                  localStorage.getItem("@type") !== "country")) && (
-                <button
-                  onClick={sendNotification}
-                  className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
-                >
-                  <AiFillBell />
-                </button>
-              )}
+            {((active === "province" &&
+              localStorage.getItem("@type") === "country") ||
+              (active === "division" &&
+                localStorage.getItem("@type") === "province") ||
+              (active === "maqam" &&
+                localStorage.getItem("@type") === "province") ||
+              (active === "ilaqa" &&
+                localStorage.getItem("@type") === "maqam") ||
+              (active === "halqa" &&
+                (localStorage.getItem("@type") === "maqam" ||
+                  localStorage.getItem("@type") === "division" ||
+                  localStorage.getItem("@type") === "ilaqa") &&
+                localStorage.getItem("@type") !== "province" &&
+                localStorage.getItem("@type") !== "country")) && (
+              <button
+                onClick={sendNotification}
+                className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
+              >
+                <AiFillBell />
+              </button>
+            )}
           </div>
         </div>
         {[
@@ -239,9 +238,9 @@ export const Reports = () => {
           <Link
             to={"/personalReport"}
             role="tab"
-            className={`tab flex justify-center items-center w-full ${
-              tab === "personal" ? "tab-active" : ""
-            } font-bold underline`}
+            className={`flex justify-center text-slate-400 items-center w-full ${
+              tab === "personal" ? "text-[#3B82F6] underline" : ""
+            } font-bold `}
             onClick={() => setTab("personal")}
           >
             Personal
@@ -249,7 +248,7 @@ export const Reports = () => {
         )}
         <div
           role="tablist"
-          className="w-full flex justify-between items-center overflow-hidden overflow-x-scroll"
+          className="w-full flex text-slate-400 justify-between gap-3 items-center overflow-hidden overflow-x-scroll"
         >
           {["country"].includes(localStorage.getItem("@type")) &&
             ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
@@ -258,9 +257,9 @@ export const Reports = () => {
               <Link
                 to={"?active=country"}
                 role="tab"
-                className={`tab flex justify-center items-center mb-2 p-2 w-full ${
-                  active === "country" ? "tab-active bg-slate-200" : ""
-                }  font-bold underline`}
+                className={`flex justify-center items-center mb-2  w-full ${
+                  active === "country" ? "text-[#3B82F6] underline " : ""
+                }  font-bold `}
                 onClick={() => setNotifyTo("country")}
               >
                 Country
@@ -273,9 +272,9 @@ export const Reports = () => {
               <Link
                 to={"?active=province"}
                 role="tab"
-                className={`tab flex justify-center items-center mb-2 p-2 w-full ${
-                  active === "province" ? "tab-active bg-slate-200" : ""
-                } font-bold underline`}
+                className={`flex justify-center items-center mb-2  w-full ${
+                  active === "province" ? "text-[#3B82F6] underline " : ""
+                } font-bold `}
                 onClick={() => setNotifyTo("province")}
               >
                 Province
@@ -290,9 +289,9 @@ export const Reports = () => {
               <Link
                 to={"?active=division"}
                 role="tab"
-                className={`tab flex justify-center items-center mb-2 p-2 w-full ${
-                  active === "division" ? "tab-active" : ""
-                } font-bold underline`}
+                className={`flex justify-center items-center mb-2  w-full ${
+                  active === "division" ? "text-[#3B82F6] underline" : ""
+                } font-bold `}
                 onClick={() => setNotifyTo("division")}
               >
                 Division
@@ -307,9 +306,9 @@ export const Reports = () => {
               <Link
                 to={"?active=maqam"}
                 role="tab"
-                className={`tab flex justify-center items-center mb-2 p-2 w-full ${
-                  active === "maqam" ? "tab-active" : ""
-                } font-bold underline`}
+                className={`flex justify-center items-center mb-2  w-full ${
+                  active === "maqam" ? "text-[#3B82F6] underline" : ""
+                } font-bold `}
                 onClick={() => setNotifyTo("maqam")}
               >
                 Maqam
@@ -325,12 +324,12 @@ export const Reports = () => {
               <Link
                 to={"?active=ilaqa"}
                 role="tab"
-                className={`tab flex justify-center items-center mb-2 p-2 w-full ${
-                  active === "ilaqa" ? "tab-active" : ""
-                } font-bold underline`}
+                className={`flex justify-center items-center mb-2  w-full ${
+                  active === "ilaqa" ? "text-[#3B82F6] underline" : ""
+                } font-bold `}
                 onClick={() => setNotifyTo("ilaqa")}
               >
-                Ilaqa
+                Ilaqa/Zone
               </Link>
             )}
 
@@ -343,9 +342,9 @@ export const Reports = () => {
               <Link
                 to={"?active=halqa"}
                 role="tab"
-                className={`tab flex justify-center items-center mb-2 p-2 w-full ${
-                  active === "halqa" ? "tab-active" : ""
-                } font-bold underline`}
+                className={`flex justify-center items-center mb-2  w-full ${
+                  active === "halqa" ? "text-[#3B82F6] underline" : ""
+                } font-bold `}
                 onClick={() => setNotifyTo("halqa")}
               >
                 Halqa

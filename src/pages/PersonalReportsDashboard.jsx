@@ -20,27 +20,29 @@ export const PersonalReportsDashboard = () => {
   const [toggle, setToggle] = useState(false);
   const itemsPerPage = 10;
   const [isSearch, setIsSearch] = useState(false);
-  const [searchData, setSearchData] = useState([]);
-  const {setLoading}=useContext(UIContext)
+  const { setLoading } = useContext(UIContext);
   const [currentPage, setCurrentPage] = useState(1);
-  const [total,setTotal]=useState(1)
+  const [total, setTotal] = useState(1);
   const me = useContext(MeContext);
   // const provinces = useContext(ProvinceContext);
   let navigate = useNavigate();
   const getAllReports = async (inset, offset) => {
-    setLoading(true)
-    const req = await instance.get(`/umeedwar?inset=${inset ?inset :0}&offset=${offset? offset :10}`, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("@token")}`,
-      },
-    });
+    setLoading(true);
+    const req = await instance.get(
+      `/umeedwar?inset=${inset ? inset : 0}&offset=${offset ? offset : 10}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("@token")}`,
+        },
+      }
+    );
 
     setFilteredData(req?.data?.data?.data);
-    setTotal(req?.data?.data?.length)
+    setTotal(req?.data?.data?.length);
     setData(req?.data?.data?.data);
 
-    setLoading(false)
+    setLoading(false);
   };
   useEffect(() => {
     getAllReports();
@@ -71,8 +73,8 @@ export const PersonalReportsDashboard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [window.innerWidth]);
 
-  const searchResults =async () => {
-    setIsSearch(true)
+  const searchResults = async () => {
+    setIsSearch(true);
     setToggle(false);
     const findData = `${year}-${
       parseInt(month) > 9 ? month : "0" + month.toString()
@@ -83,8 +85,8 @@ export const PersonalReportsDashboard = () => {
         Authorization: `Bearer ${localStorage.getItem("@token")}`,
       },
     });
-    setFilteredData(req?.data?.data?.data)
-      
+    setFilteredData(req?.data?.data?.data);
+
     // const filData = data?.reduce((acc, curr) => {
     //   Object.keys(curr).forEach((tag) => {
     //     if (tag === "month") {
@@ -102,7 +104,7 @@ export const PersonalReportsDashboard = () => {
   const handlePrevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
-      const inset =  (currentPage-2) * itemsPerPage;
+      const inset = (currentPage - 2) * itemsPerPage;
       const offset = itemsPerPage;
       setFilteredData([]);
       setData([]);
@@ -118,7 +120,6 @@ export const PersonalReportsDashboard = () => {
       setFilteredData([]);
       setData([]);
       getAllReports(inset, offset);
-      
     }
   };
   return (
@@ -136,7 +137,13 @@ export const PersonalReportsDashboard = () => {
               onChange={searchPersonalReports}
             />
           </div>
-          <button className="btn" onClick={() => {setFilteredData(data); setIsSearch(false)}}>
+          <button
+            className="btn"
+            onClick={() => {
+              setFilteredData(data);
+              setIsSearch(false);
+            }}
+          >
             Clear
           </button>
           <button className="btn" onClick={() => setToggle(true)}>
@@ -209,7 +216,6 @@ export const PersonalReportsDashboard = () => {
               key={index}
               className="card-body flex items-center max-h-[170px]  justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col mt-5"
             >
-              
               <div className="flex w-full flex-col items-start justify-center">
                 <span className="text-lg font-semibold" key={index}>
                   {`${obj?.userId?.name} from ${obj?.areaId?.name}  `}
@@ -232,25 +238,27 @@ export const PersonalReportsDashboard = () => {
               </div>
             </div>
           ))}
-       {!isSearch &&    <div className="flex w-full justify-between mt-4">
-            <button
-              className="btn"
-              onClick={handlePrevPage}
-              disabled={currentPage === 1}
-            >
-              Previous
-            </button>
-            <span>
-              Page {currentPage} of {totalPages}
-            </span>
-            <button
-              className="btn"
-              onClick={handleNextPage}
-              disabled={currentPage === totalPages}
-            >
-              Next
-            </button>
-          </div>}
+          {!isSearch && (
+            <div className="flex w-full justify-between mt-4">
+              <button
+                className="btn"
+                onClick={handlePrevPage}
+                disabled={currentPage === 1}
+              >
+                Previous
+              </button>
+              <span>
+                Page {currentPage} of {totalPages}
+              </span>
+              <button
+                className="btn"
+                onClick={handleNextPage}
+                disabled={currentPage === totalPages}
+              >
+                Next
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </GeneralLayout>
