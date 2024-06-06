@@ -329,7 +329,7 @@ export const Reports = () => {
                 } font-bold `}
                 onClick={() => setNotifyTo("ilaqa")}
               >
-                Ilaqa
+                Ilaqa/Zone
               </Link>
             )}
 

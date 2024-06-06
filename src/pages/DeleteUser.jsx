@@ -316,7 +316,7 @@ export const DeleteUser = () => {
                   <th>Name</th>
                   <th>Nazim Type</th>
                   <th>Email</th>
-                  <th>Are Details</th>
+                  <th>Area Details</th>
                   <th>Status</th>
                   <th className="text-center">Actions</th>
                 </tr>

@@ -23,7 +23,7 @@ export const ProvinceReports = () => {
   const [year, setYear] = useState("2024");
   const me = useContext(MeContext);
   const { getProvinceReports } = useContext(UIContext);
-  const [isFilter,setIsFilter]=useState(false);
+  const [isFilter, setIsFilter] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
   const itemsPerPage = 10;
@@ -38,6 +38,7 @@ export const ProvinceReports = () => {
     setFilterAllData(uniqueArray);
   }, [pReports]);
   const searchResults = async () => {
+    showSearch(false);
     if (year !== "" && month !== "") {
       try {
         setIsSearch(true);
@@ -70,7 +71,7 @@ export const ProvinceReports = () => {
     setMonth("");
     setYear("2023");
     setFilterAllData(pReports);
-    setIsFilter(false)
+    setIsFilter(false);
     setIsSearch(false);
     document.getElementById("autocomplete").value = "";
   };
@@ -100,10 +101,17 @@ export const ProvinceReports = () => {
       }
     }
   };
-
+  useEffect(() => {
+    if (window) {
+      if (window.innerWidth < 520) {
+        setIsMobileView(true);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [window.innerWidth]);
   return (
     <>
-      <div className="join xs:w-full mb-4">
+      <div className="md:join xs:w-full mb-4 flex justify-between items-center">
         {!isMobileView && (
           <div className="w-full">
             <select
@@ -176,11 +184,11 @@ export const ProvinceReports = () => {
           </div>
         )}
 
-        <div className="indicator ">
+        <div className="indicator flex justify-between items-center w-full">
           {/* <span className='indicator-item badge badge-secondary'>new</span> */}
           <button
             className={`btn ${!isMobileView ? "join-item" : ""}`}
-            onClick={() => searchResults()}
+            onClick={() => (!isMobileView ? searchResults() : toggleSearch())}
           >
             Search
           </button>
@@ -188,7 +196,7 @@ export const ProvinceReports = () => {
             <button
               onClick={() => {
                 document.getElementById("filter-area-dialog").showModal();
-                setIsSearch(false)
+                setIsSearch(false);
               }}
               className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
             >
@@ -201,23 +209,6 @@ export const ProvinceReports = () => {
           >
             Clear
           </button>
-          {/* {isMobileView &&
-            active !== "province" &&
-            !(
-              active === "maqam" && localStorage.getItem("@type") === "maqam"
-            ) &&
-            !(
-              active === "division" &&
-              localStorage.getItem("@type") === "division"
-            ) &&
-            localStorage.getItem("@type") !== "halqa" && (
-              <button
-                onClick={sendNotification}
-                className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
-              >
-                <AiFillBell />
-              </button>
-            )} */}
         </div>
       </div>
       {!isSearch ? (
@@ -285,7 +276,10 @@ export const ProvinceReports = () => {
         <SearchPage data={searchData?.data} area={"province"} />
       )}
       <dialog id="filter-area-dialog" className="modal">
-        <FilterDialog setFilterAllData={setFilterAllData} setIsFilter={setIsFilter}/>
+        <FilterDialog
+          setFilterAllData={setFilterAllData}
+          setIsFilter={setIsFilter}
+        />
       </dialog>
     </>
   );
