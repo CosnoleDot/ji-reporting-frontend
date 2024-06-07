@@ -317,7 +317,7 @@ export const LocationMaqam = () => {
         {["province", "country"].includes(localStorage.getItem("@type")) && (
           <button
             disabled={loading}
-            className="btn"
+            className="btn capitalize p-[8px]"
             onClick={() => {
               setForm({
                 name: "",
@@ -336,7 +336,7 @@ export const LocationMaqam = () => {
           view === "ilaqa" && (
             <button
               disabled={loading}
-              className="btn"
+              className="btn capitalize p-[8px]"
               onClick={() => {
                 setIlaqaForm({
                   name: "",
@@ -395,7 +395,7 @@ export const LocationMaqam = () => {
             className={`tab w-full ${view === "maqam" ? "tab-active" : ""}`}
             onClick={() => setCurrentPage(1)}
           >
-            Maqam
+            مقام
           </Link>
         )}
         <Link
@@ -404,7 +404,7 @@ export const LocationMaqam = () => {
           className={`tab w-full ${view === "halqa" ? "tab-active" : ""}`}
           onClick={() => setCurrentPage(1)}
         >
-          Halqa
+          حلقہ
         </Link>
         {muntakhib && (
           <Link
@@ -413,7 +413,7 @@ export const LocationMaqam = () => {
             className={`tab w-full ${view === "ilaqa" ? "tab-active" : ""}`}
             onClick={() => setCurrentPage(1)}
           >
-            Ilaqa/Zone
+            علاقہ/Zone
           </Link>
         )}
       </div>
@@ -455,7 +455,7 @@ export const LocationMaqam = () => {
                             name: maqam?.name || "",
                           });
                         }}
-                        className="btn"
+                        className="btn capitalize "
                       >
                         <FaEdit />
                       </button>
@@ -520,7 +520,7 @@ export const LocationMaqam = () => {
                             name: ilaqa?.name,
                           });
                         }}
-                        className="btn"
+                        className="btn capitalize "
                       >
                         <FaEdit />
                       </button>
@@ -591,7 +591,7 @@ export const LocationMaqam = () => {
                               parentType: isIlaqa ? "Ilaqa" : "Maqam",
                             });
                           }}
-                          className="btn"
+                          className="btn capitalize "
                         >
                           <FaEdit />
                         </button>
@@ -617,7 +617,7 @@ export const LocationMaqam = () => {
       {/* Pagination Controls */}
       <div className="flex w-full px-4 justify-between items-center mt-4">
         <button
-          className="btn"
+          className="btn capitalize p-[8px]"
           disabled={currentPage === 1}
           onClick={() => setCurrentPage((prev) => prev - 1)}
         >
@@ -627,7 +627,7 @@ export const LocationMaqam = () => {
           Page {currentPage} of {totalPages}
         </span>
         <button
-          className="btn"
+          className="btn capitalize p-[8px]"
           disabled={currentPage === totalPages}
           onClick={() => setCurrentPage((prev) => prev + 1)}
         >
@@ -681,13 +681,17 @@ export const LocationMaqam = () => {
             {editMode ? (
               <button
                 disabled={loading}
-                className="btn"
+                className="btn capitalize p-[8px]"
                 onClick={handleSubmitEdit}
               >
                 Update
               </button>
             ) : (
-              <button disabled={loading} className="btn" onClick={handleSubmit}>
+              <button
+                disabled={loading}
+                className="btn capitalize p-[8px]"
+                onClick={handleSubmit}
+              >
                 Add
               </button>
             )}
@@ -709,19 +713,21 @@ export const LocationMaqam = () => {
           <h3 className="font-bold text-lg">Add Halqa</h3>
           <div className="space-y-4">
             <div className="flex">
-              <label className="label cursor-pointer gap-3">
-                <input
-                  type="radio"
-                  name="radio-10"
-                  className="radio checked:bg-red-500"
-                  checked={isIlaqa}
-                  onChange={() => {
-                    setIsIlaqa(!isIlaqa);
-                    setFormHalqa({ ...formHalqa, parentType: "Ilaqa" });
-                  }}
-                />
-                <span className="label-text">Ilaqa Halqa</span>
-              </label>
+              {ilaqas?.length > 0 && (
+                <label className="label cursor-pointer gap-3">
+                  <input
+                    type="radio"
+                    name="radio-10"
+                    className="radio checked:bg-red-500"
+                    checked={isIlaqa}
+                    onChange={() => {
+                      setIsIlaqa(!isIlaqa);
+                      setFormHalqa({ ...formHalqa, parentType: "Ilaqa" });
+                    }}
+                  />
+                  <span className="label-text">Ilaqa Halqa</span>
+                </label>
+              )}
               <label className="label cursor-pointer gap-3">
                 <input
                   type="radio"
@@ -828,7 +834,7 @@ export const LocationMaqam = () => {
             {editMode ? (
               <button
                 disabled={loading}
-                className="btn"
+                className="btn capitalize"
                 onClick={handleSubmitHalqaEdit}
               >
                 Update
@@ -836,7 +842,7 @@ export const LocationMaqam = () => {
             ) : (
               <button
                 disabled={loading}
-                className="btn"
+                className="btn capitalize "
                 onClick={handleSubmitHalqa}
               >
                 Add
@@ -904,7 +910,7 @@ export const LocationMaqam = () => {
             {editMode ? (
               <button
                 disabled={loading}
-                className="btn"
+                className="btn capitalize p-[8px]"
                 onClick={handleSubmitEditIlaqa}
               >
                 Update
@@ -912,7 +918,7 @@ export const LocationMaqam = () => {
             ) : (
               <button
                 disabled={loading}
-                className="btn"
+                className="btn capitalize p-[8px]"
                 onClick={handleSubmitIlaqa}
               >
                 Add

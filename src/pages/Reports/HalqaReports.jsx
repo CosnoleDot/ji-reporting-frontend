@@ -58,6 +58,7 @@ export const HalqaReports = () => {
   }, []);
 
   const searchResults = async () => {
+    showSearch(false);
     if (year !== "" && month !== "") {
       try {
         setIsSearch(true);
@@ -148,7 +149,7 @@ export const HalqaReports = () => {
           }`}
           onClick={() => tabClick("maqam")}
         >
-          Maqam Halqa
+          مقام حلقہ
         </Link>
         <Link
           to={"?active=halqa&tab=division"}
@@ -158,7 +159,7 @@ export const HalqaReports = () => {
           }`}
           onClick={() => tabClick("division")}
         >
-          Division Halqa
+          ڈویژن حلقہ
         </Link>
         <Link
           to={"?active=halqa&tab=ilaqa"}
@@ -168,7 +169,7 @@ export const HalqaReports = () => {
           }`}
           onClick={() => tabClick("ilaqa")}
         >
-          Ilaqa Halqa
+          علاقہ حلقہ
         </Link>
       </div>
       <div className="md:join xs:w-full mb-4 flex justify-between items-center">
@@ -208,6 +209,16 @@ export const HalqaReports = () => {
           <div className="fixed p-3 z-40 rounded-lg top-[140px] left-[5px] w-[calc(100%-10px)] overflow-hidden bg-white min-h-[100px] border">
             <div className="flex flex-col gap-3">
               <div className="w-full flex flex-col">
+                {isMobileView && (
+                  <div className="w-full flex justify-end items-center ">
+                    <button
+                      className="btn-square"
+                      onClick={() => showSearch(false)}
+                    >
+                      ✕
+                    </button>
+                  </div>
+                )}
                 <select
                   className="select select-bordered w-full rounded-none rounded-tl-lg rounded-tr-lg"
                   onChange={(e) => setMonth(e.target.value)}

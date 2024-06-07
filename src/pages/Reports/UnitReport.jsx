@@ -11,7 +11,7 @@ import { SearchPage } from "./SearchPage";
 
 export const UnitReport = () => {
   const h = useContext(HalqaReportContext);
- 
+
   const hReports = h?.reports;
   const total = h?.length;
   const [filterAllData, setFilterAllData] = useState(hReports);
@@ -26,7 +26,7 @@ export const UnitReport = () => {
   const [searchData, setSearchData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const { getHalqaReports } = useContext(UIContext);
-  const [isFilter,setIsFilter]=useState(false);
+  const [isFilter, setIsFilter] = useState(false);
   const itemsPerPage = 10;
   useEffect(() => {
     const uniqueArray = hReports.reduce((acc, current) => {
@@ -71,7 +71,7 @@ export const UnitReport = () => {
     setMonth("");
     setYear("2023");
     setFilterAllData(hReports);
-    setIsFilter(false)
+    setIsFilter(false);
     setIsSearch(false);
     document.getElementById("autocomplete").value = "";
   };
@@ -149,6 +149,16 @@ export const UnitReport = () => {
           <div className="fixed p-3 z-40 rounded-lg top-[140px] left-[5px] w-[calc(100%-10px)] overflow-hidden bg-white min-h-[100px] border">
             <div className="flex flex-col gap-3">
               <div className="w-full flex flex-col">
+                {isMobileView && (
+                  <div className="w-full flex justify-end items-center ">
+                    <button
+                      className="btn-square"
+                      onClick={() => showSearch(false)}
+                    >
+                      ✕
+                    </button>
+                  </div>
+                )}
                 <select
                   className="select select-bordered w-full rounded-none rounded-tl-lg rounded-tr-lg"
                   onChange={(e) => setMonth(e.target.value)}
@@ -197,7 +207,7 @@ export const UnitReport = () => {
             <button
               onClick={() => {
                 document.getElementById("filter-area-dialog").showModal();
-                setIsSearch(false)
+                setIsSearch(false);
               }}
               className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
             >
@@ -289,7 +299,10 @@ export const UnitReport = () => {
         <SearchPage data={searchData} area={"halqa"} />
       )}
       <dialog id="filter-area-dialog" className="modal">
-        <FilterDialog setFilterAllData={setFilterAllData} setIsFilter={setIsFilter}/>
+        <FilterDialog
+          setFilterAllData={setFilterAllData}
+          setIsFilter={setIsFilter}
+        />
       </dialog>
     </>
   );

@@ -48,7 +48,7 @@ export const Locations = () => {
               role="tab"
               className={`tab w-full ${active === "maqam" ? "tab-active" : ""}`}
             >
-              Maqam
+              مقام
             </Link>
           )}
           {["country", "province", "division"].includes(
@@ -61,7 +61,7 @@ export const Locations = () => {
                 active === "division" ? "tab-active" : ""
               }`}
             >
-              Division
+              ڈویژن
             </Link>
           )}
           {["country"].includes(localStorage.getItem("@type")) && (
@@ -72,7 +72,7 @@ export const Locations = () => {
                 active === "country" ? "tab-active" : ""
               }`}
             >
-              Province
+              صوبہ
             </Link>
           )}
         </div>

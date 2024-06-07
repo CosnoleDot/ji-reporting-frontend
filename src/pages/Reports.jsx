@@ -18,8 +18,10 @@ import { UnitReport } from "./Reports/UnitReport";
 
 export const NoReports = () => (
   <div className="card-body flex flex-col items-center justify-center w-full p-2 md:p-5 mb-1 rounded-xl">
-    <FaRegFileExcel className="text-gray-300 w-40 h-40" />
-    <span className="text-gray-300 font-bold text-3xl">No Reports Found!</span>
+    <FaRegFileExcel className="text-gray-300 w-20 h-20 md:w-40 md:h-40 " />
+    <span className="text-gray-300 font-bold text-md md:text-3xl">
+      No Reports Found!
+    </span>
   </div>
 );
 
@@ -238,7 +240,7 @@ export const Reports = () => {
           <Link
             to={"/personalReport"}
             role="tab"
-            className={`flex justify-center text-slate-400 items-center w-full ${
+            className={`flex justify-center p-1 text-slate-400 items-center w-full ${
               tab === "personal" ? "text-[#3B82F6] underline" : ""
             } font-bold `}
             onClick={() => setTab("personal")}
@@ -257,12 +259,12 @@ export const Reports = () => {
               <Link
                 to={"?active=country"}
                 role="tab"
-                className={`flex justify-center items-center mb-2  w-full ${
+                className={`flex justify-center p-1 items-center mb-2  w-full ${
                   active === "country" ? "text-[#3B82F6] underline " : ""
                 }  font-bold `}
                 onClick={() => setNotifyTo("country")}
               >
-                Country
+                مرکز
               </Link>
             )}
           {["country", "province"].includes(localStorage.getItem("@type")) &&
@@ -272,12 +274,12 @@ export const Reports = () => {
               <Link
                 to={"?active=province"}
                 role="tab"
-                className={`flex justify-center items-center mb-2  w-full ${
+                className={`flex justify-center p-1 items-center mb-2  w-full ${
                   active === "province" ? "text-[#3B82F6] underline " : ""
                 } font-bold `}
                 onClick={() => setNotifyTo("province")}
               >
-                Province
+                صوبہ
               </Link>
             )}
           {["country", "province", "division"].includes(
@@ -289,12 +291,12 @@ export const Reports = () => {
               <Link
                 to={"?active=division"}
                 role="tab"
-                className={`flex justify-center items-center mb-2  w-full ${
+                className={`flex justify-center p-1 items-center mb-2  w-full ${
                   active === "division" ? "text-[#3B82F6] underline" : ""
                 } font-bold `}
                 onClick={() => setNotifyTo("division")}
               >
-                Division
+                ڈویژن
               </Link>
             )}
           {["country", "province", "maqam"].includes(
@@ -306,12 +308,12 @@ export const Reports = () => {
               <Link
                 to={"?active=maqam"}
                 role="tab"
-                className={`flex justify-center items-center mb-2  w-full ${
+                className={`flex justify-center p-1 items-center mb-2  w-full ${
                   active === "maqam" ? "text-[#3B82F6] underline" : ""
                 } font-bold `}
                 onClick={() => setNotifyTo("maqam")}
               >
-                Maqam
+                مقام
               </Link>
             )}
           {["country", "maqam", "ilaqa", "province"].includes(
@@ -324,12 +326,12 @@ export const Reports = () => {
               <Link
                 to={"?active=ilaqa"}
                 role="tab"
-                className={`flex justify-center items-center mb-2  w-full ${
+                className={`flex justify-center p-1 items-center mb-2  w-full ${
                   active === "ilaqa" ? "text-[#3B82F6] underline" : ""
                 } font-bold `}
                 onClick={() => setNotifyTo("ilaqa")}
               >
-                Ilaqa/Zone
+                علاقہ/Zone
               </Link>
             )}
 
@@ -342,12 +344,12 @@ export const Reports = () => {
               <Link
                 to={"?active=halqa"}
                 role="tab"
-                className={`flex justify-center items-center mb-2  w-full ${
+                className={`flex justify-center p-1 items-center mb-2  w-full ${
                   active === "halqa" ? "text-[#3B82F6] underline" : ""
                 } font-bold `}
                 onClick={() => setNotifyTo("halqa")}
               >
-                Halqa
+                حلقہ
               </Link>
             )}
         </div>

@@ -23,9 +23,11 @@ export const LocationDivision = () => {
   const divisions = useContext(DivisionContext);
   const areaDetails = useContext(ViewDetails);
   const halqa = useContext(HalqaContext);
-  const halqas = halqa.filter((i)=> i.parentType ==="Tehsil" || i.parentType ==="Division")
-  const [searchData, setSearchData] =useState([]);
-  const [value, setValue]=useState('');
+  const halqas = halqa.filter(
+    (i) => i.parentType === "Tehsil" || i.parentType === "Division"
+  );
+  const [searchData, setSearchData] = useState([]);
+  const [value, setValue] = useState("");
   const districts = useContext(DistrictContext);
   const [filteredData, setFilteredData] = useState(halqas);
   const [isDivision, setIsDivision] = useState(false);
@@ -54,14 +56,16 @@ export const LocationDivision = () => {
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
   // Compute the displayed items based on the current page
-  const paginatedData =value === '' ? filteredData.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  ) : searchData.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
- 
+  const paginatedData =
+    value === ""
+      ? filteredData.slice(
+          (currentPage - 1) * itemsPerPage,
+          currentPage * itemsPerPage
+        )
+      : searchData.slice(
+          (currentPage - 1) * itemsPerPage,
+          currentPage * itemsPerPage
+        );
 
   useEffect(() => {
     setLoading(true);
@@ -331,7 +335,7 @@ export const LocationDivision = () => {
     setLoading(false);
   };
   const handleSearch = (value) => {
-   setValue(value)
+    setValue(value);
     if (view === "halqa") {
       const filteredHalqa = halqas
         ?.map((halqa) => halqa)
@@ -340,10 +344,9 @@ export const LocationDivision = () => {
             hal?.name?.toLowerCase().includes(value.toLowerCase()) ||
             hal?.parentId?.name?.toLowerCase().includes(value.toLowerCase())
         );
-       
-      
+
       setFilteredData(filteredHalqa);
-      setSearchData(filteredHalqa)
+      setSearchData(filteredHalqa);
     } else if (view === "district") {
       const filteredDistricts = districts
         ?.map((district) => district)
@@ -354,7 +357,7 @@ export const LocationDivision = () => {
         );
 
       setFilteredData(filteredDistricts);
-      setSearchData(filteredDistricts)
+      setSearchData(filteredDistricts);
     } else if (view === "tehsil") {
       const filteredTehsils = tehsils
         ?.map((tehsil) => tehsil)
@@ -364,7 +367,7 @@ export const LocationDivision = () => {
             teh?.maqam?.name.toLowerCase().includes(value.toLowerCase())
         );
       setFilteredData(filteredTehsils);
-      setSearchData(filteredTehsils)
+      setSearchData(filteredTehsils);
     } else if (view === "division") {
       const filteredDivisions = divisions
         ?.map((div) => div)
@@ -374,7 +377,7 @@ export const LocationDivision = () => {
             div?.maqam?.name.toLowerCase().includes(value.toLowerCase())
         );
       setFilteredData(filteredDivisions);
-      setSearchData(filteredDivisions)
+      setSearchData(filteredDivisions);
     }
     setCurrentPage(1); // Reset to the first page after search
   };
@@ -392,7 +395,7 @@ export const LocationDivision = () => {
       >
         {["province"].includes(localStorage.getItem("@type")) && (
           <button
-            className="btn"
+            className="btn capitalize p-[8px]"
             onClick={() => {
               setForm({
                 name: "",
@@ -407,7 +410,7 @@ export const LocationDivision = () => {
         )}
         {districts?.length > 0 && (
           <button
-            className="btn"
+            className="btn capitalize p-[8px]"
             onClick={() => {
               setFormDistrict({
                 name: "",
@@ -422,7 +425,7 @@ export const LocationDivision = () => {
         )}
         {tehsils?.length > 0 && (
           <button
-            className="btn"
+            className="btn capitalize p-[8px]"
             onClick={() => {
               setFormTehsil({
                 name: "",
@@ -446,7 +449,7 @@ export const LocationDivision = () => {
             document.getElementById("add_halqa_modal").showModal();
             setEditMode(false);
           }}
-          className="btn"
+          className="btn capitalize p-[8px]"
         >
           Add Halqa
         </button>
@@ -478,7 +481,7 @@ export const LocationDivision = () => {
             role="tab"
             className={`tab w-full ${view === "division" ? "tab-active" : ""}`}
           >
-            Division
+            ڈویژن
           </Link>
         )}
         {districts?.length > 0 && (
@@ -487,7 +490,7 @@ export const LocationDivision = () => {
             role="tab"
             className={`tab w-full ${view === "district" ? "tab-active" : ""}`}
           >
-            District
+            ضلع
           </Link>
         )}
         {tehsils?.length > 0 && (
@@ -496,7 +499,7 @@ export const LocationDivision = () => {
             role="tab"
             className={`tab w-full ${view === "tehsil" ? "tab-active" : ""}`}
           >
-            Tehsil
+            تحصیل
           </Link>
         )}
         <Link
@@ -504,7 +507,7 @@ export const LocationDivision = () => {
           role="tab"
           className={`tab w-full ${view === "halqa" ? "tab-active" : ""}`}
         >
-          Halqa
+          حلقہ
         </Link>
       </div>
 
@@ -539,7 +542,7 @@ export const LocationDivision = () => {
                             name: division?.name || "",
                           });
                         }}
-                        className="btn"
+                        className="btn capitalize "
                       >
                         <FaEdit />
                       </button>
@@ -579,7 +582,7 @@ export const LocationDivision = () => {
                 paginatedData?.map((tehsil, index) => (
                   <tr
                     key={tehsil?._id}
-                    className="flex w-full justify-between items-start"
+                    className="flex w-full justify-between items-center"
                   >
                     <th>{(currentPage - 1) * itemsPerPage + index + 1}</th>
                     <td className="w-full text-start">{tehsil?.name}</td>
@@ -603,7 +606,7 @@ export const LocationDivision = () => {
                             name: tehsil?.name || "",
                           });
                         }}
-                        className="btn"
+                        className="btn capitalize "
                       >
                         <FaEdit />
                       </button>
@@ -641,7 +644,7 @@ export const LocationDivision = () => {
                 paginatedData?.map((district, index) => (
                   <tr
                     key={district?._id}
-                    className="flex w-full justify-between items-start"
+                    className="flex w-full justify-between items-center"
                   >
                     <th>{(currentPage - 1) * itemsPerPage + index + 1}</th>
                     <td className="w-full text-start">{district?.name}</td>
@@ -665,7 +668,7 @@ export const LocationDivision = () => {
                             name: district?.name || "",
                           });
                         }}
-                        className="btn"
+                        className="btn capitalize "
                       >
                         <FaEdit />
                       </button>
@@ -705,14 +708,11 @@ export const LocationDivision = () => {
             <tbody>
               {paginatedData?.length > 0 ? (
                 paginatedData
-                  ?.filter(
-                    (i) =>
-                      i?.parentType === "Tehsil"
-                  )
+                  ?.filter((i) => i?.parentType === "Tehsil")
                   ?.map((halqa, index) => (
                     <tr
                       key={halqa?._id}
-                      className="flex w-full justify-between items-start"
+                      className="flex w-full justify-between items-center"
                     >
                       <th>{(currentPage - 1) * itemsPerPage + index + 1}</th>
                       <td className="w-full">{halqa?.name}</td>
@@ -741,7 +741,7 @@ export const LocationDivision = () => {
                               unitType: halqa?.unitType || "",
                             });
                           }}
-                          className="btn"
+                          className="btn capitalize "
                         >
                           <FaEdit />
                         </button>
@@ -769,7 +769,7 @@ export const LocationDivision = () => {
       {/* Pagination Controls */}
       <div className="flex w-full px-4 justify-between items-center mt-4">
         <button
-          className="btn"
+          className="btn capitalize p-[8px]"
           disabled={currentPage === 1}
           onClick={() => setCurrentPage((prev) => prev - 1)}
         >
@@ -779,7 +779,7 @@ export const LocationDivision = () => {
           Page {currentPage} of {totalPages}
         </span>
         <button
-          className="btn"
+          className="btn capitalize p-[8px]"
           disabled={currentPage === totalPages}
           onClick={() => setCurrentPage((prev) => prev + 1)}
         >
@@ -833,11 +833,14 @@ export const LocationDivision = () => {
           </div>
           <div className="modal-action">
             {editMode ? (
-              <button className="btn" onClick={handleSubmitEdit}>
+              <button
+                className="btn capitalize p-[8px]"
+                onClick={handleSubmitEdit}
+              >
                 Update
               </button>
             ) : (
-              <button className="btn" onClick={handleSubmit}>
+              <button className="btn capitalize p-[8px]" onClick={handleSubmit}>
                 Add
               </button>
             )}
@@ -898,11 +901,17 @@ export const LocationDivision = () => {
           </div>
           <div className="modal-action">
             {editMode ? (
-              <button className="btn" onClick={handleSubmitDistrictEdit}>
+              <button
+                className="btn capitalize p-[8px]"
+                onClick={handleSubmitDistrictEdit}
+              >
                 Update
               </button>
             ) : (
-              <button className="btn" onClick={handleSubmitDistrict}>
+              <button
+                className="btn capitalize p-[8px]"
+                onClick={handleSubmitDistrict}
+              >
                 Add
               </button>
             )}
@@ -963,11 +972,17 @@ export const LocationDivision = () => {
           </div>
           <div className="modal-action">
             {editMode ? (
-              <button className="btn" onClick={handleSubmitTehsilEdit}>
+              <button
+                className="btn capitalize p-[8px]"
+                onClick={handleSubmitTehsilEdit}
+              >
                 Update
               </button>
             ) : (
-              <button className="btn" onClick={handleSubmitTehsil}>
+              <button
+                className="btn capitalize p-[8px]"
+                onClick={handleSubmitTehsil}
+              >
                 Add
               </button>
             )}
@@ -1104,7 +1119,7 @@ export const LocationDivision = () => {
             {editMode ? (
               <button
                 disabled={loading}
-                className="btn"
+                className="btn capitalize p-[8px]"
                 onClick={handleSubmitHalqaEdit}
               >
                 Update
@@ -1112,7 +1127,7 @@ export const LocationDivision = () => {
             ) : (
               <button
                 disabled={loading}
-                className="btn"
+                className="btn capitalize p-[8px]"
                 onClick={handleSubmitHalqa}
               >
                 Add

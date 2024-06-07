@@ -5,7 +5,7 @@ import {
   ProvinceReportContext,
   useToastState,
 } from "../../context";
-import { FaEdit, FaEye, FaPrint } from "react-icons/fa";
+import { FaCross, FaCut, FaEdit, FaEye, FaPrint } from "react-icons/fa";
 import moment from "moment";
 import { NoReports, months } from "../Reports";
 import { FilterDialog } from "./FilterDialog";
@@ -155,6 +155,16 @@ export const CountryReport = () => {
           <div className="fixed p-3 z-40 rounded-lg top-[140px] left-[5px] w-[calc(100%-10px)] overflow-hidden bg-white min-h-[100px] border">
             <div className="flex flex-col gap-3">
               <div className="w-full flex flex-col">
+                {isMobileView && (
+                  <div className="w-full flex justify-end items-center ">
+                    <button
+                      className="btn-square"
+                      onClick={() => showSearch(false)}
+                    >
+                      ✕
+                    </button>
+                  </div>
+                )}
                 <select
                   className="select select-bordered w-full rounded-none rounded-tl-lg rounded-tr-lg"
                   onChange={(e) => setMonth(e.target.value)}

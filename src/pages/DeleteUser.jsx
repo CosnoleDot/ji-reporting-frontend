@@ -431,7 +431,7 @@ export const DeleteUser = () => {
         </div>
 
         <dialog id="categorize-filter" className="modal">
-          <div className="modal-box">
+          <div className="modal-box p-2">
             <form method="dialog">
               {/* if there is a button in form, it will close the modal */}
               <button
@@ -444,11 +444,11 @@ export const DeleteUser = () => {
             <form
               autoComplete="off"
               method="dialog"
-              className="space-y-4"
+              className="space-y-3"
               onSubmit={handleSubmit}
               id="filter-form"
             >
-              <h1 className="font-semibold text-2xl">Categorize Users</h1>
+              <h1 className="font-semibold text-md md:text-2xl">Categorize Users</h1>
               <div className="flex justify-between items-center">
                 <button
                   className="btn btn-primary border-none capitalize"
@@ -612,6 +612,11 @@ export const DeleteUser = () => {
                     </select>
                   </div>
                   <div className="w-full">
+                    <label className="label">
+                      <span className="text-base label-text">
+                        Select Subject
+                      </span>
+                    </label>
                     <select
                       name="subject"
                       id="subject"
