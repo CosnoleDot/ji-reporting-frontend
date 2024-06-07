@@ -62,7 +62,7 @@ import { MuntakhibMaqamReport } from "./pages/MuntakhibMaqamReport";
 import { MaqamReport } from "./pages/MaqamReport";
 import { MarkazReportPrint } from "./pages/MarkazReportPrint";
 import { Page404 } from "./pages/PageNotFound/Page404";
-import { SpiderChart } from "./pages/SpiderChart";
+// import { SpiderChart } from "./pages/SpiderChart";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -105,46 +105,46 @@ function App() {
   );
   let length;
   let dis;
-  const data2023 = [
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 34, 4, 35, 5, 44, 12, 43, 42, 43, 41,
-    43, 4, 45, 34, 6, 14, 24, 26,
-  ];
-  const data2024 = [
-    3, 5, 2, 8, 14, 22, 11, 5, 8, 13, 14, 19, 22, 25, 14, 12, 9, 11, 15, 18, 17,
-    14, 12, 10, 11, 14, 16, 19, 23, 25,
-  ];
-  const labels = [
-    "A",
-    "B",
-    "C",
-    "D",
-    "E",
-    "F",
-    "G",
-    "H",
-    "I",
-    "J",
-    "K",
-    "L",
-    "M",
-    "N",
-    "O",
-    "P",
-    "Q",
-    "R",
-    "S",
-    "T",
-    "U",
-    "V",
-    "W",
-    "X",
-    "Y",
-    "Z",
-    "AA",
-    "BB",
-    "CC",
-    "DD",
-  ];
+  // const data2023 = [
+  //   1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 34, 4, 35, 5, 44, 12, 43, 42, 43, 41,
+  //   43, 4, 45, 34, 6, 14, 24, 26,
+  // ];
+  // const data2024 = [
+  //   3, 5, 2, 8, 14, 22, 11, 5, 8, 13, 14, 19, 22, 25, 14, 12, 9, 11, 15, 18, 17,
+  //   14, 12, 10, 11, 14, 16, 19, 23, 25,
+  // ];
+  // const labels = [
+  //   "A",
+  //   "B",
+  //   "C",
+  //   "D",
+  //   "E",
+  //   "F",
+  //   "G",
+  //   "H",
+  //   "I",
+  //   "J",
+  //   "K",
+  //   "L",
+  //   "M",
+  //   "N",
+  //   "O",
+  //   "P",
+  //   "Q",
+  //   "R",
+  //   "S",
+  //   "T",
+  //   "U",
+  //   "V",
+  //   "W",
+  //   "X",
+  //   "Y",
+  //   "Z",
+  //   "AA",
+  //   "BB",
+  //   "CC",
+  //   "DD",
+  // ];
   const getMe = async () => {
     try {
       sessionStorage.removeItem("storedData");
@@ -1340,7 +1340,7 @@ function App() {
                                               path="/markaz-report/print/:id"
                                               element={<MarkazReportPrint />}
                                             />
-                                            <Route
+                                            {/* <Route
                                               path="/spider"
                                               element={
                                                 <SpiderChart
@@ -1349,7 +1349,7 @@ function App() {
                                                   labels={labels}
                                                 />
                                               }
-                                            />
+                                            /> */}
                                           </Routes>
                                           <LoadingScreen
                                             count={count}

@@ -355,15 +355,15 @@ export const Ilaqa = () => {
   return (
     <GeneralLayout>
       <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">
+          <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
+            جائزہ کارکردگی رپورٹ (برائے علاقہ)
+          </h2>
         <form
           className="flex flex-col justify-center items-center p-4 font-notoUrdu mb-5"
           dir="rtl"
           onSubmit={handleSubmit}
           id="ilaqa-form"
         >
-          <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
-            جائزہ کارکردگی رپورٹ (برائے علاقہ)
-          </h2>
           <div className="w-full">
             <div>
               <GeneralInfo

@@ -129,65 +129,67 @@ export const Halqa = () => {
           کارکردگی رپورٹ براۓ حلقہ
         </h2>
         <form
-          className="flex flex-col items-center justify-start gap-5 p-3 w-full overflow-auto mb-5"
+          className="flex flex-col justify-center items-center p-4 font-notoUrdu mb-5"
           onSubmit={handleReportSubmit}
           dir="rtl"
         >
-          <div className="mb-4">
-            <GeneralInfo
-              me={me}
-              area={"حلقہ"}
-              newMonth={data?.month}
-              view={view}
-            />
-          </div>
-          <div className="mb-4">
-            <IfradiKuwat view={view} />
-          </div>
-          <div className="mb-4">
-            <Activity view={view} />
-          </div>
-          <div className="mb-4">
-            <OtherActivities view={view} />
-          </div>
-          <div className="mb-4">
-            <ToseeDawat view={view} />
-          </div>
-          <div className="mb-4">
-            <Library view={view} />
-          </div>
-          <div className="mb-4">
-            <Baitulmal view={view} />
-          </div>
-          <div className="mb-4">
-            <RozOShabDiary view={view} />
-          </div>
-          <div className="w-full flex p-2">
-            <label htmlFor="comments">تبصرہ</label>
-            <input
-              required
-              type="text"
-              name="comments"
-              className="border-b-2 border-dashed w-full"
-              id="comments"
-              readOnly={view}
-            />
-          </div>
-          {!view && (
-            <div className="w-full flex flex-col items-end gap-3 p-2">
-              <div>
-                <label htmlFor="nazim">نام ناظمِ:</label>
-                <input
-                  required
-                  type="text"
-                  className="border-b-2 border-dashed text-center"
-                  id="nazim"
-                  defaultValue={me?.name || ""}
-                  readOnly
-                />
-              </div>
+          <div className="w-full">
+            <div className="mb-4">
+              <GeneralInfo
+                me={me}
+                area={"حلقہ"}
+                newMonth={data?.month}
+                view={view}
+              />
             </div>
-          )}
+            <div className="mb-4">
+              <IfradiKuwat view={view} />
+            </div>
+            <div className="mb-4">
+              <Activity view={view} />
+            </div>
+            <div className="mb-4">
+              <OtherActivities view={view} />
+            </div>
+            <div className="mb-4">
+              <ToseeDawat view={view} />
+            </div>
+            <div className="mb-4">
+              <Library view={view} />
+            </div>
+            <div className="mb-4">
+              <Baitulmal view={view} />
+            </div>
+            <div className="mb-4">
+              <RozOShabDiary view={view} />
+            </div>
+            <div className="w-full flex p-2">
+              <label htmlFor="comments">تبصرہ</label>
+              <input
+                required
+                type="text"
+                name="comments"
+                className="border-b-2 border-dashed w-full"
+                id="comments"
+                readOnly={view}
+              />
+            </div>
+            {!view && (
+              <div className="w-full flex flex-col items-end gap-3 p-2">
+                <div>
+                  <label htmlFor="nazim">نام ناظمِ:</label>
+                  <input
+                    required
+                    type="text"
+                    className="border-b-2 border-dashed text-center"
+                    id="nazim"
+                    defaultValue={me?.name || ""}
+                    readOnly
+                  />
+                </div>
+              </div>
+            )}
+          </div>
           {!view && (
             <button type="submit" className="btn">
               {id ? "UPDATE" : "Submit"}

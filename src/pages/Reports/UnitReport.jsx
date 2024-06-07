@@ -39,6 +39,7 @@ export const UnitReport = () => {
     setFilterAllData(uniqueArray);
   }, [hReports]);
   const searchResults = async () => {
+    showSearch(false);
     if (year !== "" && month !== "") {
       try {
         setIsSearch(true);
@@ -109,10 +110,17 @@ export const UnitReport = () => {
       }
     }
   };
-
+  useEffect(() => {
+    if (window) {
+      if (window.innerWidth < 520) {
+        setIsMobileView(true);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [window.innerWidth]);
   return (
     <>
-      <div className="join xs:w-full mb-4">
+      <div className="md:join xs:w-full mb-4 flex justify-between items-center">
         {!isMobileView && (
           <div className="w-full">
             <select
@@ -195,7 +203,7 @@ export const UnitReport = () => {
           </div>
         )}
 
-        <div className="indicator ">
+        <div className="indicator flex justify-between items-center w-full">
           {/* <span className='indicator-item badge badge-secondary'>new</span> */}
           <button
             className={`btn ${!isMobileView ? "join-item" : ""}`}
