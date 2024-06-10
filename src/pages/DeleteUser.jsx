@@ -451,9 +451,9 @@ export const DeleteUser = () => {
               <h1 className="font-semibold text-md md:text-2xl">
                 Categorize Users
               </h1>
-              <div className="flex justify-between items-center">
+              <div className="flex md:flex-row flex-col gap-2 justify-between items-center">
                 <button
-                  className="btn btn-primary border-none capitalize"
+                  className="btn btn-primary border-none capitalize w-full sm:w-auto"
                   onClick={(e) => {
                     setWithArea(true);
                     e.preventDefault();
@@ -462,7 +462,7 @@ export const DeleteUser = () => {
                   Categorize with area
                 </button>
                 <button
-                  className="btn btn-primary border-none capitalize"
+                  className="btn btn-primary border-none capitalize w-full sm:w-auto"
                   onClick={(e) => {
                     setWithArea(false);
                     e.preventDefault();
