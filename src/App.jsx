@@ -62,6 +62,7 @@ import { MuntakhibMaqamReport } from "./pages/MuntakhibMaqamReport";
 import { MaqamReport } from "./pages/MaqamReport";
 import { MarkazReportPrint } from "./pages/MarkazReportPrint";
 import { Page404 } from "./pages/PageNotFound/Page404";
+import { Compile } from "./pages/Compilaton/Compile";
 // import { SpiderChart } from "./pages/SpiderChart";
 
 function App() {
@@ -1339,6 +1340,10 @@ function App() {
                                             <Route
                                               path="/markaz-report/print/:id"
                                               element={<MarkazReportPrint />}
+                                            />
+                                            <Route
+                                              path="/compilation"
+                                              element={<Compile />}
                                             />
                                             {/* <Route
                                               path="/spider"

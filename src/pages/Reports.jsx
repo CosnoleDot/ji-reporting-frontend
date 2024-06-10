@@ -228,6 +228,10 @@ export const Reports = () => {
                 <AiFillBell />
               </button>
             )}
+            <button className="btn " onClick={()=>navigate('/compilation')}>
+      
+              <span className="hidden lg:block xl:block">Compile</span>
+            </button>
           </div>
         </div>
         {[
