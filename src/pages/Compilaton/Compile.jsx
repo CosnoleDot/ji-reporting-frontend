@@ -9,10 +9,62 @@ import {
   MeContext,
   ProvinceContext,
   TehsilContext,
+  useToastState,
 } from "../../context";
-import { months } from "../Reports";
+import instance from "../../api/instrance";
 
 export const Compile = () => {
+     const months = [
+        {
+          title: "January",
+          value: '01',
+        },
+        {
+          title: "February",
+          value: '02',
+        },
+        {
+          title: "March",
+          value: '03',
+        },
+        {
+          title: "April",
+          value: '04',
+        },
+        {
+          title: "May",
+          value: '05',
+        },
+        {
+          title: "June",
+          value: '06',
+        },
+        {
+          title: "July",
+          value: '07',
+        },
+        {
+          title: "August",
+          value: '08',
+        },
+        {
+          title: "September",
+          value: '09',
+        },
+        {
+          title: "October",
+          value: '10',
+        },
+        {
+          title: "November",
+          value: '11',
+        },
+        {
+          title: "December",
+          value: '12',
+        },
+      ];
+      
   const me = useContext(MeContext);
   const maqams = useContext(MaqamContext);
   const divisions = useContext(DivisionContext);
@@ -26,11 +78,11 @@ export const Compile = () => {
   const [areas, setAreas] = useState([]);
   const [areaId, setAreaId] = useState("");
   const [checked, setChecked] = useState("");
-  const [startYear, setStartYear] = useState("2023");
+  const [startYear, setStartYear] = useState("2022");
   const [startMonth, setStartMonth] = useState("");
-  const [endYear, setEndYear] = useState("2023");
+  const [endYear, setEndYear] = useState("2022");
   const [endMonth, setEndMonth] = useState("");
-
+  const { dispatch } = useToastState();
   useEffect(() => {
     switch (areaType) {
       case "markaz":
@@ -59,43 +111,42 @@ export const Compile = () => {
   const clearDates = () => {
     setStartMonth("");
     setEndMonth("");
-    setStartYear("2023");
-    setEndYear("2023");
+    setStartYear("2022");
+    setEndYear("2022");
   };
   const handleCheckboxChange = (event) => {
     clearDates();
     setChecked(event.target.id);
   };
-
+console.log(areaId)
   const getReports = async () => {
     const startDate =
       startMonth === "" ? startYear : startYear + "-" + startMonth;
     const endDate = endMonth === "" ? endYear : endYear + "-" + endMonth;
-    console.log(startDate, endDate);
-    // if (year !== "" && month !== "") {
-    //   try {
-    //     setIsSearch(true);
-    //     const req = await instance.get(
-    //       `/reports/province`,
-    //       {
-    //         headers: {
-    //           Authorization: `Bearer ${localStorage.getItem("@token")}`,
-    //         },
-    //       }
-    //     );
+    console.log(areaId);
+   
+      try {
+       
+        const req = await instance.get(
+          `/compilation/${areaId}?startDate=${startDate}&endDate=${endDate}&areaType=${areaType}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("@token")}`,
+            },
+          }
+        );
 
-    //     if (req) {
-    //       setSearchData([]);
-    //       setSearchData(req.data?.data);
-    //     }
-    //   } catch (err) {
-    //     console.log(err);
-    //     dispatch({
-    //       type: "ERROR",
-    //       payload: err?.response?.data?.message || err?.message,
-    //     });
-    //   }
-    // }
+        if (req) {
+          console.log(req)
+        }
+      } catch (err) {
+        console.log(err);
+        dispatch({
+          type: "ERROR",
+          payload: err?.response?.data?.message || err?.message,
+        });
+      }
+   
   };
   return (
     <GeneralLayout title={me?.userAreaId?.name.toUpperCase()}>
@@ -136,7 +187,7 @@ export const Compile = () => {
                 className="select select-bordered w-full"
               >
                 {areas?.map((i) => (
-                  <option key={i?._id} value={i?.name}>
+                  <option key={i?._id} value={i?._id}>
                     {i?.name}
                   </option>
                 ))}
@@ -202,8 +253,8 @@ export const Compile = () => {
                     Year
                   </option>
                   {Array.from({ length: 10 }, (_, index) => (
-                    <option key={index} value={2023 + index}>
-                      {2023 + index}
+                    <option key={index} value={2022 + index}>
+                      {2022 + index}
                     </option>
                   ))}
                 </select>
@@ -231,8 +282,8 @@ export const Compile = () => {
                     Year
                   </option>
                   {Array.from({ length: 10 }, (_, index) => (
-                    <option key={index} value={2023 + index}>
-                      {2023 + index}
+                    <option key={index} value={2022 + index}>
+                      {2022 + index}
                     </option>
                   ))}
                 </select>
@@ -252,8 +303,8 @@ export const Compile = () => {
                     Year
                   </option>
                   {Array.from({ length: 10 }, (_, index) => (
-                    <option key={index} value={2023 + index}>
-                      {2023 + index}
+                    <option key={index} value={2022 + index}>
+                      {2022 + index}
                     </option>
                   ))}
                 </select>
@@ -269,8 +320,8 @@ export const Compile = () => {
                     Year
                   </option>
                   {Array.from({ length: 10 }, (_, index) => (
-                    <option key={index} value={2023 + index}>
-                      {2023 + index}
+                    <option key={index} value={2022 + index}>
+                      {2022 + index}
                     </option>
                   ))}
                 </select>
