@@ -50,7 +50,7 @@ export const DeleteUser = () => {
   //year calender
   const YearCalender = (val) => {
     setYears((prevYears) => {
-      const updatedYears = prevYears.map((year) => year + val);
+      const updatedYears = prevYears?.map((year) => year + val);
       return updatedYears;
     });
   };
@@ -448,7 +448,9 @@ export const DeleteUser = () => {
               onSubmit={handleSubmit}
               id="filter-form"
             >
-              <h1 className="font-semibold text-md md:text-2xl">Categorize Users</h1>
+              <h1 className="font-semibold text-md md:text-2xl">
+                Categorize Users
+              </h1>
               <div className="flex justify-between items-center">
                 <button
                   className="btn btn-primary border-none capitalize"
@@ -508,7 +510,7 @@ export const DeleteUser = () => {
                           -
                         </span>
 
-                        {years.map((obj) => (
+                        {years?.map((obj) => (
                           <p
                             key={obj}
                             className={`year-item hover:bg-slate-400 w-full flex justify-start px-4 items-center cursor-pointer ${
@@ -562,7 +564,7 @@ export const DeleteUser = () => {
                           -
                         </span>
 
-                        {years.map((obj) => (
+                        {years?.map((obj) => (
                           <p
                             key={obj}
                             className={`year-item hover:bg-slate-400 w-full flex justify-start px-4 items-center cursor-pointer ${
@@ -917,7 +919,7 @@ export const DeleteUser = () => {
                                 return true;
                               }
                             })
-                            .map((area, index) => (
+                            ?.map((area, index) => (
                               <div
                                 key={index}
                                 onClick={() => {
@@ -1124,7 +1126,7 @@ export const DeleteUser = () => {
                     type="number"
                     placeholder={singleUser?.nazimType
                       ?.split("-")
-                      .map(
+                      ?.map(
                         (word) => word.charAt(0).toUpperCase() + word.slice(1)
                       )
                       .join(" ")}
@@ -1455,7 +1457,7 @@ export const DeleteUser = () => {
                               return true;
                             }
                           })
-                          .map((area, index) => (
+                          ?.map((area, index) => (
                             <div
                               key={index}
                               onClick={() => {
@@ -1598,6 +1600,8 @@ export const DeleteUser = () => {
                           ?.name
                       : areaDetails?.parentType === "Division"
                       ? areaDetails?.parentId?.province?.name
+                      : areaDetails?.province
+                      ? areaDetails?.province?.name
                       : areaDetails?.maqam
                       ? areaDetails?.maqam?.province?.name
                       : ""}

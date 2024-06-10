@@ -1221,7 +1221,9 @@ export const LocationDivision = () => {
                   ? areaDetails?.parentId?.district?.division?.province?.name
                   : areaDetails?.parentType === "Division"
                   ? areaDetails?.parentId?.province?.name
-                  : areaDetails?.province?.name}
+                  : areaDetails?.province
+                  ? areaDetails?.province?.name
+                  : ""}
               </h4>
             </div>
             <div className="w-full flex justify-start items-center gap-5">

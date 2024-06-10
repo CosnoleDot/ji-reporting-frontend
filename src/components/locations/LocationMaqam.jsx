@@ -1017,9 +1017,9 @@ export const LocationMaqam = () => {
                     ? areaDetails?.parentId?.district?.division?.province?.name
                     : areaDetails?.parentType === "Division"
                     ? areaDetails?.parentId?.province?.name
-                    : areaDetails?.maqam
-                    ? areaDetails?.maqam?.province?.name
-                    : areaDetails?.province?.name}
+                    : areaDetails?.province
+                    ? areaDetails?.province?.name
+                    : ""}
                 </h4>
               </div>
             )}

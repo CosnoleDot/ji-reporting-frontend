@@ -28,7 +28,7 @@ export const Signup = () => {
       password2: formData.get("password2"),
       name: formData.get("name"),
       age: formData.get("age"),
-      nazim: formData.get("userAreaType").toLowerCase(),
+      nazim: formData.get("userAreaType")?.toLowerCase(),
       nazimType: formData.get("nazimType"),
       fatherName: formData.get("fatherName"),
       dob: formData.get("dob"),
@@ -41,6 +41,9 @@ export const Signup = () => {
       phoneNumber: formData.get("phoneNumber"),
       whatsAppNumber: formData.get("whatsAppNumber"),
     };
+    if (!joiningDate.title) {
+      alert("please select the nazim");
+    }
     try {
       const request = await instance.post("/user/signup", data, {
         headers: { "Content-Type": "application/json" },
@@ -338,6 +341,7 @@ export const Signup = () => {
                 placeholder="WhatsApp Number"
                 name="whatsAppNumber"
                 className="w-full input input-bordered input-primary"
+                required
               />
             </div>
           </div>
@@ -393,7 +397,10 @@ export const Signup = () => {
                     name="userAreaType"
                     className="radio checked:bg-blue-500"
                     value="Province"
-                    onChange={(e) => setUserAreaType(e.target.value)}
+                    onChange={(e) => {
+                      document.getElementById("autocomplete").value = "";
+                      setUserAreaType(e.target.value);
+                    }}
                   />
                   <span className="label-text">Province</span>
                 </label>
@@ -405,7 +412,10 @@ export const Signup = () => {
                     name="userAreaType"
                     className="radio checked:bg-blue-500"
                     value="Division"
-                    onChange={(e) => setUserAreaType(e.target.value)}
+                    onChange={(e) => {
+                      document.getElementById("autocomplete").value = "";
+                      setUserAreaType(e.target.value);
+                    }}
                   />
                   <span className="label-text">Division</span>
                 </label>
@@ -417,7 +427,10 @@ export const Signup = () => {
                     name="userAreaType"
                     className="radio checked:bg-blue-500"
                     value="Maqam"
-                    onChange={(e) => setUserAreaType(e.target.value)}
+                    onChange={(e) => {
+                      document.getElementById("autocomplete").value = "";
+                      setUserAreaType(e.target.value);
+                    }}
                   />
                   <span className="label-text">Maqam</span>
                 </label>
@@ -429,7 +442,10 @@ export const Signup = () => {
                     name="userAreaType"
                     className="radio checked:bg-blue-500"
                     value="Ilaqa"
-                    onChange={(e) => setUserAreaType(e.target.value)}
+                    onChange={(e) => {
+                      document.getElementById("autocomplete").value = "";
+                      setUserAreaType(e.target.value);
+                    }}
                   />
                   <span className="label-text">Ilaqa/Zone</span>
                 </label>
@@ -441,7 +457,10 @@ export const Signup = () => {
                     name="userAreaType"
                     className="radio checked:bg-blue-500"
                     value="Halqa"
-                    onChange={(e) => setUserAreaType(e.target.value)}
+                    onChange={(e) => {
+                      document.getElementById("autocomplete").value = "";
+                      setUserAreaType(e.target.value);
+                    }}
                   />
                   <span className="label-text">Halqa</span>
                 </label>

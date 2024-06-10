@@ -129,7 +129,7 @@ export const UnitReport = () => {
               value={month}
             >
               <option value={""}>Month</option>
-              {months.map((month, index) => (
+              {months?.map((month, index) => (
                 <option value={month?.value} key={index}>
                   {month.title}
                 </option>
@@ -144,8 +144,8 @@ export const UnitReport = () => {
                 Year
               </option>
               {Array(10)
-                .fill(1)
-                .map((_, index) => (
+                ?.fill(1)
+                ?.map((_, index) => (
                   <option key={index} value={2023 + index}>
                     {2023 + index}
                   </option>
@@ -173,7 +173,7 @@ export const UnitReport = () => {
                   value={month}
                 >
                   <option value={""}>Month</option>
-                  {months.map((month, index) => (
+                  {months?.map((month, index) => (
                     <option value={month?.value} key={index}>
                       {month.title}
                     </option>
@@ -188,8 +188,8 @@ export const UnitReport = () => {
                     Year
                   </option>
                   {Array(10)
-                    .fill(1)
-                    .map((_, index) => (
+                    ?.fill(1)
+                    ?.map((_, index) => (
                       <option key={index} value={2023 + index}>
                         {2023 + index}
                       </option>
@@ -228,30 +228,13 @@ export const UnitReport = () => {
           >
             Clear
           </button>
-          {/* {isMobileView &&
-            active !== "province" &&
-            !(
-              active === "maqam" && localStorage.getItem("@type") === "maqam"
-            ) &&
-            !(
-              active === "division" &&
-              localStorage.getItem("@type") === "division"
-            ) &&
-            localStorage.getItem("@type") !== "halqa" && (
-              <button
-                onClick={sendNotification}
-                className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
-              >
-                <AiFillBell />
-              </button>
-            )} */}
         </div>
       </div>
       {!isSearch ? (
         <>
           {" "}
           {currentData?.length > 0 ? (
-            currentData.map((p, index) => (
+            currentData?.map((p, index) => (
               <div
                 key={index}
                 className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"

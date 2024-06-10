@@ -75,7 +75,6 @@ function App() {
   const [tehsils, setTehsils] = useState([]);
   const [halqas, setHalqas] = useState([]);
   const [ilaqas, setIlaqas] = useState([]);
-  const [page, setPage] = useState(1);
   const [nazim, setNazim] = useState([]);
   const [markazReport, setMarkazReport] = useState([]);
   const [provinceReports, setProvinceReports] = useState([]);

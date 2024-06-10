@@ -136,7 +136,7 @@ export const MaqamReports = () => {
               value={month}
             >
               <option value={""}>Month</option>
-              {months.map((month, index) => (
+              {months?.map((month, index) => (
                 <option value={month?.value} key={index}>
                   {month.title}
                 </option>
@@ -152,7 +152,7 @@ export const MaqamReports = () => {
               </option>
               {Array(10)
                 .fill(1)
-                .map((_, index) => (
+                ?.map((_, index) => (
                   <option key={index} value={2023 + index}>
                     {2023 + index}
                   </option>
@@ -180,7 +180,7 @@ export const MaqamReports = () => {
                   value={month}
                 >
                   <option value={""}>Month</option>
-                  {months.map((month, index) => (
+                  {months?.map((month, index) => (
                     <option value={month?.value} key={index}>
                       {month.title}
                     </option>
@@ -195,8 +195,8 @@ export const MaqamReports = () => {
                     Year
                   </option>
                   {Array(10)
-                    .fill(1)
-                    .map((_, index) => (
+                    ?.fill(1)
+                    ?.map((_, index) => (
                       <option key={index} value={2023 + index}>
                         {2023 + index}
                       </option>

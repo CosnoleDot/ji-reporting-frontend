@@ -245,7 +245,7 @@ export const Reports = () => {
             } font-bold `}
             onClick={() => setTab("personal")}
           >
-            Personal
+            ارکان/امیدواران رپورٹ
           </Link>
         )}
         <div

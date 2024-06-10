@@ -189,7 +189,7 @@ export const Comparision = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [maqams, divisions, halqas, districts]);
   const { dispatch } = useToastState();
-  const transformedArray = durationMonths.map((item) => {
+  const transformedArray = durationMonths?.map((item) => {
     return {
       month: item.value,
       year: item.year,
@@ -657,7 +657,7 @@ export const Comparision = () => {
                       return true;
                     }
                   })
-                  .map((area, index) => (
+                  ?.map((area, index) => (
                     <div
                       key={index}
                       onClick={() => {

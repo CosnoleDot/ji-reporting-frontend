@@ -124,7 +124,7 @@ export const Dashboard = () => {
           );
           return res;
         };
-        let markaz;
+        let markaz = [];
         if (me?.userAreaType === "Country") {
           markaz = await getUnfilledReports("markaz");
         }
@@ -156,8 +156,8 @@ export const Dashboard = () => {
                 const district = h?.parentId?.district;
                 const halqas = h?.parentId?.division === selectedId;
                 const filteredDistricts = districts
-                  .filter((dis) => dis?.division?._id === selectedId)
-                  .map((div) => div?._id);
+                  ?.filter((dis) => dis?.division?._id === selectedId)
+                  ?.map((div) => div?._id);
 
                 return filteredDistricts.includes(district) || halqas;
               }
@@ -185,12 +185,12 @@ export const Dashboard = () => {
         temp.unfilled =
           userAreaType === "All"
             ? [
-                ...markaz?.data?.data?.unfilled,
-                ...province?.data?.data?.unfilled,
-                ...maqam?.data?.data?.unfilled,
-                ...division?.data?.data?.unfilled,
-                ...ilaqa?.data?.data?.unfilled,
-                ...halqa?.data?.data?.unfilled,
+                ...(markaz?.data?.data?.unfilled || []),
+                ...(province?.data?.data?.unfilled || []),
+                ...(maqam?.data?.data?.unfilled || []),
+                ...(division?.data?.data?.unfilled || []),
+                ...(ilaqa?.data?.data?.unfilled || []),
+                ...(halqa?.data?.data?.unfilled || []),
               ]
             : getFilteredHalqas(halqa?.data?.data?.unfilled);
         temp.totalAreas =
@@ -258,7 +258,6 @@ export const Dashboard = () => {
         break;
     }
   };
-
   useEffect(() => {
     getAreas();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -268,13 +267,13 @@ export const Dashboard = () => {
 
   const handlePersonalFilledReports = () => {
     // Filter out nazim who are not of type "nazim"
-    const validNazim = nazim.filter(
+    const validNazim = nazim?.filter(
       (n) => n?.nazimType && n?.nazimType !== "nazim"
     );
     // Get IDs of validNazim
-    const validNazimIds = validNazim.map((n) => n?._id);
+    const validNazimIds = validNazim?.map((n) => n?._id);
     // Get IDs of nazim who have filled personal reports
-    const nazimFilledPersonalIds = umeedwarReports.map(
+    const nazimFilledPersonalIds = umeedwarReports?.map(
       (report) => report?.userId?._id
     );
     // Get IDs of unfilled nazim
@@ -671,8 +670,8 @@ export const Dashboard = () => {
                               )
                             ) : data?.unfilled?.length > 0 ? (
                               data?.unfilled
-                                .filter((i) => !i?.disabled)
-                                .map((obj, index) => (
+                                ?.filter((i) => !i?.disabled)
+                                ?.map((obj, index) => (
                                   <tr
                                     className={`w-full flex items-center ${
                                       index % 2 === 0 && "bg-[#B2D5FF]"
@@ -748,15 +747,17 @@ export const Dashboard = () => {
                             {toggle === "pFilled" ? (
                               personalFilled?.length > 0 ? (
                                 personalFilled
-                                  .filter((i) => !i?.disabled)
-                                  .map((obj, index) => (
+                                  ?.filter((i) => !i?.disabled)
+                                  ?.map((obj, index) => (
                                     <tr
                                       key={index}
                                       className={`w-full flex items-center ${
                                         index % 2 === 0 && "bg-[#B2D5FF]"
                                       }`}
                                     >
-                                      <td className="w-[50%]">{obj.userId?.name}</td>
+                                      <td className="w-[50%]">
+                                        {obj.userId?.name}
+                                      </td>
                                       <td className="w-[50%]">
                                         {obj?.areaId?.name}
                                       </td>
@@ -771,8 +772,8 @@ export const Dashboard = () => {
                               )
                             ) : personalUnfilled?.length > 0 ? (
                               personalUnfilled
-                                .filter((i) => !i?.disabled)
-                                .map((obj, index) => (
+                                ?.filter((i) => !i?.disabled)
+                                ?.map((obj, index) => (
                                   <tr
                                     className={`w-full flex  items-center ${
                                       index % 2 === 0 && "bg-[#B2D5FF]"
@@ -910,8 +911,8 @@ export const Dashboard = () => {
                     className="absolute hidden z-10 max-h-[100px] overflow-y-scroll bg-white border border-gray-300 w-full mt-1"
                   >
                     {areas
-                      .sort((a, b) => a?.name?.localeCompare(b?.name))
-                      .filter((item) => {
+                      ?.sort((a, b) => a?.name?.localeCompare(b?.name))
+                      ?.filter((item) => {
                         if (searchArea && searchArea !== "") {
                           if (
                             item?.name
@@ -926,7 +927,7 @@ export const Dashboard = () => {
                           return true;
                         }
                       })
-                      .map((area, index) => (
+                      ?.map((area, index) => (
                         <div
                           key={index}
                           onClick={() => {
@@ -1094,6 +1095,8 @@ export const Dashboard = () => {
                     ? areaDetails?.parentId?.district?.division?.province?.name
                     : areaDetails?.parentType === "Division"
                     ? areaDetails?.parentId?.province?.name
+                    : areaDetails?.province
+                    ? areaDetails?.province?.name
                     : areaDetails?.maqam
                     ? areaDetails?.maqam?.province?.name
                     : ""}

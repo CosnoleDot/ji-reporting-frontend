@@ -118,7 +118,10 @@ export const Halqa = () => {
   useEffect(() => {
     const l = location.pathname?.split("/")[2];
     if ((l === "view" && id) || l === "edit") {
-      getHalqaReport();
+      if (id) {
+        getHalqaReport();
+      }
+      return;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
