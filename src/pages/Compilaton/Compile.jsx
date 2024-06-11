@@ -14,57 +14,57 @@ import {
 import instance from "../../api/instrance";
 
 export const Compile = () => {
-     const months = [
-        {
-          title: "January",
-          value: '01',
-        },
-        {
-          title: "February",
-          value: '02',
-        },
-        {
-          title: "March",
-          value: '03',
-        },
-        {
-          title: "April",
-          value: '04',
-        },
-        {
-          title: "May",
-          value: '05',
-        },
-        {
-          title: "June",
-          value: '06',
-        },
-        {
-          title: "July",
-          value: '07',
-        },
-        {
-          title: "August",
-          value: '08',
-        },
-        {
-          title: "September",
-          value: '09',
-        },
-        {
-          title: "October",
-          value: '10',
-        },
-        {
-          title: "November",
-          value: '11',
-        },
-        {
-          title: "December",
-          value: '12',
-        },
-      ];
-      
+  const months = [
+    {
+      title: "January",
+      value: "01",
+    },
+    {
+      title: "February",
+      value: "02",
+    },
+    {
+      title: "March",
+      value: "03",
+    },
+    {
+      title: "April",
+      value: "04",
+    },
+    {
+      title: "May",
+      value: "05",
+    },
+    {
+      title: "June",
+      value: "06",
+    },
+    {
+      title: "July",
+      value: "07",
+    },
+    {
+      title: "August",
+      value: "08",
+    },
+    {
+      title: "September",
+      value: "09",
+    },
+    {
+      title: "October",
+      value: "10",
+    },
+    {
+      title: "November",
+      value: "11",
+    },
+    {
+      title: "December",
+      value: "12",
+    },
+  ];
+
   const me = useContext(MeContext);
   const maqams = useContext(MaqamContext);
   const divisions = useContext(DivisionContext);
@@ -78,6 +78,7 @@ export const Compile = () => {
   const [areas, setAreas] = useState([]);
   const [areaId, setAreaId] = useState("");
   const [checked, setChecked] = useState("");
+  const [self, setSelf] = useState(false);
   const [startYear, setStartYear] = useState("2022");
   const [startMonth, setStartMonth] = useState("");
   const [endYear, setEndYear] = useState("2022");
@@ -118,81 +119,114 @@ export const Compile = () => {
     clearDates();
     setChecked(event.target.id);
   };
-console.log(areaId)
+  console.log(areaId);
   const getReports = async () => {
     const startDate =
       startMonth === "" ? startYear : startYear + "-" + startMonth;
     const endDate = endMonth === "" ? endYear : endYear + "-" + endMonth;
     console.log(areaId);
-   
-      try {
-       
-        const req = await instance.get(
-          `/compilation/${areaId}?startDate=${startDate}&endDate=${endDate}&areaType=${areaType}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("@token")}`,
-            },
-          }
-        );
 
-        if (req) {
-          console.log(req)
+    try {
+      const req = await instance.get(
+        `/compilation/${areaId}?startDate=${startDate}&endDate=${endDate}&areaType=${areaType}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
         }
-      } catch (err) {
-        console.log(err);
-        dispatch({
-          type: "ERROR",
-          payload: err?.response?.data?.message || err?.message,
-        });
+      );
+
+      if (req) {
+        console.log(req);
       }
-   
+    } catch (err) {
+      console.log(err);
+      dispatch({
+        type: "ERROR",
+        payload: err?.response?.data?.message || err?.message,
+      });
+    }
   };
+  const handleSelf = () => {
+    setSelf(!self);
+  };
+  useEffect(() => {
+    if (self === true) {
+      setAreaType(localStorage.getItem("@type"));
+      setAreaId(me?.userAreaId?._id);
+    } else {
+      setAreaType("");
+      setAreaId("");
+    }
+  }, [self]);
+  console.log(areaType, areaId);
   return (
     <GeneralLayout title={me?.userAreaId?.name.toUpperCase()}>
       <div className="relative flex flex-col gap-3 items-start p-5 justify-start h-[calc(100vh-65.6px-64px)]">
         <h3 className="w-full font-bold text-left text-xl hidden lg:block xl:block">
           Reports Compilation
         </h3>
+        <div className="flex items-center my-4">
+          <input
+            id="self-checkbox"
+            type="checkbox"
+            checked={self}
+            onChange={handleSelf}
+            className="w-6 h-6 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+          />
+          <label
+            htmlFor="self-checkbox"
+            className="ms-2 text-md font-medium text-gray-900 dark:text-gray-300"
+          >
+            {`Compile ${me?.userAreaId?.name}`}
+          </label>
+        </div>
         <div className="flex flex-col lg:flex-row w-full gap-4">
-          <div className="flex flex-col gap-2 w-full">
-            <label htmlFor="select">Select Area Type:</label>
-            <select
-              onChange={(e) => setAreaType(e.target.value)}
-              className="select select-bordered w-full"
-            >
-              {localStorage.getItem("@type") === "country" && (
-                <option value="markaz">Markaz</option>
-              )}
-              {["country", "province"].includes(
-                localStorage.getItem("@type")
-              ) && <option value="province">Province</option>}
-              {["country", "province", "maqam"].includes(
-                localStorage.getItem("@type")
-              ) && <option value="maqam">Maqam</option>}
-              {["country", "province", "division"].includes(
-                localStorage.getItem("@type")
-              ) && <option value="division">Division</option>}
-              {["country", "province", "maqam", "ilaqa"].includes(
-                localStorage.getItem("@type")
-              ) && <option value="ilaqa">Ilaqa</option>}
-              <option value="halqa">Halqa</option>
-            </select>
-          </div>
-          {areaType && (
-            <div className="flex flex-col gap-2 w-full">
-              <label htmlFor="select">Select Area:</label>
-              <select
-                onChange={(e) => setAreaId(e.target.value)}
-                className="select select-bordered w-full"
-              >
-                {areas?.map((i) => (
-                  <option key={i?._id} value={i?._id}>
-                    {i?.name}
+          {!self && (
+            <>
+              <div className="flex flex-col gap-2 w-full">
+                <label htmlFor="select">Select Area Type:</label>
+                <select
+                  value="" // Ensure the first option is selected initially
+                  onChange={(e) => setAreaType(e.target.value)}
+                  className="select select-bordered w-full"
+                >
+                  <option value="" disabled>
+                    Select Area
                   </option>
-                ))}
-              </select>
-            </div>
+                  
+                  {["country"].includes(localStorage.getItem("@type")) && (
+                    <option value="province">Province</option>
+                  )}
+                  {["country", "province"].includes(
+                    localStorage.getItem("@type")
+                  ) && <option value="maqam">Maqam</option>}
+                  {["country", "province"].includes(
+                    localStorage.getItem("@type")
+                  ) && <option value="division">Division</option>}
+                  {["country", "province", "maqam"].includes(
+                    localStorage.getItem("@type")
+                  ) && <option value="ilaqa">Ilaqa</option>}
+                  <option value="halqa">Halqa</option>
+                </select>
+              </div>
+
+              {areaType && (
+                <div className="flex flex-col gap-2 w-full">
+                  <label htmlFor="select">Select Area:</label>
+                  <select
+                    onChange={(e) => setAreaId(e.target.value)}
+                    className="select select-bordered w-full"
+                  >
+                    {areas?.map((i) => (
+                      <option key={i?._id} value={i?._id}>
+                        {i?.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+            </>
           )}
         </div>
         <div className="flex flex-col justify-between w-full gap-4 mt-4">
@@ -329,10 +363,7 @@ console.log(areaId)
             </div>
           )}
         </div>
-        <button
-          className="btn "
-          onClick={()=> startMonth !== "" && endMonth !== "" && getReports()}
-        >
+        <button className="btn " onClick={getReports}>
           <span className="hidden lg:block xl:block">Compile</span>
         </button>
       </div>
