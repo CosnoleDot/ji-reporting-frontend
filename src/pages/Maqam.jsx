@@ -203,6 +203,7 @@ export const Maqam = () => {
     setLoading(false);
   };
 
+  console.log(data);
   // To set values to zero when in create mode
   useEffect(() => {
     const value1 = document.getElementById("litrature");
@@ -241,7 +242,7 @@ export const Maqam = () => {
           if (elem.type === "checkbox") {
             elem.checked = data[i];
           } else {
-            elem.value = data[i];
+            elem.value = data[i] || 0;
           }
         }
       }
