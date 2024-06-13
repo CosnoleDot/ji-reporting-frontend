@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { GeneralLayout } from "../../components";
 import {
+  CompileReportContext,
   DistrictContext,
   DivisionContext,
   HalqaContext,
@@ -12,6 +13,10 @@ import {
   useToastState,
 } from "../../context";
 import instance from "../../api/instrance";
+import { Markaz } from "./Markaz";
+import { FaEye, FaPrint } from "react-icons/fa";
+import { UIContext } from "../../context/ui";
+import { useNavigate } from "react-router-dom";
 
 export const Compile = () => {
   const months = [
@@ -72,18 +77,26 @@ export const Compile = () => {
   const tehsils = useContext(TehsilContext);
   const ilaqas = useContext(IlaqaContext);
   const districts = useContext(DistrictContext);
+  const compileReports = useContext(CompileReportContext);
   const provinces = useContext(ProvinceContext);
-
+  const [data, setData] = useState(compileReports);
+  const [showReport, setShowReport] = useState(false);
   const [areaType, setAreaType] = useState("");
   const [areas, setAreas] = useState([]);
   const [areaId, setAreaId] = useState("");
   const [checked, setChecked] = useState("");
   const [self, setSelf] = useState(false);
-  const [startYear, setStartYear] = useState("2022");
+  const [startYear, setStartYear] = useState("2023");
   const [startMonth, setStartMonth] = useState("");
-  const [endYear, setEndYear] = useState("2022");
+  const [endYear, setEndYear] = useState("2023");
   const [endMonth, setEndMonth] = useState("");
   const { dispatch } = useToastState();
+  const [areaName, setAreaName] = useState("");
+  const { getCompileReports } = useContext(UIContext);
+  const [sDate, setSDate] = useState();
+  const [eDate, setEDate] = useState();
+
+  const navigate = useNavigate();
   useEffect(() => {
     switch (areaType) {
       case "markaz":
@@ -112,41 +125,45 @@ export const Compile = () => {
   const clearDates = () => {
     setStartMonth("");
     setEndMonth("");
-    setStartYear("2022");
-    setEndYear("2022");
+    setStartYear("2023");
+    setEndYear("2023");
   };
   const handleCheckboxChange = (event) => {
     clearDates();
+    setShowReport(false);
     setChecked(event.target.id);
   };
-  console.log(areaId);
-  const getReports = async () => {
+
+  const getReports = () => {
+    switch (areaType) {
+      case "country":
+        setAreaName("Pakistan");
+        break;
+      case "province":
+        const name = provinces.find((i) => i._id === areaId)?.name;
+        setAreaName(name?.split(" ").join(""));
+        break;
+      default:
+        break;
+    }
+
     const startDate =
       startMonth === "" ? startYear : startYear + "-" + startMonth;
+    setSDate(startDate);
     const endDate = endMonth === "" ? endYear : endYear + "-" + endMonth;
-    console.log(areaId);
-
-    try {
-      const req = await instance.get(
-        `/compilation/${areaId}?startDate=${startDate}&endDate=${endDate}&areaType=${areaType}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("@token")}`,
-          },
-        }
-      );
-
-      if (req) {
-        console.log(req);
-      }
-    } catch (err) {
-      console.log(err);
-      dispatch({
-        type: "ERROR",
-        payload: err?.response?.data?.message || err?.message,
-      });
-    }
+    setEDate(endDate)
+    getCompileReports(startDate, endDate, areaType, areaId);
+    setShowReport(true);
   };
+
+  useEffect(() => {
+    if (showReport) {
+      console.log(areaName);
+      navigate(
+        `/compile/view?areaType=${areaType}&areaName=${areaName}&startDate=${sDate}&endDate=${eDate}`
+      );
+    }
+  }, [areaName, showReport, navigate, areaType]);
   const handleSelf = () => {
     setSelf(!self);
   };
@@ -159,7 +176,14 @@ export const Compile = () => {
       setAreaId("");
     }
   }, [self]);
-  console.log(areaType, areaId);
+  useEffect(() => {
+    if (localStorage.getItem("@type") === "halqa") {
+      setAreaId(me?.userAreaId?._id);
+      setAreaType("halqa");
+      setAreaName(me?.userAreaId?.name.split(" ").join(""));
+    }
+    
+  }, [localStorage.getItem("@type")]);
   return (
     <GeneralLayout title={me?.userAreaId?.name.toUpperCase()}>
       <div className="relative flex flex-col gap-3 items-start p-5 justify-start h-[calc(100vh-65.6px-64px)]">
@@ -170,7 +194,7 @@ export const Compile = () => {
           <input
             id="self-checkbox"
             type="checkbox"
-            checked={self}
+            checked={self || localStorage.getItem("@type") === "halqa"}
             onChange={handleSelf}
             className="w-6 h-6 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
           />
@@ -182,16 +206,18 @@ export const Compile = () => {
           </label>
         </div>
         <div className="flex flex-col lg:flex-row w-full gap-4">
-          {!self && (
+          {!self && localStorage.getItem("@type") !== "halqa" && localStorage.getItem("@type") !== "ilaqa" && localStorage.getItem("@type") !== "division" && (
             <>
               <div className="flex flex-col gap-2 w-full">
                 <label htmlFor="select">Select Area Type:</label>
                 <select
-                  value="" // Ensure the first option is selected initially
+                defaultValue={'selected'}
+                value={areaType}
+                  // Ensure the first option is selected initially
                   onChange={(e) => setAreaType(e.target.value)}
                   className="select select-bordered w-full"
                 >
-                  <option value="" disabled>
+                  <option value="selected"  >
                     Select Area
                   </option>
 
@@ -211,7 +237,7 @@ export const Compile = () => {
                 </select>
               </div>
 
-              {areaType && (
+              {areaType && areaType !=="selected" && (
                 <div className="flex flex-col gap-2 w-full">
                   <label htmlFor="select">Select Area:</label>
                   <select
@@ -226,8 +252,24 @@ export const Compile = () => {
                   </select>
                 </div>
               )}
+              
             </>
           )}
+          <></>
+          {(localStorage.getItem("@type") === "ilaqa" || localStorage.getItem("@type") === "division") && !self &&
+              <div className="flex flex-col gap-2 w-full">
+              <label htmlFor="select">Select Halqa:</label>
+              <select
+                onChange={(e) => {setAreaId(e.target.value);setAreaType("halqa")}}
+                className="select select-bordered w-full"
+              >
+                {halqas?.map((i) => (
+                  <option key={i?._id} value={i?._id}>
+                    {i?.name}
+                  </option>
+                ))}
+              </select>
+            </div>}
         </div>
         <div className="flex flex-col justify-between w-full gap-4 mt-4">
           <div className="flex items-center w-full justify-evenly gap-4">
@@ -287,8 +329,8 @@ export const Compile = () => {
                     Year
                   </option>
                   {Array.from({ length: 10 }, (_, index) => (
-                    <option key={index} value={2022 + index}>
-                      {2022 + index}
+                    <option key={index} value={2023 + index}>
+                      {2023 + index}
                     </option>
                   ))}
                 </select>
@@ -297,7 +339,10 @@ export const Compile = () => {
                 <label>End Date:</label>
                 <select
                   className="select select-bordered"
-                  onChange={(e) => setEndMonth(e.target.value)}
+                  onChange={(e) => {
+                    setEndMonth(e.target.value);
+                    setShowReport(false);
+                  }}
                   value={endMonth}
                 >
                   <option value="">Month</option>
@@ -316,8 +361,8 @@ export const Compile = () => {
                     Year
                   </option>
                   {Array.from({ length: 10 }, (_, index) => (
-                    <option key={index} value={2022 + index}>
-                      {2022 + index}
+                    <option key={index} value={2023 + index}>
+                      {2023 + index}
                     </option>
                   ))}
                 </select>
@@ -337,8 +382,8 @@ export const Compile = () => {
                     Year
                   </option>
                   {Array.from({ length: 10 }, (_, index) => (
-                    <option key={index} value={2022 + index}>
-                      {2022 + index}
+                    <option key={index} value={2023 + index}>
+                      {2023 + index}
                     </option>
                   ))}
                 </select>
@@ -354,8 +399,8 @@ export const Compile = () => {
                     Year
                   </option>
                   {Array.from({ length: 10 }, (_, index) => (
-                    <option key={index} value={2022 + index}>
-                      {2022 + index}
+                    <option key={index} value={2023 + index}>
+                      {2023 + index}
                     </option>
                   ))}
                 </select>
@@ -363,7 +408,7 @@ export const Compile = () => {
             </div>
           )}
         </div>
-      
+
         <button
           onClick={getReports}
           type="button"
@@ -371,6 +416,47 @@ export const Compile = () => {
         >
           Compile
         </button>
+        {/* {showReport && areaType==="country" && <Markaz/>} */}
+        {showReport && areaType === "country" && (
+          <div className="card flex flex-row items-start justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl ">
+            <div className="flex flex-col">
+              {" "}
+              <h2 className="text-sm lg:text-lg font-semibold">{`${areaType.toUpperCase()}'s COMPILED REPORT`}</h2>
+              <span className="text-sm lg:text-lg font-semibold">{`From ${
+                startMonth
+                  ? months.filter(
+                      (i) => i.value === data?.startDate.split("-")[1]
+                    )[0]?.title +
+                    "-" +
+                    data?.startDate?.split("-")[0]
+                  : data?.startDate
+              } To ${
+                endMonth
+                  ? months.filter(
+                      (i) => i.value === data?.endDate.split("-")[1]
+                    )[0]?.title +
+                    "-" +
+                    data?.endDate?.split("-")[0]
+                  : data?.endDate
+              } `}</span>
+            </div>
+            <div className="flex gap-4">
+              <button
+                className="btn"
+                // onClick={() => navigate(`/reports/edit/${p._id}`)}
+              >
+                <FaEye />
+              </button>
+
+              <button
+                className="btn"
+                // onClick={() => handlePrint(p?._id)}
+              >
+                <FaPrint />
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </GeneralLayout>
   );
