@@ -20,6 +20,7 @@ import { RozOShabDiary } from "../../components/maqamReport/RozOShabDiary";
 import { reverseDataFormat } from "../../utils";
 import { CompileReportContext, MeContext, useToastState } from "../../context";
 import { UIContext } from "../../context/ui";
+import { NoReports } from "../Reports";
 
 
 
@@ -153,7 +154,7 @@ export const MaqamCompile = () => {
 
   return (
     <GeneralLayout>
-      <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">
+      {Object.keys(compileReport).length > 2 ?<div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">
         <form
           className="flex flex-col justify-center items-center p-4 font-notoUrdu mb-5"
           dir="rtl"
@@ -267,7 +268,11 @@ export const MaqamCompile = () => {
             </div>
           )}
         </form>
-      </div>
+      </div> : <div className="flex w-full justify-center items-center">
+          <div>
+            <NoReports/>
+          </div>
+        </div>}
     </GeneralLayout>
   );
 };
