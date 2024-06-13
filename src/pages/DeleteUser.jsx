@@ -17,6 +17,7 @@ import instance from "../api/instrance";
 import { MdOutlineUpgrade } from "react-icons/md";
 import { RiDeviceRecoverFill } from "react-icons/ri";
 import { FcViewDetails } from "react-icons/fc";
+import { decryptData } from "../utils";
 export const DeleteUser = () => {
   const me = useContext(MeContext);
   const halqas = useContext(HalqaContext);
@@ -322,109 +323,106 @@ export const DeleteUser = () => {
                 </tr>
               </thead>
               <tbody>
-                {data
-                  .filter((i) => i?.userAreaId?._id !== me?.userAreaId?._id)
-                  .map((user, index) => (
-                    <tr key={user?._id}>
-                      <th>{index + 1}</th>
-                      <td>{user?.name || "-"}</td>
-                      <td className="min-w-[10rem]">
-                        {user?.nazimType
-                          ?.replace(/-/g, " ") // Replace hyphens with spaces
-                          .split(" ") // Split the string into an array of words
-                          .map(
-                            (word) =>
-                              word.charAt(0).toUpperCase() + word.slice(1)
-                          ) // Capitalize the first letter of each word
-                          .join(" ") || // Join the array back into a string with spaces
-                          "-"}
-                      </td>
+                {data?.map((user, index) => (
+                  <tr key={user?._id}>
+                    <th>{index + 1}</th>
+                    <td>{user?.name || "-"}</td>
+                    <td className="min-w-[10rem]">
+                      {user?.nazimType
+                        ?.replace(/-/g, " ") // Replace hyphens with spaces
+                        .split(" ") // Split the string into an array of words
+                        .map(
+                          (word) => word.charAt(0).toUpperCase() + word.slice(1)
+                        ) // Capitalize the first letter of each word
+                        .join(" ") || // Join the array back into a string with spaces
+                        "-"}
+                    </td>
 
-                      <td>{user?.email || "-"}</td>
-                      <td>
-                        {" "}
-                        <div
-                          onClick={() => {
-                            getAreaDetails(user?.userAreaId);
-                          }}
-                        >
-                          <FcViewDetails
-                            className="cursor-pointer text-2xl p-0 m-0"
-                            id="sv"
-                          />
-                        </div>
-                      </td>
-                      <td>
-                        {user?.isDeleted ? (
-                          <div className="badge badge-error">inActive</div>
-                        ) : (
-                          <div className="badge badge-accent">active</div>
-                        )}
-                      </td>
-                      <td
-                        className="w-full flex row justify-evenly items-center gap-3"
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-evenly",
+                    <td>{user?.email || "-"}</td>
+                    <td>
+                      {" "}
+                      <div
+                        onClick={() => {
+                          getAreaDetails(user?.userAreaId);
                         }}
                       >
+                        <FcViewDetails
+                          className="cursor-pointer text-2xl p-0 m-0"
+                          id="sv"
+                        />
+                      </div>
+                    </td>
+                    <td>
+                      {user?.isDeleted ? (
+                        <div className="badge badge-error">inActive</div>
+                      ) : (
+                        <div className="badge badge-accent">active</div>
+                      )}
+                    </td>
+                    <td
+                      className="w-full flex row justify-evenly items-center gap-3"
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-evenly",
+                      }}
+                    >
+                      <div className="flex justify-center items-center">
+                        <button
+                          onClick={() => {
+                            document
+                              .getElementById("view-details-modal")
+                              .showModal();
+                            setSingleUser(user);
+                          }}
+                          readOnly={loading}
+                          className="btn"
+                        >
+                          <FaEye />
+                        </button>
+                      </div>
+                      <div className="flex justify-center items-center">
+                        <button
+                          readOnly={loading}
+                          className="btn"
+                          onClick={() => {
+                            if (!user.isDeleted) {
+                              deleteUser(user);
+                            } else {
+                              document
+                                .getElementById("change-status-modal")
+                                .showModal();
+                              setSingleUser(user);
+                            }
+                          }}
+                        >
+                          {user?.isDeleted ? (
+                            <RiDeviceRecoverFill />
+                          ) : (
+                            <FaTrash />
+                          )}
+                        </button>
+                      </div>
+                      {me?.userAreaType !== "halqa" && (
                         <div className="flex justify-center items-center">
                           <button
+                            readOnly={loading}
+                            disabled={user?.isDeleted}
+                            className="btn"
                             onClick={() => {
                               document
-                                .getElementById("view-details-modal")
+                                .getElementById("change-status-modal")
                                 .showModal();
                               setSingleUser(user);
                             }}
-                            readOnly={loading}
-                            className="btn"
                           >
-                            <FaEye />
+                            <MdOutlineUpgrade />
                           </button>
                         </div>
-                        <div className="flex justify-center items-center">
-                          <button
-                            readOnly={loading}
-                            className="btn"
-                            onClick={() => {
-                              if (!user.isDeleted) {
-                                deleteUser(user);
-                              } else {
-                                document
-                                  .getElementById("change-status-modal")
-                                  .showModal();
-                                setSingleUser(user);
-                              }
-                            }}
-                          >
-                            {user?.isDeleted ? (
-                              <RiDeviceRecoverFill />
-                            ) : (
-                              <FaTrash />
-                            )}
-                          </button>
-                        </div>
-                        {me?.userAreaType !== "halqa" && (
-                          <div className="flex justify-center items-center">
-                            <button
-                              readOnly={loading}
-                              disabled={user?.isDeleted}
-                              className="btn"
-                              onClick={() => {
-                                document
-                                  .getElementById("change-status-modal")
-                                  .showModal();
-                                setSingleUser(user);
-                              }}
-                            >
-                              <MdOutlineUpgrade />
-                            </button>
-                          </div>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
+                      )}
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
@@ -1142,7 +1140,7 @@ export const DeleteUser = () => {
                   </label>
                   <input
                     readOnly
-                    defaultValue={singleUser?.phoneNumber}
+                    defaultValue={decryptData(singleUser?.phoneNumber)}
                     type="text"
                     placeholder="Phone Number"
                     name="phoneNumber"
@@ -1157,7 +1155,7 @@ export const DeleteUser = () => {
                   </label>
                   <input
                     readOnly
-                    defaultValue={singleUser?.whatsAppNumber}
+                    defaultValue={decryptData(singleUser?.whatsAppNumber)}
                     type="text"
                     placeholder="WhatsApp Number"
                     name="whatsAppNumber"
@@ -1175,7 +1173,7 @@ export const DeleteUser = () => {
                   name="address"
                   className="w-full text-[#7a7a7a]"
                   required
-                  defaultValue={singleUser?.address}
+                  defaultValue={decryptData(singleUser?.address)}
                 ></textarea>
               </div>
               <div className="w-full">
@@ -1184,13 +1182,7 @@ export const DeleteUser = () => {
                 </label>
                 <input
                   readOnly
-                  defaultValue={`${singleUser?.userAreaId?.name}(${
-                    singleUser?.userAreaId?.parentType === "Tehsil"
-                      ? "Division"
-                      : singleUser?.userAreaId?.parentType === "Maqam"
-                      ? "Maqam"
-                      : singleUser?.userAreaType
-                  })`}
+                  defaultValue={singleUser?.userAreaId?.name}
                   type="text"
                   placeholder="UserArea"
                   name="userArea"

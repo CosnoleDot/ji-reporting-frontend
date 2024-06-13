@@ -1,5 +1,5 @@
 import instance from "./api/instrance";
-import { useToastState } from "./context";
+import CryptoJS from "crypto-js";
 
 export const toJson = (formData) => {
   const obj = {};
@@ -8,7 +8,25 @@ export const toJson = (formData) => {
   });
   return obj;
 };
+// DECRYPT
 
+export const decryptData = (data) => {
+  try {
+    const bytes = CryptoJS.AES.decrypt(
+      data,
+      process.env.REACT_APP_SECRET.replace(/['"]+/g, "")
+    );
+    const decryptedData = bytes.toString(CryptoJS.enc.Utf8);
+
+    if (decryptedData) {
+      return decryptedData;
+    }
+  } catch (error) {
+    console.log("Decryption failed or data is not encrypted:", error);
+  }
+
+  return data;
+};
 export const convertDataFormat = (data) => {
   function processKey(key) {
     const parts = key.split("-");

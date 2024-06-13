@@ -3,7 +3,7 @@ import { GeneralLayout } from "../components";
 import instance from "../api/instrance";
 import { MeContext, useToastState } from "../context";
 import { UIContext } from "../context/ui";
-
+import { decryptData } from "../utils";
 export const EditProfile = () => {
   const me = useContext(MeContext);
   const { getMe } = useContext(UIContext);
@@ -44,6 +44,7 @@ export const EditProfile = () => {
       dispatch({ type: "ERROR", payload: err.response.data.message });
     }
   };
+
   // FETCH ALL SUBJECTS
 
   const getSubjects = async () => {
@@ -291,7 +292,7 @@ export const EditProfile = () => {
                     </label>
                     <input
                       required
-                      defaultValue={me?.phoneNumber}
+                      defaultValue={decryptData(me?.phoneNumber)}
                       type="text"
                       placeholder="No data"
                       name="phoneNumber"
@@ -306,7 +307,7 @@ export const EditProfile = () => {
                     </label>
                     <input
                       required
-                      defaultValue={me?.whatsAppNumber}
+                      defaultValue={decryptData(me?.whatsAppNumber)}
                       type="text"
                       placeholder="No data "
                       name="whatsAppNumber"
@@ -324,7 +325,7 @@ export const EditProfile = () => {
                       name="address"
                       className="w-full input input-bordered input-primary"
                       required
-                      defaultValue={me?.address}
+                      defaultValue={decryptData(me?.address)}
                     ></textarea>
                   </div>
                 </div>

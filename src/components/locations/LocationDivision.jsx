@@ -384,16 +384,8 @@ export const LocationDivision = () => {
 
   return (
     <>
-      <div
-        className={`p-5 grid ${
-          ["province"].includes(localStorage.getItem("@type"))
-            ? "grid-cols-4"
-            : districts?.length === 0
-            ? "grid-cols-1"
-            : "grid-cols-3"
-        }`}
-      >
-        {["province"].includes(localStorage.getItem("@type")) && (
+      <div className="w-full flex flex-wrap gap-2 justify-center items-center mt-2">
+        {["province", "country"].includes(localStorage.getItem("@type")) && (
           <button
             className="btn capitalize p-[8px]"
             onClick={() => {
@@ -805,15 +797,21 @@ export const LocationDivision = () => {
                 <option value="" disabled>
                   Select Province
                 </option>
-                {provinces
-                  ?.filter(
-                    (i) => !i?.disabled && i?._id === me?.userAreaId?._id
-                  )
-                  ?.map((i, index) => (
-                    <option value={i?._id} key={index}>
-                      {i?.name}
-                    </option>
-                  ))}
+                {me?.userAreaType === "Province"
+                  ? provinces
+                      ?.filter(
+                        (i) => !i?.disabled && i?._id === me?.userAreaId?._id
+                      )
+                      ?.map((i, index) => (
+                        <option value={i?._id} key={index}>
+                          {i?.name}
+                        </option>
+                      ))
+                  : provinces?.map((i, index) => (
+                      <option value={i?._id} key={index}>
+                        {i?.name}
+                      </option>
+                    ))}
               </select>
             </div>
             <div>
@@ -833,14 +831,11 @@ export const LocationDivision = () => {
           </div>
           <div className="modal-action">
             {editMode ? (
-              <button
-                className="btn capitalize p-[8px]"
-                onClick={handleSubmitEdit}
-              >
+              <button className="btn capitalize " onClick={handleSubmitEdit}>
                 Update
               </button>
             ) : (
-              <button className="btn capitalize p-[8px]" onClick={handleSubmit}>
+              <button className="btn capitalize" onClick={handleSubmit}>
                 Add
               </button>
             )}
@@ -902,16 +897,13 @@ export const LocationDivision = () => {
           <div className="modal-action">
             {editMode ? (
               <button
-                className="btn capitalize p-[8px]"
+                className="btn capitalize"
                 onClick={handleSubmitDistrictEdit}
               >
                 Update
               </button>
             ) : (
-              <button
-                className="btn capitalize p-[8px]"
-                onClick={handleSubmitDistrict}
-              >
+              <button className="btn capitalize" onClick={handleSubmitDistrict}>
                 Add
               </button>
             )}
@@ -973,16 +965,13 @@ export const LocationDivision = () => {
           <div className="modal-action">
             {editMode ? (
               <button
-                className="btn capitalize p-[8px]"
+                className="btn capitalize"
                 onClick={handleSubmitTehsilEdit}
               >
                 Update
               </button>
             ) : (
-              <button
-                className="btn capitalize p-[8px]"
-                onClick={handleSubmitTehsil}
-              >
+              <button className="btn capitalize" onClick={handleSubmitTehsil}>
                 Add
               </button>
             )}
@@ -1119,7 +1108,7 @@ export const LocationDivision = () => {
             {editMode ? (
               <button
                 disabled={loading}
-                className="btn capitalize p-[8px]"
+                className="btn capitalize"
                 onClick={handleSubmitHalqaEdit}
               >
                 Update
@@ -1127,7 +1116,7 @@ export const LocationDivision = () => {
             ) : (
               <button
                 disabled={loading}
-                className="btn capitalize p-[8px]"
+                className="btn capitalize"
                 onClick={handleSubmitHalqa}
               >
                 Add
