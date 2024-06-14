@@ -64,7 +64,7 @@ export const IlaqaCompile = () => {
       data[i] = 0;
     }
   });
-  console.log(compileReport);
+
   return (
     <GeneralLayout>
       {Object.keys(compileReport).length > 2 ? (
