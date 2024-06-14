@@ -2,7 +2,7 @@ import React from "react";
 import { Box } from "./IfradiKuwat";
 import { sumUpTwoValues } from "../muntakhibMaqamReports";
 
-const ZailiActivities = ({ view }) => {
+const ZailiActivities = ({ view,compile }) => {
   return (
     <div className="relative w-full overflow-auto">
       <table className="w-full table">
@@ -39,6 +39,7 @@ const ZailiActivities = ({ view }) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 required
                 name={`ijtRafaqa-averageAttendance`}
@@ -71,6 +72,7 @@ const ZailiActivities = ({ view }) => {
             </Box>
             <Box>
               <input
+              readOnly={view}
                 type="number"
                 required
                 name={`studyCircleMentioned-averageAttendance`}
@@ -91,7 +93,20 @@ const ZailiActivities = ({ view }) => {
                 className="p-1 text-center min-w-full"
               />
             </Box>
-            <div style={{ display: "flex", width: "30%" }}>
+           {compile ?  <div style={{ display: "flex", width: "30%" }}>
+           <input
+                readOnly={true}
+                type="number"
+                defaultValue={
+                  parseInt(document.getElementById("ijtKarkunan-done")?.value) +
+                  parseInt(document.getElementById("ijtKarkunan-manual")?.value)
+                }
+                required
+                name={`ijtKarkunan-sum`}
+                id={`ijtKarkunan-sum`}
+                className="p-1 text-center min-w-full"
+              />
+           </div>  : <div style={{ display: "flex", width: "30%" }}>
               <input
                 readOnly={true}
                 type="number"
@@ -132,7 +147,7 @@ const ZailiActivities = ({ view }) => {
                 id={`ijtKarkunan-sum`}
                 className="p-1 text-center min-w-full"
               />
-            </div>
+            </div>}
             <Box>
               <input
                 readOnly={view}
@@ -157,6 +172,25 @@ const ZailiActivities = ({ view }) => {
               />
             </Box>
             <Box>
+            {compile ?  <div className="flex">
+              <input
+                  readOnly={true}
+                  type="number"
+                  defaultValue={
+                    parseInt(
+                      document.getElementById("darseQuran-done")?.value
+                    ) +
+                    parseInt(
+                      document.getElementById("darseQuran-manual")?.value
+                    )
+                  }
+                  required
+                  name={`darseQuran-sum`}
+                  id={`darseQuran-sum`}
+                  className="p-1 text-center "
+                />
+            </div>
+:
               <div className="flex">
                 <input
                   readOnly={true}
@@ -204,7 +238,7 @@ const ZailiActivities = ({ view }) => {
                   id={`darseQuran-sum`}
                   className="p-1 text-center "
                 />
-              </div>
+              </div>}
             </Box>
             <Box>
               <input

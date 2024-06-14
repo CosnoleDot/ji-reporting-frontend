@@ -1,10 +1,11 @@
 import { Box } from "./IfradiKuwat";
 
-export const Activity = ({ view }) => {
+export const Activity = ({ view ,compile }) => {
+
   return (
     <div className="relative w-full overflow-auto">
       <div className="flex w-full justify-end items-end p-2">
-        <label htmlFor="ijtRafaqa-registered">کاروائ رجسٹر</label>
+      {!compile && <> <label htmlFor="ijtRafaqa-registered">کاروائ رجسٹر</label>
         {view ? (
           <input
             disabled
@@ -20,7 +21,7 @@ export const Activity = ({ view }) => {
             id="ijtRafaqa-registered"
             className="checkbox ms-2"
           />
-        )}
+        )}</>}
       </div>
       <table className="w-full table">
         <thead>
@@ -29,7 +30,7 @@ export const Activity = ({ view }) => {
             <Box>طےشدہ</Box>
             <Box>منعقدہ</Box>
             <Box>حاضری</Box>
-            <Box>عنوان</Box>
+           {!compile &&  <Box>عنوان</Box>}
           </tr>
         </thead>
         <tbody>
@@ -66,7 +67,7 @@ export const Activity = ({ view }) => {
                 className="p-1 text-center min-w-full"
               />
             </Box>
-            <Box>
+           {!compile && <Box>
               <input
                 readOnly={view}
                 type="text"
@@ -75,7 +76,7 @@ export const Activity = ({ view }) => {
                 className="p-1 min-w-full"
                 required
               />
-            </Box>
+            </Box>}
           </tr>
           <tr>
             <Box>اجتماع کارکنان</Box>
@@ -110,7 +111,7 @@ export const Activity = ({ view }) => {
                 className="p-1 text-center min-w-full"
               />
             </Box>
-            <Box>
+            {!compile && <Box>
               <input
                 readOnly={view}
                 type="text"
@@ -119,7 +120,7 @@ export const Activity = ({ view }) => {
                 className="p-1 min-w-full"
                 required
               />
-            </Box>
+            </Box>}
           </tr>
           <tr>
             <Box>سٹڈی سرکل</Box>
@@ -154,7 +155,7 @@ export const Activity = ({ view }) => {
                 className="p-1 text-center min-w-full"
               />
             </Box>
-            <Box>
+            {!compile && <Box>
               <input
                 readOnly={view}
                 type="text"
@@ -163,7 +164,7 @@ export const Activity = ({ view }) => {
                 className="p-1 min-w-full"
                 required
               />
-            </Box>
+            </Box>}
           </tr>
           <tr>
             <Box>درس قُرآن</Box>
@@ -198,7 +199,7 @@ export const Activity = ({ view }) => {
                 className="p-1 text-center min-w-full"
               />
             </Box>
-            <Box>
+            {!compile && <Box>
               <input
                 readOnly={view}
                 type="text"
@@ -207,7 +208,7 @@ export const Activity = ({ view }) => {
                 className="p-1 min-w-full"
                 required
               />
-            </Box>
+            </Box>}
           </tr>
           <tr>
             <Box>شاہین میٹنگ</Box>
@@ -241,7 +242,7 @@ export const Activity = ({ view }) => {
                 className="p-1 text-center max-w-full"
               />
             </Box>
-            <Box>
+            {!compile && <Box>
               <input
                 readOnly={view}
                 type="text"
@@ -250,7 +251,7 @@ export const Activity = ({ view }) => {
                 className="p-1 min-w-full"
                 required
               />
-            </Box>
+            </Box>}
           </tr>
           <tr>
             <Box>پیغام محفل</Box>
@@ -284,7 +285,7 @@ export const Activity = ({ view }) => {
                 className="p-1 text-center max-w-full"
               />
             </Box>
-            <Box>
+            {!compile && <Box>
               <input
                 readOnly={view}
                 type="text"
@@ -293,7 +294,7 @@ export const Activity = ({ view }) => {
                 className="p-1 min-w-full"
                 required
               />
-            </Box>
+            </Box>}
           </tr>
         </tbody>
       </table>

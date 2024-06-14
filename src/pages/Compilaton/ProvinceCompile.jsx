@@ -135,19 +135,11 @@ export const ProvinceCompile = () => {
                   />
                 </div>
               </div>
-              <div className="flex justify-start items-center gap-2 w-full p-2">
+              <div className="flex justify-start items-center gap-4 w-full p-2">
                 <label htmlFor="month" className="block text-sm md:text-lg">
                   برائے عرصہ
                 </label>
-                <input
-                  required
-                  className="border-b-2 border-dashed"
-                  type="month"
-                  name="month"
-                  id="month"
-                  value={date}
-                  readOnly
-                />
+                <span className="underline">{date}</span>
               </div>
               <div>
                 <Jamiaat view={view} />
@@ -168,7 +160,7 @@ export const ProvinceCompile = () => {
                 <ZailiActivities view={view} />
               </div>
               <div>
-                <OtherActivities view={view} />
+                <OtherActivities view={view} compile={true} />
               </div>
               <div>
                 <ToseeDawat finalMerged={!id ? finalMerged : null} />
@@ -185,17 +177,7 @@ export const ProvinceCompile = () => {
               <div>
                 <RozOShabDiary />
               </div>
-              <div className="w-full flex p-2">
-                <label htmlFor="comments">تبصرہ</label>
-                <input
-                  type="text"
-                  required
-                  name="comments"
-                  className="border-b-2 border-dashed w-full"
-                  id="comments"
-                  readOnly={view}
-                />
-              </div>
+              
               <div className="w-full flex flex-col items-end gap-3 p-2">
                 <div>
                   <label htmlFor="nazim">نام ناظمِ:</label>
@@ -209,13 +191,7 @@ export const ProvinceCompile = () => {
                 </div>
               </div>
             </div>
-            {!view && (
-              <div className="w-full">
-                <button disabled={loading} className="btn btn-primary">
-                  {id ? "Update" : "Add"}
-                </button>
-              </div>
-            )}
+           
           </form>
         </div>
       ) : (

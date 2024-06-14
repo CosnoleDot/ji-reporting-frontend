@@ -1,4 +1,4 @@
-export const PaighamDigest = ({ view }) => {
+export const PaighamDigest = ({ view, compile }) => {
   const sumUpTwoValues = (val1, val2, final) => {
     document.getElementById(final).value = val1 + val2;
   };
@@ -11,44 +11,57 @@ export const PaighamDigest = ({ view }) => {
             کل موصولہ:
           </label>
           <div className="w-full md:w-[80%] flex overflow-hidden overflow-x-scroll">
-            <input
-              type="number"
-              readOnly={view}
-              className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
-              name="totalReceived"
-              id="totalReceived"
-              onChange={() =>
-                sumUpTwoValues(
-                  parseInt(document.getElementById("totalReceived").value),
-                  parseInt(document.getElementById("manualReceived").value),
-                  "receivedSum"
-                )
-              }
-            />
-            +
-            <input
-              readOnly={view}
-              name="manualReceived"
-              id="manualReceived"
-              type="number"
-              className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
-              onChange={() =>
-                sumUpTwoValues(
-                  parseInt(document.getElementById("totalReceived").value),
-                  parseInt(document.getElementById("manualReceived").value),
-                  "receivedSum"
-                )
-              }
-            />
-            =
-            <input
-              readOnly={true}
-              type="number"
-              required
-              name="receivedSum"
-              id="receivedSum"
-              className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
-            />
+            {compile ? (
+              <input
+                readOnly={true}
+                type="number"
+                required
+                name="receivedSum"
+                id="receivedSum"
+                className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+              />
+            ) : (
+              <>
+                <input
+                  type="number"
+                  readOnly={view}
+                  className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+                  name="totalReceived"
+                  id="totalReceived"
+                  onChange={() =>
+                    sumUpTwoValues(
+                      parseInt(document.getElementById("totalReceived").value),
+                      parseInt(document.getElementById("manualReceived").value),
+                      "receivedSum"
+                    )
+                  }
+                />
+                +
+                <input
+                  readOnly={view}
+                  name="manualReceived"
+                  id="manualReceived"
+                  type="number"
+                  className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+                  onChange={() =>
+                    sumUpTwoValues(
+                      parseInt(document.getElementById("totalReceived").value),
+                      parseInt(document.getElementById("manualReceived").value),
+                      "receivedSum"
+                    )
+                  }
+                />
+                =
+                <input
+                  readOnly={true}
+                  type="number"
+                  required
+                  name="receivedSum"
+                  id="receivedSum"
+                  className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+                />
+              </>
+            )}
           </div>
         </div>
         <div className="flex md:flex-row flex-col w-full gap-1 md:gap-3 pb-2">
@@ -56,44 +69,57 @@ export const PaighamDigest = ({ view }) => {
             فروخت کردہ:
           </label>
           <div className="w-full md:w-[80%] flex overflow-hidden overflow-x-scroll">
-            <input
-              type="number"
-              readOnly={view}
-              className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
-              name="totalSold"
-              id="totalSold"
-              onChange={() =>
-                sumUpTwoValues(
-                  parseInt(document.getElementById("totalSold").value),
-                  parseInt(document.getElementById("manualSold").value),
-                  "soldSum"
-                )
-              }
-            />
-            +
-            <input
-              readOnly={view}
-              name="manualSold"
-              id="manualSold"
-              type="number"
-              className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
-              onChange={() =>
-                sumUpTwoValues(
-                  parseInt(document.getElementById("totalSold").value),
-                  parseInt(document.getElementById("manualSold").value),
-                  "soldSum"
-                )
-              }
-            />
-            =
-            <input
-              readOnly={true}
-              type="number"
-              required
-              name="soldSum"
-              id="soldSum"
-              className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
-            />
+            {compile ? (
+              <input
+                readOnly={true}
+                type="number"
+                required
+                name="soldSum"
+                id="soldSum"
+                className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+              />
+            ) : (
+              <>
+                <input
+                  type="number"
+                  readOnly={view}
+                  className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+                  name="totalSold"
+                  id="totalSold"
+                  onChange={() =>
+                    sumUpTwoValues(
+                      parseInt(document.getElementById("totalSold").value),
+                      parseInt(document.getElementById("manualSold").value),
+                      "soldSum"
+                    )
+                  }
+                />
+                +
+                <input
+                  readOnly={view}
+                  name="manualSold"
+                  id="manualSold"
+                  type="number"
+                  className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+                  onChange={() =>
+                    sumUpTwoValues(
+                      parseInt(document.getElementById("totalSold").value),
+                      parseInt(document.getElementById("manualSold").value),
+                      "soldSum"
+                    )
+                  }
+                />
+                =
+                <input
+                  readOnly={true}
+                  type="number"
+                  required
+                  name="soldSum"
+                  id="soldSum"
+                  className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+                />{" "}
+              </>
+            )}
           </div>
         </div>
         <div className="flex md:flex-row flex-col w-full gap-1 md:gap-3 pb-2">
@@ -101,52 +127,68 @@ export const PaighamDigest = ({ view }) => {
             ڈائجسٹ موصول کرنے کا ماہانہ ہدف:
           </label>
           <div className="w-full md:w-[80%] flex overflow-hidden overflow-x-scroll">
-            <input
-              type="number"
-              readOnly={view}
-              className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
-              name="monthlyReceivingGoal"
-              id="monthlyReceivingGoal"
-              onChange={() =>
-                sumUpTwoValues(
-                  parseInt(
-                    document.getElementById("monthlyReceivingGoal").value
-                  ),
-                  parseInt(
-                    document.getElementById("manualMonthlyReceivingGoal").value
-                  ),
-                  "monthlyReceivingGoalSum"
-                )
-              }
-            />
-            +
-            <input
-              readOnly={view}
-              name="manualMonthlyReceivingGoal"
-              id="manualMonthlyReceivingGoal"
-              type="number"
-              className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
-              onChange={() =>
-                sumUpTwoValues(
-                  parseInt(
-                    document.getElementById("monthlyReceivingGoal").value
-                  ),
-                  parseInt(
-                    document.getElementById("manualMonthlyReceivingGoal").value
-                  ),
-                  "monthlyReceivingGoalSum"
-                )
-              }
-            />
-            =
-            <input
-              readOnly={true}
-              type="number"
-              required
-              name="monthlyReceivingGoalSum"
-              id="monthlyReceivingGoalSum"
-              className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
-            />
+            {compile ? (
+              <input
+                readOnly={true}
+                type="number"
+                required
+                name="monthlyReceivingGoalSum"
+                id="monthlyReceivingGoalSum"
+                className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+              />
+            ) : (
+              <>
+                {" "}
+                <input
+                  type="number"
+                  readOnly={view}
+                  className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+                  name="monthlyReceivingGoal"
+                  id="monthlyReceivingGoal"
+                  onChange={() =>
+                    sumUpTwoValues(
+                      parseInt(
+                        document.getElementById("monthlyReceivingGoal").value
+                      ),
+                      parseInt(
+                        document.getElementById("manualMonthlyReceivingGoal")
+                          .value
+                      ),
+                      "monthlyReceivingGoalSum"
+                    )
+                  }
+                />
+                +
+                <input
+                  readOnly={view}
+                  name="manualMonthlyReceivingGoal"
+                  id="manualMonthlyReceivingGoal"
+                  type="number"
+                  className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+                  onChange={() =>
+                    sumUpTwoValues(
+                      parseInt(
+                        document.getElementById("monthlyReceivingGoal").value
+                      ),
+                      parseInt(
+                        document.getElementById("manualMonthlyReceivingGoal")
+                          .value
+                      ),
+                      "monthlyReceivingGoalSum"
+                    )
+                  }
+                />
+                =
+                <input
+                  readOnly={true}
+                  type="number"
+                  required
+                  name="monthlyReceivingGoalSum"
+                  id="monthlyReceivingGoalSum"
+                  className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+                />{" "}
+              </>
+            )}
           </div>
         </div>
       </div>

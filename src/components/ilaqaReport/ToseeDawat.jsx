@@ -24,7 +24,7 @@ export const ilaqaRawabitDecided = () => {
     }
   }
 };
-export const ToseeDawat = ({ view }) => {
+export const ToseeDawat = ({ view ,compile}) => {
   const sumUpTwoValues = (val1, val2, final) => {
     document.getElementById(final).value = val1 + val2;
   };
@@ -52,7 +52,14 @@ export const ToseeDawat = ({ view }) => {
        <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">
             موجود:
           </label>
-          <input
+         {compile ? <input
+            readOnly={true}
+            type="number"
+            required
+            name={`currentSum`}
+            id={`currentSum`}
+            className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+          /> : <><input
             readOnly={true}
             type="number"
             required
@@ -84,7 +91,7 @@ export const ToseeDawat = ({ view }) => {
             name={`currentSum`}
             id={`currentSum`}
             className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
-          />
+          /></>}
         </div>
         <div className="flex py-2">
        <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">
@@ -105,7 +112,14 @@ export const ToseeDawat = ({ view }) => {
             ملاقاتوں کی تعداد:
           </label>
           <div className="w-full md:w-[80%] flex overflow-hidden overflow-x-scroll">
-            <input
+           {compile ?  <input
+              readOnly={true}
+              type="number"
+              required
+              name={`meetingsSum`}
+              id={`meetingsSum`}
+              className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+            /> : <> <input
               readOnly={true}
               type="number"
               required
@@ -137,7 +151,7 @@ export const ToseeDawat = ({ view }) => {
               name={`meetingsSum`}
               id={`meetingsSum`}
               className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
-            />
+            /></>}
           </div>
         </div>
         <div className="flex md:flex-row flex-col w-full gap-1 md:gap-3 pb-2">
@@ -145,7 +159,14 @@ export const ToseeDawat = ({ view }) => {
             تقسیم لٹریچر:
           </label>
           <div className="w-full md:w-[80%] flex overflow-hidden overflow-x-scroll">
-            <input
+           {compile ? <input
+              readOnly={true}
+              type="number"
+              required
+              name={`literatureSum`}
+              id={`literatureSum`}
+              className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+            /> : <> <input
               readOnly={true}
               type="number"
               required
@@ -177,7 +198,7 @@ export const ToseeDawat = ({ view }) => {
               name={`literatureSum`}
               id={`literatureSum`}
               className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
-            />
+            /></>}
           </div>
         </div>
       </div>
@@ -190,7 +211,14 @@ export const ToseeDawat = ({ view }) => {
             تقسیم لٹریچر:
           </label>
           <div className="w-full md:w-[80%] flex overflow-hidden overflow-x-scroll">
-            <input
+            {compile ? <input
+              readOnly={true}
+              type="number"
+              required
+              name={`commonLiteratureDistributionSum`}
+              id={`commonLiteratureDistributionSum`}
+              className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+            /> : <><input
               readOnly={true}
               type="number"
               required
@@ -230,7 +258,7 @@ export const ToseeDawat = ({ view }) => {
               name={`commonLiteratureDistributionSum`}
               id={`commonLiteratureDistributionSum`}
               className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
-            />
+            /> </>}
           </div>
         </div>
         <div className="flex md:flex-row flex-col w-full gap-1 md:gap-3 pb-2">
@@ -238,7 +266,14 @@ export const ToseeDawat = ({ view }) => {
             ملاقاتیں :
           </label>
           <div className="w-full md:w-[80%] flex overflow-hidden overflow-x-scroll">
-            <input
+            {compile ? <input
+              readOnly={true}
+              type="number"
+              required
+              name={`commonStudentMeetingsSum`}
+              id={`commonStudentMeetingsSum`}
+              className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+            /> : <><input
               readOnly={true}
               type="number"
               required
@@ -275,7 +310,7 @@ export const ToseeDawat = ({ view }) => {
               name={`commonStudentMeetingsSum`}
               id={`commonStudentMeetingsSum`}
               className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
-            />
+            /></>}
           </div>
         </div>
       </div>

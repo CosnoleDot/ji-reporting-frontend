@@ -25,7 +25,7 @@ export const maqamRawabitDecided = () => {
     }
   }
 };
-export const ToseeDawat = ({ view }) => {
+export const ToseeDawat = ({ view, compile }) => {
   useEffect(() => {
     const elem = document.getElementById("rawabitDecided");
     const rwbMeetings = document.getElementById("rwabitMeetingsGoal");
@@ -53,10 +53,10 @@ export const ToseeDawat = ({ view }) => {
   const [cSum, setCSum] = useState();
   const [mSum, setMSum] = useState();
   useEffect(() => {
-    const uFilled = parseInt(document.getElementById("current").value);
-    const mFilled = parseInt(document.getElementById("currentManual").value);
-    const meetM = parseInt(document.getElementById("meetingsManual").value);
-    const meet = parseInt(document.getElementById("meetings").value);
+    const uFilled = parseInt(document.getElementById("current")?.value);
+    const mFilled = parseInt(document.getElementById("currentManual")?.value);
+    const meetM = parseInt(document.getElementById("meetingsManual")?.value);
+    const meet = parseInt(document.getElementById("meetings")?.value);
     if ((uFilled, mFilled)) {
       setCSum(uFilled + mFilled);
     }
@@ -84,48 +84,63 @@ export const ToseeDawat = ({ view }) => {
         </div>
         <div className="flex gap-3 mb-2 overflow-hidden overflow-x-scroll w-full">
           <label className=" block text-sm md:text-lg">موجود:</label>
-          <input
-            readOnly={true}
-            type="number"
-            required
-            name={`current`}
-            id={`current`}
-            className="border-b-2 text-center border-dashed  mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg "
-            onChange={() =>
-              sumUpTwoValues(
-                parseInt(document.getElementById("current").value),
-                parseInt(document.getElementById("currentManual").value),
-                "currentSum"
-              )
-            }
-          />
-          +
-          <input
-            type="number"
-            required
-            readOnly={view}
-            name={`currentManual`}
-            id={`currentManual`}
-            className="border-b-2 text-center border-dashed   mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg "
-            onChange={() =>
-              sumUpTwoValues(
-                parseInt(document.getElementById("current").value),
-                parseInt(document.getElementById("currentManual").value),
-                "currentSum"
-              )
-            }
-          />
-          =
-          <input
-            readOnly={true}
-            defaultValue={document.getElementById("current")?.value}
-            type="number"
-            required
-            name={`currentSum`}
-            id={`currentSum`}
-            className="border-b-2 text-center border-dashed mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg "
-            value={cSum}
-          />
+          {compile ? (
+            <input
+              readOnly={true}
+              defaultValue={document.getElementById("current")?.value}
+              type="number"
+              required
+              name={`currentSum`}
+              id={`currentSum`}
+              className="border-b-2 text-center border-dashed mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg "
+              value={cSum}
+            />
+          ) : (
+            <>
+              <input
+                readOnly={true}
+                type="number"
+                required
+                name={`current`}
+                id={`current`}
+                className="border-b-2 text-center border-dashed  mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg "
+                onChange={() =>
+                  sumUpTwoValues(
+                    parseInt(document.getElementById("current").value),
+                    parseInt(document.getElementById("currentManual").value),
+                    "currentSum"
+                  )
+                }
+              />
+              +
+              <input
+                type="number"
+                required
+                readOnly={view}
+                name={`currentManual`}
+                id={`currentManual`}
+                className="border-b-2 text-center border-dashed   mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg "
+                onChange={() =>
+                  sumUpTwoValues(
+                    parseInt(document.getElementById("current").value),
+                    parseInt(document.getElementById("currentManual").value),
+                    "currentSum"
+                  )
+                }
+              />
+              =
+              <input
+                readOnly={true}
+                defaultValue={document.getElementById("current")?.value}
+                type="number"
+                required
+                name={`currentSum`}
+                id={`currentSum`}
+                className="border-b-2 text-center border-dashed mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg "
+                value={cSum}
+              />{" "}
+            </>
+          )}
         </div>
         <div className="flex py-2 mb-2 ">
           <label className=" block text-sm md:text-lg">
@@ -146,48 +161,63 @@ export const ToseeDawat = ({ view }) => {
             ملاقاتوں کی تعداد:
           </label>
           <div className="w-full md:w-[80%] flex overflow-hidden overflow-x-scroll">
-            <input
-              readOnly={true}
-              type="number"
-              required
-              name={`meetings`}
-              id={`meetings`}
-              className="border-b-2 text-center border-dashed mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg "
-              onChange={() =>
-                sumUpTwoValues(
-                  parseInt(document.getElementById("meetings").value),
-                  parseInt(document.getElementById("meetingsManual").value),
-                  "meetingsSum"
-                )
-              }
-            />
-            +
-            <input
-              type="number"
-              required
-              readOnly={view}
-              name={`meetingsManual`}
-              id={`meetingsManual`}
-              className="border-b-2 text-center border-dashed mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg "
-              onChange={() =>
-                sumUpTwoValues(
-                  parseInt(document.getElementById("meetings").value),
-                  parseInt(document.getElementById("meetingsManual").value),
-                  "meetingsSum"
-                )
-              }
-            />
-            =
-            <input
-              readOnly={true}
-              type="number"
-              defaultValue={document.getElementById("meetings")?.value}
-              required
-              name={`meetingsSum`}
-              id={`meetingsSum`}
-              className="border-b-2 text-center border-dashed mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg "
-              value={mSum}
-            />
+            {compile ? (
+              <input
+                readOnly={true}
+                type="number"
+                defaultValue={document.getElementById("meetings")?.value}
+                required
+                name={`meetingsSum`}
+                id={`meetingsSum`}
+                className="border-b-2 text-center border-dashed mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg "
+                value={mSum}
+              />
+            ) : (
+              <>
+                <input
+                  readOnly={true}
+                  type="number"
+                  required
+                  name={`meetings`}
+                  id={`meetings`}
+                  className="border-b-2 text-center border-dashed mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg "
+                  onChange={() =>
+                    sumUpTwoValues(
+                      parseInt(document.getElementById("meetings").value),
+                      parseInt(document.getElementById("meetingsManual").value),
+                      "meetingsSum"
+                    )
+                  }
+                />
+                +
+                <input
+                  type="number"
+                  required
+                  readOnly={view}
+                  name={`meetingsManual`}
+                  id={`meetingsManual`}
+                  className="border-b-2 text-center border-dashed mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg "
+                  onChange={() =>
+                    sumUpTwoValues(
+                      parseInt(document.getElementById("meetings").value),
+                      parseInt(document.getElementById("meetingsManual").value),
+                      "meetingsSum"
+                    )
+                  }
+                />
+                =
+                <input
+                  readOnly={true}
+                  type="number"
+                  defaultValue={document.getElementById("meetings")?.value}
+                  required
+                  name={`meetingsSum`}
+                  id={`meetingsSum`}
+                  className="border-b-2 text-center border-dashed mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg "
+                  value={mSum}
+                />{" "}
+              </>
+            )}
           </div>
         </div>
         <div className="flex flex-col lg:flex-row gap-3 mb-2">

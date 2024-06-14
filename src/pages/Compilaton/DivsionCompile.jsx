@@ -27,7 +27,7 @@ export const DivisionCompile = () => {
   const { dispatch } = useToastState();
   const [data, setData] = useState({});
   const { loading, setLoading, getDivisionReports } = useContext(UIContext);
-  const [view, setView] = useState(false);
+  const [view, setView] = useState(true);
   const location = useLocation();
   const me = useContext(MeContext);
   const navigate = useNavigate();
@@ -96,19 +96,11 @@ export const DivisionCompile = () => {
                 />
               </div>
             </div>
-            <div className="flex justify-start items-center gap-2 w-full p-2">
+            <div className="flex justify-start items-center gap-4 w-full p-2">
               <label htmlFor="month" className="block text-sm md:text-lg">
                 برائے عرصہ
               </label>
-              <input
-                required
-                className="border-b-2 border-dashed"
-                type="month"
-                name="month"
-                id="month"
-                value={date}
-                readOnly
-              />
+              <span className="underline">{date}</span>
             </div>
             <div className="mb-4">
               <Jamiaat view={view} />
@@ -130,15 +122,15 @@ export const DivisionCompile = () => {
             </div>
             <div className="mb-4">
               {/* <ZailiActivitesDivision view={view} /> */}
-              <ZailiActivities view={view} />
+              <ZailiActivities view={view} compile={true}/>
             </div>
             <div className=" mb-4">
               {/* <OtherActivitiesDivision arr={arr} view={view} /> */}
-              <OtherActivities view={view} />
+              <OtherActivities view={view} compile={true}/>
             </div>
             <div className=" mb-4">
               {/* <ExpandPartyDivision view={view} /> */}
-              <ToseeDawat />
+              <ToseeDawat compile={true}/>
             </div>
             <div className=" mb-4">
               {/* <LibraryDivision view={view} /> */}
@@ -154,20 +146,10 @@ export const DivisionCompile = () => {
             </div>
             <div className=" mb-4">
               {/* <EveningDiaryDivision view={view} /> */}
-              <RozOShabDiary view={view} />
+              <RozOShabDiary view={view} compile={true}/>
             </div>
           </div>
-          <div className="w-full flex p-2">
-            <label htmlFor="comments">تبصرہ</label>
-            <input
-              type="text"
-              name="comments"
-              required
-              className="border-b-2 border-dashed w-full"
-              id="comments"
-              readOnly={view}
-            />
-          </div>
+         
           {!view && (
             <div className="w-full flex flex-col items-end gap-3 p-2">
               <div>
@@ -182,17 +164,7 @@ export const DivisionCompile = () => {
               </div>
             </div>
           )}
-          {!view && (
-            <div className="w-full">
-              <button
-                type="submit"
-                className="btn btn-primary"
-                disabled={loading}
-              >
-                {id ? "Update" : "Add"}
-              </button>
-            </div>
-          )}
+         
           {/* </fieldset> */}
         </form>
       </div> : <div className="flex w-full justify-center items-center">

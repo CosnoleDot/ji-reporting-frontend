@@ -27,6 +27,7 @@ export const HalqaCompile = () => {
   const { setLoading } = useContext(UIContext);
   const location = useLocation();
   const { getHalqaReports } = useContext(UIContext);
+  const [compile, setCompile]=useState();
   const params = useParams();
   let navigate = useNavigate();
   const compileReport = useContext(CompileReportContext);
@@ -96,34 +97,26 @@ export const HalqaCompile = () => {
                   />
                 </div>
               </div>
-              <div className="flex justify-start items-center gap-2 w-full p-2">
+              <div className="flex justify-start items-center gap-4 w-full p-2">
                 <label htmlFor="month" className="block text-sm md:text-lg">
                   برائے عرصہ
                 </label>
-                <input
-                  required
-                  className="border-b-2 border-dashed"
-                  type="month"
-                  name="month"
-                  id="month"
-                  value={date}
-                  readOnly
-                />
+                <span className="underline">{date}</span>
               </div>
               <div className="mb-4">
                 <IfradiKuwat view={view} />
               </div>
               <div className="mb-4">
-                <Activity view={view} />
+                <Activity view={view} compile={true} />
               </div>
               <div className="mb-4">
-                <OtherActivities view={view} />
+                <OtherActivities view={view} compile={true} />
               </div>
               <div className="mb-4">
-                <ToseeDawat view={view} />
+                <ToseeDawat view={view} compile={true}/>
               </div>
               <div className="mb-4">
-                <Library view={view} />
+                <Library view={view} compile={true}/>
               </div>
               <div className="mb-4">
                 <Baitulmal view={view} />
@@ -131,17 +124,7 @@ export const HalqaCompile = () => {
               <div className="mb-4">
                 <RozOShabDiary view={view} />
               </div>
-              <div className="w-full flex p-2">
-                <label htmlFor="comments">تبصرہ</label>
-                <input
-                  required
-                  type="text"
-                  name="comments"
-                  className="border-b-2 border-dashed w-full"
-                  id="comments"
-                  readOnly={view}
-                />
-              </div>
+            
               {!view && (
                 <div className="w-full flex flex-col items-end gap-3 p-2">
                   <div>
@@ -158,11 +141,7 @@ export const HalqaCompile = () => {
                 </div>
               )}
             </div>
-            {!view && (
-              <button type="submit" className="btn">
-                {id ? "UPDATE" : "Submit"}
-              </button>
-            )}
+          
           </form>
         </div>
       ) : (

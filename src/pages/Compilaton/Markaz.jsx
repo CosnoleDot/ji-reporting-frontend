@@ -71,6 +71,13 @@ export const Markaz = () => {
           newElem.value = compileReport[i];
         }
       }
+      if (i.split('-')[0] === 'studyCircle') {
+        const newKey = 'studyCircleMentioned-'+ i.split("-")[1];
+        const newElem = document.getElementById(newKey);
+        if (newElem) {
+          newElem.value = compileReport[i];
+        }
+      }
     });
   };
 
@@ -116,19 +123,11 @@ export const Markaz = () => {
                   />
                 </div>
 
-                <div className="flex justify-start items-center gap-2 w-full p-2">
+                <div className="flex justify-start items-center gap-4 w-full p-2">
                   <label htmlFor="month" className="block text-sm md:text-lg">
                     برائے عرصہ
                   </label>
-                  <input
-                    required
-                    className="border-b-2 border-dashed"
-                    type="month"
-                    name="month"
-                    id="month"
-                    readOnly
-                    value={date}
-                  />
+                  <span className="underline">{date}</span>
                 </div>
               </div>
               <div className="mb-4">
@@ -150,7 +149,7 @@ export const Markaz = () => {
                 <ZailiActivities view={view} obj={obj} />
               </div>
               <div className="mb-4">
-                <OtherActivities view={view} />
+                <OtherActivities view={view} compile={true}/>
               </div>
               <div className="mb-4">
                 <ToseeDawat />
@@ -164,17 +163,7 @@ export const Markaz = () => {
               <div className="mb-4">
                 <RozOShabDiary view={view} />
               </div>
-              <div className="w-full flex p-2">
-                <label htmlFor="comments">تبصرہ</label>
-                <input
-                  type="text"
-                  required
-                  name="comments"
-                  className="border-b-2 border-dashed w-full"
-                  id="comments"
-                  readOnly={view}
-                />
-              </div>
+              
               {!view && (
                 <div className="w-full flex flex-col items-end gap-3 p-2">
                   <div>
@@ -190,13 +179,7 @@ export const Markaz = () => {
                 </div>
               )}
             </div>
-            {!view && (
-              <div className="w-full">
-                <button disabled={loading} className="btn btn-primary">
-                  {id ? "Update" : "Add"}
-                </button>
-              </div>
-            )}
+           
           </form>
         </div>
       ) : (

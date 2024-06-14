@@ -2,7 +2,7 @@ import React from "react";
 import { Box } from "./IfradiKuwat";
 import { sumUpTwoValues } from "../muntakhibMaqamReports";
 
-export const ZailiActivities = ({ view }) => {
+export const ZailiActivities = ({ view, compile }) => {
   return (
     <div className="relative w-full overflow-auto">
       <table className="w-full table">
@@ -99,45 +99,63 @@ export const ZailiActivities = ({ view }) => {
               />
             </Box>
             <div style={{ display: "flex", width: "30%" }}>
-              <input
-                readOnly={true}
-                type="number"
-                defaultValue={0}
-                required
-                name={`ijtKarkunan-done`}
-                id={`ijtKarkunan-done`}
-                className="p-1 text-center min-w-full"
-              />
-              +
-              <input
-                type="number"
-                placeholder="کل زیلی حلقہ جات"
-                required
-                name={`ijtKarkunan-manual`}
-                id={`ijtKarkunan-manual`}
-                className="p-1 text-center min-w-full"
-                onChange={() =>
-                  sumUpTwoValues(
-                    parseInt(document.getElementById("ijtKarkunan-done").value),
-                    parseInt(
-                      document.getElementById("ijtKarkunan-manual").value
-                    ),
-                    "ijtKarkunan-sum"
-                  )
-                }
-              />
-              =
-              <input
-                readOnly={true}
-                type="number"
-                defaultValue={
-                  document.getElementById("ijtKarkunan-done")?.value
-                }
-                required
-                name={`ijtKarkunan-sum`}
-                id={`ijtKarkunan-sum`}
-                className="p-1 text-center min-w-full"
-              />
+              {compile ? (
+                <input
+                  readOnly={true}
+                  type="number"
+                  defaultValue={
+                    document.getElementById("ijtKarkunan-done")?.value
+                  }
+                  required
+                  name={`ijtKarkunan-sum`}
+                  id={`ijtKarkunan-sum`}
+                  className="p-1 text-center min-w-full"
+                />
+              ) : (
+                <>
+                  <input
+                    readOnly={true}
+                    type="number"
+                    defaultValue={0}
+                    required
+                    name={`ijtKarkunan-done`}
+                    id={`ijtKarkunan-done`}
+                    className="p-1 text-center min-w-full"
+                  />
+                  +
+                  <input
+                    type="number"
+                    placeholder="کل زیلی حلقہ جات"
+                    required
+                    name={`ijtKarkunan-manual`}
+                    id={`ijtKarkunan-manual`}
+                    className="p-1 text-center min-w-full"
+                    onChange={() =>
+                      sumUpTwoValues(
+                        parseInt(
+                          document.getElementById("ijtKarkunan-done").value
+                        ),
+                        parseInt(
+                          document.getElementById("ijtKarkunan-manual").value
+                        ),
+                        "ijtKarkunan-sum"
+                      )
+                    }
+                  />
+                  =
+                  <input
+                    readOnly={true}
+                    type="number"
+                    defaultValue={
+                      document.getElementById("ijtKarkunan-done")?.value
+                    }
+                    required
+                    name={`ijtKarkunan-sum`}
+                    id={`ijtKarkunan-sum`}
+                    className="p-1 text-center min-w-full"
+                  />{" "}
+                </>
+              )}
             </div>
             <Box>
               <input
@@ -166,47 +184,64 @@ export const ZailiActivities = ({ view }) => {
             </Box>
             <Box>
               <div className="flex">
-                <input
-                  readOnly={true}
-                  type="number"
-                  defaultValue={0}
-                  required
-                  name={`darseQuran-done`}
-                  id={`darseQuran-done`}
-                  className="p-1 text-center "
-                />
-                +
-                <input
-                  type="number"
-                  required
-                  placeholder="کل زیلی حلقہ جات"
-                  name={`darseQuran-manual`}
-                  id={`darseQuran-manual`}
-                  className="p-1 text-center "
-                  onChange={() =>
-                    sumUpTwoValues(
-                      parseInt(
-                        document.getElementById("darseQuran-done").value
-                      ),
-                      parseInt(
-                        document.getElementById("darseQuran-manual").value
-                      ),
-                      "darseQuran-sum"
-                    )
-                  }
-                />
-                =
-                <input
-                  readOnly={true}
-                  type="number"
-                  defaultValue={
-                    document.getElementById("darseQuran-done")?.value
-                  }
-                  required
-                  name={`darseQuran-sum`}
-                  id={`darseQuran-sum`}
-                  className="p-1 text-center "
-                />
+                {compile ? (
+                  <input
+                    readOnly={true}
+                    type="number"
+                    defaultValue={
+                      document.getElementById("darseQuran-done")?.value
+                    }
+                    required
+                    name={`darseQuran-sum`}
+                    id={`darseQuran-sum`}
+                    className="p-1 text-center "
+                  />
+                ) : (
+                  <>
+                    {" "}
+                    <input
+                      readOnly={true}
+                      type="number"
+                      defaultValue={0}
+                      required
+                      name={`darseQuran-done`}
+                      id={`darseQuran-done`}
+                      className="p-1 text-center "
+                    />
+                    +
+                    <input
+                      type="number"
+                      required
+                      placeholder="کل زیلی حلقہ جات"
+                      name={`darseQuran-manual`}
+                      id={`darseQuran-manual`}
+                      className="p-1 text-center "
+                      onChange={() =>
+                        sumUpTwoValues(
+                          parseInt(
+                            document.getElementById("darseQuran-done").value
+                          ),
+                          parseInt(
+                            document.getElementById("darseQuran-manual").value
+                          ),
+                          "darseQuran-sum"
+                        )
+                      }
+                    />
+                    =
+                    <input
+                      readOnly={true}
+                      type="number"
+                      defaultValue={
+                        document.getElementById("darseQuran-done")?.value
+                      }
+                      required
+                      name={`darseQuran-sum`}
+                      id={`darseQuran-sum`}
+                      className="p-1 text-center "
+                    />{" "}
+                  </>
+                )}
               </div>
             </Box>
             <Box>

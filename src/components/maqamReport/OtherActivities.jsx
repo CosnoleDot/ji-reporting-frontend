@@ -1,4 +1,4 @@
-export const OtherActivities = ({ view }) => {
+export const OtherActivities = ({ view, compile }) => {
   return (
     <div className='p-2 py-5 relative w-full overflow-auto'>
       <h2 className='text-black py-3 text-lg'>دیگر سرگرمیاں</h2>
@@ -52,7 +52,7 @@ export const OtherActivities = ({ view }) => {
           />
         </div>
 
-        <div className='flex py-2'>
+        {!compile && <div className='flex py-2'>
           <label className='block'>کوئ اور سرگرمی:</label>
           <input
             readOnly={view}
@@ -62,7 +62,7 @@ export const OtherActivities = ({ view }) => {
             id='anyOther'
             className='border-b-2 border-dashed'
           />
-        </div>
+        </div>}
       </div>
     </div>
   );

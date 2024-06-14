@@ -1,4 +1,4 @@
-export const OtherActivities = ({ view }) => {
+export const OtherActivities = ({ view, compile }) => {
   const sumUpTwoValues = (val1, val2, final) => {
     document.getElementById(final).value = val1 + val2;
   };
@@ -9,7 +9,7 @@ export const OtherActivities = ({ view }) => {
       <div className="flex flex-col py-2">
         <h2 className="block text-black py-3 text-lg"> تربیت گاہ:</h2>
         <div className="flex py-2">
-       <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">
             تربیت گاہ:
           </label>
           <input
@@ -26,42 +26,62 @@ export const OtherActivities = ({ view }) => {
             تربیت گاہوں کے انعقاد کا ہدف:
           </label>
           <div className="w-full md:w-[80%] flex overflow-hidden overflow-x-scroll">
-            <input
-              readOnly={true}
-              type="number"
-              required
-              name={`tarbiyatGaahGoal`}
-              id={`tarbiyatGaahGoal`}
-              className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
-            />
-            +
-            <input
-              type="number"
-              readOnly={view}
-              required
-              onChange={() =>
-                sumUpTwoValues(
-                  parseInt(document.getElementById("tarbiyatGaahGoal").value),
-                  parseInt(
-                    document.getElementById("tarbiyatGaahGoalManual").value
-                  ),
-                  "tarbiyatGaahGoalSum"
-                )
-              }
-              name={`tarbiyatGaahGoalManual`}
-              id={`tarbiyatGaahGoalManual`}
-              className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
-            />
-            =
-            <input
-              readOnly={true}
-              type="number"
-              defaultValue={document.getElementById("tarbiyatGaahGoal")?.value}
-              required
-              name={`tarbiyatGaahGoalSum`}
-              id={`tarbiyatGaahGoalSum`}
-              className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
-            />
+            {compile ? (
+              <input
+                readOnly={true}
+                type="number"
+                defaultValue={
+                  document.getElementById("tarbiyatGaahGoal")?.value
+                }
+                required
+                name={`tarbiyatGaahGoalSum`}
+                id={`tarbiyatGaahGoalSum`}
+                className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+              />
+            ) : (
+              <>
+                <input
+                  readOnly={true}
+                  type="number"
+                  required
+                  name={`tarbiyatGaahGoal`}
+                  id={`tarbiyatGaahGoal`}
+                  className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+                />
+                +
+                <input
+                  type="number"
+                  readOnly={view}
+                  required
+                  onChange={() =>
+                    sumUpTwoValues(
+                      parseInt(
+                        document.getElementById("tarbiyatGaahGoal").value
+                      ),
+                      parseInt(
+                        document.getElementById("tarbiyatGaahGoalManual").value
+                      ),
+                      "tarbiyatGaahGoalSum"
+                    )
+                  }
+                  name={`tarbiyatGaahGoalManual`}
+                  id={`tarbiyatGaahGoalManual`}
+                  className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+                />
+                =
+                <input
+                  readOnly={true}
+                  type="number"
+                  defaultValue={
+                    document.getElementById("tarbiyatGaahGoal")?.value
+                  }
+                  required
+                  name={`tarbiyatGaahGoalSum`}
+                  id={`tarbiyatGaahGoalSum`}
+                  className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+                />{" "}
+              </>
+            )}
           </div>
         </div>
         <div className="flex md:flex-row flex-col w-full gap-1 md:gap-3 pb-2">
@@ -69,48 +89,68 @@ export const OtherActivities = ({ view }) => {
             تربیت گاہوں کے انعقاد کا تعداد:
           </label>
           <div className="w-full md:w-[80%] flex overflow-hidden overflow-x-scroll">
-            <input
-              readOnly={true}
-              type="number"
-              required
-              name={`tarbiyatGaahHeld`}
-              id={`tarbiyatGaahHeld`}
-              className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
-            />
-            +
-            <input
-              type="number"
-              readOnly={view}
-              required
-              onChange={() =>
-                sumUpTwoValues(
-                  parseInt(document.getElementById("tarbiyatGaahHeld").value),
-                  parseInt(
-                    document.getElementById("tarbiyatGaahHeldManual").value
-                  ),
-                  "tarbiyatGaahHeldSum"
-                )
-              }
-              name={`tarbiyatGaahHeldManual`}
-              id={`tarbiyatGaahHeldManual`}
-              className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
-            />
-            =
-            <input
-              readOnly={true}
-              type="number"
-              defaultValue={document.getElementById("tarbiyatGaahHeld")?.value}
-              required
-              name={`tarbiyatGaahHeldSum`}
-              id={`tarbiyatGaahHeldSum`}
-              className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
-            />
+            {compile ? (
+              <input
+                readOnly={true}
+                type="number"
+                defaultValue={
+                  document.getElementById("tarbiyatGaahHeld")?.value
+                }
+                required
+                name={`tarbiyatGaahHeldSum`}
+                id={`tarbiyatGaahHeldSum`}
+                className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+              />
+            ) : (
+              <>
+                <input
+                  readOnly={true}
+                  type="number"
+                  required
+                  name={`tarbiyatGaahHeld`}
+                  id={`tarbiyatGaahHeld`}
+                  className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+                />
+                +
+                <input
+                  type="number"
+                  readOnly={view}
+                  required
+                  onChange={() =>
+                    sumUpTwoValues(
+                      parseInt(
+                        document.getElementById("tarbiyatGaahHeld").value
+                      ),
+                      parseInt(
+                        document.getElementById("tarbiyatGaahHeldManual").value
+                      ),
+                      "tarbiyatGaahHeldSum"
+                    )
+                  }
+                  name={`tarbiyatGaahHeldManual`}
+                  id={`tarbiyatGaahHeldManual`}
+                  className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+                />
+                =
+                <input
+                  readOnly={true}
+                  type="number"
+                  defaultValue={
+                    document.getElementById("tarbiyatGaahHeld")?.value
+                  }
+                  required
+                  name={`tarbiyatGaahHeldSum`}
+                  id={`tarbiyatGaahHeldSum`}
+                  className="border-b-2 text-center border-dashed  max-w-[6rem] md:max-w-lg mb-2 lg:mb-0"
+                />{" "}
+              </>
+            )}
           </div>
         </div>
       </div>
       <div className="flex-col lg:flex-row w-full items-center justify-start">
         <div className="flex py-2">
-       <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">
             تنظیمی دورہ:
           </label>
           <input
@@ -123,7 +163,7 @@ export const OtherActivities = ({ view }) => {
           />
         </div>
         <div className="flex py-2">
-       <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">
             دعوتی وفود:
           </label>
           <input
@@ -136,7 +176,7 @@ export const OtherActivities = ({ view }) => {
           />
         </div>
         <div className="flex py-2">
-       <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">
             روابط پارٹیز:
           </label>
           <input
@@ -149,7 +189,7 @@ export const OtherActivities = ({ view }) => {
           />
         </div>
         <div className="flex py-2">
-       <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">
             شب بیداری:
           </label>
           <input
@@ -162,7 +202,7 @@ export const OtherActivities = ({ view }) => {
           />
         </div>
         <div className="flex py-2">
-       <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">
             نظام الصلوٰۃ:
           </label>
           <input
@@ -176,7 +216,7 @@ export const OtherActivities = ({ view }) => {
         </div>
 
         <div className="flex py-2">
-       <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">
+          <label className="block text-sm md:text-lg mb-2 lg:mb-0 p-2 ">
             کوئ اور سرگرمی:
           </label>
           <input
