@@ -12,7 +12,7 @@ export const CompileReports = () => {
     const location = useLocation();
     const queryParams =new URLSearchParams(location.search);
     const[report , setReport]=useState(queryParams.get('areaType'));
-     console.log(queryParams.get('areaName'))
+  
   return (
     <div>
         {report==="country" && <Markaz/>}

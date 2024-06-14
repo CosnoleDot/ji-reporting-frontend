@@ -15,6 +15,7 @@ import { Library } from "../../components/divisionReport/Library";
 import { PaighamDigest } from "../../components/divisionReport/PaighamDigest";
 import { Baitulmal } from "../../components/divisionReport/Baitulmal";
 import { RozOShabDiary } from "../../components/divisionReport/RozOShabDiary";
+import { NoReports } from "../Reports";
 
 
 export const DivisionCompile = () => {
@@ -68,7 +69,7 @@ export const DivisionCompile = () => {
   });
   return (
     <GeneralLayout>
-      <div className="reports h-[calc(100vh-64.4px-64px)] overflow-hidden overflow-y-scroll w-full">
+      {Object.keys(compileReport).length > 2 ?<div className="reports h-[calc(100vh-64.4px-64px)] overflow-hidden overflow-y-scroll w-full">
       <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
           رپورٹ تالیف(برائے ڈویزن)
         </h2>
@@ -194,7 +195,11 @@ export const DivisionCompile = () => {
           )}
           {/* </fieldset> */}
         </form>
-      </div>
+      </div> : <div className="flex w-full justify-center items-center">
+          <div>
+            <NoReports/>
+          </div>
+        </div>}
       {loading && <Loader />}
     </GeneralLayout>
   );

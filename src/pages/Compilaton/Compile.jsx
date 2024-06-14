@@ -17,6 +17,7 @@ import { Markaz } from "./Markaz";
 import { FaEye, FaPrint } from "react-icons/fa";
 import { UIContext } from "../../context/ui";
 import { useNavigate } from "react-router-dom";
+import { MdOutlineSearchOff } from "react-icons/md";
 
 export const Compile = () => {
   const months = [
@@ -134,7 +135,7 @@ export const Compile = () => {
     setChecked(event.target.id);
   };
 
-  const getReports = () => {
+  const getReports = async () => {
     switch (areaType) {
       case "country":
         setAreaName("Pakistan");
@@ -146,19 +147,25 @@ export const Compile = () => {
       default:
         break;
     }
-
-    const startDate =
-      startMonth === "" ? startYear : startYear + "-" + startMonth;
+  
+    const startDate = startMonth === "" ? startYear : `${startYear}-${startMonth}`;
     setSDate(startDate);
-    const endDate = endMonth === "" ? endYear : endYear + "-" + endMonth;
-    setEDate(endDate)
-    getCompileReports(startDate, endDate, areaType, areaId);
-    setShowReport(true);
+    const endDate = endMonth === "" ? endYear : `${endYear}-${endMonth}`;
+    setEDate(endDate);
+  
+    try {
+      await getCompileReports(startDate, endDate, areaType, areaId);
+      
+      setShowReport(true);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
+  
 
   useEffect(() => {
     if (showReport) {
-      console.log(areaName);
+      
       navigate(
         `/compile/view?areaType=${areaType}&areaName=${areaName}&startDate=${sDate}&endDate=${eDate}`
       );
