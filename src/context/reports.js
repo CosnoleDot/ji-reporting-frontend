@@ -7,3 +7,4 @@ export const HalqaReportContext = createContext([]);
 export const IlaqaReportContext = createContext([]);
 export const MarkazReportContext = createContext([]);
 export const HalqaReportTabContext = createContext([]);
+export const CompileReportContext = createContext({});
