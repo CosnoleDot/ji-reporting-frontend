@@ -40,10 +40,6 @@ export const Dashboard = () => {
   const ilaqa = useContext(IlaqaContext);
   const districts = useContext(DistrictContext);
   const tehsils = useContext(TehsilContext);
-  const maqamReports = useContext(MaqamReportContext);
-  const divisionReports = useContext(DivisionReportContext);
-  const halqaReports = useContext(HalqaReportContext);
-  const provinceReports = useContext(ProvinceReportContext);
   const areaDetails = useContext(ViewDetails);
   const me = useContext(MeContext);
   const [userAreaType, setUserAreaType] = useState("All");
@@ -129,15 +125,12 @@ export const Dashboard = () => {
         if (me?.userAreaType === "Country") {
           markaz = await getUnfilledReports("markaz");
         }
-        if (userAreaType === "Province") {
-          province = await getUnfilledReports("province");
-        } else if (userAreaType === "All") {
-          province = await getUnfilledReports("province");
-          maqam = await getUnfilledReports("maqam");
-          division = await getUnfilledReports("division");
-          ilaqa = await getUnfilledReports("ilaqa");
-          halqa = await getUnfilledReports("halqa");
-        }
+        province = await getUnfilledReports("province");
+        province = await getUnfilledReports("province");
+        maqam = await getUnfilledReports("maqam");
+        division = await getUnfilledReports("division");
+        ilaqa = await getUnfilledReports("ilaqa");
+        halqa = await getUnfilledReports("halqa");
 
         const markazData = markaz?.data?.data?.allCountries || [];
         const provinceData = province?.data?.data?.allProvince || [];
@@ -169,7 +162,29 @@ export const Dashboard = () => {
               }
               return false;
             }
+            if (userAreaType === "Ilaqa") {
+              if (
+                h?.parentType === "Ilaqa" &&
+                h?.parentId?._id === selectedId
+              ) {
+                return true;
+              }
+              return false;
+            }
             return false;
+          }),
+        ];
+        const getIlaqaData = (halqaData) => [
+          ...halqaData.filter((h) => {
+            if (userAreaType === "Ilaqa") {
+              if (
+                h?.parentType === "Ilaqa" &&
+                h?.parentId?._id === selectedId
+              ) {
+                return true;
+              }
+              return false;
+            }
           }),
         ];
         const temp = {
@@ -263,6 +278,9 @@ export const Dashboard = () => {
         break;
       case "Maqam":
         setAreas(maqams);
+        break;
+      case "Ilaqa":
+        setAreas(ilaqa);
         break;
       case "Province":
         setAreas(provinces);
@@ -867,6 +885,23 @@ export const Dashboard = () => {
                             onChange={(e) => setUserAreaType(e.target.value)}
                           />
                           <span className="label-text">Maqam</span>
+                        </label>
+                      </div>
+                    )}
+                    {(me?.userAreaType === "Province" ||
+                      me?.userAreaType === "Country" ||
+                      me?.userAreaType === "Maqam") && (
+                      <div className="form-control">
+                        <label className="label cursor-pointer gap-2">
+                          <input
+                            type="radio"
+                            name="userAreaType"
+                            className="radio checked:bg-blue-500"
+                            value="Ilaqa"
+                            checked={userAreaType === "Ilaqa"}
+                            onChange={(e) => setUserAreaType(e.target.value)}
+                          />
+                          <span className="label-text">Ilaqa</span>
                         </label>
                       </div>
                     )}

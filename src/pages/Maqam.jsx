@@ -242,7 +242,7 @@ export const Maqam = () => {
           if (elem.type === "checkbox") {
             elem.checked = data[i];
           } else {
-            elem.value = data[i] || 0;
+            elem.value = data[i]||0;
           }
         }
       }

@@ -27,8 +27,9 @@ export const DeleteUser = () => {
   const provinces = useContext(ProvinceContext);
   const divisions = useContext(DivisionContext);
   const areaDetails = useContext(ViewDetails);
-  const { nazim, loading, setLoading, getNazim, getAreaDetails } =
-    useContext(UIContext);
+  const { nazim, loading, setLoading, getNazim, getAreaDetails } = useContext(UIContext);
+  const { dispatch } = useToastState();
+
   const [data, setData] = useState(nazim);
   const [userAreaType, setUserAreaType] = useState("");
   const [nazimType, setNazimType] = useState("");
@@ -36,25 +37,27 @@ export const DeleteUser = () => {
   const [searchArea, setSearchArea] = useState("");
   const [search, setSearch] = useState("");
   const [subjects, setSubjects] = useState([]);
-  const { dispatch } = useToastState();
   const [selectedSubject, setSelectedSubject] = useState("");
   const [singleUser, setSingleUser] = useState("");
   const [selectedId, setSelectedId] = useState("");
-  const [years, setYears] = useState([
-    2021, 2022, 2023, 2024, 2025, 2026, 2027,
-  ]);
+  const [years, setYears] = useState([2021, 2022, 2023, 2024, 2025, 2026, 2027]);
   const [selectedYear, setSelectedYear] = useState(null);
   const [birthYear, setBirthYear] = useState(null);
   const [openYears, setOpenYears] = useState(false);
   const [withArea, setWithArea] = useState(false);
   const [openBirthYears, setOpenBirthYears] = useState(false);
-  //year calender
+
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
   const YearCalender = (val) => {
     setYears((prevYears) => {
       const updatedYears = prevYears?.map((year) => year + val);
       return updatedYears;
     });
   };
+
   const searchUsers = (e) => {
     setSearch(e.target.value);
     if (e.target.value && e.target.value !== "") {
@@ -69,16 +72,28 @@ export const DeleteUser = () => {
       setData(nazim);
     }
   };
+
+  const paginate = (items, pageNumber, itemsPerPage) => {
+    const startIndex = (pageNumber - 1) * itemsPerPage;
+    return items.slice(startIndex, startIndex + itemsPerPage);
+  };
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const totalPages = Math.ceil(data.length / itemsPerPage);
+  const paginatedData = paginate(data, currentPage, itemsPerPage);
+
   useEffect(() => {
     getAreas();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAreaType]);
+
   const deleteUser = async (user) => {
     setLoading(true);
     try {
-      let isConfirmed = window.confirm(
-        `Are you sure you want to delete ${user?.email} ?`
-      );
+      let isConfirmed = window.confirm(`Are you sure you want to delete ${user?.email} ?`);
       if (isConfirmed) {
         const req = await instance.delete("/user/" + user?._id, {
           headers: {
@@ -123,24 +138,18 @@ export const DeleteUser = () => {
       joiningDate: formData.get("joiningDate"),
       nazimType: formData.get("nazimType"),
     };
-    if (data.userAreaId && data.userAreaId !== "")
-      params.userAreaId = data.userAreaId;
-    if (data.userAreaType && data.userAreaType !== "")
-      params.userAreaType = data.userAreaType;
+    if (data.userAreaId && data.userAreaId !== "") params.userAreaId = data.userAreaId;
+    if (data.userAreaType && data.userAreaType !== "") params.userAreaType = data.userAreaType;
     if (data.name && data.name !== "") params.name = data.name;
     if (data.nazim && data.nazim !== "") params.nazim = data.nazim;
     if (data.dob && data.dob !== "") params.dob = data.dob;
     if (data.address && data.address !== "") params.address = data.address;
-    if (data.qualification && data.qualification !== "")
-      params.qualification = data.qualification;
+    if (data.qualification && data.qualification !== "") params.qualification = data.qualification;
     if (data.subject && data.subject !== "") params.subject = data.subject;
     if (data.semester && data.semester !== "") params.semester = data.semester;
-    if (data.institution && data.institution !== "")
-      params.institution = data.institution;
-    if (data.joiningDate && data.joiningDate !== "")
-      params.joiningDate = data.joiningDate;
-    if (data.nazimType && data.nazimType !== "")
-      params.nazimType = data.nazimType;
+    if (data.institution && data.institution !== "") params.institution = data.institution;
+    if (data.joiningDate && data.joiningDate !== "") params.joiningDate = data.joiningDate;
+    if (data.nazimType && data.nazimType !== "") params.nazimType = data.nazimType;
 
     try {
       const request = await instance.get("/user/filter", {
@@ -160,6 +169,7 @@ export const DeleteUser = () => {
 
     setLoading(false);
   };
+
   const updateStatus = async () => {
     const data = {
       nazim: userAreaType,
@@ -182,10 +192,12 @@ export const DeleteUser = () => {
       dispatch({ type: "ERROR", payload: err?.response?.data?.message });
     }
   };
+
   useEffect(() => {
     getAreas();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAreaType]);
+
   const getAreas = async () => {
     switch (userAreaType) {
       case "Province":
@@ -207,11 +219,13 @@ export const DeleteUser = () => {
         break;
     }
   };
+
   const handleCloseUpdateModel = () => {
     setUserAreaType("");
     setNazimType("nazim");
     document.getElementById("autocomplete0").value = "";
   };
+
   useEffect(() => {
     const handleClickYear = (e) => {
       if (
@@ -236,6 +250,7 @@ export const DeleteUser = () => {
       document.removeEventListener("click", handleClickYear);
     };
   }, []);
+
   const getSubjects = async () => {
     try {
       const request = await instance.get("/subjects", {
@@ -248,9 +263,11 @@ export const DeleteUser = () => {
       console.log(error);
     }
   };
+
   useEffect(() => {
     getSubjects();
   }, []);
+
   const clearSearchFilters = () => {
     document.getElementById("filter-form").reset();
     setSelectedYear("");
@@ -258,9 +275,11 @@ export const DeleteUser = () => {
     setData(nazim);
     setBirthYear("");
   };
+
   useEffect(() => {
     setData(nazim);
   }, [nazim]);
+
   const handleEventClick = (e) => {
     if (e?.target?.id !== "autocomplete0") {
       if (
@@ -274,12 +293,14 @@ export const DeleteUser = () => {
       }
     }
   };
+
   useEffect(() => {
     document.addEventListener("click", handleEventClick);
     return () => {
       document.removeEventListener("click", handleEventClick);
     };
   }, []);
+
   return (
     <GeneralLayout title={"Manage Users"} active={"user-switch"}>
       <div className="p-5 relative flex flex-col items-center py-3 px-0 pt-0 justify-start h-[calc(100vh-65.6px-64px)] overflow-hidden overflow-y-auto">
@@ -309,7 +330,7 @@ export const DeleteUser = () => {
               Clear Filters
             </button>
           </div>
-          <div className="flex overflow-hidden overflow-x-scroll overflow-y-scroll  ">
+          <div className="flex overflow-hidden overflow-x-scroll overflow-y-scroll">
             <table className="table table-zebra">
               <thead>
                 <tr>
@@ -323,109 +344,129 @@ export const DeleteUser = () => {
                 </tr>
               </thead>
               <tbody>
-                {data?.map((user, index) => (
-                  <tr key={user?._id}>
-                    <th>{index + 1}</th>
-                    <td>{user?.name || "-"}</td>
-                    <td className="min-w-[10rem]">
-                      {user?.nazimType
-                        ?.replace(/-/g, " ") // Replace hyphens with spaces
-                        .split(" ") // Split the string into an array of words
-                        .map(
-                          (word) => word.charAt(0).toUpperCase() + word.slice(1)
-                        ) // Capitalize the first letter of each word
-                        .join(" ") || // Join the array back into a string with spaces
-                        "-"}
-                    </td>
-
-                    <td>{user?.email || "-"}</td>
-                    <td>
-                      {" "}
-                      <div
-                        onClick={() => {
-                          getAreaDetails(user?.userAreaId);
+                {paginatedData
+                  ?.filter((i) => i?.userAreaId?._id !== me?.userAreaId?._id)
+                  ?.map((user, index) => (
+                    <tr key={user?._id}>
+                      <th>{(currentPage - 1) * itemsPerPage + index + 1}</th>
+                      <td>{user?.name || "-"}</td>
+                      <td className="min-w-[10rem]">
+                        {user?.nazimType
+                          ?.replace(/-/g, " ") // Replace hyphens with spaces
+                          .split(" ") // Split the string into an array of words
+                          .map(
+                            (word) =>
+                              word.charAt(0).toUpperCase() + word.slice(1)
+                          ) // Capitalize the first letter of each word
+                          .join(" ") || // Join the array back into a string with spaces
+                          "-"}
+                      </td>
+                      <td>{user?.email || "-"}</td>
+                      <td>
+                        <div
+                          onClick={() => {
+                            getAreaDetails(user?.userAreaId);
+                          }}
+                        >
+                          <FcViewDetails
+                            className="cursor-pointer text-2xl p-0 m-0"
+                            id="sv"
+                          />
+                        </div>
+                      </td>
+                      <td>
+                        {user?.isDeleted ? (
+                          <div className="badge badge-error">inActive</div>
+                        ) : (
+                          <div className="badge badge-accent">active</div>
+                        )}
+                      </td>
+                      <td
+                        className="w-full flex row justify-evenly items-center gap-3"
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-evenly",
                         }}
                       >
-                        <FcViewDetails
-                          className="cursor-pointer text-2xl p-0 m-0"
-                          id="sv"
-                        />
-                      </div>
-                    </td>
-                    <td>
-                      {user?.isDeleted ? (
-                        <div className="badge badge-error">inActive</div>
-                      ) : (
-                        <div className="badge badge-accent">active</div>
-                      )}
-                    </td>
-                    <td
-                      className="w-full flex row justify-evenly items-center gap-3"
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-evenly",
-                      }}
-                    >
-                      <div className="flex justify-center items-center">
-                        <button
-                          onClick={() => {
-                            document
-                              .getElementById("view-details-modal")
-                              .showModal();
-                            setSingleUser(user);
-                          }}
-                          readOnly={loading}
-                          className="btn"
-                        >
-                          <FaEye />
-                        </button>
-                      </div>
-                      <div className="flex justify-center items-center">
-                        <button
-                          readOnly={loading}
-                          className="btn"
-                          onClick={() => {
-                            if (!user.isDeleted) {
-                              deleteUser(user);
-                            } else {
-                              document
-                                .getElementById("change-status-modal")
-                                .showModal();
-                              setSingleUser(user);
-                            }
-                          }}
-                        >
-                          {user?.isDeleted ? (
-                            <RiDeviceRecoverFill />
-                          ) : (
-                            <FaTrash />
-                          )}
-                        </button>
-                      </div>
-                      {me?.userAreaType !== "halqa" && (
                         <div className="flex justify-center items-center">
                           <button
-                            readOnly={loading}
-                            disabled={user?.isDeleted}
-                            className="btn"
                             onClick={() => {
                               document
-                                .getElementById("change-status-modal")
+                                .getElementById("view-details-modal")
                                 .showModal();
                               setSingleUser(user);
                             }}
+                            readOnly={loading}
+                            className="btn"
                           >
-                            <MdOutlineUpgrade />
+                            <FaEye />
                           </button>
                         </div>
-                      )}
-                    </td>
-                  </tr>
-                ))}
+                        <div className="flex justify-center items-center">
+                          <button
+                            readOnly={loading}
+                            className="btn"
+                            onClick={() => {
+                              if (!user.isDeleted) {
+                                deleteUser(user);
+                              } else {
+                                document
+                                  .getElementById("change-status-modal")
+                                  .showModal();
+                                setSingleUser(user);
+                              }
+                            }}
+                          >
+                            {user?.isDeleted ? (
+                              <RiDeviceRecoverFill />
+                            ) : (
+                              <FaTrash />
+                            )}
+                          </button>
+                        </div>
+                        {me?.userAreaType !== "halqa" && (
+                          <div className="flex justify-center items-center">
+                            <button
+                              readOnly={loading}
+                              disabled={user?.isDeleted}
+                              className="btn"
+                              onClick={() => {
+                                document
+                                  .getElementById("change-status-modal")
+                                  .showModal();
+                                setSingleUser(user);
+                              }}
+                            >
+                              <MdOutlineUpgrade />
+                            </button>
+                          </div>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
+          <div className="flex w-full px-4 justify-between items-center mt-4">
+        <button
+          className="btn capitalize p-[8px]"
+          disabled={currentPage === 1}
+          onClick={() => setCurrentPage((prev) => prev - 1)}
+        >
+          Previous
+        </button>
+        <span className="mx-4">
+          Page {currentPage} of {totalPages===0 ? 1 : totalPages}
+        </span>
+        <button
+          className="btn capitalize p-[8px]"
+          disabled={currentPage === totalPages}
+          onClick={() => setCurrentPage((prev) => prev + 1)}
+        >
+          Next
+        </button>
+      </div>
         </div>
 
         <dialog id="categorize-filter" className="modal">
