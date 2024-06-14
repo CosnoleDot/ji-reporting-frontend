@@ -17,7 +17,7 @@ import instance from "../api/instrance";
 import { MdOutlineUpgrade } from "react-icons/md";
 import { RiDeviceRecoverFill } from "react-icons/ri";
 import { FcViewDetails } from "react-icons/fc";
-
+import { decryptData } from "../utils";
 export const DeleteUser = () => {
   const me = useContext(MeContext);
   const halqas = useContext(HalqaContext);
@@ -345,8 +345,8 @@ export const DeleteUser = () => {
               </thead>
               <tbody>
                 {paginatedData
-                  .filter((i) => i?.userAreaId?._id !== me?.userAreaId?._id)
-                  .map((user, index) => (
+                  ?.filter((i) => i?.userAreaId?._id !== me?.userAreaId?._id)
+                  ?.map((user, index) => (
                     <tr key={user?._id}>
                       <th>{(currentPage - 1) * itemsPerPage + index + 1}</th>
                       <td>{user?.name || "-"}</td>
@@ -1181,7 +1181,7 @@ export const DeleteUser = () => {
                   </label>
                   <input
                     readOnly
-                    defaultValue={singleUser?.phoneNumber}
+                    defaultValue={decryptData(singleUser?.phoneNumber)}
                     type="text"
                     placeholder="Phone Number"
                     name="phoneNumber"
@@ -1196,7 +1196,7 @@ export const DeleteUser = () => {
                   </label>
                   <input
                     readOnly
-                    defaultValue={singleUser?.whatsAppNumber}
+                    defaultValue={decryptData(singleUser?.whatsAppNumber)}
                     type="text"
                     placeholder="WhatsApp Number"
                     name="whatsAppNumber"
@@ -1214,7 +1214,7 @@ export const DeleteUser = () => {
                   name="address"
                   className="w-full text-[#7a7a7a]"
                   required
-                  defaultValue={singleUser?.address}
+                  defaultValue={decryptData(singleUser?.address)}
                 ></textarea>
               </div>
               <div className="w-full">
@@ -1223,13 +1223,7 @@ export const DeleteUser = () => {
                 </label>
                 <input
                   readOnly
-                  defaultValue={`${singleUser?.userAreaId?.name}(${
-                    singleUser?.userAreaId?.parentType === "Tehsil"
-                      ? "Division"
-                      : singleUser?.userAreaId?.parentType === "Maqam"
-                      ? "Maqam"
-                      : singleUser?.userAreaType
-                  })`}
+                  defaultValue={singleUser?.userAreaId?.name}
                   type="text"
                   placeholder="UserArea"
                   name="userArea"

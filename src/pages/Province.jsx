@@ -485,21 +485,21 @@ export const Province = () => {
     const l = location.pathname?.split("/")[2];
     if (l === "create") {
       getReportsForProvinceReport();
-    } else {
-      if (l === "edit") {
-        getProvinceSingleReport();
-      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
   useEffect(() => {
     if (!id) {
       autoFill();
-    } else {
-      getProvinceSingleReport();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [month, createData, id]);
+  useEffect(() => {
+    if (id) {
+      getProvinceSingleReport();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
   // EDIT CODE END
   const handleSubmit = async (e) => {
     e.preventDefault();
