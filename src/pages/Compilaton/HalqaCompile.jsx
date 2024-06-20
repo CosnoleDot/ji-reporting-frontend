@@ -1,22 +1,12 @@
-import { useContext, useEffect, useState } from "react";
-
-import {
-  GeneralInfo,
-  GeneralLayout,
-  IfradiKuwat,
-  Library,
-  OtherActivities,
-  RozOShabDiary,
-  ToseeDawat,
-  calcultate,
-} from "../../components";
-
+import { useContext, useEffect, useRef, useState } from "react";
+import { GeneralLayout, IfradiKuwat, Library, OtherActivities, RozOShabDiary, ToseeDawat, Activity } from "../../components";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { CompileReportContext, MeContext, useToastState } from "../../context";
 import { UIContext } from "../../context/ui";
 import { Baitulmal } from "../../components/halqa/Baitulmal";
-import { Activity } from "../../components";
 import { NoReports } from "../Reports";
+import { FaPrint } from "react-icons/fa";
+import ReactToPrint from "react-to-print";
 
 export const HalqaCompile = () => {
   const { dispatch } = useToastState();
@@ -27,10 +17,11 @@ export const HalqaCompile = () => {
   const { setLoading } = useContext(UIContext);
   const location = useLocation();
   const { getHalqaReports } = useContext(UIContext);
-  const [compile, setCompile]=useState();
+  const [compile, setCompile] = useState();
   const params = useParams();
   let navigate = useNavigate();
   const compileReport = useContext(CompileReportContext);
+  const formRef = useRef();
 
   const [date, setDate] = useState(
     `${compileReport?.startDate}-${compileReport?.endDate}`
@@ -40,6 +31,7 @@ export const HalqaCompile = () => {
   const areaName = queryParams.get("areaName");
   const startDate = queryParams.get("startDate");
   const endDate = queryParams.get("endDate");
+
   const autoFill = () => {
     Object.keys(compileReport).forEach((i) => {
       const elem = document.getElementById(i);
@@ -65,11 +57,13 @@ export const HalqaCompile = () => {
       data[i] = 0;
     }
   });
+
   return (
     <GeneralLayout>
       {Object.keys(compileReport).length > 2 ? (
         <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">
           <form
+            ref={formRef}
             className="flex flex-col justify-center items-center p-4 font-notoUrdu mb-5"
             dir="rtl"
             id="markaz-form"
@@ -78,7 +72,6 @@ export const HalqaCompile = () => {
               {" "}
               رپورٹ تالیف(برائے حلقہ)
             </h2>
-
             <div className="w-full">
               <div className="grid w-full grid-cols-1 lg:grid-cols-2">
                 <div className="flex justify-start items-center gap-2 w-full p-2">
@@ -113,10 +106,10 @@ export const HalqaCompile = () => {
                 <OtherActivities view={view} compile={true} />
               </div>
               <div className="mb-4">
-                <ToseeDawat view={view} compile={true}/>
+                <ToseeDawat view={view} compile={true} />
               </div>
               <div className="mb-4">
-                <Library view={view} compile={true}/>
+                <Library view={view} compile={true} />
               </div>
               <div className="mb-4">
                 <Baitulmal view={view} />
@@ -124,7 +117,6 @@ export const HalqaCompile = () => {
               <div className="mb-4">
                 <RozOShabDiary view={view} />
               </div>
-            
               {!view && (
                 <div className="w-full flex flex-col items-end gap-3 p-2">
                   <div>
@@ -141,8 +133,18 @@ export const HalqaCompile = () => {
                 </div>
               )}
             </div>
-          
           </form>
+          <div className="w-full flex justify-center p-4">
+            <ReactToPrint
+              trigger={() => (
+                <button className="btn flex items-center gap-2">
+                  <FaPrint />
+                  <span>پرنٹ کریں</span>
+                </button>
+              )}
+              content={() => formRef.current}
+            />
+          </div>
         </div>
       ) : (
         <div className="flex w-full justify-center items-center">

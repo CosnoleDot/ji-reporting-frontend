@@ -1380,6 +1380,10 @@ function App() {
                                                 element={<HalqaReport />}
                                               />
                                               <Route
+                                                path="/halqa-report/compile/print/:id"
+                                                element={<HalqaReport />}
+                                              />
+                                              <Route
                                                 path="/markaz-report/print/:id"
                                                 element={<MarkazReportPrint />}
                                               />

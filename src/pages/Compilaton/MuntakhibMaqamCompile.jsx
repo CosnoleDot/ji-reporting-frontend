@@ -1,7 +1,7 @@
 import {   GeneralLayout, calcultate } from "../../components";
 
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { useEffect } from "react";
 
 
@@ -21,6 +21,8 @@ import { reverseDataFormat } from "../../utils";
 import { CompileReportContext, MeContext, useToastState } from "../../context";
 import { UIContext } from "../../context/ui";
 import { NoReports } from "../Reports";
+import ReactToPrint from "react-to-print";
+import { FaPrint } from "react-icons/fa";
 export const MuntakhibMaqamCompile = () => {
   // EDIT CODE START
   const [month, setMonth] = useState("");
@@ -29,6 +31,7 @@ export const MuntakhibMaqamCompile = () => {
   const [id, setId] = useState(null);
   const { dispatch } = useToastState();
   const [data, setData] = useState({});
+  const formRef = useRef();
   const { loading, setLoading, getMaqamReports } = useContext(UIContext);
   const [view, setView] = useState(true);
   const location = useLocation();
@@ -115,6 +118,7 @@ export const MuntakhibMaqamCompile = () => {
     <GeneralLayout>
       <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">
       <form
+       ref={formRef}
           className="flex flex-col justify-center items-center p-4 font-notoUrdu mb-5"
           dir="rtl"
           id="markaz-form"
@@ -203,6 +207,17 @@ export const MuntakhibMaqamCompile = () => {
           </div>
         
         </form>
+        <div className="w-full flex justify-center p-4">
+            <ReactToPrint
+              trigger={() => (
+                <button className="btn flex items-center gap-2">
+                  <FaPrint />
+                  <span>پرنٹ کریں</span>
+                </button>
+              )}
+              content={() => formRef.current}
+            />
+          </div>
       </div>
     </GeneralLayout>
   );

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import {
   CompileReportContext,
   DivisionReportContext,
@@ -22,6 +22,8 @@ import { PaighamDigest } from "../../components/provinceReport/PaighamDigest";
 import { Baitulmal } from "../../components/provinceReport/Baitulmal";
 import { RozOShabDiary } from "../../components/provinceReport/RozOShabDiary";
 import { NoReports } from "../Reports";
+import ReactToPrint from "react-to-print";
+import { FaPrint } from "react-icons/fa";
 
 export const ProvinceCompile = () => {
   // EDIT CODE START
@@ -30,6 +32,7 @@ export const ProvinceCompile = () => {
   const province = useContext(ProvinceReportContext);
   const [month, setMonth] = useState("");
   const params = useParams();
+  const formRef = useRef();
   const [id, setId] = useState(null);
   const { dispatch } = useToastState();
   const [data, setData] = useState({});
@@ -108,6 +111,7 @@ export const ProvinceCompile = () => {
       {Object.keys(compileReport).length > 2 ? (
         <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">
           <form
+           ref={formRef}
             className="flex flex-col justify-center items-center p-4 font-notoUrdu mb-5"
             dir="rtl"
             id="markaz-form"
@@ -193,6 +197,17 @@ export const ProvinceCompile = () => {
             </div>
            
           </form>
+          <div className="w-full flex justify-center p-4">
+            <ReactToPrint
+              trigger={() => (
+                <button className="btn flex items-center gap-2">
+                  <FaPrint />
+                  <span>پرنٹ کریں</span>
+                </button>
+              )}
+              content={() => formRef.current}
+            />
+          </div>
         </div>
       ) : (
         <div className="flex w-full justify-center items-center">

@@ -3,13 +3,14 @@ import "./HalqaReport.css";
 import instance from "../../api/instrance";
 import { useParams } from "react-router-dom";
 import { PrintDocument } from "../../components";
-import { MaqamContext, TehsilContext } from "../../context";
+import { CompileReportContext, MaqamContext, TehsilContext } from "../../context";
 export const HalqaReport = () => {
   const [data, setData] = useState();
   const params = useParams();
+  const compileReport = useContext(CompileReportContext);
   const maqams = useContext(MaqamContext);
   const tehsils = useContext(TehsilContext);
-
+  const [compile , setCompile]=useState();
   const printReport = async (id) => {
     const req = await instance.get(`/reports/halqa/${id}`, {
       headers: {
@@ -24,7 +25,13 @@ export const HalqaReport = () => {
   useEffect(() => {
     if (params?.id) printReport(params?.id);
   }, [params]);
-
+   useEffect(()=>{
+    let url = window.location.pathname.split('/')[2];
+    if(url==="compile"){
+      setData(compileReport);
+      console.log(data)
+    }
+   })
   const getAreaType = (area) => {
     if (area?.parentType === "Maqam") {
       return `Halqa of Maqam`;

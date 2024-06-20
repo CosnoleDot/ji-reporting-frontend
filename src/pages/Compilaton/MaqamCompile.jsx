@@ -1,7 +1,7 @@
 import {   GeneralLayout, calcultate } from "../../components";
 
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { useEffect } from "react";
 
 
@@ -21,6 +21,8 @@ import { reverseDataFormat } from "../../utils";
 import { CompileReportContext, MeContext, useToastState } from "../../context";
 import { UIContext } from "../../context/ui";
 import { NoReports } from "../Reports";
+import ReactToPrint from "react-to-print";
+import { FaPrint } from "react-icons/fa";
 
 
 
@@ -37,6 +39,7 @@ export const MaqamCompile = () => {
   const location = useLocation();
   const me = useContext(MeContext);
   const navigate = useNavigate();
+  const formRef = useRef();
   const report =useContext(CompileReportContext) ;
   const compileReport = report?.b
   const [date, setDate]=useState(`${compileReport?.startDate}-${compileReport?.endDate}`)
@@ -157,6 +160,7 @@ export const MaqamCompile = () => {
     <GeneralLayout>
       {Object.keys(compileReport).length > 2 ?<div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">
         <form
+         ref={formRef}
           className="flex flex-col justify-center items-center p-4 font-notoUrdu mb-5"
           dir="rtl"
           id="markaz-form"
@@ -245,6 +249,17 @@ export const MaqamCompile = () => {
           </div>
           
         </form>
+        <div className="w-full flex justify-center p-4">
+            <ReactToPrint
+              trigger={() => (
+                <button className="btn flex items-center gap-2">
+                  <FaPrint />
+                  <span>پرنٹ کریں</span>
+                </button>
+              )}
+              content={() => formRef.current}
+            />
+          </div>
       </div> : <div className="flex w-full justify-center items-center">
           <div>
             <NoReports/>

@@ -134,7 +134,7 @@ export const Compile = () => {
     setShowReport(false);
     setChecked(event.target.id);
   };
-console.log(areaName)
+
   const getReports = async () => {
     switch (areaType) {
       case "country":

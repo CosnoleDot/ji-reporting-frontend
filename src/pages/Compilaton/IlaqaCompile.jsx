@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { GeneralLayout } from "../../components";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { CompileReportContext, MeContext, useToastState } from "../../context";
@@ -15,6 +15,8 @@ import { Baitulmal } from "../../components/ilaqaReport/Baitulmal";
 import { RozOShabDiary } from "../../components/ilaqaReport/RozOShabDiary";
 import { MdOutlineSearchOff } from "react-icons/md";
 import { NoReports } from "../Reports";
+import { FaPrint } from "react-icons/fa";
+import ReactToPrint from "react-to-print";
 
 export const IlaqaCompile = () => {
   // EDIT CODE START
@@ -26,6 +28,7 @@ export const IlaqaCompile = () => {
   const [data, setData] = useState({});
   const { loading, setLoading, getIlaqaReports } = useContext(UIContext);
   const [view, setView] = useState(true);
+  const formRef = useRef();
   const location = useLocation();
   const me = useContext(MeContext);
   let navigate = useNavigate();
@@ -52,14 +55,13 @@ export const IlaqaCompile = () => {
           newElem.value = compileReport[i];
         }
       }
-      if (i.split('-')[0] === 'studyCircle') {
-        const newKey = 'studyCircleMentioned-'+ i.split("-")[1];
+      if (i.split("-")[0] === "studyCircle") {
+        const newKey = "studyCircleMentioned-" + i.split("-")[1];
         const newElem = document.getElementById(newKey);
         if (newElem) {
           newElem.value = compileReport[i];
         }
       }
-     
     });
   };
 
@@ -77,15 +79,16 @@ export const IlaqaCompile = () => {
     <GeneralLayout>
       {Object.keys(compileReport).length > 2 ? (
         <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">
-          <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
-            رپورٹ تالیف(برائے علاقہ)
-          </h2>
           <form
+            ref={formRef}
             className="flex flex-col justify-center items-center p-4 font-notoUrdu mb-5"
             dir="rtl"
             id="markaz-form"
           >
             <div className="w-full">
+              <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
+                رپورٹ تالیف(برائے علاقہ)
+              </h2>
               <div className="grid w-full grid-cols-1 lg:grid-cols-2">
                 <div className="flex justify-start items-center gap-2 w-full p-2">
                   <label
@@ -119,13 +122,13 @@ export const IlaqaCompile = () => {
                 <MarkaziActivities view={view} />
               </div>
               <div className="mb-4">
-                <ZailiActivities view={view} compile={true}/>
+                <ZailiActivities view={view} compile={true} />
               </div>
               <div className="mb-4">
-                <OtherActivities view={view}  compile={true}/>
+                <OtherActivities view={view} compile={true} />
               </div>
               <div className="mb-4">
-                <ToseeDawat view={view} compile={true}/>
+                <ToseeDawat view={view} compile={true} />
               </div>
               <div className="mb-4">
                 <Library view={view} />
@@ -137,9 +140,9 @@ export const IlaqaCompile = () => {
                 <Baitulmal view={view} />
               </div>
               <div className="mb-4">
-                <RozOShabDiary view={view} compile={true}/>
+                <RozOShabDiary view={view} compile={true} />
               </div>
-             
+
               {!view && (
                 <div className="w-full flex flex-col items-end gap-3 p-2">
                   <div>
@@ -155,13 +158,23 @@ export const IlaqaCompile = () => {
                 </div>
               )}
             </div>
-            
           </form>
+          <div className="w-full flex justify-center p-4">
+            <ReactToPrint
+              trigger={() => (
+                <button className="btn flex items-center gap-2">
+                  <FaPrint />
+                  <span>پرنٹ کریں</span>
+                </button>
+              )}
+              content={() => formRef.current}
+            />
+          </div>
         </div>
       ) : (
         <div className="flex w-full justify-center items-center">
           <div>
-            <NoReports/>
+            <NoReports />
           </div>
         </div>
       )}
