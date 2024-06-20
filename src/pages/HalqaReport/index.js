@@ -29,7 +29,6 @@ export const HalqaReport = () => {
     let url = window.location.pathname.split('/')[2];
     if(url==="compile"){
       setData(compileReport);
-      console.log(data)
     }
    })
   const getAreaType = (area) => {
