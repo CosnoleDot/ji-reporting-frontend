@@ -23,10 +23,7 @@ import { UIContext } from "../../context/ui";
 import { NoReports } from "../Reports";
 import ReactToPrint from "react-to-print";
 import { FaPrint } from "react-icons/fa";
-
-
-
-export const MaqamCompile = () => {
+export const MuntakhibMaqamCompile = () => {
   // EDIT CODE START
   const [month, setMonth] = useState("");
   const [createData, setCreateData] = useState();
@@ -34,19 +31,20 @@ export const MaqamCompile = () => {
   const [id, setId] = useState(null);
   const { dispatch } = useToastState();
   const [data, setData] = useState({});
+  const formRef = useRef();
   const { loading, setLoading, getMaqamReports } = useContext(UIContext);
   const [view, setView] = useState(true);
   const location = useLocation();
   const me = useContext(MeContext);
   const navigate = useNavigate();
-  const formRef = useRef();
   const report =useContext(CompileReportContext) ;
   const compileReport = report?.b
-  const [date, setDate]=useState(`${compileReport?.startDate}-${compileReport?.endDate}`)
+  const [date, setDate]=useState(`${report?.startDate}-${report?.endDate}`)
  const queryParams =new URLSearchParams(location.search);
  const areaType = queryParams.get('areaType');
     const areaName = queryParams.get('areaName');
     const autoFill = () => {
+    
       Object.keys(compileReport).forEach((i) => {
         const elem = document.getElementById(i);
         if (elem) {
@@ -87,87 +85,47 @@ export const MaqamCompile = () => {
             newElem.value = compileReport[i];
           }
         }
+        if (i==='darseQuran-done') {
+          const newKey = 'darseQuran-sum'
+          const newElem = document.getElementById(newKey);
+          if (newElem) {
+            newElem.value = compileReport['darseQuran-done'] ;
+          }
+        }
+        if (i==='ijtKarkunan-done') {
+          const newKey = 'ijtKarkunan-sum'
+          const newElem = document.getElementById(newKey);
+          if (newElem) {
+            newElem.value = compileReport['ijtKarkunan-done'] ;
+          }
+        }
+        // compileReport['darseQuran-sum']= compileReport["darseQuran-done"]+ compileReport["darseQuran-manual"]
+
         
        
       });
     };
 
-  // To set values to zero when in create mode
-  //   useEffect(() => {
-  //     const value1 = document.getElementById("litrature");
-  //     const value2 = document.getElementById("commonStudentMeetings");
-  //     const value3 = document.getElementById("commonLiteratureDistribution");
-  //     if (window.location.pathname?.split("/")[2] === "create") {
-  //       value1.value = 0;
-  //       value2.value = 0;
-  //       value3.value = 0;
-  //     }
-  //   }, [location.pathname]);
 
-  //     const afd = [
-  //       "rehaishHalqay",
-  //       "taleemHalqay",
-  //       "totalHalqay",
-  //       "subRehaishHalqay",
-  //       "subTaleemHalqay",
-  //       "subTotalHalqay",
-  //       "busmSchoolUnits",
-  //       "busmRehaishUnits",
-  //       "busmTotalUnits",
-  //       "arkan",
-  //       "umeedWaran",
-  //       "rafaqa",
-  //       "karkunan",
-  //       "members",
-  //       "shaheen",
-  //     ];
-  //     afd.forEach((i) => {
-  //       calcultate(i);
-  //     });
-  //   }, [data]);
   useEffect(() => {
     if (!id) {
       autoFill();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // const totalHalqay = parseInt(
-  //   document.getElementById("totalHalqay-end")?.value
-  // );
-  // const subTotalHalqay = parseInt(
-  //   document.getElementById("subTotalHalqay-end")?.value
-  // );
-  // const busmTotalUnits = parseInt(
-  //   document.getElementById("busmTotalUnits-end")?.value
-  // );
-
-  // useEffect(() => {
-  //   document.getElementById("studyCircleMentioned-decided").value = totalHalqay;
-  //   document.getElementById("ijtRafaqa-decided").value = totalHalqay;
-  //   document.getElementById("darseQuran-decided").value = parseFloat(
-  //     totalHalqay + subTotalHalqay
-  //   );
-  //   document.getElementById("ijtKarkunan-decided").value = parseFloat(
-  //     totalHalqay + subTotalHalqay
-  //   );
-  //   document.getElementById("paighamEvent-decided").value = busmTotalUnits;
-  //   document.getElementById("shaheenMeeting-decided").value = busmTotalUnits;
-  // }, [totalHalqay, subTotalHalqay, busmTotalUnits]);
-  // data.litrature = data["literatureDistribution"];
-
+  
   return (
     <GeneralLayout>
-      {Object.keys(compileReport).length > 2 ?<div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">
-        <form
-         ref={formRef}
+      <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">
+      <form
+       ref={formRef}
           className="flex flex-col justify-center items-center p-4 font-notoUrdu mb-5"
           dir="rtl"
           id="markaz-form"
         >
           <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
             {" "}
-            رپورٹ تالیف(برائے مقام)
+            رپورٹ تالیف(برائے منتخب مقام)
           </h2>
 
           <div className="w-full">
@@ -176,19 +134,19 @@ export const MaqamCompile = () => {
                 <label
                   htmlFor="halqa_name"
                   className="block text-sm md:text-lg"
-                >{`مقام کا نام`}</label>
+                >{`منتخب مقام کا نام`}</label>
                 <input
                   required
                   className="border-b-2 border-dashed"
                   type="text"
                   name="name"
                   id="name"
-                  value={queryParams.get('areaName')}
+                  value={areaName}
                   readOnly
                 />
               </div>
 
-              <div className="flex justify-start items-center gap-4 w-full p-2">
+              <div className="flex justify-start items-center gap-2 w-full p-2">
                 <label htmlFor="month" className="block text-sm md:text-lg">
                   برائے عرصہ
                 </label>
@@ -211,13 +169,13 @@ export const MaqamCompile = () => {
               <MarkaziActivities view={view} />
             </div>
             <div className="mb-4">
-              <ZailiActivities view={view} />
+              <ZailiActivities view={view} compile={true}/>
             </div>
             <div className="mb-4">
-              <OtherActivities view={view} />
+              <OtherActivities view={view} compile={true}/>
             </div>
             <div className="mb-4">
-              <ToseeDawat />
+              <ToseeDawat compile={true}/>
             </div>
             <div className="mb-4">
               <Library />
@@ -229,7 +187,7 @@ export const MaqamCompile = () => {
               <Baitulmal view={view} />
             </div>
             <div className="mb-4">
-              <RozOShabDiary view={view} />
+              <RozOShabDiary view={view} compile={true}/>
             </div>
            
             {!view && (
@@ -247,7 +205,7 @@ export const MaqamCompile = () => {
               </div>
             )}
           </div>
-          
+        
         </form>
         <div className="w-full flex justify-center p-4">
             <ReactToPrint
@@ -260,11 +218,7 @@ export const MaqamCompile = () => {
               content={() => formRef.current}
             />
           </div>
-      </div> : <div className="flex w-full justify-center items-center">
-          <div>
-            <NoReports/>
-          </div>
-        </div>}
+      </div>
     </GeneralLayout>
   );
 };

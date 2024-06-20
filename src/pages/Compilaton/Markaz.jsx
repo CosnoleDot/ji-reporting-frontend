@@ -1,5 +1,5 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { useEffect } from "react";
 import {
   IfradiKuwat,
@@ -26,6 +26,8 @@ import {
 import { UIContext } from "../../context/ui";
 import { Baitulmal } from "../../components/maqamReport/Baitulmal";
 import { NoReports } from "../Reports";
+import ReactToPrint from "react-to-print";
+import { FaPrint } from "react-icons/fa";
 
 // const getData = async (path, id, setData, data) => {
 //   const arr = data[path];
@@ -40,7 +42,7 @@ export const Markaz = () => {
 
   const [month, setMonth] = useState("");
   const [createData, setCreateData] = useState([]);
-
+  const formRef = useRef();
   const [id, setId] = useState(null);
   const { dispatch } = useToastState();
   const [data, setData] = useState({});
@@ -71,6 +73,13 @@ export const Markaz = () => {
           newElem.value = compileReport[i];
         }
       }
+      if (i.split('-')[0] === 'studyCircle') {
+        const newKey = 'studyCircleMentioned-'+ i.split("-")[1];
+        const newElem = document.getElementById(newKey);
+        if (newElem) {
+          newElem.value = compileReport[i];
+        }
+      }
     });
   };
 
@@ -89,6 +98,7 @@ export const Markaz = () => {
       {Object.keys(compileReport).length > 2 ? (
         <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">
           <form
+           ref={formRef}
             className="flex flex-col justify-center items-center p-4 font-notoUrdu mb-5"
             dir="rtl"
             id="markaz-form"
@@ -116,19 +126,11 @@ export const Markaz = () => {
                   />
                 </div>
 
-                <div className="flex justify-start items-center gap-2 w-full p-2">
+                <div className="flex justify-start items-center gap-4 w-full p-2">
                   <label htmlFor="month" className="block text-sm md:text-lg">
                     برائے عرصہ
                   </label>
-                  <input
-                    required
-                    className="border-b-2 border-dashed"
-                    type="month"
-                    name="month"
-                    id="month"
-                    readOnly
-                    value={date}
-                  />
+                  <span className="underline">{date}</span>
                 </div>
               </div>
               <div className="mb-4">
@@ -150,7 +152,7 @@ export const Markaz = () => {
                 <ZailiActivities view={view} obj={obj} />
               </div>
               <div className="mb-4">
-                <OtherActivities view={view} />
+                <OtherActivities view={view} compile={true}/>
               </div>
               <div className="mb-4">
                 <ToseeDawat />
@@ -164,17 +166,7 @@ export const Markaz = () => {
               <div className="mb-4">
                 <RozOShabDiary view={view} />
               </div>
-              <div className="w-full flex p-2">
-                <label htmlFor="comments">تبصرہ</label>
-                <input
-                  type="text"
-                  required
-                  name="comments"
-                  className="border-b-2 border-dashed w-full"
-                  id="comments"
-                  readOnly={view}
-                />
-              </div>
+              
               {!view && (
                 <div className="w-full flex flex-col items-end gap-3 p-2">
                   <div>
@@ -190,14 +182,19 @@ export const Markaz = () => {
                 </div>
               )}
             </div>
-            {!view && (
-              <div className="w-full">
-                <button disabled={loading} className="btn btn-primary">
-                  {id ? "Update" : "Add"}
-                </button>
-              </div>
-            )}
+           
           </form>
+          <div className="w-full flex justify-center p-4">
+            <ReactToPrint
+              trigger={() => (
+                <button className="btn flex items-center gap-2">
+                  <FaPrint />
+                  <span>پرنٹ کریں</span>
+                </button>
+              )}
+              content={() => formRef.current}
+            />
+          </div>
         </div>
       ) : (
         <div className="flex w-full justify-center items-center">

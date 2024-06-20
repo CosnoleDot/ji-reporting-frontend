@@ -24,7 +24,7 @@ export const calculateRawabitDecided = () => {
   }
 };
 
-export const ToseeDawat = ({ view }) => {
+export const ToseeDawat = ({ view ,compile}) => {
   useEffect(() => {
     const elem = document.getElementById("rawabitDecided");
     const rwbMeetings = document.getElementById("rwabitMeetingsGoal");
@@ -113,7 +113,7 @@ export const ToseeDawat = ({ view }) => {
           />
         </div>
         <div className="flex py-2">
-          <label className="block text-sm md:text-lg">روابط رجسٹر مرتب:</label>
+         {!compile && <> <label className="block text-sm md:text-lg">روابط رجسٹر مرتب:</label>
           {view ? (
             <input
               disabled
@@ -129,7 +129,7 @@ export const ToseeDawat = ({ view }) => {
               id="registeredTosee"
               className="checkbox ms-2"
             />
-          )}
+          )}</>}
         </div>
       </div>
       <div className="flex-col lg:flex-row w-full items-center justify-start">

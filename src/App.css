@@ -6,6 +6,21 @@
   font-family: urdu;
   src: url("../public/fonts/font.ttf");
 }
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #markaz-form, #markaz-form * {
+    visibility: visible;
+  }
+  #markaz-form {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+}
+
 
 .containerPrint {
   width: 210mm;

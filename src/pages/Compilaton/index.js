@@ -6,3 +6,4 @@ export * from "./HalqaCompile";
 export * from "./IlaqaCompile";
 export * from "./ProvinceCompile";
 export * from "./DivsionCompile";
+export * from "./MuntakhibMaqamCompile";

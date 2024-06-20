@@ -96,8 +96,8 @@ export const Compile = () => {
   const { getCompileReports } = useContext(UIContext);
   const [sDate, setSDate] = useState();
   const [eDate, setEDate] = useState();
-
   const navigate = useNavigate();
+  
   useEffect(() => {
     switch (areaType) {
       case "markaz":
@@ -141,8 +141,24 @@ export const Compile = () => {
         setAreaName("Pakistan");
         break;
       case "province":
-        const name = provinces.find((i) => i._id === areaId)?.name;
-        setAreaName(name?.split(" ").join(""));
+        let provinceName = provinces.find((i) => i._id === areaId)?.name;
+        setAreaName(provinceName?.split(" ").join(""));
+        break;
+        case "division":
+        let divisionName = divisions.find((i) => i._id === areaId)?.name;
+        
+        setAreaName(divisionName?.split(" ").join(""));
+        case "maqam":
+          let maqamName = maqams.find((i) => i._id === areaId)?.name;
+          setAreaName(maqamName?.split(" ").join(""));
+        break;
+        case "ilaqa":
+          let ilaqaName = ilaqas.find((i) => i._id === areaId)?.name;
+          setAreaName(ilaqaName?.split(" ").join(""));
+        break;
+        case "halqa":
+          let halqaName = halqas.find((i) => i._id === areaId)?.name;
+          setAreaName(halqaName?.split(" ").join(""));
         break;
       default:
         break;
@@ -190,7 +206,10 @@ export const Compile = () => {
       setAreaName(me?.userAreaId?.name.split(" ").join(""));
     }
     
+    
   }, [localStorage.getItem("@type")]);
+
+
   return (
     <GeneralLayout title={me?.userAreaId?.name.toUpperCase()}>
       <div className="relative flex flex-col gap-3 items-start p-5 justify-start h-[calc(100vh-65.6px-64px)]">
@@ -423,47 +442,9 @@ export const Compile = () => {
         >
           Compile
         </button>
-        {/* {showReport && areaType==="country" && <Markaz/>} */}
-        {showReport && areaType === "country" && (
-          <div className="card flex flex-row items-start justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl ">
-            <div className="flex flex-col">
-              {" "}
-              <h2 className="text-sm lg:text-lg font-semibold">{`${areaType.toUpperCase()}'s COMPILED REPORT`}</h2>
-              <span className="text-sm lg:text-lg font-semibold">{`From ${
-                startMonth
-                  ? months.filter(
-                      (i) => i.value === data?.startDate.split("-")[1]
-                    )[0]?.title +
-                    "-" +
-                    data?.startDate?.split("-")[0]
-                  : data?.startDate
-              } To ${
-                endMonth
-                  ? months.filter(
-                      (i) => i.value === data?.endDate.split("-")[1]
-                    )[0]?.title +
-                    "-" +
-                    data?.endDate?.split("-")[0]
-                  : data?.endDate
-              } `}</span>
-            </div>
-            <div className="flex gap-4">
-              <button
-                className="btn"
-                // onClick={() => navigate(`/reports/edit/${p._id}`)}
-              >
-                <FaEye />
-              </button>
-
-              <button
-                className="btn"
-                // onClick={() => handlePrint(p?._id)}
-              >
-                <FaPrint />
-              </button>
-            </div>
-          </div>
-        )}
+       <div className="w-full flex justify-end items-end text-white">
+        <span>HASSAAN MUJTABA</span>
+       </div>
       </div>
     </GeneralLayout>
   );
