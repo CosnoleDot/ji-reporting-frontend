@@ -40,10 +40,6 @@ export const Dashboard = () => {
   const ilaqa = useContext(IlaqaContext);
   const districts = useContext(DistrictContext);
   const tehsils = useContext(TehsilContext);
-  const maqamReports = useContext(MaqamReportContext);
-  const divisionReports = useContext(DivisionReportContext);
-  const halqaReports = useContext(HalqaReportContext);
-  const provinceReports = useContext(ProvinceReportContext);
   const areaDetails = useContext(ViewDetails);
   const me = useContext(MeContext);
   const [userAreaType, setUserAreaType] = useState("All");
@@ -125,14 +121,17 @@ export const Dashboard = () => {
           return res;
         };
         let markaz = [];
+        let province, maqam, division, ilaqa, halqa;
         if (me?.userAreaType === "Country") {
           markaz = await getUnfilledReports("markaz");
         }
-        const province = await getUnfilledReports("province");
-        const maqam = await getUnfilledReports("maqam");
-        const division = await getUnfilledReports("division");
-        const ilaqa = await getUnfilledReports("ilaqa");
-        const halqa = await getUnfilledReports("halqa");
+        province = await getUnfilledReports("province");
+        province = await getUnfilledReports("province");
+        maqam = await getUnfilledReports("maqam");
+        division = await getUnfilledReports("division");
+        ilaqa = await getUnfilledReports("ilaqa");
+        halqa = await getUnfilledReports("halqa");
+
         const markazData = markaz?.data?.data?.allCountries || [];
         const provinceData = province?.data?.data?.allProvince || [];
         const maqamData = maqam?.data?.data?.allMaqams || [];
@@ -163,7 +162,29 @@ export const Dashboard = () => {
               }
               return false;
             }
+            if (userAreaType === "Ilaqa") {
+              if (
+                h?.parentType === "Ilaqa" &&
+                h?.parentId?._id === selectedId
+              ) {
+                return true;
+              }
+              return false;
+            }
             return false;
+          }),
+        ];
+        const getIlaqaData = (halqaData) => [
+          ...halqaData.filter((h) => {
+            if (userAreaType === "Ilaqa") {
+              if (
+                h?.parentType === "Ilaqa" &&
+                h?.parentId?._id === selectedId
+              ) {
+                return true;
+              }
+              return false;
+            }
           }),
         ];
         const temp = {
@@ -180,6 +201,8 @@ export const Dashboard = () => {
                   ...ilaqaData,
                   ...halqaData,
                 ]
+              : userAreaType === "Province"
+              ? [...provinceData]
               : getFilteredHalqas(halqaData),
         };
         temp.unfilled =
@@ -192,6 +215,8 @@ export const Dashboard = () => {
                 ...(ilaqa?.data?.data?.unfilled || []),
                 ...(halqa?.data?.data?.unfilled || []),
               ]
+            : userAreaType === "Province"
+            ? province?.data?.data?.unfilled || []
             : getFilteredHalqas(halqa?.data?.data?.unfilled);
         temp.totalAreas =
           markaz?.data?.data?.totalCountries ||
@@ -253,6 +278,12 @@ export const Dashboard = () => {
         break;
       case "Maqam":
         setAreas(maqams);
+        break;
+      case "Ilaqa":
+        setAreas(ilaqa);
+        break;
+      case "Province":
+        setAreas(provinces);
         break;
       default:
         break;
@@ -810,6 +841,21 @@ export const Dashboard = () => {
               <div className=" w-full flex items-center justify-start gap-2 border border-primary p-2 rounded-lg">
                 {show && (
                   <>
+                    {me?.userAreaType === "Country" && (
+                      <div className="form-control">
+                        <label className="label cursor-pointer gap-2">
+                          <input
+                            type="radio"
+                            name="userAreaType"
+                            className="radio checked:bg-blue-500"
+                            value="Province"
+                            checked={userAreaType === "Province"}
+                            onChange={(e) => setUserAreaType(e.target.value)}
+                          />
+                          <span className="label-text">Province</span>
+                        </label>
+                      </div>
+                    )}
                     {(me?.userAreaType === "Province" ||
                       me?.userAreaType === "Country") && (
                       <div className="form-control">
@@ -842,7 +888,23 @@ export const Dashboard = () => {
                         </label>
                       </div>
                     )}
-
+                    {(me?.userAreaType === "Province" ||
+                      me?.userAreaType === "Country" ||
+                      me?.userAreaType === "Maqam") && (
+                      <div className="form-control">
+                        <label className="label cursor-pointer gap-2">
+                          <input
+                            type="radio"
+                            name="userAreaType"
+                            className="radio checked:bg-blue-500"
+                            value="Ilaqa"
+                            checked={userAreaType === "Ilaqa"}
+                            onChange={(e) => setUserAreaType(e.target.value)}
+                          />
+                          <span className="label-text">Ilaqa</span>
+                        </label>
+                      </div>
+                    )}
                     <div className="form-control">
                       <label className="label cursor-pointer gap-2">
                         <input

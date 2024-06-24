@@ -203,6 +203,7 @@ export const Maqam = () => {
     setLoading(false);
   };
 
+  console.log(data);
   // To set values to zero when in create mode
   useEffect(() => {
     const value1 = document.getElementById("litrature");
