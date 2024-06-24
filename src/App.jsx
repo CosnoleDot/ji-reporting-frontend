@@ -65,6 +65,7 @@ import { MarkazReportPrint } from "./pages/MarkazReportPrint";
 import { Page404 } from "./pages/PageNotFound/Page404";
 import { Compile } from "./pages/Compilaton/Compile";
 import { CompileReports, MaqamCompile, Markaz } from "./pages/Compilaton";
+import { HalqaCompileReport } from "./pages/Compilaton/HalqaCompileReport";
 // import { SpiderChart } from "./pages/SpiderChart";
 
 function App() {
@@ -1378,6 +1379,10 @@ function App() {
                                               <Route
                                                 path="/halqa-report/print/:id"
                                                 element={<HalqaReport />}
+                                              />
+                                              <Route
+                                                path="/halqa-report-compile/print"
+                                                element={<HalqaCompileReport />}
                                               />
                                               <Route
                                                 path="/halqa-report/compile/print/:id"

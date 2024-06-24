@@ -1,12 +1,19 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { GeneralLayout, IfradiKuwat, Library, OtherActivities, RozOShabDiary, ToseeDawat, Activity } from "../../components";
+import {
+  GeneralLayout,
+  IfradiKuwat,
+  Library,
+  OtherActivities,
+  RozOShabDiary,
+  ToseeDawat,
+  Activity,
+} from "../../components";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { CompileReportContext, MeContext, useToastState } from "../../context";
 import { UIContext } from "../../context/ui";
 import { Baitulmal } from "../../components/halqa/Baitulmal";
 import { NoReports } from "../Reports";
 import { FaPrint } from "react-icons/fa";
-import ReactToPrint from "react-to-print";
 
 export const HalqaCompile = () => {
   const { dispatch } = useToastState();
@@ -21,7 +28,6 @@ export const HalqaCompile = () => {
   const params = useParams();
   let navigate = useNavigate();
   const compileReport = useContext(CompileReportContext);
-  const formRef = useRef();
 
   const [date, setDate] = useState(
     `${compileReport?.startDate}-${compileReport?.endDate}`
@@ -57,13 +63,15 @@ export const HalqaCompile = () => {
       data[i] = 0;
     }
   });
-
+  const handlePrint = () => {
+    window.open(`/halqa-report-compile/print`, "blank");
+  };
+  
   return (
     <GeneralLayout>
       {Object.keys(compileReport).length > 2 ? (
         <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">
           <form
-            ref={formRef}
             className="flex flex-col justify-center items-center p-4 font-notoUrdu mb-5"
             dir="rtl"
             id="markaz-form"
@@ -134,17 +142,9 @@ export const HalqaCompile = () => {
               )}
             </div>
           </form>
-          <div className="w-full flex justify-center p-4">
-            <ReactToPrint
-              trigger={() => (
-                <button className="btn flex items-center gap-2">
-                  <FaPrint />
-                  <span>پرنٹ کریں</span>
-                </button>
-              )}
-              content={() => formRef.current}
-            />
-          </div>
+          <button className="btn" onClick={() => handlePrint()}>
+            <FaPrint />
+          </button>
         </div>
       ) : (
         <div className="flex w-full justify-center items-center">
