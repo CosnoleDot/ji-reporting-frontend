@@ -3944,6 +3944,18 @@ html {
   height: 100vh;
 }
 
+.h-\[calc\(100vh-400px-64px-73\.6px\)\] {
+  height: calc(100vh - 400px - 64px - 73.6px);
+}
+
+.h-\[calc\(100vh-300px-64px-73\.6px\)\] {
+  height: calc(100vh - 300px - 64px - 73.6px);
+}
+
+.h-\[calc\(100vh-200px-64px-73\.6px\)\] {
+  height: calc(100vh - 200px - 64px - 73.6px);
+}
+
 .max-h-56 {
   max-height: 14rem;
 }
