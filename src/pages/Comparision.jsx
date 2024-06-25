@@ -512,8 +512,8 @@ export const Comparision = () => {
 
         totallibraries: "کل تعداد لائبریریز",
         totalbooks: "تعداد کتب",
-        totalincrease: "اضافہ",
-        totaldecrease: "کمی",
+        totalincrease: "اضافہ کتب",
+        totaldecrease: "کمی کتب",
         totalbookrent: "اجرائے کتب",
 
         umeedwaranfilledsum: "امیدواران فل",
@@ -524,7 +524,70 @@ export const Comparision = () => {
         savings: "بدست",
         loss: "خسارہ",
       };
-      myData.labels = myData.labels.map((i) => ilaqa[i]);
+      const maqam = {
+        rehaishhalqay: "رہائشی حلقے",
+        taleemhalqay: "تعلیمی حلقے",
+        totalhalqay: "کل حلقے",
+        subrehaishhalqay: "رِہائشی ذیلی حلقے",
+        subtaleemhalqay: "تعلیمی ذیلی حلقے",
+        subtotalhalqay: "کل ذیلی حلقے",
+        busmschoolunits: "بزم کے سکول یونٹس",
+        busmrehaishunits: "بزم کےرِہائشی یونٹس",
+        busmtotalunits: "بزم کے کل یونٹس",
+
+        arkan: "ارکان",
+        umeedwaran: "امیدواران",
+        rafaqa: "رفقا",
+        karkunan: "کارکنان",
+        shaheen: "شاہین",
+        members: "ممبرز",
+
+        ijtarkan: "اجتمع ارکان",
+        studycircle: "سٹڈی سرکل",
+        ijtnazmeen: "اجتماع ناظمین",
+        ijtumeedwaran: "اجتماع امیدواران",
+        sadurmeeting: "صدورمیٹینگ",
+
+        dawatiwafud: "دعوتی وفود",
+        rawabitparties: "روابط پارٹیز",
+        nizamsalah: "نظام الصلوٰۃ",
+        shabbedari: "شب بیداری",
+        anyOther: "",
+
+        ijtrafaqa: "اجتماع رفقا",
+        ijtkarkunan: "اجتماع کارکنان",
+        studycircle: "سٹڈی سرکل",
+        darsequran: "درس قرآن",
+        shaheenmeeting: "شاہین میٹنگ",
+        paighamevent: "پیغام محفل",
+
+        totallibraries: "کل تعداد لائبریریز",
+        totalbooks: "تعداد کتب",
+        totalincrease: "اضافہ کتب",
+        totaldecrease: "کمی کتب",
+        totalbookrent: "اجرائے کتب",
+
+        totalreceived: "کل موصولہ",
+        totalsold: "فروخت کردہ",
+        monthlyreceivinggoal: "ڈائجسٹ ماہانہ ہدف",
+
+        umeedwaranfilledsum: "امیدواران فل",
+        rafaqafilledsum: "رفقا فل",
+
+        monthlyincome: "ماہانہ آمدن",
+        monthlyexpenditure: "ماہانہ خرچ",
+        savings: "بدست",
+        loss: "خسارہ",
+
+        rawabitdecided: "طے شدہ",
+        currentsum: "موجود",
+        meetingssum: "ملاقاتیں",
+        literaturesum: "تقسیم لٹریچر",
+        commonstudentmeetingssum: "عام طلبہ ملاقاتیں",
+        commonliteraturedistributionsum: "عام طلبہ تقسیم لٹریچر ",
+        registered: "",
+      };
+      myData.labels = myData.labels.map((i) => maqam[i]);
       setResponse(myData);
     } catch (error) {
       console.log(error);

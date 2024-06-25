@@ -84,7 +84,8 @@ export const MaqamReports = () => {
     document.getElementById("autocomplete").value = "";
   };
 
-  const viewReport = async (id) => {
+  const viewReport = async (id,areaId) => {
+    filterMuntakhib(areaId);
     navigate(`view/${id}`);
   };
   const editReport = (id) => {
