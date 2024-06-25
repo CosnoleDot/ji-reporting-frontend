@@ -15,7 +15,7 @@ export const MuntakhibMaqamCompileReport = () => {
   const { getCompileReports } = useContext(UIContext);
   useEffect(() => {
     let url = window.location.pathname.split("/")[2];
-    console.log(compileReport);
+   
     if (url === "print") {
       setData(compileReport.b);
     }
@@ -28,7 +28,7 @@ export const MuntakhibMaqamCompileReport = () => {
   useEffect(() => {
     getCompileReports(startDate, endDate, "maqam", areaId);
   }, []);
-  console.log(compileReport.muntakhib)
+ 
   return (
     <div className="wrapper reports" style={{ marginBottom: "2rem" }} dir="rtl">
       <PrintDocument />

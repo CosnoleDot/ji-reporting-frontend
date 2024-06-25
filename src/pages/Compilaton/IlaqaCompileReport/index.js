@@ -17,7 +17,7 @@ export const IlaqaCompileReport = () => {
   const { getCompileReports } = useContext(UIContext);
   useEffect(() => {
     let url = window.location.pathname.split("/")[2];
-    console.log(compileReport);
+   
     if (url === "print") {
       setData(compileReport);
     }

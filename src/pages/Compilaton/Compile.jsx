@@ -100,7 +100,6 @@ export const Compile = () => {
   const [isMun , setIsMun]=useState(true);
   const ilaqa = ilaqas?.filter((i)=> i?.maqam._id === me?.userAreaId?._id);
 
-  console.log(isMun)
   useEffect(() => {
     switch (areaType) {
       case "markaz":

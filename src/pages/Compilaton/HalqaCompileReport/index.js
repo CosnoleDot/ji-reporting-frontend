@@ -22,7 +22,7 @@ export const HalqaCompileReport = () => {
   const { getCompileReports } = useContext(UIContext);
   useEffect(() => {
     let url = window.location.pathname.split("/")[2];
-    console.log(compileReport);
+   
     if (url === "print") {
       setData(compileReport);
     }
@@ -47,7 +47,7 @@ export const HalqaCompileReport = () => {
   useEffect(() => {
     getCompileReports(startDate, endDate, "halqa", areaId);
   }, []);
-  console.log(data);
+
   return (
     <div className="wrapper reports" style={{ marginBottom: "2rem" }} dir="rtl">
       <PrintDocument />
