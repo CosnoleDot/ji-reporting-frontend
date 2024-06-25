@@ -524,7 +524,6 @@ export const Comparision = () => {
         savings: "بدست",
         loss: "خسارہ",
       };
-      console.log(myData);
       myData.labels = myData.labels.map((i) => ilaqa[i]);
       setResponse(myData);
     } catch (error) {
