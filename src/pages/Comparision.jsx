@@ -224,287 +224,242 @@ export const Comparision = () => {
         }
       );
       const myData = res?.data?.data;
-      // const labels = {
-      //   halqa: {
-      //     activities: {
-      //       ijtrafaqa: "اجتماع رفقا",
-      //       ijtkarkunan: "اجتماع کارکنان",
-      //       studycircle: "سٹڈی سرکل",
-      //       darsequran: "درس قُرآن",
-      //     },
-      //     workerInfo: {
-      //       arkan: "ارکان",
-      //       umeedwaran: "امیدواران",
-      //       rafaqa: "رفقا",
-      //       karkunan: "کارکنان",
-      //     },
-      //     library: {
-      //       books: "تعداد کتب",
-      //       increase: "اضافہ",
-      //       decrease: "کمی",
-      //       bookrent: "اجرائے کتب",
-      //       registered: "",
-      //     },
-      //     otherActivity: {
-      //       dawatiwafud: "دعوتی وفود",
-      //       rawabitparties: "روابط پارٹیز",
-      //       hadithcircle: "حدیث سرکل",
-      //       nizamsalah: "نظام الصلوٰۃ",
-      //       shabbedari: "شب بیداری",
-      //     },
-      //     toseeDawat: {
-      //       rawabitdecided: "طے شدہ",
-      //       current: "موجود",
-      //       meetings: "ملاقاتیں",
-      //       literaturedistribution: "تقسیم لٹریچر",
-      //       registered: "",
-      //       commonstudentmeetings: "عام طلبہ ملاقاتیں",
-      //       commonliteraturedistribution: "عام طلبہ تقسیم لٹریچر ",
-      //     },
-      //     rozShabBedari: {
-      //       umeedwaranfilled: "امیدواران فل",
-      //       rafaqafilled: "رفقا فل",
-      //       arkanfilled: "ارکان فل",
-      //     },
-      //   },
-      //   maqam: {
-      //     activities: {
-      //       ijtarkan: "اجتماع ارکان",
-      //       studycircle: "سٹڈی سرکل",
-      //       ijtnazmeen: "اجتماع ناظمین",
-      //       ijtumeedwaran: "اجتماع امیدواران",
-      //       sadurmeeting: "صدورمیٹینگ",
-      //     },
-      //     workerInfo: {
-      //       arkan: "ارکان",
-      //       umeedwaran: "امیدواران",
-      //       rafaqa: "رفقا",
-      //       karkunan: "کارکنان",
-      //       shaheen: "شاہین",
-      //       members: "ممبرز",
-      //     },
-      //     library: {
-      //       totallibraries: "کل تعداد لائبریریز",
-      //       totalBooks: "تعداد کتب",
-      //       totalIncrease: "اضافہ",
-      //       totalDecrease: "کمی",
-      //       totalBookRent: "اجرائے کتب",
-      //     },
-      //     otherActivity: {
-      //       dawatiwafud: "دعوتی وفود",
-      //       rawabitparties: "روابط پارٹیز",
-      //       nizamsalah: "نظام الصلوٰۃ",
-      //       shabbedari: "شب بیداری",
-      //       anyOther: "",
-      //       tarbiyatgaah: "تربیت گاہ",
-      //     },
-      //     toseeDawat: {
-      //       rawabitdecided: "طے شدہ",
-      //       current: "موجود",
-      //       meetings: "ملاقاتیں",
-      //       literaturedistribution: "تقسیم لٹریچر",
-      //       registered: "",
-      //       commonstudentmeetings: "عام طلبہ ملاقاتیں",
-      //       commonliteraturedistribution: "عام طلبہ تقسیم لٹریچر ",
-      //     },
-      //     rozShabBedari: {
-      //       umeedwaranfilled: "امیدواران فل",
-      //       rafaqafilled: "رفقا فل",
-      //       arkanfilled: "ارکان فل",
-      //     },
-      //     paighamDigest: {
-      //       totalreceived: "کل موصولہ",
-      //       totalsold: "فروخت کردہ",
-      //     },
-      //     tanzeem: {
-      //       rehaishhalqay: "رہائشی حلقے",
-      //       taleemhalqay: "تعلیمی حلقے",
-      //       totalhalqay: "کل حلقے",
-      //       subrehaishhalqay: "رِہائشی ذیلی حلقے",
-      //       subtaleemhalqay: "تعلیمی ذیلی حلقے",
-      //       subtotalhalqay: "کل ذیلی حلقے",
-      //       busmschoolunits: "بزم کے سکول یونٹس",
-      //       busmrehaishunits: "بزم کےرِہائشی یونٹس",
-      //       busmtotalunits: "بزم کے کل یونٹس",
-      //     },
-      //     mentionedActivities: {
-      //       ijtrafaqa: "اجتماع رفقا",
-      //       studycircle: "سٹڈی سرکل",
-      //       ijtkarkunan: "اجتماع کارکنان",
-      //       darsequran: "درس قرآن",
-      //       shaheenmeeting: "شاہین میٹنگ",
-      //       paighamevent: "پیغام محفل",
-      //     },
-      //   },
-      //   division: {
-      //     activities: {
-      //       studycircle: "سٹڈی سرکل",
-      //       ijtnazmeen: "اجتماع ناظمین",
-      //       ijtumeedwaran: "اجتماع امیدواران",
-      //       sadurmeeting: "صدورمیٹینگ",
-      //     },
-      //     workerInfo: {
-      //       arkan: "ارکان",
-      //       umeedwaran: "امیدواران",
-      //       rafaqa: "رفقا",
-      //       karkunan: "کارکنان",
-      //       shaheen: "شاہین",
-      //       members: "ممبرز",
-      //     },
-      //     library: {
-      //       totallibraries: "کل تعداد لائبریریز",
-      //       totalBooks: "تعداد کتب",
-      //       totalIncrease: "اضافہ",
-      //       totalDecrease: "کمی",
-      //       totalBookRent: "اجرائے کتب",
-      //     },
-      //     otherActivity: {
-      //       dawatiwafud: "دعوتی وفود",
-      //       rawabitparties: "روابط پارٹیز",
-      //       nizamsalah: "نظام الصلوٰۃ",
-      //       shabbedari: "شب بیداری",
-      //       anyOther: "",
-      //       tarbiyatgaah: "تربیت گاہ",
-      //     },
-      //     toseeDawat: {
-      //       rawabitdecided: "طے شدہ",
-      //       current: "موجود",
-      //       meetings: "ملاقاتیں",
-      //       literaturedistribution: "تقسیم لٹریچر",
-      //       registered: "",
-      //       commonstudentmeetings: "عام طلبہ ملاقاتیں",
-      //       commonliteraturedistribution: "عام طلبہ تقسیم لٹریچر ",
-      //     },
-      //     rozShabBedari: {
-      //       umeedwaranfilled: "امیدواران فل",
-      //       rafaqafilled: "رفقا فل",
-      //       arkanfilled: "ارکان فل",
-      //     },
-      //     paighamDigest: {
-      //       totalreceived: "کل موصولہ",
-      //       totalsold: "فروخت کردہ",
-      //     },
-      //     tanzeem: {
-      //       rehaishhalqay: "رہائشی حلقے",
-      //       taleemhalqay: "تعلیمی حلقے",
-      //       totalhalqay: "کل حلقے",
-      //       subrehaishhalqay: "رِہائشی ذیلی حلقے",
-      //       subtaleemhalqay: "تعلیمی ذیلی حلقے",
-      //       subtotalhalqay: "کل ذیلی حلقے",
-      //       busmschoolunits: "بزم کے سکول یونٹس",
-      //       busmrehaishunits: "بزم کےرِہائشی یونٹس",
-      //       busmtotalunits: "بزم کے کل یونٹس",
-      //     },
-      //     mentionedActivities: {
-      //       ijtrafaqa: "اجتماع رفقا",
-      //       studycircle: "سٹڈی سرکل",
-      //       ijtkarkunan: "اجتماع کارکنان",
-      //       darsequran: "درس قرآن",
-      //       shaheenmeeting: "شاہین میٹنگ",
-      //       paighamevent: "پیغام محفل",
-      //     },
-      //   },
-      //   province: {
-      //     activities: {
-      //       studycircle: "سٹڈی سرکل",
-      //       ijtnazmeen: "اجتماع ناظمین",
-      //       ijtumeedwaran: "اجتماع امیدواران",
-      //       sadurmeeting: "صدورمیٹینگ",
-      //     },
-      //     workerInfo: {
-      //       arkan: "ارکان",
-      //       umeedwaran: "امیدواران",
-      //       rafaqa: "رفقا",
-      //       karkunan: "کارکنان",
-      //       shaheen: "شاہین",
-      //       members: "ممبرز",
-      //     },
-      //     library: {
-      //       totallibraries: "کل تعداد لائبریریز",
-      //       totalBooks: "تعداد کتب",
-      //       totalIncrease: "اضافہ",
-      //       totalDecrease: "کمی",
-      //       totalBookRent: "اجرائے کتب",
-      //     },
-      //     otherActivity: {
-      //       dawatiwafud: "دعوتی وفود",
-      //       rawabitparties: "روابط پارٹیز",
-      //       nizamsalah: "نظام الصلوٰۃ",
-      //       shabbedari: "شب بیداری",
-      //       anyOther: "",
-      //       tarbiyatgaah: "تربیت گاہ",
-      //       tanzeemiround: "تنظیمی دورہ",
-      //     },
-      //     toseeDawat: {
-      //       rawabitdecided: "طے شدہ",
-      //       current: "موجود",
-      //       meetings: "ملاقاتیں",
-      //       literaturedistribution: "تقسیم لٹریچر",
-      //       registered: "",
-      //       commonstudentmeetings: "عام طلبہ ملاقاتیں",
-      //       commonliteraturedistribution: "عام طلبہ تقسیم لٹریچر ",
-      //     },
-      //     rozShabBedari: {
-      //       umeedwaranfilled: "امیدواران فل",
-      //       rafaqafilled: "رفقا فل",
-      //       arkanfilled: "ارکان فل",
-      //     },
-      //     paighamDigest: {
-      //       totalprinted: "کل پرنٹ کردہ",
-      //       totalsoldmarket: "کل فروخت کردہ (مارکیٹ)",
-      //       totalsoldtanzeemi: "کل فروخت کردہ (تنظیمی)",
-      //       gift: "گفٹ",
-      //     },
-      //     tanzeem: {
-      //       rehaishhalqay: "رہائشی حلقے",
-      //       taleemhalqay: "تعلیمی حلقے",
-      //       totalhalqay: "کل حلقے",
-      //       subrehaishhalqay: "رِہائشی ذیلی حلقے",
-      //       subtaleemhalqay: "تعلیمی ذیلی حلقے",
-      //       subtotalhalqay: "کل ذیلی حلقے",
-      //       busmschoolunits: "بزم کے سکول یونٹس",
-      //       busmrehaishunits: "بزم کےرِہائشی یونٹس",
-      //       busmtotalunits: "بزم کے کل یونٹس",
-      //     },
-      //     mentionedActivities: {
-      //       ijtrafaqa: "اجتماع رفقا",
-      //       studycircle: "سٹڈی سرکل",
-      //       ijtkarkunan: "اجتماع کارکنان",
-      //       darsequran: "درس قرآن",
-      //       shaheenmeeting: "شاہین میٹنگ",
-      //       paighamevent: "پیغام محفل",
-      //     },
-      //   },
-      //   personal: {
-      //     prayers: {
-      //       fajarinfradi: "فجرانفرادی ",
-      //       fajarontime: "فجرباجماعت",
-      //       fajarqaza: "فجر قضا ",
-      //       fajartotal: "فجر ٹوٹل",
-      //       otherprayersinfradi: "دیگرانفرادی",
-      //       otherprayersontime: "دیگرباجماعت",
-      //       otherprayersqaza: "دیگرقضا",
-      //       otherprayerstotal: "دیگرٹوٹل",
-      //     },
-      //     studies: {
-      //       tafseertotaldays: "تفسیرکتنےدن پڑہی",
-      //       tafseertotalrakoo: "تفسیرکےکتنے رکوع پڑہے",
-      //       ahdeestotaldays: "کل کتنےدن پڑہی",
-      //       litraturetotaldays: "لٹریچر کتنے دن پڑہا",
-      //       hifztotaldays: "حفظ کتنے دن کیا",
-      //       institutionAttendance: "تعلیمی ادارے میں حاضری",
-      //     },
-      //     toseeDawa: {
-      //       genralstudentstotalmeetups: "عام طلبہ سے کل ملاقاتیں",
-      //       genralstudentstotallitraturedivided:
-      //         "عام طلبہ کتنا لٹریچرتقسیم کیا",
-      //       genralstudentscount: "عام طلبہ کل سے ملاقاتیں",
-      //     },
-      //   },
-      // };
-      // myData.labels = myData.labels.map(
-      //   (i) => labels[reportType][selectedProperty][i]
-      // );
+      console.log(myData);
+      const labels = {
+        ijtrafaqa: "اجتماع رفقا",
+        ijtkarkunan: "اجتماع کارکنان",
+        studycircle: "سٹڈی سرکل",
+        darsequran: "درس قُرآن",
+
+        arkan: "ارکان",
+        umeedwaran: "امیدواران",
+        rafaqa: "رفقا",
+        karkunan: "کارکنان",
+
+        books: "تعداد کتب",
+        increase: "اضافہ",
+        decrease: "کمی",
+        bookrent: "اجرائے کتب",
+        registered: "",
+
+        dawatiwafud: "دعوتی وفود",
+        rawabitparties: "روابط پارٹیز",
+        hadithcircle: "حدیث سرکل",
+        nizamsalah: "نظام الصلوٰۃ",
+        shabbedari: "شب بیداری",
+
+        rawabitdecided: "طے شدہ",
+        current: "موجود",
+        meetings: "ملاقاتیں",
+        literaturedistribution: "تقسیم لٹریچر",
+        registered: "",
+        commonstudentmeetings: "عام طلبہ ملاقاتیں",
+        commonliteraturedistribution: "عام طلبہ تقسیم لٹریچر ",
+
+        umeedwaranfilled: "امیدواران فل",
+        rafaqafilled: "رفقا فل",
+        arkanfilled: "ارکان فل",
+
+        ijtarkan: "اجتماع ارکان",
+        studycircle: "سٹڈی سرکل",
+        ijtnazmeen: "اجتماع ناظمین",
+        ijtumeedwaran: "اجتماع امیدواران",
+        sadurmeeting: "صدورمیٹینگ",
+
+        arkan: "ارکان",
+        umeedwaran: "امیدواران",
+        rafaqa: "رفقا",
+        karkunan: "کارکنان",
+        shaheen: "شاہین",
+        members: "ممبرز",
+
+        totallibraries: "کل تعداد لائبریریز",
+        totalBooks: "تعداد کتب",
+        totalIncrease: "اضافہ",
+        totalDecrease: "کمی",
+        totalBookRent: "اجرائے کتب",
+
+        dawatiwafud: "دعوتی وفود",
+        rawabitparties: "روابط پارٹیز",
+        nizamsalah: "نظام الصلوٰۃ",
+        shabbedari: "شب بیداری",
+        anyOther: "",
+        tarbiyatgaah: "تربیت گاہ",
+
+        rawabitdecided: "طے شدہ",
+        current: "موجود",
+        meetings: "ملاقاتیں",
+        literaturedistribution: "تقسیم لٹریچر",
+        registered: "",
+        commonstudentmeetings: "عام طلبہ ملاقاتیں",
+        commonliteraturedistribution: "عام طلبہ تقسیم لٹریچر ",
+
+        umeedwaranfilled: "امیدواران فل",
+        rafaqafilled: "رفقا فل",
+        arkanfilled: "ارکان فل",
+
+        totalreceived: "کل موصولہ",
+        totalsold: "فروخت کردہ",
+
+        rehaishhalqay: "رہائشی حلقے",
+        taleemhalqay: "تعلیمی حلقے",
+        totalhalqay: "کل حلقے",
+        subrehaishhalqay: "رِہائشی ذیلی حلقے",
+        subtaleemhalqay: "تعلیمی ذیلی حلقے",
+        subtotalhalqay: "کل ذیلی حلقے",
+        busmschoolunits: "بزم کے سکول یونٹس",
+        busmrehaishunits: "بزم کےرِہائشی یونٹس",
+        busmtotalunits: "بزم کے کل یونٹس",
+
+        ijtrafaqa: "اجتماع رفقا",
+        studycircle: "سٹڈی سرکل",
+        ijtkarkunan: "اجتماع کارکنان",
+        darsequran: "درس قرآن",
+        shaheenmeeting: "شاہین میٹنگ",
+        paighamevent: "پیغام محفل",
+
+        studycircle: "سٹڈی سرکل",
+        ijtnazmeen: "اجتماع ناظمین",
+        ijtumeedwaran: "اجتماع امیدواران",
+        sadurmeeting: "صدورمیٹینگ",
+
+        arkan: "ارکان",
+        umeedwaran: "امیدواران",
+        rafaqa: "رفقا",
+        karkunan: "کارکنان",
+        shaheen: "شاہین",
+        members: "ممبرز",
+
+        totallibraries: "کل تعداد لائبریریز",
+        totalBooks: "تعداد کتب",
+        totalIncrease: "اضافہ",
+        totalDecrease: "کمی",
+        totalBookRent: "اجرائے کتب",
+
+        dawatiwafud: "دعوتی وفود",
+        rawabitparties: "روابط پارٹیز",
+        nizamsalah: "نظام الصلوٰۃ",
+        shabbedari: "شب بیداری",
+        anyOther: "",
+        tarbiyatgaah: "تربیت گاہ",
+
+        rawabitdecided: "طے شدہ",
+        current: "موجود",
+        meetings: "ملاقاتیں",
+        literaturedistribution: "تقسیم لٹریچر",
+        registered: "",
+        commonstudentmeetings: "عام طلبہ ملاقاتیں",
+        commonliteraturedistribution: "عام طلبہ تقسیم لٹریچر ",
+
+        umeedwaranfilled: "امیدواران فل",
+        rafaqafilled: "رفقا فل",
+        arkanfilled: "ارکان فل",
+
+        totalreceived: "کل موصولہ",
+        totalsold: "فروخت کردہ",
+
+        rehaishhalqay: "رہائشی حلقے",
+        taleemhalqay: "تعلیمی حلقے",
+        totalhalqay: "کل حلقے",
+        subrehaishhalqay: "رِہائشی ذیلی حلقے",
+        subtaleemhalqay: "تعلیمی ذیلی حلقے",
+        subtotalhalqay: "کل ذیلی حلقے",
+        busmschoolunits: "بزم کے سکول یونٹس",
+        busmrehaishunits: "بزم کےرِہائشی یونٹس",
+        busmtotalunits: "بزم کے کل یونٹس",
+
+        ijtrafaqa: "اجتماع رفقا",
+        studycircle: "سٹڈی سرکل",
+        ijtkarkunan: "اجتماع کارکنان",
+        darsequran: "درس قرآن",
+        shaheenmeeting: "شاہین میٹنگ",
+        paighamevent: "پیغام محفل",
+
+        studycircle: "سٹڈی سرکل",
+        ijtnazmeen: "اجتماع ناظمین",
+        ijtumeedwaran: "اجتماع امیدواران",
+        sadurmeeting: "صدورمیٹینگ",
+
+        arkan: "ارکان",
+        umeedwaran: "امیدواران",
+        rafaqa: "رفقا",
+        karkunan: "کارکنان",
+        shaheen: "شاہین",
+        members: "ممبرز",
+
+        totallibraries: "کل تعداد لائبریریز",
+        totalBooks: "تعداد کتب",
+        totalIncrease: "اضافہ",
+        totalDecrease: "کمی",
+        totalBookRent: "اجرائے کتب",
+
+        dawatiwafud: "دعوتی وفود",
+        rawabitparties: "روابط پارٹیز",
+        nizamsalah: "نظام الصلوٰۃ",
+        shabbedari: "شب بیداری",
+        anyOther: "",
+        tarbiyatgaah: "تربیت گاہ",
+        tanzeemiround: "تنظیمی دورہ",
+
+        rawabitdecided: "طے شدہ",
+        current: "موجود",
+        meetings: "ملاقاتیں",
+        literaturedistribution: "تقسیم لٹریچر",
+        registered: "",
+        commonstudentmeetings: "عام طلبہ ملاقاتیں",
+        commonliteraturedistribution: "عام طلبہ تقسیم لٹریچر ",
+
+        umeedwaranfilled: "امیدواران فل",
+        rafaqafilled: "رفقا فل",
+        arkanfilled: "ارکان فل",
+
+        totalprinted: "کل پرنٹ کردہ",
+        totalsoldmarket: "کل فروخت کردہ (مارکیٹ)",
+        totalsoldtanzeemi: "کل فروخت کردہ (تنظیمی)",
+        gift: "گفٹ",
+
+        rehaishhalqay: "رہائشی حلقے",
+        taleemhalqay: "تعلیمی حلقے",
+        totalhalqay: "کل حلقے",
+        subrehaishhalqay: "رِہائشی ذیلی حلقے",
+        subtaleemhalqay: "تعلیمی ذیلی حلقے",
+        subtotalhalqay: "کل ذیلی حلقے",
+        busmschoolunits: "بزم کے سکول یونٹس",
+        busmrehaishunits: "بزم کےرِہائشی یونٹس",
+        busmtotalunits: "بزم کے کل یونٹس",
+
+        ijtrafaqa: "اجتماع رفقا",
+        studycircle: "سٹڈی سرکل",
+        ijtkarkunan: "اجتماع کارکنان",
+        darsequran: "درس قرآن",
+        shaheenmeeting: "شاہین میٹنگ",
+        paighamevent: "پیغام محفل",
+
+        fajarinfradi: "فجرانفرادی ",
+        fajarontime: "فجرباجماعت",
+        fajarqaza: "فجر قضا ",
+        fajartotal: "فجر ٹوٹل",
+        otherprayersinfradi: "دیگرانفرادی",
+        otherprayersontime: "دیگرباجماعت",
+        otherprayersqaza: "دیگرقضا",
+        otherprayerstotal: "دیگرٹوٹل",
+
+        tafseertotaldays: "تفسیرکتنےدن پڑہی",
+        tafseertotalrakoo: "تفسیرکےکتنے رکوع پڑہے",
+        ahdeestotaldays: "کل کتنےدن پڑہی",
+        litraturetotaldays: "لٹریچر کتنے دن پڑہا",
+        hifztotaldays: "حفظ کتنے دن کیا",
+        institutionAttendance: "تعلیمی ادارے میں حاضری",
+
+        genralstudentstotalmeetups: "عام طلبہ سے کل ملاقاتیں",
+        genralstudentstotallitraturedivided: "عام طلبہ کتنا لٹریچرتقسیم کیا",
+        genralstudentscount: "عام طلبہ کل سے ملاقاتیں",
+        monthlyincome: "ماہانہ آمدن",
+        monthlyexpenditure: "ماہانہ خرچ",
+        savings: "بدست",
+        loss: "خسارہ",
+      };
+      myData.labels = myData.labels.map((i) => labels[i]);
       setResponse(myData);
     } catch (error) {
       console.log(error);
@@ -688,24 +643,7 @@ export const Comparision = () => {
             </option>
             {reportType !== "personal" && (
               <>
-                <option value={"activities"}>Activity</option>
-                <option value={"workerInfo"}>Ifradi Kuwat</option>
-                <option value={"library"}>Library</option>
-                <option value={"otherActivity"}>Other Activity</option>
-                <option value={"toseeDawat"}>Tosee Dawat</option>
-                <option value={"rozShabBedari"}>Roz-o-Shab Diary</option>
                 <option value={"compareAll"}>Compare All</option>
-                {["maqam", "division", "province", "country"].includes(
-                  reportType
-                ) && (
-                  <>
-                    <option value={"paighamDigest"}>Paigham Digest</option>
-                    <option value={"tanzeem"}>Tanzeem</option>
-                    <option value={"mentionedActivities"}>
-                      Zaili Activities
-                    </option>
-                  </>
-                )}
               </>
             )}
             {["umeedwar", "rukan", "umeedwaar-nazim", "rukan-nazim"].includes(
@@ -744,7 +682,7 @@ export const Comparision = () => {
             Dates
           </button>
         </div>
-        <div className="relative flex flex-col gap-3 h-[calc(100vh-66px-64px-73.6px)] w-full p-3 overflow-scroll">
+        <div className="relative flex flex-col gap-3 h-[calc(100vh-200px-64px-73.6px)] w-full p-3 overflow-scroll">
           {response ? (
             <ReportChart res={response} type={selectedProperty} />
           ) : (

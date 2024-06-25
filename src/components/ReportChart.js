@@ -1,13 +1,13 @@
-import React, { useEffect, useRef } from 'react';
-import Chart from 'chart.js/auto';
+import React, { useEffect, useRef } from "react";
+import Chart from "chart.js/auto";
 
 export const ReportChart = ({ res, type }) => {
   const monthlyChartRef = useRef(null);
   const getData = async () => {
     if (!monthlyChartRef.current) {
-      const monthlyCtx = document.getElementById('monthlyChart');
+      const monthlyCtx = document.getElementById("monthlyChart");
       monthlyChartRef.current = new Chart(monthlyCtx, {
-        type: 'bar',
+        type: "bar",
         data: res,
         options: {
           scales: {
@@ -47,13 +47,20 @@ export const ReportChart = ({ res, type }) => {
   }, []);
 
   return (
-    <div className='w-full'>
-      <span className='capitalize'>{type?.split('-')?.join(" ")}</span>
+    <div className="w-full">
+      <span className="capitalize">{type?.split("-")?.join(" ")}</span>
       <div
-        className=' '
-        style={{ width: '100%', height: '100%', fontSize: '16px' }}
+        className=" "
+        style={{
+          minWidth: "600px",
+          width: "100%",
+          height: "100%",
+          fontSize: "16px",
+          overflow: "hidden",
+          overflowX: "scroll",
+        }}
       >
-        <canvas id='monthlyChart' className='p-0 h-[300px] '></canvas>
+        <canvas id="monthlyChart" className="p-0 h-[300px] "></canvas>
       </div>
     </div>
   );
