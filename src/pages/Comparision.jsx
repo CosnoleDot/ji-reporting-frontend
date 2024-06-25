@@ -178,6 +178,7 @@ export const Comparision = () => {
       halqa: halqas,
       district: districts,
       province: provinces,
+      ilaqa: ilaqas,
       all: [
         ...maqams,
         ...divisions,
@@ -224,7 +225,6 @@ export const Comparision = () => {
         }
       );
       const myData = res?.data?.data;
-      console.log(myData);
       const labels = {
         ijtrafaqa: "اجتماع رفقا",
         ijtkarkunan: "اجتماع کارکنان",
@@ -452,14 +452,79 @@ export const Comparision = () => {
         institutionAttendance: "تعلیمی ادارے میں حاضری",
 
         genralstudentstotalmeetups: "عام طلبہ سے کل ملاقاتیں",
-        genralstudentstotallitraturedivided: "عام طلبہ کتنا لٹریچرتقسیم کیا",
+        genralstudentstotallitraturedivided: "عام طلبہ لٹریچرتقسیم ",
         genralstudentscount: "عام طلبہ کل سے ملاقاتیں",
         monthlyincome: "ماہانہ آمدن",
         monthlyexpenditure: "ماہانہ خرچ",
         savings: "بدست",
         loss: "خسارہ",
+        currentsum: "موجود",
+        rwabitmeetingsgoal: "روابط سےملاقاتوں کاہدف",
+        meetingssum: "ملاقاتیں",
+        literaturedum: "تقسیم لٹریچر",
+        commonstudentmeetingssum: "عام طلبہ ملاقاتیں",
+        commonliteraturedistributionsum: "عام طلبہ لٹریچرتقسیم ",
       };
-      myData.labels = myData.labels.map((i) => labels[i]);
+      const ilaqa = {
+        rehaishhalqay: "رہائشی حلقے",
+        taleemhalqay: "تعلیمی حلقے",
+        totalhalqay: "کل حلقے",
+        subrehaishhalqay: "رِہائشی ذیلی حلقے",
+        subtaleemhalqay: "تعلیمی ذیلی حلقے",
+        subtotalhalqay: "کل ذیلی حلقے",
+        busmschoolunits: "بزم کے سکول یونٹس",
+        busmrehaishunits: "بزم کےرِہائشی یونٹس",
+        busmtotalunits: "بزم کے کل یونٹس",
+
+        studycircle: "سٹڈی سرکل",
+        ijtnazmeen: "اجتماع ناظمین",
+        ijtumeedwaran: "اجتماع امیدواران",
+        sadurmeeting: "صدورمیٹینگ",
+
+        arkan: "ارکان",
+        umeedwaran: "امیدواران",
+        rafaqa: "رفقا",
+        karkunan: "کارکنان",
+        shaheen: "شاہین",
+        members: "ممبرز",
+
+        dawatiwafud: "دعوتی وفود",
+        rawabitparties: "روابط پارٹیز",
+        hadithcircle: "حدیث سرکل",
+        nizamsalah: "نظام الصلوٰۃ",
+        shabbedari: "شب بیداری",
+        anyOther: "",
+
+        ijtrafaqa: "اجتماع رفقا",
+        ijtkarkunan: "اجتماع کارکنان",
+        studycircle: "سٹڈی سرکل",
+        darsequran: "درس قرآن",
+        shaheenmeeting: "شاہین میٹنگ",
+        paighamevent: "پیغام محفل",
+
+        rawabitdecided: "طے شدہ",
+        currentsum: "موجود",
+        meetingssum: "ملاقاتیں",
+        literaturesum: "تقسیم لٹریچر",
+        commonstudentmeetingssum: "عام طلبہ ملاقاتیں",
+        commonliteraturedistributionsum: "عام طلبہ تقسیم لٹریچر ",
+        registered: "",
+
+        totallibraries: "کل تعداد لائبریریز",
+        totalbooks: "تعداد کتب",
+        totalincrease: "اضافہ",
+        totaldecrease: "کمی",
+        totalbookrent: "اجرائے کتب",
+
+        umeedwaranfilledsum: "امیدواران فل",
+        rafaqafilledsum: "رفقا فل",
+
+        monthlyincome: "ماہانہ آمدن",
+        monthlyexpenditure: "ماہانہ خرچ",
+        savings: "بدست",
+        loss: "خسارہ",
+      };
+      myData.labels = myData.labels.map((i) => ilaqa[i]);
       setResponse(myData);
     } catch (error) {
       console.log(error);
@@ -538,6 +603,12 @@ export const Comparision = () => {
                   <option value="province">Province</option>
                 </>
               ))}
+            {localStorage.getItem("@type") !== "halqa" &&
+              localStorage.getItem("@type") !== "division" && (
+                <>
+                  <option value="ilaqa">Ilaqa</option>
+                </>
+              )}
             {["umeedwar", "rukan", "umeedwaar-nazim", "rukan-nazim"].includes(
               me?.nazimType
             ) && <option value="personal">Personal</option>}

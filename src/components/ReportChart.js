@@ -24,6 +24,7 @@ export const ReportChart = ({ res, type }) => {
                 font: {
                   size: 14,
                 },
+                autoSkip: false,
               },
             },
           },
