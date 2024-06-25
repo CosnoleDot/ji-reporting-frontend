@@ -28,7 +28,6 @@ export const HalqaCompile = () => {
   const params = useParams();
   let navigate = useNavigate();
   const compileReport = useContext(CompileReportContext);
-
   const [date, setDate] = useState(
     `${compileReport?.startDate}-${compileReport?.endDate}`
   );
@@ -37,7 +36,8 @@ export const HalqaCompile = () => {
   const areaName = queryParams.get("areaName");
   const startDate = queryParams.get("startDate");
   const endDate = queryParams.get("endDate");
-
+  const areaId = queryParams.get("areaId");
+  
   const autoFill = () => {
     Object.keys(compileReport).forEach((i) => {
       const elem = document.getElementById(i);
@@ -64,9 +64,11 @@ export const HalqaCompile = () => {
     }
   });
   const handlePrint = () => {
-    window.open(`/halqa-report-compile/print`, "blank");
+    window.open(`/halqa-report-compile/print?areaId=${areaId}&startDate=${startDate}&endDate=${endDate}&areaName=${areaName}`);
+    // window.location.href = `/halqa-report-compile/print?areaId${areaId}&startDate=${startDate}&endDate=${endDate}`;
+
   };
-  
+
   return (
     <GeneralLayout>
       {Object.keys(compileReport).length > 2 ? (

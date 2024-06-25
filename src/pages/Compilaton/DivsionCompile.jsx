@@ -16,6 +16,7 @@ import { PaighamDigest } from "../../components/divisionReport/PaighamDigest";
 import { Baitulmal } from "../../components/divisionReport/Baitulmal";
 import { RozOShabDiary } from "../../components/divisionReport/RozOShabDiary";
 import { NoReports } from "../Reports";
+import { FaPrint } from "react-icons/fa";
 
 
 export const DivisionCompile = () => {
@@ -32,6 +33,7 @@ export const DivisionCompile = () => {
   const me = useContext(MeContext);
   const navigate = useNavigate();
   const [page, setPage] = useState();
+ 
   const compileReport = useContext(CompileReportContext);
 
   const [date, setDate] = useState(
@@ -42,6 +44,7 @@ export const DivisionCompile = () => {
   const areaName = queryParams.get("areaName");
   const startDate = queryParams.get("startDate");
   const endDate = queryParams.get("endDate");
+  const areaId = queryParams.get("areaId");
   const autoFill = () => {
     Object.keys(compileReport).forEach((i) => {
       const elem = document.getElementById(i);
@@ -67,6 +70,11 @@ export const DivisionCompile = () => {
       data[i] = 0;
     }
   });
+  const handlePrint = () => {
+    window.open(`/division-report-compile/print?areaId=${areaId}&startDate=${startDate}&endDate=${endDate}&areaName=${areaName}`);
+    // window.location.href = `/halqa-report-compile/print?areaId${areaId}&startDate=${startDate}&endDate=${endDate}`;
+
+  };
   return (
     <GeneralLayout>
       {Object.keys(compileReport).length > 2 ?<div className="reports h-[calc(100vh-64.4px-64px)] overflow-hidden overflow-y-scroll w-full">
@@ -167,6 +175,9 @@ export const DivisionCompile = () => {
          
           {/* </fieldset> */}
         </form>
+        <button className="btn" onClick={() => handlePrint()}>
+            <FaPrint />
+          </button>
       </div> : <div className="flex w-full justify-center items-center">
           <div>
             <NoReports/>

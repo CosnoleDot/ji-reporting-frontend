@@ -66,6 +66,8 @@ import { Page404 } from "./pages/PageNotFound/Page404";
 import { Compile } from "./pages/Compilaton/Compile";
 import { CompileReports, MaqamCompile, Markaz } from "./pages/Compilaton";
 import { HalqaCompileReport } from "./pages/Compilaton/HalqaCompileReport";
+import { IlaqaCompileReport } from "./pages/Compilaton/IlaqaCompileReport";
+import { DivisionCompileReport } from "./pages/Compilaton/DivisionCompileReport";
 // import { SpiderChart } from "./pages/SpiderChart";
 
 function App() {
@@ -1355,8 +1357,16 @@ function App() {
                                                 element={<DivisionReport />}
                                               />
                                               <Route
+                                                path="/division-report-compile/print/"
+                                                element={<DivisionCompileReport />}
+                                              />
+                                              <Route
                                                 path="/ilaqa-report/print/:id"
                                                 element={<IlaqaReport />}
+                                              />
+                                              <Route
+                                                path="/ilaqa-report-compile/print"
+                                                element={<IlaqaCompileReport />}
                                               />
                                               <Route
                                                 path="*"
@@ -1384,10 +1394,7 @@ function App() {
                                                 path="/halqa-report-compile/print"
                                                 element={<HalqaCompileReport />}
                                               />
-                                              <Route
-                                                path="/halqa-report/compile/print/:id"
-                                                element={<HalqaReport />}
-                                              />
+                                              
                                               <Route
                                                 path="/markaz-report/print/:id"
                                                 element={<MarkazReportPrint />}

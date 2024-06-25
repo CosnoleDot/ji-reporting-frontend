@@ -183,7 +183,7 @@ export const Compile = () => {
     if (showReport) {
       
       navigate(
-        `/compile/view?areaType=${areaType}&areaName=${areaName}&startDate=${sDate}&endDate=${eDate}`
+        `/compile/view?areaId=${areaId}&areaType=${areaType}&areaName=${areaName}&startDate=${sDate}&endDate=${eDate}`
       );
     }
   }, [areaName, showReport, navigate, areaType]);
