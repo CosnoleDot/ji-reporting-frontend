@@ -1,13 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import "./IlaqaCompileReport.css";
+import "./MuntakhibMaqamCompileReport.css";
 import { useLocation, useParams } from "react-router-dom";
-
 import { PrintDocument } from "../../../components";
 import { CompileReportContext } from "../../../context";
 import { UIContext } from "../../../context/ui";
 
-
-export const IlaqaCompileReport = () => {
+export const MuntakhibMaqamCompileReport = () => {
   const [data, setData] = useState();
   const params = useParams();
   const compileReport = useContext(CompileReportContext);
@@ -19,7 +17,7 @@ export const IlaqaCompileReport = () => {
     let url = window.location.pathname.split("/")[2];
     console.log(compileReport);
     if (url === "print") {
-      setData(compileReport);
+      setData(compileReport.b);
     }
   });
   const areaName = queryParams.get("areaName");
@@ -28,20 +26,19 @@ export const IlaqaCompileReport = () => {
   const areaId = queryParams.get("areaId");
 
   useEffect(() => {
-    getCompileReports(startDate, endDate, "ilaqa", areaId);
+    getCompileReports(startDate, endDate, "maqam", areaId);
   }, []);
+  console.log(compileReport.muntakhib)
   return (
     <div className="wrapper reports" style={{ marginBottom: "2rem" }} dir="rtl">
       <PrintDocument />
-      <h3
-        style={{
-          textAlign: "center",
-          fontWeight: "bold",
-          marginBottom: "1rem",
-        }}
-      >
-        جائزہ کارکردگی رپورٹ برائے علاقہ
-      </h3>
+      
+      {compileReport.muntakhib ? <h3 style={{ textAlign: "center", fontWeight: "bold" }}>
+        جائزہ کارکردگی رپورٹ برائے منتخب مقام
+      </h3> : 
+      <h3 style={{ textAlign: "center", fontWeight: "bold" }}>
+      جائزہ کارکردگی رپورٹ برائے  مقام
+    </h3> }
       <div
         style={{
           display: "flex",
@@ -59,7 +56,7 @@ export const IlaqaCompileReport = () => {
             gap: "1rem",
           }}
         >
-          <h4 className="header"> علاقہ کا نام:</h4>
+          <h4 className="header"> مقام کا نام:</h4>
           <h6>
             {areaName}
           </h6>
@@ -73,7 +70,179 @@ export const IlaqaCompileReport = () => {
           }}
         >
           <h4 className="header">برائے ماہ:</h4>
-         {`${startDate}  تا   ${endDate}`}
+          <h6>{`${startDate}  تا   ${endDate}`}</h6>
+        </div>
+      </div>
+      <div className="flex w-full p-4 justify-start items-center font-bold text-2xl">
+        {" "}
+        جامعات
+      </div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-start",
+          alignItems: "center",
+          width: "100%",
+        }}
+        className="tableContainer"
+      >
+        <p className="header" style={{ width: "100%", padding: "8px 5px" }}>
+          <strong>کیٹیگری</strong>
+        </p>
+        <p className="header" style={{ width: "100%" }}>
+          <strong>آغازمیں</strong>
+        </p>
+        <p className="header" style={{ width: "100%" }}>
+          <strong>اضافہ</strong>
+        </p>
+
+        <p className="header" style={{ width: "100%" }}>
+          <strong>اختتام پر</strong>
+        </p>
+        {compileReport?.muntakhib ? <p className="header" style={{ width: "100%" }}>
+          <strong>اضافہ کا ماہانہ ہدف</strong>
+        </p> : <p className="header" style={{ width: "100%" }}>
+          <strong> ماہانہ ہدف</strong>
+        </p>}
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          marginBottom: "2rem",
+        }}
+        className="tableContainer"
+      >
+        <div className="row">
+          <p className="header">A </p>
+          <p>{data?.['jamiaatA-start']}</p>
+          <p>{data?.['jamiaatA-increase']}</p>
+          <p>
+            {data?.['jamiaatA-start'] +
+              data?.['jamiaatA-increase']}
+          </p>
+          <p>{data?.['jamiaatA-monthly']}</p>
+        </div>
+        <div className="row">
+          <p className="header">B </p>
+          <p>{data?.['jamiaatB-start']}</p>
+          <p>{data?.['jamiaatB-increase']}</p>
+          <p>
+            {data?.['jamiaatB-start'] +
+              data?.['jamiaatB-increase']}
+          </p>
+          <p>{data?.['jamiaatB-monthly']}</p>
+        </div>
+        <div className="row">
+          <p className="header">C</p>
+          <p>{data?.['jamiaatC-start']}</p>
+          <p>{data?.['jamiaatC-increase']}</p>
+          <p>
+            {data?.['jamiaatC-start'] +
+              data?.['jamiaatC-increase']}
+          </p>
+          <p>{data?.['jamiaatC-monthly']}</p>
+        </div>
+        <div className="row">
+          <p className="header">D</p>
+          <p>{data?.['jamiaatD-start']}</p>
+          <p>{data?.['jamiaatD-increase']}</p>
+          <p>
+            {data?.['jamiaatD-start'] +
+              data?.['jamiaatD-increase']}
+          </p>
+          <p>{data?.['jamiaatD-monthly']}</p>
+        </div>
+        <div className="row">
+          <p className="header">E</p>
+          <p>{data?.['jamiaatE-start']}</p>
+          <p>{data?.['jamiaatE-increase']}</p>
+          <p>
+            {data?.['jamiaatE-start'] +
+              data?.['jamiaatE-increase']}
+          </p>
+          <p>{data?.['jamiaatE-monthly']}</p>
+        </div>
+      </div>
+      <div className="flex w-full p-4 justify-start items-center font-bold text-2xl">
+        {" "}
+        کالجز
+      </div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-start",
+          alignItems: "center",
+          width: "100%",
+        }}
+        className="tableContainer"
+      >
+        <p className="header" style={{ width: "100%", padding: "8px 5px" }}>
+          <strong>کیٹیگری</strong>
+        </p>
+        <p className="header" style={{ width: "100%" }}>
+          <strong>آغازمیں</strong>
+        </p>
+        <p className="header" style={{ width: "100%" }}>
+          <strong>اضافہ</strong>
+        </p>
+
+        <p className="header" style={{ width: "100%" }}>
+          <strong>اختتام پر</strong>
+        </p>
+        {compileReport?.muntakhib ? <p className="header" style={{ width: "100%" }}>
+          <strong>اضافہ کا ماہانہ ہدف</strong>
+        </p> : <p className="header" style={{ width: "100%" }}>
+          <strong> ماہانہ ہدف</strong>
+        </p>}
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          marginBottom: "2rem",
+        }}
+        className="tableContainer"
+      >
+        <div className="row">
+          <p className="header">A </p>
+          <p>{data?.['collegesA-start']}</p>
+          <p>{data?.['collegesA-increase']}</p>
+          <p>
+            {data?.['collegesA-start'] +
+              data?.['collegesA-increase']}
+          </p>
+          <p>{data?.['collegesA-monthly']}</p>
+        </div>
+        <div className="row">
+          <p className="header">B </p>
+          <p>{data?.['collegesB-start']}</p>
+          <p>{data?.['collegesB-increase']}</p>
+          <p>
+            {data?.['collegesB-start'] +
+              data?.['collegesB-increase']}
+          </p>
+          <p>{data?.['collegesB-monthly']}</p>
+        </div>
+        <div className="row">
+          <p className="header">C</p>
+          <p>{data?.['collegesC-start']}</p>
+          <p>{data?.['collegesC-increase']}</p>
+          <p>
+            {data?.['collegesC-start'] +
+              data?.['collegesC-increase']}
+          </p>
+          <p>{data?.['collegesC-monthly']}</p>
+        </div>
+        <div className="row">
+          <p className="header">D</p>
+          <p>{data?.['collegesD-start']}</p>
+          <p>{data?.['collegesD-increase']}</p>
+          <p>
+            {data?.['collegesD-start'] +
+              data?.['collegesD-increase']}
+          </p>
+          <p>{data?.['collegesD-monthly']}</p>
         </div>
       </div>
       <div
@@ -105,9 +274,11 @@ export const IlaqaCompileReport = () => {
         <p className="header" style={{ width: "100%" }}>
           <strong>غیرفعال</strong>
         </p>
-        <p className="header" style={{ width: "100%" }}>
-          <strong>ماہانہ ہدف</strong>
-        </p>
+        {compileReport?.muntakhib ? <p className="header" style={{ width: "100%" }}>
+          <strong>اضافہ کا ماہانہ ہدف</strong>
+        </p> : <p className="header" style={{ width: "100%" }}>
+          <strong> ماہانہ ہدف</strong>
+        </p>}
       </div>
       <div
         style={{
@@ -161,17 +332,17 @@ export const IlaqaCompileReport = () => {
         </div>
         <div className="row">
           <p className="header">رہائشی زیلی حلقے</p>
-          <p>{data?.['rehaishHalqay-start']}</p>
-          <p>{data?.['rehaishHalqay-increase']}</p>
-          <p>{data?.['rehaishHalqay-decrease']}</p>
+          <p>{data?.['subRehaishHalqay-start']}</p>
+          <p>{data?.['subRehaishHalqay-increase']}</p>
+          <p>{data?.['subRehaishHalqay-decrease']}</p>
           <p>
-            {data?.['rehaishHalqay-start'] +
-              data?.['rehaishHalqay-increase'] -
-              data?.['rehaishHalqay-decrease']}
+            {data?.['subRehaishHalqay-start'] +
+              data?.['subRehaishHalqay-increase'] -
+              data?.['subRehaishHalqay-decrease']}
           </p>
-          <p>{data?.['rehaishHalqay-continue']}</p>
-          <p>{data?.['rehaishHalqay-paused']}</p>
-          <p>{data?.['rehaishHalqay-monthly']}</p>
+          <p>{data?.['subRehaishHalqay-continue']}</p>
+          <p>{data?.['subRehaishHalqay-paused']}</p>
+          <p>{data?.['subRehaishHalqay-monthly']}</p>
         </div>
         <div className="row">
           <p className="header">تعلیمی زیلی حلقے</p>
@@ -269,9 +440,11 @@ export const IlaqaCompileReport = () => {
         <p className="header" style={{ width: "100%" }}>
           <strong>اختتام پر</strong>
         </p>
-        <p className="header" style={{ width: "100%" }}>
-          <strong>ماہانہ ہدف</strong>
-        </p>
+        {compileReport?.muntakhib ? <p className="header" style={{ width: "100%" }}>
+          <strong>اضافہ کا ماہانہ ہدف</strong>
+        </p> : <p className="header" style={{ width: "100%" }}>
+          <strong> ماہانہ ہدف</strong>
+        </p>}
       </div>
       <div
         style={{
@@ -369,7 +542,7 @@ export const IlaqaCompileReport = () => {
         }}
       >
         <p className="header" style={{ width: "100%", padding: "8px 5px" }}>
-          <strong>علاقے کی طے شدہ سرگرمیاں</strong>
+          <strong>مرکزی طے شدہ سرگرمیاں</strong>
         </p>
         <p className="header">
           <strong> طے شدہ </strong>
@@ -389,6 +562,12 @@ export const IlaqaCompileReport = () => {
         }}
         className="tableContainer"
       >
+        <div className="row">
+          <p className="header">اجتماع ارکان</p>
+          <p>{data?.['ijtArkan-decided']}</p>
+          <p>{data?.['ijtArkan-done']}</p>
+          <p>{data?.['ijtArkan-averageAttendance']}</p>
+        </div>
         <div className="row">
           <p className="header">سٹڈی سرکل</p>
           <p>{data?.['studyCircle-decided']}</p>
@@ -458,13 +637,13 @@ export const IlaqaCompileReport = () => {
         <div className="row">
           <p className="header">اجتماعِ کارکنان </p>
           <p>{data?.['ijtKarkunan-decided']}</p>
-          <p>{data?.['ijtKarkunan-sum']}</p>
+          <p>{data?.['ijtKarkunan-done']}</p>
           <p>{data?.['ijtKarkunan-averageAttendance']}</p>
         </div>
         <div className="row">
           <p className="header"> درس قرآن </p>
           <p>{data?.['darseQuran-decided']}</p>
-          <p>{data?.['darseQuran-sum']}</p>
+          <p>{data?.['darseQuran-done']}</p>
           <p>{data?.['darseQuran-averageAttendance']}</p>
         </div>
         <div className="row">
@@ -525,28 +704,25 @@ export const IlaqaCompileReport = () => {
             justifyContent: "flex-start",
             alignItems: "center",
             marginBottom: "1rem",
-            flexDirection: "column",
             width: "100%",
           }}
           className="tableContainer"
         >
-          <div className="flex w-full gap-4">
-            <h6 style={{ width: "100%", textAlign: "start" }}>
-              طے شدہ:{data?.['rawabitDecided']}
-            </h6>
-            <h6 style={{ width: "100%", textAlign: "start" }}>
-              روابط سے ملاقاتوں کا ہدف:{data?.['rwabitMeetingsGoal']}
-            </h6>
-            <h6 style={{ width: "100%", textAlign: "start" }}>
-              موجودہ :{data?.['currentSum']}
-            </h6>
-            <h6 style={{ width: "100%", textAlign: "start" }}>
-              ملاقاتوں کی تعداد:{data?.['meetingsSum']}
-            </h6>
-            <h6 style={{ width: "100%", textAlign: "start" }}>
-              تقسیم لٹریچر:{data?.['literatureSum']}
-            </h6>
-          </div>
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+            طے شدہ:{data?.['rawabitDecided']}
+          </h6>
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+            روابط سے ملاقاتوں کا ہدف:{data?.['rwabitMeetingsGoal']}
+          </h6>
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+            موجودہ :{data?.['currentSum']}
+          </h6>
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+            ملاقاتوں کی تعداد:{data?.['meetingsSum']}
+          </h6>
+          <h6 style={{ width: "100%", textAlign: "start" }}>
+            تقسیم لٹریچر:{data?.['literatureSum']}
+          </h6>
         </div>
         <h3 style={{ textAlign: "start", fontWeight: "bold" }}>عام طلبہ</h3>
         <div
@@ -604,14 +780,15 @@ export const IlaqaCompileReport = () => {
           }}
         >
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            کل موصولہ :{data?.['receivedSum']}
+            کل موصولہ :{data?.['totalReceived']}
           </h6>
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            فروخت کردہ :{data?.['soldSum']}
+            فروخت کردہ :{data?.['totalSold']}
           </h6>
+
           <h6 style={{ width: "100%", textAlign: "start" }}>
-            ڈائجسٹ موصول کرنے کا ہدف:
-            {data?.['monthlyReceivingGoalSum']}
+            ڈائجسٹ موصول کرنے کا ماہانہ حدف:
+            {data?.['monthlyReceivingGoal']}
           </h6>
         </div>
         <h3 style={{ textAlign: "start", fontWeight: "bolder" }}>بیت المال</h3>
@@ -659,39 +836,7 @@ export const IlaqaCompileReport = () => {
           </h6>
         </div>
        
-        {/* <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "20px",
-            justifyContent: "flex-start",
-            alignItems: "flex-end",
-            width: "100%",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              gap: "20px",
-              justifyContent: "center",
-              alignItems: "flex-start",
-            }}
-          >
-            <h3 style={{ fontWeight: "bolder" }}>نام ناظم</h3>
-            <h6>{data?.userId?.name}</h6>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              gap: "20px",
-              justifyContent: "flex-start",
-              alignItems: "flex-start",
-            }}
-          >
-            <h3 style={{ fontWeight: "bolder" }}> رپورٹ جمع کروانے کی تاریخ</h3>
-            <h6>{data?.createdAt.split("T")[0]}</h6>
-          </div>
-        </div> */}
+        
       </div>
     </div>
   );

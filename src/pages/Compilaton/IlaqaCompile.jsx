@@ -33,7 +33,7 @@ export const IlaqaCompile = () => {
   const compileReport = useContext(CompileReportContext);
 
   const [date, setDate] = useState(
-    `${compileReport?.startDate}-${compileReport?.endDate}`
+    `${compileReport?.startDate} تا  ${compileReport?.endDate}`
   );
   const queryParams = new URLSearchParams(location.search);
   const areaType = queryParams.get("areaType");
@@ -74,9 +74,10 @@ export const IlaqaCompile = () => {
     }
   });
   const handlePrint = () => {
-    window.open(`/ilaqa-report-compile/print?areaId=${areaId}&startDate=${startDate}&endDate=${endDate}&areaName=${areaName}`);
+    window.open(
+      `/ilaqa-report-compile/print?areaId=${areaId}&startDate=${startDate}&endDate=${endDate}&areaName=${areaName}`
+    );
     // window.location.href = `/halqa-report-compile/print?areaId${areaId}&startDate=${startDate}&endDate=${endDate}`;
-
   };
   return (
     <GeneralLayout>
@@ -161,9 +162,12 @@ export const IlaqaCompile = () => {
               )}
             </div>
           </form>
-          <button className="btn" onClick={() => handlePrint()}>
-            <FaPrint />
-          </button>
+          <div className="flex w-ful justify-center">
+            
+            <button className="btn" onClick={() => handlePrint()}>
+              <FaPrint /> پرنٹ
+            </button>
+          </div>
         </div>
       ) : (
         <div className="flex w-full justify-center items-center">

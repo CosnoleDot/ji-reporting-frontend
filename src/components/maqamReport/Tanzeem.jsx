@@ -93,7 +93,7 @@ export const Tanzeem = ({ view }) => {
             <Box>اختتام پر</Box>
             <Box>فعال</Box>
             <Box>غیرفعال</Box>
-            <Box>ماہانہ ہدف</Box>
+            <Box> ماہانہ ہدف </Box>
           </tr>
         </thead>
         <tbody>

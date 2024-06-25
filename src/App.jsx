@@ -68,6 +68,9 @@ import { CompileReports, MaqamCompile, Markaz } from "./pages/Compilaton";
 import { HalqaCompileReport } from "./pages/Compilaton/HalqaCompileReport";
 import { IlaqaCompileReport } from "./pages/Compilaton/IlaqaCompileReport";
 import { DivisionCompileReport } from "./pages/Compilaton/DivisionCompileReport";
+import { ProvinceReportCompile } from "./pages/Compilaton/ProvinceReportCompile";
+import { MarkazReportCompilePrint } from "./pages/Compilaton/MarkazReportCompilePrint";
+import { MuntakhibMaqamCompileReport } from "./pages/Compilaton/MuntakhibMaqamCompileReport";
 // import { SpiderChart } from "./pages/SpiderChart";
 
 function App() {
@@ -1353,6 +1356,10 @@ function App() {
                                                 element={<ProvinceReport />}
                                               />
                                               <Route
+                                                path="/province-report-compile/print"
+                                                element={<ProvinceReportCompile />}
+                                              />
+                                              <Route
                                                 path="/division-report/print/:id"
                                                 element={<DivisionReport />}
                                               />
@@ -1377,6 +1384,10 @@ function App() {
                                                 element={<MaqamReport />}
                                               />
                                               <Route
+                                                path="/maqam-report-compile/print/"
+                                                element={<MuntakhibMaqamCompileReport />}
+                                              />
+                                              <Route
                                                 path="/compile/view"
                                                 element={<CompileReports />}
                                               />
@@ -1398,6 +1409,10 @@ function App() {
                                               <Route
                                                 path="/markaz-report/print/:id"
                                                 element={<MarkazReportPrint />}
+                                              />
+                                               <Route
+                                                path="/markaz-report-compile/print"
+                                                element={<MarkazReportCompilePrint />}
                                               />
                                               <Route
                                                 path="/compilation"

@@ -22,6 +22,7 @@ import { PaighamDigest } from "../../components/provinceReport/PaighamDigest";
 import { Baitulmal } from "../../components/provinceReport/Baitulmal";
 import { RozOShabDiary } from "../../components/provinceReport/RozOShabDiary";
 import { NoReports } from "../Reports";
+import { FaPrint } from "react-icons/fa";
 
 export const ProvinceCompile = () => {
   // EDIT CODE START
@@ -35,20 +36,21 @@ export const ProvinceCompile = () => {
   const [data, setData] = useState({});
   const { loading, setLoading, getProvinceReports } = useContext(UIContext);
   const [finalMerged, setFinalMerged] = useState({});
-  const [view, setView] = useState(false);
+  const [view, setView] = useState(true);
   const location = useLocation();
   const me = useContext(MeContext);
   let navigate = useNavigate();
   const compileReport = useContext(CompileReportContext);
 
   const [date, setDate] = useState(
-    `${compileReport?.startDate}-${compileReport?.endDate}`
+    `${compileReport?.startDate}  تا  ${compileReport?.endDate}`
   );
   const queryParams = new URLSearchParams(location.search);
   const areaType = queryParams.get("areaType");
   const areaName = queryParams.get("areaName");
   const startDate = queryParams.get("startDate");
   const endDate = queryParams.get("endDate");
+  const areaId = queryParams.get("areaId");
   const autoFill = () => {
     Object.keys(compileReport).forEach((i) => {
       const elem = document.getElementById(i);
@@ -102,7 +104,12 @@ export const ProvinceCompile = () => {
       data[i] = 0;
     }
   });
-
+  const handlePrint = () => {
+    window.open(
+      `/province-report-compile/print?areaId=${areaId}&startDate=${startDate}&endDate=${endDate}&areaName=${areaName}`
+    );
+    // window.location.href = `/halqa-report-compile/print?areaId${areaId}&startDate=${startDate}&endDate=${endDate}`;
+  };
   return (
     <GeneralLayout>
       {Object.keys(compileReport).length > 2 ? (
@@ -177,7 +184,7 @@ export const ProvinceCompile = () => {
               <div>
                 <RozOShabDiary />
               </div>
-              
+
               <div className="w-full flex flex-col items-end gap-3 p-2">
                 <div>
                   <label htmlFor="nazim">نام ناظمِ:</label>
@@ -191,9 +198,12 @@ export const ProvinceCompile = () => {
                 </div>
               </div>
             </div>
-           
           </form>
-          
+          <div className="flex w-ful justify-center">
+            <button className="btn" onClick={() => handlePrint()}>
+              <FaPrint /> پرنٹ
+            </button>
+          </div>
         </div>
       ) : (
         <div className="flex w-full justify-center items-center">

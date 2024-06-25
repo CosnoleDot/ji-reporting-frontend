@@ -93,7 +93,7 @@ export const HalqaCompileReport = () => {
         >
           <h4 className="header">برائے ماہ:</h4>
           {/* <h6>{data?.month.split("T")[0]}</h6> */}
-          {`${startDate} - ${endDate}`}
+          {`${startDate}  تا   ${endDate}`}
         </div>
       </div>
       <div

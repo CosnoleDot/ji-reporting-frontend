@@ -64,7 +64,7 @@ export const DivisionCompileReport = () => {
           }}
         >
           <h4 className="header">برائے ماہ:</h4>
-          {`${startDate} - ${endDate}`}
+          {`${startDate}  تا   ${endDate}`}
         </div>
       </div>
       <div className="flex w-full p-4 justify-start items-center font-bold text-2xl">
