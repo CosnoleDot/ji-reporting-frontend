@@ -748,6 +748,7 @@ export const Comparision = () => {
         savings: "بدست",
         loss: "خسارہ",
       };
+      
       myData.labels = myData.labels.map((i) => division[i]);
       setResponse(myData);
     } catch (error) {
