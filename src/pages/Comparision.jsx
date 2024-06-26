@@ -748,7 +748,163 @@ export const Comparision = () => {
         savings: "بدست",
         loss: "خسارہ",
       };
-      myData.labels = myData.labels.map((i) => division[i]);
+      const province = {
+        rehaishhalqay: "رہائشی حلقے",
+        taleemhalqay: "تعلیمی حلقے",
+        totalhalqay: "کل حلقے",
+        subrehaishhalqay: "رِہائشی ذیلی حلقے",
+        subtaleemhalqay: "تعلیمی ذیلی حلقے",
+        subtotalhalqay: "کل ذیلی حلقے",
+        busmschoolunits: "بزم کے سکول یونٹس",
+        busmrehaishunits: "بزم کےرِہائشی یونٹس",
+        busmtotalunits: "بزم کے کل یونٹس",
+        collegesa: "Colleges A",
+        collegesb: "Colleges B",
+        collegesc: "Colleges C",
+        collegesd: "Colleges D",
+        jamiaata: "Jamiaat A",
+        jamiaatb: "Jamiaat B",
+        jamiaatc: "Jamiaat C",
+        jamiaatd: "Jamiaat D",
+        jamiaate: "Jamiaat E",
+        arkan: "ارکان",
+        umeedwaran: "امیدواران",
+        rafaqa: "رفقا",
+        karkunan: "کارکنان",
+        shaheen: "شاہین",
+        members: "ممبرز",
+        divmushawarat: "ڈویژنل مشاورت",
+        ijtarkan: "اجتمع ارکان",
+        ijtnazmeen: "اجتماع ناظمین",
+        ijtumeedwaran: "اجتماع امیدواران",
+        studycircle: "سٹڈی سرکل",
+        sadurmeeting: "صدورمیٹینگ",
+        ijtrafaqa: "اجتماع رفقا",
+        studycircle: "سٹڈی سرکل",
+        ijtkarkunan: "اجتماع کارکنان",
+        darsequran: "درس قرآن",
+        shaheenmeeting: "شاہین میٹنگ",
+        paighamevent: "پیغام محفل",
+        dawatiwafud: "دعوتی وفود",
+        rawabitparties: "روابط پارٹیز",
+        nizamsalah: "نظام الصلوٰۃ",
+        shabbedari: "شب بیداری",
+        anyOther: "",
+        tarbiyatgaahgoalsum: "تربیت گاہ ہدف",
+        tarbiyatgaahheldsum: "تربیت گاہ انعقاد",
+        tarbiyatgaah: "تربیت گاہ",
+        tanzeemiround: "تنظیمی دورہ",
+        totalprinted: "کل پرنٹ کردہ",
+        totalsoldmarket: "کل فروخت کردہ (مارکیٹ)",
+        totalsoldtanzeemi: "کل فروخت کردہ (تنظیمی)",
+        gift: "گفٹ",
+        rawabitdecided: "طے شدہ",
+        current: "موجود",
+        meetings: "ملاقاتیں",
+        literaturedistribution: "تقسیم لٹریچر",
+        rwabitmeetingsgoal: "روابط سےملاقاتوں کاہدف",
+        commonstudentmeetings: "عام طلبہ ملاقاتیں",
+        commonliteraturedistribution: "عام طلبہ تقسیم لٹریچر ",
+        registered: "",
+        totallibraries: "کل تعداد لائبریریز",
+        totalbooks: "تعداد کتب",
+        totalincrease: "اضافہ کتب",
+        totaldecrease: "کمی کتب",
+        totalbookrent: "اجرائے کتب",
+        totalreceived: "کل موصولہ",
+        totalsold: "فروخت کردہ",
+        monthlyreceivinggoal: "ڈائجسٹ ماہانہ ہدف",
+        umeedwaranfilled: "امیدواران فل",
+        rafaqafilled: "رفقا فل",
+        monthlyincome: "ماہانہ آمدن",
+        monthlyexpenditure: "ماہانہ خرچ",
+        savings: "بدست",
+        loss: "خسارہ",
+      };
+      const markaz = {
+        rehaishhalqay: "رہائشی حلقے",
+        taleemhalqay: "تعلیمی حلقے",
+        totalhalqay: "کل حلقے",
+        subrehaishhalqay: "رِہائشی ذیلی حلقے",
+        subtaleemhalqay: "تعلیمی ذیلی حلقے",
+        subtotalhalqay: "کل ذیلی حلقے",
+        busmschoolunits: "بزم کے سکول یونٹس",
+        busmrehaishunits: "بزم کےرِہائشی یونٹس",
+        busmtotalunits: "بزم کے کل یونٹس",
+        collegesa: "Colleges A",
+        collegesb: "Colleges B",
+        collegesc: "Colleges C",
+        collegesd: "Colleges D",
+        jamiaata: "Jamiaat A",
+        jamiaatb: "Jamiaat B",
+        jamiaatc: "Jamiaat C",
+        jamiaatd: "Jamiaat D",
+        jamiaate: "Jamiaat E",
+        arkan: "ارکان",
+        umeedwaran: "امیدواران",
+        rafaqa: "رفقا",
+        karkunan: "کارکنان",
+        shaheen: "شاہین",
+        members: "ممبرز",
+        divmushawarat: "ڈویژنل مشاورت",
+        ijtarkan: "اجتمع ارکان",
+        ijtnazmeen: "اجتماع ناظمین",
+        ijtumeedwaran: "اجتماع امیدواران",
+        studycircle: "سٹڈی سرکل",
+        sadurmeeting: "صدورمیٹینگ",
+        ijtrafaqa: "اجتماع رفقا",
+        studycircle: "سٹڈی سرکل",
+        ijtkarkunan: "اجتماع کارکنان",
+        darsequran: "درس قرآن",
+        shaheenmeeting: "شاہین میٹنگ",
+        paighamevent: "پیغام محفل",
+        dawatiwafud: "دعوتی وفود",
+        rawabitparties: "روابط پارٹیز",
+        nizamsalah: "نظام الصلوٰۃ",
+        shabbedari: "شب بیداری",
+        anyOther: "",
+        tarbiyatgaahgoalsum: "تربیت گاہ ہدف",
+        tarbiyatgaahheldsum: "تربیت گاہ انعقاد",
+        tarbiyatgaah: "تربیت گاہ",
+        tanzeemiround: "تنظیمی دورہ",
+        totalprinted: "کل پرنٹ کردہ",
+        totalsoldmarket: "کل فروخت کردہ (مارکیٹ)",
+        totalsoldtanzeemi: "کل فروخت کردہ (تنظیمی)",
+        gift: "گفٹ",
+        rawabitdecided: "طے شدہ",
+        current: "موجود",
+        meetings: "ملاقاتیں",
+        literaturedistribution: "تقسیم لٹریچر",
+        rwabitmeetingsgoal: "روابط سےملاقاتوں کاہدف",
+        commonstudentmeetings: "عام طلبہ ملاقاتیں",
+        commonliteraturedistribution: "عام طلبہ تقسیم لٹریچر ",
+        registered: "",
+        totallibraries: "کل تعداد لائبریریز",
+        totalbooks: "تعداد کتب",
+        totalincrease: "اضافہ کتب",
+        totaldecrease: "کمی کتب",
+        totalbookrent: "اجرائے کتب",
+        totalreceived: "کل موصولہ",
+        totalsold: "فروخت کردہ",
+        monthlyreceivinggoal: "ڈائجسٹ ماہانہ ہدف",
+        umeedwaranfilled: "امیدواران فل",
+        rafaqafilled: "رفقا فل",
+        monthlyincome: "ماہانہ آمدن",
+        monthlyexpenditure: "ماہانہ خرچ",
+        savings: "بدست",
+        loss: "خسارہ",
+      };
+      if (reportType === "markaz") {
+        myData.labels = myData.labels.map((i) => markaz[i]);
+      } else if (reportType === "province") {
+        myData.labels = myData.labels.map((i) => province[i]);
+      } else if (reportType === "maqam") {
+        myData.labels = myData.labels.map((i) => mMaqam[i]);
+      } else if (reportType === "division") {
+        myData.labels = myData.labels.map((i) => division[i]);
+      } else if (reportType === "ilaqa") {
+        myData.labels = myData.labels.map((i) => ilaqa[i]);
+      }
       setResponse(myData);
     } catch (error) {
       console.log(error);
@@ -794,6 +950,7 @@ export const Comparision = () => {
       document.removeEventListener("click", handleEventClick);
     };
   }, []);
+
   return (
     <GeneralLayout title={"Comparison"} active={"comparison"}>
       <div className="relative flex flex-col gap-3 h-[calc(100vh-66px-64px)] w-full p-3">
@@ -809,7 +966,7 @@ export const Comparision = () => {
             value={reportType}
             onChange={(e) => {
               setReportType(e.target.value);
-              if (e.target.value === "self") {
+              if (e.target.value === "self" || e.target.value === "markaz") {
                 setAreaId(me.userAreaId._id);
               }
             }}
@@ -825,6 +982,7 @@ export const Comparision = () => {
                   <option value="maqam">Maqam</option>
                   <option value="division">Division</option>
                   <option value="province">Province</option>
+                  <option value="markaz">Markaz</option>
                 </>
               ))}
             {localStorage.getItem("@type") !== "halqa" &&
@@ -838,22 +996,24 @@ export const Comparision = () => {
             ) && <option value="personal">Personal</option>}
             {/* <option value='self'>Self Compare</option> */}
           </select>
-          {reportType !== "self" && reportType !== "personal" && (
-            <select
-              value={areaId}
-              onChange={(e) => setAreaId(e.target.value)}
-              className="select select-bordered w-full"
-            >
-              <option value="" disabled>
-                Area {reportType}
-              </option>
-              {areas[reportType]?.map((i, index) => (
-                <option key={index} value={i?._id} className="w-[200px]">
-                  {i?.name} - {getAreaType(i)}
+          {reportType !== "self" &&
+            reportType !== "personal" &&
+            reportType !== "markaz" && (
+              <select
+                value={areaId}
+                onChange={(e) => setAreaId(e.target.value)}
+                className="select select-bordered w-full"
+              >
+                <option value="" disabled>
+                  Area {reportType}
                 </option>
-              ))}
-            </select>
-          )}
+                {areas[reportType]?.map((i, index) => (
+                  <option key={index} value={i?._id} className="w-[200px]">
+                    {i?.name} - {getAreaType(i)}
+                  </option>
+                ))}
+              </select>
+            )}
 
           {reportType === "personal" && (
             <div className="relative w-full min-w-[140px]">
