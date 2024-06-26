@@ -524,7 +524,7 @@ export const Comparision = () => {
         savings: "بدست",
         loss: "خسارہ",
       };
-      const maqam = {
+      const mMaqam = {
         rehaishhalqay: "رہائشی حلقے",
         taleemhalqay: "تعلیمی حلقے",
         totalhalqay: "کل حلقے",
@@ -534,6 +534,17 @@ export const Comparision = () => {
         busmschoolunits: "بزم کے سکول یونٹس",
         busmrehaishunits: "بزم کےرِہائشی یونٹس",
         busmtotalunits: "بزم کے کل یونٹس",
+
+        collegesa: "Colleges A",
+        collegesb: "Colleges B",
+        collegesc: "Colleges C",
+        collegesd: "Colleges D",
+
+        jamiaata: "Jamiaat A",
+        jamiaatb: "Jamiaat B",
+        jamiaatc: "Jamiaat C",
+        jamiaatd: "Jamiaat D",
+        jamiaate: "Jamiaat E",
 
         arkan: "ارکان",
         umeedwaran: "امیدواران",
@@ -587,7 +598,157 @@ export const Comparision = () => {
         commonliteraturedistributionsum: "عام طلبہ تقسیم لٹریچر ",
         registered: "",
       };
-      myData.labels = myData.labels.map((i) => maqam[i]);
+      const gMaqam = {
+        rehaishhalqay: "رہائشی حلقے",
+        taleemhalqay: "تعلیمی حلقے",
+        totalhalqay: "کل حلقے",
+        subrehaishhalqay: "رِہائشی ذیلی حلقے",
+        subtaleemhalqay: "تعلیمی ذیلی حلقے",
+        subtotalhalqay: "کل ذیلی حلقے",
+        busmschoolunits: "بزم کے سکول یونٹس",
+        busmrehaishunits: "بزم کےرِہائشی یونٹس",
+        busmtotalunits: "بزم کے کل یونٹس",
+
+        collegesa: "Colleges A",
+        collegesb: "Colleges B",
+        collegesc: "Colleges C",
+        collegesd: "Colleges D",
+
+        jamiaata: "Jamiaat A",
+        jamiaatb: "Jamiaat B",
+        jamiaatc: "Jamiaat C",
+        jamiaatd: "Jamiaat D",
+        jamiaate: "Jamiaat E",
+
+        arkan: "ارکان",
+        umeedwaran: "امیدواران",
+        rafaqa: "رفقا",
+        karkunan: "کارکنان",
+        shaheen: "شاہین",
+        members: "ممبرز",
+
+        ijtarkan: "اجتمع ارکان",
+        studycircle: "سٹڈی سرکل",
+        ijtnazmeen: "اجتماع ناظمین",
+        ijtumeedwaran: "اجتماع امیدواران",
+        sadurmeeting: "صدورمیٹینگ",
+
+        ijtrafaqa: "اجتماع رفقا",
+        studycircle: "سٹڈی سرکل",
+        ijtkarkunan: "اجتماع کارکنان",
+        darsequran: "درس قرآن",
+        shaheenmeeting: "شاہین میٹنگ",
+        paighamevent: "پیغام محفل",
+
+        dawatiwafud: "دعوتی وفود",
+        rawabitparties: "روابط پارٹیز",
+        nizamsalah: "نظام الصلوٰۃ",
+        shabbedari: "شب بیداری",
+        anyOther: "",
+
+        rawabitdecided: "طے شدہ",
+        currentsum: "موجود",
+        meetingssum: "ملاقاتیں",
+        literaturedistribution: "تقسیم لٹریچر",
+        rwabitmeetingsgoal: "روابط سےملاقاتوں کاہدف",
+        commonstudentmeetings: "عام طلبہ ملاقاتیں",
+        commonliteraturedistribution: "عام طلبہ تقسیم لٹریچر ",
+        registered: "",
+
+        totallibraries: "کل تعداد لائبریریز",
+        totalbooks: "تعداد کتب",
+        totalincrease: "اضافہ کتب",
+        totaldecrease: "کمی کتب",
+        totalbookrent: "اجرائے کتب",
+
+        totalreceived: "کل موصولہ",
+        totalsold: "فروخت کردہ",
+        monthlyreceivinggoal: "ڈائجسٹ ماہانہ ہدف",
+
+        umeedwaranfilledsum: "امیدواران فل",
+        rafaqafilledsum: "رفقا فل",
+
+        monthlyincome: "ماہانہ آمدن",
+        monthlyexpenditure: "ماہانہ خرچ",
+        savings: "بدست",
+        loss: "خسارہ",
+      };
+      const division = {
+        rehaishhalqay: "رہائشی حلقے",
+        taleemhalqay: "تعلیمی حلقے",
+        totalhalqay: "کل حلقے",
+        subrehaishhalqay: "رِہائشی ذیلی حلقے",
+        subtaleemhalqay: "تعلیمی ذیلی حلقے",
+        subtotalhalqay: "کل ذیلی حلقے",
+        busmschoolunits: "بزم کے سکول یونٹس",
+        busmrehaishunits: "بزم کےرِہائشی یونٹس",
+        busmtotalunits: "بزم کے کل یونٹس",
+
+        collegesa: "Colleges A",
+        collegesb: "Colleges B",
+        collegesc: "Colleges C",
+        collegesd: "Colleges D",
+
+        jamiaata: "Jamiaat A",
+        jamiaatb: "Jamiaat B",
+        jamiaatc: "Jamiaat C",
+        jamiaatd: "Jamiaat D",
+        jamiaate: "Jamiaat E",
+
+        arkan: "ارکان",
+        umeedwaran: "امیدواران",
+        rafaqa: "رفقا",
+        karkunan: "کارکنان",
+        shaheen: "شاہین",
+        members: "ممبرز",
+
+        ijtarkan: "اجتمع ارکان",
+        studycircle: "سٹڈی سرکل",
+        ijtnazmeen: "اجتماع ناظمین",
+        ijtumeedwaran: "اجتماع امیدواران",
+        sadurmeeting: "صدورمیٹینگ",
+
+        ijtrafaqa: "اجتماع رفقا",
+        studycircle: "سٹڈی سرکل",
+        ijtkarkunan: "اجتماع کارکنان",
+        darsequran: "درس قرآن",
+        shaheenmeeting: "شاہین میٹنگ",
+        paighamevent: "پیغام محفل",
+
+        dawatiwafud: "دعوتی وفود",
+        rawabitparties: "روابط پارٹیز",
+        nizamsalah: "نظام الصلوٰۃ",
+        shabbedari: "شب بیداری",
+        anyOther: "",
+
+        rawabitdecided: "طے شدہ",
+        currentsum: "موجود",
+        meetingssum: "ملاقاتیں",
+        literaturedistribution: "تقسیم لٹریچر",
+        rwabitmeetingsgoal: "روابط سےملاقاتوں کاہدف",
+        commonstudentmeetings: "عام طلبہ ملاقاتیں",
+        commonliteraturedistribution: "عام طلبہ تقسیم لٹریچر ",
+        registered: "",
+
+        totallibraries: "کل تعداد لائبریریز",
+        totalbooks: "تعداد کتب",
+        totalincrease: "اضافہ کتب",
+        totaldecrease: "کمی کتب",
+        totalbookrent: "اجرائے کتب",
+
+        totalreceived: "کل موصولہ",
+        totalsold: "فروخت کردہ",
+        monthlyreceivinggoal: "ڈائجسٹ ماہانہ ہدف",
+
+        umeedwaranfilledsum: "امیدواران فل",
+        rafaqafilledsum: "رفقا فل",
+
+        monthlyincome: "ماہانہ آمدن",
+        monthlyexpenditure: "ماہانہ خرچ",
+        savings: "بدست",
+        loss: "خسارہ",
+      };
+      myData.labels = myData.labels.map((i) => division[i]);
       setResponse(myData);
     } catch (error) {
       console.log(error);
@@ -816,7 +977,7 @@ export const Comparision = () => {
             Dates
           </button>
         </div>
-        <div className="relative flex flex-col gap-3 h-[calc(100vh-200px-64px-73.6px)] w-full p-3 overflow-scroll">
+        <div className="relative flex flex-col gap-3 h-[calc(100vh-100px-64px-73.6px)] w-full p-3 overflow-scroll">
           {response ? (
             <ReportChart res={response} type={selectedProperty} />
           ) : (
