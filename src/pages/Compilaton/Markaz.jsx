@@ -26,6 +26,7 @@ import {
 import { UIContext } from "../../context/ui";
 import { Baitulmal } from "../../components/maqamReport/Baitulmal";
 import { NoReports } from "../Reports";
+import { FaPrint } from "react-icons/fa";
 
 // const getData = async (path, id, setData, data) => {
 //   const arr = data[path];
@@ -51,12 +52,14 @@ export const Markaz = () => {
   const navigate = useNavigate();
   const compileReport = useContext(CompileReportContext);
   const [date, setDate] = useState(
-    `${compileReport?.startDate}-${compileReport?.endDate}`
+    `${compileReport?.startDate} تا  ${compileReport?.endDate}`
   );
   const queryParams = new URLSearchParams(location.search);
   const areaType = queryParams.get("areaType");
   const areaName = queryParams.get("areaName");
-
+  const startDate = queryParams.get("startDate");
+  const endDate = queryParams.get("endDate");
+  const areaId = queryParams.get("areaId");
   const autoFill = () => {
     Object.keys(compileReport).forEach((i) => {
       const elem = document.getElementById(i);
@@ -70,8 +73,8 @@ export const Markaz = () => {
           newElem.value = compileReport[i];
         }
       }
-      if (i.split('-')[0] === 'studyCircle') {
-        const newKey = 'studyCircleMentioned-'+ i.split("-")[1];
+      if (i.split("-")[0] === "studyCircle") {
+        const newKey = "studyCircleMentioned-" + i.split("-")[1];
         const newElem = document.getElementById(newKey);
         if (newElem) {
           newElem.value = compileReport[i];
@@ -89,7 +92,12 @@ export const Markaz = () => {
       data[i] = 0;
     }
   });
-
+  const handlePrint = () => {
+    window.open(
+      `/markaz-report-compile/print?areaId=${areaId}&startDate=${startDate}&endDate=${endDate}&areaName=${areaName}`
+    );
+    // window.location.href = `/halqa-report-compile/print?areaId${areaId}&startDate=${startDate}&endDate=${endDate}`;
+  };
   return (
     <GeneralLayout>
       {Object.keys(compileReport).length > 2 ? (
@@ -148,7 +156,7 @@ export const Markaz = () => {
                 <ZailiActivities view={view} obj={obj} />
               </div>
               <div className="mb-4">
-                <OtherActivities view={view} compile={true}/>
+                <OtherActivities view={view} compile={true} />
               </div>
               <div className="mb-4">
                 <ToseeDawat />
@@ -162,7 +170,7 @@ export const Markaz = () => {
               <div className="mb-4">
                 <RozOShabDiary view={view} />
               </div>
-              
+
               {!view && (
                 <div className="w-full flex flex-col items-end gap-3 p-2">
                   <div>
@@ -178,9 +186,12 @@ export const Markaz = () => {
                 </div>
               )}
             </div>
-           
           </form>
-          
+          <div className="flex w-ful justify-center">
+            <button className="btn" onClick={() => handlePrint()}>
+              <FaPrint /> پرنٹ
+            </button>
+          </div>
         </div>
       ) : (
         <div className="flex w-full justify-center items-center">

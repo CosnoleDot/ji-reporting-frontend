@@ -28,15 +28,15 @@ export const HalqaCompile = () => {
   const params = useParams();
   let navigate = useNavigate();
   const compileReport = useContext(CompileReportContext);
-
   const [date, setDate] = useState(
-    `${compileReport?.startDate}-${compileReport?.endDate}`
+    `${compileReport?.startDate} تا  ${compileReport?.endDate}`
   );
   const queryParams = new URLSearchParams(location.search);
   const areaType = queryParams.get("areaType");
   const areaName = queryParams.get("areaName");
   const startDate = queryParams.get("startDate");
   const endDate = queryParams.get("endDate");
+  const areaId = queryParams.get("areaId");
 
   const autoFill = () => {
     Object.keys(compileReport).forEach((i) => {
@@ -64,9 +64,12 @@ export const HalqaCompile = () => {
     }
   });
   const handlePrint = () => {
-    window.open(`/halqa-report-compile/print`, "blank");
+    window.open(
+      `/halqa-report-compile/print?areaId=${areaId}&startDate=${startDate}&endDate=${endDate}&areaName=${areaName}`
+    );
+    // window.location.href = `/halqa-report-compile/print?areaId${areaId}&startDate=${startDate}&endDate=${endDate}`;
   };
-  
+
   return (
     <GeneralLayout>
       {Object.keys(compileReport).length > 2 ? (
@@ -142,9 +145,11 @@ export const HalqaCompile = () => {
               )}
             </div>
           </form>
-          <button className="btn" onClick={() => handlePrint()}>
-            <FaPrint />
-          </button>
+          <div className="flex w-ful justify-center">
+            <button className="btn" onClick={() => handlePrint()}>
+              <FaPrint /> پرنٹ
+            </button>
+          </div>
         </div>
       ) : (
         <div className="flex w-full justify-center items-center">

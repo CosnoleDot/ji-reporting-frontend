@@ -230,7 +230,7 @@ export const Reports = () => {
             )}
             <button className="btn " onClick={()=>navigate('/compilation')}>
       
-              <span className="hidden lg:block xl:block">Compile</span>
+              Compile
             </button>
             
           </div>

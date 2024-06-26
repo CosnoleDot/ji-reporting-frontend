@@ -33,13 +33,14 @@ export const IlaqaCompile = () => {
   const compileReport = useContext(CompileReportContext);
 
   const [date, setDate] = useState(
-    `${compileReport?.startDate}-${compileReport?.endDate}`
+    `${compileReport?.startDate} تا  ${compileReport?.endDate}`
   );
   const queryParams = new URLSearchParams(location.search);
   const areaType = queryParams.get("areaType");
   const areaName = queryParams.get("areaName");
   const startDate = queryParams.get("startDate");
   const endDate = queryParams.get("endDate");
+  const areaId = queryParams.get("areaId");
   const autoFill = () => {
     Object.keys(compileReport).forEach((i) => {
       const elem = document.getElementById(i);
@@ -72,7 +73,12 @@ export const IlaqaCompile = () => {
       data[i] = 0;
     }
   });
-
+  const handlePrint = () => {
+    window.open(
+      `/ilaqa-report-compile/print?areaId=${areaId}&startDate=${startDate}&endDate=${endDate}&areaName=${areaName}`
+    );
+    // window.location.href = `/halqa-report-compile/print?areaId${areaId}&startDate=${startDate}&endDate=${endDate}`;
+  };
   return (
     <GeneralLayout>
       {Object.keys(compileReport).length > 2 ? (
@@ -156,7 +162,12 @@ export const IlaqaCompile = () => {
               )}
             </div>
           </form>
-          
+          <div className="flex w-ful justify-center">
+            
+            <button className="btn" onClick={() => handlePrint()}>
+              <FaPrint /> پرنٹ
+            </button>
+          </div>
         </div>
       ) : (
         <div className="flex w-full justify-center items-center">

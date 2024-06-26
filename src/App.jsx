@@ -66,6 +66,11 @@ import { Page404 } from "./pages/PageNotFound/Page404";
 import { Compile } from "./pages/Compilaton/Compile";
 import { CompileReports, MaqamCompile, Markaz } from "./pages/Compilaton";
 import { HalqaCompileReport } from "./pages/Compilaton/HalqaCompileReport";
+import { IlaqaCompileReport } from "./pages/Compilaton/IlaqaCompileReport";
+import { DivisionCompileReport } from "./pages/Compilaton/DivisionCompileReport";
+import { ProvinceReportCompile } from "./pages/Compilaton/ProvinceReportCompile";
+import { MarkazReportCompilePrint } from "./pages/Compilaton/MarkazReportCompilePrint";
+import { MuntakhibMaqamCompileReport } from "./pages/Compilaton/MuntakhibMaqamCompileReport";
 // import { SpiderChart } from "./pages/SpiderChart";
 
 function App() {
@@ -1351,12 +1356,24 @@ function App() {
                                                 element={<ProvinceReport />}
                                               />
                                               <Route
+                                                path="/province-report-compile/print"
+                                                element={<ProvinceReportCompile />}
+                                              />
+                                              <Route
                                                 path="/division-report/print/:id"
                                                 element={<DivisionReport />}
                                               />
                                               <Route
+                                                path="/division-report-compile/print/"
+                                                element={<DivisionCompileReport />}
+                                              />
+                                              <Route
                                                 path="/ilaqa-report/print/:id"
                                                 element={<IlaqaReport />}
+                                              />
+                                              <Route
+                                                path="/ilaqa-report-compile/print"
+                                                element={<IlaqaCompileReport />}
                                               />
                                               <Route
                                                 path="*"
@@ -1365,6 +1382,10 @@ function App() {
                                               <Route
                                                 path="/maqam-report/print/:id"
                                                 element={<MaqamReport />}
+                                              />
+                                              <Route
+                                                path="/maqam-report-compile/print/"
+                                                element={<MuntakhibMaqamCompileReport />}
                                               />
                                               <Route
                                                 path="/compile/view"
@@ -1384,13 +1405,14 @@ function App() {
                                                 path="/halqa-report-compile/print"
                                                 element={<HalqaCompileReport />}
                                               />
-                                              <Route
-                                                path="/halqa-report/compile/print/:id"
-                                                element={<HalqaReport />}
-                                              />
+                                              
                                               <Route
                                                 path="/markaz-report/print/:id"
                                                 element={<MarkazReportPrint />}
+                                              />
+                                               <Route
+                                                path="/markaz-report-compile/print"
+                                                element={<MarkazReportCompilePrint />}
                                               />
                                               <Route
                                                 path="/compilation"

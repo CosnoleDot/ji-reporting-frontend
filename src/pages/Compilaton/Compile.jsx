@@ -97,7 +97,9 @@ export const Compile = () => {
   const [sDate, setSDate] = useState();
   const [eDate, setEDate] = useState();
   const navigate = useNavigate();
-  
+  const [isMun , setIsMun]=useState(true);
+  const ilaqa = ilaqas?.filter((i)=> i?.maqam._id === me?.userAreaId?._id);
+
   useEffect(() => {
     switch (areaType) {
       case "markaz":
@@ -108,6 +110,7 @@ export const Compile = () => {
         break;
       case "maqam":
         setAreas(maqams);
+     
         break;
       case "division":
         setAreas(divisions);
@@ -183,7 +186,7 @@ export const Compile = () => {
     if (showReport) {
       
       navigate(
-        `/compile/view?areaType=${areaType}&areaName=${areaName}&startDate=${sDate}&endDate=${eDate}`
+        `/compile/view?areaId=${areaId}&areaType=${areaType}&areaName=${areaName}&startDate=${sDate}&endDate=${eDate}`
       );
     }
   }, [areaName, showReport, navigate, areaType]);
@@ -208,7 +211,11 @@ export const Compile = () => {
     
     
   }, [localStorage.getItem("@type")]);
-
+ useEffect(()=>{
+  if(ilaqa?.length<1){
+    setIsMun(false)
+  }
+ },[])
 
   return (
     <GeneralLayout title={me?.userAreaId?.name.toUpperCase()}>
@@ -256,9 +263,12 @@ export const Compile = () => {
                   {["country", "province"].includes(
                     localStorage.getItem("@type")
                   ) && <option value="division">Division</option>}
-                  {["country", "province", "maqam"].includes(
+                  {["country", "province"].includes(
                     localStorage.getItem("@type")
                   ) && <option value="ilaqa">Ilaqa</option>}
+                    {
+                    localStorage.getItem("@type") ==="maqam"
+                   && isMun && <option value="ilaqa">Ilaqa</option>}
                   <option value="halqa">Halqa</option>
                 </select>
               </div>
@@ -305,11 +315,11 @@ export const Compile = () => {
                 type="checkbox"
                 checked={checked === "month-checkbox"}
                 onChange={handleCheckboxChange}
-                className="w-6 h-6 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+                className="w-6 h-6 md:w-4 md:h-4 sm:w-4 sm:h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
               />
               <label
                 htmlFor="month-checkbox"
-                className="ms-2 text-md font-medium text-gray-900 dark:text-gray-300"
+                className="ms-2 text-md xs:text-sm font-medium text-gray-900 dark:text-gray-300"
               >
                 By month
               </label>
@@ -335,7 +345,7 @@ export const Compile = () => {
               <div className="flex flex-row gap-4 items-center">
                 <label>Start Date:</label>
                 <select
-                  className="select select-bordered"
+                  className="select select-bordered p-2"
                   onChange={(e) => setStartMonth(e.target.value)}
                   value={startMonth}
                 >
@@ -347,7 +357,7 @@ export const Compile = () => {
                   ))}
                 </select>
                 <select
-                  className="select select-bordered"
+                  className="select select-bordered "
                   onChange={(e) => setStartYear(e.target.value)}
                   value={startYear}
                 >
@@ -364,7 +374,7 @@ export const Compile = () => {
               <div className="flex flex-row gap-4 items-center">
                 <label>End Date:</label>
                 <select
-                  className="select select-bordered"
+                  className="select select-bordered p-2"
                   onChange={(e) => {
                     setEndMonth(e.target.value);
                     setShowReport(false);

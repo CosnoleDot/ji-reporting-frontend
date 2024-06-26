@@ -1,9 +1,8 @@
-import {   GeneralLayout, calcultate } from "../../components";
+import { GeneralLayout, calcultate } from "../../components";
 
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useContext, useRef, useState } from "react";
 import { useEffect } from "react";
-
 
 import { Jamiaat } from "../../components/maqamReport/Jamiaat";
 import { Colleges } from "../../components/maqamReport/Colleges";
@@ -21,6 +20,7 @@ import { reverseDataFormat } from "../../utils";
 import { CompileReportContext, MeContext, useToastState } from "../../context";
 import { UIContext } from "../../context/ui";
 import { NoReports } from "../Reports";
+import { FaPrint } from "react-icons/fa";
 export const MuntakhibMaqamCompile = () => {
   // EDIT CODE START
   const [month, setMonth] = useState("");
@@ -34,75 +34,73 @@ export const MuntakhibMaqamCompile = () => {
   const location = useLocation();
   const me = useContext(MeContext);
   const navigate = useNavigate();
-  const report =useContext(CompileReportContext) ;
-  const compileReport = report?.b
-  const [date, setDate]=useState(`${report?.startDate}-${report?.endDate}`)
- const queryParams =new URLSearchParams(location.search);
- const areaType = queryParams.get('areaType');
-    const areaName = queryParams.get('areaName');
-    const autoFill = () => {
-    
-      Object.keys(compileReport).forEach((i) => {
-        const elem = document.getElementById(i);
-        if (elem) {
-          elem.value = compileReport[i];
+  const report = useContext(CompileReportContext);
+  const compileReport = report?.b;
+  const [date, setDate] = useState(`${report?.startDate} تا  ${report?.endDate}`);
+  const queryParams = new URLSearchParams(location.search);
+  const areaType = queryParams.get("areaType");
+  const areaName = queryParams.get("areaName");
+  const startDate = queryParams.get("startDate");
+  const endDate = queryParams.get("endDate");
+  const areaId = queryParams.get("areaId");
+  const autoFill = () => {
+    Object.keys(compileReport).forEach((i) => {
+      const elem = document.getElementById(i);
+      if (elem) {
+        elem.value = compileReport[i];
+      }
+      if (i.includes("-monthly")) {
+        const newKey = i.replace("-monthly", "-end");
+        const newElem = document.getElementById(newKey);
+        if (newElem) {
+          newElem.value = compileReport[i];
         }
-        if (i.includes('-monthly')) {
-          const newKey = i.replace('-monthly', '-end');
-          const newElem = document.getElementById(newKey);
-          if (newElem) {
-            newElem.value = compileReport[i];
-          }
+      }
+      if (i.split("-")[0] === "studyCircle") {
+        const newKey = "studyCircleMentioned-" + i.split("-")[1];
+        const newElem = document.getElementById(newKey);
+        if (newElem) {
+          newElem.value = compileReport[i];
         }
-        if (i.split('-')[0] === 'studyCircle') {
-          const newKey = 'studyCircleMentioned-'+ i.split("-")[1];
-          const newElem = document.getElementById(newKey);
-          if (newElem) {
-            newElem.value = compileReport[i];
-          }
+      }
+      if (i === "commonStudentMeetingsSum") {
+        const newKey = "commonStudentMeetings";
+        const newElem = document.getElementById(newKey);
+        if (newElem) {
+          newElem.value = compileReport[i];
         }
-        if (i === 'commonStudentMeetingsSum') {
-          const newKey = 'commonStudentMeetings'
-          const newElem = document.getElementById(newKey);
-          if (newElem) {
-            newElem.value = compileReport[i];
-          }
+      }
+      if (i === "commonLiteratureDistributionSum") {
+        const newKey = "commonLiteratureDistribution";
+        const newElem = document.getElementById(newKey);
+        if (newElem) {
+          newElem.value = compileReport[i];
         }
-        if (i === 'commonLiteratureDistributionSum') {
-          const newKey = 'commonLiteratureDistribution'
-          const newElem = document.getElementById(newKey);
-          if (newElem) {
-            newElem.value = compileReport[i];
-          }
+      }
+      if (i === "literatureSum") {
+        const newKey = "litrature";
+        const newElem = document.getElementById(newKey);
+        if (newElem) {
+          newElem.value = compileReport[i];
         }
-        if (i === 'literatureSum') {
-          const newKey = 'litrature'
-          const newElem = document.getElementById(newKey);
-          if (newElem) {
-            newElem.value = compileReport[i];
-          }
+      }
+      if (i === "darseQuran-done") {
+        const newKey = "darseQuran-sum";
+        const newElem = document.getElementById(newKey);
+        if (newElem) {
+          newElem.value = compileReport["darseQuran-done"];
         }
-        if (i==='darseQuran-done') {
-          const newKey = 'darseQuran-sum'
-          const newElem = document.getElementById(newKey);
-          if (newElem) {
-            newElem.value = compileReport['darseQuran-done'] ;
-          }
+      }
+      if (i === "ijtKarkunan-done") {
+        const newKey = "ijtKarkunan-sum";
+        const newElem = document.getElementById(newKey);
+        if (newElem) {
+          newElem.value = compileReport["ijtKarkunan-done"];
         }
-        if (i==='ijtKarkunan-done') {
-          const newKey = 'ijtKarkunan-sum'
-          const newElem = document.getElementById(newKey);
-          if (newElem) {
-            newElem.value = compileReport['ijtKarkunan-done'] ;
-          }
-        }
-        // compileReport['darseQuran-sum']= compileReport["darseQuran-done"]+ compileReport["darseQuran-manual"]
-
-        
-       
-      });
-    };
-
+      }
+      // compileReport['darseQuran-sum']= compileReport["darseQuran-done"]+ compileReport["darseQuran-manual"]
+    });
+  };
 
   useEffect(() => {
     if (!id) {
@@ -110,11 +108,16 @@ export const MuntakhibMaqamCompile = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  
+  const handlePrint = () => {
+    window.open(
+      `/maqam-report-compile/print?areaId=${areaId}&startDate=${startDate}&endDate=${endDate}&areaName=${areaName}`
+    );
+    // window.location.href = `/halqa-report-compile/print?areaId${areaId}&startDate=${startDate}&endDate=${endDate}`;
+  };
   return (
     <GeneralLayout>
       <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">
-      <form
+        <form
           className="flex flex-col justify-center items-center p-4 font-notoUrdu mb-5"
           dir="rtl"
           id="markaz-form"
@@ -165,13 +168,13 @@ export const MuntakhibMaqamCompile = () => {
               <MarkaziActivities view={view} />
             </div>
             <div className="mb-4">
-              <ZailiActivities view={view} compile={true}/>
+              <ZailiActivities view={view} compile={true} />
             </div>
             <div className="mb-4">
-              <OtherActivities view={view} compile={true}/>
+              <OtherActivities view={view} compile={true} />
             </div>
             <div className="mb-4">
-              <ToseeDawat compile={true}/>
+              <ToseeDawat compile={true} />
             </div>
             <div className="mb-4">
               <Library />
@@ -183,9 +186,9 @@ export const MuntakhibMaqamCompile = () => {
               <Baitulmal view={view} />
             </div>
             <div className="mb-4">
-              <RozOShabDiary view={view} compile={true}/>
+              <RozOShabDiary view={view} compile={true} />
             </div>
-           
+
             {!view && (
               <div className="w-full flex flex-col items-end gap-3 p-2">
                 <div>
@@ -201,9 +204,15 @@ export const MuntakhibMaqamCompile = () => {
               </div>
             )}
           </div>
-        
+          <div className="flex w-ful justify-center">
+            <button className="btn" onClick={() => handlePrint()}>
+              <FaPrint /> پرنٹ
+            </button>
+          </div>
         </form>
-       
+        <button className="btn" onClick={() => handlePrint()}>
+          <FaPrint />
+        </button>
       </div>
     </GeneralLayout>
   );

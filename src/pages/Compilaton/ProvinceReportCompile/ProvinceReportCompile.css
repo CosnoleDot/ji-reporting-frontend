@@ -1,0 +1,43 @@
+.wrapper {
+  width: 100%;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.wrapper p {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: center;
+  width: 100%;
+}
+.tableContainer {
+  width: 100%;
+}
+
+.header {
+  font-weight: bold;
+  width: 5rem;
+}
+
+.row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
+
+.row p {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: center;
+  width: 100%;
+}
+
+.p_rows {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
