@@ -512,7 +512,7 @@ export const Comparision = () => {
         monthlyreceivinggoal: "ڈائجسٹ ماہانہ ہدف",
 
         umeedwaranfilledsum: "امیدواران فل",
-        rafaqafilledsum: "رفقا فل",
+        rafaqafilled: "رفقا فل",
 
         monthlyincome: "ماہانہ آمدن",
         monthlyexpenditure: "ماہانہ خرچ",

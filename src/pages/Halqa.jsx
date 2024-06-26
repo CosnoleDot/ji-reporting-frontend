@@ -81,7 +81,7 @@ export const Halqa = () => {
           if (elem.type === "checkbox") {
             elem.defaultChecked = data[i] ? true : false;
           } else {
-            elem.value = data[i];
+            elem.value = data[i] || 0;
           }
         }
       }

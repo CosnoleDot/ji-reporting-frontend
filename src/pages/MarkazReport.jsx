@@ -214,7 +214,7 @@ export const MarkazReport = () => {
       paigham.forEach((p) => {
         if (data[p] !== undefined) {
           const fieldValue = data[p];
-          document.getElementById(p).value = fieldValue;
+          document.getElementById(p).value = fieldValue || 0;
         }
       });
     }
@@ -296,7 +296,7 @@ export const MarkazReport = () => {
           if (elem.type === "checkbox") {
             elem.checked = data[i];
           } else {
-            elem.value = data[i];
+            elem.value = data[i] || 0;
           }
         }
       }
@@ -353,7 +353,7 @@ export const MarkazReport = () => {
       data[i] = 0;
     }
   });
-  
+
   return (
     <GeneralLayout>
       <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">

@@ -141,7 +141,7 @@ export const MuntakhibMaqamReports = () => {
             if (i === "name" && !view) {
               elem.value = me?.userAreaId?.name;
             } else {
-              elem.value = halq[i];
+              elem.value = halq[i] || 0;
             }
           }
         }
@@ -215,7 +215,9 @@ export const MuntakhibMaqamReports = () => {
     afd.forEach((i) => {
       calcultate(i);
     });
-    ["manualUmeedwaran"].forEach((l) => (document.getElementById(l).value = 0));
+    ["manualUmeedwaran", "manualRafaqa"].forEach(
+      (l) => (document.getElementById(l).value = 0)
+    );
   };
   const getIlaqaReports = async () => {
     try {
@@ -294,7 +296,7 @@ export const MuntakhibMaqamReports = () => {
           if (elem.type === "checkbox") {
             elem.checked = data[i];
           } else {
-            elem.value = data[i];
+            elem.value = data[i] || 0;
           }
         }
       }
@@ -320,13 +322,13 @@ export const MuntakhibMaqamReports = () => {
       calcultate(i);
     });
   }, [data]);
- 
+
   useEffect(() => {
     if (!id || window.location.pathname?.split("/")[2] === "create") {
       autoFill();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id,createData]);
+  }, [id, createData]);
   // EDIT CODE END
   const handleSubmit = async (e) => {
     e.preventDefault();
