@@ -709,14 +709,7 @@ export const Comparision = () => {
         savings: "بدست",
         loss: "خسارہ",
       };
-      if (reportType === "markaz") {
-        myData.labels = myData.labels.map((i) => markaz[i]);
-      } else if (reportType === "province") {
-        myData.labels = myData.labels.map((i) => province[i]);
-      } else if (reportType === "maqam") {
-        myData.labels = myData.labels.map((i) => mMaqam[i]);
-      } else if (reportType === "division") {
-        const personal = {
+      const personal = {
         // Personal
 
         fajarinfradi: "فجرانفرادی ",
@@ -749,16 +742,35 @@ export const Comparision = () => {
         commonstudentmeetingssum: "عام طلبہ ملاقاتیں",
         commonliteraturedistributionsum: "عام طلبہ لٹریچرتقسیم ",
       };
-      myData.labels = myData.labels.map((i) => province[i]);
+      if (reportType === "markaz") {
+        myData.labels = myData.labels.map((i) => markaz[i]);
+      } else if (reportType === "province") {
+        myData.labels = myData.labels.map((i) => province[i]);
+      } else if (reportType === "maqam") {
+        const isMunt = ilaqas?.filter((i)=> i?.maqam?._id === areaId);
+        myData.labels = myData.labels.map((i) => 
+          isMunt.length>0 ? mMaqam[i] : gMaqam[i]
+          );
+      } else if (reportType === "division") {
+      myData.labels = myData.labels.map((i) => division[i]);
       } else if (reportType === "ilaqa") {
         myData.labels = myData.labels.map((i) => ilaqa[i]);
       }
+      else if (reportType === "halqa") {
+        myData.labels = myData.labels.map((i) => halqa[i]);
+      }
+      else if (reportType === "personal") {
+        myData.labels = myData.labels.map((i) => personal[i]);
+      }
+     
       setResponse(myData);
     } catch (error) {
       console.log(error);
       dispatch({ type: "ERROR", payload: error?.response?.data?.message });
     }
   };
+
+  
   const getAreaType = (area) => {
     if (area?.parentType === "Maqam") {
       const name = maqams.find((i) => i?._id === area?.parentId);
