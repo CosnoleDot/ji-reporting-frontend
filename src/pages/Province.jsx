@@ -467,7 +467,7 @@ export const Province = () => {
       paigham?.forEach((p) => {
         if (data[p] !== undefined) {
           const fieldValue = data[p];
-          document.getElementById(p).value = fieldValue;
+          document.getElementById(p).value = fieldValue || 0;
         }
       });
     }

@@ -252,7 +252,7 @@ export const Division = () => {
           if (elem.type === "checkbox") {
             elem.checked = data[i];
           } else {
-            elem.value = data[i];
+            elem.value = data[i] || 0;
           }
         }
       }
