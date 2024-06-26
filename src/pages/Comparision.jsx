@@ -225,7 +225,7 @@ export const Comparision = () => {
         }
       );
       const myData = res?.data?.data;
-      const labels = {
+      const halqa = {
         ijtrafaqa: "اجتماع رفقا",
         ijtkarkunan: "اجتماع کارکنان",
         studycircle: "سٹڈی سرکل",
@@ -278,38 +278,6 @@ export const Comparision = () => {
         totalIncrease: "اضافہ",
         totalDecrease: "کمی",
         totalBookRent: "اجرائے کتب",
-
-        // Personal
-
-        fajarinfradi: "فجرانفرادی ",
-        fajarontime: "فجرباجماعت",
-        fajarqaza: "فجر قضا ",
-        fajartotal: "فجر ٹوٹل",
-        otherprayersinfradi: "دیگرانفرادی",
-        otherprayersontime: "دیگرباجماعت",
-        otherprayersqaza: "دیگرقضا",
-        otherprayerstotal: "دیگرٹوٹل",
-
-        tafseertotaldays: "تفسیرکتنےدن پڑہی",
-        tafseertotalrakoo: "تفسیرکےکتنے رکوع پڑہے",
-        ahdeestotaldays: "کل کتنےدن پڑہی",
-        litraturetotaldays: "لٹریچر کتنے دن پڑہا",
-        hifztotaldays: "حفظ کتنے دن کیا",
-        institutionAttendance: "تعلیمی ادارے میں حاضری",
-
-        genralstudentstotalmeetups: "عام طلبہ سے کل ملاقاتیں",
-        genralstudentstotallitraturedivided: "عام طلبہ لٹریچرتقسیم ",
-        genralstudentscount: "عام طلبہ کل سے ملاقاتیں",
-        monthlyincome: "ماہانہ آمدن",
-        monthlyexpenditure: "ماہانہ خرچ",
-        savings: "بدست",
-        loss: "خسارہ",
-        currentsum: "موجود",
-        rwabitmeetingsgoal: "روابط سےملاقاتوں کاہدف",
-        meetingssum: "ملاقاتیں",
-        literaturedum: "تقسیم لٹریچر",
-        commonstudentmeetingssum: "عام طلبہ ملاقاتیں",
-        commonliteraturedistributionsum: "عام طلبہ لٹریچرتقسیم ",
       };
       const ilaqa = {
         rehaishhalqay: "رہائشی حلقے",
@@ -679,8 +647,40 @@ export const Comparision = () => {
         savings: "بدست",
         loss: "خسارہ",
       };
+      const personal = {
+        // Personal
 
-      myData.labels = myData.labels.map((i) => province[i]);
+        fajarinfradi: "فجرانفرادی ",
+        fajarontime: "فجرباجماعت",
+        fajarqaza: "فجر قضا ",
+        fajartotal: "فجر ٹوٹل",
+        otherprayersinfradi: "دیگرانفرادی",
+        otherprayersontime: "دیگرباجماعت",
+        otherprayersqaza: "دیگرقضا",
+        otherprayerstotal: "دیگرٹوٹل",
+
+        tafseertotaldays: "تفسیرکتنےدن پڑہی",
+        tafseertotalrakoo: "تفسیرکےکتنے رکوع پڑہے",
+        ahdeestotaldays: "کل کتنےدن پڑہی",
+        litraturetotaldays: "لٹریچر کتنے دن پڑہا",
+        hifztotaldays: "حفظ کتنے دن کیا",
+        institutionAttendance: "تعلیمی ادارے میں حاضری",
+
+        genralstudentstotalmeetups: "عام طلبہ سے کل ملاقاتیں",
+        genralstudentstotallitraturedivided: "عام طلبہ لٹریچرتقسیم ",
+        genralstudentscount: "عام طلبہ کل سے ملاقاتیں",
+        monthlyincome: "ماہانہ آمدن",
+        monthlyexpenditure: "ماہانہ خرچ",
+        savings: "بدست",
+        loss: "خسارہ",
+        currentsum: "موجود",
+        rwabitmeetingsgoal: "روابط سےملاقاتوں کاہدف",
+        meetingssum: "ملاقاتیں",
+        literaturedum: "تقسیم لٹریچر",
+        commonstudentmeetingssum: "عام طلبہ ملاقاتیں",
+        commonliteraturedistributionsum: "عام طلبہ لٹریچرتقسیم ",
+      };
+      myData.labels = myData.labels.map((i) => personal[i]);
       setResponse(myData);
     } catch (error) {
       console.log(error);
