@@ -680,7 +680,7 @@ export const Comparision = () => {
         commonstudentmeetingssum: "عام طلبہ ملاقاتیں",
         commonliteraturedistributionsum: "عام طلبہ لٹریچرتقسیم ",
       };
-      myData.labels = myData.labels.map((i) => personal[i]);
+      myData.labels = myData.labels.map((i) => province[i]);
       setResponse(myData);
     } catch (error) {
       console.log(error);
