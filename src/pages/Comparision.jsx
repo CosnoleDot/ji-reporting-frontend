@@ -278,6 +278,7 @@ export const Comparision = () => {
         totalIncrease: "اضافہ",
         totalDecrease: "کمی",
         totalBookRent: "اجرائے کتب",
+        monthlyexpenditure: "ماہانہ خرچ",
       };
       const ilaqa = {
         rehaishhalqay: "رہائشی حلقے",
@@ -589,7 +590,7 @@ export const Comparision = () => {
         shaheen: "شاہین",
         members: "ممبرز",
         divmushawarat: "ڈویژنل مشاورت",
-        ijtarkan: "اجتمع ارکان",
+        ijtarkan: "اجتماع ارکان",
         ijtnazmeen: "اجتماع ناظمین",
         ijtumeedwaran: "اجتماع امیدواران",
         studycircle: "سٹڈی سرکل",
@@ -979,7 +980,7 @@ export const Comparision = () => {
               Duration Type
             </option>
             <option value="month">Month</option>
-            <option value="year">Year</option>
+            {selectedProperty !== "spider" && <option value="year">Year</option>}
           </select>
           <button
             onClick={() => {
