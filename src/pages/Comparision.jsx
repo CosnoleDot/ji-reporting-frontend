@@ -562,7 +562,7 @@ export const Comparision = () => {
         savings: "بدست",
         loss: "خسارہ",
       };
-    
+
       const province = {
         rehaishhalqay: "رہائشی حلقے",
         taleemhalqay: "تعلیمی حلقے",
@@ -747,22 +747,20 @@ export const Comparision = () => {
       } else if (reportType === "province") {
         myData.labels = myData.labels.map((i) => province[i]);
       } else if (reportType === "maqam") {
-        const isMunt = ilaqas?.filter((i)=> i?.maqam?._id === areaId);
-        myData.labels = myData.labels.map((i) => 
-          isMunt.length>0 ? mMaqam[i] : gMaqam[i]
-          );
+        const isMunt = ilaqas?.filter((i) => i?.maqam?._id === areaId);
+        myData.labels = myData.labels.map((i) =>
+          isMunt.length > 0 ? mMaqam[i] : gMaqam[i]
+        );
       } else if (reportType === "division") {
-      myData.labels = myData.labels.map((i) => division[i]);
+        myData.labels = myData.labels.map((i) => division[i]);
       } else if (reportType === "ilaqa") {
         myData.labels = myData.labels.map((i) => ilaqa[i]);
-      }
-      else if (reportType === "halqa") {
+      } else if (reportType === "halqa") {
         myData.labels = myData.labels.map((i) => halqa[i]);
-      }
-      else if (reportType === "personal") {
+      } else if (reportType === "personal") {
         myData.labels = myData.labels.map((i) => personal[i]);
       }
-     
+
       setResponse(myData);
     } catch (error) {
       console.log(error);
@@ -770,7 +768,6 @@ export const Comparision = () => {
     }
   };
 
-  
   const getAreaType = (area) => {
     if (area?.parentType === "Maqam") {
       const name = maqams.find((i) => i?._id === area?.parentId);
@@ -959,7 +956,7 @@ export const Comparision = () => {
             {reportType !== "personal" && (
               <>
                 <option value={"compareAll"}>Compare All</option>
-                <option value={"spider"}>Spider Chart</option>
+                <option value={"spiderChart"}>Spider Chart</option>
               </>
             )}
             {["umeedwar", "rukan", "umeedwaar-nazim", "rukan-nazim"].includes(
