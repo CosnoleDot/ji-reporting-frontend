@@ -590,7 +590,7 @@ export const Comparision = () => {
         shaheen: "شاہین",
         members: "ممبرز",
         divmushawarat: "ڈویژنل مشاورت",
-        ijtarkan: "اجتمع ارکان",
+        ijtarkan: "اجتماع ارکان",
         ijtnazmeen: "اجتماع ناظمین",
         ijtumeedwaran: "اجتماع امیدواران",
         studycircle: "سٹڈی سرکل",
