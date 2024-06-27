@@ -45,7 +45,7 @@ export const Markaz = () => {
   const { dispatch } = useToastState();
   const [data, setData] = useState({});
   const { loading, setLoading, getMarkazReport } = useContext(UIContext);
-  const [view, setView] = useState(false);
+  const [view, setView] = useState(true);
   const [obj, setObj] = useState({});
   const location = useLocation();
   const me = useContext(MeContext);
