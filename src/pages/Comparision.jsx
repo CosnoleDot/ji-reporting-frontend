@@ -959,6 +959,7 @@ export const Comparision = () => {
             {reportType !== "personal" && (
               <>
                 <option value={"compareAll"}>Compare All</option>
+                <option value={"spider"}>Spider Chart</option>
               </>
             )}
             {["umeedwar", "rukan", "umeedwaar-nazim", "rukan-nazim"].includes(
@@ -981,7 +982,7 @@ export const Comparision = () => {
               Duration Type
             </option>
             <option value="month">Month</option>
-            <option value="year">Year</option>
+            {selectedProperty !== "spider" && <option value="year">Year</option>}
           </select>
           <button
             onClick={() => {
