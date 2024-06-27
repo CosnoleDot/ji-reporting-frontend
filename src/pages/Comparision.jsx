@@ -278,6 +278,7 @@ export const Comparision = () => {
         totalIncrease: "اضافہ",
         totalDecrease: "کمی",
         totalBookRent: "اجرائے کتب",
+        monthlyexpenditure: "ماہانہ خرچ",
       };
       const ilaqa = {
         rehaishhalqay: "رہائشی حلقے",
