@@ -225,7 +225,7 @@ export const Comparision = () => {
         }
       );
 
-      console.log(myData);
+ 
       const halqa = {
         ijtrafaqa: "اجتماع رفقا",
         ijtkarkunan: "اجتماع کارکنان",
