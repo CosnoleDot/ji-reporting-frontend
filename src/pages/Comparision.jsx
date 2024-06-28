@@ -408,6 +408,7 @@ export const Comparision = () => {
         rawabitdecided: "طے شدہ",
         currentsum: "موجود",
         meetingssum: "ملاقاتیں",
+        meetings: "ملاقاتیں",
         literaturesum: "تقسیم لٹریچر",
         commonstudentmeetingssum: "عام طلبہ ملاقاتیں",
         commonliteraturedistributionsum: "عام طلبہ تقسیم لٹریچر ",
@@ -463,6 +464,7 @@ export const Comparision = () => {
 
         rawabitdecided: "طے شدہ",
         currentsum: "موجود",
+        meetings: "ملاقاتیں",
         meetingssum: "ملاقاتیں",
         literaturedistribution: "تقسیم لٹریچر",
         rwabitmeetingsgoal: "روابط سےملاقاتوں کاہدف",
@@ -539,6 +541,7 @@ export const Comparision = () => {
         rawabitdecided: "طے شدہ",
         currentsum: "موجود",
         meetingssum: "ملاقاتیں",
+        meetings: "ملاقاتیں",
         literaturedistribution: "تقسیم لٹریچر",
         rwabitmeetingsgoal: "روابط سےملاقاتوں کاہدف",
         commonstudentmeetings: "عام طلبہ ملاقاتیں",
@@ -980,7 +983,9 @@ export const Comparision = () => {
               Duration Type
             </option>
             <option value="month">Month</option>
-            {selectedProperty !== "spider" && <option value="year">Year</option>}
+            {selectedProperty !== "spider" && (
+              <option value="year">Year</option>
+            )}
           </select>
           <button
             onClick={() => {
