@@ -536,7 +536,7 @@ export const Province = () => {
       data[i] = 0;
     }
   });
-s
+
   return (
     <GeneralLayout>
       <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">
