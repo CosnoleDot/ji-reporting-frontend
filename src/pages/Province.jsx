@@ -51,12 +51,12 @@ export const Province = () => {
   const autoFill = () => {
     const provinceFinalData = {};
     document.getElementById("province-form").reset();
-    const maqamTFiltered = createData?.maqamReports?.map((item) => {
+    const maqamTFiltered = createData?.data?.maqamReports?.map((item) => {
       const { muntakhibTdId, tdId } = item;
       return { m: muntakhibTdId || [], t: tdId || [] };
     });
 
-    const divisionTFiltered = createData?.divisionReports?.map((item) => {
+    const divisionTFiltered = createData?.data?.divisionReports?.map((item) => {
       const { tdId } = item;
       return { t: tdId || [] };
     });
@@ -198,6 +198,7 @@ export const Province = () => {
         }
       }
     });
+    
     if (!id) {
       document.getElementById("comments").value = null;
       document.getElementById("anyOther").value = null;
@@ -490,6 +491,7 @@ export const Province = () => {
   }, [id]);
   useEffect(() => {
     if (!id) {
+  
       autoFill();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
