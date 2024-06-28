@@ -224,8 +224,8 @@ export const Comparision = () => {
           },
         }
       );
+      const myData = res?.data?.data;
 
- 
       const halqa = {
         ijtrafaqa: "اجتماع رفقا",
         ijtkarkunan: "اجتماع کارکنان",
