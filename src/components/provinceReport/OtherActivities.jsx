@@ -74,7 +74,7 @@ export const OtherActivities = ({ view, compile }) => {
                 />
                 =
                 <input
-                  readOnly={view}
+                  readOnly={true}
                   type="number"
                   required
                   name={`tarbiyatGaahGoalSum`}
@@ -153,7 +153,7 @@ export const OtherActivities = ({ view, compile }) => {
                 />
                 =
                 <input
-                  readOnly={view}
+                  readOnly={true}
                   type="number"
                   required
                   name={`tarbiyatGaahHeldSum`}

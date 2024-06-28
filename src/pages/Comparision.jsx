@@ -837,15 +837,17 @@ export const Comparision = () => {
               Report Type
             </option>
             <option value="halqa">Halqa</option>
-            {localStorage.getItem("@type") === "province" ||
-              (localStorage.getItem("@type") === "country" && (
-                <>
-                  <option value="maqam">Maqam</option>
-                  <option value="division">Division</option>
-                  <option value="province">Province</option>
+            {(localStorage.getItem("@type") === "province" ||
+              localStorage.getItem("@type") === "country") && (
+              <>
+                <option value="maqam">Maqam</option>
+                <option value="division">Division</option>
+                {localStorage.getItem("@type") === "country" && (
                   <option value="markaz">Markaz</option>
-                </>
-              ))}
+                )}
+                <option value="province">Province</option>
+              </>
+            )}
             {localStorage.getItem("@type") !== "halqa" &&
               localStorage.getItem("@type") !== "division" && (
                 <>
