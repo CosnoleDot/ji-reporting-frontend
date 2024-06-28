@@ -224,13 +224,15 @@ export const Comparision = () => {
           },
         }
       );
-      const myData = res?.data?.data;
+
+      console.log(myData);
       const halqa = {
         ijtrafaqa: "اجتماع رفقا",
         ijtkarkunan: "اجتماع کارکنان",
         studycircle: "سٹڈی سرکل",
         darsequran: "درس قُرآن",
-
+        shaheenmeeting: "شاہین میٹنگ",
+        paighamevent: "پیغام محفل",
         arkan: "ارکان",
         umeedwaran: "امیدواران",
         rafaqa: "رفقا",
@@ -251,6 +253,8 @@ export const Comparision = () => {
         rawabitdecided: "طے شدہ",
         current: "موجود",
         meetings: "ملاقاتیں",
+        rwabitmeetingsgoal: "روابط سےملاقاتوں کاہدف",
+
         literaturedistribution: "تقسیم لٹریچر",
         registered: "",
         commonstudentmeetings: "عام طلبہ ملاقاتیں",
@@ -258,7 +262,6 @@ export const Comparision = () => {
 
         umeedwaranfilled: "امیدواران فل",
         rafaqafilled: "رفقا فل",
-        arkanfilled: "ارکان فل",
 
         ijtarkan: "اجتماع ارکان",
         studycircle: "سٹڈی سرکل",
@@ -278,7 +281,10 @@ export const Comparision = () => {
         totalIncrease: "اضافہ",
         totalDecrease: "کمی",
         totalBookRent: "اجرائے کتب",
+        monthlyincome: "ماہانہ آمدن",
         monthlyexpenditure: "ماہانہ خرچ",
+        savings: "بدست",
+        loss: "خسارہ",
       };
       const ilaqa = {
         rehaishhalqay: "رہائشی حلقے",
@@ -980,7 +986,9 @@ export const Comparision = () => {
               Duration Type
             </option>
             <option value="month">Month</option>
-            {selectedProperty !== "spider" && <option value="year">Year</option>}
+            {selectedProperty !== "spider" && (
+              <option value="year">Year</option>
+            )}
           </select>
           <button
             onClick={() => {
