@@ -798,6 +798,7 @@ export const Comparision = () => {
       return `${area?.maqam?.name}`;
     }
   };
+  console.log(areas);
   const handleEventClick = (e) => {
     if (e?.target?.id !== "autocomplete0") {
       if (
@@ -878,7 +879,8 @@ export const Comparision = () => {
                 </option>
                 {areas[reportType]?.map((i, index) => (
                   <option key={index} value={i?._id} className="w-[200px]">
-                    {i?.name} - {getAreaType(i)}
+                    {i?.name} - {i?.parentId?.name || i?.maqam?.name} - (
+                    {i?.parentType})
                   </option>
                 ))}
               </select>

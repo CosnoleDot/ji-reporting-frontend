@@ -942,90 +942,94 @@ export const Dashboard = () => {
                   </div>
                 )}
               </div>
-              {userAreaType !== "All" && userAreaType !== "personal" && (
-                <div className="relative w-full mb-3">
-                  <input
-                    type="hidden"
-                    name="userAreaId"
-                    id="userAreaId"
-                    className="w-full"
-                    autoComplete="off"
-                  />
-                  <input
-                    id="autocomplete"
-                    type="search"
-                    autoComplete="off"
-                    className="input  input-bordered input-primary w-full  mb-3"
-                    placeholder="Select area"
-                    onChange={(e) => setSearchArea(e.target.value)}
-                    onClick={() => {
-                      if (
-                        document
-                          .getElementById("autocomplete-list")
-                          .classList.contains("hidden")
-                      ) {
-                        document
-                          .getElementById("autocomplete-list")
-                          .classList.remove("hidden");
-                      } else {
-                        document
-                          .getElementById("autocomplete-list")
-                          .classList.add("hidden");
-                      }
-                    }}
-                  />
-                  <div
-                    id="autocomplete-list"
-                    className="absolute hidden z-10 max-h-[100px] overflow-y-scroll bg-white border border-gray-300 w-full mt-1"
-                  >
-                    {areas
-                      ?.sort((a, b) => a?.name?.localeCompare(b?.name))
-                      ?.filter((item) => {
-                        if (searchArea && searchArea !== "") {
-                          if (
-                            item?.name
-                              ?.toString()
-                              ?.toLowerCase()
-                              ?.includes(searchArea?.toString()?.toLowerCase())
-                          ) {
+              {userAreaType !== "All" &&
+                userAreaType !== "personal" &&
+                userAreaType !== "Province" && (
+                  <div className="relative w-full mb-3">
+                    <input
+                      type="hidden"
+                      name="userAreaId"
+                      id="userAreaId"
+                      className="w-full"
+                      autoComplete="off"
+                    />
+                    <input
+                      id="autocomplete"
+                      type="search"
+                      autoComplete="off"
+                      className="input  input-bordered input-primary w-full  mb-3"
+                      placeholder="Select area"
+                      onChange={(e) => setSearchArea(e.target.value)}
+                      onClick={() => {
+                        if (
+                          document
+                            .getElementById("autocomplete-list")
+                            .classList.contains("hidden")
+                        ) {
+                          document
+                            .getElementById("autocomplete-list")
+                            .classList.remove("hidden");
+                        } else {
+                          document
+                            .getElementById("autocomplete-list")
+                            .classList.add("hidden");
+                        }
+                      }}
+                    />
+                    <div
+                      id="autocomplete-list"
+                      className="absolute hidden z-10 max-h-[100px] overflow-y-scroll bg-white border border-gray-300 w-full mt-1"
+                    >
+                      {areas
+                        ?.sort((a, b) => a?.name?.localeCompare(b?.name))
+                        ?.filter((item) => {
+                          if (searchArea && searchArea !== "") {
+                            if (
+                              item?.name
+                                ?.toString()
+                                ?.toLowerCase()
+                                ?.includes(
+                                  searchArea?.toString()?.toLowerCase()
+                                )
+                            ) {
+                              return true;
+                            }
+                            return false;
+                          } else {
                             return true;
                           }
-                          return false;
-                        } else {
-                          return true;
-                        }
-                      })
-                      ?.map((area, index) => (
-                        <div
-                          key={index}
-                          onClick={() => {
-                            document.getElementById("userAreaId").value =
-                              area?._id;
-                            setSelectedId(area?._id);
-                            document.getElementById("autocomplete").value = `${
-                              area?.name
-                            }${
-                              userAreaType === "Halqa"
-                                ? ` - ${area?.parentId?.name} (${area?.parentType})`
-                                : ""
-                            }`;
-                            document
-                              .getElementById("autocomplete-list")
-                              .classList.add("hidden");
-                          }}
-                          className="p-2 cursor-pointer hover:bg-gray-100"
-                        >
-                          {area?.name}
-                          {userAreaType === "Halqa"
-                            ? ` - ${area?.parentId?.name} (${area?.parentType})`
-                            : userAreaType === "Ilaqa"
-                            ? `- ${area?.maqam?.name}`
-                            : ""}
-                        </div>
-                      ))}
+                        })
+                        ?.map((area, index) => (
+                          <div
+                            key={index}
+                            onClick={() => {
+                              document.getElementById("userAreaId").value =
+                                area?._id;
+                              setSelectedId(area?._id);
+                              document.getElementById(
+                                "autocomplete"
+                              ).value = `${area?.name}${
+                                userAreaType === "Halqa"
+                                  ? ` - ${area?.parentId?.name} (${area?.parentType})`
+                                  : ""
+                              }`;
+                              document
+                                .getElementById("autocomplete-list")
+                                .classList.add("hidden");
+                            }}
+                            className="p-2 cursor-pointer hover:bg-gray-100"
+                          >
+                            {area?.name}
+                            {userAreaType === "Halqa"
+                              ? ` - ${area?.parentId?.name} (${area?.parentType})`
+                              : userAreaType === "Ilaqa"
+                              ? `- ${area?.maqam?.name}`
+                              : ""}
+                          </div>
+                        ))}
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
             </div>
             <div className="w-full flex justify-end">
               <label
