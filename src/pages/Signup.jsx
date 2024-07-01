@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import instance from "../api/instrance";
-import { useToastState } from "../context";
+import { DistrictContext, useToastState } from "../context";
 import { Loader } from "../components";
 import { Link, useNavigate } from "react-router-dom";
 import { UIContext } from "../context/ui";
@@ -8,11 +8,13 @@ import { UIContext } from "../context/ui";
 export const Signup = () => {
   const [userAreaType, setUserAreaType] = useState("");
   const [areas, setAreas] = useState([]);
+  const [district, setDistrict] = useState([]);
   const [searchArea, setSearchArea] = useState("");
   const { loading, setLoading } = useContext(UIContext);
   const [selectedSubject, setSelectedSubject] = useState("");
   const [subject, setSubject] = useState();
   const [subjects, setSubjects] = useState([]);
+  const [maqams, setMaqams] = useState([]);
   const [joiningDate, setJoiningDate] = useState({ title: "", date: "" });
   const { dispatch } = useToastState();
   const navigate = useNavigate();
@@ -97,6 +99,7 @@ export const Signup = () => {
   }, []);
   const getAreas = async () => {
     let data;
+    let data1;
     switch (userAreaType) {
       case "Province":
         setLoading(true);
@@ -119,8 +122,12 @@ export const Signup = () => {
       case "Halqa":
         setLoading(true);
         data = await instance.get("/locations/halqa");
+        data1 = await instance.get("/locations/district");
+        let data2 = await instance.get("/locations/maqam");
         setLoading(false);
+        setDistrict(data1.data.data);
         setAreas(data.data.data);
+        setMaqams(data2.data.data);
         break;
       case "Ilaqa":
         setLoading(true);
@@ -132,6 +139,17 @@ export const Signup = () => {
         break;
     }
   };
+  const getDivName = (area, type) => {
+    if (type === "tehsil") {
+      let div = district?.find((i) => area.parentId.district === i._id);
+      return `-${div?.division.name}(Division) - ${div?.division?.province?.name}(Province)`;
+    } else if (type === "Ilaqa") {
+      let maqam = maqams?.find((i) => area.parentId.maqam === i._id);
+
+      return `- ${maqam?.name}(Maqam) -${maqam.province.name}(Province)`;
+    }
+  };
+
   useEffect(() => {
     getAreas();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -153,6 +171,7 @@ export const Signup = () => {
       document.removeEventListener("click", handleEventClick);
     };
   }, []);
+
   return (
     <div className="relative flex flex-col justify-center min-h-screen p-2">
       <div className="w-full p-6 m-auto bg-white rounded-md shadow-md lg:max-w-lg">
@@ -697,9 +716,15 @@ export const Signup = () => {
                     >
                       {area?.name}
                       {userAreaType === "Halqa"
-                        ? ` - ${area?.parentId?.name} (${area?.parentType})`
+                        ? ` - ${area?.parentId?.name} (${area?.parentType}) ${
+                            area.parentType === "Tehsil"
+                              ? getDivName(area, "tehsil")
+                              : area.parentType === "Ilaqa"
+                              ? getDivName(area, "Ilaqa")
+                              : ""
+                          }`
                         : userAreaType === "Ilaqa"
-                        ? ` - ${area?.maqam?.name} (${area?.maqam?.province?.name})`
+                        ? ` - ${area?.maqam?.name}(Maqam) -${area?.maqam?.province?.name}(Province)`
                         : userAreaType === "Maqam"
                         ? ` - ${area?.province?.name} `
                         : userAreaType === "Division"
