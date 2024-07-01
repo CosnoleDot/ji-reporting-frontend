@@ -798,7 +798,6 @@ export const Comparision = () => {
       return `${area?.maqam?.name}`;
     }
   };
-  console.log(areas);
   const handleEventClick = (e) => {
     if (e?.target?.id !== "autocomplete0") {
       if (
