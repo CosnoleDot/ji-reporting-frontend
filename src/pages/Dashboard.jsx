@@ -14,14 +14,10 @@ import { useEffect } from "react";
 import {
   DistrictContext,
   DivisionContext,
-  DivisionReportContext,
   HalqaContext,
-  HalqaReportContext,
   MaqamContext,
-  MaqamReportContext,
   MeContext,
   ProvinceContext,
-  ProvinceReportContext,
   TehsilContext,
   IlaqaContext,
   ViewDetails,
@@ -122,7 +118,7 @@ export const Dashboard = () => {
         };
         let markaz = [];
         let province, maqam, division, ilaqa, halqa;
-        if (me?.userAreaType === "Country") {
+        if (me?.userAreaType === "Country" && userAreaType === "All") {
           markaz = await getUnfilledReports("markaz");
         }
         province = await getUnfilledReports("province");
@@ -138,13 +134,17 @@ export const Dashboard = () => {
         const divisionData = division?.data?.data?.allDivisions || [];
         const ilaqaData = ilaqa?.data?.data?.allIlaqas || [];
         const halqaData = halqa?.data?.data?.allHalqas || [];
-        const getFilteredHalqas = (halqaData) => [
-          ...halqaData.filter((h) => {
+        const getFilteredHalqas = (fData) => [
+          ...fData.filter((h) => {
             if (userAreaType === "Maqam") {
               if (
-                (h?.parentType === "Maqam" || h.parentType === "Ilaqa") &&
-                (h?.parentId?._id === selectedId ||
-                  h.parentId?.maqam === selectedId)
+                (h?.parentType === "Ilaqa" ||
+                  h?.province ||
+                  h?.parentType === "Maqam") &&
+                (h?.parentId?.maqam === selectedId ||
+                  h?._id === selectedId ||
+                  h?.parentId?._id == selectedId ||
+                  h?.parentId === selectedId)
               ) {
                 return true;
               }
@@ -164,8 +164,8 @@ export const Dashboard = () => {
             }
             if (userAreaType === "Ilaqa") {
               if (
-                h?.parentType === "Ilaqa" &&
-                h?.parentId?._id === selectedId
+                (h?.parentType === "Ilaqa" || h?.maqam) &&
+                (h?.parentId?._id === selectedId || h?._id === selectedId)
               ) {
                 return true;
               }
@@ -174,19 +174,8 @@ export const Dashboard = () => {
             return false;
           }),
         ];
-        const getIlaqaData = (halqaData) => [
-          ...halqaData.filter((h) => {
-            if (userAreaType === "Ilaqa") {
-              if (
-                h?.parentType === "Ilaqa" &&
-                h?.parentId?._id === selectedId
-              ) {
-                return true;
-              }
-              return false;
-            }
-          }),
-        ];
+        const tempMaqamData = [...maqamData, ...ilaqaData, ...halqaData];
+        const tempIlaqaData = [...ilaqaData, ...halqaData];
         const temp = {
           unfilled: null,
           totalAreas: 1,
@@ -203,8 +192,21 @@ export const Dashboard = () => {
                 ]
               : userAreaType === "Province"
               ? [...provinceData]
+              : userAreaType === "Maqam"
+              ? getFilteredHalqas(tempMaqamData)
+              : userAreaType === "Ilaqa"
+              ? getFilteredHalqas(tempIlaqaData)
               : getFilteredHalqas(halqaData),
         };
+        const temMaqamUnfilled = [
+          ...(halqa?.data?.data?.unfilled || []),
+          ...(ilaqa?.data?.data?.unfilled || []),
+          ...(maqam?.data?.data?.unfilled || []),
+        ];
+        const temIlaqaUnfilled = [
+          ...(halqa?.data?.data?.unfilled || []),
+          ...(ilaqa?.data?.data?.unfilled || []),
+        ];
         temp.unfilled =
           userAreaType === "All"
             ? [
@@ -217,6 +219,10 @@ export const Dashboard = () => {
               ]
             : userAreaType === "Province"
             ? province?.data?.data?.unfilled || []
+            : userAreaType === "Maqam"
+            ? getFilteredHalqas(temMaqamUnfilled) || []
+            : userAreaType === "Ilaqa"
+            ? getFilteredHalqas(temIlaqaUnfilled) || []
             : getFilteredHalqas(halqa?.data?.data?.unfilled);
         temp.totalAreas =
           markaz?.data?.data?.totalCountries ||
@@ -1012,6 +1018,8 @@ export const Dashboard = () => {
                           {area?.name}
                           {userAreaType === "Halqa"
                             ? ` - ${area?.parentId?.name} (${area?.parentType})`
+                            : userAreaType === "Ilaqa"
+                            ? `- ${area?.maqam?.name}`
                             : ""}
                         </div>
                       ))}
