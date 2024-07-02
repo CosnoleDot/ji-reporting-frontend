@@ -141,12 +141,13 @@ export const Signup = () => {
   };
   const getDivName = (area, type) => {
     if (type === "tehsil") {
-      let div = district?.find((i) => area.parentId.district === i._id);
+      let div = district?.find((i) => area?.parentId?.district === i._id);
       return `-${div?.division.name}(Division) - ${div?.division?.province?.name}(Province)`;
     } else if (type === "Ilaqa") {
-      let maqam = maqams?.find((i) => area.parentId.maqam === i._id);
-
-      return `- ${maqam?.name}(Maqam) -${maqam.province.name}(Province)`;
+      let maqam = maqams?.find((i) => area?.parentId?.maqam === i._id);
+      if (maqam && Object.keys(maqam).length > 0) {
+        return `- ${maqam?.name}(Maqam) -${maqam?.province?.name}(Province)`;
+      }
     }
   };
 
@@ -717,7 +718,7 @@ export const Signup = () => {
                       {area?.name}
                       {userAreaType === "Halqa"
                         ? ` - ${area?.parentId?.name} (${area?.parentType}) ${
-                            area.parentType === "Tehsil"
+                            area?.parentType === "Tehsil"
                               ? getDivName(area, "tehsil")
                               : area.parentType === "Ilaqa"
                               ? getDivName(area, "Ilaqa")

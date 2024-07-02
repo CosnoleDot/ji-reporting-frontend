@@ -213,7 +213,31 @@ export const Compile = () => {
       setIsMun(false);
     }
   }, []);
-
+  const getDivName = (area, type) => {
+    if (areaType === "halqa") {
+      if (type === "Tehsil") {
+        let div = districts?.find((i) => area?.parentId?.district === i._id);
+        return `-${div?.division?.name}(Division) - ${div?.division?.province?.name}(Province)`;
+      } else if (type === "Ilaqa") {
+        let maqam = maqams.find((i) => area?.parentId?.maqam === i?._id);
+        return `- ${area?.parentId?.name}(Ilaqa) - ${maqam?.name}(Maqam)`;
+      } else if (type === "Maqam") {
+        return `- ${area?.parentId?.name}(Maqam)`;
+      }
+    } else if (areaType==="ilaqa") {
+      let maqam = maqams.find((i) => area?.parentId?.maqam === i?._id);
+        return `- ${area?.maqam?.name}(Maqam) - ${area?.maqam?.province?.name}(Province)`;
+    }
+    else if (areaType==="division") {
+      return `- ${area?.province?.name}(Province)`;
+    }
+    else if (areaType==="maqam") {
+      return `- ${area?.province?.name}(Province)`;
+    }
+    else{
+      return 'Pakistan'
+    }
+  };
   return (
     <GeneralLayout title={me?.userAreaId?.name.toUpperCase()}>
       <div className="relative flex flex-col gap-3 items-start p-5 justify-start h-[calc(100vh-65.6px-64px)]">
@@ -281,7 +305,7 @@ export const Compile = () => {
                       <option value={"selected"}>Select Area</option>
                       {areas?.map((i) => (
                         <option key={i?._id} value={i?._id}>
-                          {i?.name}
+                          {`${i?.name} - ${getDivName(i, i?.parentType)}`}
                         </option>
                       ))}
                     </select>
