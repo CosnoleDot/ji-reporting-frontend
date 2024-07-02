@@ -871,21 +871,22 @@ export const Comparision = () => {
               <select
                 value={areaId}
                 onChange={(e) => setAreaId(e.target.value)}
-                className="select select-bordered w-full"
+                className="select select-bordered "
               >
                 <option value="" disabled>
                   Area {reportType}
                 </option>
                 {areas[reportType]?.map((i, index) => (
                   <option key={index} value={i?._id} className="w-[200px]">
-                    {i?.name} - {getAreaType(i)}
+                    {i?.name} - {i?.parentId?.name || i?.maqam?.name} - (
+                    {i?.parentType})
                   </option>
                 ))}
               </select>
             )}
 
           {reportType === "personal" && (
-            <div className="relative w-full min-w-[140px]">
+            <div className="relative  min-w-[140px]">
               <input type="hidden" name="userAreaId" id="userAreaId" />
               <input
                 id="autocomplete0"
@@ -911,7 +912,7 @@ export const Comparision = () => {
               />
               <div
                 id="autocomplete0-list"
-                className="fixed hidden z-50 max-h-[100px] overflow-y-scroll bg-white border border-gray-300 w-full md:max-w-[228px] mt-1 left-0 md:left-[155px]"
+                className="fixed hidden z-50 max-h-[100px] overflow-y-scroll bg-white border border-gray-300  md:max-w-[228px] mt-1 left-0 md:left-[155px]"
               >
                 {nazims?.nazim
                   ?.sort((a, b) =>

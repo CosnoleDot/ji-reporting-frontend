@@ -44,7 +44,6 @@ export const DivisionReport = () => {
           }}
         >
           <h4 className="header">ڈویژن کا نام:</h4>
-          <h4 className="header">مرکزکا نام: </h4>
           {data?.divisionAreaId?.name}- ({data?.divisionAreaId?.province?.name})
         </div>
         <div

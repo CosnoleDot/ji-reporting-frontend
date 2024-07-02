@@ -24,19 +24,12 @@ import { FaPrint } from "react-icons/fa";
 
 export const MaqamCompile = () => {
   // EDIT CODE START
-  const [month, setMonth] = useState("");
-  const [createData, setCreateData] = useState();
-  const params = useParams();
   const [id, setId] = useState(null);
-  const { dispatch } = useToastState();
-  const [data, setData] = useState({});
-  const { loading, setLoading, getMaqamReports } = useContext(UIContext);
   const [view, setView] = useState(true);
   const location = useLocation();
   const me = useContext(MeContext);
-  const navigate = useNavigate();
   const report = useContext(CompileReportContext);
-  const compileReport = report?.b;
+  const [compileReport, setCompileReport] = useState(report?.b);
   const [date, setDate] = useState(
     `${compileReport?.startDate} تا  ${compileReport?.endDate}`
   );
@@ -47,7 +40,7 @@ export const MaqamCompile = () => {
   const endDate = queryParams.get("endDate");
   const areaId = queryParams.get("areaId");
   const autoFill = () => {
-    Object.keys(compileReport).forEach((i) => {
+    Object.keys(compileReport)?.forEach((i) => {
       const elem = document.getElementById(i);
       if (elem) {
         elem.value = compileReport[i];
@@ -90,78 +83,20 @@ export const MaqamCompile = () => {
     });
   };
 
-  // To set values to zero when in create mode
-  //   useEffect(() => {
-  //     const value1 = document.getElementById("litrature");
-  //     const value2 = document.getElementById("commonStudentMeetings");
-  //     const value3 = document.getElementById("commonLiteratureDistribution");
-  //     if (window.location.pathname?.split("/")[2] === "create") {
-  //       value1.value = 0;
-  //       value2.value = 0;
-  //       value3.value = 0;
-  //     }
-  //   }, [location.pathname]);
-
-  //     const afd = [
-  //       "rehaishHalqay",
-  //       "taleemHalqay",
-  //       "totalHalqay",
-  //       "subRehaishHalqay",
-  //       "subTaleemHalqay",
-  //       "subTotalHalqay",
-  //       "busmSchoolUnits",
-  //       "busmRehaishUnits",
-  //       "busmTotalUnits",
-  //       "arkan",
-  //       "umeedWaran",
-  //       "rafaqa",
-  //       "karkunan",
-  //       "members",
-  //       "shaheen",
-  //     ];
-  //     afd.forEach((i) => {
-  //       calcultate(i);
-  //     });
-  //   }, [data]);
   useEffect(() => {
     if (!id) {
       autoFill();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // const totalHalqay = parseInt(
-  //   document.getElementById("totalHalqay-end")?.value
-  // );
-  // const subTotalHalqay = parseInt(
-  //   document.getElementById("subTotalHalqay-end")?.value
-  // );
-  // const busmTotalUnits = parseInt(
-  //   document.getElementById("busmTotalUnits-end")?.value
-  // );
-
-  // useEffect(() => {
-  //   document.getElementById("studyCircleMentioned-decided").value = totalHalqay;
-  //   document.getElementById("ijtRafaqa-decided").value = totalHalqay;
-  //   document.getElementById("darseQuran-decided").value = parseFloat(
-  //     totalHalqay + subTotalHalqay
-  //   );
-  //   document.getElementById("ijtKarkunan-decided").value = parseFloat(
-  //     totalHalqay + subTotalHalqay
-  //   );
-  //   document.getElementById("paighamEvent-decided").value = busmTotalUnits;
-  //   document.getElementById("shaheenMeeting-decided").value = busmTotalUnits;
-  // }, [totalHalqay, subTotalHalqay, busmTotalUnits]);
-  // data.litrature = data["literatureDistribution"];
   const handlePrint = () => {
     window.open(
       `/maqam-report-compile/print?areaId=${areaId}&startDate=${startDate}&endDate=${endDate}&areaName=${areaName}`
     );
-    // window.location.href = `/halqa-report-compile/print?areaId${areaId}&startDate=${startDate}&endDate=${endDate}`;
   };
   return (
     <GeneralLayout>
-      {Object.keys(compileReport).length > 2 ? (
+      {Object.keys(compileReport)?.length > 2 ? (
         <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">
           <form
             className="flex flex-col justify-center items-center p-4 font-notoUrdu mb-5"

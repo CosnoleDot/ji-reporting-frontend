@@ -84,7 +84,7 @@ export const MaqamReports = () => {
     document.getElementById("autocomplete").value = "";
   };
 
-  const viewReport = async (id,areaId) => {
+  const viewReport = async (id, areaId) => {
     filterMuntakhib(areaId);
     navigate(`view/${id}`);
   };
@@ -268,7 +268,7 @@ export const MaqamReports = () => {
                       <FaEdit />
                     </button>
                   )}
-                  <button className="btn" onClick={() => handlePrint(p)}>
+                  <button className="btn" onClick={() => handlePrint(p?._id)}>
                     <FaPrint />
                   </button>
                 </div>
