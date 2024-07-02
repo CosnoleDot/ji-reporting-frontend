@@ -225,7 +225,6 @@ export const Compile = () => {
         return `- ${area?.parentId?.name}(Maqam)`;
       }
     } else if (areaType==="ilaqa") {
-      console.log(area)
       let maqam = maqams.find((i) => area?.parentId?.maqam === i?._id);
         return `- ${area?.maqam?.name}(Maqam) - ${area?.maqam?.province?.name}(Province)`;
     }
