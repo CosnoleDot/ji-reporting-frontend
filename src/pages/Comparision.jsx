@@ -160,7 +160,7 @@ export const Comparision = () => {
   const ilaqas = useContext(IlaqaContext);
   const districts = useContext(DistrictContext);
   const provinces = useContext(ProvinceContext);
-  const nazims = useContext(UIContext);
+  const { nazims, setLoading } = useContext(UIContext);
   const [searchArea, setSearchArea] = useState("");
   const [areas, setAreas] = useState({
     maqam: [],
@@ -206,6 +206,7 @@ export const Comparision = () => {
         }
       : { dates: durationYears, duration_type: durationType, areaId };
   const getData = async () => {
+    setLoading(true);
     setResponse(null);
     try {
       const res = await instance.post(
@@ -772,32 +773,14 @@ export const Comparision = () => {
       }
 
       setResponse(myData);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.log(error);
       dispatch({ type: "ERROR", payload: error?.response?.data?.message });
     }
   };
 
-  const getAreaType = (area) => {
-    if (area?.parentType === "Maqam") {
-      const name = maqams.find((i) => i?._id === area?.parentId);
-      return `${name?.name}(Maqam)`;
-    } else if (area?.parentType === "Tehsil") {
-      const tehsil = tehsils?.find((i) => i._id === area.parentId);
-
-      // const name = getDivisionByTehsil(tehsil, districts);
-      return `${tehsil?.district?.division?.name}(Division)`;
-    } else if (area?.parentType === "Ilaqa") {
-      const ilaqa = ilaqas?.find((i) => i._id === area.parentId);
-      return `${ilaqa}(Maqam)`;
-    } else if (area?.province) {
-      return maqams.find((i) => i?._id === area?._id) ? "Maqam" : "Division";
-    } else if (area?.country) {
-      return "";
-    } else {
-      return `${area?.maqam?.name}`;
-    }
-  };
   const handleEventClick = (e) => {
     if (e?.target?.id !== "autocomplete0") {
       if (
@@ -817,7 +800,32 @@ export const Comparision = () => {
       document.removeEventListener("click", handleEventClick);
     };
   }, []);
-
+  const getDivName = (area, type) => {
+    if (reportType === "halqa") {
+      if (type === "Tehsil") {
+        let div = districts?.find((i) => area?.parentId?.district === i._id);
+        return `-${div?.division?.name}(Division) - ${div?.division?.province?.name}(Province)`;
+      } else if (type === "Ilaqa") {
+        let maqam = maqams.find((i) => area?.parentId?.maqam === i?._id);
+        return `- ${area?.parentId?.name}(Ilaqa) - ${maqam?.name}(Maqam)`;
+      } else if (type === "Maqam") {
+        return `- ${area?.parentId?.name}(Maqam)`;
+      }
+    } else if (reportType==="ilaqa") {
+      console.log(area)
+      let maqam = maqams.find((i) => area?.parentId?.maqam === i?._id);
+        return `- ${area?.maqam?.name}(Maqam) - ${area?.maqam?.province?.name}(Province)`;
+    }
+    else if (reportType==="division") {
+      return `- ${area?.province?.name}(Province)`;
+    }
+    else if (reportType==="maqam") {
+      return `- ${area?.province?.name}(Province)`;
+    }
+    else{
+      return 'Pakistan'
+    }
+  };
   return (
     <GeneralLayout title={"Comparison"} active={"comparison"}>
       <div className="relative flex flex-col gap-3 h-[calc(100vh-66px-64px)] w-full p-3">
@@ -878,8 +886,7 @@ export const Comparision = () => {
                 </option>
                 {areas[reportType]?.map((i, index) => (
                   <option key={index} value={i?._id} className="w-[200px]">
-                    {i?.name} - {i?.parentId?.name || i?.maqam?.name} - (
-                    {i?.parentType})
+                    {i?.name} - {getDivName(i,i.parentType)}
                   </option>
                 ))}
               </select>
