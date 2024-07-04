@@ -393,44 +393,6 @@ export const Dashboard = () => {
                   </div>
                 </div>
               )}
-            {["maqam", "country", "province"].includes(
-              localStorage.getItem("@type")
-            ) &&
-              ilaqa?.length > 0 &&
-              ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
-                localStorage.getItem("@nazimType")
-              ) && (
-                <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
-                  <div className="p-4 bg-slate-600">
-                    <CiLocationOn className="w-12 h-12 text-white" />
-                  </div>
-                  <div className="px-4 text-gray-700">
-                    <h3 className="text-sm tracking-wider">Total Ilaqas</h3>
-                    <p className="text-3xl">
-                      {ilaqa?.filter((il) => il?.disabled !== true).length}
-                    </p>
-                  </div>
-                </div>
-              )}
-            {["province", "country"].includes(localStorage.getItem("@type")) &&
-              ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
-                localStorage.getItem("@nazimType")
-              ) && (
-                <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
-                  <div className="p-4 bg-indigo-400">
-                    <CiLocationOn className="w-12 h-12 text-white" />
-                  </div>
-                  <div className="px-4 text-gray-700">
-                    <h3 className="text-sm tracking-wider">Total Maqams</h3>
-                    <p className="text-3xl">
-                      {
-                        maqams?.filter((maqam) => maqam?.disabled !== true)
-                          .length
-                      }
-                    </p>
-                  </div>
-                </div>
-              )}
             {["province", "country"].includes(localStorage.getItem("@type")) &&
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
@@ -451,8 +413,9 @@ export const Dashboard = () => {
                   </div>
                 </div>
               )}
-            {["division"].includes(localStorage.getItem("@type")) &&
-              districts?.lentgth > 0 &&
+            {["province", "country", "division"].includes(
+              localStorage.getItem("@type")
+            ) &&
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
               ) && (
@@ -472,7 +435,9 @@ export const Dashboard = () => {
                   </div>
                 </div>
               )}
-            {["division"].includes(localStorage.getItem("@type")) &&
+            {["division", "country", "province"].includes(
+              localStorage.getItem("@type")
+            ) &&
               tehsils?.length > 0 &&
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
@@ -488,6 +453,46 @@ export const Dashboard = () => {
                         tehsils?.filter((tehsil) => tehsil?.disabled !== true)
                           .length
                       }
+                    </p>
+                  </div>
+                </div>
+              )}
+            {["province", "country", "province"].includes(
+              localStorage.getItem("@type")
+            ) &&
+              ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
+                localStorage.getItem("@nazimType")
+              ) && (
+                <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
+                  <div className="p-4 bg-indigo-400">
+                    <CiLocationOn className="w-12 h-12 text-white" />
+                  </div>
+                  <div className="px-4 text-gray-700">
+                    <h3 className="text-sm tracking-wider">Total Maqams</h3>
+                    <p className="text-3xl">
+                      {
+                        maqams?.filter((maqam) => maqam?.disabled !== true)
+                          .length
+                      }
+                    </p>
+                  </div>
+                </div>
+              )}
+            {["maqam", "country", "province"].includes(
+              localStorage.getItem("@type")
+            ) &&
+              ilaqa?.length > 0 &&
+              ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
+                localStorage.getItem("@nazimType")
+              ) && (
+                <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
+                  <div className="p-4 bg-slate-600">
+                    <CiLocationOn className="w-12 h-12 text-white" />
+                  </div>
+                  <div className="px-4 text-gray-700">
+                    <h3 className="text-sm tracking-wider">Total Ilaqas</h3>
+                    <p className="text-3xl">
+                      {ilaqa?.filter((il) => il?.disabled !== true).length}
                     </p>
                   </div>
                 </div>
