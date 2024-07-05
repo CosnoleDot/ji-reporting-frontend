@@ -89,7 +89,6 @@ export const Login = ({ setAuthenticated }) => {
               Create new account
             </Link>
           </div>
-          {captchaVerified && (
             <div>
               <button
                 disabled={loading}
@@ -99,7 +98,6 @@ export const Login = ({ setAuthenticated }) => {
                 Login
               </button>
             </div>
-          )}
         </form>
         <div className="w-full flex justify-center items-start gap-3">
           <span className="text-slate-800">Powered By:</span>
