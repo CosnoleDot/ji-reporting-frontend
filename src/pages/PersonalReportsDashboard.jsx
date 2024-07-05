@@ -58,9 +58,9 @@ export const PersonalReportsDashboard = () => {
   };
   const searchPersonalReports = (e) => {
     setSearch(e.target.value);
-    const searchParam = e.target.value.toLowerCase();
+    const searchParam = e?.target?.value?.toLowerCase();
     const requiredData = data.filter((item) => {
-      return item.title.toLowerCase().includes(searchParam);
+      return item?.title?.toLowerCase().includes(searchParam);
     });
     setFilteredData(requiredData);
   };
