@@ -6,14 +6,12 @@ import { useContext, useState } from "react";
 import { Loader } from "../components";
 import { UIContext } from "../context/ui";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { ReCaptcha } from "../components/captcha";
 
 export const Login = ({ setAuthenticated }) => {
   const navigate = useNavigate();
   const { dispatch } = useToastState();
   const { loading, setLoading } = useContext(UIContext);
   const [showPass, setShowPass] = useState(false);
-  const [captchaVerified, setCaptchaVerified] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -77,7 +75,6 @@ export const Login = ({ setAuthenticated }) => {
               {showPass ? <FaEyeSlash /> : <FaEye />}
             </span>
           </div>
-          <ReCaptcha setCaptchaVerified={setCaptchaVerified} />
           <div className="flex justify-between items-center">
             <Link
               to="/reset-password"
