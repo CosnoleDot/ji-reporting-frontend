@@ -143,7 +143,7 @@ export const Dashboard = () => {
                   h?.parentType === "Maqam") &&
                 (h?.parentId?.maqam === selectedId ||
                   h?._id === selectedId ||
-                  h?.parentId?._id == selectedId ||
+                  h?.parentId?._id === selectedId ||
                   h?.parentId === selectedId)
               ) {
                 return true;
@@ -290,6 +290,9 @@ export const Dashboard = () => {
         break;
       case "Province":
         setAreas(provinces);
+        break;
+      case "Country":
+        setAreas([me?.userAreaId]);
         break;
       default:
         break;
@@ -849,9 +852,24 @@ export const Dashboard = () => {
           <h3 className="font-bold text-lg mb-3">Filter Data</h3>
           <div className="w-full  flex justify-between items-center  flex-wrap">
             <div className="flex flex-col w-full justify-start items-center gap-3 mb-3">
-              <div className=" w-full flex items-center justify-start gap-2 border border-primary p-2 rounded-lg">
+              <div className=" w-full flex items-center justify-start gap-2 border flex-wrap border-primary p-2 rounded-lg">
                 {show && (
                   <>
+                    {me?.userAreaType === "Country" && (
+                      <div className="form-control">
+                        <label className="label cursor-pointer gap-2">
+                          <input
+                            type="radio"
+                            name="userAreaType"
+                            className="radio checked:bg-blue-500"
+                            value="Country"
+                            checked={userAreaType === "Country"}
+                            onChange={(e) => setUserAreaType(e.target.value)}
+                          />
+                          <span className="label-text">Markaz</span>
+                        </label>
+                      </div>
+                    )}
                     {me?.userAreaType === "Country" && (
                       <div className="form-control">
                         <label className="label cursor-pointer gap-2">

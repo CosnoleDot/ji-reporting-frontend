@@ -58,7 +58,6 @@ export const PersonalReportsDashboard = () => {
     setFilteredData(req?.data?.data?.data);
     setTotal(req?.data?.data?.length);
     setData(req?.data?.data?.data);
-
     setLoading(false);
   };
   useEffect(() => {
@@ -83,11 +82,12 @@ export const PersonalReportsDashboard = () => {
   }, [window.innerWidth]);
 
   const handleClear = () => {
-    setFilteredData(data);
     setIsSearch(false);
     setRukanId(null);
-    getAllReports();
   };
+  useEffect(() => {
+    getAllReports();
+  }, [rukanId]);
   const searchResults = async () => {
     setIsSearch(true);
     setToggle(false);
