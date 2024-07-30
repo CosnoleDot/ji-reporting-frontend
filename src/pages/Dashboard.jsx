@@ -256,7 +256,6 @@ export const Dashboard = () => {
     }
     setLoading(false);
   };
-
   useEffect(() => {
     const storedData = sessionStorage.getItem("storedData");
     if (storedData) {

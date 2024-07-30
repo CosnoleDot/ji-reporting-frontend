@@ -319,7 +319,6 @@ export const Comparision = () => {
 
         ijtrafaqa: "اجتماع رفقا",
         ijtkarkunan: "اجتماع کارکنان",
-        studycircle: "سٹڈی سرکل",
         darsequran: "درس قرآن",
         shaheenmeeting: "شاہین میٹنگ",
         paighamevent: "پیغام محفل",
@@ -389,7 +388,6 @@ export const Comparision = () => {
 
         ijtrafaqa: "اجتماع رفقا",
         ijtkarkunan: "اجتماع کارکنان",
-        studycircle: "سٹڈی سرکل",
         darsequran: "درس قرآن",
         shaheenmeeting: "شاہین میٹنگ",
         paighamevent: "پیغام محفل",
@@ -457,7 +455,6 @@ export const Comparision = () => {
         sadurmeeting: "صدورمیٹینگ",
 
         ijtrafaqa: "اجتماع رفقا",
-        studycircle: "سٹڈی سرکل",
         ijtkarkunan: "اجتماع کارکنان",
         darsequran: "درس قرآن",
         shaheenmeeting: "شاہین میٹنگ",
@@ -533,7 +530,6 @@ export const Comparision = () => {
         sadurmeeting: "صدورمیٹینگ",
 
         ijtrafaqa: "اجتماع رفقا",
-        studycircle: "سٹڈی سرکل",
         ijtkarkunan: "اجتماع کارکنان",
         darsequran: "درس قرآن",
         shaheenmeeting: "شاہین میٹنگ",
@@ -606,7 +602,6 @@ export const Comparision = () => {
         studycircle: "سٹڈی سرکل",
         sadurmeeting: "صدورمیٹینگ",
         ijtrafaqa: "اجتماع رفقا",
-        studycircle: "سٹڈی سرکل",
         ijtkarkunan: "اجتماع کارکنان",
         darsequran: "درس قرآن",
         shaheenmeeting: "شاہین میٹنگ",
@@ -679,7 +674,6 @@ export const Comparision = () => {
         studycircle: "سٹڈی سرکل",
         sadurmeeting: "صدورمیٹینگ",
         ijtrafaqa: "اجتماع رفقا",
-        studycircle: "سٹڈی سرکل",
         ijtkarkunan: "اجتماع کارکنان",
         darsequran: "درس قرآن",
         shaheenmeeting: "شاہین میٹنگ",
@@ -849,16 +843,15 @@ export const Comparision = () => {
             <option value="" disabled>
               Report Type
             </option>
-            <option value="halqa">Halqa</option>
             {(localStorage.getItem("@type") === "province" ||
               localStorage.getItem("@type") === "country") && (
               <>
-                <option value="maqam">Maqam</option>
-                <option value="division">Division</option>
                 {localStorage.getItem("@type") === "country" && (
                   <option value="markaz">Markaz</option>
                 )}
                 <option value="province">Province</option>
+                <option value="division">Division</option>
+                <option value="maqam">Maqam</option>
               </>
             )}
             {localStorage.getItem("@type") !== "halqa" &&
@@ -867,6 +860,7 @@ export const Comparision = () => {
                   <option value="ilaqa">Ilaqa</option>
                 </>
               )}
+              <option value="halqa">Halqa</option>
             {["umeedwar", "rukan", "umeedwaar-nazim", "rukan-nazim"].includes(
               me?.nazimType
             ) && <option value="personal">Personal</option>}
