@@ -1,15 +1,38 @@
 import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
 export const ReportChart = ({ res, type }) => {
   const monthlyChartRef = useRef(null);
+
   const getData = async () => {
     if (!monthlyChartRef.current) {
       const monthlyCtx = document.getElementById("monthlyChart");
+
       monthlyChartRef.current = new Chart(monthlyCtx, {
         type: "bar",
         data: res,
         options: {
+          plugins: {
+            datalabels: {
+              anchor: "end",
+              align: "top",
+              formatter: (value) => value, // Format data label
+              color: "#444", // Color of the labels
+              font: {
+                size: 14,
+              },
+              padding: 5, // Padding from the bar
+              rotation: 90, // Adjust rotation if needed
+            },
+            legend: {
+              labels: {
+                font: {
+                  size: 24,
+                },
+              },
+            },
+          },
           scales: {
             y: {
               beginAtZero: true,
@@ -26,18 +49,16 @@ export const ReportChart = ({ res, type }) => {
                 },
                 autoSkip: false,
               },
-            },
-          },
-          plugins: {
-            legend: {
-              labels: {
-                font: {
-                  size: 24,
-                },
+              grid: {
+                offset: true,
               },
+              // Adjust bar percentage and category percentage to control bar width and space
+              barPercentage: 0.8, // This controls the width of the bars
+              categoryPercentage: 1.0, // This controls the width of the space for each category
             },
           },
         },
+        plugins: [ChartDataLabels], // Include the plugin here
       });
     }
   };

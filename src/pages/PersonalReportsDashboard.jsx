@@ -4,7 +4,7 @@ import { FaEdit, FaEye, FaPrint } from "react-icons/fa";
 import moment from "moment";
 import instance from "../api/instrance";
 import { useNavigate } from "react-router-dom";
-import { getDivisionByTehsil, months } from "./Reports";
+import { NoReports, getDivisionByTehsil, months } from "./Reports";
 import { MdCancel } from "react-icons/md";
 import { MeContext } from "../context";
 import { UIContext } from "../context/ui";
@@ -24,24 +24,40 @@ export const PersonalReportsDashboard = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [total, setTotal] = useState(1);
   const me = useContext(MeContext);
+  const { nazim } = useContext(UIContext);
+  const [rukanId, setRukanId] = useState(null);
   // const provinces = useContext(ProvinceContext);
   let navigate = useNavigate();
   const getAllReports = async (inset, offset) => {
     setLoading(true);
-    const req = await instance.get(
-      `/umeedwar?inset=${inset ? inset : 0}&offset=${offset ? offset : 10}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("@token")}`,
-        },
-      }
-    );
+    let req;
+    if (rukanId) {
+      req = await instance.get(
+        `/umeedwar/all/${rukanId}?inset=${inset ? inset : 0}&offset=${
+          offset ? offset : 10
+        }`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
+        }
+      );
+    } else {
+      req = await instance.get(
+        `/umeedwar?inset=${inset ? inset : 0}&offset=${offset ? offset : 10}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
+        }
+      );
+    }
 
     setFilteredData(req?.data?.data?.data);
     setTotal(req?.data?.data?.length);
     setData(req?.data?.data?.data);
-
     setLoading(false);
   };
   useEffect(() => {
@@ -56,14 +72,6 @@ export const PersonalReportsDashboard = () => {
   const printReport = (id) => {
     window.open(`personalReport/print/${id}`, "blank");
   };
-  const searchPersonalReports = (e) => {
-    setSearch(e.target.value);
-    const searchParam = e.target.value.toLowerCase();
-    const requiredData = data.filter((item) => {
-      return item.title.toLowerCase().includes(searchParam);
-    });
-    setFilteredData(requiredData);
-  };
   useEffect(() => {
     if (window) {
       if (window.innerWidth < 520) {
@@ -73,6 +81,13 @@ export const PersonalReportsDashboard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [window.innerWidth]);
 
+  const handleClear = () => {
+    setIsSearch(false);
+    setRukanId(null);
+  };
+  useEffect(() => {
+    getAllReports();
+  }, [rukanId]);
   const searchResults = async () => {
     setIsSearch(true);
     setToggle(false);
@@ -86,19 +101,6 @@ export const PersonalReportsDashboard = () => {
       },
     });
     setFilteredData(req?.data?.data?.data);
-
-    // const filData = data?.reduce((acc, curr) => {
-    //   Object.keys(curr).forEach((tag) => {
-    //     if (tag === "month") {
-    //       const r = curr["month"].includes(findData);
-    //       if (r) {
-    //         acc?.push(curr);
-    //       }
-    //     }
-    //   });
-    //   return acc;
-    // }, []);
-    // setFilteredData(filData);
   };
   let totalPages = Math.ceil(total / itemsPerPage);
   const handlePrevPage = () => {
@@ -124,26 +126,33 @@ export const PersonalReportsDashboard = () => {
   };
   return (
     <GeneralLayout title={"Personal Dashboard"} active={"personalReports"}>
-      <div className="w-full flex flex-col justify-start items-center mt-5 p-5">
-        <div className="w-full overflow-hidden overflow-x-scroll md:justify-center md:items-center flex gap-2  mt-5">
-          <div className="flex items-center justify-start md:justify-start gap-2 ">
-            <input
-              type="search"
-              name="Search"
-              id="search"
-              placeholder="Search by name..."
-              className="input input-bordered"
-              value={search}
-              onChange={searchPersonalReports}
-            />
-          </div>
-          <button
-            className="btn"
-            onClick={() => {
-              setFilteredData(data);
-              setIsSearch(false);
+      <div className="w-full flex flex-col justify-start items-center p-5">
+        <div className="w-full overflow-hidden overflow-x-scroll md:justify-center md:items-center flex gap-2 m-2">
+          <select
+            name="nazim"
+            className="select w-full border-gray-200 max-w-xs"
+            value={rukanId ? rukanId : "none"}
+            onChange={(e) => {
+              setRukanId(e.target.value);
             }}
           >
+            <option disabled selected value={"none"}>
+              Name...
+            </option>
+            {nazim
+              ?.filter((n) => n?.nazimType && n?.nazimType !== "nazim")
+              .map((nazim) => (
+                <option key={nazim._id} value={nazim._id}>
+                  {nazim.name} Of {nazim.userAreaId.name}
+                </option>
+              ))}
+          </select>
+          {rukanId && (
+            <button className="btn" onClick={getAllReports}>
+              Get All
+            </button>
+          )}
+          <button className="btn" onClick={handleClear}>
             Clear
           </button>
           <button className="btn" onClick={() => setToggle(true)}>
@@ -211,33 +220,40 @@ export const PersonalReportsDashboard = () => {
           )}
         </div>
         <div className="w-full overflow-hidden overflow-y-scroll h-[calc(100vh-64px-64px-54px-76px)] flex flex-col justify-start items-start">
-          {filteredData?.map((obj, index) => (
-            <div
-              key={index}
-              className="card-body flex items-center max-h-[170px]  justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col mt-5"
-            >
-              <div className="flex w-full flex-col items-start justify-center">
-                <span className="text-lg font-semibold" key={index}>
-                  {`${obj?.userId?.name} from ${obj?.areaId?.name}  `}
-                  {moment(obj?.month).format("MMMM YYYY")}
-                </span>
-                <span>Last Modified: {moment(obj?.updatedAt).fromNow()}</span>
-              </div>
-              <div className="flex items-center w-full justify-end gap-3 ">
-                <button className="btn" onClick={() => viewReport(obj?._id)}>
-                  <FaEye />
-                </button>
-                {me?._id === obj?.userId?._id && (
-                  <button className="btn" onClick={() => editReport(obj?._id)}>
-                    <FaEdit />
+          {filteredData?.length > 0 ? (
+            filteredData?.map((obj, index) => (
+              <div
+                key={index}
+                className="card-body flex items-center max-h-[170px]  justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col mt-5"
+              >
+                <div className="flex w-full flex-col items-start justify-center">
+                  <span className="text-lg font-semibold" key={index}>
+                    {`${obj?.userId?.name} from ${obj?.areaId?.name}  `}
+                    {moment(obj?.month).format("MMMM YYYY")}
+                  </span>
+                  <span>Last Modified: {moment(obj?.updatedAt).fromNow()}</span>
+                </div>
+                <div className="flex items-center w-full justify-end gap-3 ">
+                  <button className="btn" onClick={() => viewReport(obj?._id)}>
+                    <FaEye />
                   </button>
-                )}
-                <button className="btn" onClick={() => printReport(obj?._id)}>
-                  <FaPrint />
-                </button>
+                  {me?._id === obj?.userId?._id && (
+                    <button
+                      className="btn"
+                      onClick={() => editReport(obj?._id)}
+                    >
+                      <FaEdit />
+                    </button>
+                  )}
+                  <button className="btn" onClick={() => printReport(obj?._id)}>
+                    <FaPrint />
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <NoReports />
+          )}
           {!isSearch && (
             <div className="flex w-full justify-between mt-4">
               <button

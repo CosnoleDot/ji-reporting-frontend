@@ -89,15 +89,15 @@ export const Login = ({ setAuthenticated }) => {
               Create new account
             </Link>
           </div>
-          <div>
-            <button
-              disabled={loading}
-              className="btn btn-primary"
-              type="submit"
-            >
-              Login
-            </button>
-          </div>
+            <div>
+              <button
+                disabled={loading}
+                className="btn btn-primary"
+                type="submit"
+              >
+                Login
+              </button>
+            </div>
         </form>
         <div className="w-full flex justify-center items-start gap-3">
           <span className="text-slate-800">Powered By:</span>

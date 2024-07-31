@@ -31,7 +31,6 @@ export const Signup = () => {
       name: formData.get("name"),
       age: formData.get("age"),
       nazim: formData.get("userAreaType")?.toLowerCase(),
-      nazimType: formData.get("nazimType"),
       fatherName: formData.get("fatherName"),
       dob: formData.get("dob"),
       address: formData.get("address"),
@@ -129,9 +128,9 @@ export const Signup = () => {
         setAreas(data.data.data);
         setMaqams(data2.data.data);
         break;
-      case "Ilaqa":
+      case "Markaz":
         setLoading(true);
-        data = await instance.get("/locations/ilaqa");
+        data = await instance.get("/locations/country");
         setLoading(false);
         setAreas(data.data.data);
         break;
@@ -409,7 +408,22 @@ export const Signup = () => {
             <span className="px-1 py-2 block font-semibold">
               Organization pocket:
             </span>
-            <div className="flex items-center justify-between flex-wrap border border-primary p-2 rounded-lg">
+            <div className="flex items-center justify-start gap-2  flex-wrap border border-primary p-2 rounded-lg">
+              <div className="form-control">
+                <label className="label cursor-pointer gap-2">
+                  <input
+                    type="radio"
+                    name="userAreaType"
+                    className="radio checked:bg-blue-500"
+                    value="Markaz"
+                    onChange={(e) => {
+                      document.getElementById("autocomplete").value = "";
+                      setUserAreaType(e.target.value);
+                    }}
+                  />
+                  <span className="label-text">Markaz</span>
+                </label>
+              </div>
               <div className="form-control">
                 <label className="label cursor-pointer gap-2">
                   <input
@@ -530,26 +544,28 @@ export const Signup = () => {
                   <span className="label-text">Umeedwar</span>
                 </label>
               </div>
-              <div className="form-control">
-                <label className="label cursor-pointer gap-2">
-                  <input
-                    type="radio"
-                    id="joininType"
-                    name="joiningType"
-                    value="nazim"
-                    className="radio checked:bg-blue-500"
-                    defaultChecked={joiningDate?.title === "nazim"}
-                    onChange={(e) => {
-                      setJoiningDate((prev) => ({
-                        ...prev,
-                        title: e.target.value,
-                        date: "",
-                      }));
-                    }}
-                  />
-                  <span className="label-text">Rafeeq</span>
-                </label>
-              </div>
+              {userAreaType !== "Markaz" && (
+                <div className="form-control">
+                  <label className="label cursor-pointer gap-2">
+                    <input
+                      type="radio"
+                      id="joininType"
+                      name="joiningType"
+                      value="nazim"
+                      className="radio checked:bg-blue-500"
+                      defaultChecked={joiningDate?.title === "nazim"}
+                      onChange={(e) => {
+                        setJoiningDate((prev) => ({
+                          ...prev,
+                          title: e.target.value,
+                          date: "",
+                        }));
+                      }}
+                    />
+                    <span className="label-text">Rafeeq</span>
+                  </label>
+                </div>
+              )}
             </div>
             <span className="w-full block font-semibold">
               Month of becoming {joiningDate?.title.toUpperCase()}:
@@ -568,7 +584,7 @@ export const Signup = () => {
             />
           </div>
           {/* NAZIM TYPES */}
-          {joiningDate?.title && (
+          {joiningDate?.title && userAreaType !== "Markaz" && (
             <div className="w-full">
               <span className="px-1 py-2 block font-semibold"> Status:</span>
               <div className="flex  items-center justify-start flex-wrap border border-primary p-2 rounded-lg">
@@ -598,6 +614,7 @@ export const Signup = () => {
                         <span className="label-text">Rukan</span>
                       </label>
                     </div>
+
                     <div className="form-control">
                       <label className="label cursor-pointer gap-2">
                         <input
@@ -624,6 +641,7 @@ export const Signup = () => {
                         <span className="label-text">Umeedwaar</span>
                       </label>
                     </div>
+
                     <div className="form-control">
                       <label className="label cursor-pointer gap-2">
                         <input
