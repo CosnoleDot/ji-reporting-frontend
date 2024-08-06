@@ -7,7 +7,7 @@ export const CircularChart = ({ res, type }) => {
   let respond = res?.datasets || [];
   respond = respond?.map((i) => (i === null ? 0 : i < 0 ? 0 : Math.round(i) ));
   respond = respond?.map((i) => (i > 100 ? 100 : i));
-  console.log(respond ,res?.labels)
+ 
   const options = {
     series: respond,
     chart: {
