@@ -71,6 +71,7 @@ import { DivisionCompileReport } from "./pages/Compilaton/DivisionCompileReport"
 import { ProvinceReportCompile } from "./pages/Compilaton/ProvinceReportCompile";
 import { MarkazReportCompilePrint } from "./pages/Compilaton/MarkazReportCompilePrint";
 import { MuntakhibMaqamCompileReport } from "./pages/Compilaton/MuntakhibMaqamCompileReport";
+import { CircularChart } from "./components/CircularChart";
 // import { SpiderChart } from "./pages/SpiderChart";
 
 function App() {
@@ -1378,6 +1379,10 @@ function App() {
                                               <Route
                                                 path="*"
                                                 element={<Page404 />}
+                                              />
+                                               <Route
+                                                path="/circular"
+                                                element={<CircularChart />}
                                               />
                                               <Route
                                                 path="/maqam-report/print/:id"
