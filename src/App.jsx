@@ -975,6 +975,12 @@ function App() {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
+      } else if (!obj.parentType && (obj.name = "Pakistan")) {
+        res = await instance.get(`/locations/country`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
+        });
       } else {
         res = await instance.get(`/locations/maqam/${obj?._id}`, {
           headers: {
@@ -993,16 +999,9 @@ function App() {
 
     document.getElementById("area_details").showModal();
   };
-  const getCompileReports = async (
-    startDate,
-    endDate,
-    areaType,
-    areaId
-  ) => {
-   
-
+  const getCompileReports = async (startDate, endDate, areaType, areaId) => {
     try {
-      setLoading(true)
+      setLoading(true);
       const req = await instance.get(
         `/compilation/${areaId}?startDate=${startDate}&endDate=${endDate}&areaType=${areaType}`,
         {
@@ -1014,10 +1013,10 @@ function App() {
 
       if (req) {
         setCompileReports(req.data.data);
-        setLoading(false)
+        setLoading(false);
       }
     } catch (err) {
-      setLoading(false)
+      setLoading(false);
       console.log(err);
       dispatch({
         type: "ERROR",
@@ -1140,7 +1139,9 @@ function App() {
                                 <HalqaReportTabContext.Provider
                                   value={halqaReportsTab}
                                 >
-                                  <CompileReportContext.Provider value={compileReports}>
+                                  <CompileReportContext.Provider
+                                    value={compileReports}
+                                  >
                                     <ViewDetails.Provider value={areaDetails}>
                                       <IsMuntakhib.Provider
                                         value={muntakhibMaqam}
@@ -1357,7 +1358,9 @@ function App() {
                                               />
                                               <Route
                                                 path="/province-report-compile/print"
-                                                element={<ProvinceReportCompile />}
+                                                element={
+                                                  <ProvinceReportCompile />
+                                                }
                                               />
                                               <Route
                                                 path="/division-report/print/:id"
@@ -1365,7 +1368,9 @@ function App() {
                                               />
                                               <Route
                                                 path="/division-report-compile/print/"
-                                                element={<DivisionCompileReport />}
+                                                element={
+                                                  <DivisionCompileReport />
+                                                }
                                               />
                                               <Route
                                                 path="/ilaqa-report/print/:id"
@@ -1385,7 +1390,9 @@ function App() {
                                               />
                                               <Route
                                                 path="/maqam-report-compile/print/"
-                                                element={<MuntakhibMaqamCompileReport />}
+                                                element={
+                                                  <MuntakhibMaqamCompileReport />
+                                                }
                                               />
                                               <Route
                                                 path="/compile/view"
@@ -1405,14 +1412,16 @@ function App() {
                                                 path="/halqa-report-compile/print"
                                                 element={<HalqaCompileReport />}
                                               />
-                                              
+
                                               <Route
                                                 path="/markaz-report/print/:id"
                                                 element={<MarkazReportPrint />}
                                               />
-                                               <Route
+                                              <Route
                                                 path="/markaz-report-compile/print"
-                                                element={<MarkazReportCompilePrint />}
+                                                element={
+                                                  <MarkazReportCompilePrint />
+                                                }
                                               />
                                               <Route
                                                 path="/compilation"
