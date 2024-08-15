@@ -191,6 +191,7 @@ export const Reports = () => {
         break;
     }
   }, [active]);
+
   return (
     <GeneralLayout
       title={me?.userAreaId?.name.toUpperCase()}
@@ -202,10 +203,12 @@ export const Reports = () => {
         </h3>
         <div className="flex flex-col w-full items-center justify-between md:flex-row">
           <div className="flex justify-end items-center gap-4">
-            <button className="btn " onClick={handleReport}>
-              <FaPlus />
-              <span className="hidden lg:block xl:block">New Report</span>
-            </button>
+            {active === localStorage.getItem("@type") && (
+              <button className="btn " onClick={handleReport}>
+                <FaPlus />
+                <span className="hidden lg:block xl:block">New Report</span>
+              </button>
+            )}
 
             {((active === "province" &&
               localStorage.getItem("@type") === "country") ||
@@ -228,11 +231,9 @@ export const Reports = () => {
                 <AiFillBell />
               </button>
             )}
-            <button className="btn " onClick={()=>navigate('/compilation')}>
-      
+            <button className="btn " onClick={() => navigate("/compilation")}>
               Compile
             </button>
-            
           </div>
         </div>
         {[
