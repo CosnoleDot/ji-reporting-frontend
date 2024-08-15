@@ -759,7 +759,7 @@ export const LocationDivision = () => {
       )}
 
       {/* Pagination Controls */}
-      <div className="flex w-full px-4 justify-between items-center mt-4">
+      {value === '' && <div className="flex w-full px-4 justify-between items-center mt-4">
         <button
           className="btn capitalize p-[8px]"
           disabled={currentPage === 1}
@@ -777,7 +777,7 @@ export const LocationDivision = () => {
         >
           Next
         </button>
-      </div>
+      </div>}
 
       <dialog id="add_division_modal" className="modal">
         <div className="modal-box">
