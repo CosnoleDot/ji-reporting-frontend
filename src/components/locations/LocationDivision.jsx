@@ -31,6 +31,8 @@ export const LocationDivision = () => {
   const districts = useContext(DistrictContext);
   const [filteredData, setFilteredData] = useState(halqas);
   const [isDivision, setIsDivision] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+   
   const {
     getHalqas,
     getDivisions,
@@ -51,7 +53,7 @@ export const LocationDivision = () => {
   const params = useLocation();
 
   // Pagination states
-  const [currentPage, setCurrentPage] = useState(1);
+
   const itemsPerPage = 10; // Adjust this as needed
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
@@ -551,7 +553,7 @@ export const LocationDivision = () => {
                 ))
               ) : (
                 <>
-                  <Loader />
+              <div>No Report Found</div>
                 </>
               )}
             </tbody>
@@ -677,7 +679,7 @@ export const LocationDivision = () => {
                 ))
               ) : (
                 <>
-                  <Loader />
+                  <div>No Report Found</div>
                 </>
               )}
             </tbody>
@@ -749,9 +751,7 @@ export const LocationDivision = () => {
                     </tr>
                   ))
               ) : (
-                <section>
-                  <Loader />
-                </section>
+                <div>No Report Found</div>
               )}
             </tbody>
           </table>
@@ -759,7 +759,7 @@ export const LocationDivision = () => {
       )}
 
       {/* Pagination Controls */}
-      <div className="flex w-full px-4 justify-between items-center mt-4">
+      {value === '' && <div className="flex w-full px-4 justify-between items-center mt-4">
         <button
           className="btn capitalize p-[8px]"
           disabled={currentPage === 1}
@@ -773,11 +773,11 @@ export const LocationDivision = () => {
         <button
           className="btn capitalize p-[8px]"
           disabled={currentPage === totalPages}
-          onClick={() => setCurrentPage((prev) => prev + 1)}
+          onClick={() => {setCurrentPage((prev) => prev + 1); setValue('')}}
         >
           Next
         </button>
-      </div>
+      </div>}
 
       <dialog id="add_division_modal" className="modal">
         <div className="modal-box">
@@ -937,7 +937,7 @@ export const LocationDivision = () => {
                   Select District
                 </option>
                 {districts
-                  ?.filter((i) => !i?.disabled)
+                  ?.filter((i) => !i?.disabled)?.sort((a, b) => a.name.localeCompare(b.name))
                   ?.map((i, index) => (
                     <option value={i?._id} key={index}>
                       {i?.name}
