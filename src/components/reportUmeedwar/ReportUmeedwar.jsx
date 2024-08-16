@@ -297,6 +297,7 @@ export const ReportUmeedwar = () => {
                 id={"disturbingRoutine"}
                 name={"disturbingRoutine"}
                 type={"textarea"}
+                maxLength={300}
                 disabled={view}
               ></textarea>
             </div>
@@ -476,6 +477,7 @@ export const ReportUmeedwar = () => {
             placeholder={"..."}
             label={"تبصرہ"}
             id={"comments"}
+            maxLength={150}
             name={"comments"}
             type={"textarea"}
             disabled={view}
