@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { UIContext } from "../../context/ui";
 import instance from "../../api/instrance";
 import { SearchPage } from "./SearchPage";
+import { translate } from "../../context/localization";
 
 export const HalqaReports = () => {
   const [tab, setTab] = useState("maqam");
@@ -149,7 +150,7 @@ export const HalqaReports = () => {
           }`}
           onClick={() => tabClick("maqam")}
         >
-          مقام حلقہ
+          {translate("maqamHalqa")}{" "}
         </Link>
         <Link
           to={"?active=halqa&tab=division"}
@@ -159,7 +160,7 @@ export const HalqaReports = () => {
           }`}
           onClick={() => tabClick("division")}
         >
-          ڈویژن حلقہ
+          {translate("divisionHalqa")}{" "}
         </Link>
         <Link
           to={"?active=halqa&tab=ilaqa"}
@@ -169,7 +170,7 @@ export const HalqaReports = () => {
           }`}
           onClick={() => tabClick("ilaqa")}
         >
-          علاقہ حلقہ
+          {translate("ilaqaHalqa")}{" "}
         </Link>
       </div>
       <div className="md:join xs:w-full mb-4 flex justify-between items-center">
@@ -249,7 +250,7 @@ export const HalqaReports = () => {
                 </select>
               </div>
               <button className="btn" onClick={searchResults}>
-                Search
+                {translate("Search")}
               </button>
             </div>
           </div>
@@ -261,7 +262,7 @@ export const HalqaReports = () => {
             className={`btn ${!isMobileView ? "join-item" : ""}`}
             onClick={() => (!isMobileView ? searchResults() : toggleSearch())}
           >
-            Search
+            {translate("Search")}
           </button>
           {me?.userAreaType !== "Halqa" && (
             <button
@@ -271,14 +272,14 @@ export const HalqaReports = () => {
               }}
               className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
             >
-              filter
+              {translate("filter")}
             </button>
           )}
           <button
             className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
             onClick={clearFilters}
           >
-            Clear
+            {translate("Clear")}
           </button>
         </div>
       </div>
@@ -325,7 +326,7 @@ export const HalqaReports = () => {
               onClick={handlePrevPage}
               disabled={currentPage === 1}
             >
-              Previous
+               {translate("Previous")}
             </button>
             <span>
               Page {currentPage} of {totalPages}
@@ -335,7 +336,7 @@ export const HalqaReports = () => {
               onClick={handleNextPage}
               disabled={currentPage === totalPages}
             >
-              Next
+              {translate("Next")}
             </button>
           </div>
         </>

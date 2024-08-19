@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { UIContext } from "../../context/ui";
 import instance from "../../api/instrance";
 import { SearchPage } from "./SearchPage";
+import { translate } from "../../context/localization";
 
 export const CountryReport = () => {
   const c = useContext(MarkazReportContext);
@@ -195,7 +196,7 @@ export const CountryReport = () => {
                 </select>
               </div>
               <button className="btn" onClick={searchResults}>
-                Search
+              {translate("Search")}
               </button>
             </div>
           </div>
@@ -207,7 +208,7 @@ export const CountryReport = () => {
             className={`btn ${!isMobileView ? "join-item" : ""}`}
             onClick={() => (!isMobileView ? searchResults() : toggleSearch())}
           >
-            Search
+            {translate("Search")}
           </button>
           {me?.userAreaType !== "Halqa" && (
             <button
@@ -216,14 +217,14 @@ export const CountryReport = () => {
               }}
               className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
             >
-              filter
+              {translate("filter")}
             </button>
           )}
           <button
             className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
             onClick={clearFilters}
           >
-            Clear
+            {translate("Clear")}
           </button>
         </div>
       </div>
@@ -273,17 +274,17 @@ export const CountryReport = () => {
                 onClick={handlePrevPage}
                 disabled={currentPage === 1}
               >
-                Previous
+                 {translate("Previous")}
               </button>
               <span>
-                Page {currentPage} of {totalPages}
+                {translate("Page")} {currentPage} {translate("of")} {totalPages}
               </span>
               <button
                 className="btn"
                 onClick={handleNextPage}
                 disabled={currentPage === totalPages}
               >
-                Next
+                {translate("Next")}
               </button>
             </div>
           )}

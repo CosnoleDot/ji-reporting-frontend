@@ -29,6 +29,8 @@ export const Login = ({ setAuthenticated }) => {
       setAuthenticated(res?.data?.data?.token);
       localStorage.setItem("@type", res?.data?.data?.type);
       localStorage.setItem("@nazimType", res?.data?.data?.nazimType);
+      localStorage.setItem("@lang", res?.data?.data?.langPreference || 'english');
+      
       navigate("/");
     } catch (error) {
       const message = error?.response?.data?.message;

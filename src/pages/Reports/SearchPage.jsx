@@ -3,6 +3,7 @@ import moment from "moment";
 import { FaEdit, FaEye, FaPrint } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { LuSearchX } from "react-icons/lu";
+import { translate } from "../../context/localization";
 const NoSearch = () => (
   <div className="card-body flex flex-col items-center justify-center w-full p-2 md:p-5 mb-1 rounded-xl">
     <LuSearchX className="text-gray-300 w-40 h-40" />
@@ -82,7 +83,7 @@ export const SearchPage = ({ data ,area}) => {
           onClick={handlePrevPageSearch}
           disabled={currentPage === 1}
         >
-          Previous
+           {translate("Previous")}
         </button>
         <span>
           Page {currentPage} of {totalPages}
@@ -92,7 +93,7 @@ export const SearchPage = ({ data ,area}) => {
           onClick={handleNextPageSearch}
           disabled={currentPage === totalPages}
         >
-          Next
+          {translate("Next")}
         </button>
       </div>
     </>

@@ -7,6 +7,7 @@ import { FaBell } from "react-icons/fa6";
 import moment from "moment";
 import { months } from "../../pages/Reports";
 import { UIContext } from "../../context/ui";
+import { translate } from "../../context/localization";
 
 export const Notifications = ({ userRequests, type }) => {
   const { loading, setLoading } = useContext(UIContext);
@@ -58,7 +59,7 @@ export const Notifications = ({ userRequests, type }) => {
       {type === "request" ? (
         <>
           {userRequests?.length < 1 && (
-            <h1 className="p-2">No requests found!</h1>
+            <h1 className="p-2">{translate("Norequestsfound")}</h1>
           )}
           {loading ? (
             <Loader />
@@ -109,7 +110,7 @@ export const Notifications = ({ userRequests, type }) => {
       ) : (
         <>
           {userRequests?.length < 1 && (
-            <h1 className="p-2">No notifications found!</h1>
+            <h1 className="p-2">{translate("Nonotificationsfound")}</h1>
           )}
           {loading ? (
             <Loader />

@@ -15,12 +15,13 @@ import { IlaqaReports } from "./Reports/IlaqaReports";
 import { HalqaReports } from "./Reports/HalqaReports";
 import { CountryReport } from "./Reports/CountryReport";
 import { UnitReport } from "./Reports/UnitReport";
+import { translate } from "../context/localization";
 
 export const NoReports = () => (
   <div className="card-body flex flex-col items-center justify-center w-full p-2 md:p-5 mb-1 rounded-xl">
     <FaRegFileExcel className="text-gray-300 w-20 h-20 md:w-40 md:h-40 " />
     <span className="text-gray-300 font-bold text-md md:text-3xl">
-      No Reports Found!
+      {translate("NoReportsFound")}
     </span>
   </div>
 );
@@ -199,14 +200,16 @@ export const Reports = () => {
     >
       <div className="relative flex flex-col gap-3 items-center p-5 justify-center h-[calc(100vh-65.6px-64px)]">
         <h3 className="w-full font-bold text-left text-xl hidden lg:block xl:block">
-          Reports
+          {translate("Reports")}
         </h3>
         <div className="flex flex-col w-full items-center justify-between md:flex-row">
           <div className="flex justify-end items-center gap-4">
             {active === localStorage.getItem("@type") && (
               <button className="btn " onClick={handleReport}>
                 <FaPlus />
-                <span className="hidden lg:block xl:block">New Report</span>
+                <span className="hidden lg:block xl:block">
+                  {translate("NewReport")}
+                </span>
               </button>
             )}
 
@@ -232,7 +235,7 @@ export const Reports = () => {
               </button>
             )}
             <button className="btn " onClick={() => navigate("/compilation")}>
-              Compile
+              {translate("Compile")}
             </button>
           </div>
         </div>
@@ -251,7 +254,7 @@ export const Reports = () => {
             } font-bold `}
             onClick={() => setTab("personal")}
           >
-            ارکان/امیدواران رپورٹ
+            {translate("arkanumeedwaranReport")}{" "}
           </Link>
         )}
         <div
@@ -270,7 +273,7 @@ export const Reports = () => {
                 }  font-bold `}
                 onClick={() => setNotifyTo("country")}
               >
-                مرکز
+                {translate("Markaz")}
               </Link>
             )}
           {["country", "province"].includes(localStorage.getItem("@type")) &&
@@ -285,7 +288,7 @@ export const Reports = () => {
                 } font-bold `}
                 onClick={() => setNotifyTo("province")}
               >
-                صوبہ
+                {translate("Province")}
               </Link>
             )}
           {["country", "province", "division"].includes(
@@ -302,8 +305,7 @@ export const Reports = () => {
                 } font-bold `}
                 onClick={() => setNotifyTo("division")}
               >
-                ڈویژن
-              </Link>
+{translate("Division")}              </Link>
             )}
           {["country", "province", "maqam"].includes(
             localStorage.getItem("@type")
@@ -319,8 +321,7 @@ export const Reports = () => {
                 } font-bold `}
                 onClick={() => setNotifyTo("maqam")}
               >
-                مقام
-              </Link>
+{translate("Maqam")}              </Link>
             )}
           {["country", "maqam", "ilaqa", "province"].includes(
             localStorage.getItem("@type")
@@ -337,7 +338,7 @@ export const Reports = () => {
                 } font-bold `}
                 onClick={() => setNotifyTo("ilaqa")}
               >
-                علاقہ/Zone
+                {translate("IlaqaZone")}
               </Link>
             )}
 
@@ -355,7 +356,7 @@ export const Reports = () => {
                 } font-bold `}
                 onClick={() => setNotifyTo("halqa")}
               >
-                حلقہ
+                {translate("Halqa")}
               </Link>
             )}
         </div>

@@ -13,6 +13,7 @@ import { FaEdit } from "react-icons/fa";
 import { UIContext } from "../../context/ui";
 import { FcViewDetails } from "react-icons/fc";
 import { Loader } from "../Loader";
+import { translate } from "../../context/localization";
 
 export const LocationMaqam = () => {
   const provinces = useContext(ProvinceContext);
@@ -328,7 +329,7 @@ export const LocationMaqam = () => {
               setEditMode(false);
             }}
           >
-            Add Maqam
+            {translate("Add")} {translate("Maqam")}
           </button>
         )}
         {["maqam", "province", "country"].includes(
@@ -347,7 +348,7 @@ export const LocationMaqam = () => {
                 setEditMode(false);
               }}
             >
-              Add Ilaqa
+              {translate("Add")} {translate("Ilaqa")}
             </button>
           )}
         {view !== "ilaqa" && (
@@ -364,7 +365,7 @@ export const LocationMaqam = () => {
             }}
             className="btn ms-3"
           >
-            Add Halqa
+            {translate("Add")} {translate("Halqa")}
           </button>
         )}
       </div>
@@ -396,7 +397,7 @@ export const LocationMaqam = () => {
             className={`tab w-full ${view === "maqam" ? "tab-active" : ""}`}
             onClick={() => setCurrentPage(1)}
           >
-            مقام
+            {translate("Maqam")}
           </Link>
         )}
         <Link
@@ -405,7 +406,7 @@ export const LocationMaqam = () => {
           className={`tab w-full ${view === "halqa" ? "tab-active" : ""}`}
           onClick={() => setCurrentPage(1)}
         >
-          حلقہ
+          {translate("Halqa")}
         </Link>
         {muntakhib && (
           <Link
@@ -414,7 +415,7 @@ export const LocationMaqam = () => {
             className={`tab w-full ${view === "ilaqa" ? "tab-active" : ""}`}
             onClick={() => setCurrentPage(1)}
           >
-            علاقہ/Zone
+            {translate("IlaqaZone")}
           </Link>
         )}
       </div>
@@ -425,9 +426,9 @@ export const LocationMaqam = () => {
             <thead className="h-10">
               <tr className="fixed mb-2 bg-slate-300 flex w-full justify-between items-start">
                 <th className=" text-start"></th>
-                <th className="w-full text-start">Name</th>
-                <th className="w-full text-center">Province</th>
-                <th className="w-full text-center">Edit/Disable</th>
+                <th className="w-full text-start">{translate("Name")}</th>
+                <th className="w-full text-center">{translate("Province")}</th>
+                <th className="w-full text-center">{translate("EditDisable")}</th>
               </tr>
             </thead>
             <tbody className="mt-5">
@@ -484,9 +485,9 @@ export const LocationMaqam = () => {
             <thead className="h-10">
               <tr className="fixed mb-2 bg-slate-300 flex w-full justify-between items-start">
                 <th className=" text-start"></th>
-                <th className="w-full text-start">Name</th>
-                <th className="w-full text-start">Area Details</th>
-                <th className="w-full text-center">Edit/Disable</th>
+                <th className="w-full text-start">{translate("Name")}</th>
+                <th className="w-full text-start">{translate("AreaDetails")}</th>
+                <th className="w-full text-center">{translate("EditDisable")}</th>
               </tr>
             </thead>
             <tbody>
@@ -549,9 +550,9 @@ export const LocationMaqam = () => {
             <thead className="h-10">
               <tr className="fixed mb-2 bg-slate-300 flex w-full justify-between items-start">
                 <th className="text-start"></th>
-                <th className="w-full text-start">Name</th>
-                <th className="w-full text-start">Area Details</th>
-                <th className="w-full text-center">Edit/Disable</th>
+                <th className="w-full text-start">{translate("Name")}</th>
+                <th className="w-full text-start">{translate("AreaDetails")}</th>
+                <th className="w-full text-center">{translate("EditDisable")}</th>
               </tr>
             </thead>
             <tbody>
@@ -624,7 +625,7 @@ export const LocationMaqam = () => {
             disabled={currentPage === 1}
             onClick={() => setCurrentPage((prev) => prev - 1)}
           >
-            Previous
+             {translate("Previous")}
           </button>
           <span className="mx-4">
             Page {currentPage} of {totalPages}
@@ -634,7 +635,7 @@ export const LocationMaqam = () => {
             disabled={currentPage === totalPages}
             onClick={() => setCurrentPage((prev) => prev + 1)}
           >
-            Next
+            {translate("Next")}
           </button>
         </div>
       )}

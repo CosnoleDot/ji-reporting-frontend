@@ -18,6 +18,7 @@ import { FaTimes, FaChevronCircleRight, FaTimesCircle } from "react-icons/fa";
 import { getDivisionByTehsil, months } from "./Reports";
 import { UIContext } from "../context/ui";
 import { CircularChart } from "../components/CircularChart";
+import { translate } from "../context/localization";
 
 const Dates = ({
   durationMonths,
@@ -33,7 +34,7 @@ const Dates = ({
   return (
     <div className="fixed top-0 left-0 z-1 w-full h-screen bg-white">
       <div className="flex z-50 w-full p-3 items-center border-b justify-between">
-        <h1 className="text-xl font-bold">Dates</h1>
+        <h1 className="text-xl font-bold">{translate("Dates")}</h1>
         <div className="flex justify-end items-center gap-3">
           <button
             className="btn"
@@ -42,7 +43,7 @@ const Dates = ({
               getData();
             }}
           >
-            Generate
+            {translate("Generate")}
           </button>
           <button className="btn" onClick={() => showDates(false)}>
             <FaTimes />
@@ -840,29 +841,29 @@ export const Comparision = () => {
             className="select select-bordered"
           >
             <option value="" disabled>
-              Report Type
+              {translate("ReportType")}
             </option>
             {(localStorage.getItem("@type") === "province" ||
               localStorage.getItem("@type") === "country") && (
               <>
                 {localStorage.getItem("@type") === "country" && (
-                  <option value="markaz">Markaz</option>
+                  <option value="markaz">{translate("Markaz")}</option>
                 )}
-                <option value="province">Province</option>
-                <option value="division">Division</option>
-                <option value="maqam">Maqam</option>
+                <option value="province">{translate("Province")}</option>
+                <option value="division">{translate("Division")}</option>
+                <option value="maqam">{translate("Maqam")}</option>
               </>
             )}
             {localStorage.getItem("@type") !== "halqa" &&
               localStorage.getItem("@type") !== "division" && (
                 <>
-                  <option value="ilaqa">Ilaqa</option>
+                  <option value="ilaqa">{translate("Ilaqa")}</option>
                 </>
               )}
-            <option value="halqa">Halqa</option>
+            <option value="halqa">{translate("Halqa")}</option>
             {["umeedwar", "rukan", "umeedwaar-nazim", "rukan-nazim"].includes(
               me?.nazimType
-            ) && <option value="personal">Personal</option>}
+            ) && <option value="personal">{translate("Personal")}</option>}
             {/* <option value='self'>Self Compare</option> */}
           </select>
           {reportType !== "self" &&
@@ -874,7 +875,7 @@ export const Comparision = () => {
                 className="select select-bordered "
               >
                 <option value="" disabled>
-                  Area {reportType}
+                  {translate("Area")} {translate(reportType)}
                 </option>
                 {areas[reportType]?.map((i, index) => (
                   <option key={index} value={i?._id} className="w-[200px]">
@@ -963,13 +964,13 @@ export const Comparision = () => {
             onChange={(e) => setSelectedProperty(e.target.value)}
           >
             <option value="" disabled>
-              Property
+              {translate("Property")}
             </option>
             {reportType !== "personal" && (
               <>
-                <option value={"compareAll"}>Compare All</option>
-                <option value={"spiderChart"}>Spider Chart</option>
-                <option value={"radialChart"}>Radial Chart</option>
+                <option value={"compareAll"}>{translate("CompareAll")}</option>
+                <option value={"spiderChart"}>{translate("SpiderChart")}</option>
+                <option value={"radialChart"}>{translate("RadialChart")}</option>
               </>
             )}
             {["umeedwar", "rukan", "umeedwaar-nazim", "rukan-nazim"].includes(
@@ -977,9 +978,9 @@ export const Comparision = () => {
             ) &&
               reportType === "personal" && (
                 <>
-                  <option value={"prayers"}> Prayers</option>
-                  <option value={"studies"}> Mutalajaat</option>
-                  <option value={"toseeDawa"}>ToseeDawat</option>
+                  <option value={"prayers"}> {translate("Prayers")}</option>
+                  <option value={"studies"}> {translate("Mutalajaat")}</option>
+                  <option value={"toseeDawa"}>{translate("ToseeDawat")}</option>
                 </>
               )}
           </select>
@@ -989,11 +990,11 @@ export const Comparision = () => {
             className="select select-bordered"
           >
             <option value="" disabled>
-              Duration Type
+              {translate("DurationType")}
             </option>
-            <option value="month">Month</option>
+            <option value="month">{translate("Month")}</option>
             {selectedProperty !== "spider" && (
-              <option value="year">Year</option>
+              <option value="year">{translate("Year")}</option>
             )}
           </select>
           <button
@@ -1007,7 +1008,7 @@ export const Comparision = () => {
             }}
             className="btn"
           >
-            Dates
+            {translate("Dates")}
           </button>
         </div>
         <div className="relative flex flex-col gap-3 h-[calc(100vh-100px-64px-73.6px)] w-full p-3">
@@ -1019,7 +1020,7 @@ export const Comparision = () => {
             )
           ) : (
             <div className="flex justify-center items-center top-[50%] relative left-[0%]">
-              <p className="text-2xl text-[#7a7a7a]">No Reports Data</p>
+              <p className="text-2xl text-[#7a7a7a]">{translate("NoReportsFound")}</p>
             </div>
           )}
         </div>

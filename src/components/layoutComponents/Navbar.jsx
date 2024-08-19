@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { FaRegUserCircle } from "react-icons/fa";
 import { UIContext } from "../../context/ui";
 import { MeContext } from "../../context";
+import { translate } from "../../context/localization";
 
 export const Navbar = ({ title }) => {
   const navigate = useNavigate();
@@ -49,12 +50,12 @@ export const Navbar = ({ title }) => {
     <>
       <div className="navbar bg-blue-500 text-white">
         <div className="flex-1">
-          <span className="text-xl">{title || "IJT Reporting"}</span>
+          <span className="text-xl">{translate(title) || translate("IJTReporting")}</span>
         </div>
         <div className="flex-none">
-          <div>
+          {/* <div>
             <h1>{me?.name}</h1>
-          </div>
+          </div> */}
           {localStorage.getItem("@type") !== "country" && (
             <div className="relative dropdown dropdown-end" ref={notificationsRef}>
               <div
@@ -126,10 +127,10 @@ export const Navbar = ({ title }) => {
                 </span>
               </li>
               <li onClick={() => navigate("/profile")}>
-                <span>Profile</span>
+                <span>{translate('profile')}</span>
               </li>
               <li onClick={() => navigate("/change-password")}>
-                <span>Change Password</span>
+                <span>{translate('ChangePassword')}</span>
               </li>
               <li>
                 <span
@@ -140,7 +141,7 @@ export const Navbar = ({ title }) => {
                     window.location.reload();
                   }}
                 >
-                  Logout
+                  {translate("logout")}
                 </span>
               </li>
               <li className="bg-slate-300 flex justify-center w-full">
@@ -164,7 +165,7 @@ export const Navbar = ({ title }) => {
           ref={requestsRef}
           className="mt-3 top-[60.5px] right-[10px] lg:right-10 fixed z-[1] w-[calc(100%-20px)] lg:w-[420px] card card-compact dropdown-content bg-base-100 border-2 overflow-hidden"
         >
-          <h2 className="p-5 font-bold text-xl">User Request(s)</h2>
+          <h2 className="p-5 font-bold text-xl">{translate("userRequest")}</h2>
           <Notifications userRequests={userRequests} type="request" />
         </div>
       )}
@@ -175,7 +176,7 @@ export const Navbar = ({ title }) => {
           ref={notificationsRef}
           className="mt-3 top-[60.5px] right-[10px] lg:right-10 fixed z-[1] w-[calc(100%-20px)] lg:w-[420px] card card-compact dropdown-content bg-base-100 border-2 overflow-hidden"
         >
-          <h2 className="p-5 font-bold text-xl">Notification(s)</h2>
+          <h2 className="p-5 font-bold text-xl">{translate("notifications")}</h2>
           <Notifications
             userRequests={notifications}
             getAllRequests={getAllNotifications}

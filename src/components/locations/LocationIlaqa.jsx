@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import instance from "../../api/instrance";
 import { FaEdit } from "react-icons/fa";
 import { UIContext } from "../../context/ui";
+import { translate } from "../../context/localization";
 
 export const LocationIlaqa = () => {
   const halqas = useContext(HalqaContext);
@@ -197,7 +198,7 @@ export const LocationIlaqa = () => {
           disabled={currentPage === 1}
           onClick={() => setCurrentPage((prev) => prev - 1)}
         >
-          Previous
+           {translate("Previous")}
         </button>
         <span className="mx-4">
           Page {currentPage} of {totalPages}
@@ -207,7 +208,7 @@ export const LocationIlaqa = () => {
           disabled={currentPage === totalPages}
           onClick={() => setCurrentPage((prev) => prev + 1)}
         >
-          Next
+          {translate("Next")}
         </button>
       </div>
 

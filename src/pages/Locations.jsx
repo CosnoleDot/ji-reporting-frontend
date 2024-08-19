@@ -8,6 +8,7 @@ import {
 } from "../components";
 import { Link, useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { translate } from "../context/localization";
 
 export const Locations = () => {
   const [active, setActive] = useState(
@@ -48,7 +49,7 @@ export const Locations = () => {
               role="tab"
               className={`tab w-full ${active === "maqam" ? "tab-active" : ""}`}
             >
-              مقام
+              {translate("Maqam")}
             </Link>
           )}
           {["country", "province", "division"].includes(
@@ -61,7 +62,7 @@ export const Locations = () => {
                 active === "division" ? "tab-active" : ""
               }`}
             >
-              ڈویژن
+              {translate("Division")}
             </Link>
           )}
           {["country"].includes(localStorage.getItem("@type")) && (
@@ -72,7 +73,7 @@ export const Locations = () => {
                 active === "country" ? "tab-active" : ""
               }`}
             >
-              صوبہ
+              {translate("Province")}
             </Link>
           )}
         </div>

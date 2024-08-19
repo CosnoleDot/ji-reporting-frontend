@@ -17,6 +17,7 @@ import { MdOutlineUpgrade } from "react-icons/md";
 import { RiDeviceRecoverFill } from "react-icons/ri";
 import { FcViewDetails } from "react-icons/fc";
 import { decryptData } from "../utils";
+import { translate } from "../context/localization";
 export const DeleteUser = () => {
   const me = useContext(MeContext);
   const halqas = useContext(HalqaContext);
@@ -477,7 +478,7 @@ export const DeleteUser = () => {
               disabled={currentPage === 1}
               onClick={() => setCurrentPage((prev) => prev - 1)}
             >
-              Previous
+               {translate("Previous")}
             </button>
             <span className="mx-4">
               Page {currentPage} of {totalPages === 0 ? 1 : totalPages}
@@ -487,7 +488,7 @@ export const DeleteUser = () => {
               disabled={currentPage === totalPages}
               onClick={() => setCurrentPage((prev) => prev + 1)}
             >
-              Next
+              {translate("Next")}
             </button>
           </div>
         </div>

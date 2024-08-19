@@ -41,6 +41,7 @@ export const Signup = () => {
       joiningDate: joiningDate,
       phoneNumber: formData.get("phoneNumber"),
       whatsAppNumber: formData.get("whatsAppNumber"),
+      langPreference: formData.get("language")
     };
     if (!joiningDate.title) {
       alert("please select the nazim");
@@ -181,6 +182,37 @@ export const Signup = () => {
         <form className="space-y-4" onSubmit={handleSubmit}>
           <h1 className="font-semibold text-2xl">Signup Form</h1>
           <div className="flex items-center justify-between flex-wrap">
+            <div className="flex items-center justify-between flex-wrap">
+              <div className="w-full flex gap-12">
+                <label className="label">
+                  <span className="text-base label-text">
+                    Language Preferences
+                  </span>
+                </label>
+                <div className="flex items-center gap-4">
+                  <label className="flex items-center">
+                    <input
+                      type="radio"
+                      name="language"
+                      value="english"
+                      defaultChecked
+                      className="radio radio-primary"
+                    />
+                    <span className="ml-2">English</span>
+                  </label>
+                  <label className="flex items-center">
+                    <input
+                      type="radio"
+                      name="language"
+                      value="urdu"
+                      className="radio radio-primary"
+                    />
+                    <span className="ml-2">Urdu</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
             <div className="w-full">
               <label className="label">
                 <span className="text-base label-text">Full Name</span>

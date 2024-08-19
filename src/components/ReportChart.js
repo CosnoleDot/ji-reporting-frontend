@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 import ChartDataLabels from "chartjs-plugin-datalabels";
+import { translate } from "../context/localization";
 
 export const ReportChart = ({ res, type }) => {
   const monthlyChartRef = useRef(null);
@@ -70,7 +71,7 @@ export const ReportChart = ({ res, type }) => {
 
   return (
     <div className="w-full">
-      <span className="capitalize">{type?.split("-")?.join(" ")}</span>
+      <span className="capitalize">{translate(type?.split("-")?.join(" "))}</span>
       <div
         className=" "
         style={{

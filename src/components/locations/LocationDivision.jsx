@@ -15,6 +15,7 @@ import { FaEdit } from "react-icons/fa";
 import { UIContext } from "../../context/ui";
 import { Loader } from "../Loader";
 import { FcViewDetails } from "react-icons/fc";
+import { translate } from "../../context/localization";
 
 export const LocationDivision = () => {
   const provinces = useContext(ProvinceContext);
@@ -765,7 +766,7 @@ export const LocationDivision = () => {
           disabled={currentPage === 1}
           onClick={() => setCurrentPage((prev) => prev - 1)}
         >
-          Previous
+          {translate("Previous")}
         </button>
         <span className="mx-4">
           Page {currentPage} of {totalPages}
@@ -775,7 +776,7 @@ export const LocationDivision = () => {
           disabled={currentPage === totalPages}
           onClick={() => {setCurrentPage((prev) => prev + 1); setValue('')}}
         >
-          Next
+          {translate("Next")}
         </button>
       </div>}
 

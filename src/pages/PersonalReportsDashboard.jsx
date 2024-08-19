@@ -8,6 +8,7 @@ import { NoReports, getDivisionByTehsil, months } from "./Reports";
 import { MdCancel } from "react-icons/md";
 import { MeContext } from "../context";
 import { UIContext } from "../context/ui";
+import { translate } from "../context/localization";
 // import { ProvinceContext } from "../context";
 
 export const PersonalReportsDashboard = () => {
@@ -84,10 +85,9 @@ export const PersonalReportsDashboard = () => {
   const handleClear = () => {
     setIsSearch(false);
     setRukanId(null);
+    getAllReports(0, 10);
   };
-  useEffect(() => {
-    getAllReports();
-  }, [rukanId]);
+
   const searchResults = async () => {
     setIsSearch(true);
     setToggle(false);
@@ -148,7 +148,7 @@ export const PersonalReportsDashboard = () => {
               ))}
           </select>
           {rukanId && (
-            <button className="btn" onClick={getAllReports}>
+            <button className="btn" onClick={() => getAllReports(0, 10)}>
               Get All
             </button>
           )}
@@ -261,7 +261,7 @@ export const PersonalReportsDashboard = () => {
                 onClick={handlePrevPage}
                 disabled={currentPage === 1}
               >
-                Previous
+                {translate("Previous")}{" "}
               </button>
               <span>
                 Page {currentPage} of {totalPages}
@@ -271,7 +271,7 @@ export const PersonalReportsDashboard = () => {
                 onClick={handleNextPage}
                 disabled={currentPage === totalPages}
               >
-                Next
+                {translate("Next")}
               </button>
             </div>
           )}

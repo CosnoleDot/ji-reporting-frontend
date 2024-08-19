@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { UIContext } from "../../context/ui";
 import { SearchPage } from "./SearchPage";
 import instance from "../../api/instrance";
+import { translate } from "../../context/localization";
 
 export const IlaqaReports = () => {
   const i = useContext(IlaqaReportContext);
@@ -198,7 +199,7 @@ export const IlaqaReports = () => {
                 </select>
               </div>
               <button className="btn" onClick={searchResults}>
-                Search
+              {translate("Search")}
               </button>
             </div>
           </div>
@@ -210,7 +211,7 @@ export const IlaqaReports = () => {
             className={`btn ${!isMobileView ? "join-item" : ""}`}
             onClick={() => (!isMobileView ? searchResults() : toggleSearch())}
           >
-            Search
+            {translate("Search")}
           </button>
           {me?.userAreaType !== "Halqa" && (
             <button
@@ -220,14 +221,14 @@ export const IlaqaReports = () => {
               }}
               className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
             >
-              filter
+              {translate("filter")}
             </button>
           )}
           <button
             className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
             onClick={clearFilters}
           >
-            Clear
+            {translate("Clear")}
           </button>
         </div>
       </div>
@@ -273,7 +274,7 @@ export const IlaqaReports = () => {
                 onClick={handlePrevPage}
                 disabled={currentPage === 1}
               >
-                Previous
+                 {translate("Previous")}
               </button>
               <span>
                 Page {currentPage} of {totalPages}
@@ -283,7 +284,7 @@ export const IlaqaReports = () => {
                 onClick={handleNextPage}
                 disabled={currentPage === totalPages}
               >
-                Next
+                {translate("Next")}
               </button>
             </div>
           )}

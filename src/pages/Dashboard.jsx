@@ -25,6 +25,7 @@ import {
 import { UIContext } from "../context/ui";
 import { useNavigate } from "react-router-dom";
 import instance from "../api/instrance";
+import { translate } from "../context/localization";
 
 export const Dashboard = () => {
   const { getHalqas } = useContext(UIContext);
@@ -367,7 +368,7 @@ export const Dashboard = () => {
                     </svg>
                   </div>
                   <div className="px-4 text-gray-700">
-                    <h3 className="text-sm tracking-wider">Total Nazims</h3>
+                    <h3 className="text-sm tracking-wider">{translate("TotalNazims")}</h3>
                     <p className="text-3xl">
                       {nazim?.filter((naz) => naz?.isDeleted == false).length}
                     </p>
@@ -384,7 +385,7 @@ export const Dashboard = () => {
                     <CiLocationOn className="w-12 h-12 text-white" />
                   </div>
                   <div className="px-4 text-gray-700">
-                    <h3 className="text-sm tracking-wider">Total Provinces</h3>
+                    <h3 className="text-sm tracking-wider">{translate("TotalProvinces")}</h3>
                     <p className="text-3xl">
                       {
                         provinces?.filter(
@@ -404,7 +405,7 @@ export const Dashboard = () => {
                     <FaLocationDot className="h-12 w-12 text-white" />
                   </div>
                   <div className="px-4 text-gray-700">
-                    <h3 className="text-sm tracking-wider">Total Divisions</h3>
+                    <h3 className="text-sm tracking-wider">{translate("TotalDivisions")}</h3>
                     <p className="text-3xl">
                       {
                         divisions?.filter(
@@ -426,7 +427,7 @@ export const Dashboard = () => {
                     <FaLocationDot className="h-12 w-12 text-white" />
                   </div>
                   <div className="px-4 text-gray-700">
-                    <h3 className="text-sm tracking-wider">Total Districts</h3>
+                    <h3 className="text-sm tracking-wider">{translate("TotalDistricts")}</h3>
                     <p className="text-3xl">
                       {
                         districts?.filter(
@@ -449,7 +450,7 @@ export const Dashboard = () => {
                     <CiLocationOn className="h-12 w-12 text-white" />
                   </div>
                   <div className="px-4 text-gray-700">
-                    <h3 className="text-sm tracking-wider">Total Tehsils</h3>
+                    <h3 className="text-sm tracking-wider">{translate("TotalTehsils")}</h3>
                     <p className="text-3xl">
                       {
                         tehsils?.filter((tehsil) => tehsil?.disabled !== true)
@@ -470,7 +471,7 @@ export const Dashboard = () => {
                     <CiLocationOn className="w-12 h-12 text-white" />
                   </div>
                   <div className="px-4 text-gray-700">
-                    <h3 className="text-sm tracking-wider">Total Maqams</h3>
+                    <h3 className="text-sm tracking-wider">{translate("TotalMaqams")}</h3>
                     <p className="text-3xl">
                       {
                         maqams?.filter((maqam) => maqam?.disabled !== true)
@@ -492,7 +493,7 @@ export const Dashboard = () => {
                     <CiLocationOn className="w-12 h-12 text-white" />
                   </div>
                   <div className="px-4 text-gray-700">
-                    <h3 className="text-sm tracking-wider">Total Ilaqas</h3>
+                    <h3 className="text-sm tracking-wider">{translate("TotalIlaqas")}</h3>
                     <p className="text-3xl">
                       {ilaqa?.filter((il) => il?.disabled !== true).length}
                     </p>
@@ -508,7 +509,7 @@ export const Dashboard = () => {
                     <FaLocationArrow className="w-12 h-12 text-white" />
                   </div>
                   <div className="px-4 text-gray-700">
-                    <h3 className="text-sm tracking-wider">Total Units</h3>
+                    <h3 className="text-sm tracking-wider">{translate("TotalUnits")}</h3>
                     <p className="text-3xl">{unit.length}</p>
                   </div>
                 </div>
@@ -527,7 +528,7 @@ export const Dashboard = () => {
                 </div>
                 <div className="px-4 text-gray-700">
                   {/* <h3 className='text-sm tracking-wider'>Create New Report</h3> */}
-                  <p className="text-2xl">Create New Report</p>
+                  <p className="text-2xl">{translate("CreateNewReport")}</p>
                 </div>
               </div>
             )}
@@ -544,7 +545,7 @@ export const Dashboard = () => {
                 }}
                 className="btn btn-neutral w-full md:w-auto border-none capitalize"
               >
-                See Reports Status
+                {translate("SeeReportsStatus")}
                 <FaArrowDown />
               </button>
             )}
@@ -557,7 +558,7 @@ export const Dashboard = () => {
                 onClick={() => setShowData(false)}
                 className="btn btn-neutral w-full md:w-auto border-none capitalize"
               >
-                Close Reports Status
+                {translate("CloseReportsStatus")}
                 <FaArrowUp />
               </button>
             )}
@@ -572,10 +573,10 @@ export const Dashboard = () => {
                       .showModal();
                   }}
                 >
-                  Filter <FaFilter />
+                  {translate("Filter")} <FaFilter />
                 </button>
                 <button className="btn" onClick={clearFilter}>
-                  Clear Filter
+                  {translate("ClearFilter")}
                 </button>
               </div>
 
@@ -592,7 +593,7 @@ export const Dashboard = () => {
                     }}
                     className="capitalize items-center text-start underline w-[50%] md:w-auto font-semibold cursor-pointer pb-1"
                   >
-                    Personal Filled {personalFilled?.length}
+                    {translate("PersonalFilled")} {personalFilled?.length}
                   </div>
                   <div
                     style={{
@@ -605,7 +606,7 @@ export const Dashboard = () => {
                     }}
                     className="capitalize items-center text-start underline w-[50%] md:w-auto font-semibold cursor-pointer pb-1"
                   >
-                    Personal Unfilled {personalUnfilled?.length}
+                    {translate("PersonalUnfilled")} {personalUnfilled?.length}
                   </div>
 
                   <div
@@ -618,7 +619,7 @@ export const Dashboard = () => {
                     }}
                     className="capitalize items-center text-start underline w-[50%] md:w-auto font-semibold cursor-pointer pb-1"
                   >
-                    Filled {data?.filled?.length}
+                    {translate("Filled")} {data?.filled?.length}
                   </div>
                   <div
                     style={{
@@ -630,23 +631,23 @@ export const Dashboard = () => {
                     }}
                     className="capitalize items-center text-start underline w-[50%] md:w-auto font-semibold cursor-pointer pb-1"
                   >
-                    Unfilled {data?.unfilled?.length}
+                    {translate("Unfilled")} {data?.unfilled?.length}
                   </div>
                 </div>
               )}
               <hr />
               {showData && (
                 <div className="overflow-x-auto grid grid-cols-1 gap-4 mt-3 sm:grid-cols-1 sm:px-4 w-full transition ease-in-out duration-300">
-                  <p className="text-slate-500 ">Reports of {month}</p>
+                  <p className="text-slate-500 ">{translate("Reportsof")} {month}</p>
                   <div>
                     {show && (
                       <table className="table mb-7" ref={tableRef}>
                         {/* head */}
                         <thead className="">
                           <tr className="w-full flex justify-between ">
-                            <th className="text-start">Area</th>
-                            <th className="text-center">Nazim</th>
-                            <th className="text-right">View</th>
+                            <th className="text-start">{translate("Area")}</th>
+                            <th className="text-center">{translate("Nazim")}</th>
+                            <th className="text-right">{translate("View")}</th>
                           </tr>
                         </thead>
                         <div className="w-full mb-3 h-[300px] overflow-auto overflow-y-scroll">
@@ -690,7 +691,7 @@ export const Dashboard = () => {
                                             }}
                                             className="text-start text-error"
                                           >
-                                            User Not Registered Yet
+                                            {translate("UserNotRegisteredYet")}
                                           </span>
                                         )}
                                       </td>
@@ -708,7 +709,7 @@ export const Dashboard = () => {
                               ) : (
                                 <tr>
                                   <td colSpan="2">
-                                    No one has filled report yet
+                                    {translate("Noonehasfilledreportyet")}
                                   </td>
                                 </tr>
                               )
@@ -747,7 +748,7 @@ export const Dashboard = () => {
                                           }}
                                           className="text-start text-error"
                                         >
-                                          User Not Registered
+                                          {translate("UserNotRegistered")}
                                         </span>
                                       )}
                                     </td>
@@ -764,7 +765,7 @@ export const Dashboard = () => {
                                 ))
                             ) : (
                               <tr>
-                                <td colSpan="2">All have filled reports</td>
+                                <td colSpan="2">{translate("Allhavefilledreports")}</td>
                               </tr>
                             )}
                           </tbody>
@@ -776,8 +777,8 @@ export const Dashboard = () => {
                         {/* head */}
                         <thead className="">
                           <tr className="w-full flex">
-                            <th className="w-[50%]">Name</th>
-                            <th className="w-[50%]">Area</th>
+                            <th className="w-[50%]">{translate("Name")}</th>
+                            <th className="w-[50%]">{translate("Area")}</th>
                           </tr>
                         </thead>
                         <div className="w-full mb-3 h-[300px] overflow-auto overflow-y-scroll">
@@ -810,7 +811,7 @@ export const Dashboard = () => {
                               ) : (
                                 <tr>
                                   <td colSpan="2">
-                                    No one has filled personal report yet
+                                    {translate("Noonehasfilledpersonalreportyet")}
                                   </td>
                                 </tr>
                               )
@@ -831,7 +832,7 @@ export const Dashboard = () => {
                             ) : (
                               <tr>
                                 <td colSpan="2">
-                                  All have filled their personal Reports
+                                  {translate("AllhavefilledtheirpersonalReports")}
                                 </td>
                               </tr>
                             )}
@@ -865,7 +866,7 @@ export const Dashboard = () => {
                             checked={userAreaType === "Country"}
                             onChange={(e) => setUserAreaType(e.target.value)}
                           />
-                          <span className="label-text">Markaz</span>
+                          <span className="label-text">{translate("Markaz")}</span>
                         </label>
                       </div>
                     )}
@@ -880,7 +881,7 @@ export const Dashboard = () => {
                             checked={userAreaType === "Province"}
                             onChange={(e) => setUserAreaType(e.target.value)}
                           />
-                          <span className="label-text">Province</span>
+                          <span className="label-text">{translate("Province")}</span>
                         </label>
                       </div>
                     )}
@@ -896,7 +897,7 @@ export const Dashboard = () => {
                             checked={userAreaType === "Tehsil"}
                             onChange={(e) => setUserAreaType(e.target.value)}
                           />
-                          <span className="label-text">Division</span>
+                          <span className="label-text">{translate("Division")}</span>
                         </label>
                       </div>
                     )}
@@ -912,7 +913,7 @@ export const Dashboard = () => {
                             checked={userAreaType === "Maqam"}
                             onChange={(e) => setUserAreaType(e.target.value)}
                           />
-                          <span className="label-text">Maqam</span>
+                          <span className="label-text">{translate("Maqam")}</span>
                         </label>
                       </div>
                     )}
@@ -929,7 +930,7 @@ export const Dashboard = () => {
                             checked={userAreaType === "Ilaqa"}
                             onChange={(e) => setUserAreaType(e.target.value)}
                           />
-                          <span className="label-text">Ilaqa</span>
+                          <span className="label-text">{translate("Ilaqa")}</span>
                         </label>
                       </div>
                     )}
@@ -943,7 +944,7 @@ export const Dashboard = () => {
                           checked={userAreaType === "All"}
                           onChange={(e) => setUserAreaType(e.target.value)}
                         />
-                        <span className="label-text">All</span>
+                        <span className="label-text">{translate("All")}</span>
                       </label>
                     </div>
                   </>
@@ -959,7 +960,7 @@ export const Dashboard = () => {
                         checked={userAreaType === "personal"}
                         onChange={(e) => setUserAreaType(e.target.value)}
                       />
-                      <span className="label-text">personal</span>
+                      <span className="label-text">{translate("Personal")}</span>
                     </label>
                   </div>
                 )}
@@ -1079,7 +1080,7 @@ export const Dashboard = () => {
                       setUserAreaType("All");
                     }}
                   >
-                    Clear
+                    {translate("Clear")}
                   </button>
                   <button
                     disabled={
@@ -1099,7 +1100,7 @@ export const Dashboard = () => {
                         : getPsersonalReports();
                     }}
                   >
-                    Filter
+                    {translate("Filter")}
                   </button>
                 </div>
               </form>
@@ -1109,21 +1110,21 @@ export const Dashboard = () => {
       </dialog>
       <dialog id="area_details" className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg mb-3">Details of the area</h3>
+          <h3 className="font-bold text-lg mb-3">{translate("Detailsofthearea")}</h3>
           <div className="w-full  flex flex-col justify-between items-start text-left gap-4  flex-wrap">
             <div className="w-full flex justify-start items-center gap-5">
-              <h5>Name:</h5>
+              <h5>{translate("Name")}:</h5>
               <h4 className="text-gray-400 font-bold">{areaDetails?.name}</h4>
               <h4 className="text-grstart underline w-[50%] md:w-auto font-semibold">
                 {areaDetails?.parentType === "Ilaqa" ||
                 areaDetails?.parentType === "Tehsil" ||
                 areaDetails?.parentType === "Division" ||
                 areaDetails?.parentType === "Maqam"
-                  ? "(Halqa)"
+                  ? `(${translate('Halqa')})`
                   : !areaDetails?.parentId && areaDetails?.maqam
-                  ? "(Ilaqa)"
+                  ? `(${translate('Ilaqa')})`
                   : areaDetails?.country
-                  ? "(Province)"
+                  ? `(${translate('Province')})`
                   : `(${areaDetails?.areaType})`}
               </h4>
             </div>
@@ -1131,7 +1132,7 @@ export const Dashboard = () => {
               {areaDetails?.parentType
                 ? areaDetails?.parentType + ":"
                 : areaDetails?.maqam
-                ? "Maqam"
+                ? `(${translate('Maqam')})`
                 : ""}
               <h4 className="text-gray-400 font-bold">
                 {areaDetails?.parentType === "Ilaqa"
@@ -1152,7 +1153,7 @@ export const Dashboard = () => {
               !areaDetails?.parentType === "Division" && (
                 <>
                   <div className="w-full flex justify-start items-center gap-5">
-                    <h5> District:</h5>
+                    <h5> {translate("District")}:</h5>
                     <h4 className="text-gray-400 font-bold">
                       {areaDetails?.parentId?.district
                         ? areaDetails?.parentId?.district?.name
@@ -1160,7 +1161,7 @@ export const Dashboard = () => {
                     </h4>
                   </div>
                   <div className="w-full flex justify-start items-center gap-5">
-                    <h5>Division:</h5>
+                    <h5>{translate("Division")}:</h5>
                     <h4 className="text-gray-400 font-bold">
                       {areaDetails?.parentId?.district
                         ? areaDetails?.parentId?.district?.division?.name
@@ -1171,7 +1172,7 @@ export const Dashboard = () => {
               )}
             {areaDetails?.parentType === "Ilaqa" && (
               <div className="w-full flex justify-start items-center gap-5">
-                <h5>Maqam:</h5>
+                <h5>{translate("Maqam")}:</h5>
                 <h4 className="text-gray-400 font-bold">
                   {areaDetails?.parentType === "Ilaqa"
                     ? areaDetails?.parentId?.maqam?.name
@@ -1181,7 +1182,7 @@ export const Dashboard = () => {
             )}
             {!areaDetails?.country && (
               <div className="w-full flex justify-start items-center gap-5">
-                <h4>Province:</h4>
+                <h4>{translate("Province")}:</h4>
                 <h4 className="text-gray-400 font-bold">
                   {areaDetails?.parentType === "Ilaqa"
                     ? areaDetails?.parentId?.maqam?.province?.name
@@ -1200,8 +1201,8 @@ export const Dashboard = () => {
               </div>
             )}
             <div className="w-full flex justify-start items-center gap-5">
-              <h5>Country:</h5>
-              <h4 className="text-gray-400 font-bold">Pakistan</h4>
+              <h5>{translate("Country")}:</h5>
+              <h4 className="text-gray-400 font-bold">{translate("Pakistan")}</h4>
             </div>
           </div>
           <div className="modal-action w-full">
@@ -1211,7 +1212,7 @@ export const Dashboard = () => {
                   id="close-details-modal"
                   className="btn ms-3 capitalize"
                 >
-                  Close
+                  {translate("Close")}
                 </button>
               </div>
             </form>

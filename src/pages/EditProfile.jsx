@@ -30,6 +30,7 @@ export const EditProfile = () => {
           institution: formData.get("institution"),
           phoneNumber: formData.get("phoneNumber"),
           whatsAppNumber: formData.get("whatsAppNumber"),
+          langPreference: formData.get("language")
         },
         {
           headers: {
@@ -99,6 +100,36 @@ export const EditProfile = () => {
           {me && (
             <form className="space-y-4 mb-12" onSubmit={handleSubmit}>
               <div className="flex flex-col justify-start items-center w-full">
+                <div className="flex items-center justify-between flex-wrap">
+                  <div className="w-full flex gap-12">
+                    <label className="label">
+                      <span className="text-base label-text">
+                        Language Preferences
+                      </span>
+                    </label>
+                    <div className="flex items-center gap-4">
+                      <label className="flex items-center">
+                        <input
+                          type="radio"
+                          name="language"
+                          value="english"
+                          defaultChecked
+                          className="radio radio-primary"
+                        />
+                        <span className="ml-2">English</span>
+                      </label>
+                      <label className="flex items-center">
+                        <input
+                          type="radio"
+                          name="language"
+                          value="urdu"
+                          className="radio radio-primary"
+                        />
+                        <span className="ml-2">Urdu</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
                 <div className="w-full flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col ">
                   <div className="w-full">
                     <label className="label">
