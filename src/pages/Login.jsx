@@ -91,13 +91,13 @@ export const Login = ({ setAuthenticated }) => {
                 {showPass ? <FaEyeSlash /> : <FaEye />}
               </span>
             </div>
-            <div>
+            <div className="w-full">
               <button
                 disabled={loading}
-                className="btn btn-primary"
+                className="text-[14px] leading-6 font-medium font-inter text-white bg-primary w-full py-2 border rounded"
                 type="submit"
               >
-                Login
+                Login to your account
               </button>
             </div>
           </div>
