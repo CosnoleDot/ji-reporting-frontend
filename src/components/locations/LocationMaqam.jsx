@@ -28,7 +28,7 @@ export const LocationMaqam = () => {
     getIlaqas,
     getAreaDetails,
   } = useContext(UIContext);
-
+const [value, setValue]=('')
   const [editMode, setEditMode] = useState(false);
   const [id, setId] = useState("");
   const { dispatch } = useToastState();
