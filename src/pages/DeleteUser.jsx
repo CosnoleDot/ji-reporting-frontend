@@ -29,8 +29,6 @@ export const DeleteUser = () => {
   const areaDetails = useContext(ViewDetails);
   const { nazim, loading, setLoading, getNazim, getAreaDetails } =
     useContext(UIContext);
-  const { nazim, loading, setLoading, getNazim, getAreaDetails } =
-    useContext(UIContext);
   const { dispatch } = useToastState();
 
   const [data, setData] = useState(nazim);
@@ -354,7 +352,7 @@ export const DeleteUser = () => {
               name="Search"
               id="search"
               placeholder="Search by name..."
-              className="input w-full input-bordered max-w-lg"
+              className="input input-sm w-full input-bordered max-w-lg"
               value={search}
               onChange={searchUsers}
             />
@@ -369,7 +367,7 @@ export const DeleteUser = () => {
               </button>
               <button
                 onClick={() => clearSearchFilters()}
-                className="border rounded-md py-1 px-4  bg-none bg-transparent"
+                className="border border-innerAlignment rounded-md py-1 px-4 bg-none"
               >
                 Clear Filters
               </button>
@@ -1073,14 +1071,14 @@ export const DeleteUser = () => {
                   {/* if there is a button in form, it will close the modal */}
                   <button
                     id="filter-area-dialog-close-btn"
-                    className="border border-primary rounded-md bg-white text-black capitalize py-1 px-4"
+                    className="border border-innerAlignment rounded-md bg-white text-black capitalize py-1 px-4"
                   >
                     Cancel
                   </button>
                 </form>
                 <button
                   type="submit"
-                  className="rounded-md border btn-primary capitalize py-1 px-4"
+                  className="rounded-md border bg-primary text-white capitalize py-1 px-4"
                   onClick={() =>
                     document
                       .getElementById("filter-area-dialog-close-btn")
