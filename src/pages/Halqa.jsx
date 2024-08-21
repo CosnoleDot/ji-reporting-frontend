@@ -136,6 +136,13 @@ export const Halqa = () => {
           onSubmit={handleReportSubmit}
           dir="rtl"
         >
+          <button
+            type="button"
+            class="absolute top-20 left-5 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 "
+           onClick={()=>navigate('/reports')}
+           >
+            Back
+          </button>
           <div className="w-full">
             <div className="mb-4">
               <GeneralInfo
@@ -172,6 +179,7 @@ export const Halqa = () => {
                 required
                 type="text"
                 name="comments"
+                maxLength={150}
                 className="border-b-2 border-dashed w-full"
                 id="comments"
                 readOnly={view}

@@ -28,6 +28,7 @@ export const LocationMaqam = () => {
     getIlaqas,
     getAreaDetails,
   } = useContext(UIContext);
+
   const [editMode, setEditMode] = useState(false);
   const [id, setId] = useState("");
   const { dispatch } = useToastState();
@@ -37,16 +38,6 @@ export const LocationMaqam = () => {
   const params = useLocation();
   const [muntakhib, setMuntakhib] = useState(ilaqas?.length > 0 ? true : false);
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10; // Adjust this as needed
-  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
-
-  // Compute the displayed items based on the current page
-  const paginatedData = filteredData.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
-
   useEffect(() => {
     setLoading(true); // Set loading to true before fetching data
     const getQueryParams = () => {
@@ -55,6 +46,7 @@ export const LocationMaqam = () => {
       for (let [key, value] of searchParams.entries()) {
         queryParams[key] = value;
       }
+
       setView(queryParams.view || "halqa");
       if (
         queryParams.hasOwnProperty !== "halqa" &&
@@ -64,7 +56,20 @@ export const LocationMaqam = () => {
       } else {
         if (queryParams.view) {
           if (queryParams.view === "halqa") {
-            setFilteredData(halqas);
+            if (queryParams.active === "maqam") {
+              let maqamHalqas = halqas?.filter(
+                (i) => i.parentType === "Ilaqa" || i?.parentType === "Maqam"
+              );
+              setFilteredData(maqamHalqas);
+            } else if (queryParams.active === "division") {
+              let divHalqas = halqas?.filter(
+                (i) => i.parentType === "Tehsil" || i?.parentType === "Division"
+              );
+              setFilteredData(divHalqas);
+            }
+            else{
+              setFilteredData(halqas)
+            }
           }
           if (queryParams.view === "maqam") {
             setFilteredData(maqams);
@@ -84,8 +89,26 @@ export const LocationMaqam = () => {
 
   useEffect(() => {
     if (view) {
+      const searchParams = new URLSearchParams(params.search);
+      const queryParams = {};
+      for (let [key, value] of searchParams.entries()) {
+        queryParams[key] = value;
+      }
       if (view === "halqa") {
-        setFilteredData(halqas);
+        if (queryParams.active === "maqam") {
+          let maqamHalqas = halqas?.filter(
+            (i) => i.parentType === "Ilaqa" || i?.parentType === "Maqam"
+          );
+          setFilteredData(maqamHalqas);
+        } else if (queryParams.active === "division") {
+          let divHalqas = halqas?.filter(
+            (i) => i.parentType === "Tehsil" || i?.parentType === "Division"
+          );
+          setFilteredData(divHalqas);
+        }
+        else{
+          setFilteredData(halqas)
+        }
       }
       if (view === "maqam") {
         setFilteredData(maqams);
@@ -95,7 +118,14 @@ export const LocationMaqam = () => {
       }
     }
   }, [halqas, maqams, ilaqas]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
+  const paginatedData = filteredData.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
   const [form, setForm] = useState({
     name: "",
     province: "",
@@ -268,6 +298,7 @@ export const LocationMaqam = () => {
   };
 
   const handleSearch = (value) => {
+    setValue(value);
     if (view === "halqa") {
       const filteredHalqa = halqas?.filter((hal) => {
         const halName = hal?.name?.toLowerCase() || "";
@@ -471,7 +502,7 @@ export const LocationMaqam = () => {
                   </tr>
                 ))
               ) : (
-                <Loader />
+                <div>No Report Found</div>
               )}
             </tbody>
           </table>
@@ -536,7 +567,7 @@ export const LocationMaqam = () => {
                   </tr>
                 ))
               ) : (
-                <Loader />
+                <div>No Report Found</div>
               )}
             </tbody>
           </table>
@@ -607,7 +638,7 @@ export const LocationMaqam = () => {
                     </tr>
                   ))
               ) : (
-                <Loader />
+                <div>No Report Found</div>
               )}
             </tbody>
           </table>
@@ -615,25 +646,28 @@ export const LocationMaqam = () => {
       )}
 
       {/* Pagination Controls */}
-      <div className="flex w-full px-4 justify-between items-center mt-4">
-        <button
-          className="btn capitalize p-[8px]"
-          disabled={currentPage === 1}
-          onClick={() => setCurrentPage((prev) => prev - 1)}
-        >
-          Previous
-        </button>
-        <span className="mx-4">
-          Page {currentPage} of {totalPages}
-        </span>
-        <button
-          className="btn capitalize p-[8px]"
-          disabled={currentPage === totalPages}
-          onClick={() => setCurrentPage((prev) => prev + 1)}
-        >
-          Next
-        </button>
-      </div>
+
+      {value === "" && (
+        <div className="flex w-full px-4 justify-between items-center mt-4">
+          <button
+            className="btn capitalize p-[8px]"
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage((prev) => prev - 1)}
+          >
+            Previous
+          </button>
+          <span className="mx-4">
+            Page {currentPage} of {totalPages}
+          </span>
+          <button
+            className="btn capitalize p-[8px]"
+            disabled={currentPage === totalPages}
+            onClick={() => setCurrentPage((prev) => prev + 1)}
+          >
+            Next
+          </button>
+        </div>
+      )}
 
       <dialog id="add_maqam_modal" className="modal">
         <div className="modal-box">

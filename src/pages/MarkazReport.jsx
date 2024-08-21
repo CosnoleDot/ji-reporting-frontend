@@ -363,6 +363,14 @@ export const MarkazReport = () => {
           onSubmit={handleSubmit}
           id="markaz-form"
         >
+          <button
+            type="button"
+            class="absolute top-20 left-5 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 "
+           onClick={()=>navigate('/reports')}
+           >
+            Back
+          </button>
+
           <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
             {" "}
             جائزہ کارکردگی رپورٹ (برائے مرکز)
@@ -417,6 +425,7 @@ export const MarkazReport = () => {
                 type="text"
                 required
                 name="comments"
+                maxLength={150}
                 className="border-b-2 border-dashed w-full"
                 id="comments"
                 readOnly={view}

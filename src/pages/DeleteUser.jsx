@@ -1042,7 +1042,17 @@ export const DeleteUser = () => {
         {/* This is to see the user Details */}
         <dialog id="view-details-modal" className="modal">
           <div className="modal-box">
-            <h3 className="font-bold text-2xl">User Details</h3>
+            <div className="flex justify-between items-center w-full">
+              <h3 className="font-bold text-2xl">User Details</h3>
+              <button
+                className="btn rounded-lg"
+                onClick={() =>
+                  document.getElementById("view-details-modal").close()
+                }
+              >
+                Close
+              </button>
+            </div>
             <hr className="mb-3" />
             <form className="space-y-4">
               <div className="flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col">
@@ -1266,11 +1276,6 @@ export const DeleteUser = () => {
                   name="email"
                   className=" w-full text-[#7a7a7a]"
                 />
-              </div>
-            </form>
-            <form method="dialog" className="modal-backdrop">
-              <div className="flex justify-end items-end w-full">
-                <button className="btn rounded-lg ">Close</button>
               </div>
             </form>
           </div>
