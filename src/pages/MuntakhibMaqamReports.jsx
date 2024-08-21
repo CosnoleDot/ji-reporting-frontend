@@ -482,6 +482,7 @@ export const MuntakhibMaqamReports = () => {
                 type="text"
                 required
                 name="comments"
+                maxLength={150}
                 className="border-b-2 border-dashed w-full"
                 id="comments"
                 readOnly={view}
