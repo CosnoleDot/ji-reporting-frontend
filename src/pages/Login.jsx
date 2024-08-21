@@ -38,10 +38,17 @@ export const Login = ({ setAuthenticated }) => {
   };
   return (
     <div className="relative flex  justify-center min-h-screen overflow-hidden">
-      <div className=" w-[40%] bg-secondary h-screen">
-        <h2 className="text-heading text-[20px] leading-7 font-medium">
-          Welcome to IJT Reporting
-        </h2>
+      <div className=" w-[40%] bg-secondary h-screen p-[40px] flex flex-col justify-between">
+        <div></div>
+        <div className="flex flex-col gap-4">
+          <h2 class="text-white font-inter text-2xl font-bold leading-7 text-left">
+            Welcome to IJT Reporting
+          </h2>
+          <p class="text-white font-inter text-base font-normal leading-7 text-left">
+            Get better view of your activities and manage your nazims in an easy
+            way. Report your activities here.
+          </p>
+        </div>
       </div>
       <div className="w-full p-6 m-auto  lg:max-w-lg">
         <div className="flex flex-col gap-4 items-center justify-center w-full">
@@ -101,22 +108,27 @@ export const Login = ({ setAuthenticated }) => {
               </button>
             </div>
           </div>
-          <div className="flex justify-between items-center">
+          <div className="flex flex-col gap-4 justify-between items-center">
+            <div className="flex items-center gap-1">
+              <span className="text-secondaryText text-[14px] leading-5 font-inter font-normal">
+                Doesn't have an account?
+              </span>
+              <Link
+                to="/signup"
+                className="text-[14px] leading-3 font-medium text-heading font-inter underline"
+              >
+                Create new account
+              </Link>
+            </div>
             <Link
               to="/reset-password"
-              className="text-xs text-gray-600 hover:underline hover:text-blue-600"
+              className="text-[14px] leading-5 font-medium text-accentForeground font-inter underline"
             >
               Forget Password?
             </Link>
-            <Link
-              to="/signup"
-              className="text-xs text-gray-600 hover:underline hover:text-blue-600"
-            >
-              Create new account
-            </Link>
           </div>
         </form>
-        <div className="w-full flex justify-center items-start gap-3">
+        {/* <div className="w-full flex justify-center items-start gap-3">
           <span className="text-slate-800">Powered By:</span>
           <a
             href="https://consoledot.com"
@@ -126,7 +138,7 @@ export const Login = ({ setAuthenticated }) => {
           >
             <img src="/cd.png" alt="CD LOGO" className="w-5 h-5" /> ConsoleDot
           </a>
-        </div>
+        </div> */}
       </div>
       {loading && <Loader />}
     </div>
