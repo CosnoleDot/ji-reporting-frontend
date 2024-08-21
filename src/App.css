@@ -90,3 +90,31 @@
   border: 1px solid #3b82f6;
   background-color: #fff;
 }
+/* styles.css or your component's CSS module */
+.custom-radio {
+  appearance: none;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.custom-radio:checked {
+  border-color: #4CAF50; /* Change this to your desired checked color */
+}
+
+.custom-radio:checked::after {
+  content: "";
+  display: block;
+  border-radius: 50%;
+  width: 8px;
+  height: 8px;
+  background-color: #4CAF50; /* Change this to your desired checked color */
+  position: absolute;
+  top: 2px;
+  left: 2px;
+}

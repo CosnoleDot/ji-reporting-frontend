@@ -37,69 +37,98 @@ export const Login = ({ setAuthenticated }) => {
     setLoading(false);
   };
   return (
-    <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
-      <div className="w-full p-6 m-auto bg-white rounded-md shadow-md lg:max-w-lg">
-        <div className="flex items-center justify-center w-full">
+    <div className="relative flex  justify-center min-h-screen overflow-hidden">
+      <div className=" w-[40%] bg-secondary h-screen p-[40px] flex flex-col justify-between">
+        <div></div>
+        <div className="flex flex-col gap-4">
+          <h2 class="text-white font-inter text-2xl font-bold leading-7 text-left">
+            Welcome to IJT Reporting
+          </h2>
+          <p class="text-white font-inter text-base font-normal leading-7 text-left">
+            Get better view of your activities and manage your nazims in an easy
+            way. Report your activities here.
+          </p>
+        </div>
+      </div>
+      <div className="w-full p-6 m-auto  lg:max-w-lg">
+        <div className="flex flex-col gap-4 items-center justify-center w-full">
           <img
             src="/logo.png"
-            className="text-center  h-[200px] w-[250px]"
+            className="text-center  h-[104px] w-[142px]"
             alt="LOGO"
           />
+          <h2 className="text-heading text-[20px] leading-7 font-semibold font-inter">
+            Login into your account
+          </h2>
+          <p className="font-inter font-medium text-[14px] text-center leading-4 text-secondaryText">
+            Enter your email and password to access your account
+          </p>
         </div>
         <form className="space-y-4" onSubmit={handleSubmit}>
-          <div>
-            <label className="label">
-              <span className="text-base label-text">Email</span>
-            </label>
-            <input
-              name="email"
-              type="text"
-              placeholder="Email Address"
-              className="w-full input input-bordered input-primary"
-            />
+          <div className="flex flex-col gap-4 bg-white rounded-md shadow-md p-4">
+            <div>
+              <label className="label">
+                <span className="text-heading font-inter text-[14px] leading-5">
+                  Email
+                </span>
+              </label>
+              <input
+                name="email"
+                type="text"
+                placeholder="Email Address"
+                className="w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
+              />
+            </div>
+            <div className="relative">
+              <label className="label">
+                <span className="text-heading font-inter text-[14px] leading-5">
+                  Password
+                </span>
+              </label>
+              <input
+                name="password"
+                type={showPass ? "text" : "password"}
+                placeholder="Enter Password"
+                className="w-full text-secondaryText border border-inputBorder outline-none rounded p-2 text-[16px] leading-6 font-inter"
+              />
+              <span
+                className="absolute right-[4%] top-[65%]"
+                onClick={() => setShowPass(!showPass)}
+              >
+                {showPass ? <FaEyeSlash /> : <FaEye />}
+              </span>
+            </div>
+            <div className="w-full">
+              <button
+                disabled={loading}
+                className="text-[14px] leading-6 font-medium font-inter text-white bg-primary w-full py-2 border rounded"
+                type="submit"
+              >
+                Login to your account
+              </button>
+            </div>
           </div>
-          <div className="relative">
-            <label className="label">
-              <span className="text-base label-text">Password</span>
-            </label>
-            <input
-              name="password"
-              type={showPass ? "text" : "password"}
-              placeholder="Enter Password"
-              className="w-full input input-bordered input-primary"
-            />
-            <span
-              className="absolute right-[4%] top-[65%]"
-              onClick={() => setShowPass(!showPass)}
-            >
-              {showPass ? <FaEyeSlash /> : <FaEye />}
-            </span>
-          </div>
-          <div className="flex justify-between items-center">
+          <div className="flex flex-col gap-4 justify-between items-center">
+            <div className="flex items-center gap-1">
+              <span className="text-secondaryText text-[14px] leading-5 font-inter font-normal">
+                Doesn't have an account?
+              </span>
+              <Link
+                to="/signup"
+                className="text-[14px] leading-3 font-medium text-heading font-inter underline"
+              >
+                Create new account
+              </Link>
+            </div>
             <Link
               to="/reset-password"
-              className="text-xs text-gray-600 hover:underline hover:text-blue-600"
+              className="text-[14px] leading-5 font-medium text-accentForeground font-inter underline"
             >
               Forget Password?
             </Link>
-            <Link
-              to="/signup"
-              className="text-xs text-gray-600 hover:underline hover:text-blue-600"
-            >
-              Create new account
-            </Link>
-          </div>
-          <div>
-            <button
-              disabled={loading}
-              className="btn btn-primary"
-              type="submit"
-            >
-              Login
-            </button>
           </div>
         </form>
-        <div className="w-full flex justify-center items-start gap-3">
+        {/* <div className="w-full flex justify-center items-start gap-3">
           <span className="text-slate-800">Powered By:</span>
           <a
             href="https://consoledot.com"
@@ -109,7 +138,7 @@ export const Login = ({ setAuthenticated }) => {
           >
             <img src="/cd.png" alt="CD LOGO" className="w-5 h-5" /> ConsoleDot
           </a>
-        </div>
+        </div> */}
       </div>
       {loading && <Loader />}
     </div>

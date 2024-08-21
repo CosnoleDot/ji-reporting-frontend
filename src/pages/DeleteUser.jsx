@@ -12,7 +12,6 @@ import {
   ProvinceContext,
   useToastState,
   IlaqaContext,
-  TehsilContext,
   ViewDetails,
 } from "../context";
 import instance from "../api/instrance";
@@ -23,12 +22,13 @@ import { IoEyeOutline } from "react-icons/io5";
 export const DeleteUser = () => {
   const me = useContext(MeContext);
   const halqas = useContext(HalqaContext);
-  const tehsils = useContext(TehsilContext);
   const ilaqas = useContext(IlaqaContext);
   const maqams = useContext(MaqamContext);
   const provinces = useContext(ProvinceContext);
   const divisions = useContext(DivisionContext);
   const areaDetails = useContext(ViewDetails);
+  const { nazim, loading, setLoading, getNazim, getAreaDetails } =
+    useContext(UIContext);
   const { nazim, loading, setLoading, getNazim, getAreaDetails } =
     useContext(UIContext);
   const { dispatch } = useToastState();
@@ -173,13 +173,27 @@ export const DeleteUser = () => {
         },
       });
       setData(request?.data?.data);
+      document.getElementById("filter-form").reset();
+      setSelectedYear("");
+      setBirthYear("");
+      setSelectedSubject("");
+      setData(nazim);
       document.getElementById("categorize-filter").close();
       dispatch({ type: "SUCCESS", payload: request.data?.message });
       e.target.reset();
     } catch (err) {
+      document.getElementById("filter-form").reset();
+      setSelectedYear("");
+      setBirthYear("");
+      setSelectedSubject("");
+      setData(nazim);
       dispatch({ type: "ERROR", payload: err.response.data.message });
     }
-
+    document.getElementById("filter-form").reset();
+    setSelectedYear("");
+    setBirthYear("");
+    setSelectedSubject("");
+    setData(nazim);
     setLoading(false);
   };
 
@@ -284,9 +298,9 @@ export const DeleteUser = () => {
   const clearSearchFilters = () => {
     document.getElementById("filter-form").reset();
     setSelectedYear("");
+    setBirthYear("");
     setSelectedSubject("");
     setData(nazim);
-    setBirthYear("");
   };
 
   useEffect(() => {
@@ -1082,7 +1096,17 @@ export const DeleteUser = () => {
         {/* This is to see the user Details */}
         <dialog id="view-details-modal" className="modal">
           <div className="modal-box">
-            <h3 className="font-bold text-2xl">User Details</h3>
+            <div className="flex justify-between items-center w-full">
+              <h3 className="font-bold text-2xl">User Details</h3>
+              <button
+                className="btn rounded-lg"
+                onClick={() =>
+                  document.getElementById("view-details-modal").close()
+                }
+              >
+                Close
+              </button>
+            </div>
             <hr className="mb-3" />
             <form className="space-y-4">
               <div className="flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col">
@@ -1306,11 +1330,6 @@ export const DeleteUser = () => {
                   name="email"
                   className=" w-full text-[#7a7a7a]"
                 />
-              </div>
-            </form>
-            <form method="dialog" className="modal-backdrop">
-              <div className="flex justify-end items-end w-full">
-                <button className="btn rounded-lg ">Close</button>
               </div>
             </form>
           </div>

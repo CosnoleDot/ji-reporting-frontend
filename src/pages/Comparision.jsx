@@ -17,6 +17,7 @@ import { ReportChart } from "../components/ReportChart";
 import { FaTimes, FaChevronCircleRight, FaTimesCircle } from "react-icons/fa";
 import { getDivisionByTehsil, months } from "./Reports";
 import { UIContext } from "../context/ui";
+import { CircularChart } from "../components/CircularChart";
 
 const Dates = ({
   durationMonths,
@@ -319,7 +320,6 @@ export const Comparision = () => {
 
         ijtrafaqa: "اجتماع رفقا",
         ijtkarkunan: "اجتماع کارکنان",
-        studycircle: "سٹڈی سرکل",
         darsequran: "درس قرآن",
         shaheenmeeting: "شاہین میٹنگ",
         paighamevent: "پیغام محفل",
@@ -389,7 +389,6 @@ export const Comparision = () => {
 
         ijtrafaqa: "اجتماع رفقا",
         ijtkarkunan: "اجتماع کارکنان",
-        studycircle: "سٹڈی سرکل",
         darsequran: "درس قرآن",
         shaheenmeeting: "شاہین میٹنگ",
         paighamevent: "پیغام محفل",
@@ -457,7 +456,6 @@ export const Comparision = () => {
         sadurmeeting: "صدورمیٹینگ",
 
         ijtrafaqa: "اجتماع رفقا",
-        studycircle: "سٹڈی سرکل",
         ijtkarkunan: "اجتماع کارکنان",
         darsequran: "درس قرآن",
         shaheenmeeting: "شاہین میٹنگ",
@@ -533,7 +531,6 @@ export const Comparision = () => {
         sadurmeeting: "صدورمیٹینگ",
 
         ijtrafaqa: "اجتماع رفقا",
-        studycircle: "سٹڈی سرکل",
         ijtkarkunan: "اجتماع کارکنان",
         darsequran: "درس قرآن",
         shaheenmeeting: "شاہین میٹنگ",
@@ -606,7 +603,6 @@ export const Comparision = () => {
         studycircle: "سٹڈی سرکل",
         sadurmeeting: "صدورمیٹینگ",
         ijtrafaqa: "اجتماع رفقا",
-        studycircle: "سٹڈی سرکل",
         ijtkarkunan: "اجتماع کارکنان",
         darsequran: "درس قرآن",
         shaheenmeeting: "شاہین میٹنگ",
@@ -679,7 +675,6 @@ export const Comparision = () => {
         studycircle: "سٹڈی سرکل",
         sadurmeeting: "صدورمیٹینگ",
         ijtrafaqa: "اجتماع رفقا",
-        studycircle: "سٹڈی سرکل",
         ijtkarkunan: "اجتماع کارکنان",
         darsequran: "درس قرآن",
         shaheenmeeting: "شاہین میٹنگ",
@@ -811,20 +806,18 @@ export const Comparision = () => {
       } else if (type === "Maqam") {
         return `- ${area?.parentId?.name}(Maqam)`;
       }
-    } else if (reportType==="ilaqa") {
+    } else if (reportType === "ilaqa") {
       let maqam = maqams.find((i) => area?.parentId?.maqam === i?._id);
-        return `- ${area?.maqam?.name}(Maqam) - ${area?.maqam?.province?.name}(Province)`;
-    }
-    else if (reportType==="division") {
+      return `- ${area?.maqam?.name}(Maqam) - ${area?.maqam?.province?.name}(Province)`;
+    } else if (reportType === "division") {
       return `- ${area?.province?.name}(Province)`;
-    }
-    else if (reportType==="maqam") {
+    } else if (reportType === "maqam") {
       return `- ${area?.province?.name}(Province)`;
-    }
-    else{
-      return 'Pakistan'
+    } else {
+      return "Pakistan";
     }
   };
+
   return (
     <GeneralLayout title={"Comparison"} active={"comparison"}>
       <div className="relative flex flex-col gap-3 h-[calc(100vh-66px-64px)] w-full p-3">
@@ -849,16 +842,15 @@ export const Comparision = () => {
             <option value="" disabled>
               Report Type
             </option>
-            <option value="halqa">Halqa</option>
             {(localStorage.getItem("@type") === "province" ||
               localStorage.getItem("@type") === "country") && (
               <>
-                <option value="maqam">Maqam</option>
-                <option value="division">Division</option>
                 {localStorage.getItem("@type") === "country" && (
                   <option value="markaz">Markaz</option>
                 )}
                 <option value="province">Province</option>
+                <option value="division">Division</option>
+                <option value="maqam">Maqam</option>
               </>
             )}
             {localStorage.getItem("@type") !== "halqa" &&
@@ -867,6 +859,7 @@ export const Comparision = () => {
                   <option value="ilaqa">Ilaqa</option>
                 </>
               )}
+            <option value="halqa">Halqa</option>
             {["umeedwar", "rukan", "umeedwaar-nazim", "rukan-nazim"].includes(
               me?.nazimType
             ) && <option value="personal">Personal</option>}
@@ -885,7 +878,7 @@ export const Comparision = () => {
                 </option>
                 {areas[reportType]?.map((i, index) => (
                   <option key={index} value={i?._id} className="w-[200px]">
-                    {i?.name} - {getDivName(i,i.parentType)}
+                    {i?.name} - {getDivName(i, i.parentType)}
                   </option>
                 ))}
               </select>
@@ -976,6 +969,7 @@ export const Comparision = () => {
               <>
                 <option value={"compareAll"}>Compare All</option>
                 <option value={"spiderChart"}>Spider Chart</option>
+                <option value={"radialChart"}>Radial Chart</option>
               </>
             )}
             {["umeedwar", "rukan", "umeedwaar-nazim", "rukan-nazim"].includes(
@@ -1016,9 +1010,13 @@ export const Comparision = () => {
             Dates
           </button>
         </div>
-        <div className="relative flex flex-col gap-3 h-[calc(100vh-100px-64px-73.6px)] w-full p-3 overflow-scroll">
+        <div className="relative flex flex-col gap-3 h-[calc(100vh-100px-64px-73.6px)] w-full p-3">
           {response ? (
-            <ReportChart res={response} type={selectedProperty} />
+            response?.chart === "radial" ? (
+              <CircularChart res={response} type={selectedProperty} />
+            ) : (
+              <ReportChart res={response} type={selectedProperty} />
+            )
           ) : (
             <div className="flex justify-center items-center top-[50%] relative left-[0%]">
               <p className="text-2xl text-[#7a7a7a]">No Reports Data</p>
