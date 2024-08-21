@@ -554,7 +554,7 @@ export const LocationDivision = () => {
                 ))
               ) : (
                 <>
-                  <Loader />
+              <div>No Report Found</div>
                 </>
               )}
             </tbody>
@@ -680,7 +680,7 @@ export const LocationDivision = () => {
                 ))
               ) : (
                 <>
-                  <Loader />
+                  <div>No Report Found</div>
                 </>
               )}
             </tbody>
@@ -750,9 +750,7 @@ export const LocationDivision = () => {
                     </tr>
                   ))
               ) : (
-                <section>
-                  <Loader />
-                </section>
+                <div>No Report Found</div>
               )}
             </tbody>
           </table>
@@ -760,7 +758,7 @@ export const LocationDivision = () => {
       )}
 
       {/* Pagination Controls */}
-      <div className="flex w-full px-4 justify-between items-center mt-4">
+      {value === '' && <div className="flex w-full px-4 justify-between items-center mt-4">
         <button
           className="btn capitalize p-[8px]"
           disabled={currentPage === 1}
@@ -774,11 +772,11 @@ export const LocationDivision = () => {
         <button
           className="btn capitalize p-[8px]"
           disabled={currentPage === totalPages}
-          onClick={() => setCurrentPage((prev) => prev + 1)}
+          onClick={() => {setCurrentPage((prev) => prev + 1); setValue('')}}
         >
           Next
         </button>
-      </div>
+      </div>}
 
       <dialog id="add_division_modal" className="modal">
         <div className="modal-box">
@@ -938,7 +936,7 @@ export const LocationDivision = () => {
                   Select District
                 </option>
                 {districts
-                  ?.filter((i) => !i?.disabled)
+                  ?.filter((i) => !i?.disabled)?.sort((a, b) => a.name.localeCompare(b.name))
                   ?.map((i, index) => (
                     <option value={i?._id} key={index}>
                       {i?.name}

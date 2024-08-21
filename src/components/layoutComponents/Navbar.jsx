@@ -22,19 +22,22 @@ export const Navbar = ({ title }) => {
   const profileTabRef = useRef();
 
   const handleClickOutside = (event) => {
-    if (
-      notificationsRef.current &&
-      !notificationsRef.current.contains(event.target)
-    ) {
-      setShowNotifications(false);
-    }
-    if (requestsRef.current && !requestsRef.current.contains(event.target)) {
-      showRequests(false);
-    }
-    if (profileTabRef.current && !profileTabRef.current.contains(event.target)) {
-      showProfileTab(false);
-    }
+    setTimeout(() => {
+      if (
+        notificationsRef.current &&
+        !notificationsRef.current.contains(event.target)
+      ) {
+        setShowNotifications(false);
+      }
+      if (requestsRef.current && !requestsRef.current.contains(event.target)) {
+        showRequests(false);
+      }
+      if (profileTabRef.current && !profileTabRef.current.contains(event.target)) {
+        showProfileTab(false);
+      }
+    }, 150);
   };
+  
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -50,6 +53,9 @@ export const Navbar = ({ title }) => {
           <span className="text-xl">{title || "IJT Reporting"}</span>
         </div>
         <div className="flex-none">
+          <div>
+            <h1>{me?.name}</h1>
+          </div>
           {localStorage.getItem("@type") !== "country" && (
             <div className="relative dropdown dropdown-end" ref={notificationsRef}>
               <div

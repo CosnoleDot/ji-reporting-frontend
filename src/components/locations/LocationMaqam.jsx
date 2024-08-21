@@ -298,6 +298,7 @@ export const LocationMaqam = () => {
   };
 
   const handleSearch = (value) => {
+    setValue(value);
     if (view === "halqa") {
       const filteredHalqa = halqas?.filter((hal) => {
         const halName = hal?.name?.toLowerCase() || "";
@@ -501,7 +502,7 @@ export const LocationMaqam = () => {
                   </tr>
                 ))
               ) : (
-                <Loader />
+                <div>No Report Found</div>
               )}
             </tbody>
           </table>
@@ -566,7 +567,7 @@ export const LocationMaqam = () => {
                   </tr>
                 ))
               ) : (
-                <Loader />
+                <div>No Report Found</div>
               )}
             </tbody>
           </table>
@@ -637,7 +638,7 @@ export const LocationMaqam = () => {
                     </tr>
                   ))
               ) : (
-                <Loader />
+                <div>No Report Found</div>
               )}
             </tbody>
           </table>
@@ -645,25 +646,28 @@ export const LocationMaqam = () => {
       )}
 
       {/* Pagination Controls */}
-      <div className="flex w-full px-4 justify-between items-center mt-4">
-        <button
-          className="btn capitalize p-[8px]"
-          disabled={currentPage === 1}
-          onClick={() => setCurrentPage((prev) => prev - 1)}
-        >
-          Previous
-        </button>
-        <span className="mx-4">
-          Page {currentPage} of {totalPages}
-        </span>
-        <button
-          className="btn capitalize p-[8px]"
-          disabled={currentPage === totalPages}
-          onClick={() => setCurrentPage((prev) => prev + 1)}
-        >
-          Next
-        </button>
-      </div>
+
+      {value === "" && (
+        <div className="flex w-full px-4 justify-between items-center mt-4">
+          <button
+            className="btn capitalize p-[8px]"
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage((prev) => prev - 1)}
+          >
+            Previous
+          </button>
+          <span className="mx-4">
+            Page {currentPage} of {totalPages}
+          </span>
+          <button
+            className="btn capitalize p-[8px]"
+            disabled={currentPage === totalPages}
+            onClick={() => setCurrentPage((prev) => prev + 1)}
+          >
+            Next
+          </button>
+        </div>
+      )}
 
       <dialog id="add_maqam_modal" className="modal">
         <div className="modal-box">

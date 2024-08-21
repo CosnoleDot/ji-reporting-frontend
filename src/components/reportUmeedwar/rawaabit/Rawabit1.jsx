@@ -80,6 +80,7 @@ export const Rawabit1 = ({
             id={"rbt1NamazCondition"}
             name={"rbt1NamazCondition"}
             type={"textarea"}
+            maxLength={150}
             disabled={view}
             required
           ></textarea>
@@ -98,6 +99,7 @@ export const Rawabit1 = ({
                 id="rbt1Programs"
                 name="rbt1Programs"
                 disabled={view}
+                maxLength={10}
                 value={programName1}
                 onChange={(e) => setProgramName1(e.target.value)}
               />
@@ -149,6 +151,7 @@ export const Rawabit1 = ({
                   key={index}
                   className="input border-slate-600 p-4"
                   defaultValue={l}
+                
                   placeholder={rbt1Programs[index] || ""}
                   onChange={(e) => {
                     const updatedPrograms = [...rbt1Programs];
