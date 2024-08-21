@@ -9,6 +9,7 @@ import { AiOutlineMenu } from "react-icons/ai";
 import { RxCross2 } from "react-icons/rx";
 export const Navbar = ({ title , setIsSideBarOpen ,isSideBarOpen }) => {
   const navigate = useNavigate();
+ 
   const [requests, showRequests] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [profileTab, showProfileTab] = useState(false);
