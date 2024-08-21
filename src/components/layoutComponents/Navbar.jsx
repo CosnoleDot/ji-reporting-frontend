@@ -8,6 +8,7 @@ import { MeContext } from "../../context";
 
 export const Navbar = ({ title }) => {
   const navigate = useNavigate();
+ 
   const [requests, showRequests] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [profileTab, showProfileTab] = useState(false);

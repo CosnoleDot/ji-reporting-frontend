@@ -26,13 +26,15 @@ export const LocationDivision = () => {
   const halqas = halqa.filter(
     (i) => i.parentType === "Tehsil" || i.parentType === "Division"
   );
+
+
   const [searchData, setSearchData] = useState([]);
   const [value, setValue] = useState("");
   const districts = useContext(DistrictContext);
   const [filteredData, setFilteredData] = useState(halqas);
   const [isDivision, setIsDivision] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-   
+
   const {
     getHalqas,
     getDivisions,
@@ -53,21 +55,6 @@ export const LocationDivision = () => {
   const params = useLocation();
 
   // Pagination states
-
-  const itemsPerPage = 10; // Adjust this as needed
-  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
-
-  // Compute the displayed items based on the current page
-  const paginatedData =
-    value === ""
-      ? filteredData.slice(
-          (currentPage - 1) * itemsPerPage,
-          currentPage * itemsPerPage
-        )
-      : searchData.slice(
-          (currentPage - 1) * itemsPerPage,
-          currentPage * itemsPerPage
-        );
 
   useEffect(() => {
     setLoading(true);
@@ -141,6 +128,20 @@ export const LocationDivision = () => {
     parentType: "",
     unitType: "",
   });
+  const itemsPerPage = 10; // Adjust this as needed
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+
+  // Compute the displayed items based on the current page
+  const paginatedData =
+    value === ""
+      ? filteredData.slice(
+          (currentPage - 1) * itemsPerPage,
+          currentPage * itemsPerPage
+        )
+      : searchData.slice(
+          (currentPage - 1) * itemsPerPage,
+          currentPage * itemsPerPage
+        );
 
   // *****************Division***********************
   const handleSubmit = async () => {
@@ -701,9 +702,7 @@ export const LocationDivision = () => {
             </thead>
             <tbody>
               {paginatedData?.length > 0 ? (
-                paginatedData
-                  ?.filter((i) => i?.parentType === "Tehsil")
-                  ?.map((halqa, index) => (
+                paginatedData?.map((halqa, index) => (
                     <tr
                       key={halqa?._id}
                       className="flex w-full justify-between items-center"
