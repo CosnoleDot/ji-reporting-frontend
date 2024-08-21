@@ -41,7 +41,7 @@ export const Signup = () => {
       joiningDate: joiningDate,
       phoneNumber: formData.get("phoneNumber"),
       whatsAppNumber: formData.get("whatsAppNumber"),
-      nazimType: formData.get("nazimType")
+      nazimType: formData.get("nazimType"),
     };
     if (!joiningDate.title) {
       alert("please select the nazim");
@@ -174,61 +174,81 @@ export const Signup = () => {
   }, []);
 
   return (
-    <div className="relative flex flex-col justify-center min-h-screen p-2">
-      <div className="w-full p-6 m-auto bg-white rounded-md shadow-md lg:max-w-lg">
-        <div className="w-full flex items-center justify-center">
-          <img src="/logo.png" className="text-center w-25 h-20" alt="LOGO" />
+    <div className="relative flex  justify-center min-h-screen overflow-hidden w-full">
+      <div className=" w-[40%] bg-secondary min-h-screen p-[40px] md:flex md:flex-col md:justify-between  hidden">
+        <div></div>
+        <div className="flex flex-col gap-4 fixed bottom-5 left-2">
+          <h2 class="text-white font-inter text-2xl font-bold leading-7 text-left">
+            Welcome to IJT Reporting
+          </h2>
+         
         </div>
-        <form className="space-y-4" onSubmit={handleSubmit}>
-          <h1 className="font-semibold text-2xl">Signup Form</h1>
-          <div className="flex items-center justify-between flex-wrap">
+      </div>
+      <div className="w-full p-6 m-auto">
+        <div className="w-full flex flex-col items-center justify-center gap-2">
+          <img src="/logo.png" className="h-[104px] w-[142px]" alt="LOGO" />
+          <h1 className="text-heading text-[20px] leading-7 font-semibold font-inter">
+            Create a new account
+          </h1>
+        </div>
+        <form
+          className="space-y-4 bg-white rounded-md shadow-md p-4 w-full"
+          onSubmit={handleSubmit}
+        >
+          <div className="flex items-center justify-between gap-4">
             <div className="w-full">
               <label className="label">
-                <span className="text-base label-text">Full Name</span>
+                <span className="text-heading font-inter text-[14px] leading-5">
+                  Full Name
+                </span>
               </label>
               <input
                 type="text"
                 placeholder="Full Name"
                 name="name"
-                className="w-full input input-bordered input-primary"
+                className="w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
                 required
               />
             </div>
             <div className="w-full">
               <label className="label">
-                <span className="text-base label-text">Father Name</span>
+                <span className="text-heading font-inter text-[14px] leading-5">
+                  Father Name
+                </span>
               </label>
               <input
                 type="text"
                 placeholder="Father name"
                 name="fatherName"
-                className="w-full input input-bordered input-primary"
+                className="w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
                 required
               />
             </div>
           </div>
-          <div className="flex items-center justify-between flex-wrap gap-2">
+          <div className="flex items-center justify-between gap-4">
             <div className="w-full">
               <label className="label">
-                <span className="text-base label-text">Date of birth</span>
+                <span className="text-heading font-inter text-[14px] leading-5">
+                  Date of birth
+                </span>
               </label>
               <input
                 type="month"
                 placeholder="Date of birth"
                 name="dob"
-                className="w-full input input-bordered input-primary min-w-[230px]"
+                className="w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter min-w-[230px]"
                 required
               />
             </div>
-          </div>
-          <div className="flex items-center justify-between flex-wrap gap-2">
             <div className="w-full">
               <label className="label">
-                <span className="text-base label-text">Qualifications</span>
+                <span className="text-heading font-inter text-[14px] leading-5">
+                  Qualifications
+                </span>
               </label>
               <select
                 name="qualification"
-                className="select select-bordered select-primary w-full"
+                className="w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
               >
                 <option disabled selected>
                   Qualification
@@ -240,15 +260,19 @@ export const Signup = () => {
                 <option value={"phd"}>PHD</option>
               </select>
             </div>
+          </div>
+          <div className="flex items-center justify-between gap-4">
             <div className="w-full relative">
               <label className="label">
-                <span className="text-base label-text">Subject</span>
+                <span className="text-heading font-inter text-[14px] leading-5">
+                  Subject
+                </span>
               </label>
 
               <select
                 name="subject"
                 id="subject"
-                className="select select-bordered select-primary w-full"
+                className="w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
                 value={selectedSubject}
                 onChange={handleSubjectChange}
               >
@@ -268,15 +292,15 @@ export const Signup = () => {
                 + Add New
               </span>
             </div>
-          </div>
-          <div className="flex items-center justify-between flex-wrap gap-2">
             <div className="w-full">
               <label className="label">
-                <span className="text-base label-text">Semester/Year</span>
+                <span className="text-heading font-inter text-[14px] leading-5">
+                  Semester/Year
+                </span>
               </label>
               <select
                 name="semester"
-                className="select select-bordered select-primary w-full "
+                className="w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
               >
                 <option disabled selected>
                   Semester/Year
@@ -300,15 +324,33 @@ export const Signup = () => {
                 <option value={"5th year"}>5th Year</option>
               </select>
             </div>
+          </div>
+          <div className="flex items-center justify-between gap-4">
             <div className="w-full">
               <label className="label">
-                <span className="text-base label-text">Institution</span>
+                <span className="text-heading font-inter text-[14px] leading-5">
+                  Institution
+                </span>
               </label>
               <input
                 type="text"
                 placeholder="Institution"
                 name="institution"
-                className="w-full input input-bordered input-primary"
+                className="w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
+                required
+              />
+            </div>
+            <div className="w-full">
+              <label className="label">
+                <span className="text-heading font-inter text-[14px] leading-5">
+                  Age
+                </span>
+              </label>
+              <input
+                type="number"
+                placeholder="Age"
+                name="age"
+                className="w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
                 required
               />
             </div>
@@ -316,78 +358,76 @@ export const Signup = () => {
           <div className="flex items-center justify-between flex-wrap gap-2">
             <div className="w-full">
               <label className="label">
-                <span className="text-base label-text">Email</span>
+                <span className="text-heading font-inter text-[14px] leading-5">
+                  Email
+                </span>
               </label>
               <input
                 type="email"
                 placeholder="Email Address"
                 name="email"
-                className="w-full input input-bordered input-primary"
-                required
-              />
-            </div>
-            <div className="w-full">
-              <label className="label">
-                <span className="text-base label-text">Age</span>
-              </label>
-              <input
-                type="number"
-                placeholder="Age"
-                name="age"
-                className="w-full input input-bordered input-primary"
+                className="w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
                 required
               />
             </div>
           </div>
-          <div className="flex items-center justify-between flex-wrap">
+          <div className="flex items-center justify-between gap-4">
             <div className="w-full">
               <label className="label">
-                <span className="text-base label-text">Phone Number</span>
+                <span className="text-heading font-inter text-[14px] leading-5">
+                  Phone Number
+                </span>
               </label>
               <input
                 type="text"
                 placeholder="Phone Number"
                 name="phoneNumber"
-                className="w-full input input-bordered input-primary"
+                className="w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
                 required
               />
             </div>
             <div className="w-full">
               <label className="label">
-                <span className="text-base label-text">WhatsApp Number</span>
+                <span className="text-heading font-inter text-[14px] leading-5">
+                  WhatsApp Number
+                </span>
               </label>
               <input
                 type="text"
                 placeholder="WhatsApp Number"
                 name="whatsAppNumber"
-                className="w-full input input-bordered input-primary"
+                className="w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
                 required
               />
             </div>
           </div>
 
-          <div className="flex items-center justify-between flex-wrap">
+          <div className="flex items-center justify-between gap-4">
             <div className="w-full">
               <label className="label">
-                <span className="text-base label-text">Password</span>
+                <span className="text-heading font-inter text-[14px] leading-5">
+                  Password
+                </span>
               </label>
               <input
                 type="password"
                 placeholder="Enter Password"
                 name="password1"
-                className="w-full input input-bordered input-primary"
+                className="w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
                 required
               />
             </div>
             <div className="w-full">
               <label className="label">
-                <span className="text-base label-text">Confirm Password</span>
+                <span className="text-heading font-inter text-[14px] leading-5">
+                  Confirm Password
+                </span>
               </label>
               <input
                 type="password"
                 name="password2"
                 placeholder="Confirm Password"
-                className="w-full input input-bordered input-primary"
+                className="w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
                 required
               />
             </div>
@@ -395,21 +435,23 @@ export const Signup = () => {
           <div className="flex items-start justify-start">
             <div className="w-full">
               <label className="label">
-                <span className="text-base label-text">Home address</span>
+                <span className="text-heading font-inter text-[14px] leading-5">
+                  Home address
+                </span>
               </label>
               <textarea
                 placeholder="Address"
                 name="address"
-                className="w-full input input-bordered input-primary"
+                className="w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
                 required
               ></textarea>
             </div>
           </div>
           <div className="w-full">
-            <span className="px-1 py-2 block font-semibold">
+            <span className="text-heading font-inter text-[14px] leading-5 mb-2">
               Organization pocket:
             </span>
-            <div className="flex items-center justify-start gap-2  flex-wrap border border-primary p-2 rounded-lg">
+            <div className="flex items-center justify-start gap-2  flex-wrap border border-inputBorder p-2 rounded-lg">
               <div className="form-control">
                 <label className="label cursor-pointer gap-2">
                   <input
@@ -502,8 +544,8 @@ export const Signup = () => {
               </div>
             </div>
           </div>
-          <div className="w-full flex items-center justify-between gap-2 flex-col ">
-            <span className="w-full block font-semibold">
+          <div className="w-full flex  justify-between gap-2 flex-col ">
+            <span className="text-heading font-inter text-[14px] leading-5 mb-2">
               RelationShip with Jamiat
             </span>
             <div className="w-full p-1 mt-2 flex justify-between items-center">
@@ -568,7 +610,7 @@ export const Signup = () => {
                 </div>
               )}
             </div>
-            <span className="w-full block font-semibold">
+            <span className="text-heading font-inter text-[14px] leading-5 mb-2">
               Month of becoming {joiningDate?.title.toUpperCase()}:
             </span>
             <input
@@ -577,7 +619,7 @@ export const Signup = () => {
               disabled={joiningDate?.title === "nazim"}
               placeholder="No data"
               name="joiningDate"
-              className="w-full input input-bordered input-primary"
+              className="w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
               defaultValue={joiningDate?.date?.split("-").slice(0, 2).join("-")}
               onChange={(e) =>
                 setJoiningDate((prev) => ({ ...prev, date: e.target.value }))
@@ -661,14 +703,14 @@ export const Signup = () => {
           )}
           <div className="relative">
             <div
-              className="tooltip w-full"
+              className=" w-full"
               data-tip={
                 userAreaType
                   ? `Organization is ${userAreaType}`
                   : "Select organization "
               }
             >
-              <span className="px-1 py-2 block font-semibold w-full text-start">
+              <span className="text-heading font-inter text-[14px] leading-5 mb-2 text-left">
                 Area:
               </span>
               <input type="hidden" name="userAreaId" id="userAreaId" />
@@ -676,7 +718,7 @@ export const Signup = () => {
                 id="autocomplete"
                 type="search"
                 autoComplete="off"
-                class="input input-bordered input-primary w-full text-start"
+                className="w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
                 placeholder="Select area"
                 onChange={(e) => setSearchArea(e.target.value)}
                 onClick={() => {
@@ -755,14 +797,16 @@ export const Signup = () => {
               </div>
             </div>
           </div>
+          <div className="w-full p-4">
           <Link
             to="/"
-            className="text-xs text-gray-600 hover:underline mt-5 block hover:text-blue-600"
+            className="text-[14px] py-4 leading-5 font-medium text-accentForeground font-inter underline"
           >
             Already have an account?
-          </Link>
+          </Link></div>
           <div className="w-full">
-            <button type="submit" className="btn btn-primary w-full">
+            <button type="submit" className="text-[14px] leading-6 font-medium font-inter text-white bg-primary w-full py-2 border rounded"
+            >
               Sign Up
             </button>
           </div>
@@ -775,7 +819,9 @@ export const Signup = () => {
           <div className="space-y-4">
             <div className="w-full">
               <label className="label">
-                <span className="text-base label-text">Subject</span>
+                <span className="text-heading font-inter text-[14px] leading-5">
+                  Subject
+                </span>
               </label>
               <input
                 name="subject"
@@ -783,7 +829,7 @@ export const Signup = () => {
                 placeholder="Enter Subject Name"
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
-                className="w-full input input-bordered input-primary"
+                className="w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
                 required
               />
             </div>
