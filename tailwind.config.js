@@ -11,7 +11,10 @@ module.exports = {
         primary:"#002856",
         heading:"#09090B",
         secondaryText:"#71717A",
-        inputBorder:"#E4E4E7"
+        inputBorder:"#E4E4E7",
+        accentForeground:"#18181B",
+        innerAlignment:"#94A3B8",
+        destructive:"#EF4343"
       }
     },
   },
