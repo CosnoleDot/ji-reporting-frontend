@@ -15,7 +15,10 @@ module.exports = {
         accentForeground:"#18181B",
         innerAlignment:"#94A3B8",
         destructive:"#EF4343"
-      }
+      },
+      screens: { 
+        'md': '768px',  
+      },
     },
   },
   plugins: [require("daisyui")],

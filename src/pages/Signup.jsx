@@ -175,7 +175,7 @@ export const Signup = () => {
 
   return (
     <div className="relative flex  justify-center min-h-screen overflow-hidden w-full">
-      <div className=" w-[40%] bg-secondary min-h-screen p-[40px] flex flex-col justify-between">
+      <div className=" w-[40%] bg-secondary min-h-screen p-[40px] md:flex md:flex-col md:justify-between  hidden">
         <div></div>
         <div className="flex flex-col gap-4 fixed bottom-5 left-2">
           <h2 class="text-white font-inter text-2xl font-bold leading-7 text-left">

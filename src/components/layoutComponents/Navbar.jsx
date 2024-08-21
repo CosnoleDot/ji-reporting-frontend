@@ -5,8 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { FaRegUserCircle } from "react-icons/fa";
 import { UIContext } from "../../context/ui";
 import { MeContext } from "../../context";
-
-export const Navbar = ({ title }) => {
+import { AiOutlineMenu } from "react-icons/ai";
+import { RxCross2 } from "react-icons/rx";
+export const Navbar = ({ title , setIsSideBarOpen ,isSideBarOpen }) => {
   const navigate = useNavigate();
   const [requests, showRequests] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
@@ -31,12 +32,14 @@ export const Navbar = ({ title }) => {
       if (requestsRef.current && !requestsRef.current.contains(event.target)) {
         showRequests(false);
       }
-      if (profileTabRef.current && !profileTabRef.current.contains(event.target)) {
+      if (
+        profileTabRef.current &&
+        !profileTabRef.current.contains(event.target)
+      ) {
         showProfileTab(false);
       }
     }, 150);
   };
-  
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -47,16 +50,24 @@ export const Navbar = ({ title }) => {
 
   return (
     <>
-      <div className="navbar bg-blue-500 text-white">
+      <div className="navbar  text-heading px-8">
         <div className="flex-1">
-          <span className="text-xl">{title || "IJT Reporting"}</span>
+          <span className="text-[18px] font-black font-inter leading-5 md:block hidden">
+            IJT REPORTING
+          </span>
+          {!isSideBarOpen ? <span className="md:hidden block cursor-pointer" >
+            <AiOutlineMenu width={12} height={12} onClick={()=>setIsSideBarOpen(true)}/>
+          </span> :
+          <span className="md:hidden block cursor-pointer" >
+            <RxCross2 width={12} height={12} onClick={()=>setIsSideBarOpen(false)}/>
+          </span>}
         </div>
         <div className="flex-none">
-          <div>
-            <h1>{me?.name}</h1>
-          </div>
           {localStorage.getItem("@type") !== "country" && (
-            <div className="relative dropdown dropdown-end" ref={notificationsRef}>
+            <div
+              className="relative dropdown dropdown-end"
+              ref={notificationsRef}
+            >
               <div
                 tabIndex={0}
                 role="button"
@@ -83,7 +94,7 @@ export const Navbar = ({ title }) => {
                 <div
                   tabIndex={0}
                   role="button"
-                  className="btn btn-ghost btn-circle"
+                  className="p-2 border rounded-full bg-primary btn-primary hover:bg-white"
                   onClick={() => {
                     setShowNotifications(false);
                     showRequests(!requests);
@@ -99,62 +110,6 @@ export const Navbar = ({ title }) => {
                 </div>
               </div>
             )}
-
-          <div className="dropdown dropdown-end" ref={profileTabRef}>
-            <div
-              tabIndex={0}
-              onClick={() => {
-                setShowNotifications(false);
-                showRequests(false);
-                showProfileTab(!profileTab);
-              }}
-              role="button"
-              className="btn btn-ghost btn-circle avatar"
-            >
-              <div className="w-8">
-                <FaRegUserCircle className="w-full h-full" />
-              </div>
-            </div>
-          </div>
-
-          {profileTab && (
-            <ul className="text-black fixed right-[10px] top-[60.5px] menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-              <li className="mb-1">
-                <span className="bg-slate-200 flex flex-col w-full justify-start items-start gap-0">
-                  <span className="font-semibold">{me?.name}</span>
-                  <span className="text-xs">{me?.email}</span>
-                </span>
-              </li>
-              <li onClick={() => navigate("/profile")}>
-                <span>Profile</span>
-              </li>
-              <li onClick={() => navigate("/change-password")}>
-                <span>Change Password</span>
-              </li>
-              <li>
-                <span
-                  onClick={() => {
-                    localStorage.clear();
-                    navigate("/login");
-                    setMe(null);
-                    window.location.reload();
-                  }}
-                >
-                  Logout
-                </span>
-              </li>
-              <li className="bg-slate-300 flex justify-center w-full">
-                <a
-                  href="https://consoledot.com"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Powered By:
-                  <img src="/cd.png" className="w-5 h-5" alt="ConsoleDot" />
-                </a>
-              </li>
-            </ul>
-          )}
         </div>
       </div>
 
