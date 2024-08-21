@@ -4,14 +4,19 @@ import { FaBell, FaUserPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { FaRegUserCircle } from "react-icons/fa";
 import { UIContext } from "../../context/ui";
-import { MeContext } from "../../context";
+import { MeContext, useToastState } from "../../context";
 import { translate } from "../../context/localization";
+import { IoIosGlobe } from "react-icons/io";
+import instance from "../../api/instrance";
 
 export const Navbar = ({ title }) => {
   const navigate = useNavigate();
   const [requests, showRequests] = useState(false);
+  const { loading, setLoading } = useContext(UIContext);
   const [showNotifications, setShowNotifications] = useState(false);
   const [profileTab, showProfileTab] = useState(false);
+  const { dispatch } = useToastState();
+  const [lang, setLang] = useState("en");
   const me = useContext(MeContext);
   const { userRequests, notifications, getAllNotifications } =
     useContext(UIContext);
@@ -32,12 +37,14 @@ export const Navbar = ({ title }) => {
       if (requestsRef.current && !requestsRef.current.contains(event.target)) {
         showRequests(false);
       }
-      if (profileTabRef.current && !profileTabRef.current.contains(event.target)) {
+      if (
+        profileTabRef.current &&
+        !profileTabRef.current.contains(event.target)
+      ) {
         showProfileTab(false);
       }
     }, 150);
   };
-  
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -46,18 +53,80 @@ export const Navbar = ({ title }) => {
     };
   }, []);
 
+  const changeLang =async (lang)=>{
+  setLang(lang)
+  setLoading(true);
+    try {
+      const req = await instance.patch(
+        `/user/lang-preference`,
+        {
+          lang ,
+          id: me?._id
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      
+   
+      dispatch({ type: "SUCCESS", payload: req.data?.message });
+    } catch (err) {
+      dispatch({ type: "ERROR", payload: err.response.data.message });
+    }
+    setLoading(false);
+  }
   return (
     <>
       <div className="navbar bg-blue-500 text-white">
         <div className="flex-1">
-          <span className="text-xl">{translate(title) || translate("IJTReporting")}</span>
+          <span className="text-xl">
+            {translate(title) || translate("IJTReporting")}
+          </span>
         </div>
         <div className="flex-none">
           {/* <div>
             <h1>{me?.name}</h1>
           </div> */}
+          {lang === "en" ? (
+            <div className="relative dropdown dropdown-end">
+              <div
+                tabIndex={0}
+                role="button"
+                className="btn btn-ghost btn-circle"
+              >
+                <div className="indicator" onClick={()=>changeLang("ur")}>
+                  <IoIosGlobe className="text-2xl" />
+                  <span className="badge badge-sm absolute -top-2 -right-3 z-0">
+                    En
+                  </span>
+                </div>
+              </div>{" "}
+            </div>
+          ) : (
+            <div className="relative dropdown dropdown-end">
+              <div
+                tabIndex={0}
+                role="button"
+                className="btn btn-ghost btn-circle"
+              >
+                <div className="indicator"onClick={()=>changeLang("en")}>
+                  <IoIosGlobe className="text-2xl" />
+                  <span className="badge badge-sm absolute -top-2 -right-3 z-0">
+                    UR
+                  </span>
+                </div>
+              </div>{" "}
+            </div>
+          )}
+
           {localStorage.getItem("@type") !== "country" && (
-            <div className="relative dropdown dropdown-end" ref={notificationsRef}>
+            <div
+              className="relative dropdown dropdown-end"
+              ref={notificationsRef}
+            >
               <div
                 tabIndex={0}
                 role="button"
@@ -127,10 +196,10 @@ export const Navbar = ({ title }) => {
                 </span>
               </li>
               <li onClick={() => navigate("/profile")}>
-                <span>{translate('profile')}</span>
+                <span>{translate("profile")}</span>
               </li>
               <li onClick={() => navigate("/change-password")}>
-                <span>{translate('ChangePassword')}</span>
+                <span>{translate("ChangePassword")}</span>
               </li>
               <li>
                 <span
@@ -176,7 +245,9 @@ export const Navbar = ({ title }) => {
           ref={notificationsRef}
           className="mt-3 top-[60.5px] right-[10px] lg:right-10 fixed z-[1] w-[calc(100%-20px)] lg:w-[420px] card card-compact dropdown-content bg-base-100 border-2 overflow-hidden"
         >
-          <h2 className="p-5 font-bold text-xl">{translate("notifications")}</h2>
+          <h2 className="p-5 font-bold text-xl">
+            {translate("notifications")}
+          </h2>
           <Notifications
             userRequests={notifications}
             getAllRequests={getAllNotifications}

@@ -334,7 +334,7 @@ export const DeleteUser = () => {
               type="search"
               name="Search"
               id="search"
-              placeholder="Search by name..."
+              placeholder={translate('Searchbyname')}
               className="input input-bordered"
               value={search}
               onChange={searchUsers}
@@ -345,13 +345,13 @@ export const DeleteUser = () => {
               }}
               className="btn border-none"
             >
-              More Filters
+              {translate("MoreFilters")}
             </button>
             <button
               onClick={() => clearSearchFilters()}
               className="btn border-none"
             >
-              Clear Filters
+              {translate("ClearFilters")}
             </button>
           </div>
           <div className="flex overflow-hidden overflow-x-scroll overflow-y-scroll">
@@ -359,12 +359,12 @@ export const DeleteUser = () => {
               <thead>
                 <tr>
                   <th></th>
-                  <th>Name</th>
-                  <th>Nazim Type</th>
-                  <th>Email</th>
-                  <th>Area Details</th>
-                  <th>Status</th>
-                  <th className="text-center">Actions</th>
+                  <th>{translate("Name")}</th>
+                  <th>{translate("Nazim")} {translate("Type")}</th>
+                  <th>{translate("Email")}</th>
+                  <th>{translate("Area")} {translate("Details")}</th>
+                  <th>{translate("Status")}</th>
+                  <th className="text-center">{translate("Actions")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -400,9 +400,9 @@ export const DeleteUser = () => {
                       </td>
                       <td>
                         {user?.isDeleted ? (
-                          <div className="badge badge-error">inActive</div>
+                          <div className="badge badge-error">{translate("inActive")}</div>
                         ) : (
-                          <div className="badge badge-accent">active</div>
+                          <div className="badge badge-accent">{translate("active")}</div>
                         )}
                       </td>
                       <td
@@ -512,7 +512,7 @@ export const DeleteUser = () => {
               id="filter-form"
             >
               <h1 className="font-semibold text-md md:text-2xl">
-                Categorize Users
+                {translate("CategorizeUsers")}
               </h1>
               <div className="flex md:flex-row flex-col gap-2 justify-between items-center">
                 <button
@@ -522,7 +522,7 @@ export const DeleteUser = () => {
                     e.preventDefault();
                   }}
                 >
-                  Categorize with area
+                  {translate("Categorizewitharea")}
                 </button>
                 <button
                   className="btn btn-primary border-none capitalize w-full sm:w-auto"
@@ -531,18 +531,18 @@ export const DeleteUser = () => {
                     e.preventDefault();
                   }}
                 >
-                  Categorize with details
+                  {translate("Categorizewithdetails")}
                 </button>
               </div>
               {!withArea && (
                 <div>
                   <div>
                     <label className="label">
-                      <span className="text-base label-text">Full Name</span>
+                      <span className="text-base label-text">{translate("Full")} {translate("Name")}</span>
                     </label>
                     <input
                       type="text"
-                      placeholder="Full Name"
+                      placeholder={translate("FullName")}
                       name="name"
                       className="w-full input input-bordered input-primary"
                     />
@@ -551,7 +551,7 @@ export const DeleteUser = () => {
                   <div className="relative">
                     <label className="label">
                       <span className="text-base label-text">
-                        Year of becoming rukan/umeedwar
+                        {translate("Yearofbecomingrukan/umeedwar")}
                       </span>
                     </label>
                     <input
@@ -605,7 +605,7 @@ export const DeleteUser = () => {
                   <div className="relative">
                     <label className="label">
                       <span className="text-base label-text">
-                        Year of birth
+                        {translate("Yearofbirth")}
                       </span>
                     </label>
                     <input
@@ -659,7 +659,7 @@ export const DeleteUser = () => {
                   <div className="w-full">
                     <label className="label">
                       <span className="text-base label-text">
-                        Qualifications
+                        {translate("Qualifications")}
                       </span>
                     </label>
                     <select
@@ -668,18 +668,18 @@ export const DeleteUser = () => {
                       defaultValue={""}
                     >
                       {/* <button>add</button> */}
-                      <option value={""}>Qualification</option>
-                      <option value={"matric"}>Matric</option>
-                      <option value={"intermediate"}>Intermediate</option>
-                      <option value={"bachelors"}>Bachelors</option>
-                      <option value={"masters"}>Masters</option>
-                      <option value={"phd"}>PHD</option>
+                      <option value={""}>{translate("Qualification")}</option>
+                      <option value={"matric"}>{translate("Matric")}</option>
+                      <option value={"intermediate"}>{translate("Intermediate")}</option>
+                      <option value={"bachelors"}>{translate("Bachelors")}</option>
+                      <option value={"masters"}>{translate("Masters")}</option>
+                      <option value={"phd"}>{translate("PHD")}</option>
                     </select>
                   </div>
                   <div className="w-full">
                     <label className="label">
                       <span className="text-base label-text">
-                        Select Subject
+                        {translate("Select")} {translate("Subject")}
                       </span>
                     </label>
                     <select
@@ -689,7 +689,7 @@ export const DeleteUser = () => {
                       value={selectedSubject}
                       onChange={(e) => setSelectedSubject(e.target.value)}
                     >
-                      <option value={""}>Select subject</option>
+                      <option value={""}>{translate("Select")} {translate("subject")}</option>
                       {subjects?.map((sub, index) => (
                         <option
                           value={sub?._id}
@@ -705,7 +705,7 @@ export const DeleteUser = () => {
                   <div className="w-full">
                     <label className="label">
                       <span className="text-base label-text">
-                        Semester/Year
+                        {translate("SemesterYear")}
                       </span>
                     </label>
                     <select
@@ -713,29 +713,29 @@ export const DeleteUser = () => {
                       className="select select-bordered select-primary w-full "
                       defaultValue={""}
                     >
-                      <option value={""}>Semester/Year</option>
-                      <option value={"semester 1"}>Semester 1</option>
-                      <option value={"semester 2"}>Semester 2</option>
-                      <option value={"semester 3"}>Semester 3</option>
-                      <option value={"semester 4"}>Semester 4</option>
-                      <option value={"semester 5"}>Semester 5</option>
-                      <option value={"semester 6"}>Semester 6</option>
-                      <option value={"semester 7"}>Semester 7</option>
-                      <option value={"semester 8"}>Semester 8</option>
-                      <option value={"semester 9"}>Semester 9</option>
-                      <option value={"semester10"}>Semester10</option>
-                      <option value={"semester 11"}>Semester 11</option>
-                      <option value={"semester 12"}>Semester 12</option>
-                      <option value={"1st year"}>1st Year</option>
-                      <option value={"2nd year"}>2nd Year</option>
-                      <option value={"3rd year"}>3rd Year</option>
-                      <option value={"4th year"}>4th Year</option>
-                      <option value={"5th year"}>5th Year</option>
+                      <option value={""}>{translate("SemesterYear")}</option>
+                      <option value={"semester 1"}>{translate("Semester")} 1</option>
+                      <option value={"semester 2"}>{translate("Semester")} 2</option>
+                      <option value={"semester 3"}>{translate("Semester")} 3</option>
+                      <option value={"semester 4"}>{translate("Semester")} 4</option>
+                      <option value={"semester 5"}>{translate("Semester")} 5</option>
+                      <option value={"semester 6"}>{translate("Semester")} 6</option>
+                      <option value={"semester 7"}>{translate("Semester")} 7</option>
+                      <option value={"semester 8"}>{translate("Semester")} 8</option>
+                      <option value={"semester 9"}>{translate("Semester")} 9</option>
+                      <option value={"semester10"}>{translate("Semester")}10</option>
+                      <option value={"semester 11"}>{translate("Semester")} 11</option>
+                      <option value={"semester 12"}>{translate("Semester")} 12</option>
+                      <option value={"1st year"}>{translate("1st")} {translate("Year")}</option>
+                      <option value={"2nd year"}>{translate("2nd")} {translate("Year")}</option>
+                      <option value={"3rd year"}>{translate("3rd")} {translate("Year")}</option>
+                      <option value={"4th year"}>{translate("4th")} {translate("Year")}</option>
+                      <option value={"5th year"}>{translate("5th")} {translate("Year")}</option>
                     </select>
                   </div>
                   <div className="w-full">
                     <label className="label">
-                      <span className="text-base label-text">Institution</span>
+                      <span className="text-base label-text">{translate("Institution")}</span>
                     </label>
                     <input
                       type="text"
@@ -750,7 +750,7 @@ export const DeleteUser = () => {
                 <div>
                   <div>
                     <span className="px-1 py-2 block font-semibold">
-                      Organization pocket:
+                      {translate("Organizationpocket")}:
                     </span>
                     <div className="flex flex-wrap items-center justify-start border border-primary p-2 rounded-lg">
                       {me?.nazim.toLowerCase() === "country" && (
@@ -769,7 +769,7 @@ export const DeleteUser = () => {
                                   "";
                               }}
                             />
-                            <span className="label-text">Province</span>
+                            <span className="label-text">{translate("Province")}</span>
                           </label>
                         </div>
                       )}
@@ -791,7 +791,7 @@ export const DeleteUser = () => {
                                   "";
                               }}
                             />
-                            <span className="label-text">Division</span>
+                            <span className="label-text">{translate("Division")}</span>
                           </label>
                         </div>
                       )}
@@ -812,7 +812,7 @@ export const DeleteUser = () => {
                                   "";
                               }}
                             />
-                            <span className="label-text">Maqam</span>
+                            <span className="label-text">{translate("Maqam")}</span>
                           </label>
                         </div>
                       )}
@@ -836,7 +836,7 @@ export const DeleteUser = () => {
                                   ).value = "";
                                 }}
                               />
-                              <span className="label-text">Ilaqa</span>
+                              <span className="label-text">{translate("Ilaqa")}</span>
                             </label>
                           </div>
                         )}
@@ -856,7 +856,7 @@ export const DeleteUser = () => {
                                 "";
                             }}
                           />
-                          <span className="label-text">Halqa</span>
+                          <span className="label-text">{translate("Halqa")}</span>
                         </label>
                       </div>
                     </div>
@@ -865,7 +865,7 @@ export const DeleteUser = () => {
                   {/* NAZIM TYPES */}
                   <div className="w-full">
                     <span className="px-1 py-2 block font-semibold">
-                      Change status to:
+                    {translate("Changestatusto")}:
                     </span>
                     <div className="flex  items-center justify-start flex-wrap border border-primary p-2 rounded-lg">
                       <div className="form-control">
@@ -878,7 +878,7 @@ export const DeleteUser = () => {
                             checked={nazimType === "nazim"}
                             onChange={() => setNazimType("nazim")}
                           />
-                          <span className="label-text">Rafiq-Nazim</span>
+                          <span className="label-text">{translate("RafiqNazim")}</span>
                         </label>
                       </div>
                       <div className="form-control">
@@ -891,7 +891,7 @@ export const DeleteUser = () => {
                             checked={nazimType === "umeedwar"}
                             onChange={() => setNazimType("umeedwar")}
                           />
-                          <span className="label-text">Umeedwaar</span>
+                          <span className="label-text">{translate("Umeedwaar")}</span>
                         </label>
                       </div>
                       <div className="form-control">
@@ -903,7 +903,7 @@ export const DeleteUser = () => {
                             value="umeedwaar-nazim"
                             onChange={() => setNazimType("umeedwaar-nazim")}
                           />
-                          <span className="label-text">Umeedwaar-Nazim</span>
+                          <span className="label-text">{translate("UmeedwaarNazim")}</span>
                         </label>
                       </div>
                       <div className="form-control">
@@ -916,7 +916,7 @@ export const DeleteUser = () => {
                             checked={nazimType === "rukan"}
                             onChange={() => setNazimType("rukan")}
                           />
-                          <span className="label-text">Rukan</span>
+                          <span className="label-text">{translate("Rukan")}</span>
                         </label>
                       </div>
                       <div className="form-control">
@@ -929,13 +929,13 @@ export const DeleteUser = () => {
                             checked={nazimType === "rukan-nazim"}
                             onChange={() => setNazimType("rukan-nazim")}
                           />
-                          <span className="label-text">Rukan-Nazim</span>
+                          <span className="label-text">{translate("RukanNazim")}</span>
                         </label>
                       </div>
                     </div>
                   </div>
                   <div className="relative ">
-                    <span className="px-1 py-2 block font-semibold">Area:</span>
+                    <span className="px-1 py-2 block font-semibold">{translate("Area")}:</span>
                     <input type="hidden" name="userAreaId" id="userAreaId" />
                     <input
                       id="autocomplete0"
@@ -1035,7 +1035,7 @@ export const DeleteUser = () => {
                     .click()
                 }
               >
-                Filter
+                {translate("Filter")}
               </button>
             </form>
           </div>
@@ -1044,14 +1044,14 @@ export const DeleteUser = () => {
         <dialog id="view-details-modal" className="modal">
           <div className="modal-box">
             <div className="flex justify-between items-center w-full">
-              <h3 className="font-bold text-2xl">User Details</h3>
+              <h3 className="font-bold text-2xl">{translate("User")} {translate("Details")}</h3>
               <button
                 className="btn rounded-lg"
                 onClick={() =>
                   document.getElementById("view-details-modal").close()
                 }
               >
-                Close
+                {translate("Close")}
               </button>
             </div>
             <hr className="mb-3" />
@@ -1059,12 +1059,12 @@ export const DeleteUser = () => {
               <div className="flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col">
                 <div className="w-full">
                   <label className="label">
-                    <span className="text-base label-text">Full Name</span>
+                    <span className="text-base label-text">{translate("Full")} {translate("Name")}</span>
                   </label>
                   <input
                     readOnly
                     type="text"
-                    placeholder="Full Name"
+                    placeholder={translate("FullName")}
                     name="name"
                     className="w-full text-[#7a7a7a]"
                     defaultValue={singleUser?.name}
@@ -1072,12 +1072,12 @@ export const DeleteUser = () => {
                 </div>
                 <div className="w-full">
                   <label className="label">
-                    <span className="text-base label-text">Father Name</span>
+                    <span className="text-base label-text">{translate("FatherName")} </span>
                   </label>
                   <input
                     readOnly
                     type="text"
-                    placeholder="Father name"
+                    placeholder={translate("FatherName")}
                     name="fatherName"
                     className="w-full text-[#7a7a7a]"
                     defaultValue={singleUser?.fatherName}
@@ -1087,13 +1087,13 @@ export const DeleteUser = () => {
               <div className="flex w-full items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col">
                 <div className="w-full">
                   <label className="label">
-                    <span className="text-base label-text">Date of birth</span>
+                    <span className="text-base label-text">{translate("Dateofbirth")}</span>
                   </label>
                   <input
                     readOnly
                     defaultValue={singleUser?.dob?.split("T")[0]}
                     type="text"
-                    placeholder="Date of birth"
+                    placeholder={translate("Dateofbirth")}
                     name="dob"
                     className=" w-full text-[#7a7a7a]"
                   />
@@ -1101,13 +1101,13 @@ export const DeleteUser = () => {
                 <div className="w-full">
                   <label className="label">
                     <span className="label-text text-sm">
-                      Month of becoming rukan/umeedwar
+                      {translate("Monthofbecomingrukan/umeedwar")}
                     </span>
                   </label>
                   <input
                     readOnly
                     type="text"
-                    placeholder="JoiningDate"
+                    placeholder={translate("JoiningDate")}
                     name="joiningDate"
                     className="w-full text-[#7a7a7a]"
                     defaultValue={singleUser?.joiningDate?.date?.split("T")[0]}
@@ -1117,12 +1117,12 @@ export const DeleteUser = () => {
               <div className="flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col">
                 <div className="w-full">
                   <label className="label">
-                    <span className="text-base label-text">Qualifications</span>
+                    <span className="text-base label-text">{translate("Qualifications")}</span>
                   </label>
                   <input
                     readOnly
                     type="text"
-                    placeholder="Qualification"
+                    placeholder={translate("Masters")}
                     name="qualification"
                     className="w-full text-[#7a7a7a] capitalize "
                     defaultValue={singleUser?.qualification}
@@ -1130,13 +1130,13 @@ export const DeleteUser = () => {
                 </div>
                 <div className="w-full relative">
                   <label className="label">
-                    <span className="text-base label-text">Subject</span>
+                    <span className="text-base label-text">{translate("Subject")}</span>
                   </label>
 
                   <input
                     readOnly
                     type="text"
-                    placeholder="Subject"
+                    placeholder={translate("Subject")}
                     name="subject"
                     className="w-full   capitalize"
                     defaultValue={(() => {
@@ -1151,12 +1151,12 @@ export const DeleteUser = () => {
               <div className="flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col">
                 <div className="w-full">
                   <label className="label">
-                    <span className="text-base label-text">Semester/Year</span>
+                    <span className="text-base label-text">{translate("SemesterYear")}</span>
                   </label>
                   <input
                     readOnly
                     type="text"
-                    placeholder="Semester"
+                    placeholder={translate("Semester")}
                     name="semester"
                     className="w-full text-[#7a7a7a]  capitalize "
                     defaultValue={singleUser?.semester}
@@ -1164,7 +1164,7 @@ export const DeleteUser = () => {
                 </div>
                 <div className="w-full">
                   <label className="label">
-                    <span className="text-base label-text">Institution</span>
+                    <span className="text-base label-text">{translate("Institution")}</span>
                   </label>
                   <input
                     readOnly
@@ -1179,7 +1179,7 @@ export const DeleteUser = () => {
               <div className="flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col">
                 <div className="w-full">
                   <label className="label">
-                    <span className="text-base label-text">Age</span>
+                    <span className="text-base label-text">{translate("Age")}</span>
                   </label>
                   <input
                     readOnly
@@ -1192,7 +1192,7 @@ export const DeleteUser = () => {
                 </div>
                 <div className="w-full">
                   <label className="label">
-                    <span className="text-base label-text">Nazim Type</span>
+                    <span className="text-base label-text">{translate("NazimType")}</span>
                   </label>
                   <input
                     readOnly
@@ -1212,7 +1212,7 @@ export const DeleteUser = () => {
               <div className="flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col">
                 <div className="w-full">
                   <label className="label">
-                    <span className="text-base label-text">Phone Number</span>
+                    <span className="text-base label-text">{translate("PhoneNumber")}</span>
                   </label>
                   <input
                     readOnly
@@ -1226,7 +1226,7 @@ export const DeleteUser = () => {
                 <div className="w-full">
                   <label className="label">
                     <span className="text-base label-text">
-                      WhatsApp Number
+                      {translate("WhatsAppNumber")}
                     </span>
                   </label>
                   <input
@@ -1242,7 +1242,7 @@ export const DeleteUser = () => {
 
               <div className="w-full">
                 <label className="label">
-                  <span className="text-base label-text">Home address</span>
+                  <span className="text-base label-text">{translate("Homeaddress")}</span>
                 </label>
                 <textarea
                   placeholder="Address"
@@ -1254,7 +1254,7 @@ export const DeleteUser = () => {
               </div>
               <div className="w-full">
                 <label className="label">
-                  <span className="text-base label-text">Area</span>
+                  <span className="text-base label-text">{translate("Area")}</span>
                 </label>
                 <input
                   readOnly
@@ -1267,7 +1267,7 @@ export const DeleteUser = () => {
               </div>
               <div className="w-full">
                 <label className="label">
-                  <span className="text-base label-text">Email</span>
+                  <span className="text-base label-text">{translate("Email")}</span>
                 </label>
                 <input
                   readOnly
@@ -1285,12 +1285,12 @@ export const DeleteUser = () => {
         <dialog id="change-status-modal" className="modal">
           <div className="modal-box flex justify-between items-start flex-col h-[600px]">
             <div>
-              <h3 className="font-bold text-2xl">Change Status</h3>
+              <h3 className="font-bold text-2xl">{translate("Change")} {translate("Status")}</h3>
               <hr className="mb-3" />
               <form className="space-y-4 mb-3">
                 <div>
                   <span className="px-1 py-2 block font-semibold">
-                    Organization pocket:
+                    {translate("Organizationpocket")}:
                   </span>
                   <div className="flex flex-wrap items-center justify-start border border-primary p-2 rounded-lg">
                     {me?.nazim.toLowerCase() === "country" && (
@@ -1309,7 +1309,7 @@ export const DeleteUser = () => {
                                 "";
                             }}
                           />
-                          <span className="label-text">Province</span>
+                          <span className="label-text">{translate("Province")}</span>
                         </label>
                       </div>
                     )}
@@ -1331,7 +1331,7 @@ export const DeleteUser = () => {
                                 "";
                             }}
                           />
-                          <span className="label-text">Division</span>
+                          <span className="label-text">{translate("Division")}</span>
                         </label>
                       </div>
                     )}
@@ -1352,7 +1352,7 @@ export const DeleteUser = () => {
                                 "";
                             }}
                           />
-                          <span className="label-text">Maqam</span>
+                          <span className="label-text">{translate("Maqam")}</span>
                         </label>
                       </div>
                     )}
@@ -1375,7 +1375,7 @@ export const DeleteUser = () => {
                                   "";
                               }}
                             />
-                            <span className="label-text">Ilaqa</span>
+                            <span className="label-text">{translate("Ilaqa")}</span>
                           </label>
                         </div>
                       )}
@@ -1394,7 +1394,7 @@ export const DeleteUser = () => {
                             document.getElementById("autocomplete0").value = "";
                           }}
                         />
-                        <span className="label-text">Halqa</span>
+                        <span className="label-text">{translate("Halqa")}</span>
                       </label>
                     </div>
                   </div>
@@ -1403,7 +1403,7 @@ export const DeleteUser = () => {
                 {/* NAZIM TYPES */}
                 <div className="w-full">
                   <span className="px-1 py-2 block font-semibold">
-                    Change status to:
+                    {translate("Changestatusto")}:
                   </span>
                   <div className="flex  items-center justify-start flex-wrap border border-primary p-2 rounded-lg">
                     <div className="form-control">
@@ -1416,7 +1416,7 @@ export const DeleteUser = () => {
                           checked={nazimType === "nazim"}
                           onChange={() => setNazimType("nazim")}
                         />
-                        <span className="label-text">Rafiq-Nazim</span>
+                        <span className="label-text">{translate("RafiqNazim")}</span>
                       </label>
                     </div>
                     <div className="form-control">
@@ -1429,7 +1429,7 @@ export const DeleteUser = () => {
                           checked={nazimType === "umeedwar"}
                           onChange={() => setNazimType("umeedwar")}
                         />
-                        <span className="label-text">Umeedwaar</span>
+                        <span className="label-text">{translate("Umeedwaar")}</span>
                       </label>
                     </div>
                     <div className="form-control">
@@ -1441,7 +1441,7 @@ export const DeleteUser = () => {
                           value="umeedwaar-nazim"
                           onChange={() => setNazimType("umeedwaar-nazim")}
                         />
-                        <span className="label-text">Umeedwaar-Nazim</span>
+                        <span className="label-text">{translate("UmeedwaarNazim")}</span>
                       </label>
                     </div>
                     <div className="form-control">
@@ -1454,7 +1454,7 @@ export const DeleteUser = () => {
                           checked={nazimType === "rukan"}
                           onChange={() => setNazimType("rukan")}
                         />
-                        <span className="label-text">Rukan</span>
+                        <span className="label-text">{translate("Rukan")}</span>
                       </label>
                     </div>
                     <div className="form-control">
@@ -1467,13 +1467,13 @@ export const DeleteUser = () => {
                           checked={nazimType === "rukan-nazim"}
                           onChange={() => setNazimType("rukan-nazim")}
                         />
-                        <span className="label-text">Rukan-Nazim</span>
+                        <span className="label-text">{translate("RukanNazim")}</span>
                       </label>
                     </div>
                   </div>
                 </div>
                 <div className="relative ">
-                  <span className="px-1 py-2 block font-semibold">Area:</span>
+                  <span className="px-1 py-2 block font-semibold">{translate("Area")}:</span>
                   <input type="hidden" name="userAreaId" id="userAreaId" />
                   <input
                     id="autocomplete0"
@@ -1570,10 +1570,10 @@ export const DeleteUser = () => {
                   className="btn rounded-lg"
                   onClick={handleCloseUpdateModel}
                 >
-                  Close
+                  {translate("Close")}
                 </button>
                 <button className="btn rounded-lg" onClick={updateStatus}>
-                  Update
+                  {translate("Update")}
                 </button>
               </div>
             </form>
@@ -1581,10 +1581,10 @@ export const DeleteUser = () => {
         </dialog>
         <dialog id="area_details" className="modal">
           <div className="modal-box">
-            <h3 className="font-bold text-lg mb-3">Details of the area</h3>
+            <h3 className="font-bold text-lg mb-3">{translate("Detailsofthearea")}</h3>
             <div className="w-full  flex flex-col justify-between items-start text-left gap-4  flex-wrap">
               <div className="w-full flex justify-start items-center gap-5">
-                <h5>Area Name:</h5>
+                <h5>{translate("Area")} {translate("Name")}:</h5>
                 <h4 className="text-gray-400 font-bold">{areaDetails?.name}</h4>
                 <h4 className="text-gray-400 font-semibold">
                   {areaDetails?.parentType === "Ilaqa" ||
@@ -1624,7 +1624,7 @@ export const DeleteUser = () => {
                 !areaDetails?.parentType === "Division" && (
                   <>
                     <div className="w-full flex justify-start items-center gap-5">
-                      <h5> District:</h5>
+                      <h5> {translate("District")}:</h5>
                       <h4 className="text-gray-400 font-bold">
                         {areaDetails?.parentId?.district
                           ? areaDetails?.parentId?.district?.name
@@ -1632,7 +1632,7 @@ export const DeleteUser = () => {
                       </h4>
                     </div>
                     <div className="w-full flex justify-start items-center gap-5">
-                      <h5>Division:</h5>
+                      <h5>{translate("Division")}:</h5>
                       <h4 className="text-gray-400 font-bold">
                         {areaDetails?.parentId?.district
                           ? areaDetails?.parentId?.district?.division?.name
@@ -1643,7 +1643,7 @@ export const DeleteUser = () => {
                 )}
               {areaDetails?.parentType === "Ilaqa" && (
                 <div className="w-full flex justify-start items-center gap-5">
-                  <h5>Maqam:</h5>
+                  <h5>{translate("Maqam")}:</h5>
                   <h4 className="text-gray-400 font-bold">
                     {areaDetails?.parentType === "Ilaqa"
                       ? areaDetails?.parentId?.maqam?.name
@@ -1653,7 +1653,7 @@ export const DeleteUser = () => {
               )}
               {!areaDetails?.country && (
                 <div className="w-full flex justify-start items-center gap-5">
-                  <h4>Province:</h4>
+                  <h4>{translate("Province")}:</h4>
                   <h4 className="text-gray-400 font-bold">
                     {areaDetails?.parentType === "Ilaqa"
                       ? areaDetails?.parentId?.maqam?.province?.name
@@ -1673,8 +1673,8 @@ export const DeleteUser = () => {
                 </div>
               )}
               <div className="w-full flex justify-start items-center gap-5">
-                <h5>Country:</h5>
-                <h4 className="text-gray-400 font-bold">Pakistan</h4>
+                <h5>{translate("Country")}:</h5>
+                <h4 className="text-gray-400 font-bold">{translate("Pakistan")}</h4>
               </div>
             </div>
             <div className="modal-action w-full">
@@ -1684,7 +1684,7 @@ export const DeleteUser = () => {
                     id="close-details-modal"
                     className="btn ms-3 capitalize"
                   >
-                    Close
+                    {translate("Close")}
                   </button>
                 </div>
               </form>

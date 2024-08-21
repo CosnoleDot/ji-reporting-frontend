@@ -3,6 +3,7 @@ import { ProvinceContext, useToastState } from "../../context";
 import instance from "../../api/instrance";
 import { FaEdit } from "react-icons/fa";
 import { UIContext } from "../../context/ui";
+import { translate } from "../../context/localization";
 export const LocationCountry = () => {
   const provinces = useContext(ProvinceContext);
   const { setLoading, loading, getProvinces } = useContext(UIContext);
@@ -89,7 +90,7 @@ export const LocationCountry = () => {
               setEditMode(false);
             }}
           >
-            Add Province
+            {translate("Add")} {translate("Province")}
           </button>
         )}
       </div>
@@ -98,8 +99,8 @@ export const LocationCountry = () => {
           <thead>
             <tr>
               <th></th>
-              <th>Name</th>
-              <th className="text-center">Edit/Disable</th>
+              <th>{translate("Name")}</th>
+              <th className="text-center">{translate("EditDisable")}</th>
             </tr>
           </thead>
           <tbody>
@@ -140,11 +141,11 @@ export const LocationCountry = () => {
 
       <dialog id="add_province_modal" className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Add Province</h3>
+          <h3 className="font-bold text-lg">{translate("Add")} {translate("Province")}</h3>
           <div className="space-y-4">
             <div>
               <label className="label">
-                <span className="text-base label-text">Country</span>
+                <span className="text-base label-text">{translate("Country")}</span>
               </label>
               <input
                 name="country"
@@ -158,7 +159,7 @@ export const LocationCountry = () => {
           <div className="space-y-4">
             <div>
               <label className="label">
-                <span className="text-base label-text">Province</span>
+                <span className="text-base label-text">{translate("Province")}</span>
               </label>
               <input
                 name="name"
@@ -184,11 +185,11 @@ export const LocationCountry = () => {
                 className="btn"
                 onClick={handleSubmitEdit}
               >
-                Update
+                {translate("Update")}
               </button>
             ) : (
               <button disabled={loading} className="btn" onClick={handleSubmit}>
-                Add
+                {translate("Add")}
               </button>
             )}
             <form method="dialog">
@@ -198,7 +199,7 @@ export const LocationCountry = () => {
                 id="close-province-modal"
                 className="btn ms-3"
               >
-                Close
+                {translate("Close")}
               </button>
             </form>
           </div>

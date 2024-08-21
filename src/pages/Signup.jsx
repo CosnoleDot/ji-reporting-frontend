@@ -41,7 +41,8 @@ export const Signup = () => {
       joiningDate: joiningDate,
       phoneNumber: formData.get("phoneNumber"),
       whatsAppNumber: formData.get("whatsAppNumber"),
-      langPreference: formData.get("language")
+      langPreference: formData.get("language"),
+      nazimType: formData.get("nazimType")
     };
     if (!joiningDate.title) {
       alert("please select the nazim");

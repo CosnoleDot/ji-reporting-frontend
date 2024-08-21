@@ -642,11 +642,11 @@ export const LocationMaqam = () => {
 
       <dialog id="add_maqam_modal" className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Add Maqam</h3>
+          <h3 className="font-bold text-lg">{translate("Add")} {translate("Maqam")}</h3>
           <div className="space-y-4">
             <div>
               <label className="label">
-                <span className="text-base label-text">Province</span>
+                <span className="text-base label-text">{translate("Province")}</span>
               </label>
               <select
                 name="province"
@@ -656,7 +656,7 @@ export const LocationMaqam = () => {
                 className="w-full input input-bordered input-primary"
               >
                 <option value="" disabled>
-                  Select Province
+                  {translate("Select")} {translate("Province")}
                 </option>
                 {provinces
                   ?.filter((i) => !i?.disabled)
@@ -669,7 +669,7 @@ export const LocationMaqam = () => {
             </div>
             <div>
               <label className="label">
-                <span className="text-base label-text">Maqam</span>
+                <span className="text-base label-text">{translate("Maqam")}</span>
               </label>
               <input
                 name="name"
@@ -689,7 +689,7 @@ export const LocationMaqam = () => {
                 className="btn capitalize p-[8px]"
                 onClick={handleSubmitEdit}
               >
-                Update
+                {translate("Update")}
               </button>
             ) : (
               <button
@@ -697,7 +697,7 @@ export const LocationMaqam = () => {
                 className="btn capitalize p-[8px]"
                 onClick={handleSubmit}
               >
-                Add
+                {translate("Add")}
               </button>
             )}
             <form method="dialog">
@@ -706,7 +706,7 @@ export const LocationMaqam = () => {
                 id="close-maqam-modal"
                 className="btn ms-3"
               >
-                Close
+                {translate("Close")}
               </button>
             </form>
           </div>
@@ -715,7 +715,7 @@ export const LocationMaqam = () => {
 
       <dialog id="add_halqa_modal" className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Add Halqa</h3>
+          <h3 className="font-bold text-lg">{translate("Add")} {translate("Halqa")}</h3>
           <div className="space-y-4">
             <div className="flex">
               {ilaqas?.length > 0 && (
@@ -730,7 +730,7 @@ export const LocationMaqam = () => {
                       setFormHalqa({ ...formHalqa, parentType: "Ilaqa" });
                     }}
                   />
-                  <span className="label-text">Ilaqa Halqa</span>
+                  <span className="label-text">{translate("Ilaqa")} {translate("Halqa")}</span>
                 </label>
               )}
               <label className="label cursor-pointer gap-3">
@@ -744,13 +744,13 @@ export const LocationMaqam = () => {
                     setFormHalqa({ ...formHalqa, parentType: "Maqam" });
                   }}
                 />
-                <span className="label-text">Maqam Halqa</span>
+                <span className="label-text">{translate("Maqam")} {translate("Halqa")}</span>
               </label>
             </div>
             {isIlaqa ? (
               <div>
                 <label className="label">
-                  <span className="text-base label-text">Ilaqa</span>
+                  <span className="text-base label-text">{translate("Ilaqa")}</span>
                 </label>
                 <select
                   name="maqam"
@@ -762,7 +762,7 @@ export const LocationMaqam = () => {
                   className="w-full input input-bordered input-primary"
                 >
                   <option value="" disabled>
-                    Select Ilaqa
+                    {translate("Select")} {translate("Ilaqa")}
                   </option>
                   {ilaqas
                     ?.filter((i) => !i?.disabled)
@@ -776,7 +776,7 @@ export const LocationMaqam = () => {
             ) : (
               <div>
                 <label className="label">
-                  <span className="text-base label-text">Maqam</span>
+                  <span className="text-base label-text">{translate("Maqam")}</span>
                 </label>
                 <select
                   name="maqam"
@@ -788,7 +788,7 @@ export const LocationMaqam = () => {
                   className="w-full input input-bordered input-primary"
                 >
                   <option value="" disabled>
-                    Select Maqam
+                    {translate("Select")} {translate("Maqam")}
                   </option>
                   {maqams
                     ?.filter((i) => !i?.disabled)
@@ -802,7 +802,7 @@ export const LocationMaqam = () => {
             )}
             <div>
               <label className="label">
-                <span className="text-base label-text">Halqa Type</span>
+                <span className="text-base label-text">{translate("Halqa")} {translate("Type")}</span>
               </label>
               <select
                 className="select select-bordered w-full max-w-full"
@@ -812,15 +812,15 @@ export const LocationMaqam = () => {
                 value={formHalqa.unitType}
               >
                 <option disabled value="">
-                  Select Unit Type
+                  {translate("Select")} {translate("Unit")} {translate("Type")}
                 </option>
-                <option value="Residential">Residential</option>
-                <option value="Educational">Educational</option>
+                <option value="Residential">{translate("Residential")}</option>
+                <option value="Educational">{translate("Educational")}</option>
               </select>
             </div>
             <div>
               <label className="label">
-                <span className="text-base label-text">Halqa</span>
+                <span className="text-base label-text">{translate("Halqa")}</span>
               </label>
               <input
                 name="name"
@@ -842,7 +842,7 @@ export const LocationMaqam = () => {
                 className="btn capitalize"
                 onClick={handleSubmitHalqaEdit}
               >
-                Update
+                {translate("Update")}
               </button>
             ) : (
               <button
@@ -850,7 +850,7 @@ export const LocationMaqam = () => {
                 className="btn capitalize "
                 onClick={handleSubmitHalqa}
               >
-                Add
+                {translate("Add")}
               </button>
             )}
             <form method="dialog">
@@ -859,7 +859,7 @@ export const LocationMaqam = () => {
                 id="close-maqam-modal"
                 className="btn ms-3"
               >
-                Close
+                {translate("Close")}
               </button>
             </form>
           </div>
@@ -867,11 +867,11 @@ export const LocationMaqam = () => {
       </dialog>
       <dialog id="add_ilaqa_modal" className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Add Ilaqa</h3>
+          <h3 className="font-bold text-lg">{translate("Add")} {translate("Ilaqa")}</h3>
           <div className="space-y-4">
             <div>
               <label className="label">
-                <span className="text-base label-text">Maqam</span>
+                <span className="text-base label-text">{translate("Maqam")}</span>
               </label>
               <select
                 name="ilaqa"
@@ -883,7 +883,7 @@ export const LocationMaqam = () => {
                 className="w-full input input-bordered input-primary"
               >
                 <option value="" disabled>
-                  Select Maqam
+                  {translate("Select")} {translate("Maqam")}
                 </option>
                 {maqams
                   ?.filter((i) => !i?.disabled)
@@ -896,7 +896,7 @@ export const LocationMaqam = () => {
             </div>
             <div>
               <label className="label">
-                <span className="text-base label-text">Ilaqa</span>
+                <span className="text-base label-text">{translate("Ilaqa")}</span>
               </label>
               <input
                 name="name"
@@ -918,7 +918,7 @@ export const LocationMaqam = () => {
                 className="btn capitalize p-[8px]"
                 onClick={handleSubmitEditIlaqa}
               >
-                Update
+                {translate("Update")}
               </button>
             ) : (
               <button
@@ -926,7 +926,7 @@ export const LocationMaqam = () => {
                 className="btn capitalize p-[8px]"
                 onClick={handleSubmitIlaqa}
               >
-                Add
+                {translate("Add")}
               </button>
             )}
             <form method="dialog">
@@ -935,7 +935,7 @@ export const LocationMaqam = () => {
                 id="close-maqam-modal"
                 className="btn ms-3"
               >
-                Close
+                {translate("Close")}
               </button>
             </form>
           </div>
@@ -943,10 +943,10 @@ export const LocationMaqam = () => {
       </dialog>
       <dialog id="area_details" className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg mb-3">Details of the area</h3>
+          <h3 className="font-bold text-lg mb-3">{translate("Detailsofthearea")}</h3>
           <div className="w-full  flex flex-col justify-between items-start text-left gap-4  flex-wrap">
             <div className="w-full flex justify-start items-center gap-5">
-              <h5>Name:</h5>
+              <h5>{translate("Name")}:</h5>
               <h4 className="text-gray-400 font-bold">{areaDetails?.name}</h4>
               <h4 className="text-gray-400 font-semibold">
                 {areaDetails?.parentType === "Ilaqa" ||
@@ -965,7 +965,7 @@ export const LocationMaqam = () => {
               {areaDetails?.parentType
                 ? areaDetails?.parentType + ":"
                 : areaDetails?.maqam
-                ? "Maqam"
+                ? translate("Maqam")
                 : ""}
               <h4 className="text-gray-400 font-bold">
                 {areaDetails?.parentType === "Ilaqa"
@@ -983,7 +983,7 @@ export const LocationMaqam = () => {
               areaDetails?.parentType === "Division") && (
               <>
                 <div className="w-full flex justify-start items-center gap-5">
-                  <h5> District:</h5>
+                  <h5> {translate("District")}:</h5>
                   <h4 className="text-gray-400 font-bold">
                     {areaDetails?.parentId?.district
                       ? areaDetails?.parentId?.district?.name
@@ -991,7 +991,7 @@ export const LocationMaqam = () => {
                   </h4>
                 </div>
                 <div className="w-full flex justify-start items-center gap-5">
-                  <h5>Division:</h5>
+                  <h5>{translate("Division")}:</h5>
                   <h4 className="text-gray-400 font-bold">
                     {areaDetails?.parentId?.district
                       ? areaDetails?.parentId?.district?.division?.name
@@ -1002,7 +1002,7 @@ export const LocationMaqam = () => {
             )}
             {areaDetails?.parentType === "Ilaqa" && (
               <div className="w-full flex justify-start items-center gap-5">
-                <h5>Maqam:</h5>
+                <h5>{translate("Maqam")}:</h5>
                 <h4 className="text-gray-400 font-bold">
                   {areaDetails?.parentType === "Ilaqa"
                     ? areaDetails?.parentId?.maqam?.name
@@ -1012,7 +1012,7 @@ export const LocationMaqam = () => {
             )}
             {!areaDetails?.country && (
               <div className="w-full flex justify-start items-center gap-5">
-                <h4>Province:</h4>
+                <h4>{translate("Province")}:</h4>
                 <h4 className="text-gray-400 font-bold">
                   {areaDetails?.parentType === "Ilaqa"
                     ? areaDetails?.parentId?.maqam?.province?.name
@@ -1029,8 +1029,8 @@ export const LocationMaqam = () => {
               </div>
             )}
             <div className="w-full flex justify-start items-center gap-5">
-              <h5>Country:</h5>
-              <h4 className="text-gray-400 font-bold">Pakistan</h4>
+              <h5>{translate("Country")}:</h5>
+              <h4 className="text-gray-400 font-bold">{translate("Pakistan")}</h4>
             </div>
           </div>
           <div className="modal-action w-full">
@@ -1040,7 +1040,7 @@ export const LocationMaqam = () => {
                   id="close-details-modal"
                   className="btn ms-3 capitalize"
                 >
-                  Close
+                  {translate("Close")}
                 </button>
               </div>
             </form>

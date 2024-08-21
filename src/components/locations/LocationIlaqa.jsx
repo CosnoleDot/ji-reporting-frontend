@@ -130,7 +130,7 @@ export const LocationIlaqa = () => {
           }}
           className="btn ms-3"
         >
-          Add Halqa
+          {translate("Add")} {translate("Halqa")}
         </button>
       </div>
 
@@ -139,10 +139,10 @@ export const LocationIlaqa = () => {
           <thead className="h-10">
             <tr className="fixed mb-2 bg-slate-300 flex w-full justify-between items-start">
               <th className=" text-start"></th>
-              <th className="w-full text-start">Name</th>
-              <th className="w-full text-start">Ilaqa</th>
-              <th className="w-full text-start">Type</th>
-              <th className="w-full text-center">Edit/Disable</th>
+              <th className="w-full text-start">{translate("Name")}</th>
+              <th className="w-full text-start">{translate("Ilaqa")}</th>
+              <th className="w-full text-start">{translate("Type")}</th>
+              <th className="w-full text-center">{translate("EditDisable")}</th>
             </tr>
           </thead>
           <tbody>
@@ -214,11 +214,11 @@ export const LocationIlaqa = () => {
 
       <dialog id="add_halqa_modal" className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Add Halqa</h3>
+          <h3 className="font-bold text-lg">{translate("Add")} {translate("Halqa")}</h3>
           <div className="space-y-4">
             <div>
               <label className="label">
-                <span className="text-base label-text">Ilaqa</span>
+                <span className="text-base label-text">{translate("Ilaqa")}</span>
               </label>
               <select
                 name="maqam"
@@ -230,7 +230,7 @@ export const LocationIlaqa = () => {
                 className="w-full input input-bordered input-primary"
               >
                 <option value="" disabled>
-                  Select Ilaqa
+                  {translate("Select")} {translate("Ilaqa")}
                 </option>
                 {ilaqas
                   ?.filter((i) => !i?.disabled)
@@ -243,7 +243,7 @@ export const LocationIlaqa = () => {
             </div>
             <div>
               <label className="label">
-                <span className="text-base label-text">Halqa Name</span>
+                <span className="text-base label-text">{translate("Halqa")} {translate("Name")}</span>
               </label>
               <input
                 name="name"
@@ -259,7 +259,7 @@ export const LocationIlaqa = () => {
             </div>
             <div>
               <label className="label">
-                <span className="text-base label-text">Halqa Type</span>
+                <span className="text-base label-text">{translate("Halqa")} {translate("Type")}</span>
               </label>
               <select
                 className="select select-bordered w-full max-w-full"
@@ -269,10 +269,10 @@ export const LocationIlaqa = () => {
                 value={formHalqa.unitType}
               >
                 <option disabled value="">
-                  Select Unit Type
+                  {translate("Select")} {translate("Unit")} {translate("Type")}
                 </option>
-                <option value="Residential">Residential</option>
-                <option value="Educational">Educational</option>
+                <option value="Residential">{translate("Residential")}</option>
+                <option value="Educational">{translate("Educational")}</option>
               </select>
             </div>
           </div>
@@ -283,7 +283,7 @@ export const LocationIlaqa = () => {
                 className="btn"
                 onClick={handleSubmitHalqaEdit}
               >
-                Update
+                {translate("Update")}
               </button>
             ) : (
               <button
@@ -291,7 +291,7 @@ export const LocationIlaqa = () => {
                 className="btn"
                 onClick={handleSubmitHalqa}
               >
-                Add
+                {translate("Add")}
               </button>
             )}
             <form method="dialog">
@@ -301,7 +301,7 @@ export const LocationIlaqa = () => {
                 id="close-maqam-modal"
                 className="btn ms-3"
               >
-                Close
+                {translate("Close")}
               </button>
             </form>
           </div>

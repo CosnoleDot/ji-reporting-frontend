@@ -16,6 +16,7 @@ import { convertDataFormat, reverseDataFormat, toJson } from "../utils";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { UIContext } from "../context/ui";
 import { Baitulmal } from "../components/halqa/Baitulmal";
+import { translate } from "../context/localization";
 
 export const Halqa = () => {
   const { dispatch } = useToastState();
@@ -139,10 +140,11 @@ export const Halqa = () => {
           <button
             type="button"
             class="absolute top-20 left-5 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 "
-           onClick={()=>navigate('/reports')}
-           >
-            Back
+            onClick={() => navigate("/reports")}
+          >
+            {translate("Back")}
           </button>
+          
           <div className="w-full">
             <div className="mb-4">
               <GeneralInfo

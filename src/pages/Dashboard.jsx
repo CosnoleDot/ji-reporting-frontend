@@ -57,6 +57,7 @@ export const Dashboard = () => {
   const [month, setMonth] = useState();
   let date;
   const tableRef = useRef();
+ 
   useEffect(() => {
     if (queryDate) {
       date = new Date(queryDate);
@@ -99,7 +100,7 @@ export const Dashboard = () => {
   }, [umeedwarReports]);
   const getData = async () => {
     setLoading(true);
-    setShowData(true);
+ 
     // Check if data is already stored in session storage
     const storedData = sessionStorage.getItem("storedData");
     if (queryDate !== "" || !storedData) {
@@ -255,6 +256,7 @@ export const Dashboard = () => {
     } else {
       setData(JSON.parse(storedData));
     }
+    setShowData(true);
     setLoading(false);
   };
   useEffect(() => {

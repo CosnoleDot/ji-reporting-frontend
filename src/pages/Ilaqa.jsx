@@ -17,6 +17,7 @@ import { PaighamDigest } from "../components/ilaqaReport/PaighamDigest";
 import { RozOShabDiary } from "../components/ilaqaReport/RozOShabDiary";
 import { getData } from "./Maqam";
 import { Baitulmal } from "../components/ilaqaReport/Baitulmal";
+import { translate } from "../context/localization";
 
 export const Ilaqa = () => {
   // EDIT CODE START
@@ -369,7 +370,8 @@ export const Ilaqa = () => {
             class="absolute top-20 left-5 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 "
            onClick={()=>navigate('/reports')}
            >
-            Back
+                        {translate("Back")}
+
           </button>
           <div className="w-full">
             <div>

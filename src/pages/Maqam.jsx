@@ -24,6 +24,7 @@ import { RozOShabDiary } from "../components/maqamReport/RozOShabDiary";
 import { Jamiaat } from "../components/maqamReport/Jamiaat";
 import { Colleges } from "../components/maqamReport/Colleges";
 import { Baitulmal } from "../components/maqamReport/Baitulmal";
+import { translate } from "../context/localization";
 
 export const getData = async (path, id, setData, data) => {
   const arr = data[path];
@@ -359,8 +360,8 @@ export const Maqam = () => {
             class="absolute top-20 left-5 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 "
            onClick={()=>navigate('/reports')}
            >
-            Back
-          </button>
+            {translate("Back")}
+            </button>
           <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
             {" "}
             جائزہ کارکردگی رپورٹ (براے مقام)

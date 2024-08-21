@@ -400,7 +400,7 @@ export const LocationDivision = () => {
               setEditMode(false);
             }}
           >
-            Add Division
+            {translate("Add")} {translate("Division")}
           </button>
         )}
         {districts?.length > 0 && (
@@ -415,7 +415,7 @@ export const LocationDivision = () => {
               setEditMode(false);
             }}
           >
-            Add District
+            {translate("Add")} {translate("District")}
           </button>
         )}
         {tehsils?.length > 0 && (
@@ -430,7 +430,7 @@ export const LocationDivision = () => {
               setEditMode(false);
             }}
           >
-            Add Tehsil
+            {translate("Add")} {translate("Tehsil")}
           </button>
         )}
         <button
@@ -446,7 +446,7 @@ export const LocationDivision = () => {
           }}
           className="btn capitalize p-[8px]"
         >
-          Add Halqa
+          {translate("Add")} {translate("Halqa")}
         </button>
       </div>
       <label className="input input-bordered flex items-center gap-2">
@@ -476,7 +476,7 @@ export const LocationDivision = () => {
             role="tab"
             className={`tab w-full ${view === "division" ? "tab-active" : ""}`}
           >
-            ڈویژن
+            {translate("Division")}
           </Link>
         )}
         {districts?.length > 0 && (
@@ -485,7 +485,7 @@ export const LocationDivision = () => {
             role="tab"
             className={`tab w-full ${view === "district" ? "tab-active" : ""}`}
           >
-            ضلع
+            {translate("District")}
           </Link>
         )}
         {tehsils?.length > 0 && (
@@ -494,7 +494,7 @@ export const LocationDivision = () => {
             role="tab"
             className={`tab w-full ${view === "tehsil" ? "tab-active" : ""}`}
           >
-            تحصیل
+            {translate("Tehsil")}
           </Link>
         )}
         <Link
@@ -502,7 +502,7 @@ export const LocationDivision = () => {
           role="tab"
           className={`tab w-full ${view === "halqa" ? "tab-active" : ""}`}
         >
-          حلقہ
+          {translate("Halqa")}
         </Link>
       </div>
 
@@ -512,9 +512,9 @@ export const LocationDivision = () => {
             <thead>
               <tr>
                 <th></th>
-                <th>Name</th>
-                <th>Province</th>
-                <th className="text-center">Edit/Disable</th>
+                <th>{translate("Name")}</th>
+                <th>{translate("Province")}</th>
+                <th className="text-center">{translate("EditDisable")}</th>
               </tr>
             </thead>
             <tbody>
@@ -567,9 +567,9 @@ export const LocationDivision = () => {
             <thead className="h-10">
               <tr className="fixed mb-2 bg-slate-300 flex w-full justify-between items-start">
                 <th className=" text-start"></th>
-                <th className="w-full text-start">Name</th>
-                <th className="w-full text-start">District</th>
-                <th className="w-full text-center">Edit/Disable</th>
+                <th className="w-full text-start">{translate("Name")}</th>
+                <th className="w-full text-start">{translate("District")}</th>
+                <th className="w-full text-center">{translate("EditDisable")}</th>
               </tr>
             </thead>
             <tbody>
@@ -629,9 +629,9 @@ export const LocationDivision = () => {
             <thead className="h-10">
               <tr className="fixed mb-2 bg-slate-300 flex w-full justify-between items-start">
                 <th className=" text-start"></th>
-                <th className="w-full text-start">Name</th>
-                <th className="w-full text-start">Division</th>
-                <th className="w-full text-center">Edit/Disable</th>
+                <th className="w-full text-start">{translate("Name")}</th>
+                <th className="w-full text-start">{translate("Division")}</th>
+                <th className="w-full text-center">{translate("EditDisable")}</th>
               </tr>
             </thead>
             <tbody>
@@ -693,11 +693,11 @@ export const LocationDivision = () => {
             <thead className="h-10">
               <tr className="fixed mb-2 bg-slate-300 flex w-full justify-between items-start">
                 <th className=" text-start"></th>
-                <th className="w-full text-start">Name</th>
+                <th className="w-full text-start">{translate("Name")}</th>
                 <th className="w-full text-center">
-                  {tehsils?.length > 0 ? "Area Details" : "Division"}
+                  {tehsils?.length > 0 ? translate("AreaDetails") : translate("Division")}
                 </th>
-                <th className="w-full text-center">Edit/Disable</th>
+                <th className="w-full text-center">{translate("EditDisable")}</th>
               </tr>
             </thead>
             <tbody>
@@ -782,11 +782,11 @@ export const LocationDivision = () => {
 
       <dialog id="add_division_modal" className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Add Division</h3>
+          <h3 className="font-bold text-lg">{translate("Add")} {translate("Division")}</h3>
           <div className="space-y-4">
             <div>
               <label className="label">
-                <span className="text-base label-text">Province</span>
+                <span className="text-base label-text">{translate("Province")}</span>
               </label>
               <select
                 name="province"
@@ -796,7 +796,7 @@ export const LocationDivision = () => {
                 className="w-full input input-bordered input-primary"
               >
                 <option value="" disabled>
-                  Select Province
+                  {translate("Select")} {translate("Province")}
                 </option>
                 {me?.userAreaType === "Province"
                   ? provinces
@@ -817,7 +817,7 @@ export const LocationDivision = () => {
             </div>
             <div>
               <label className="label">
-                <span className="text-base label-text">Division</span>
+                <span className="text-base label-text">{translate("Division")}</span>
               </label>
               <input
                 name="name"
@@ -833,17 +833,17 @@ export const LocationDivision = () => {
           <div className="modal-action">
             {editMode ? (
               <button className="btn capitalize " onClick={handleSubmitEdit}>
-                Update
+                {translate("Update")}
               </button>
             ) : (
               <button className="btn capitalize" onClick={handleSubmit}>
-                Add
+                {translate("Add")}
               </button>
             )}
             <form method="dialog">
               {/* if there is a button in form, it will close the modal */}
               <button id="close-division-modal" className="btn ms-3">
-                Close
+              {translate("Close")}
               </button>
             </form>
           </div>
@@ -851,11 +851,11 @@ export const LocationDivision = () => {
       </dialog>
       <dialog id="add_district_modal" className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Add District</h3>
+          <h3 className="font-bold text-lg">{translate("Add")} {translate("District")}</h3>
           <div className="space-y-4">
             <div>
               <label className="label">
-                <span className="text-base label-text">Division</span>
+                <span className="text-base label-text">{translate("Division")}</span>
               </label>
               <select
                 name="division"
@@ -867,7 +867,7 @@ export const LocationDivision = () => {
                 className="w-full input input-bordered input-primary"
               >
                 <option value="" disabled>
-                  Select Division
+                  {translate("Select")} {translate("Division")}
                 </option>
                 {divisions
                   ?.filter((i) => !i?.disabled)
@@ -880,7 +880,7 @@ export const LocationDivision = () => {
             </div>
             <div>
               <label className="label">
-                <span className="text-base label-text">Name</span>
+                <span className="text-base label-text">{translate("Name")}</span>
               </label>
               <input
                 name="name"
@@ -901,17 +901,17 @@ export const LocationDivision = () => {
                 className="btn capitalize"
                 onClick={handleSubmitDistrictEdit}
               >
-                Update
+                {translate("Update")}
               </button>
             ) : (
               <button className="btn capitalize" onClick={handleSubmitDistrict}>
-                Add
+                {translate("Add")}
               </button>
             )}
             <form method="dialog">
               {/* if there is a button in form, it will close the modal */}
               <button id="close-district-modal" className="btn ms-3">
-                Close
+                {translate("Close")}
               </button>
             </form>
           </div>
@@ -919,11 +919,11 @@ export const LocationDivision = () => {
       </dialog>
       <dialog id="add_tehsil_modal" className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Add Tehsil</h3>
+          <h3 className="font-bold text-lg">{translate("Add")} {translate("Tehsil")}</h3>
           <div className="space-y-4">
             <div>
               <label className="label">
-                <span className="text-base label-text">District</span>
+                <span className="text-base label-text">{translate("District")}</span>
               </label>
               <select
                 name="district"
@@ -935,7 +935,7 @@ export const LocationDivision = () => {
                 className="w-full input input-bordered input-primary"
               >
                 <option value="" disabled>
-                  Select District
+                  {translate("Select")} {translate("District")}
                 </option>
                 {districts
                   ?.filter((i) => !i?.disabled)?.sort((a, b) => a.name.localeCompare(b.name))
@@ -948,7 +948,7 @@ export const LocationDivision = () => {
             </div>
             <div>
               <label className="label">
-                <span className="text-base label-text">Name</span>
+                <span className="text-base label-text">{translate("Name")}</span>
               </label>
               <input
                 name="name"
@@ -969,17 +969,17 @@ export const LocationDivision = () => {
                 className="btn capitalize"
                 onClick={handleSubmitTehsilEdit}
               >
-                Update
+                {translate("Update")}
               </button>
             ) : (
               <button className="btn capitalize" onClick={handleSubmitTehsil}>
-                Add
+                {translate("Add")}
               </button>
             )}
             <form method="dialog">
               {/* if there is a button in form, it will close the modal */}
               <button id="close-tehsil-modal" className="btn ms-3">
-                Close
+                {translate("Close")}
               </button>
             </form>
           </div>
@@ -987,7 +987,7 @@ export const LocationDivision = () => {
       </dialog>
       <dialog id="add_halqa_modal" className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Add Halqa</h3>
+          <h3 className="font-bold text-lg">{translate("Add")} {translate("Halqa")}</h3>
           <div className="space-y-4">
             <div className="flex">
               <label className="label cursor-pointer gap-3">
@@ -1001,7 +1001,7 @@ export const LocationDivision = () => {
                     setFormHalqa({ ...formHalqa, parentType: "Division" });
                   }}
                 />
-                <span className="label-text">Division Halqa</span>
+                <span className="label-text">{translate("Division")} {translate("Halqa")}</span>
               </label>
               <label className="label cursor-pointer gap-3">
                 <input
@@ -1014,13 +1014,13 @@ export const LocationDivision = () => {
                     setFormHalqa({ ...formHalqa, parentType: "Tehsil" });
                   }}
                 />
-                <span className="label-text">Tehsil Halqa</span>
+                <span className="label-text">{translate("Tehsil")} {translate("Halqa")}</span>
               </label>
             </div>
             {isDivision ? (
               <div>
                 <label className="label">
-                  <span className="text-base label-text">Division</span>
+                  <span className="text-base label-text">{translate("Division")}</span>
                 </label>
                 <select
                   name="division"
@@ -1032,7 +1032,7 @@ export const LocationDivision = () => {
                   className="w-full input input-bordered input-primary"
                 >
                   <option value="" disabled>
-                    Select Division
+                    {translate("Select")} {translate("Division")}
                   </option>
                   {divisions
                     ?.filter((i) => !i?.disabled)
@@ -1046,7 +1046,7 @@ export const LocationDivision = () => {
             ) : (
               <div>
                 <label className="label">
-                  <span className="text-base label-text">Tehsil</span>
+                  <span className="text-base label-text">{translate("Tehsil")}</span>
                 </label>
                 <select
                   name="tehsil"
@@ -1058,7 +1058,7 @@ export const LocationDivision = () => {
                   className="w-full input input-bordered input-primary"
                 >
                   <option value="" disabled>
-                    Select Tehsil
+                    {translate("Select")} {translate("Tehsil")}
                   </option>
                   {tehsils
                     .filter((i) => !i?.disabled)
@@ -1072,7 +1072,7 @@ export const LocationDivision = () => {
             )}
             <div>
               <label className="label">
-                <span className="text-base label-text">Halqa Type</span>
+                <span className="text-base label-text">{translate("Halqa")} {translate("Type")}</span>
               </label>
               <select
                 className="select select-bordered w-full max-w-full"
@@ -1082,15 +1082,15 @@ export const LocationDivision = () => {
                 value={formHalqa.unitType}
               >
                 <option disabled value="">
-                  Select Unit Type
+                  {translate("Select")} {translate("Unit")} {translate("Type")}
                 </option>
-                <option value="Residential">Residential</option>
-                <option value="Educational">Educational</option>
+                <option value="Residential">{translate("Residential")}</option>
+                <option value="Educational">{translate("Educational")}</option>
               </select>
             </div>
             <div>
               <label className="label">
-                <span className="text-base label-text">Halqa</span>
+                <span className="text-base label-text">{translate("Halqa")}</span>
               </label>
               <input
                 name="name"
@@ -1112,7 +1112,7 @@ export const LocationDivision = () => {
                 className="btn capitalize"
                 onClick={handleSubmitHalqaEdit}
               >
-                Update
+                {translate("Update")}
               </button>
             ) : (
               <button
@@ -1120,7 +1120,7 @@ export const LocationDivision = () => {
                 className="btn capitalize"
                 onClick={handleSubmitHalqa}
               >
-                Add
+                {translate("Add")}
               </button>
             )}
             <form method="dialog">
@@ -1129,7 +1129,7 @@ export const LocationDivision = () => {
                 id="close-maqam-modal"
                 className="btn ms-3"
               >
-                Close
+                {translate("Close")}
               </button>
             </form>
           </div>
@@ -1137,10 +1137,10 @@ export const LocationDivision = () => {
       </dialog>
       <dialog id="area_details" className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg mb-3">Details of the area</h3>
+          <h3 className="font-bold text-lg mb-3">{translate("Detailsofthearea")}</h3>
           <div className="w-full  flex flex-col justify-between items-start text-left gap-4  flex-wrap">
             <div className="w-full flex justify-start items-center gap-5">
-              <h5>Name:</h5>
+              <h5>{translate("Name")}:</h5>
               <h4 className="text-gray-400 font-bold">{areaDetails?.name}</h4>
               <h4 className="text-gray-400 font-semibold">
                 {areaDetails?.parentType === "Ilaqa" ||
@@ -1173,7 +1173,7 @@ export const LocationDivision = () => {
               !areaDetails?.parentType === "Division" && (
                 <>
                   <div className="w-full flex justify-start items-center gap-5">
-                    <h5> District:</h5>
+                    <h5> {translate("District")}:</h5>
                     <h4 className="text-gray-400 font-bold">
                       {areaDetails?.parentId?.district
                         ? areaDetails?.parentId?.district?.name
@@ -1181,7 +1181,7 @@ export const LocationDivision = () => {
                     </h4>
                   </div>
                   <div className="w-full flex justify-start items-center gap-5">
-                    <h5>Division:</h5>
+                    <h5>{translate("Division")}:</h5>
                     <h4 className="text-gray-400 font-bold">
                       {areaDetails?.parentId?.district
                         ? areaDetails?.parentId?.district?.division?.name
@@ -1192,7 +1192,7 @@ export const LocationDivision = () => {
               )}
             {areaDetails?.parentType === "Ilaqa" && (
               <div className="w-full flex justify-start items-center gap-5">
-                <h5>Maqam:</h5>
+                <h5>{translate("Maqam")}:</h5>
                 <h4 className="text-gray-400 font-bold">
                   {areaDetails?.parentType === "Ilaqa"
                     ? areaDetails?.parentId?.maqam?.name
@@ -1201,7 +1201,7 @@ export const LocationDivision = () => {
               </div>
             )}
             <div className="w-full flex justify-start items-center gap-5">
-              <h4>Province:</h4>
+              <h4>{translate("Province")}:</h4>
               <h4 className="text-gray-400 font-bold">
                 {areaDetails?.parentType === "Ilaqa"
                   ? areaDetails?.parentId?.maqam?.province?.name
@@ -1217,8 +1217,8 @@ export const LocationDivision = () => {
               </h4>
             </div>
             <div className="w-full flex justify-start items-center gap-5">
-              <h5>Country:</h5>
-              <h4 className="text-gray-400 font-bold">Pakistan</h4>
+              <h5>{translate("Country")}:</h5>
+              <h4 className="text-gray-400 font-bold">{translate("Pakistan")}</h4>
             </div>
           </div>
           <div className="modal-action w-full">
@@ -1228,7 +1228,7 @@ export const LocationDivision = () => {
                   id="close-details-modal"
                   className="btn ms-3 capitalize"
                 >
-                  Close
+                  {translate("Close")}
                 </button>
               </div>
             </form>

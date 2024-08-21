@@ -27,6 +27,7 @@ import { Jamiaat } from "../components/divisionReport/Jamiaat";
 import { Colleges } from "../components/divisionReport/Colleges";
 import { ZailiActivities } from "../components/divisionReport/ZailiActivities";
 import { Baitulmal } from "../components/divisionReport/Baitulmal";
+import { translate } from "../context/localization";
 
 export const Division = () => {
   // EDIT CODE START
@@ -378,7 +379,7 @@ export const Division = () => {
             class="absolute top-20 left-5 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 "
            onClick={()=>navigate('/reports')}
            >
-            Back
+            {translate("Back")}
           </button>
           {/* <fieldset disabled={view} className="w-full"> */}
           <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
