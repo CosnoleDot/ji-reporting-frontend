@@ -1,7 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { GeneralLayout } from "../components";
 import { UIContext } from "../context/ui";
-import { FaEye, FaTrash } from "react-icons/fa";
+import { FiTrash } from "react-icons/fi";
+import { HiOutlineUpload } from "react-icons/hi";
+
 import {
   DivisionContext,
   HalqaContext,
@@ -14,10 +16,10 @@ import {
   ViewDetails,
 } from "../context";
 import instance from "../api/instrance";
-import { MdOutlineUpgrade } from "react-icons/md";
 import { RiDeviceRecoverFill } from "react-icons/ri";
 import { FcViewDetails } from "react-icons/fc";
 import { decryptData } from "../utils";
+import { IoEyeOutline } from "react-icons/io5";
 export const DeleteUser = () => {
   const me = useContext(MeContext);
   const halqas = useContext(HalqaContext);
@@ -27,7 +29,8 @@ export const DeleteUser = () => {
   const provinces = useContext(ProvinceContext);
   const divisions = useContext(DivisionContext);
   const areaDetails = useContext(ViewDetails);
-  const { nazim, loading, setLoading, getNazim, getAreaDetails } = useContext(UIContext);
+  const { nazim, loading, setLoading, getNazim, getAreaDetails } =
+    useContext(UIContext);
   const { dispatch } = useToastState();
 
   const [data, setData] = useState(nazim);
@@ -40,7 +43,9 @@ export const DeleteUser = () => {
   const [selectedSubject, setSelectedSubject] = useState("");
   const [singleUser, setSingleUser] = useState("");
   const [selectedId, setSelectedId] = useState("");
-  const [years, setYears] = useState([2021, 2022, 2023, 2024, 2025, 2026, 2027]);
+  const [years, setYears] = useState([
+    2021, 2022, 2023, 2024, 2025, 2026, 2027,
+  ]);
   const [selectedYear, setSelectedYear] = useState(null);
   const [birthYear, setBirthYear] = useState(null);
   const [openYears, setOpenYears] = useState(false);
@@ -93,7 +98,9 @@ export const DeleteUser = () => {
   const deleteUser = async (user) => {
     setLoading(true);
     try {
-      let isConfirmed = window.confirm(`Are you sure you want to delete ${user?.email} ?`);
+      let isConfirmed = window.confirm(
+        `Are you sure you want to delete ${user?.email} ?`
+      );
       if (isConfirmed) {
         const req = await instance.delete("/user/" + user?._id, {
           headers: {
@@ -138,18 +145,24 @@ export const DeleteUser = () => {
       joiningDate: formData.get("joiningDate"),
       nazimType: formData.get("nazimType"),
     };
-    if (data.userAreaId && data.userAreaId !== "") params.userAreaId = data.userAreaId;
-    if (data.userAreaType && data.userAreaType !== "") params.userAreaType = data.userAreaType;
+    if (data.userAreaId && data.userAreaId !== "")
+      params.userAreaId = data.userAreaId;
+    if (data.userAreaType && data.userAreaType !== "")
+      params.userAreaType = data.userAreaType;
     if (data.name && data.name !== "") params.name = data.name;
     if (data.nazim && data.nazim !== "") params.nazim = data.nazim;
     if (data.dob && data.dob !== "") params.dob = data.dob;
     if (data.address && data.address !== "") params.address = data.address;
-    if (data.qualification && data.qualification !== "") params.qualification = data.qualification;
+    if (data.qualification && data.qualification !== "")
+      params.qualification = data.qualification;
     if (data.subject && data.subject !== "") params.subject = data.subject;
     if (data.semester && data.semester !== "") params.semester = data.semester;
-    if (data.institution && data.institution !== "") params.institution = data.institution;
-    if (data.joiningDate && data.joiningDate !== "") params.joiningDate = data.joiningDate;
-    if (data.nazimType && data.nazimType !== "") params.nazimType = data.nazimType;
+    if (data.institution && data.institution !== "")
+      params.institution = data.institution;
+    if (data.joiningDate && data.joiningDate !== "")
+      params.joiningDate = data.joiningDate;
+    if (data.nazimType && data.nazimType !== "")
+      params.nazimType = data.nazimType;
 
     try {
       const request = await instance.get("/user/filter", {
@@ -300,186 +313,203 @@ export const DeleteUser = () => {
       document.removeEventListener("click", handleEventClick);
     };
   }, []);
-
+  const [users, setUsers] = useState([
+    // Replace this with your actual user data
+    {
+      name: "PIA Society",
+      nazimType: "Janoobi",
+      email: "Chuniachu@gmail.com",
+      area: "Punjab",
+      province: "Punjab",
+      country: "Punjab",
+      status: "Inactive",
+    },
+    // ... other users
+  ]);
   return (
     <GeneralLayout title={"Manage Users"} active={"user-switch"}>
-      <div className="p-5 relative flex flex-col items-center py-3 px-0 pt-0 justify-start h-[calc(100vh-65.6px-64px)] overflow-hidden overflow-y-auto">
-        <div className="w-full">
-          <div className="flex items-center justify-start md:justify-center gap-2 p-2 overflow-hidden overflow-x-scroll">
+      <div className="px-5 relative flex flex-col items-center py-3 pt-0 justify-start h-[calc(100vh-65.6px-64px)] overflow-hidden overflow-y-auto">
+        <div className="w-full flex md:flex-row flex-col md:justify-between justify-start items-center py-4">
+          <div className="mb-4 w-full md:w-[30%] flex flex-col">
+            <h1 className="text-2xl font-bold text-start ">Manage Users</h1>
+            <p className="text-gray-500">Manage Your users easily </p>
+          </div>
+          <div className="flex md:flex-row flex-col w-full md:w-[70%] items-center justify-start md:justify-center gap-2 p-2 overflow-hidden overflow-x-scroll">
             <input
               type="search"
               name="Search"
               id="search"
               placeholder="Search by name..."
-              className="input input-bordered"
+              className="input w-full input-bordered max-w-lg"
               value={search}
               onChange={searchUsers}
             />
-            <button
-              onClick={() => {
-                document.getElementById("categorize-filter").showModal();
-              }}
-              className="btn border-none"
-            >
-              More Filters
-            </button>
-            <button
-              onClick={() => clearSearchFilters()}
-              className="btn border-none"
-            >
-              Clear Filters
-            </button>
+            <div className="w-full flex gap-2">
+              <button
+                onClick={() => {
+                  document.getElementById("categorize-filter").showModal();
+                }}
+                className="py-1 px-4 rounded-md bg-primary text-white border-none capitalize"
+              >
+                More Filters
+              </button>
+              <button
+                onClick={() => clearSearchFilters()}
+                className="border rounded-md py-1 px-4  bg-none bg-transparent"
+              >
+                Clear Filters
+              </button>
+            </div>
           </div>
-          <div className="flex overflow-hidden overflow-x-scroll overflow-y-scroll">
-            <table className="table table-zebra">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>Name</th>
-                  <th>Nazim Type</th>
-                  <th>Email</th>
-                  <th>Area Details</th>
-                  <th>Status</th>
-                  <th className="text-center">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {paginatedData
-                  ?.filter((i) => i?.userAreaId?._id !== me?.userAreaId?._id)
-                  ?.map((user, index) => (
-                    <tr key={user?._id}>
-                      <th>{(currentPage - 1) * itemsPerPage + index + 1}</th>
-                      <td>{user?.name || "-"}</td>
-                      <td className="min-w-[10rem]">
-                        {user?.nazimType
-                          ?.replace(/-/g, " ") // Replace hyphens with spaces
-                          .split(" ") // Split the string into an array of words
-                          .map(
-                            (word) =>
-                              word.charAt(0).toUpperCase() + word.slice(1)
-                          ) // Capitalize the first letter of each word
-                          .join(" ") || // Join the array back into a string with spaces
-                          "-"}
-                      </td>
-                      <td>{user?.email || "-"}</td>
-                      <td>
-                        <div
-                          onClick={() => {
-                            getAreaDetails(user?.userAreaId);
-                          }}
-                        >
-                          <FcViewDetails
-                            className="cursor-pointer text-2xl p-0 m-0"
-                            id="sv"
-                          />
-                        </div>
-                      </td>
-                      <td>
-                        {user?.isDeleted ? (
-                          <div className="badge badge-error">inActive</div>
-                        ) : (
-                          <div className="badge badge-accent">active</div>
-                        )}
-                      </td>
-                      <td
-                        className="w-full flex row justify-evenly items-center gap-3"
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-evenly",
+        </div>
+        <div className="w-full overflow-scroll">
+          <table className="w-full">
+            <thead>
+              <tr className="">
+                <th className="border py-2 px-4 font-semibold text-gray-400">
+                  Name
+                </th>
+                <th className="border py-2 px-4 font-semibold text-gray-400">
+                  Nazim Type
+                </th>
+                <th className="border py-2 px-4 font-semibold text-gray-400">
+                  Email
+                </th>
+                <th className="border py-2 px-4 font-semibold text-gray-400">
+                  Area
+                </th>
+                <th className="border py-2 px-4 font-semibold text-gray-400">
+                  Country
+                </th>
+                <th className="border py-2 px-4 font-semibold text-gray-400">
+                  Status
+                </th>
+                <th className="border py-2 px-4 font-semibold text-gray-400">
+                  Action
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {paginatedData
+                ?.filter((i) => i?.userAreaId?._id !== me?.userAreaId?._id)
+                ?.map((user, index) => (
+                  <tr key={user.email}>
+                    <td className="border-b-2 border-l-2 p-4">
+                      {user?.name || "-"}
+                    </td>
+                    <td className="border-b-2 p-4">
+                      {user?.nazimType
+                        ?.replace(/-/g, " ")
+                        .split(" ")
+                        .map(
+                          (word) => word.charAt(0).toUpperCase() + word.slice(1)
+                        )
+                        .join(" ") || "-"}
+                    </td>
+                    <td className="border-b-2 p-4">{user?.email || "-"}</td>
+                    <td className="border-b-2 p-4">
+                      {" "}
+                      <div
+                        onClick={() => {
+                          getAreaDetails(user?.userAreaId);
                         }}
                       >
-                        <div className="flex justify-center items-center">
+                        <FcViewDetails
+                          className="cursor-pointer text-2xl p-0 m-0"
+                          id="sv"
+                        />
+                      </div>
+                    </td>
+                    <td className="border-b-2 p-4">Pakistan</td>
+                    <td className="border-b-2 p-4">
+                      {user?.isDeleted ? (
+                        <div className="bg-red-200 badge badge-lg flex justify-center items-center py-2 text-red-800">
+                          inActive
+                        </div>
+                      ) : (
+                        <div className="bg-green-200 badge badge-lg flex justify-center items-center py-2 text-green-800">
+                          active
+                        </div>
+                      )}
+                    </td>
+                    <td className="border-b-2 border-r-2 p-4 ">
+                      <div className="w-full flex justify-between items-center">
+                        <button
+                          onClick={() => {
+                            document
+                              .getElementById("view-details-modal")
+                              .showModal();
+                            setSingleUser(user);
+                          }}
+                          readOnly={loading}
+                        >
+                          <IoEyeOutline />
+                        </button>
+                        <button
+                          readOnly={loading}
+                          onClick={() => {
+                            if (!user.isDeleted) {
+                              deleteUser(user);
+                            } else {
+                              document
+                                .getElementById("change-status-modal")
+                                .showModal();
+                              setSingleUser(user);
+                            }
+                          }}
+                        >
+                          {user?.isDeleted ? (
+                            <RiDeviceRecoverFill />
+                          ) : (
+                            <FiTrash className="text-red-500" />
+                          )}
+                        </button>
+                        {me?.userAreaType !== "halqa" && (
                           <button
+                            readOnly={loading}
+                            disabled={user?.isDeleted}
                             onClick={() => {
                               document
-                                .getElementById("view-details-modal")
+                                .getElementById("change-status-modal")
                                 .showModal();
                               setSingleUser(user);
                             }}
-                            readOnly={loading}
-                            className="btn"
                           >
-                            <FaEye />
+                            <HiOutlineUpload />
                           </button>
-                        </div>
-                        <div className="flex justify-center items-center">
-                          <button
-                            readOnly={loading}
-                            className="btn"
-                            onClick={() => {
-                              if (!user.isDeleted) {
-                                deleteUser(user);
-                              } else {
-                                document
-                                  .getElementById("change-status-modal")
-                                  .showModal();
-                                setSingleUser(user);
-                              }
-                            }}
-                          >
-                            {user?.isDeleted ? (
-                              <RiDeviceRecoverFill />
-                            ) : (
-                              <FaTrash />
-                            )}
-                          </button>
-                        </div>
-                        {me?.userAreaType !== "halqa" && (
-                          <div className="flex justify-center items-center">
-                            <button
-                              readOnly={loading}
-                              disabled={user?.isDeleted}
-                              className="btn"
-                              onClick={() => {
-                                document
-                                  .getElementById("change-status-modal")
-                                  .showModal();
-                                setSingleUser(user);
-                              }}
-                            >
-                              <MdOutlineUpgrade />
-                            </button>
-                          </div>
                         )}
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
-          </div>
-          <div className="flex w-full px-4 justify-between items-center mt-4">
-        <button
-          className="btn capitalize p-[8px]"
-          disabled={currentPage === 1}
-          onClick={() => setCurrentPage((prev) => prev - 1)}
-        >
-          Previous
-        </button>
-        <span className="mx-4">
-          Page {currentPage} of {totalPages===0 ? 1 : totalPages}
-        </span>
-        <button
-          className="btn capitalize p-[8px]"
-          disabled={currentPage === totalPages}
-          onClick={() => setCurrentPage((prev) => prev + 1)}
-        >
-          Next
-        </button>
-      </div>
+                         
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
         </div>
+
+        <div className="flex w-full px-4 justify-end items-center mt-4">
+          <button
+            className="rounded-full border capitalize p-[8px] w-10 h-10 bg-gray-200 hover:bg-primary hover:text-white"
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage((prev) => prev - 1)}
+          >
+            {"<"}
+          </button>
+          <span className="mx-4">
+            Page {currentPage} of {totalPages === 0 ? 1 : totalPages}
+          </span>
+          <button
+            className="rounded-full border capitalize p-[8px] w-10 h-10 bg-gray-200 hover:bg-primary hover:text-white"
+            disabled={currentPage === totalPages}
+            onClick={() => setCurrentPage((prev) => prev + 1)}
+          >
+            {">"}
+          </button>
+        </div>
+        {/* DIALOG BOXES */}
 
         <dialog id="categorize-filter" className="modal">
           <div className="modal-box p-2">
-            <form method="dialog">
-              {/* if there is a button in form, it will close the modal */}
-              <button
-                id="filter-area-dialog-close-btn"
-                className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-              >
-                ✕
-              </button>
-            </form>
             <form
               autoComplete="off"
               method="dialog"
@@ -490,7 +520,30 @@ export const DeleteUser = () => {
               <h1 className="font-semibold text-md md:text-2xl">
                 Categorize Users
               </h1>
-              <div className="flex md:flex-row flex-col gap-2 justify-between items-center">
+              <div role="tablist" className="tabs tabs-boxed md:w-[50%] w-full">
+                <button
+                  role="tab"
+                  className={`tab ${withArea ? "bg-white text-black" : ""}`}
+                  onClick={(e) => {
+                    setWithArea(true);
+                    e.preventDefault();
+                  }}
+                >
+                  Area Details
+                </button>
+                <button
+                  role="tab"
+                  className={`tab ${!withArea ? "bg-white text-black" : ""}`}
+                  onClick={(e) => {
+                    setWithArea(false);
+                    e.preventDefault();
+                  }}
+                >
+                  Personal Details
+                </button>
+              </div>
+
+              {/* <div className="flex md:flex-row flex-col gap-2 justify-between items-center">
                 <button
                   className="btn btn-primary border-none capitalize w-full sm:w-auto"
                   onClick={(e) => {
@@ -509,7 +562,7 @@ export const DeleteUser = () => {
                 >
                   Categorize with details
                 </button>
-              </div>
+              </div> */}
               {!withArea && (
                 <div>
                   <div>
@@ -520,7 +573,7 @@ export const DeleteUser = () => {
                       type="text"
                       placeholder="Full Name"
                       name="name"
-                      className="w-full input input-bordered input-primary"
+                      className="w-full input input-bordered "
                     />
                   </div>
 
@@ -535,7 +588,7 @@ export const DeleteUser = () => {
                       id="year-of-joining"
                       placeholder={"Select year"}
                       name="joiningDate"
-                      className="w-full select select-bordered select-primary"
+                      className="input input-bordered w-full"
                       value={selectedYear}
                       onClick={() => setOpenYears(!openYears)}
                     />
@@ -589,7 +642,7 @@ export const DeleteUser = () => {
                       id="year-of-joining"
                       placeholder={"Select year"}
                       name="dob"
-                      className="w-full select select-bordered select-primary"
+                      className="input input-bordered w-full"
                       value={birthYear}
                       onClick={() => setOpenBirthYears(!openBirthYears)}
                     />
@@ -640,7 +693,7 @@ export const DeleteUser = () => {
                     </label>
                     <select
                       name="qualification"
-                      className="select select-bordered select-primary w-full"
+                      className="select  select-bordered w-full"
                       defaultValue={""}
                     >
                       {/* <button>add</button> */}
@@ -661,7 +714,7 @@ export const DeleteUser = () => {
                     <select
                       name="subject"
                       id="subject"
-                      className="select select-bordered select-primary w-full"
+                      className="select select-bordered  w-full"
                       value={selectedSubject}
                       onChange={(e) => setSelectedSubject(e.target.value)}
                     >
@@ -686,7 +739,7 @@ export const DeleteUser = () => {
                     </label>
                     <select
                       name="semester"
-                      className="select select-bordered select-primary w-full "
+                      className="select select-bordered  w-full "
                       defaultValue={""}
                     >
                       <option value={""}>Semester/Year</option>
@@ -717,7 +770,7 @@ export const DeleteUser = () => {
                       type="text"
                       placeholder="Institution"
                       name="institution"
-                      className="w-full input input-bordered input-primary"
+                      className="w-full input input-bordered "
                     />
                   </div>
                 </div>
@@ -728,14 +781,14 @@ export const DeleteUser = () => {
                     <span className="px-1 py-2 block font-semibold">
                       Organization pocket:
                     </span>
-                    <div className="flex flex-wrap items-center justify-start border border-primary p-2 rounded-lg">
+                    <div className="flex flex-wrap items-center justify-start border  p-2 rounded-lg">
                       {me?.nazim.toLowerCase() === "country" && (
                         <div className="form-control">
                           <label className="label cursor-pointer gap-2">
                             <input
                               type="radio"
                               name="userAreaType"
-                              className="radio checked:bg-blue-500"
+                              className="radio checked:bg-primary"
                               checked={userAreaType === "Province"}
                               value="Province"
                               onChange={(e) => {
@@ -757,7 +810,7 @@ export const DeleteUser = () => {
                             <input
                               type="radio"
                               name="userAreaType"
-                              className="radio checked:bg-blue-500"
+                              className="radio checked:bg-primary"
                               checked={userAreaType === "Division"}
                               value="Division"
                               onChange={(e) => {
@@ -780,7 +833,7 @@ export const DeleteUser = () => {
                               <input
                                 type="radio"
                                 name="userAreaType"
-                                className="radio checked:bg-blue-500"
+                                className="radio checked:bg-primary"
                                 checked={userAreaType === "Ilaqa"}
                                 value="Ilaqa"
                                 onChange={(e) => {
@@ -802,7 +855,7 @@ export const DeleteUser = () => {
                             <input
                               type="radio"
                               name="userAreaType"
-                              className="radio checked:bg-blue-500"
+                              className="radio checked:bg-primary"
                               checked={userAreaType === "Maqam"}
                               value="Maqam"
                               onChange={(e) => {
@@ -821,7 +874,7 @@ export const DeleteUser = () => {
                           <input
                             type="radio"
                             name="userAreaType"
-                            className="radio checked:bg-blue-500"
+                            className="radio checked:bg-primary"
                             checked={userAreaType === "Halqa"}
                             value="Halqa"
                             onChange={(e) => {
@@ -842,13 +895,13 @@ export const DeleteUser = () => {
                     <span className="px-1 py-2 block font-semibold">
                       Change status to:
                     </span>
-                    <div className="flex  items-center justify-start flex-wrap border border-primary p-2 rounded-lg">
+                    <div className="flex  items-center justify-start flex-wrap border  p-2 rounded-lg">
                       <div className="form-control">
                         <label className="label cursor-pointer gap-2">
                           <input
                             type="radio"
                             name="nazimType"
-                            className="radio checked:bg-blue-500"
+                            className="radio checked:bg-primary"
                             value="nazim"
                             checked={nazimType === "nazim"}
                             onChange={() => setNazimType("nazim")}
@@ -861,7 +914,7 @@ export const DeleteUser = () => {
                           <input
                             type="radio"
                             name="nazimType"
-                            className="radio checked:bg-blue-500"
+                            className="radio checked:bg-primary"
                             value="umeedwaar"
                             checked={nazimType === "umeedwar"}
                             onChange={() => setNazimType("umeedwar")}
@@ -874,7 +927,7 @@ export const DeleteUser = () => {
                           <input
                             type="radio"
                             name="nazimType"
-                            className="radio checked:bg-blue-500"
+                            className="radio checked:bg-primary"
                             value="umeedwaar-nazim"
                             onChange={() => setNazimType("umeedwaar-nazim")}
                           />
@@ -886,7 +939,7 @@ export const DeleteUser = () => {
                           <input
                             type="radio"
                             name="nazimType"
-                            className="radio checked:bg-blue-500"
+                            className="radio checked:bg-primary"
                             value="rukan"
                             checked={nazimType === "rukan"}
                             onChange={() => setNazimType("rukan")}
@@ -899,7 +952,7 @@ export const DeleteUser = () => {
                           <input
                             type="radio"
                             name="nazimType"
-                            className="radio checked:bg-blue-500"
+                            className="radio checked:bg-primary"
                             value="rukan-nazim"
                             checked={nazimType === "rukan-nazim"}
                             onChange={() => setNazimType("rukan-nazim")}
@@ -915,7 +968,7 @@ export const DeleteUser = () => {
                     <input
                       id="autocomplete0"
                       type="search"
-                      className="input input-bordered input-primary w-full"
+                      className="input input-bordered w-full"
                       placeholder="Select area"
                       onChange={(e) => setSearchArea(e.target.value)}
                       onClick={() => {
@@ -1001,17 +1054,28 @@ export const DeleteUser = () => {
                   </div>
                 </div>
               )}
-              <button
-                type="submit"
-                className="btn btn-primary"
-                onClick={() =>
-                  document
-                    .getElementById("filter-area-dialog-close-btn")
-                    .click()
-                }
-              >
-                Filter
-              </button>
+              <div className="w-full flex justify-end items-center gap-4">
+                <form method="dialog">
+                  {/* if there is a button in form, it will close the modal */}
+                  <button
+                    id="filter-area-dialog-close-btn"
+                    className="border border-primary rounded-md bg-white text-black capitalize py-1 px-4"
+                  >
+                    Cancel
+                  </button>
+                </form>
+                <button
+                  type="submit"
+                  className="rounded-md border btn-primary capitalize py-1 px-4"
+                  onClick={() =>
+                    document
+                      .getElementById("filter-area-dialog-close-btn")
+                      .click()
+                  }
+                >
+                  Filter
+                </button>
+              </div>
             </form>
           </div>
         </dialog>
@@ -1262,14 +1326,14 @@ export const DeleteUser = () => {
                   <span className="px-1 py-2 block font-semibold">
                     Organization pocket:
                   </span>
-                  <div className="flex flex-wrap items-center justify-start border border-primary p-2 rounded-lg">
+                  <div className="flex flex-wrap items-center justify-start border  p-2 rounded-lg">
                     {me?.nazim.toLowerCase() === "country" && (
                       <div className="form-control">
                         <label className="label cursor-pointer gap-2">
                           <input
                             type="radio"
                             name="userAreaType"
-                            className="radio checked:bg-blue-500"
+                            className="radio checked:bg-primary"
                             checked={userAreaType === "Province"}
                             value="Province"
                             onChange={(e) => {
@@ -1291,7 +1355,7 @@ export const DeleteUser = () => {
                           <input
                             type="radio"
                             name="userAreaType"
-                            className="radio checked:bg-blue-500"
+                            className="radio checked:bg-primary"
                             checked={userAreaType === "Division"}
                             value="Division"
                             onChange={(e) => {
@@ -1314,7 +1378,7 @@ export const DeleteUser = () => {
                             <input
                               type="radio"
                               name="userAreaType"
-                              className="radio checked:bg-blue-500"
+                              className="radio checked:bg-primary"
                               checked={userAreaType === "Ilaqa"}
                               value="Ilaqa"
                               onChange={(e) => {
@@ -1335,7 +1399,7 @@ export const DeleteUser = () => {
                           <input
                             type="radio"
                             name="userAreaType"
-                            className="radio checked:bg-blue-500"
+                            className="radio checked:bg-primary"
                             checked={userAreaType === "Maqam"}
                             value="Maqam"
                             onChange={(e) => {
@@ -1354,7 +1418,7 @@ export const DeleteUser = () => {
                         <input
                           type="radio"
                           name="userAreaType"
-                          className="radio checked:bg-blue-500"
+                          className="radio checked:bg-primary"
                           checked={userAreaType === "Halqa"}
                           value="Halqa"
                           onChange={(e) => {
@@ -1374,13 +1438,13 @@ export const DeleteUser = () => {
                   <span className="px-1 py-2 block font-semibold">
                     Change status to:
                   </span>
-                  <div className="flex  items-center justify-start flex-wrap border border-primary p-2 rounded-lg">
+                  <div className="flex  items-center justify-start flex-wrap border  p-2 rounded-lg">
                     <div className="form-control">
                       <label className="label cursor-pointer gap-2">
                         <input
                           type="radio"
                           name="nazimType"
-                          className="radio checked:bg-blue-500"
+                          className="radio checked:bg-primary"
                           value="nazim"
                           checked={nazimType === "nazim"}
                           onChange={() => setNazimType("nazim")}
@@ -1393,7 +1457,7 @@ export const DeleteUser = () => {
                         <input
                           type="radio"
                           name="nazimType"
-                          className="radio checked:bg-blue-500"
+                          className="radio checked:bg-primary"
                           value="umeedwaar"
                           checked={nazimType === "umeedwar"}
                           onChange={() => setNazimType("umeedwar")}
@@ -1406,7 +1470,7 @@ export const DeleteUser = () => {
                         <input
                           type="radio"
                           name="nazimType"
-                          className="radio checked:bg-blue-500"
+                          className="radio checked:bg-primary"
                           value="umeedwaar-nazim"
                           onChange={() => setNazimType("umeedwaar-nazim")}
                         />
@@ -1418,7 +1482,7 @@ export const DeleteUser = () => {
                         <input
                           type="radio"
                           name="nazimType"
-                          className="radio checked:bg-blue-500"
+                          className="radio checked:bg-primary"
                           value="rukan"
                           checked={nazimType === "rukan"}
                           onChange={() => setNazimType("rukan")}
@@ -1431,7 +1495,7 @@ export const DeleteUser = () => {
                         <input
                           type="radio"
                           name="nazimType"
-                          className="radio checked:bg-blue-500"
+                          className="radio checked:bg-primary"
                           value="rukan-nazim"
                           checked={nazimType === "rukan-nazim"}
                           onChange={() => setNazimType("rukan-nazim")}
