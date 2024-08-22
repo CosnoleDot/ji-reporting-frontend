@@ -211,7 +211,7 @@ export const Reports = () => {
             <div className="flex items-center gap-2 w-full">
               {active === localStorage.getItem("@type") && (
                 <button
-                  className="font-inter w-1/2 gap-1 justify-center flex items-center bg-primary  text-white p-2 rounded text-[14px] font-medium leading-[20px] text-left"
+                  className="font-inter w-full gap-1 justify-center flex items-center bg-primary  text-white p-2 rounded text-[14px] font-medium leading-[20px] text-left"
                   onClick={handleReport}
                 >
                   <FaPlus />
@@ -219,7 +219,7 @@ export const Reports = () => {
                 </button>
               )}
               <button
-                className="font-inter w-1/2 text-[14px] bg-primary flex justify-center text-white p-2 rounded font-medium leading-[20px] text-left"
+                className="font-inter w-full text-[14px] bg-primary flex justify-center text-white p-2 rounded font-medium leading-[20px] text-left"
                 onClick={() => navigate("/compilation")}
               >
                 Compile
