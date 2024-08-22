@@ -27,7 +27,8 @@ export const DeleteUser = () => {
   const provinces = useContext(ProvinceContext);
   const divisions = useContext(DivisionContext);
   const areaDetails = useContext(ViewDetails);
-  const { nazim, loading, setLoading, getNazim, getAreaDetails } = useContext(UIContext);
+  const { nazim, loading, setLoading, getNazim, getAreaDetails } =
+    useContext(UIContext);
   const { dispatch } = useToastState();
 
   const [data, setData] = useState(nazim);
@@ -40,7 +41,9 @@ export const DeleteUser = () => {
   const [selectedSubject, setSelectedSubject] = useState("");
   const [singleUser, setSingleUser] = useState("");
   const [selectedId, setSelectedId] = useState("");
-  const [years, setYears] = useState([2021, 2022, 2023, 2024, 2025, 2026, 2027]);
+  const [years, setYears] = useState([
+    2021, 2022, 2023, 2024, 2025, 2026, 2027,
+  ]);
   const [selectedYear, setSelectedYear] = useState(null);
   const [birthYear, setBirthYear] = useState(null);
   const [openYears, setOpenYears] = useState(false);
@@ -93,7 +96,9 @@ export const DeleteUser = () => {
   const deleteUser = async (user) => {
     setLoading(true);
     try {
-      let isConfirmed = window.confirm(`Are you sure you want to delete ${user?.email} ?`);
+      let isConfirmed = window.confirm(
+        `Are you sure you want to delete ${user?.email} ?`
+      );
       if (isConfirmed) {
         const req = await instance.delete("/user/" + user?._id, {
           headers: {
@@ -138,18 +143,24 @@ export const DeleteUser = () => {
       joiningDate: formData.get("joiningDate"),
       nazimType: formData.get("nazimType"),
     };
-    if (data.userAreaId && data.userAreaId !== "") params.userAreaId = data.userAreaId;
-    if (data.userAreaType && data.userAreaType !== "") params.userAreaType = data.userAreaType;
+    if (data.userAreaId && data.userAreaId !== "")
+      params.userAreaId = data.userAreaId;
+    if (data.userAreaType && data.userAreaType !== "")
+      params.userAreaType = data.userAreaType;
     if (data.name && data.name !== "") params.name = data.name;
     if (data.nazim && data.nazim !== "") params.nazim = data.nazim;
     if (data.dob && data.dob !== "") params.dob = data.dob;
     if (data.address && data.address !== "") params.address = data.address;
-    if (data.qualification && data.qualification !== "") params.qualification = data.qualification;
+    if (data.qualification && data.qualification !== "")
+      params.qualification = data.qualification;
     if (data.subject && data.subject !== "") params.subject = data.subject;
     if (data.semester && data.semester !== "") params.semester = data.semester;
-    if (data.institution && data.institution !== "") params.institution = data.institution;
-    if (data.joiningDate && data.joiningDate !== "") params.joiningDate = data.joiningDate;
-    if (data.nazimType && data.nazimType !== "") params.nazimType = data.nazimType;
+    if (data.institution && data.institution !== "")
+      params.institution = data.institution;
+    if (data.joiningDate && data.joiningDate !== "")
+      params.joiningDate = data.joiningDate;
+    if (data.nazimType && data.nazimType !== "")
+      params.nazimType = data.nazimType;
 
     try {
       const request = await instance.get("/user/filter", {
@@ -177,6 +188,18 @@ export const DeleteUser = () => {
       userAreaId: selectedId,
       userId: singleUser?._id,
     };
+    if (
+      !data?.nazim ||
+      !data?.nazim === "" ||
+      !data?.userAreaId ||
+      !data?.userAreaId === "" ||
+      !data?.nazimType ||
+      !data?.nazimType === "" ||
+      !data?.userId ||
+      !data?.userId === ""
+    ) {
+      dispatch({ type: "ERROR", payload: "Please select all fields" });
+    }
     let req;
     try {
       req = await instance.put("/user/update-status", data, {
@@ -188,7 +211,15 @@ export const DeleteUser = () => {
       dispatch({ type: "SUCCESS", payload: req.data?.message });
       getNazim();
       setData(nazim);
+      setUserAreaType("");
+      setSingleUser("");
+      setNazimType("");
     } catch (err) {
+      setUserAreaType("");
+      setSingleUser("");
+      setNazimType("");
+      setSelectedId("");
+      document.getElementById("autocomplete0").value = "";
       dispatch({ type: "ERROR", payload: err?.response?.data?.message });
     }
   };
@@ -449,24 +480,24 @@ export const DeleteUser = () => {
             </table>
           </div>
           <div className="flex w-full px-4 justify-between items-center mt-4">
-        <button
-          className="btn capitalize p-[8px]"
-          disabled={currentPage === 1}
-          onClick={() => setCurrentPage((prev) => prev - 1)}
-        >
-          Previous
-        </button>
-        <span className="mx-4">
-          Page {currentPage} of {totalPages===0 ? 1 : totalPages}
-        </span>
-        <button
-          className="btn capitalize p-[8px]"
-          disabled={currentPage === totalPages}
-          onClick={() => setCurrentPage((prev) => prev + 1)}
-        >
-          Next
-        </button>
-      </div>
+            <button
+              className="btn capitalize p-[8px]"
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage((prev) => prev - 1)}
+            >
+              Previous
+            </button>
+            <span className="mx-4">
+              Page {currentPage} of {totalPages === 0 ? 1 : totalPages}
+            </span>
+            <button
+              className="btn capitalize p-[8px]"
+              disabled={currentPage === totalPages}
+              onClick={() => setCurrentPage((prev) => prev + 1)}
+            >
+              Next
+            </button>
+          </div>
         </div>
 
         <dialog id="categorize-filter" className="modal">
