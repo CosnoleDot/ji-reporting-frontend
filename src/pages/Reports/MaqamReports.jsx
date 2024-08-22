@@ -130,9 +130,9 @@ export const MaqamReports = () => {
     <>
       <div className="md:join xs:w-full mb-4 flex justify-between items-center">
         {!isMobileView && (
-          <div className="w-full">
+          <div className="w-full flex">
             <select
-              className="select select-bordered join-item"
+              className="select select-bordered select-sm  join-item"
               onChange={(e) => setMonth(e.target.value)}
               value={month}
             >
@@ -144,7 +144,7 @@ export const MaqamReports = () => {
               ))}
             </select>
             <select
-              className="select select-bordered join-item"
+              className="select select-bordered select-sm  join-item"
               onChange={(e) => setYear(e.target.value)}
               value={year}
             >
@@ -176,7 +176,7 @@ export const MaqamReports = () => {
                   </div>
                 )}
                 <select
-                  className="select select-bordered w-full rounded-none rounded-tl-lg rounded-tr-lg"
+                  className="select select-bordered select-sm w-full rounded-none rounded-tl-lg rounded-tr-lg"
                   onChange={(e) => setMonth(e.target.value)}
                   value={month}
                 >
@@ -188,7 +188,7 @@ export const MaqamReports = () => {
                   ))}
                 </select>
                 <select
-                  className="select select-bordered w-full rounded-none rounded-bl-lg rounded-br-lg"
+                  className="select select-bordered select-sm w-full rounded-none rounded-bl-lg rounded-br-lg"
                   value={year}
                   onChange={(e) => setYear(e.target.value)}
                 >
@@ -204,16 +204,16 @@ export const MaqamReports = () => {
                     ))}
                 </select>
               </div>
-              <button className="btn" onClick={searchResults}>
+              <button className="font-inter px-2 text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left" onClick={searchResults}>
                 Search
               </button>
             </div>
           </div>
         )}
 
-        <div className="indicator flex justify-between items-center w-full">
+        <div className="indicator flex items-center justify-end w-full">
           <button
-            className={`btn ${!isMobileView ? "join-item" : ""}`}
+            className={`font-inter px-2 text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left ${!isMobileView ? "join-item" : ""}`}
             onClick={() => (!isMobileView ? searchResults() : toggleSearch())}
           >
             Search
@@ -224,13 +224,13 @@ export const MaqamReports = () => {
                 document.getElementById("filter-area-dialog").showModal();
                 setIsSearch(false);
               }}
-              className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
+              className={`font-inter text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left ${!isMobileView ? "join-item" : "ms-3"}`}
             >
               filter
             </button>
           )}
           <button
-            className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
+            className={`font-inter text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left ${!isMobileView ? "join-item" : "ms-3"}`}
             onClick={clearFilters}
           >
             Clear
@@ -247,8 +247,8 @@ export const MaqamReports = () => {
                   <th className="text-left">Report</th>
                   <th className="text-left">Last modified</th>
                   <th className="text-left">Month</th>
-                  <th></th>
-                  <th></th>
+                  <th className="md:block hidden"></th>
+                  <th className="md:block hidden"></th>
                   <th className="text-left">Action</th>
                 </tr>
               </thead>
@@ -257,35 +257,41 @@ export const MaqamReports = () => {
                 {currentData.map((p, index) => (
                   <tr key={index}>
                     <td>
-                      <span>{p?.maqamAreaId?.name}</span>
+                      <span className="font-medium md:text-sm text-xs leading-[16.94px] text-left font-inter text-heading">
+                        {p?.maqamAreaId?.name}
+                      </span>
                     </td>
                     <td>
-                      <span>{moment(p?.updatedAt).fromNow()}</span>
+                      <span className="font-medium md:text-sm text-xs leading-[16.94px] text-left font-inter text-heading">
+                        {moment(p?.updatedAt).fromNow()}
+                      </span>
                     </td>
                     <td>
-                      <span>{moment(p?.month).format("MMMM YYYY")}</span>
+                      <span className="font-medium md:text-sm text-xs leading-[16.94px] text-left font-inter text-heading">
+                        {moment(p?.month).format("MMMM YYYY")}
+                      </span>
                     </td>
-                    <td></td>
-                    <td></td>
+                    <td className="md:block hidden"></td>
+                    <td className="md:block hidden"></td>
                     <td>
                       <div className="flex items-center gap-2">
                         <span
                           onClick={() => navigate(`/reports/view/${p._id}`)}
-                          className="cursor-pointer font-inter text-[14px] font-medium leading-[16.94px] text-left"
+                          className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left"
                         >
                           View
                         </span>
                         {me?.userAreaType === "Maqam" && (
                           <span
                             onClick={() => navigate(`/reports/edit/${p._id}`)}
-                            className="cursor-pointer font-inter text-[14px] font-medium leading-[16.94px] text-left text-green"
+                            className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left text-green"
                           >
                             Edit
                           </span>
                         )}
                         <span
                           onClick={() => handlePrint(p?._id)}
-                          className="cursor-pointer font-inter text-[14px] font-medium leading-[16.94px] text-left text-blue"
+                          className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left text-blue"
                         >
                           Print
                         </span>
