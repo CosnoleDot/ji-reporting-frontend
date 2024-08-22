@@ -115,46 +115,7 @@ function App() {
   );
   let length;
   let dis;
-  // const data2023 = [
-  //   1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 34, 4, 35, 5, 44, 12, 43, 42, 43, 41,
-  //   43, 4, 45, 34, 6, 14, 24, 26,
-  // ];
-  // const data2024 = [
-  //   3, 5, 2, 8, 14, 22, 11, 5, 8, 13, 14, 19, 22, 25, 14, 12, 9, 11, 15, 18, 17,
-  //   14, 12, 10, 11, 14, 16, 19, 23, 25,
-  // ];
-  // const labels = [
-  //   "A",
-  //   "B",
-  //   "C",
-  //   "D",
-  //   "E",
-  //   "F",
-  //   "G",
-  //   "H",
-  //   "I",
-  //   "J",
-  //   "K",
-  //   "L",
-  //   "M",
-  //   "N",
-  //   "O",
-  //   "P",
-  //   "Q",
-  //   "R",
-  //   "S",
-  //   "T",
-  //   "U",
-  //   "V",
-  //   "W",
-  //   "X",
-  //   "Y",
-  //   "Z",
-  //   "AA",
-  //   "BB",
-  //   "CC",
-  //   "DD",
-  // ];
+
   const getMe = async () => {
     try {
       sessionStorage.removeItem("storedData");
@@ -994,16 +955,9 @@ function App() {
 
     document.getElementById("area_details").showModal();
   };
-  const getCompileReports = async (
-    startDate,
-    endDate,
-    areaType,
-    areaId
-  ) => {
-   
-
+  const getCompileReports = async (startDate, endDate, areaType, areaId) => {
     try {
-      setLoading(true)
+      setLoading(true);
       const req = await instance.get(
         `/compilation/${areaId}?startDate=${startDate}&endDate=${endDate}&areaType=${areaType}`,
         {
@@ -1015,10 +969,10 @@ function App() {
 
       if (req) {
         setCompileReports(req.data.data);
-        setLoading(false)
+        setLoading(false);
       }
     } catch (err) {
-      setLoading(false)
+      setLoading(false);
       console.log(err);
       dispatch({
         type: "ERROR",
@@ -1141,7 +1095,9 @@ function App() {
                                 <HalqaReportTabContext.Provider
                                   value={halqaReportsTab}
                                 >
-                                  <CompileReportContext.Provider value={compileReports}>
+                                  <CompileReportContext.Provider
+                                    value={compileReports}
+                                  >
                                     <ViewDetails.Provider value={areaDetails}>
                                       <IsMuntakhib.Provider
                                         value={muntakhibMaqam}
@@ -1358,7 +1314,9 @@ function App() {
                                               />
                                               <Route
                                                 path="/province-report-compile/print"
-                                                element={<ProvinceReportCompile />}
+                                                element={
+                                                  <ProvinceReportCompile />
+                                                }
                                               />
                                               <Route
                                                 path="/division-report/print/:id"
@@ -1366,7 +1324,9 @@ function App() {
                                               />
                                               <Route
                                                 path="/division-report-compile/print/"
-                                                element={<DivisionCompileReport />}
+                                                element={
+                                                  <DivisionCompileReport />
+                                                }
                                               />
                                               <Route
                                                 path="/ilaqa-report/print/:id"
@@ -1380,7 +1340,7 @@ function App() {
                                                 path="*"
                                                 element={<Page404 />}
                                               />
-                                               <Route
+                                              <Route
                                                 path="/circular"
                                                 element={<CircularChart />}
                                               />
@@ -1390,7 +1350,9 @@ function App() {
                                               />
                                               <Route
                                                 path="/maqam-report-compile/print/"
-                                                element={<MuntakhibMaqamCompileReport />}
+                                                element={
+                                                  <MuntakhibMaqamCompileReport />
+                                                }
                                               />
                                               <Route
                                                 path="/compile/view"
@@ -1410,14 +1372,16 @@ function App() {
                                                 path="/halqa-report-compile/print"
                                                 element={<HalqaCompileReport />}
                                               />
-                                              
+
                                               <Route
                                                 path="/markaz-report/print/:id"
                                                 element={<MarkazReportPrint />}
                                               />
-                                               <Route
+                                              <Route
                                                 path="/markaz-report-compile/print"
-                                                element={<MarkazReportCompilePrint />}
+                                                element={
+                                                  <MarkazReportCompilePrint />
+                                                }
                                               />
                                               <Route
                                                 path="/compilation"

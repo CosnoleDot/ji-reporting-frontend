@@ -11,11 +11,10 @@ import {
 } from "../../context";
 import { Link, useLocation } from "react-router-dom";
 import instance from "../../api/instrance";
-import { FaEdit } from "react-icons/fa";
 import { UIContext } from "../../context/ui";
-import { Loader } from "../Loader";
 import { FcViewDetails } from "react-icons/fc";
-
+import { IoIosArrowDropright } from "react-icons/io";
+import { IoIosArrowDropleft } from "react-icons/io";
 export const LocationDivision = () => {
   const provinces = useContext(ProvinceContext);
   const me = useContext(MeContext);
@@ -774,26 +773,58 @@ export const LocationDivision = () => {
 
       {/* Pagination Controls */}
       {value === "" && (
-        <div className="flex w-full px-4 justify-between items-center mt-4">
+        <div className="flex w-full gap-4 px-4 justify-end items-center mt-4">
+          <select
+            readOnly
+            disabled
+            name="items_per_page"
+            id="items"
+            className="select select-sm max-w-xs bg-gray-200 rounded-full"
+          >
+            <option value="" disabled selected>
+              rows per page 10
+            </option>
+          </select>
+
+          {/* Previous Button */}
           <button
-            className="text-green-500"
+            className="rounded-full border-none"
             disabled={currentPage === 1}
-            onClick={() => setCurrentPage((prev) => prev - 1)}
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           >
-            Previous
+            <IoIosArrowDropleft className="text-[1.5rem] rounded-full bg-gray-200" />
           </button>
-          <span className="mx-4">
-            Page {currentPage} of {totalPages}
-          </span>
+
+          {/* Page Numbers */}
+          <div className="flex items-center">
+            {currentPage > 1 && (
+              <span className="rounded-full  border border-gray-700 border-1 mx-1 bg-gray-200 w-5 h-5 flex justify-center items-center">
+                1
+              </span>
+            )}
+            {totalPages > 2 && (
+              <button className="rounded-full  border border-gray-700 border-1 mx-1 bg-gray-200 w-5 h-5 flex justify-center items-center">
+                2
+              </button>
+            )}
+            {totalPages > 3 && <span>...</span>}
+
+            {totalPages && (
+              <span className="rounded-full  border border-gray-700 border-1 mx-1 bg-gray-200 w-5 h-5 flex justify-center items-center">
+                {totalPages}
+              </span>
+            )}
+          </div>
+
+          {/* Next Button */}
           <button
-            className="text-green-500"
+            className="rounded-full border-none"
             disabled={currentPage === totalPages}
-            onClick={() => {
-              setCurrentPage((prev) => prev + 1);
-              setValue("");
-            }}
+            onClick={() =>
+              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+            }
           >
-            Next
+            <IoIosArrowDropright className="text-[1.5rem] rounded-full bg-gray-200" />
           </button>
         </div>
       )}

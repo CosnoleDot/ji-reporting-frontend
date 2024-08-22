@@ -164,7 +164,7 @@ export const Comparision = () => {
   const ilaqas = useContext(IlaqaContext);
   const districts = useContext(DistrictContext);
   const provinces = useContext(ProvinceContext);
-  const { nazims, setLoading } = useContext(UIContext);
+  const { nazim, setLoading } = useContext(UIContext);
   const [searchArea, setSearchArea] = useState("");
   const [areas, setAreas] = useState({
     maqam: [],
@@ -824,19 +824,21 @@ export const Comparision = () => {
   return (
     <GeneralLayout title={"Comparison"} active={"comparison"}>
       <div className=" flex flex-col gap-3 h-[calc(100vh-66px-64px)] w-full p-3">
-        <div className="w-full flex justify-between items-center py-4">
-          <div className="mb-4 w-full md:w-[30%] flex flex-col">
+        <div className="w-full flex md:flex-row flex-col justify-between items-center py-4">
+          <div className="mb-4 w-full md:w-[70%] flex flex-col">
             <h1 className="text-2xl font-bold text-start ">Comparison</h1>
             <p className="text-gray-500">Get a sneak peak into your reports </p>
           </div>
-          <button
-            className="px-4 py-2 rounded-md bg-primary text-white capitalize p-[8px]"
-            onClick={() => {
-              document.getElementById("add_comparison_modal").showModal();
-            }}
-          >
-            +New Comparios
-          </button>
+          <div className="w-full md:w-[30%]  flex justify-start md:justify-end">
+            <button
+              className="px-4 py-2 rounded-md bg-primary text-white capitalize p-[8px]"
+              onClick={() => {
+                document.getElementById("add_comparison_modal").showModal();
+              }}
+            >
+              +New Comparios
+            </button>
+          </div>
         </div>
         <div className="divider mt-0"></div>
         <div className="flex flex-col gap-3 w-full p-3 overflow-hidden overflow-x-scroll h-[80vh]">
@@ -953,7 +955,7 @@ export const Comparision = () => {
                 <input
                   id="autocomplete0"
                   type="search"
-                  className="input input-bordered w-full"
+                  className="input input-bordered w-full input-sm"
                   placeholder="Select area"
                   onChange={(e) => setSearchArea(e.target.value)}
                   onClick={() => {
@@ -976,7 +978,7 @@ export const Comparision = () => {
                   id="autocomplete0-list"
                   className="fixed hidden z-50 max-h-[100px] overflow-y-scroll bg-white border border-gray-300 w-auto"
                 >
-                  {nazims?.nazim
+                  {nazim
                     ?.sort((a, b) =>
                       a?.userAreaId?.name?.localeCompare(b?.userAreaId?.name)
                     )
