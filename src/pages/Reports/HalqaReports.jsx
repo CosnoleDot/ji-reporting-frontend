@@ -156,7 +156,7 @@ export const HalqaReports = () => {
           }`}
           onClick={() => tabClick("maqam")}
         >
-          مقام حلقہ
+          Maqam Halqa{" "}
         </Link>
         <Link
           to={"?active=halqa&tab=division"}
@@ -166,7 +166,7 @@ export const HalqaReports = () => {
           }`}
           onClick={() => tabClick("division")}
         >
-          ڈویژن حلقہ
+          Division Halqa{" "}
         </Link>
         <Link
           to={"?active=halqa&tab=ilaqa"}
@@ -176,7 +176,7 @@ export const HalqaReports = () => {
           }`}
           onClick={() => tabClick("ilaqa")}
         >
-          علاقہ حلقہ
+          Ilaqa Halqa{" "}
         </Link>
       </div>
       <div className="md:join xs:w-full mb-4 flex justify-between items-center">
@@ -293,40 +293,58 @@ export const HalqaReports = () => {
       {!isSearch && !isFilter ? (
         <>
           {data?.length > 0 ? (
-            data
+      <table className="table mb-7 w-full">
+        {/* Head */}
+        <thead>
+          <tr>
+            <th className="text-left">Report</th>
+            <th className="text-left">Last modified</th>
+            <th className="text-left">Month</th>
+            <th></th>
+            <th></th>
+            <th className="text-left">Action</th>
+          </tr>
+        </thead>
+        {/* Body */}
+        <tbody>
+            {data
               ?.filter((i) =>
                 tab === "division"
                   ? i.halqaAreaId?.parentType === "Tehsil"
                   : i.halqaAreaId?.parentType ===
                     tab.charAt(0).toUpperCase() + tab.slice(1)
               )
-              ?.map((p) => (
-                <div
-                  key={p?._id}
-                  className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
-                >
-                  <div className="flex w-full flex-col items-start justify-center">
-                    <span className="text-sm lg:text-lg font-semibold">
-                      {p?.halqaAreaId?.name + " "}
-                      {moment(p?.month).format("MMMM YYYY")}
-                    </span>
-                    <span>Last Modified: {moment(p?.updatedAt).fromNow()}</span>
-                  </div>
-                  <div className="flex items-end w-full justify-end gap-3 ">
-                    <button className="btn" onClick={() => viewReport(p?._id)}>
-                      <FaEye />
-                    </button>
-
-                    <button className="btn" onClick={() => handlePrint(p?._id)}>
-                      <FaPrint />
-                    </button>
-                  </div>
+              ?.map((p,index) => (
+                <tr key={index}>
+              <td>
+                <span>{p?.halqaAreaId?.name + " "}</span>
+              </td>
+              <td>
+                <span>{moment(p?.updatedAt).fromNow()}</span>
+              </td>
+              <td>
+                <span>{moment(p?.month).format("MMMM YYYY")}</span>
+              </td>
+              <td></td>
+              <td></td>
+              <td>
+                <div className="flex items-center gap-2">
+                  <span  onClick={() => viewReport(p?._id)} className="cursor-pointer font-inter text-[14px] font-medium leading-[16.94px] text-left">View</span>
+                  {me?.userAreaType === "Halqa" && (
+                    <span onClick={() => navigate(`/reports/edit/${p._id}`)} className="cursor-pointer font-inter text-[14px] font-medium leading-[16.94px] text-left text-green">Edit</span>
+                  )}
+                  <span onClick={() => handlePrint(p?._id)} className="cursor-pointer font-inter text-[14px] font-medium leading-[16.94px] text-left text-blue">Print</span>
                 </div>
-              ))
+              </td>
+            </tr>
+               
+              ))}
+              </tbody>
+            </table>
           ) : (
             <NoReports />
           )}
-          <div className="flex justify-between mt-4">
+          <div className="flex items-center justify-between mt-4">
             <button
               className="btn"
               onClick={handlePrevPage}
@@ -347,7 +365,10 @@ export const HalqaReports = () => {
           </div>
         </>
       ) : (
-        <SearchPage data={isSearch ? searchData : filterAllData} area={"halqa"} />
+        <SearchPage
+          data={isSearch ? searchData : filterAllData}
+          area={"halqa"}
+        />
       )}
 
       <dialog id="filter-area-dialog" className="modal">
