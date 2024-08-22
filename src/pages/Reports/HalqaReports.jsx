@@ -18,6 +18,8 @@ export const HalqaReports = () => {
   const [isMobileView, setIsMobileView] = useState(false);
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("2023");
+  const [isFilter, setIsFilter] = useState(false);
+  const [filterAllData, setFilterAllData] = useState([]);
   const [data, setData] = useState([]);
   const me = useContext(MeContext);
   const [searchData, setSearchData] = useState([]);
@@ -25,6 +27,7 @@ export const HalqaReports = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [length, setLength] = useState(1);
   const itemsPerPage = 10;
+
   const getHalqaReportsTab = async (inset, offset, tab) => {
     if (tab) {
       setLoading(true);
@@ -39,8 +42,7 @@ export const HalqaReports = () => {
         );
 
         if (req) {
-          setData([]);
-          setData(req.data.data?.data);
+          setData(req.data.data?.data || []);
           setLength(req.data.data.length);
         }
       } catch (err) {
@@ -72,8 +74,7 @@ export const HalqaReports = () => {
         );
 
         if (req) {
-          setSearchData([]);
-          setSearchData(req.data.data?.data);
+          setSearchData(req.data.data?.data || []);
         }
       } catch (err) {
         console.log(err);
@@ -84,14 +85,9 @@ export const HalqaReports = () => {
       }
     }
   };
+
   const toggleSearch = () => {
     showSearch(!search);
-  };
-  const clearFilters = () => {
-    setMonth("");
-    setYear("2023");
-    setData(data);
-    setIsSearch(false);
   };
 
   const viewReport = async (id) => {
@@ -124,17 +120,28 @@ export const HalqaReports = () => {
     setTab(tab);
     getHalqaReportsTab((currentPage - 1) * itemsPerPage, itemsPerPage, tab);
   };
+
   const handlePrint = (id) => {
     window.open(`halqa-report/print/${id}`, "blank");
   };
+
+  const clearFilters = () => {
+    setMonth("");
+    setYear("2023");
+    getHalqaReportsTab(0, 10, tab);
+    setIsSearch(false);
+    setIsFilter(false);
+    setFilterAllData([]);
+  };
+
   useEffect(() => {
     if (window) {
       if (window.innerWidth < 520) {
         setIsMobileView(true);
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [window.innerWidth]);
+
   return (
     <>
       <div
@@ -149,7 +156,7 @@ export const HalqaReports = () => {
           }`}
           onClick={() => tabClick("maqam")}
         >
-          مقام حلقہ
+          Maqam Halqa{" "}
         </Link>
         <Link
           to={"?active=halqa&tab=division"}
@@ -159,7 +166,7 @@ export const HalqaReports = () => {
           }`}
           onClick={() => tabClick("division")}
         >
-          ڈویژن حلقہ
+          Division Halqa{" "}
         </Link>
         <Link
           to={"?active=halqa&tab=ilaqa"}
@@ -169,7 +176,7 @@ export const HalqaReports = () => {
           }`}
           onClick={() => tabClick("ilaqa")}
         >
-          علاقہ حلقہ
+          Ilaqa Halqa{" "}
         </Link>
       </div>
       <div className="md:join xs:w-full mb-4 flex justify-between items-center">
@@ -256,7 +263,6 @@ export const HalqaReports = () => {
         )}
 
         <div className="indicator flex justify-between items-center w-full">
-          {/* <span className='indicator-item badge badge-secondary'>new</span> */}
           <button
             className={`btn ${!isMobileView ? "join-item" : ""}`}
             onClick={() => (!isMobileView ? searchResults() : toggleSearch())}
@@ -266,6 +272,7 @@ export const HalqaReports = () => {
           {me?.userAreaType !== "Halqa" && (
             <button
               onClick={() => {
+                setFilterAllData([]);
                 document.getElementById("filter-area-dialog").showModal();
                 setIsSearch(false);
               }}
@@ -283,43 +290,61 @@ export const HalqaReports = () => {
         </div>
       </div>
 
-      {!isSearch ? (
+      {!isSearch && !isFilter ? (
         <>
           {data?.length > 0 ? (
-            data
+      <table className="table mb-7 w-full">
+        {/* Head */}
+        <thead>
+          <tr>
+            <th className="text-left">Report</th>
+            <th className="text-left">Last modified</th>
+            <th className="text-left">Month</th>
+            <th></th>
+            <th></th>
+            <th className="text-left">Action</th>
+          </tr>
+        </thead>
+        {/* Body */}
+        <tbody>
+            {data
               ?.filter((i) =>
                 tab === "division"
                   ? i.halqaAreaId?.parentType === "Tehsil"
                   : i.halqaAreaId?.parentType ===
                     tab.charAt(0).toUpperCase() + tab.slice(1)
               )
-              ?.map((p) => (
-                <div
-                  key={p?._id}
-                  className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
-                >
-                  <div className="flex w-full flex-col items-start justify-center">
-                    <span className="text-sm lg:text-lg font-semibold">
-                      {p?.halqaAreaId?.name + " "}
-                      {moment(p?.month).format("MMMM YYYY")}
-                    </span>
-                    <span>Last Modified: {moment(p?.updatedAt).fromNow()}</span>
-                  </div>
-                  <div className="flex items-end w-full justify-end gap-3 ">
-                    <button className="btn" onClick={() => viewReport(p?._id)}>
-                      <FaEye />
-                    </button>
-
-                    <button className="btn" onClick={() => handlePrint(p?._id)}>
-                      <FaPrint />
-                    </button>
-                  </div>
+              ?.map((p,index) => (
+                <tr key={index}>
+              <td>
+                <span>{p?.halqaAreaId?.name + " "}</span>
+              </td>
+              <td>
+                <span>{moment(p?.updatedAt).fromNow()}</span>
+              </td>
+              <td>
+                <span>{moment(p?.month).format("MMMM YYYY")}</span>
+              </td>
+              <td></td>
+              <td></td>
+              <td>
+                <div className="flex items-center gap-2">
+                  <span  onClick={() => viewReport(p?._id)} className="cursor-pointer font-inter text-[14px] font-medium leading-[16.94px] text-left">View</span>
+                  {me?.userAreaType === "Halqa" && (
+                    <span onClick={() => navigate(`/reports/edit/${p._id}`)} className="cursor-pointer font-inter text-[14px] font-medium leading-[16.94px] text-left text-green">Edit</span>
+                  )}
+                  <span onClick={() => handlePrint(p?._id)} className="cursor-pointer font-inter text-[14px] font-medium leading-[16.94px] text-left text-blue">Print</span>
                 </div>
-              ))
+              </td>
+            </tr>
+               
+              ))}
+              </tbody>
+            </table>
           ) : (
             <NoReports />
           )}
-          <div className="flex justify-between mt-4">
+          <div className="flex items-center justify-between mt-4">
             <button
               className="btn"
               onClick={handlePrevPage}
@@ -340,11 +365,18 @@ export const HalqaReports = () => {
           </div>
         </>
       ) : (
-        <SearchPage data={searchData} area={"halqa"} />
+        <SearchPage
+          data={isSearch ? searchData : filterAllData}
+          area={"halqa"}
+        />
       )}
 
       <dialog id="filter-area-dialog" className="modal">
-        <FilterDialog tab={tab} />
+        <FilterDialog
+          setFilterAllData={setFilterAllData}
+          tab={tab}
+          setIsFilter={setIsFilter}
+        />
       </dialog>
     </>
   );

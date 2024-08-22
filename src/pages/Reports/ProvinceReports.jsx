@@ -222,69 +222,75 @@ export const ProvinceReports = () => {
         </div>
       </div>
       {!isSearch ? (
-        <>
-          {" "}
-          {currentData?.length > 0 ? (
-            currentData?.map((p) => (
-              <div
-                key={p?._id}
-                className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
-              >
-                <div className="flex w-full flex-col items-start justify-center">
-                  <span className="text-sm lg:text-lg font-semibold">
-                    {p?.provinceAreaId?.name + " "}
-                    {moment(p?.month).format("MMMM YYYY")}
-                  </span>
-                  <span>Last Modified: {moment(p?.updatedAt).fromNow()}</span>
-                </div>
-                <div className="flex items-end w-full justify-end gap-3 ">
-                  <button
-                    className="btn"
-                    onClick={() => navigate(`/reports/view/${p._id}`)}
-                  >
-                    <FaEye />
-                  </button>
+  <>
+    {currentData?.length > 0 ? (
+      <table className="table mb-7 w-full">
+        {/* Head */}
+        <thead>
+          <tr>
+            <th className="text-left">Report</th>
+            <th className="text-left">Last modified</th>
+            <th className="text-left">Month</th>
+            <th className="md:block hidden"></th>
+            <th className="md:block hidden"></th>
+            <th className="text-left">Action</th>
+          </tr>
+        </thead>
+        {/* Body */}
+        <tbody>
+          {currentData.map((p, index) => (
+            <tr key={index}>
+              <td>
+                <span className="font-medium md:text-sm text-xs leading-[16.94px] text-left font-inter text-heading">{p?.provinceAreaId?.name}</span>
+              </td>
+              <td>
+                <span className="font-medium md:text-sm text-xs leading-[16.94px] text-left font-inter text-heading">{moment(p?.updatedAt).fromNow()}</span>
+              </td>
+              <td>
+                <span className="font-medium md:text-sm text-xs leading-[16.94px] text-left font-inter text-heading">{moment(p?.month).format("MMMM YYYY")}</span>
+              </td>
+              <td className="md:block hidden"></td>
+              <td className="md:block hidden"></td>
+              <td>
+                <div className="flex items-center gap-2">
+                  <span onClick={() => navigate(`/reports/view/${p._id}`)} className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left">View</span>
                   {me?.userAreaType === "Province" && (
-                    <button
-                      className="btn"
-                      onClick={() => navigate(`/reports/edit/${p._id}`)}
-                    >
-                      <FaEdit />
-                    </button>
+                    <span onClick={() => navigate(`/reports/edit/${p._id}`)} className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left text-green">Edit</span>
                   )}
-
-                  <button className="btn" onClick={() => handlePrint(p?._id)}>
-                    <FaPrint />
-                  </button>
+                  <span onClick={() => handlePrint(p?._id)} className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left text-blue">Print</span>
                 </div>
-              </div>
-            ))
-          ) : (
-            <NoReports />
-          )}
-          <div className="flex justify-between mt-4">
-            <button
-              className="btn"
-              onClick={handlePrevPage}
-              disabled={currentPage === 1}
-            >
-              Previous
-            </button>
-            <span>
-              Page {currentPage} of {totalPages}
-            </span>
-            <button
-              className="btn"
-              onClick={handleNextPage}
-              disabled={currentPage === totalPages}
-            >
-              Next
-            </button>
-          </div>
-        </>
-      ) : (
-        <SearchPage data={searchData?.data} area={"province"} />
-      )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    ) : (
+      <NoReports />
+    )}
+    <div className="flex justify-between mt-4">
+      <button
+        className="btn"
+        onClick={handlePrevPage}
+        disabled={currentPage === 1}
+      >
+        Previous
+      </button>
+      <span>
+        Page {currentPage} of {totalPages}
+      </span>
+      <button
+        className="btn"
+        onClick={handleNextPage}
+        disabled={currentPage === totalPages}
+      >
+        Next
+      </button>
+    </div>
+  </>
+) : (
+  <SearchPage data={searchData?.data} area={"province"} />
+)}
+
       <dialog id="filter-area-dialog" className="modal">
         <FilterDialog
           setFilterAllData={setFilterAllData}

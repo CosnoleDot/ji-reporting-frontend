@@ -447,6 +447,7 @@ export const Division = () => {
               name="comments"
               required
               className="border-b-2 border-dashed w-full"
+              maxLength={150}
               id="comments"
               readOnly={view}
             />

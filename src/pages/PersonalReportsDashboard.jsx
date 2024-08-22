@@ -30,10 +30,11 @@ export const PersonalReportsDashboard = () => {
   let navigate = useNavigate();
   const getAllReports = async (inset, offset) => {
     setLoading(true);
+    
     let req;
     if (rukanId) {
       req = await instance.get(
-        `/umeedwar/all/${rukanId}?inset=${inset ? inset : 0}&offset=${
+        `/umeedwar/${rukanId}?inset=${inset ? inset : 0}&offset=${
           offset ? offset : 10
         }`,
         {
@@ -84,10 +85,9 @@ export const PersonalReportsDashboard = () => {
   const handleClear = () => {
     setIsSearch(false);
     setRukanId(null);
+    getAllReports(0,10)
   };
-  useEffect(() => {
-    getAllReports();
-  }, [rukanId]);
+ 
   const searchResults = async () => {
     setIsSearch(true);
     setToggle(false);
@@ -148,7 +148,7 @@ export const PersonalReportsDashboard = () => {
               ))}
           </select>
           {rukanId && (
-            <button className="btn" onClick={getAllReports}>
+            <button className="btn" onClick={()=>getAllReports(0,10)}>
               Get All
             </button>
           )}

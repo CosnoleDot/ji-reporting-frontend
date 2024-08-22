@@ -126,7 +126,7 @@ export const Halqa = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
   return (
-    <GeneralLayout>
+  
       <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">
         <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
           کارکردگی رپورٹ براۓ حلقہ
@@ -138,7 +138,7 @@ export const Halqa = () => {
         >
           <button
             type="button"
-            class="absolute top-20 left-5 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 "
+            class="absolute top-5 left-5 bg-primary text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-inter focus:ring-4 z-50 focus:ring-blue-300 font-medium rounded text-sm px-5 py-2.5 text-center me-2 mb-2 "
            onClick={()=>navigate('/reports')}
            >
             Back
@@ -179,6 +179,7 @@ export const Halqa = () => {
                 required
                 type="text"
                 name="comments"
+                maxLength={150}
                 className="border-b-2 border-dashed w-full"
                 id="comments"
                 readOnly={view}
@@ -207,6 +208,5 @@ export const Halqa = () => {
           )}
         </form>
       </div>
-    </GeneralLayout>
   );
 };
