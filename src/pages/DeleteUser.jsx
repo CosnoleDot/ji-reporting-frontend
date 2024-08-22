@@ -325,19 +325,6 @@ export const DeleteUser = () => {
       document.removeEventListener("click", handleEventClick);
     };
   }, []);
-  const [users, setUsers] = useState([
-    // Replace this with your actual user data
-    {
-      name: "PIA Society",
-      nazimType: "Janoobi",
-      email: "Chuniachu@gmail.com",
-      area: "Punjab",
-      province: "Punjab",
-      country: "Punjab",
-      status: "Inactive",
-    },
-    // ... other users
-  ]);
   return (
     <GeneralLayout title={"Manage Users"} active={"user-switch"}>
       <div className="px-5 relative flex flex-col items-center py-3 pt-0 justify-start h-[calc(100vh-65.6px-64px)] overflow-hidden overflow-y-auto">
