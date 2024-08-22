@@ -232,39 +232,50 @@ export const DivisionReports = () => {
       </div>
       {!isSearch ? (
         <>
-          {currentData?.length > 0 ? (
-            currentData?.map((p) => (
-              <div
-                key={p?._id}
-                className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
-              >
-                <div className="flex w-full flex-col items-start justify-center">
-                  <span className="text-sm lg:text-lg font-semibold">
-                    {p?.divisionAreaId?.name + " "}
-                    {moment(p?.month).format("MMMM YYYY")}
-                  </span>
-                  <span>Last Modified: {moment(p?.updatedAt).fromNow()}</span>
-                </div>
-                <div className="flex items-end w-full justify-end gap-3 ">
-                  <button className="btn" onClick={() => viewReport(p?._id)}>
-                    <FaEye />
-                  </button>
-
+         {currentData?.length > 0 ? (
+      <table className="table mb-7 w-full">
+        {/* Head */}
+        <thead>
+          <tr>
+            <th className="text-left">Report</th>
+            <th className="text-left">Last modified</th>
+            <th className="text-left">Month</th>
+            <th></th>
+            <th></th>
+            <th className="text-left">Action</th>
+          </tr>
+        </thead>
+        {/* Body */}
+        <tbody>
+          {currentData.map((p, index) => (
+            <tr key={index}>
+              <td>
+                <span>{p?.divisionAreaId?.name}</span>
+              </td>
+              <td>
+                <span>{moment(p?.updatedAt).fromNow()}</span>
+              </td>
+              <td>
+                <span>{moment(p?.month).format("MMMM YYYY")}</span>
+              </td>
+              <td></td>
+              <td></td>
+              <td>
+                <div className="flex items-center gap-2">
+                  <span onClick={() => navigate(`/reports/view/${p._id}`)} className="cursor-pointer font-inter text-[14px] font-medium leading-[16.94px] text-left">View</span>
                   {me?.userAreaType === "Division" && (
-                    <button className="btn" onClick={() => editReport(p?._id)}>
-                      <FaEdit />
-                    </button>
+                    <span onClick={() => navigate(`/reports/edit/${p._id}`)} className="cursor-pointer font-inter text-[14px] font-medium leading-[16.94px] text-left text-green">Edit</span>
                   )}
-
-                  <button className="btn" onClick={() => handlePrint(p?._id)}>
-                    <FaPrint />
-                  </button>
+                  <span onClick={() => handlePrint(p?._id)} className="cursor-pointer font-inter text-[14px] font-medium leading-[16.94px] text-left text-blue">Print</span>
                 </div>
-              </div>
-            ))
-          ) : (
-            <NoReports />
-          )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    ) : (
+      <NoReports />
+    )}
           {!isFilter && (
             <div className="flex justify-between mt-4">
               <button

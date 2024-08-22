@@ -9,10 +9,9 @@ import {
 } from "../../context";
 import { Link, useLocation } from "react-router-dom";
 import instance from "../../api/instrance";
-import { FaEdit } from "react-icons/fa";
 import { UIContext } from "../../context/ui";
 import { FcViewDetails } from "react-icons/fc";
-import { Loader } from "../Loader";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 export const LocationMaqam = () => {
   const provinces = useContext(ProvinceContext);
@@ -28,6 +27,7 @@ export const LocationMaqam = () => {
     getIlaqas,
     getAreaDetails,
   } = useContext(UIContext);
+  const [value, setValue] = useState("");
   const [editMode, setEditMode] = useState(false);
   const [id, setId] = useState("");
   const { dispatch } = useToastState();
@@ -36,16 +36,6 @@ export const LocationMaqam = () => {
   const [isIlaqa, setIsIlaqa] = useState(false);
   const params = useLocation();
   const [muntakhib, setMuntakhib] = useState(ilaqas?.length > 0 ? true : false);
-  const [value, setValue] = useState();
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10; // Adjust this as needed
-  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
-
-  // Compute the displayed items based on the current page
-  const paginatedData = filteredData.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
 
   useEffect(() => {
     setLoading(true); // Set loading to true before fetching data
@@ -55,6 +45,7 @@ export const LocationMaqam = () => {
       for (let [key, value] of searchParams.entries()) {
         queryParams[key] = value;
       }
+
       setView(queryParams.view || "halqa");
       if (
         queryParams.hasOwnProperty !== "halqa" &&
@@ -64,7 +55,19 @@ export const LocationMaqam = () => {
       } else {
         if (queryParams.view) {
           if (queryParams.view === "halqa") {
-            setFilteredData(halqas);
+            if (queryParams.active === "maqam") {
+              let maqamHalqas = halqas?.filter(
+                (i) => i.parentType === "Ilaqa" || i?.parentType === "Maqam"
+              );
+              setFilteredData(maqamHalqas);
+            } else if (queryParams.active === "division") {
+              let divHalqas = halqas?.filter(
+                (i) => i.parentType === "Tehsil" || i?.parentType === "Division"
+              );
+              setFilteredData(divHalqas);
+            } else {
+              setFilteredData(halqas);
+            }
           }
           if (queryParams.view === "maqam") {
             setFilteredData(maqams);
@@ -84,8 +87,25 @@ export const LocationMaqam = () => {
 
   useEffect(() => {
     if (view) {
+      const searchParams = new URLSearchParams(params.search);
+      const queryParams = {};
+      for (let [key, value] of searchParams.entries()) {
+        queryParams[key] = value;
+      }
       if (view === "halqa") {
-        setFilteredData(halqas);
+        if (queryParams.active === "maqam") {
+          let maqamHalqas = halqas?.filter(
+            (i) => i.parentType === "Ilaqa" || i?.parentType === "Maqam"
+          );
+          setFilteredData(maqamHalqas);
+        } else if (queryParams.active === "division") {
+          let divHalqas = halqas?.filter(
+            (i) => i.parentType === "Tehsil" || i?.parentType === "Division"
+          );
+          setFilteredData(divHalqas);
+        } else {
+          setFilteredData(halqas);
+        }
       }
       if (view === "maqam") {
         setFilteredData(maqams);
@@ -95,7 +115,14 @@ export const LocationMaqam = () => {
       }
     }
   }, [halqas, maqams, ilaqas]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
+  const paginatedData = filteredData.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
   const [form, setForm] = useState({
     name: "",
     province: "",
@@ -612,25 +639,59 @@ export const LocationMaqam = () => {
       )}
 
       {/* Pagination Controls */}
-
       {value === "" && (
-        <div className="flex w-full px-4 justify-between items-center mt-4">
+        <div className="flex w-full gap-4 px-4 justify-end items-center mt-4">
+          <select
+            readOnly
+            disabled
+            name="items_per_page"
+            id="items"
+            className="select select-sm max-w-xs bg-gray-200 rounded-full"
+          >
+            <option value="" disabled selected>
+              rows per page 10
+            </option>
+          </select>
+
+          {/* Previous Button */}
           <button
-            className="px-4 py-2 rounded-md bg-primary text-white capitalize "
+            className="rounded-full border-none w-7 h-7"
             disabled={currentPage === 1}
-            onClick={() => setCurrentPage((prev) => prev - 1)}
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           >
-            Previous
+            <IoIosArrowBack className="text-[1.5rem] rounded-full bg-gray-200" />
           </button>
-          <span className="mx-4">
-            Page {currentPage} of {totalPages}
-          </span>
+
+          {/* Page Numbers */}
+          <div className="flex items-center">
+            {totalPages > 1 && (
+              <span className="rounded-full  border border-gray-500 border-1 mx-1 bg-white w-7 h-7 flex justify-center items-center">
+                1
+              </span>
+            )}
+            {totalPages > 2 && (
+              <button className="rounded-full  border border-gray-500 border-1 mx-1 bg-white w-7 h-7 flex justify-center items-center">
+                2
+              </button>
+            )}
+            {totalPages > 3 && <span>...</span>}
+
+            {totalPages && (
+              <span className="rounded-full  border border-gray-500 border-1 mx-1 bg-white w-7 h-7 flex justify-center items-center">
+                {totalPages}
+              </span>
+            )}
+          </div>
+
+          {/* Next Button */}
           <button
-            className="px-4 py-2 rounded-md bg-primary text-white capitalize "
+            className="rounded-full border-none w-7 h-7"
             disabled={currentPage === totalPages}
-            onClick={() => setCurrentPage((prev) => prev + 1)}
+            onClick={() =>
+              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+            }
           >
-            Next
+            <IoIosArrowForward className="text-[1.5rem] rounded-full bg-gray-200" />
           </button>
         </div>
       )}

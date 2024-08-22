@@ -31,7 +31,7 @@ export const ChangePassword = () => {
   return (
     <GeneralLayout>
       <div className='relative flex  justify-center  overflow-hidden h-[calc(100vh-65.6px-64px)]'>
-      <div className=" w-[40%] bg-secondary h-[calc(100vh-65.6px-64px)] p-[40px] flex flex-col justify-between">
+      <div className=" w-[40%] bg-secondary h-[calc(100vh-65.6px-64px)] p-[40px] md:flex md:flex-col md:justify-between  hidden">
         <div></div>
         <div className="flex flex-col gap-4">
           <h2 class="text-white font-inter text-2xl font-bold leading-7 text-left">

@@ -13,7 +13,11 @@ import { Link, useLocation } from "react-router-dom";
 import instance from "../../api/instrance";
 import { UIContext } from "../../context/ui";
 import { FcViewDetails } from "react-icons/fc";
-import { IoIosArrowDropright } from "react-icons/io";
+import {
+  IoIosArrowBack,
+  IoIosArrowDropright,
+  IoIosArrowForward,
+} from "react-icons/io";
 import { IoIosArrowDropleft } from "react-icons/io";
 export const LocationDivision = () => {
   const provinces = useContext(ProvinceContext);
@@ -25,6 +29,7 @@ export const LocationDivision = () => {
   const halqas = halqa.filter(
     (i) => i.parentType === "Tehsil" || i.parentType === "Division"
   );
+
   const [searchData, setSearchData] = useState([]);
   const [value, setValue] = useState("");
   const districts = useContext(DistrictContext);
@@ -52,21 +57,6 @@ export const LocationDivision = () => {
   const params = useLocation();
 
   // Pagination states
-
-  const itemsPerPage = 10; // Adjust this as needed
-  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
-
-  // Compute the displayed items based on the current page
-  const paginatedData =
-    value === ""
-      ? filteredData.slice(
-          (currentPage - 1) * itemsPerPage,
-          currentPage * itemsPerPage
-        )
-      : searchData.slice(
-          (currentPage - 1) * itemsPerPage,
-          currentPage * itemsPerPage
-        );
 
   useEffect(() => {
     setLoading(true);
@@ -140,6 +130,20 @@ export const LocationDivision = () => {
     parentType: "",
     unitType: "",
   });
+  const itemsPerPage = 10; // Adjust this as needed
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+
+  // Compute the displayed items based on the current page
+  const paginatedData =
+    value === ""
+      ? filteredData.slice(
+          (currentPage - 1) * itemsPerPage,
+          currentPage * itemsPerPage
+        )
+      : searchData.slice(
+          (currentPage - 1) * itemsPerPage,
+          currentPage * itemsPerPage
+        );
 
   // *****************Division***********************
   const handleSubmit = async () => {
@@ -715,54 +719,52 @@ export const LocationDivision = () => {
             </thead>
             <tbody>
               {paginatedData?.length > 0 ? (
-                paginatedData
-                  ?.filter((i) => i?.parentType === "Tehsil")
-                  ?.map((halqa, index) => (
-                    <tr
-                      key={halqa?._id}
-                      className="border-r border-l font-semibold"
-                    >
-                      <td className="">{halqa?.name}</td>
-                      <td className="">
-                        <div
-                          onClick={() => {
-                            getAreaDetails(halqa);
-                          }}
-                        >
-                          <FcViewDetails className="cursor-pointer text-2xl" />
-                        </div>
-                      </td>
+                paginatedData?.map((halqa, index) => (
+                  <tr
+                    key={halqa?._id}
+                    className="border-r border-l font-semibold"
+                  >
+                    <td className="">{halqa?.name}</td>
+                    <td className="">
+                      <div
+                        onClick={() => {
+                          getAreaDetails(halqa);
+                        }}
+                      >
+                        <FcViewDetails className="cursor-pointer text-2xl" />
+                      </div>
+                    </td>
 
-                      <td className="flex justify-center items-center gap-4">
-                        <button
-                          onClick={() => {
-                            setEditMode(true);
-                            setId(halqa?._id);
-                            document
-                              .getElementById("add_halqa_modal")
-                              .showModal();
-                            setFormHalqa({
-                              parentId: halqa?.parentId?._id || "",
-                              name: halqa?.name || "",
-                              parentType: halqa?.parentType || "",
-                              unitType: halqa?.unitType || "",
-                            });
-                          }}
-                          className="text-green-500"
-                        >
-                          Edit
-                        </button>
-                        <input
-                          type="checkbox"
-                          className="toggle toggle-white bg-white [--tglbg:#E2E8F0] checked:[--tglbg:#002856]"
-                          defaultChecked={halqa?.disabled}
-                          onChange={() => {
-                            handleDisable(halqa?._id, !halqa?.disabled);
-                          }}
-                        />
-                      </td>
-                    </tr>
-                  ))
+                    <td className="flex justify-center items-center gap-4">
+                      <button
+                        onClick={() => {
+                          setEditMode(true);
+                          setId(halqa?._id);
+                          document
+                            .getElementById("add_halqa_modal")
+                            .showModal();
+                          setFormHalqa({
+                            parentId: halqa?.parentId?._id || "",
+                            name: halqa?.name || "",
+                            parentType: halqa?.parentType || "",
+                            unitType: halqa?.unitType || "",
+                          });
+                        }}
+                        className="text-green-500"
+                      >
+                        Edit
+                      </button>
+                      <input
+                        type="checkbox"
+                        className="toggle toggle-white bg-white [--tglbg:#E2E8F0] checked:[--tglbg:#002856]"
+                        defaultChecked={halqa?.disabled}
+                        onChange={() => {
+                          handleDisable(halqa?._id, !halqa?.disabled);
+                        }}
+                      />
+                    </td>
+                  </tr>
+                ))
               ) : (
                 <div>No Report Found</div>
               )}
@@ -788,29 +790,29 @@ export const LocationDivision = () => {
 
           {/* Previous Button */}
           <button
-            className="rounded-full border-none"
+            className="rounded-full border-none w-7 h-7"
             disabled={currentPage === 1}
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           >
-            <IoIosArrowDropleft className="text-[1.5rem] rounded-full bg-gray-200" />
+            <IoIosArrowBack className="text-[1.5rem] rounded-full bg-gray-200" />
           </button>
 
           {/* Page Numbers */}
           <div className="flex items-center">
             {currentPage > 1 && (
-              <span className="rounded-full  border border-gray-700 border-1 mx-1 bg-gray-200 w-5 h-5 flex justify-center items-center">
+              <span className="rounded-full  border border-gray-500 border-1 mx-1 bg-white w-7 h-7 flex justify-center items-center">
                 1
               </span>
             )}
             {totalPages > 2 && (
-              <button className="rounded-full  border border-gray-700 border-1 mx-1 bg-gray-200 w-5 h-5 flex justify-center items-center">
+              <button className="rounded-full  border border-gray-500 border-1 mx-1 bg-white w-7 h-7 flex justify-center items-center">
                 2
               </button>
             )}
             {totalPages > 3 && <span>...</span>}
 
             {totalPages && (
-              <span className="rounded-full  border border-gray-700 border-1 mx-1 bg-gray-200 w-5 h-5 flex justify-center items-center">
+              <span className="rounded-full  border border-gray-500 border-1 mx-1 bg-white w-7 h-7 flex justify-center items-center">
                 {totalPages}
               </span>
             )}
@@ -818,13 +820,13 @@ export const LocationDivision = () => {
 
           {/* Next Button */}
           <button
-            className="rounded-full border-none"
+            className="rounded-full border-none w-7 h-7"
             disabled={currentPage === totalPages}
             onClick={() =>
               setCurrentPage((prev) => Math.min(prev + 1, totalPages))
             }
           >
-            <IoIosArrowDropright className="text-[1.5rem] rounded-full bg-gray-200" />
+            <IoIosArrowForward className="text-[1.5rem] rounded-full bg-gray-200" />
           </button>
         </div>
       )}

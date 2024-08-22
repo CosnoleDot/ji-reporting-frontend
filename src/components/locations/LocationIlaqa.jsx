@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import instance from "../../api/instrance";
 import { FaEdit } from "react-icons/fa";
 import { UIContext } from "../../context/ui";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 export const LocationIlaqa = () => {
   const halqas = useContext(HalqaContext);
@@ -195,23 +196,58 @@ export const LocationIlaqa = () => {
         </table>
       </div>
 
-      <div className="flex w-full px-4 justify-between items-center mt-4">
+      <div className="flex w-full gap-4 px-4 justify-end items-center mt-4">
+        <select
+          readOnly
+          disabled
+          name="items_per_page"
+          id="items"
+          className="select select-sm max-w-xs bg-gray-200 rounded-full"
+        >
+          <option value="" disabled selected>
+            rows per page 10
+          </option>
+        </select>
+
+        {/* Previous Button */}
         <button
-          className="btn"
+          className="rounded-full border-none w-7 h-7"
           disabled={currentPage === 1}
-          onClick={() => setCurrentPage((prev) => prev - 1)}
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
         >
-          Previous
+          <IoIosArrowBack className="text-[1.5rem] rounded-full bg-gray-200" />
         </button>
-        <span className="mx-4">
-          Page {currentPage} of {totalPages}
-        </span>
+
+        {/* Page Numbers */}
+        <div className="flex items-center">
+          {totalPages > 1 && (
+            <span className="rounded-full  border border-gray-500 border-1 mx-1 bg-white w-7 h-7 flex justify-center items-center">
+              1
+            </span>
+          )}
+          {totalPages > 2 && (
+            <button className="rounded-full  border border-gray-500 border-1 mx-1 bg-white w-7 h-7 flex justify-center items-center">
+              2
+            </button>
+          )}
+          {totalPages > 3 && <span>...</span>}
+
+          {totalPages && (
+            <span className="rounded-full  border border-gray-500 border-1 mx-1 bg-white w-7 h-7 flex justify-center items-center">
+              {totalPages}
+            </span>
+          )}
+        </div>
+
+        {/* Next Button */}
         <button
-          className="btn"
+          className="rounded-full border-none w-7 h-7"
           disabled={currentPage === totalPages}
-          onClick={() => setCurrentPage((prev) => prev + 1)}
+          onClick={() =>
+            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+          }
         >
-          Next
+          <IoIosArrowForward className="text-[1.5rem] rounded-full bg-gray-200" />
         </button>
       </div>
 

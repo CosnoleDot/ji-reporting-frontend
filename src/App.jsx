@@ -937,6 +937,12 @@ function App() {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
+      } else if (!obj.parentType && (obj.name = "Pakistan")) {
+        res = await instance.get(`/locations/country`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
+        });
       } else {
         res = await instance.get(`/locations/maqam/${obj?._id}`, {
           headers: {
@@ -1397,6 +1403,7 @@ function App() {
                                                 />
                                               }
                                             /> */}
+                                   
                                             </Routes>
                                             <LoadingScreen
                                               count={count}
