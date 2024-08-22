@@ -341,47 +341,36 @@ export const Dashboard = () => {
   return (
     <GeneralLayout title={"Dashboard"} active={"dashboard"}>
       {
-        <div className="relative flex flex-col w-full gap-3 items-center p-5 justify-start overflow-hidden overflow-y-scroll">
-          <div className="flex w-full py-4 mb-4 border-b border-inputBorder">
-            <div className="">
-              <h1 class="font-inter text-heading text-[18px] font-medium leading-[28px] text-left"
-              >Dashborad</h1>
-              <p class="font-inter text-[14px] font-normal leading-[20px] text-left text-secondaryText">Get a sneak peek into your data</p>
-            </div>
-          </div>
-          <div className="grid md:grid-cols-4 grid-cols-2 gap-2 w-full">
+        <div className="relative flex flex-col w-full gap-3 items-center p-5 justify-start h-[calc(100vh-65.6px-64px)] overflow-hidden overflow-y-scroll bg-blue-50">
+          <div className="grid grid-cols-1 gap-2 mt-4 sm:grid-cols-4 sm:px-8 w-full">
             {["province", "country", "maqam", "division"].includes(
               localStorage.getItem("@type")
             ) &&
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
               ) && (
-                <div className="flex bg-white border rounded-2xl h-[130px] p-4 overflow-hidden shadow">
-                  <div className="px-4 flex flex-col gap-2  justify-end">
-                    <p className="text-[32px] font-extrabold font-inter leading-10 text-primary">
+                <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
+                  <div className="p-4 bg-green-400">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-12 w-12 text-white"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div className="px-4 text-gray-700">
+                    <h3 className="text-sm tracking-wider">Total Nazims</h3>
+                    <p className="text-3xl">
                       {nazim?.filter((naz) => naz?.isDeleted == false).length}
                     </p>
-                    <h3 class="font-inter text-[12px] font-semibold leading-[14.52px] text-left text-primary">
-                      Total Nazims
-                    </h3>
-                  </div>
-                  <div className="flex flex-row w-full justify-end">
-                    <div className="p-3 border border-innerAlignment rounded-2xl max-h-11">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-4.5 text-primary"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
-                        ></path>
-                      </svg>
-                    </div>
                   </div>
                 </div>
               )}
@@ -390,23 +379,19 @@ export const Dashboard = () => {
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
               ) && (
-                <div className="flex bg-white border rounded-2xl h-[130px] p-4 overflow-hidden shadow">
-                  <div className="px-4 flex flex-col gap-2  justify-end">
-                    <p className="text-[32px] font-extrabold font-inter leading-10 text-primary">
+                <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
+                  <div className="p-4 bg-gray-400">
+                    <CiLocationOn className="w-12 h-12 text-white" />
+                  </div>
+                  <div className="px-4 text-gray-700">
+                    <h3 className="text-sm tracking-wider">Total Provinces</h3>
+                    <p className="text-3xl">
                       {
                         provinces?.filter(
                           (province) => province?.disabled !== true
                         ).length
                       }
                     </p>
-                    <h3 className="font-inter text-[12px] font-semibold leading-[14.52px] text-left text-primary">
-                      Total Provinces
-                    </h3>
-                  </div>
-                  <div className="flex flex-row w-full justify-end">
-                    <div className="p-3 border border-innerAlignment rounded-2xl max-h-11">
-                      <CiLocationOn className="h-5 w-4.5 text-primary" />
-                    </div>
                   </div>
                 </div>
               )}
@@ -414,23 +399,19 @@ export const Dashboard = () => {
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
               ) && (
-                <div className="flex bg-white border rounded-2xl h-[130px] p-4 overflow-hidden shadow">
-                  <div className="px-4 flex flex-col gap-2  justify-end">
-                    <p className="text-[32px] font-extrabold font-inter leading-10 text-primary">
+                <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
+                  <div className="p-4 bg-red-400">
+                    <FaLocationDot className="h-12 w-12 text-white" />
+                  </div>
+                  <div className="px-4 text-gray-700">
+                    <h3 className="text-sm tracking-wider">Total Divisions</h3>
+                    <p className="text-3xl">
                       {
                         divisions?.filter(
                           (division) => division?.disabled !== true
                         ).length
                       }
                     </p>
-                    <h3 className="font-inter text-[12px] font-semibold leading-[14.52px] text-left text-primary">
-                      Total Divisions
-                    </h3>
-                  </div>
-                  <div className="flex flex-row w-full justify-end">
-                    <div className="p-3 border border-innerAlignment rounded-2xl max-h-11">
-                      <FaLocationDot className="h-5 w-4.5 text-primary" />
-                    </div>
                   </div>
                 </div>
               )}
@@ -440,23 +421,19 @@ export const Dashboard = () => {
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
               ) && (
-                <div className="flex bg-white border rounded-2xl h-[130px] p-4 overflow-hidden shadow">
-                  <div className="px-4 flex flex-col gap-2  justify-end">
-                    <p className="text-[32px] font-extrabold font-inter leading-10 text-primary">
+                <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
+                  <div className="p-4 bg-red-400">
+                    <FaLocationDot className="h-12 w-12 text-white" />
+                  </div>
+                  <div className="px-4 text-gray-700">
+                    <h3 className="text-sm tracking-wider">Total Districts</h3>
+                    <p className="text-3xl">
                       {
                         districts?.filter(
                           (district) => district?.disabled !== true
                         ).length
                       }
                     </p>
-                    <h3 className="font-inter text-[12px] font-semibold leading-[14.52px] text-left text-primary">
-                      Total Districts
-                    </h3>
-                  </div>
-                  <div className="flex flex-row w-full justify-end">
-                    <div className="p-3 border border-innerAlignment rounded-2xl max-h-11">
-                      <FaLocationDot className="h-5 w-4.5 text-primary" />
-                    </div>
                   </div>
                 </div>
               )}
@@ -467,22 +444,18 @@ export const Dashboard = () => {
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
               ) && (
-                <div className="flex bg-white border rounded-2xl h-[130px] p-4 overflow-hidden shadow">
-                  <div className="px-4 flex flex-col gap-2  justify-end">
-                    <p className="text-[32px] font-extrabold font-inter leading-10 text-primary">
+                <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
+                  <div className="p-4 bg-indigo-400">
+                    <CiLocationOn className="h-12 w-12 text-white" />
+                  </div>
+                  <div className="px-4 text-gray-700">
+                    <h3 className="text-sm tracking-wider">Total Tehsils</h3>
+                    <p className="text-3xl">
                       {
                         tehsils?.filter((tehsil) => tehsil?.disabled !== true)
                           .length
                       }
                     </p>
-                    <h3 className="font-inter text-[12px] font-semibold leading-[14.52px] text-left text-primary">
-                      Total Tehsils
-                    </h3>
-                  </div>
-                  <div className="flex flex-row w-full justify-end">
-                    <div className="p-3 border border-innerAlignment rounded-2xl max-h-11">
-                      <CiLocationOn className="h-5 w-4.5 text-primary" />
-                    </div>
                   </div>
                 </div>
               )}
@@ -492,22 +465,18 @@ export const Dashboard = () => {
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
               ) && (
-                <div className="flex bg-white border rounded-2xl h-[130px] p-4 overflow-hidden shadow">
-                  <div className="px-4 flex flex-col gap-2  justify-end">
-                    <p className="text-[32px] font-extrabold font-inter leading-10 text-primary">
+                <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
+                  <div className="p-4 bg-indigo-400">
+                    <CiLocationOn className="w-12 h-12 text-white" />
+                  </div>
+                  <div className="px-4 text-gray-700">
+                    <h3 className="text-sm tracking-wider">Total Maqams</h3>
+                    <p className="text-3xl">
                       {
                         maqams?.filter((maqam) => maqam?.disabled !== true)
                           .length
                       }
                     </p>
-                    <h3 className="font-inter text-[12px] font-semibold leading-[14.52px] text-left text-primary">
-                      Total Maqams
-                    </h3>
-                  </div>
-                  <div className="flex flex-row w-full justify-end">
-                    <div className="p-3 border border-innerAlignment rounded-2xl max-h-11">
-                      <CiLocationOn className="h-5 w-4.5 text-primary" />
-                    </div>
                   </div>
                 </div>
               )}
@@ -518,19 +487,15 @@ export const Dashboard = () => {
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
               ) && (
-                <div className="flex bg-white border rounded-2xl h-[130px] p-4 overflow-hidden shadow">
-                  <div className="px-4 flex flex-col gap-2  justify-end">
-                    <p className="text-[32px] font-extrabold font-inter leading-10 text-primary">
+                <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
+                  <div className="p-4 bg-slate-600">
+                    <CiLocationOn className="w-12 h-12 text-white" />
+                  </div>
+                  <div className="px-4 text-gray-700">
+                    <h3 className="text-sm tracking-wider">Total Ilaqas</h3>
+                    <p className="text-3xl">
                       {ilaqa?.filter((il) => il?.disabled !== true).length}
                     </p>
-                    <h3 className="font-inter text-[12px] font-semibold leading-[14.52px] text-left text-primary">
-                      Total Ilaqas
-                    </h3>
-                  </div>
-                  <div className="flex flex-row w-full justify-end">
-                    <div className="p-3 border border-innerAlignment rounded-2xl max-h-11">
-                      <CiLocationOn className="h-5 w-4.5 text-primary" />
-                    </div>
                   </div>
                 </div>
               )}
@@ -538,19 +503,13 @@ export const Dashboard = () => {
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
               ) && (
-                <div className="flex bg-white border rounded-2xl h-[130px] p-4 overflow-hidden shadow">
-                  <div className="px-4 flex flex-col gap-2  justify-end">
-                    <p className="text-[32px] font-extrabold font-inter leading-10 text-primary">
-                      {unit.length}
-                    </p>
-                    <h3 className="font-inter text-[12px] font-semibold leading-[14.52px] text-left text-primary">
-                      Total Units
-                    </h3>
+                <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
+                  <div className="p-4 bg-red-400">
+                    <FaLocationArrow className="w-12 h-12 text-white" />
                   </div>
-                  <div className="flex flex-row w-full justify-end">
-                    <div className="p-3 border border-innerAlignment rounded-2xl max-h-11">
-                      <FaLocationArrow className="h-5 w-4.5 text-primary" />
-                    </div>
+                  <div className="px-4 text-gray-700">
+                    <h3 className="text-sm tracking-wider">Total Units</h3>
+                    <p className="text-3xl">{unit.length}</p>
                   </div>
                 </div>
               )}
@@ -583,7 +542,7 @@ export const Dashboard = () => {
                   getData();
                   getPsersonalReports();
                 }}
-                className="bg-primary flex items-center gap-2 p-2 rounded w-full md:w-auto border-none capitalize text-white "
+                className="btn btn-neutral w-full md:w-auto border-none capitalize"
               >
                 See Reports Status
                 <FaArrowDown />
@@ -596,7 +555,7 @@ export const Dashboard = () => {
             ) && (
               <button
                 onClick={() => setShowData(false)}
-                className="bg-primary flex justify-center w-full items-center gap-2 p-2 rounded md:w-auto border-none capitalize text-white"
+                className="btn btn-neutral w-full md:w-auto border-none capitalize"
               >
                 Close Reports Status
                 <FaArrowUp />
@@ -604,90 +563,81 @@ export const Dashboard = () => {
             )}
           {showData && (
             <div className=" gap-4 mt-4 sm:px-8 w-full flex flex-col ">
-              <div>
-                <p class="font-inter text-[16px] font-semibold leading-[20px] text-left">
-                  Reports of {month}
-                </p>
+              <div className="w-full flex justify-end items-center">
+                <button
+                  className="btn"
+                  onClick={() => {
+                    document
+                      .getElementById("filter_filled_unfilled_modal")
+                      .showModal();
+                  }}
+                >
+                  Filter <FaFilter />
+                </button>
+                <button className="btn" onClick={clearFilter}>
+                  Clear Filter
+                </button>
               </div>
-              <div className="flex md:flex-row-reverse flex-col-reverse md:gap-0 gap-4 items-center">
-                <div className="w-full flex md:justify-end justify-start gap-4 items-center">
-                  <button
-                    className="bg-primary text-white rounded p-2 flex items-center gap-2"
-                    onClick={() => {
-                      document
-                        .getElementById("filter_filled_unfilled_modal")
-                        .showModal();
+
+              {showData && (
+                <div className="w-full flex justify-between items-center flex-wrap">
+                  <div
+                    style={{
+                      color: toggle === "pFilled" ? "" : "#3B82F6",
                     }}
+                    onClick={() => {
+                      setToggle("pFilled");
+                      setUserAreaType("personal");
+                      setShow(false);
+                    }}
+                    className="capitalize items-center text-start underline w-[50%] md:w-auto font-semibold cursor-pointer pb-1"
                   >
-                    Filter <FaFilter />
-                  </button>
-                  <button
-                    className="bg-primary text-white rounded p-2"
-                    onClick={clearFilter}
-                  >
-                    Clear Filter
-                  </button>
-                </div>
-
-                {showData && (
-                  <div className="w-full flex justify-between items-center flex-wrap">
-                    <div
-                      style={{
-                        color: toggle === "pFilled" ? "#71717A" : "#09090B",
-                      }}
-                      onClick={() => {
-                        setToggle("pFilled");
-                        setUserAreaType("personal");
-                        setShow(false);
-                      }}
-                      className="font-inter md:text-[14px] text-[12px] font-medium leading-[20px] text-left cursor-pointer"
-                    >
-                      Personal Filled {personalFilled?.length}
-                    </div>
-                    <div
-                      style={{
-                        color: toggle === "pUnFilled" ? "#71717A" : "#09090B",
-                      }}
-                      onClick={() => {
-                        setToggle("pUnFilled");
-                        setUserAreaType("personal");
-                        setShow(false);
-                      }}
-                      className="font-inter md:text-[14px] text-[12px] font-medium leading-[20px] text-left cursor-pointer"
-                    >
-                      Personal Unfilled {personalUnfilled?.length}
-                    </div>
-
-                    <div
-                      style={{
-                        color: toggle === "filled" ? "#71717A" : "#09090B",
-                      }}
-                      onClick={() => {
-                        setShow(true);
-                        setToggle("filled");
-                      }}
-                      className="font-inter md:text-[14px] text-[12px] font-medium leading-[20px] text-left cursor-pointer"
-                    >
-                      Filled {data?.filled?.length}
-                    </div>
-                    <div
-                      style={{
-                        color: toggle === "unFilled" ? "#71717A" : "#09090B",
-                      }}
-                      onClick={() => {
-                        setShow(true);
-                        setToggle("unFilled");
-                      }}
-                      className="font-inter md:text-[14px] text-[12px] font-medium leading-[20px] text-left cursor-pointer"
-                    >
-                      Unfilled {data?.unfilled?.length}
-                    </div>
+                    Personal Filled {personalFilled?.length}
                   </div>
-                )}
-              </div>
+                  <div
+                    style={{
+                      color: toggle === "pUnFilled" ? "" : "#3B82F6",
+                    }}
+                    onClick={() => {
+                      setToggle("pUnFilled");
+                      setUserAreaType("personal");
+                      setShow(false);
+                    }}
+                    className="capitalize items-center text-start underline w-[50%] md:w-auto font-semibold cursor-pointer pb-1"
+                  >
+                    Personal Unfilled {personalUnfilled?.length}
+                  </div>
+
+                  <div
+                    style={{
+                      color: toggle === "filled" ? "" : "#3B82F6",
+                    }}
+                    onClick={() => {
+                      setShow(true);
+                      setToggle("filled");
+                    }}
+                    className="capitalize items-center text-start underline w-[50%] md:w-auto font-semibold cursor-pointer pb-1"
+                  >
+                    Filled {data?.filled?.length}
+                  </div>
+                  <div
+                    style={{
+                      color: toggle === "unFilled" ? "" : "#3B82F6",
+                    }}
+                    onClick={() => {
+                      setShow(true);
+                      setToggle("unFilled");
+                    }}
+                    className="capitalize items-center text-start underline w-[50%] md:w-auto font-semibold cursor-pointer pb-1"
+                  >
+                    Unfilled {data?.unfilled?.length}
+                  </div>
+                </div>
+              )}
               <hr />
               {showData && (
                 <div className="overflow-x-auto grid grid-cols-1 gap-4 mt-3 sm:grid-cols-1 sm:px-4 w-full transition ease-in-out duration-300">
+                  <p className="text-slate-500 ">Reports of {month}</p>
                   <div>
                     {show && (
                       <table className="table mb-7" ref={tableRef}>
@@ -696,10 +646,7 @@ export const Dashboard = () => {
                           <tr className="w-full flex justify-between ">
                             <th className="text-start">Area</th>
                             <th className="text-center">Nazim</th>
-                            <th className="md:block hidden"></th>
-                            <th className="md:block hidden"></th>
-                            <th className="md:block hidden"></th>
-                            <th className="text-left mr-2">Action</th>
+                            <th className="text-right">View</th>
                           </tr>
                         </thead>
                         <div className="w-full mb-3 h-[300px] overflow-auto overflow-y-scroll">
@@ -715,10 +662,15 @@ export const Dashboard = () => {
                                 data?.filled
                                   ?.filter((i) => !i?.disabled)
                                   ?.map((obj, index) => (
-                                    <tr key={index} className={`w-full flex`}>
-                                      <td className=" ">
+                                    <tr
+                                      key={index}
+                                      className={`w-full flex  ${
+                                        index % 2 === 0 && "bg-[#B2D5FF]"
+                                      }`}
+                                    >
+                                      <td className="w-[50%] ">
                                         <p
-                                          className="font-inter text-[14px] font-medium leading-[16.94px] text-left"
+                                          className="text-xs w-full"
                                           style={{
                                             textTransform: "capitalize",
                                             fontSize: "smaller",
@@ -727,7 +679,7 @@ export const Dashboard = () => {
                                           {obj.name}
                                         </p>
                                       </td>
-                                      <td className="font-inter text-[14px] font-medium leading-[16.94px] text-left">
+                                      <td className="w-[50%]">
                                         {nazim.find(
                                           (i) => i?.userAreaId?._id === obj?._id
                                         )?.name || (
@@ -736,15 +688,12 @@ export const Dashboard = () => {
                                               textTransform: "capitalize",
                                               fontSize: "smaller",
                                             }}
-                                            className="text-start text-destructive font-medium text-[14px] leading-4"
+                                            className="text-start text-error"
                                           >
                                             User Not Registered Yet
                                           </span>
                                         )}
                                       </td>
-                                      <td className="w-[50%] md:block hidden"></td>
-                                      <td className="w-[50%] md:block hidden"></td>
-                                      <td className="w-[50%] md:block hidden"></td>
                                       <td className="">
                                         <div
                                           onClick={() => {
@@ -768,7 +717,9 @@ export const Dashboard = () => {
                                 ?.filter((i) => !i?.disabled)
                                 ?.map((obj, index) => (
                                   <tr
-                                    className={`w-full flex items-center`}
+                                    className={`w-full flex items-center ${
+                                      index % 2 === 0 && "bg-[#B2D5FF]"
+                                    }`}
                                     key={obj?._id}
                                   >
                                     <td className="w-[50%] ">
@@ -800,19 +751,13 @@ export const Dashboard = () => {
                                         </span>
                                       )}
                                     </td>
-                                    <td className="w-[50%] md:block hidden"></td>
-                                    <td className="w-[50%] md:block hidden"></td>
-                                    <td className="w-[50%] md:block hidden"></td>
-
                                     <td className="">
                                       <div
                                         onClick={() => {
                                           getAreaDetails(obj);
                                         }}
                                       >
-                                        <span class="cursor-pointer font-inter text-[14px] font-medium leading-[16.94px] text-left">
-                                          view
-                                        </span>
+                                        <FcViewDetails className="cursor-pointer text-2xl" />
                                       </div>
                                     </td>
                                   </tr>
