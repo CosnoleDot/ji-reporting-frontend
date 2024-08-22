@@ -3345,6 +3345,10 @@ html {
   top: 1.25rem;
 }
 
+.top-\[136px\] {
+  top: 136px;
+}
+
 .z-0 {
   z-index: 0;
 }
@@ -3521,6 +3525,10 @@ html {
 
 .mt-\[5rem\] {
   margin-top: 5rem;
+}
+
+.mt-8 {
+  margin-top: 2rem;
 }
 
 .block {
@@ -3797,6 +3805,10 @@ html {
 
 .w-1\/2 {
   width: 50%;
+}
+
+.w-\[20\%\] {
+  width: 20%;
 }
 
 .min-w-\[140px\] {
@@ -4281,6 +4293,26 @@ html {
   padding: 8px;
 }
 
+.p-\[2px\] {
+  padding: 2px;
+}
+
+.p-\[3px\] {
+  padding: 3px;
+}
+
+.p-\[4px\] {
+  padding: 4px;
+}
+
+.p-\[5px\] {
+  padding: 5px;
+}
+
+.p-\[6px\] {
+  padding: 6px;
+}
+
 .px-1 {
   padding-left: 0.25rem;
   padding-right: 0.25rem;
@@ -4339,6 +4371,11 @@ html {
 .py-5 {
   padding-top: 1.25rem;
   padding-bottom: 1.25rem;
+}
+
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 .pb-2 {

@@ -341,7 +341,7 @@ export const Dashboard = () => {
   return (
     <GeneralLayout title={"Dashboard"} active={"dashboard"}>
       {
-        <div className="relative flex flex-col w-full gap-3 items-center p-5 justify-start overflow-hidden overflow-y-scroll">
+        <div className="relative  flex flex-col gap-3 items-center p-5 justify-start overflow-hidden overflow-y-scroll">
           <div className="flex w-full py-4 mb-4 border-b border-inputBorder">
             <div className="">
               <h1 class="font-inter text-heading text-[18px] font-medium leading-[28px] text-left">
@@ -586,7 +586,7 @@ export const Dashboard = () => {
                   getData();
                   getPsersonalReports();
                 }}
-                className="bg-primary flex items-center gap-2 p-2 rounded w-full md:w-auto border-none capitalize text-white "
+                className="bg-primary mt-8 flex items-center gap-2 p-2 rounded w-full md:w-auto border-none capitalize text-white "
               >
                 See Reports Status
                 <FaArrowDown />
@@ -599,7 +599,7 @@ export const Dashboard = () => {
             ) && (
               <button
                 onClick={() => setShowData(false)}
-                className="bg-primary flex justify-center w-full items-center gap-2 p-2 rounded md:w-auto border-none capitalize text-white"
+                className="bg-primary flex mt-8 justify-center w-full items-center gap-2 p-2 rounded md:w-auto border-none capitalize text-white"
               >
                 Close Reports Status
                 <FaArrowUp />
