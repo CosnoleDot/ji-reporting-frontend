@@ -16,7 +16,11 @@ export const GeneralLayout = ({ children, active, title }) => {
 
   const sidebarClasses = useMemo(
     () =>
-      `md:w-[20%] ${isSideBarOpen ? "block w-[80%] z-10 absolute top-0 left-0" : "hidden"} md:block`,
+
+      `md:w-[20%] ${
+        isSideBarOpen ? "block w-[80%] z-50 absolute top-0 left-0" : "hidden"
+      } md:block`,
+
     [isSideBarOpen]
   );
 useEffect(()=>{setIsSideBarOpen(false)},[])

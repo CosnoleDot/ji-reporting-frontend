@@ -341,8 +341,19 @@ export const Dashboard = () => {
   return (
     <GeneralLayout title={"Dashboard"} active={"dashboard"}>
       {
-        <div className="relative flex flex-col w-full gap-3 items-center p-5 justify-start h-[calc(100vh-65.6px-64px)] overflow-hidden overflow-y-scroll bg-blue-50">
-          <div className="grid grid-cols-1 gap-2 mt-4 sm:grid-cols-4 sm:px-8 w-full">
+
+        <div className="relative  flex flex-col gap-3 items-center p-5 justify-start overflow-hidden overflow-y-scroll">
+          <div className="flex w-full py-4 mb-4 border-b border-inputBorder">
+            <div className="">
+              <h1 class="font-inter text-heading text-[18px] font-medium leading-[28px] text-left">
+                Dashborad
+              </h1>
+              <p class="font-inter text-[14px] font-normal leading-[20px] text-left text-secondaryText">
+                Get a sneak peek into your data
+              </p>
+            </div>
+          </div>
+          <div className="grid md:grid-cols-4 grid-cols-2 gap-2 w-full">
             {["province", "country", "maqam", "division"].includes(
               localStorage.getItem("@type")
             ) &&
@@ -542,7 +553,10 @@ export const Dashboard = () => {
                   getData();
                   getPsersonalReports();
                 }}
-                className="btn btn-neutral w-full md:w-auto border-none capitalize"
+
+
+                className="bg-primary mt-8 flex items-center gap-2 p-2 rounded w-full md:w-auto border-none capitalize text-white "
+
               >
                 See Reports Status
                 <FaArrowDown />
@@ -555,7 +569,9 @@ export const Dashboard = () => {
             ) && (
               <button
                 onClick={() => setShowData(false)}
-                className="btn btn-neutral w-full md:w-auto border-none capitalize"
+
+                className="bg-primary flex mt-8 justify-center w-full items-center gap-2 p-2 rounded md:w-auto border-none capitalize text-white"
+
               >
                 Close Reports Status
                 <FaArrowUp />
@@ -848,10 +864,12 @@ export const Dashboard = () => {
       }
       <dialog id="filter_filled_unfilled_modal" className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg mb-3">Filter Data</h3>
-          <div className="w-full  flex justify-between items-center  flex-wrap">
+          <h3 class="font-inter text-[16px] font-bold leading-[20px] text-left">
+            Filter Data
+          </h3>
+          <div className="w-full  flex justify-between items-center  flex-wrap mt-2">
             <div className="flex flex-col w-full justify-start items-center gap-3 mb-3">
-              <div className=" w-full flex items-center justify-start gap-2 border flex-wrap border-primary p-2 rounded-lg">
+              <div className=" w-full flex items-center justify-start gap-2 border flex-wrap border-inputBorder p-2 rounded-lg">
                 {show && (
                   <>
                     {me?.userAreaType === "Country" && (
@@ -865,7 +883,9 @@ export const Dashboard = () => {
                             checked={userAreaType === "Country"}
                             onChange={(e) => setUserAreaType(e.target.value)}
                           />
-                          <span className="label-text">Markaz</span>
+                          <span class="font-inter text-[14px] font-medium leading-[20px] text-left">
+                            Markaz
+                          </span>
                         </label>
                       </div>
                     )}
@@ -880,7 +900,9 @@ export const Dashboard = () => {
                             checked={userAreaType === "Province"}
                             onChange={(e) => setUserAreaType(e.target.value)}
                           />
-                          <span className="label-text">Province</span>
+                          <span class="font-inter text-[14px] font-medium leading-[20px] text-left">
+                            Province
+                          </span>
                         </label>
                       </div>
                     )}
@@ -896,7 +918,9 @@ export const Dashboard = () => {
                             checked={userAreaType === "Tehsil"}
                             onChange={(e) => setUserAreaType(e.target.value)}
                           />
-                          <span className="label-text">Division</span>
+                          <span class="font-inter text-[14px] font-medium leading-[20px] text-left">
+                            Division
+                          </span>
                         </label>
                       </div>
                     )}
@@ -912,7 +936,9 @@ export const Dashboard = () => {
                             checked={userAreaType === "Maqam"}
                             onChange={(e) => setUserAreaType(e.target.value)}
                           />
-                          <span className="label-text">Maqam</span>
+                          <span class="font-inter text-[14px] font-medium leading-[20px] text-left">
+                            Maqam
+                          </span>
                         </label>
                       </div>
                     )}
@@ -929,7 +955,9 @@ export const Dashboard = () => {
                             checked={userAreaType === "Ilaqa"}
                             onChange={(e) => setUserAreaType(e.target.value)}
                           />
-                          <span className="label-text">Ilaqa</span>
+                          <span class="font-inter text-[14px] font-medium leading-[20px] text-left">
+                            Ilaqa
+                          </span>
                         </label>
                       </div>
                     )}
@@ -943,7 +971,9 @@ export const Dashboard = () => {
                           checked={userAreaType === "All"}
                           onChange={(e) => setUserAreaType(e.target.value)}
                         />
-                        <span className="label-text">All</span>
+                        <span class="font-inter text-[14px] font-medium leading-[20px] text-left">
+                          All
+                        </span>
                       </label>
                     </div>
                   </>
@@ -959,7 +989,9 @@ export const Dashboard = () => {
                         checked={userAreaType === "personal"}
                         onChange={(e) => setUserAreaType(e.target.value)}
                       />
-                      <span className="label-text">personal</span>
+                      <span class="font-inter text-[14px] font-medium leading-[20px] text-left">
+                        personal
+                      </span>
                     </label>
                   </div>
                 )}
@@ -1055,10 +1087,10 @@ export const Dashboard = () => {
             </div>
             <div className="w-full flex justify-end">
               <label
-                className="btn rounded-md bg-none  "
+                className="btn rounded-md bg-primary  "
                 htmlFor="filterUnfilled"
               >
-                <FaFilter />
+                <FaFilter className="text-primary"/>
                 <input
                   type="month"
                   className="text-primary"
@@ -1073,7 +1105,7 @@ export const Dashboard = () => {
                 <div className=" w-full flex justify-end gap-3 items-center">
                   <button
                     id="close-division-modal"
-                    className="btn ms-3 capitalize"
+                    className="text-white font-inter font-normal text-[14px] p-2 rounded leading-6 bg-primary ms-3 capitalize"
                     onClick={() => {
                       setQuerydate("");
                       setUserAreaType("All");
@@ -1092,7 +1124,7 @@ export const Dashboard = () => {
                       queryDate === ""
                     }
                     id="close-division-modal"
-                    className="btn ms-3 capitalize"
+                    className="text-white font-inter font-normal text-[14px] p-2 rounded leading-6 bg-primary ms-3 capitalize"
                     onClick={() => {
                       userAreaType !== "personal"
                         ? getData()
