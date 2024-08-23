@@ -51,7 +51,7 @@ export const Navbar = ({ title , setIsSideBarOpen ,isSideBarOpen }) => {
 
   return (
     <>
-      <div className="navbar  text-heading px-8 bg-white">
+      <div className="navbar  text-heading px-8">
         <div className="flex-1">
           <span className="text-[18px] font-black font-inter leading-5 md:block hidden">
             IJT REPORTING

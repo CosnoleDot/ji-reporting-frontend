@@ -197,19 +197,51 @@ export const Reports = () => {
       title={me?.userAreaId?.name.toUpperCase()}
       active={"reports"}
     >
-      <div className="relative flex flex-col gap-3 items-center p-5 justify-center h-[calc(100vh-65.6px-64px)]">
-        <h3 className="w-full font-bold text-left text-xl hidden lg:block xl:block">
-          Reports
-        </h3>
-        <div className="flex flex-col w-full items-center justify-between md:flex-row">
-          <div className="flex justify-end items-center gap-4">
-            {active === localStorage.getItem("@type") && (
-              <button className="btn " onClick={handleReport}>
-                <FaPlus />
-                <span className="hidden lg:block xl:block">New Report</span>
+      <div className="relative flex flex-col gap-3 items-center p-5 justify-center">
+        <div className="flex md:flex-row flex-col w-full items-center justify-between py-4 mb-4 border-b border-inputBorder">
+          <div className="flex flex-col justify-start w-full md:mb-0 mb-4">
+            <h1 class="font-inter text-heading text-[18px] font-medium leading-[28px] text-left">
+              Reports
+            </h1>
+            <p class="font-inter text-[14px] font-normal leading-[20px] text-left text-secondaryText">
+              Get a sneak peek into your reports
+            </p>
+          </div>
+          <div className="flex gap-2 md:flex-row flex-col w-full">
+            <div className="flex items-center gap-2 w-full">
+              {active === localStorage.getItem("@type") && (
+                <button
+                  className="font-inter w-full gap-1 justify-center flex items-center bg-primary  text-white p-2 rounded text-[14px] font-medium leading-[20px] text-left"
+                  onClick={handleReport}
+                >
+                  <FaPlus />
+                  <span className="">New Report</span>
+                </button>
+              )}
+              <button
+                className="font-inter w-full text-[14px] bg-primary flex justify-center text-white p-2 rounded font-medium leading-[20px] text-left"
+                onClick={() => navigate("/compilation")}
+              >
+                Compile
+              </button>
+            </div>
+            {[
+              "umeedwar",
+              "rukan",
+              "umeedwaar-nazim",
+              "rukan-nazim",
+              "nazim",
+            ].includes(me?.nazimType) && (
+              <button
+                className="font-inter w-full text-[14px] bg-primary flex justify-center text-white p-2 rounded font-medium leading-[20px] text-left"
+                onClick={() => {
+                  setTab("personal");
+                  navigate("/personalReport");
+                }}
+              >
+                Arkan/umeedwaran reports
               </button>
             )}
-
             {((active === "province" &&
               localStorage.getItem("@type") === "country") ||
               (active === "division" &&
@@ -226,141 +258,126 @@ export const Reports = () => {
                 localStorage.getItem("@type") !== "country")) && (
               <button
                 onClick={sendNotification}
-                className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
+                className={`text-[14px] bg-primary  text-white p-2 rounded font-medium leading-[20px] text-left ${
+                  !isMobileView ? "join-item" : "ms-3"
+                } `}
               >
                 <AiFillBell />
               </button>
             )}
-            <button className="btn " onClick={() => navigate("/compilation")}>
-              Compile
-            </button>
           </div>
         </div>
-        {[
-          "umeedwar",
-          "rukan",
-          "umeedwaar-nazim",
-          "rukan-nazim",
-          "nazim",
-        ].includes(me?.nazimType) && (
-          <Link
-            to={"/personalReport"}
-            role="tab"
-            className={`flex justify-center p-1 text-slate-400 items-center w-full ${
-              tab === "personal" ? "text-[#3B82F6] underline" : ""
-            } font-bold `}
-            onClick={() => setTab("personal")}
-          >
-            ارکان/امیدواران رپورٹ
-          </Link>
-        )}
+
         <div
           role="tablist"
           className="w-full flex text-slate-400 justify-between gap-3 items-center overflow-hidden overflow-x-scroll"
         >
-          {["country"].includes(localStorage.getItem("@type")) &&
-            ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
-              localStorage.getItem("@nazimType")
-            ) && (
-              <Link
-                to={"?active=country"}
-                role="tab"
-                className={`flex justify-center p-1 items-center mb-2  w-full ${
-                  active === "country" ? "text-[#3B82F6] underline " : ""
-                }  font-bold `}
-                onClick={() => setNotifyTo("country")}
-              >
-                مرکز
-              </Link>
-            )}
-          {["country", "province"].includes(localStorage.getItem("@type")) &&
-            ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
-              localStorage.getItem("@nazimType")
-            ) && (
-              <Link
-                to={"?active=province"}
-                role="tab"
-                className={`flex justify-center p-1 items-center mb-2  w-full ${
-                  active === "province" ? "text-[#3B82F6] underline " : ""
-                } font-bold `}
-                onClick={() => setNotifyTo("province")}
-              >
-                صوبہ
-              </Link>
-            )}
-          {["country", "province", "division"].includes(
-            localStorage.getItem("@type")
-          ) &&
-            ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
-              localStorage.getItem("@nazimType")
-            ) && (
-              <Link
-                to={"?active=division"}
-                role="tab"
-                className={`flex justify-center p-1 items-center mb-2  w-full ${
-                  active === "division" ? "text-[#3B82F6] underline" : ""
-                } font-bold `}
-                onClick={() => setNotifyTo("division")}
-              >
-                ڈویژن
-              </Link>
-            )}
-          {["country", "province", "maqam"].includes(
-            localStorage.getItem("@type")
-          ) &&
-            ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
-              localStorage.getItem("@nazimType")
-            ) && (
-              <Link
-                to={"?active=maqam"}
-                role="tab"
-                className={`flex justify-center p-1 items-center mb-2  w-full ${
-                  active === "maqam" ? "text-[#3B82F6] underline" : ""
-                } font-bold `}
-                onClick={() => setNotifyTo("maqam")}
-              >
-                مقام
-              </Link>
-            )}
-          {["country", "maqam", "ilaqa", "province"].includes(
-            localStorage.getItem("@type")
-          ) &&
-            ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
-              localStorage.getItem("@nazimType")
+          <div className="flex items-center justify-between w-full">
+            {["country"].includes(localStorage.getItem("@type")) &&
+              ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
+                localStorage.getItem("@nazimType")
+              ) && (
+                <Link
+                  to={"?active=country"}
+                  role="tab"
+                  className={`font-inter md:text-[14px] text-[12px] font-medium leading-[20px] text-left text-heading ${
+                    active === "country" ? "text-secondaryText underline " : ""
+                  }  font-bold `}
+                  onClick={() => setNotifyTo("country")}
+                >
+                  Markaz
+                </Link>
+              )}
+            {["country", "province"].includes(localStorage.getItem("@type")) &&
+              ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
+                localStorage.getItem("@nazimType")
+              ) && (
+                <Link
+                  to={"?active=province"}
+                  role="tab"
+                  className={`font-inter md:text-[14px] text-[12px] font-medium leading-[20px] text-left text-heading ${
+                    active === "province" ? "text-secondaryText underline " : ""
+                  } font-bold `}
+                  onClick={() => setNotifyTo("province")}
+                >
+                  Province
+                </Link>
+              )}
+            {["country", "province", "division"].includes(
+              localStorage.getItem("@type")
             ) &&
-            ilaqas?.length > 0 && (
-              <Link
-                to={"?active=ilaqa"}
-                role="tab"
-                className={`flex justify-center p-1 items-center mb-2  w-full ${
-                  active === "ilaqa" ? "text-[#3B82F6] underline" : ""
-                } font-bold `}
-                onClick={() => setNotifyTo("ilaqa")}
-              >
-                علاقہ/Zone
-              </Link>
-            )}
+              ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
+                localStorage.getItem("@nazimType")
+              ) && (
+                <Link
+                  to={"?active=division"}
+                  role="tab"
+                  className={`font-inter md:text-[14px] text-[12px] font-medium leading-[20px] text-left text-heading ${
+                    active === "division" ? "text-secondaryText underline" : ""
+                  } font-bold `}
+                  onClick={() => setNotifyTo("division")}
+                >
+                  Division
+                </Link>
+              )}
+            {["country", "province", "maqam"].includes(
+              localStorage.getItem("@type")
+            ) &&
+              ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
+                localStorage.getItem("@nazimType")
+              ) && (
+                <Link
+                  to={"?active=maqam"}
+                  role="tab"
+                  className={`font-inter md:text-[14px] text-[12px] font-medium leading-[20px] text-left text-heading ${
+                    active === "maqam" ? "text-secondaryText underline" : ""
+                  } font-bold `}
+                  onClick={() => setNotifyTo("maqam")}
+                >
+                  Maqam
+                </Link>
+              )}
+            {["country", "maqam", "ilaqa", "province"].includes(
+              localStorage.getItem("@type")
+            ) &&
+              ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
+                localStorage.getItem("@nazimType")
+              ) &&
+              ilaqas?.length > 0 && (
+                <Link
+                  to={"?active=ilaqa"}
+                  role="tab"
+                  className={`font-inter md:text-[14px] text-[12px] font-medium leading-[20px] text-left text-heading ${
+                    active === "ilaqa" ? "text-secondaryText underline" : ""
+                  } font-bold `}
+                  onClick={() => setNotifyTo("ilaqa")}
+                >
+                  Zone
+                </Link>
+              )}
 
-          {["country", "province", "maqam", "ilaqa", "division"].includes(
-            localStorage.getItem("@type")
-          ) &&
-            ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
-              localStorage.getItem("@nazimType")
-            ) && (
-              <Link
-                to={"?active=halqa"}
-                role="tab"
-                className={`flex justify-center p-1 items-center mb-2  w-full ${
-                  active === "halqa" ? "text-[#3B82F6] underline" : ""
-                } font-bold `}
-                onClick={() => setNotifyTo("halqa")}
-              >
-                حلقہ
-              </Link>
-            )}
+            {["country", "province", "maqam", "ilaqa", "division"].includes(
+              localStorage.getItem("@type")
+            ) &&
+              ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
+                localStorage.getItem("@nazimType")
+              ) && (
+                <Link
+                  to={"?active=halqa"}
+                  role="tab"
+                  className={`font-inter md:text-[14px] text-[12px] font-medium leading-[20px] text-left text-heading ${
+                    active === "halqa" ? "text-secondaryText underline" : ""
+                  } font-bold `}
+                  onClick={() => setNotifyTo("halqa")}
+                >
+                  Halqa
+                </Link>
+              )}
+          </div>
+          <div></div>
         </div>
 
-        <div className="relative overflow-y-scroll gap-3 w-full items-center p-0 md:p-5 justify-center h-[calc(100vh-65.6px-64px-48px)]">
+        <div className="relative overflow-y-scroll gap-3 w-full items-center  justify-center h-[calc(100vh-65.6px-64px-48px)]">
           {active === "province" ? (
             <ProvinceReports />
           ) : active === "division" ? (

@@ -123,9 +123,9 @@ export const IlaqaReports = () => {
     <>
       <div className="md:join xs:w-full mb-4 flex justify-between items-center">
         {!isMobileView && (
-          <div className="w-full">
+          <div className="w-full flex">
             <select
-              className="select select-bordered join-item"
+              className="select select-bordered select-sm join-item"
               onChange={(e) => setMonth(e.target.value)}
               value={month}
             >
@@ -137,7 +137,7 @@ export const IlaqaReports = () => {
               ))}
             </select>
             <select
-              className="select select-bordered join-item"
+              className="select select-bordered select-sm join-item"
               onChange={(e) => setYear(e.target.value)}
               value={year}
             >
@@ -169,7 +169,7 @@ export const IlaqaReports = () => {
                   </div>
                 )}
                 <select
-                  className="select select-bordered w-full rounded-none rounded-tl-lg rounded-tr-lg"
+                  className="select select-bordered select-sm w-full rounded-none rounded-tl-lg rounded-tr-lg"
                   onChange={(e) => setMonth(e.target.value)}
                   value={month}
                 >
@@ -181,7 +181,7 @@ export const IlaqaReports = () => {
                   ))}
                 </select>
                 <select
-                  className="select select-bordered w-full rounded-none rounded-bl-lg rounded-br-lg"
+                  className="select select-bordered select-sm w-full rounded-none rounded-bl-lg rounded-br-lg"
                   value={year}
                   onChange={(e) => setYear(e.target.value)}
                 >
@@ -197,7 +197,7 @@ export const IlaqaReports = () => {
                     ))}
                 </select>
               </div>
-              <button className="btn" onClick={searchResults}>
+              <button className="font-inter px-2 text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left" onClick={searchResults}>
                 Search
               </button>
             </div>
@@ -207,7 +207,7 @@ export const IlaqaReports = () => {
         <div className="indicator flex justify-between items-center w-full">
           {/* <span className='indicator-item badge badge-secondary'>new</span> */}
           <button
-            className={`btn ${!isMobileView ? "join-item" : ""}`}
+            className={`font-inter px-2 text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left ${!isMobileView ? "join-item" : ""}`}
             onClick={() => (!isMobileView ? searchResults() : toggleSearch())}
           >
             Search
@@ -218,13 +218,13 @@ export const IlaqaReports = () => {
                 document.getElementById("filter-area-dialog").showModal();
                 setIsSearch(false);
               }}
-              className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
+              className={`font-inter px-2 text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left ${!isMobileView ? "join-item" : "ms-3"}`}
             >
               filter
             </button>
           )}
           <button
-            className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
+            className={`font-inter px-2 text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left ${!isMobileView ? "join-item" : "ms-3"}`}
             onClick={clearFilters}
           >
             Clear
@@ -234,35 +234,67 @@ export const IlaqaReports = () => {
       {!isSearch ? (
         <>
           {currentData?.length > 0 ? (
-            currentData?.map((p, index) => (
-              <div
-                key={p?._id}
-                className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
-              >
-                <div className="flex w-full flex-col items-start justify-center">
-                  <span className="text-sm lg:text-lg font-semibold">
-                    {p?.ilaqaAreaId?.name + " "}
-                    {moment(p?.month).format("MMMM YYYY")}
-                  </span>
-                  <span>Last Modified: {moment(p?.updatedAt).fromNow()}</span>
-                </div>
-                <div className="flex items-end w-full justify-end gap-3 ">
-                  <button className="btn" onClick={() => viewReport(p?._id)}>
-                    <FaEye />
-                  </button>
-
-                  {me?.userAreaType == "Ilaqa" && (
-                    <button className="btn" onClick={() => editReport(p?._id)}>
-                      <FaEdit />
-                    </button>
-                  )}
-
-                  <button className="btn" onClick={() => handlePrint(p?._id)}>
-                    <FaPrint />
-                  </button>
-                </div>
-              </div>
-            ))
+            <table className="table mb-7 w-full">
+              {/* Head */}
+              <thead>
+                <tr>
+                  <th className="text-left">Report</th>
+                  <th className="text-left">Last modified</th>
+                  <th className="text-left">Month</th>
+                  <th className="md:block hidden"></th>
+                  <th className="md:block hidden"></th>
+                  <th className="text-left">Action</th>
+                </tr>
+              </thead>
+              {/* Body */}
+              <tbody>
+                {currentData.map((p, index) => (
+                  <tr key={index}>
+                    <td>
+                      <span className="font-medium md:text-sm text-xs leading-[16.94px] text-left font-inter text-heading">
+                        {p?.ilaqaAreaId?.name}
+                      </span>
+                    </td>
+                    <td>
+                      <span className="font-medium md:text-sm text-xs leading-[16.94px] text-left font-inter text-heading">
+                        {moment(p?.updatedAt).fromNow()}
+                      </span>
+                    </td>
+                    <td>
+                      <span className="font-medium md:text-sm text-xs leading-[16.94px] text-left font-inter text-heading">
+                        {moment(p?.month).format("MMMM YYYY")}
+                      </span>
+                    </td>
+                    <td className="md:block hidden"></td>
+                    <td className="md:block hidden"></td>
+                    <td>
+                      <div className="flex items-center gap-2">
+                        <span
+                          onClick={() => navigate(`/reports/view/${p._id}`)}
+                          className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left"
+                        >
+                          View
+                        </span>
+                        {me?.userAreaType === "Ilaqa" && (
+                          <span
+                            onClick={() => navigate(`/reports/edit/${p._id}`)}
+                            className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left text-green"
+                          >
+                            Edit
+                          </span>
+                        )}
+                        <span
+                          onClick={() => handlePrint(p?._id)}
+                          className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left text-blue"
+                        >
+                          Print
+                        </span>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           ) : (
             <NoReports />
           )}

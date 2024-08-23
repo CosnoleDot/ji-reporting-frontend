@@ -124,7 +124,7 @@ export const UnitReport = () => {
         {!isMobileView && (
           <div className="w-full">
             <select
-              className="select select-bordered join-item"
+              className="select select-bordered select-sm join-item"
               onChange={(e) => setMonth(e.target.value)}
               value={month}
             >
@@ -234,35 +234,67 @@ export const UnitReport = () => {
         <>
           {" "}
           {currentData?.length > 0 ? (
-            currentData?.map((p, index) => (
-              <div
-                key={index}
-                className="card-body flex items-between justify-between w-full p-2 md:p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col"
-              >
-                <div className="flex w-full flex-col items-start justify-center">
-                  <span className="text-sm lg:text-lg font-semibold">
-                    {p?.halqaAreaId?.name + " "}
-                    {moment(p?.month).format("MMMM YYYY")}
-                  </span>
-                  <span>Last Modified: {moment(p?.updatedAt).fromNow()}</span>
-                </div>
-                <div className="flex items-end w-full justify-end gap-3 ">
-                  <button className="btn" onClick={() => viewReport(p?._id)}>
-                    <FaEye />
-                  </button>
-
-                  {me?.userAreaType == "Halqa" && (
-                    <button className="btn" onClick={() => editReport(p?._id)}>
-                      <FaEdit />
-                    </button>
-                  )}
-
-                  <button className="btn" onClick={() => handlePrint(p?._id)}>
-                    <FaPrint />
-                  </button>
-                </div>
-              </div>
-            ))
+            <table className="table mb-7 w-full">
+              {/* Head */}
+              <thead>
+                <tr>
+                  <th className="text-left">Report</th>
+                  <th className="text-left">Last modified</th>
+                  <th className="text-left">Month</th>
+                  <th className="md:block hidden"></th>
+                  <th className="md:block hidden"></th>
+                  <th className="text-left">Action</th>
+                </tr>
+              </thead>
+              {/* Body */}
+              <tbody>
+                {currentData.map((p, index) => (
+                  <tr key={index}>
+                    <td>
+                      <span className="font-medium md:text-sm text-xs leading-[16.94px] text-left font-inter text-heading">
+                        {p?.halqaAreaId?.name}
+                      </span>
+                    </td>
+                    <td>
+                      <span className="font-medium md:text-sm text-xs leading-[16.94px] text-left font-inter text-heading">
+                        {moment(p?.updatedAt).fromNow()}
+                      </span>
+                    </td>
+                    <td>
+                      <span className="font-medium md:text-sm text-xs leading-[16.94px] text-left font-inter text-heading">
+                        {moment(p?.month).format("MMMM YYYY")}
+                      </span>
+                    </td>
+                    <td className="md:block hidden"></td>
+                    <td className="md:block hidden"></td>
+                    <td>
+                      <div className="flex items-center gap-2">
+                        <span
+                          onClick={() => viewReport(p?._id)}
+                          className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left"
+                        >
+                          View
+                        </span>
+                        {me?.userAreaType === "Ilaqa" && (
+                          <span
+                            onClick={() => editReport(p?._id)}
+                            className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left text-green"
+                          >
+                            Edit
+                          </span>
+                        )}
+                        <span
+                          onClick={() => handlePrint(p?._id)}
+                          className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left text-blue"
+                        >
+                          Print
+                        </span>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           ) : (
             <NoReports />
           )}
