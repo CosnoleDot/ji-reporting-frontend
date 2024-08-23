@@ -3,7 +3,8 @@ import { GeneralLayout } from "../components";
 import { UIContext } from "../context/ui";
 import { FiTrash } from "react-icons/fi";
 import { HiOutlineUpload } from "react-icons/hi";
-
+import { IoIosArrowDropright } from "react-icons/io";
+import { IoIosArrowDropleft } from "react-icons/io";
 import {
   DivisionContext,
   HalqaContext,
@@ -30,6 +31,7 @@ export const DeleteUser = () => {
   const { nazim, loading, setLoading, getNazim, getAreaDetails } =
     useContext(UIContext);
   const { dispatch } = useToastState();
+
   const [data, setData] = useState(nazim);
   const [userAreaType, setUserAreaType] = useState("");
   const [nazimType, setNazimType] = useState("");
@@ -48,11 +50,9 @@ export const DeleteUser = () => {
   const [openYears, setOpenYears] = useState(false);
   const [withArea, setWithArea] = useState(false);
   const [openBirthYears, setOpenBirthYears] = useState(false);
-
+  const itemsPerPage = 10;
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
-
   const YearCalender = (val) => {
     setYears((prevYears) => {
       const updatedYears = prevYears?.map((year) => year + val);
@@ -246,20 +246,6 @@ export const DeleteUser = () => {
       case "Ilaqa":
         setAreas(ilaqas);
         break;
-      case "Country":
-        try {
-          const request = await instance.get("/locations/country", {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("@token")}`,
-            },
-          });
-          setAreas(request?.data?.data);
-        } catch (err) {
-          dispatch({ type: "ERROR", payload: err?.response?.data?.message });
-        }
-
-        break;
       default:
         break;
     }
@@ -312,6 +298,7 @@ export const DeleteUser = () => {
   useEffect(() => {
     getSubjects();
   }, []);
+
   const clearSearchFilters = () => {
     document.getElementById("filter-form").reset();
     setSelectedYear("");
@@ -344,19 +331,6 @@ export const DeleteUser = () => {
       document.removeEventListener("click", handleEventClick);
     };
   }, []);
-  const [users, setUsers] = useState([
-    // Replace this with your actual user data
-    {
-      name: "PIA Society",
-      nazimType: "Janoobi",
-      email: "Chuniachu@gmail.com",
-      area: "Punjab",
-      province: "Punjab",
-      country: "Punjab",
-      status: "Inactive",
-    },
-    // ... other users
-  ]);
   return (
     <GeneralLayout title={"Manage Users"} active={"user-switch"}>
       <div className="px-5 relative flex flex-col items-center py-3 pt-0 justify-start h-[calc(100vh-65.6px-64px)] overflow-hidden overflow-y-auto">
@@ -518,25 +492,63 @@ export const DeleteUser = () => {
           </table>
         </div>
 
-        <div className="flex w-full px-4 justify-end items-center mt-4">
+        {/* PAGINATION */}
+
+        <div className="flex w-full gap-4 px-4 justify-end items-center mt-4">
+          <select
+            readOnly
+            disabled
+            name="items_per_page"
+            id="items"
+            className="select select-sm max-w-xs bg-gray-200 rounded-full"
+          >
+            <option value="" disabled selected>
+              rows per page 10
+            </option>
+          </select>
+
+          {/* Previous Button */}
           <button
-            className="rounded-full border capitalize p-[8px] w-10 h-10 bg-gray-200 hover:bg-primary hover:text-white"
+            className="rounded-full border-none"
             disabled={currentPage === 1}
-            onClick={() => setCurrentPage((prev) => prev - 1)}
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           >
-            {"<"}
+            <IoIosArrowDropleft className="text-[1.5rem] rounded-full bg-gray-200" />
           </button>
-          <span className="mx-4">
-            Page {currentPage} of {totalPages === 0 ? 1 : totalPages}
-          </span>
+
+          {/* Page Numbers */}
+          <div className="flex items-center">
+            {currentPage > 1 && (
+              <span className="rounded-full  border border-gray-700 border-1 mx-1 bg-gray-200 w-5 h-5 flex justify-center items-center">
+                1
+              </span>
+            )}
+            {totalPages > 2 && (
+              <button className="rounded-full  border border-gray-700 border-1 mx-1 bg-gray-200 w-5 h-5 flex justify-center items-center">
+                2
+              </button>
+            )}
+            {totalPages > 3 && <span>...</span>}
+
+            {totalPages && (
+              <span className="rounded-full  border border-gray-700 border-1 mx-1 bg-gray-200 w-5 h-5 flex justify-center items-center">
+                {totalPages}
+              </span>
+            )}
+          </div>
+
+          {/* Next Button */}
           <button
-            className="rounded-full border capitalize p-[8px] w-10 h-10 bg-gray-200 hover:bg-primary hover:text-white"
+            className="rounded-full border-none"
             disabled={currentPage === totalPages}
-            onClick={() => setCurrentPage((prev) => prev + 1)}
+            onClick={() =>
+              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+            }
           >
-            {">"}
+            <IoIosArrowDropright className="text-[1.5rem] rounded-full bg-gray-200" />
           </button>
         </div>
+
         {/* DIALOG BOXES */}
 
         <dialog id="categorize-filter" className="modal">
@@ -1392,62 +1404,24 @@ export const DeleteUser = () => {
                   </span>
                   <div className="flex flex-wrap items-center justify-start border border-primary p-2 rounded-lg">
                     {me?.nazim.toLowerCase() === "country" && (
-                      <>
-                        <div className="form-control">
-                          <label className="label cursor-pointer gap-2">
-                            <input
-                              type="radio"
-                              name="userAreaType"
-                              className="radio checked:bg-blue-500"
-                              checked={userAreaType === "Country"}
-                              value="Country"
-                              onChange={(e) => {
-                                setUserAreaType(e.target.value);
-                                setSearchArea("");
-                                document.getElementById("autocomplete0").value =
-                                  "";
-                              }}
-                            />
-                            <span className="label-text">Markaz</span>
-                          </label>
-                        </div>
-                        <div className="form-control">
-                          <label className="label cursor-pointer gap-2">
-                            <input
-                              type="radio"
-                              name="userAreaType"
-                              className="radio checked:bg-blue-500"
-                              checked={userAreaType === "Province"}
-                              value="Province"
-                              onChange={(e) => {
-                                setUserAreaType(e.target.value);
-                                setSearchArea("");
-                                document.getElementById("autocomplete0").value =
-                                  "";
-                              }}
-                            />
-                            <span className="label-text">Province</span>
-                          </label>
-                        </div>
-                        <div className="form-control">
-                          <label className="label cursor-pointer gap-2">
-                            <input
-                              type="radio"
-                              name="userAreaType"
-                              className="radio checked:bg-blue-500"
-                              checked={userAreaType === "Country"}
-                              value="Country"
-                              onChange={(e) => {
-                                setUserAreaType(e.target.value);
-                                setSearchArea("");
-                                document.getElementById("autocomplete0").value =
-                                  "";
-                              }}
-                            />
-                            <span className="label-text">Markaz</span>
-                          </label>
-                        </div>
-                      </>
+                      <div className="form-control">
+                        <label className="label cursor-pointer gap-2">
+                          <input
+                            type="radio"
+                            name="userAreaType"
+                            className="radio checked:bg-blue-500"
+                            checked={userAreaType === "Country"}
+                            value="Country"
+                            onChange={(e) => {
+                              setUserAreaType(e.target.value);
+                              setSearchArea("");
+                              document.getElementById("autocomplete0").value =
+                                "";
+                            }}
+                          />
+                          <span className="label-text">Markaz</span>
+                        </label>
+                      </div>
                     )}
                     {me?.nazim.toLowerCase() === "country" && (
                       <div className="form-control">
@@ -1747,22 +1721,6 @@ export const DeleteUser = () => {
               <div className="w-full flex justify-start items-center gap-5">
                 <h5>Area Name:</h5>
                 <h4 className="text-gray-400 font-bold">{areaDetails?.name}</h4>
-
-                {areaDetails?.name !== "Pakistan" && (
-                  <h4 className="text-gray-400 font-semibold">
-                    {areaDetails?.parentType === "Ilaqa" ||
-                    areaDetails?.parentType === "Tehsil" ||
-                    areaDetails?.parentType === "Division" ||
-                    areaDetails?.parentType === "Maqam"
-                      ? "(Halqa)"
-                      : !areaDetails?.parentId && areaDetails?.maqam
-                      ? "(Ilaqa)"
-                      : areaDetails?.country
-                      ? "(Province)"
-                      : `(${areaDetails?.areaType})`}
-                  </h4>
-                )}
-
                 <h4 className="text-gray-400 font-semibold">
                   {areaDetails?.parentType === "Ilaqa" ||
                   areaDetails?.parentType === "Tehsil" ||
@@ -1776,7 +1734,6 @@ export const DeleteUser = () => {
                     : `(${areaDetails?.areaType || "Pakistan"})`}
                 </h4>
               </div>
-
               <div className="w-full flex justify-start items-center gap-5">
                 {areaDetails?.parentType
                   ? areaDetails?.parentType + ":"
@@ -1830,7 +1787,7 @@ export const DeleteUser = () => {
                 </div>
               )}
 
-              {(!areaDetails?.country || areaDetails?.name === "Pakistan") && (
+              {!areaDetails?.country && areaDetails.name !== "Pakistan" && (
                 <div className="w-full flex justify-start items-center gap-5">
                   <h4>Province:</h4>
                   <h4 className="text-gray-400 font-bold">

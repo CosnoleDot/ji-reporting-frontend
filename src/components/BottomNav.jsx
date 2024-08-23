@@ -1,8 +1,6 @@
-import { FaFile, FaTachometerAlt } from "react-icons/fa";
-import { BsFiles } from "react-icons/bs";
+
 import { Link, useNavigate } from "react-router-dom";
 import { CiLocationOn } from "react-icons/ci";
-import { FaUsersGear } from "react-icons/fa6";
 import { useContext } from "react";
 import { UIContext } from "../context/ui";
 import { MeContext } from "../context";

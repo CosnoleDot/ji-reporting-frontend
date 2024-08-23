@@ -15,7 +15,7 @@ import instance from "../api/instrance";
 import { useEffect } from "react";
 import { ReportChart } from "../components/ReportChart";
 import { FaTimes, FaChevronCircleRight, FaTimesCircle } from "react-icons/fa";
-import { getDivisionByTehsil, months } from "./Reports";
+import { months } from "./Reports";
 import { UIContext } from "../context/ui";
 import { CircularChart } from "../components/CircularChart";
 
@@ -36,7 +36,7 @@ const Dates = ({
         <h1 className="text-xl font-bold">Dates</h1>
         <div className="flex justify-end items-center gap-3">
           <button
-            className="btn"
+            className="border px-4 py-2 rounded-md bg-primary text-white capitalize"
             onClick={() => {
               showDates(false);
               getData();
@@ -44,7 +44,10 @@ const Dates = ({
           >
             Generate
           </button>
-          <button className="btn" onClick={() => showDates(false)}>
+          <button
+            className="border px-4 py-2 rounded-md bg-none text-primary capitalize"
+            onClick={() => showDates(false)}
+          >
             <FaTimes />
           </button>
         </div>
@@ -60,7 +63,7 @@ const Dates = ({
               min="1900"
               max="2100"
               step="1"
-              className="input-bordered input w-full"
+              className="input-bordered input w-full input-sm mt-4"
               value={year}
               onChange={(e) => setYear(e.target.value)}
             />
@@ -161,7 +164,7 @@ export const Comparision = () => {
   const ilaqas = useContext(IlaqaContext);
   const districts = useContext(DistrictContext);
   const provinces = useContext(ProvinceContext);
-  const { nazims, setLoading } = useContext(UIContext);
+  const { nazim, setLoading } = useContext(UIContext);
   const [searchArea, setSearchArea] = useState("");
   const [areas, setAreas] = useState({
     maqam: [],
@@ -799,20 +802,20 @@ export const Comparision = () => {
     if (reportType === "halqa") {
       if (type === "Tehsil") {
         let div = districts?.find((i) => area?.parentId?.district === i._id);
-        return `-${div?.division?.name}(Division) - ${div?.division?.province?.name}(Province)`;
+        return `${div?.division?.name}(Division) - ${div?.division?.province?.name}`;
       } else if (type === "Ilaqa") {
         let maqam = maqams.find((i) => area?.parentId?.maqam === i?._id);
-        return `- ${area?.parentId?.name}(Ilaqa) - ${maqam?.name}(Maqam)`;
+        return `${area?.parentId?.name}(Ilaqa) - ${maqam?.name}(Maqam)`;
       } else if (type === "Maqam") {
-        return `- ${area?.parentId?.name}(Maqam)`;
+        return `${area?.parentId?.name}(Maqam)`;
       }
     } else if (reportType === "ilaqa") {
       let maqam = maqams.find((i) => area?.parentId?.maqam === i?._id);
-      return `- ${area?.maqam?.name}(Maqam) - ${area?.maqam?.province?.name}(Province)`;
+      return `${area?.maqam?.name}(Maqam) - ${area?.maqam?.province?.name}`;
     } else if (reportType === "division") {
-      return `- ${area?.province?.name}(Province)`;
+      return `${area?.province?.name}`;
     } else if (reportType === "maqam") {
-      return `- ${area?.province?.name}(Province)`;
+      return `${area?.province?.name}`;
     } else {
       return "Pakistan";
     }
@@ -820,197 +823,25 @@ export const Comparision = () => {
 
   return (
     <GeneralLayout title={"Comparison"} active={"comparison"}>
-      <div className="relative flex flex-col gap-3 h-[calc(100vh-66px-64px)] w-full p-3">
-        <div
-          style={{
-            overflow: "hidden",
-            overflowY: "visible",
-            overflowX: "scroll",
-          }}
-          className="flex mr-10 items-center justify-start lg:justify-center xl:justify-center gap-3 border-b border-t py-3 inlineQ"
-        >
-          <select
-            value={reportType}
-            onChange={(e) => {
-              setReportType(e.target.value);
-              if (e.target.value === "self" || e.target.value === "markaz") {
-                setAreaId(me.userAreaId._id);
-              }
-            }}
-            className="select select-bordered"
-          >
-            <option value="" disabled>
-              Report Type
-            </option>
-            {(localStorage.getItem("@type") === "province" ||
-              localStorage.getItem("@type") === "country") && (
-              <>
-                {localStorage.getItem("@type") === "country" && (
-                  <option value="markaz">Markaz</option>
-                )}
-                <option value="province">Province</option>
-                <option value="division">Division</option>
-                <option value="maqam">Maqam</option>
-              </>
-            )}
-            {localStorage.getItem("@type") !== "halqa" &&
-              localStorage.getItem("@type") !== "division" && (
-                <>
-                  <option value="ilaqa">Ilaqa</option>
-                </>
-              )}
-            <option value="halqa">Halqa</option>
-            {["umeedwar", "rukan", "umeedwaar-nazim", "rukan-nazim"].includes(
-              me?.nazimType
-            ) && <option value="personal">Personal</option>}
-            {/* <option value='self'>Self Compare</option> */}
-          </select>
-          {reportType !== "self" &&
-            reportType !== "personal" &&
-            reportType !== "markaz" && (
-              <select
-                value={areaId}
-                onChange={(e) => setAreaId(e.target.value)}
-                className="select select-bordered "
-              >
-                <option value="" disabled>
-                  Area {reportType}
-                </option>
-                {areas[reportType]?.map((i, index) => (
-                  <option key={index} value={i?._id} className="w-[200px]">
-                    {i?.name} - {getDivName(i, i.parentType)}
-                  </option>
-                ))}
-              </select>
-            )}
-
-          {reportType === "personal" && (
-            <div className="relative  min-w-[140px]">
-              <input type="hidden" name="userAreaId" id="userAreaId" />
-              <input
-                id="autocomplete0"
-                type="search"
-                className="input input-bordered input-primary w-full min-w-[140px]"
-                placeholder="Select area"
-                onChange={(e) => setSearchArea(e.target.value)}
-                onClick={() => {
-                  if (
-                    document
-                      .getElementById("autocomplete0-list")
-                      .classList.contains("hidden")
-                  ) {
-                    document
-                      .getElementById("autocomplete0-list")
-                      .classList.remove("hidden");
-                  } else {
-                    document
-                      .getElementById("autocomplete0-list")
-                      .classList.add("hidden");
-                  }
-                }}
-              />
-              <div
-                id="autocomplete0-list"
-                className="fixed hidden z-50 max-h-[100px] overflow-y-scroll bg-white border border-gray-300  md:max-w-[228px] mt-1 left-0 md:left-[155px]"
-              >
-                {nazims?.nazim
-                  ?.sort((a, b) =>
-                    a?.userAreaId?.name?.localeCompare(b?.userAreaId?.name)
-                  )
-                  ?.filter((item) => {
-                    if (searchArea && searchArea !== "") {
-                      if (
-                        item?.userAreaId?.name
-                          ?.toString()
-                          ?.toLowerCase()
-                          ?.includes(searchArea?.toString()?.toLowerCase()) ||
-                        item?.name
-                          ?.toString()
-                          ?.toLowerCase()
-                          ?.includes(searchArea?.toString()?.toLowerCase())
-                      ) {
-                        return true;
-                      }
-                      return false;
-                    } else {
-                      return true;
-                    }
-                  })
-                  ?.map((area, index) => (
-                    <div
-                      key={index}
-                      onClick={() => {
-                        document.getElementById("userAreaId").value = area?._id;
-                        setAreaId(area?._id);
-                        document.getElementById(
-                          "autocomplete0"
-                        ).value = `${area?.userAreaId?.name} - ${area?.name} `;
-                        document
-                          .getElementById("autocomplete0-list")
-                          .classList.add("hidden");
-                      }}
-                      className="p-2 cursor-pointer hover:bg-gray-100"
-                    >
-                      {area?.userAreaId?.name} - {area?.name}
-                    </div>
-                  ))}
-              </div>
-            </div>
-          )}
-          <select
-            value={selectedProperty}
-            className="select select-bordered"
-            onChange={(e) => setSelectedProperty(e.target.value)}
-          >
-            <option value="" disabled>
-              Property
-            </option>
-            {reportType !== "personal" && (
-              <>
-                <option value={"compareAll"}>Compare All</option>
-                <option value={"spiderChart"}>Spider Chart</option>
-                <option value={"radialChart"}>Radial Chart</option>
-              </>
-            )}
-            {["umeedwar", "rukan", "umeedwaar-nazim", "rukan-nazim"].includes(
-              me?.nazimType
-            ) &&
-              reportType === "personal" && (
-                <>
-                  <option value={"prayers"}> Prayers</option>
-                  <option value={"studies"}> Mutalajaat</option>
-                  <option value={"toseeDawa"}>ToseeDawat</option>
-                </>
-              )}
-          </select>
-          <select
-            value={durationType}
-            onChange={(e) => setDurationType(e.target.value)}
-            className="select select-bordered"
-          >
-            <option value="" disabled>
-              Duration Type
-            </option>
-            <option value="month">Month</option>
-            {selectedProperty !== "spider" && (
-              <option value="year">Year</option>
-            )}
-          </select>
-          <button
-            onClick={() => {
-              if (
-                durationType !== "" &&
-                reportType !== "" &&
-                selectedProperty !== ""
-              )
-                showDates(true);
-            }}
-            className="btn"
-          >
-            Dates
-          </button>
+      <div className=" flex flex-col gap-3 h-[calc(100vh-66px-64px)] w-full p-3">
+        <div className="w-full flex md:flex-row flex-col justify-between items-center py-4">
+          <div className="mb-4 w-full md:w-[70%] flex flex-col">
+            <h1 className="text-2xl font-bold text-start ">Comparison</h1>
+            <p className="text-gray-500">Get a sneak peak into your reports </p>
+          </div>
+          <div className="w-full md:w-[30%]  flex justify-start md:justify-end">
+            <button
+              className="px-4 py-2 rounded-md bg-primary text-white capitalize p-[8px]"
+              onClick={() => {
+                document.getElementById("add_comparison_modal").showModal();
+              }}
+            >
+              +New Comparios
+            </button>
+          </div>
         </div>
-        <div className="relative flex flex-col gap-3 h-[calc(100vh-100px-64px-73.6px)] w-full p-3">
+        <div className="divider mt-0"></div>
+        <div className="flex flex-col gap-3 w-full p-3 overflow-hidden overflow-x-scroll h-[80vh]">
           {response ? (
             response?.chart === "radial" ? (
               <CircularChart res={response} type={selectedProperty} />
@@ -1035,6 +866,250 @@ export const Comparision = () => {
           getData={getData}
         />
       )}
+
+      <dialog id="add_comparison_modal" className="modal">
+        <div className="modal-box min-w-[90%] h-full flex flex-col justify-between">
+          <div className="flex mr-10 items-center space-y-10 flex-col justify-between inlineQ">
+            <div className="w-full space-y-2">
+              <label
+                htmlFor="Reprot Type"
+                className="w-full font-semibold text-innerAlignment"
+              >
+                Select Type of Report
+              </label>
+              <select
+                value={reportType}
+                onChange={(e) => {
+                  setReportType(e.target.value);
+                  if (
+                    e.target.value === "self" ||
+                    e.target.value === "markaz"
+                  ) {
+                    setAreaId(me.userAreaId._id);
+                  }
+                }}
+                className="select select-bordered select-sm min-w-lg w-full"
+              >
+                <option value="" disabled>
+                  Report Type
+                </option>
+                {(localStorage.getItem("@type") === "province" ||
+                  localStorage.getItem("@type") === "country") && (
+                  <>
+                    {localStorage.getItem("@type") === "country" && (
+                      <option value="markaz">Markaz</option>
+                    )}
+                    <option value="province">Province</option>
+                    <option value="division">Division</option>
+                    <option value="maqam">Maqam</option>
+                  </>
+                )}
+                {localStorage.getItem("@type") !== "halqa" &&
+                  localStorage.getItem("@type") !== "division" && (
+                    <>
+                      <option value="ilaqa">Ilaqa</option>
+                    </>
+                  )}
+                <option value="halqa">Halqa</option>
+                {[
+                  "umeedwar",
+                  "rukan",
+                  "umeedwaar-nazim",
+                  "rukan-nazim",
+                ].includes(me?.nazimType) && (
+                  <option value="personal">Personal</option>
+                )}
+                {/* <option value='self'>Self Compare</option> */}
+              </select>
+            </div>
+            <div className="w-full space-y-2">
+              <label
+                htmlFor="area"
+                className="w-full font-semibold text-innerAlignment"
+              >
+                Select Your Area
+              </label>
+              {reportType !== "self" &&
+                reportType !== "personal" &&
+                reportType !== "markaz" && (
+                  <select
+                    value={areaId}
+                    onChange={(e) => setAreaId(e.target.value)}
+                    className="select select-bordered select-sm w-full"
+                  >
+                    <option value="" disabled>
+                      Area {reportType}
+                    </option>
+                    {areas[reportType]?.map((i, index) => (
+                      <option key={index} value={i?._id} className="w-auto">
+                        {i?.name} - {getDivName(i, i.parentType)}
+                      </option>
+                    ))}
+                  </select>
+                )}
+            </div>
+
+            {reportType === "personal" && (
+              <div className="relative  w-full">
+                <input type="hidden" name="userAreaId" id="userAreaId" />
+                <input
+                  id="autocomplete0"
+                  type="search"
+                  className="input input-bordered w-full input-sm"
+                  placeholder="Select area"
+                  onChange={(e) => setSearchArea(e.target.value)}
+                  onClick={() => {
+                    if (
+                      document
+                        .getElementById("autocomplete0-list")
+                        .classList.contains("hidden")
+                    ) {
+                      document
+                        .getElementById("autocomplete0-list")
+                        .classList.remove("hidden");
+                    } else {
+                      document
+                        .getElementById("autocomplete0-list")
+                        .classList.add("hidden");
+                    }
+                  }}
+                />
+                <div
+                  id="autocomplete0-list"
+                  className="fixed hidden z-50 max-h-[100px] overflow-y-scroll bg-white border border-gray-300 w-auto"
+                >
+                  {nazim
+                    ?.sort((a, b) =>
+                      a?.userAreaId?.name?.localeCompare(b?.userAreaId?.name)
+                    )
+                    ?.filter((item) => {
+                      if (searchArea && searchArea !== "") {
+                        if (
+                          item?.userAreaId?.name
+                            ?.toString()
+                            ?.toLowerCase()
+                            ?.includes(searchArea?.toString()?.toLowerCase()) ||
+                          item?.name
+                            ?.toString()
+                            ?.toLowerCase()
+                            ?.includes(searchArea?.toString()?.toLowerCase())
+                        ) {
+                          return true;
+                        }
+                        return false;
+                      } else {
+                        return true;
+                      }
+                    })
+                    ?.map((area, index) => (
+                      <div
+                        key={index}
+                        onClick={() => {
+                          document.getElementById("userAreaId").value =
+                            area?._id;
+                          setAreaId(area?._id);
+                          document.getElementById(
+                            "autocomplete0"
+                          ).value = `${area?.userAreaId?.name} - ${area?.name} `;
+                          document
+                            .getElementById("autocomplete0-list")
+                            .classList.add("hidden");
+                        }}
+                        className="p-2 cursor-pointer hover:bg-gray-100"
+                      >
+                        {area?.userAreaId?.name} - {area?.name}
+                      </div>
+                    ))}
+                </div>
+              </div>
+            )}
+            <div className="w-full space-y-2">
+              <label
+                htmlFor="area"
+                className="w-full font-semibold text-innerAlignment"
+              >
+                Select Property
+              </label>
+              <select
+                value={selectedProperty}
+                className="select select-bordered select-sm w-full"
+                onChange={(e) => setSelectedProperty(e.target.value)}
+              >
+                <option value="" disabled>
+                  Property
+                </option>
+                {reportType !== "personal" && (
+                  <>
+                    <option value={"compareAll"}>Compare All</option>
+                    <option value={"spiderChart"}>Spider Chart</option>
+                    <option value={"radialChart"}>Radial Chart</option>
+                  </>
+                )}
+                {[
+                  "umeedwar",
+                  "rukan",
+                  "umeedwaar-nazim",
+                  "rukan-nazim",
+                ].includes(me?.nazimType) &&
+                  reportType === "personal" && (
+                    <>
+                      <option value={"prayers"}> Prayers</option>
+                      <option value={"studies"}> Mutalajaat</option>
+                      <option value={"toseeDawa"}>ToseeDawat</option>
+                    </>
+                  )}
+              </select>
+            </div>
+            <div className="w-full space-y-2">
+              <label
+                htmlFor="area"
+                className="w-full font-semibold text-innerAlignment"
+              >
+                Select Duration
+              </label>
+              <select
+                value={durationType}
+                onChange={(e) => setDurationType(e.target.value)}
+                className="select select-bordered select-sm w-full"
+              >
+                <option value="" disabled>
+                  Duration Type
+                </option>
+                <option value="month">Month</option>
+                {selectedProperty !== "spider" && (
+                  <option value="year">Year</option>
+                )}
+              </select>
+            </div>
+            <form method="dialog">
+              <button
+                onClick={() => {
+                  if (
+                    durationType !== "" &&
+                    reportType !== "" &&
+                    selectedProperty !== ""
+                  )
+                    showDates(true);
+                }}
+                id="close-comparison-modal"
+                className="border px-4 py-2 rounded-md bg-primary text-white capitalize"
+              >
+                Dates
+              </button>
+            </form>
+          </div>
+
+          <form method="dialog">
+            {/* if there is a button in form, it will close the modal */}
+            <button
+              id="close-comparison-modal"
+              className="border px-4 py-2 rounded-md bg-none text-primary capitalize"
+            >
+              Cancel
+            </button>
+          </form>
+        </div>
+      </dialog>
     </GeneralLayout>
   );
 };

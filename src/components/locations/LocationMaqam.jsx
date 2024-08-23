@@ -9,10 +9,9 @@ import {
 } from "../../context";
 import { Link, useLocation } from "react-router-dom";
 import instance from "../../api/instrance";
-import { FaEdit } from "react-icons/fa";
 import { UIContext } from "../../context/ui";
 import { FcViewDetails } from "react-icons/fc";
-import { Loader } from "../Loader";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 export const LocationMaqam = () => {
   const provinces = useContext(ProvinceContext);
@@ -28,6 +27,7 @@ export const LocationMaqam = () => {
     getIlaqas,
     getAreaDetails,
   } = useContext(UIContext);
+  const [value, setValue] = useState("");
   const [editMode, setEditMode] = useState(false);
   const [id, setId] = useState("");
   const { dispatch } = useToastState();
@@ -36,7 +36,6 @@ export const LocationMaqam = () => {
   const [isIlaqa, setIsIlaqa] = useState(false);
   const params = useLocation();
   const [muntakhib, setMuntakhib] = useState(ilaqas?.length > 0 ? true : false);
-  const [value , setValue] = useState('')
 
   useEffect(() => {
     setLoading(true); // Set loading to true before fetching data
@@ -66,9 +65,8 @@ export const LocationMaqam = () => {
                 (i) => i.parentType === "Tehsil" || i?.parentType === "Division"
               );
               setFilteredData(divHalqas);
-            }
-            else{
-              setFilteredData(halqas)
+            } else {
+              setFilteredData(halqas);
             }
           }
           if (queryParams.view === "maqam") {
@@ -105,9 +103,8 @@ export const LocationMaqam = () => {
             (i) => i.parentType === "Tehsil" || i?.parentType === "Division"
           );
           setFilteredData(divHalqas);
-        }
-        else{
-          setFilteredData(halqas)
+        } else {
+          setFilteredData(halqas);
         }
       }
       if (view === "maqam") {
@@ -336,19 +333,11 @@ export const LocationMaqam = () => {
 
   return (
     <>
-      <div
-        className={`p-2 grid ${
-          ["province", "country", "division", "maqam"].includes(
-            localStorage.getItem("@type")
-          )
-            ? "grid-cols-2"
-            : "grid-cols-1"
-        }`}
-      >
+      <div className="w-full flex flex-wrap gap-2 justify-end items-center">
         {["province", "country"].includes(localStorage.getItem("@type")) && (
           <button
             disabled={loading}
-            className="btn capitalize p-[8px]"
+            className="px-4 py-2 rounded-md bg-primary text-white capitalize "
             onClick={() => {
               setForm({
                 name: "",
@@ -367,7 +356,7 @@ export const LocationMaqam = () => {
           view === "ilaqa" && (
             <button
               disabled={loading}
-              className="btn capitalize p-[8px]"
+              className="px-4 py-2 rounded-md bg-primary text-white capitalize "
               onClick={() => {
                 setIlaqaForm({
                   name: "",
@@ -392,72 +381,69 @@ export const LocationMaqam = () => {
               document.getElementById("add_halqa_modal").showModal();
               setEditMode(false);
             }}
-            className="btn ms-3"
+            className="px-4 py-2 rounded-md bg-primary text-white capitalize "
           >
             Add Halqa
           </button>
         )}
       </div>
-      <label className="input input-bordered flex items-center gap-2">
+
+      <div className="w-full flex md:flex-row flex-col justify-between items-start">
+        <div
+          role="tablist"
+          className="w-auto flex  justify-between md:justify-start items-center tabs tabs-boxed"
+        >
+          {["country", "province"].includes(localStorage.getItem("@type")) && (
+            <Link
+              to={"?active=maqam&view=maqam"}
+              role="tab"
+              className={`tab ${view === "maqam" ? "bg-white text-black" : ""}`}
+              onClick={() => setCurrentPage(1)}
+            >
+              مقام
+            </Link>
+          )}
+          <Link
+            to={"?active=maqam&view=halqa"}
+            role="tab"
+            className={`tab ${view === "halqa" ? "bg-white text-black" : ""}`}
+            onClick={() => setCurrentPage(1)}
+          >
+            حلقہ
+          </Link>
+          {muntakhib && (
+            <Link
+              to={"?active=maqam&view=ilaqa"}
+              role="tab"
+              className={`tab ${view === "ilaqa" ? "bg-white text-black" : ""}`}
+              onClick={() => setCurrentPage(1)}
+            >
+              علاقہ/Zone
+            </Link>
+          )}
+        </div>
         <input
           type="text"
-          className="grow p-2"
+          className="input input-bordered input-sm md:w-[30%] w-full"
           placeholder="Search"
           onChange={(e) => handleSearch(e.target.value)}
         />
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 16 16"
-          fill="currentColor"
-          className="w-4 h-4 opacity-70"
-        >
-          <path
-            fillRule="evenodd"
-            d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
-            clipRule="evenodd"
-          />
-        </svg>
-      </label>
-      <div role="tablist" className="w-full flex justify-between items-center">
-        {["country", "province"].includes(localStorage.getItem("@type")) && (
-          <Link
-            to={"?active=maqam&view=maqam"}
-            role="tab"
-            className={`tab w-full ${view === "maqam" ? "tab-active" : ""}`}
-            onClick={() => setCurrentPage(1)}
-          >
-            مقام
-          </Link>
-        )}
-        <Link
-          to={"?active=maqam&view=halqa"}
-          role="tab"
-          className={`tab w-full ${view === "halqa" ? "tab-active" : ""}`}
-          onClick={() => setCurrentPage(1)}
-        >
-          حلقہ
-        </Link>
-        {muntakhib && (
-          <Link
-            to={"?active=maqam&view=ilaqa"}
-            role="tab"
-            className={`tab w-full ${view === "ilaqa" ? "tab-active" : ""}`}
-            onClick={() => setCurrentPage(1)}
-          >
-            علاقہ/Zone
-          </Link>
-        )}
       </div>
 
       {view === "maqam" && (
         <div className="w-full overflow-x-auto">
-          <table className="table table-zebra">
-            <thead className="h-10">
-              <tr className="fixed mb-2 bg-slate-300 flex w-full justify-between items-start">
-                <th className=" text-start"></th>
-                <th className="w-full text-start">Name</th>
-                <th className="w-full text-center">Province</th>
-                <th className="w-full text-center">Edit/Disable</th>
+          <table className="table">
+            <thead className="">
+              <tr className="">
+                <th className="border border-r-0 py-2 px-4 font-semibold text-gray-400">
+                  Name
+                </th>
+                <th className="border border-r-0 border-l-0 text-start py-1 px-4 font-semibold text-gray-400">
+                  Province
+                </th>
+                <th className="text-end border border-l-0 py-2 px-4 font-semibold text-gray-400">
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody className="mt-5">
@@ -465,14 +451,13 @@ export const LocationMaqam = () => {
                 paginatedData?.map((maqam, index) => (
                   <tr
                     key={maqam?._id}
-                    className="flex w-full justify-between items-start"
+                    className="font-semibold border-r border-l"
                   >
-                    <th>{(currentPage - 1) * itemsPerPage + index + 1}</th>
-                    <td className="w-full text-start">{maqam?.name}</td>
-                    <td className="w-full text-center">
+                    <td className=" text-start">{maqam?.name}</td>
+                    <td className=" text-start">
                       {maqam?.province?.name || "-"}
                     </td>
-                    <td className="flex  w-full justify-center items-center gap-4">
+                    <td className="flex justify-end items-center gap-4">
                       <button
                         disabled={loading}
                         onClick={() => {
@@ -486,13 +471,13 @@ export const LocationMaqam = () => {
                             name: maqam?.name || "",
                           });
                         }}
-                        className="btn capitalize "
+                        className="text-green-500"
                       >
-                        <FaEdit />
+                        Edit
                       </button>
                       <input
                         type="checkbox"
-                        className="toggle toggle-error"
+                        className="toggle toggle-white bg-white [--tglbg:#E2E8F0] checked:[--tglbg:#002856]"
                         defaultChecked={maqam?.disabled}
                         onChange={() => {
                           handleDisable(maqam?._id, !maqam?.disabled);
@@ -510,13 +495,18 @@ export const LocationMaqam = () => {
       )}
       {view === "ilaqa" && (
         <div className="w-full overflow-x-auto">
-          <table className="table table-zebra">
-            <thead className="h-10">
-              <tr className="fixed mb-2 bg-slate-300 flex w-full justify-between items-start">
-                <th className=" text-start"></th>
-                <th className="w-full text-start">Name</th>
-                <th className="w-full text-start">Area Details</th>
-                <th className="w-full text-center">Edit/Disable</th>
+          <table className="table">
+            <thead className="">
+              <tr className="">
+                <th className="border border-r-0 py-2 px-4 font-semibold text-gray-400">
+                  Name
+                </th>
+                <th className="border border-r-0 border-l-0 text-start py-1 px-4 font-semibold text-gray-400">
+                  Area Details
+                </th>
+                <th className="text-end border border-l-0 py-2 px-4 font-semibold text-gray-400">
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -524,11 +514,10 @@ export const LocationMaqam = () => {
                 paginatedData?.map((ilaqa, index) => (
                   <tr
                     key={ilaqa?._id}
-                    className="flex w-full justify-between items-center"
+                    className="font-semibold border-r border-l"
                   >
-                    <th>{(currentPage - 1) * itemsPerPage + index + 1}</th>
-                    <td className="w-full text-start">{ilaqa?.name}</td>
-                    <td className="w-full text-start">
+                    <td className=" text-start">{ilaqa?.name}</td>
+                    <td className=" text-start">
                       <div
                         onClick={() => {
                           getAreaDetails(ilaqa);
@@ -537,7 +526,7 @@ export const LocationMaqam = () => {
                         <FcViewDetails className="cursor-pointer text-2xl" />
                       </div>
                     </td>
-                    <td className="flex  w-full justify-center items-center gap-4">
+                    <td className="flex justify-end items-center gap-4">
                       <button
                         disabled={loading}
                         onClick={() => {
@@ -551,13 +540,13 @@ export const LocationMaqam = () => {
                             name: ilaqa?.name,
                           });
                         }}
-                        className="btn capitalize "
+                        className="text-green-500"
                       >
-                        <FaEdit />
+                        Edit
                       </button>
                       <input
                         type="checkbox"
-                        className="toggle toggle-error"
+                        className="toggle toggle-white bg-white [--tglbg:#E2E8F0] checked:[--tglbg:#002856]"
                         defaultChecked={ilaqa?.disabled}
                         onChange={() => {
                           handleDisable(ilaqa?._id, !ilaqa?.disabled);
@@ -575,13 +564,18 @@ export const LocationMaqam = () => {
       )}
       {view === "halqa" && (
         <div className="w-full overflow-x-auto">
-          <table className="table table-zebra">
-            <thead className="h-10">
-              <tr className="fixed mb-2 bg-slate-300 flex w-full justify-between items-start">
-                <th className="text-start"></th>
-                <th className="w-full text-start">Name</th>
-                <th className="w-full text-start">Area Details</th>
-                <th className="w-full text-center">Edit/Disable</th>
+          <table className="table">
+            <thead className="">
+              <tr className="">
+                <th className="border border-r-0 py-2 px-4 font-semibold text-gray-400">
+                  Name
+                </th>
+                <th className="border border-r-0 border-l-0 text-start py-1 px-4 font-semibold text-gray-400">
+                  Area Details
+                </th>
+                <th className="text-end border border-l-0 py-2 px-4 font-semibold text-gray-400">
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -594,11 +588,10 @@ export const LocationMaqam = () => {
                   ?.map((halqa, index) => (
                     <tr
                       key={halqa?._id}
-                      className="flex w-full justify-between items-center"
+                      className="font-semibold border-r border-l"
                     >
-                      <th>{(currentPage - 1) * itemsPerPage + index + 1}</th>
-                      <td className="w-full text-start">{halqa?.name}</td>
-                      <td className="w-full text-start">
+                      <td className=" text-start">{halqa?.name}</td>
+                      <td className=" text-start">
                         <div
                           onClick={() => {
                             getAreaDetails(halqa);
@@ -607,7 +600,7 @@ export const LocationMaqam = () => {
                           <FcViewDetails className="cursor-pointer text-2xl" />
                         </div>
                       </td>
-                      <td className="flex w-full justify-center  items-center gap-4">
+                      <td className="flex  justify-end  items-center gap-4">
                         <button
                           disabled={loading}
                           onClick={() => {
@@ -622,13 +615,13 @@ export const LocationMaqam = () => {
                               parentType: isIlaqa ? "Ilaqa" : "Maqam",
                             });
                           }}
-                          className="btn capitalize "
+                          className="text-green-500"
                         >
-                          <FaEdit />
+                          Edit
                         </button>
                         <input
                           type="checkbox"
-                          className="toggle toggle-error"
+                          className="toggle toggle-white bg-white [--tglbg:#E2E8F0] checked:[--tglbg:#002856]"
                           defaultChecked={halqa?.disabled}
                           onChange={() => {
                             handleDisable(halqa?._id, !halqa?.disabled);
@@ -646,25 +639,59 @@ export const LocationMaqam = () => {
       )}
 
       {/* Pagination Controls */}
-
       {value === "" && (
-        <div className="flex w-full px-4 justify-between items-center mt-4">
+        <div className="flex w-full gap-4 px-4 justify-end items-center mt-4">
+          <select
+            readOnly
+            disabled
+            name="items_per_page"
+            id="items"
+            className="select select-sm max-w-xs bg-gray-200 rounded-full"
+          >
+            <option value="" disabled selected>
+              rows per page 10
+            </option>
+          </select>
+
+          {/* Previous Button */}
           <button
-            className="btn capitalize p-[8px]"
+            className="rounded-full border-none w-7 h-7"
             disabled={currentPage === 1}
-            onClick={() => setCurrentPage((prev) => prev - 1)}
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           >
-            Previous
+            <IoIosArrowBack className="text-[1.5rem] rounded-full bg-gray-200" />
           </button>
-          <span className="mx-4">
-            Page {currentPage} of {totalPages}
-          </span>
+
+          {/* Page Numbers */}
+          <div className="flex items-center">
+            {totalPages > 1 && (
+              <span className="rounded-full  border border-gray-500 border-1 mx-1 bg-white w-7 h-7 flex justify-center items-center">
+                1
+              </span>
+            )}
+            {totalPages > 2 && (
+              <button className="rounded-full  border border-gray-500 border-1 mx-1 bg-white w-7 h-7 flex justify-center items-center">
+                2
+              </button>
+            )}
+            {totalPages > 3 && <span>...</span>}
+
+            {totalPages && (
+              <span className="rounded-full  border border-gray-500 border-1 mx-1 bg-white w-7 h-7 flex justify-center items-center">
+                {totalPages}
+              </span>
+            )}
+          </div>
+
+          {/* Next Button */}
           <button
-            className="btn capitalize p-[8px]"
+            className="rounded-full border-none w-7 h-7"
             disabled={currentPage === totalPages}
-            onClick={() => setCurrentPage((prev) => prev + 1)}
+            onClick={() =>
+              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+            }
           >
-            Next
+            <IoIosArrowForward className="text-[1.5rem] rounded-full bg-gray-200" />
           </button>
         </div>
       )}
@@ -682,7 +709,7 @@ export const LocationMaqam = () => {
                 required
                 value={form.province}
                 onChange={(e) => setForm({ ...form, province: e.target.value })}
-                className="w-full input input-bordered input-primary"
+                className="w-full input input-bordered "
               >
                 <option value="" disabled>
                   Select Province
@@ -706,7 +733,7 @@ export const LocationMaqam = () => {
                 placeholder="Enter Maqam Name"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className="w-full input input-bordered input-primary"
+                className="w-full input input-bordered "
                 required
               />
             </div>
@@ -715,7 +742,7 @@ export const LocationMaqam = () => {
             {editMode ? (
               <button
                 disabled={loading}
-                className="btn capitalize p-[8px]"
+                className="px-4 py-2 rounded-md bg-primary text-white capitalize "
                 onClick={handleSubmitEdit}
               >
                 Update
@@ -723,7 +750,7 @@ export const LocationMaqam = () => {
             ) : (
               <button
                 disabled={loading}
-                className="btn capitalize p-[8px]"
+                className="px-4 py-2 rounded-md bg-primary text-white capitalize "
                 onClick={handleSubmit}
               >
                 Add
@@ -733,7 +760,7 @@ export const LocationMaqam = () => {
               <button
                 disabled={loading}
                 id="close-maqam-modal"
-                className="btn ms-3"
+                className="border px-4 py-2 rounded-md bg-none text-primary capitalize"
               >
                 Close
               </button>
@@ -788,7 +815,7 @@ export const LocationMaqam = () => {
                   onChange={(e) =>
                     setFormHalqa({ ...formHalqa, parentId: e.target.value })
                   }
-                  className="w-full input input-bordered input-primary"
+                  className="w-full input input-bordered "
                 >
                   <option value="" disabled>
                     Select Ilaqa
@@ -814,7 +841,7 @@ export const LocationMaqam = () => {
                   onChange={(e) =>
                     setFormHalqa({ ...formHalqa, parentId: e.target.value })
                   }
-                  className="w-full input input-bordered input-primary"
+                  className="w-full input input-bordered "
                 >
                   <option value="" disabled>
                     Select Maqam
@@ -859,7 +886,7 @@ export const LocationMaqam = () => {
                 onChange={(e) =>
                   setFormHalqa({ ...formHalqa, name: e.target.value })
                 }
-                className="w-full input input-bordered input-primary"
+                className="w-full input input-bordered "
                 required
               />
             </div>
@@ -868,7 +895,7 @@ export const LocationMaqam = () => {
             {editMode ? (
               <button
                 disabled={loading}
-                className="btn capitalize"
+                className="px-4 py-2 rounded-md bg-primary text-white capitalize"
                 onClick={handleSubmitHalqaEdit}
               >
                 Update
@@ -876,7 +903,7 @@ export const LocationMaqam = () => {
             ) : (
               <button
                 disabled={loading}
-                className="btn capitalize "
+                className="px-4 py-2 rounded-md bg-primary text-white capitalize"
                 onClick={handleSubmitHalqa}
               >
                 Add
@@ -886,7 +913,7 @@ export const LocationMaqam = () => {
               <button
                 disabled={loading}
                 id="close-maqam-modal"
-                className="btn ms-3"
+                className="border px-4 py-2 rounded-md bg-none text-primary capitalize"
               >
                 Close
               </button>
@@ -909,7 +936,7 @@ export const LocationMaqam = () => {
                 onChange={(e) =>
                   setIlaqaForm({ ...ilaqaForm, maqam: e.target.value })
                 }
-                className="w-full input input-bordered input-primary"
+                className="w-full input input-bordered "
               >
                 <option value="" disabled>
                   Select Maqam
@@ -935,7 +962,7 @@ export const LocationMaqam = () => {
                 onChange={(e) =>
                   setIlaqaForm({ ...ilaqaForm, name: e.target.value })
                 }
-                className="w-full input input-bordered input-primary"
+                className="w-full input input-bordered "
                 required
               />
             </div>
@@ -944,7 +971,7 @@ export const LocationMaqam = () => {
             {editMode ? (
               <button
                 disabled={loading}
-                className="btn capitalize p-[8px]"
+                className="px-4 py-2 rounded-md bg-primary text-white capitalize "
                 onClick={handleSubmitEditIlaqa}
               >
                 Update
@@ -952,7 +979,7 @@ export const LocationMaqam = () => {
             ) : (
               <button
                 disabled={loading}
-                className="btn capitalize p-[8px]"
+                className="px-4 py-2 rounded-md bg-primary text-white capitalize "
                 onClick={handleSubmitIlaqa}
               >
                 Add
@@ -962,7 +989,7 @@ export const LocationMaqam = () => {
               <button
                 disabled={loading}
                 id="close-maqam-modal"
-                className="btn ms-3"
+                className="border px-4 py-2 rounded-md bg-none text-primary capitalize"
               >
                 Close
               </button>
@@ -1067,7 +1094,7 @@ export const LocationMaqam = () => {
               <div className=" w-full flex justify-end gap-3 items-center">
                 <button
                   id="close-details-modal"
-                  className="btn ms-3 capitalize"
+                  className="border px-4 py-2 rounded-md bg-none text-primary capitalize"
                 >
                   Close
                 </button>

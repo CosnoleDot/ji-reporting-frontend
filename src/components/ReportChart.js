@@ -69,20 +69,20 @@ export const ReportChart = ({ res, type }) => {
   }, []);
 
   return (
-    <div className="w-full">
+    <div className="w-full h-full">
       <span className="capitalize">{type?.split("-")?.join(" ")}</span>
       <div
         className=" "
         style={{
           minWidth: "600px",
           width: "100%",
-          height: "100%",
+          height: "100vh",
           fontSize: "16px",
           overflow: "hidden",
           overflowX: "scroll",
         }}
       >
-        <canvas id="monthlyChart" className="p-0 h-[300px] "></canvas>
+        <canvas id="monthlyChart" className="p-0 h-full "></canvas>
       </div>
     </div>
   );

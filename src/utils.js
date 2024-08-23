@@ -12,14 +12,18 @@ export const toJson = (formData) => {
 
 export const decryptData = (data) => {
   try {
-    const bytes = CryptoJS.AES.decrypt(
-      data,
-      process.env.REACT_APP_SECRET.replace(/['"]+/g, "")
-    );
-    const decryptedData = bytes.toString(CryptoJS.enc.Utf8);
+    if (data && data !== "") {
+      const bytes = CryptoJS.AES.decrypt(
+        data,
+        process.env.REACT_APP_SECRET.replace(/['"]+/g, "")
+      );
+      const decryptedData = bytes.toString(CryptoJS.enc.Utf8);
 
-    if (decryptedData) {
-      return decryptedData;
+      if (decryptedData) {
+        return decryptedData;
+      }
+    } else {
+      return;
     }
   } catch (error) {
     console.log("Decryption failed or data is not encrypted:", error);

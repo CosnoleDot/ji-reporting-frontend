@@ -11,11 +11,14 @@ import {
 } from "../../context";
 import { Link, useLocation } from "react-router-dom";
 import instance from "../../api/instrance";
-import { FaEdit } from "react-icons/fa";
 import { UIContext } from "../../context/ui";
-import { Loader } from "../Loader";
 import { FcViewDetails } from "react-icons/fc";
-
+import {
+  IoIosArrowBack,
+  IoIosArrowDropright,
+  IoIosArrowForward,
+} from "react-icons/io";
+import { IoIosArrowDropleft } from "react-icons/io";
 export const LocationDivision = () => {
   const provinces = useContext(ProvinceContext);
   const me = useContext(MeContext);
@@ -26,7 +29,6 @@ export const LocationDivision = () => {
   const halqas = halqa.filter(
     (i) => i.parentType === "Tehsil" || i.parentType === "Division"
   );
-
 
   const [searchData, setSearchData] = useState([]);
   const [value, setValue] = useState("");
@@ -387,10 +389,10 @@ export const LocationDivision = () => {
 
   return (
     <>
-      <div className="w-full flex flex-wrap gap-2 justify-center items-center mt-2">
+      <div className="w-full flex flex-wrap gap-2 justify-end items-center">
         {["province", "country"].includes(localStorage.getItem("@type")) && (
           <button
-            className="btn capitalize p-[8px]"
+            className="px-4 py-2 rounded-md bg-primary text-white capitalize "
             onClick={() => {
               setForm({
                 name: "",
@@ -405,7 +407,7 @@ export const LocationDivision = () => {
         )}
         {districts?.length > 0 && (
           <button
-            className="btn capitalize p-[8px]"
+            className="px-4 py-2 rounded-md bg-primary text-white capitalize p-[8px]"
             onClick={() => {
               setFormDistrict({
                 name: "",
@@ -420,7 +422,7 @@ export const LocationDivision = () => {
         )}
         {tehsils?.length > 0 && (
           <button
-            className="btn capitalize p-[8px]"
+            className="px-4 py-2 rounded-md bg-primary text-white capitalize p-[8px]"
             onClick={() => {
               setFormTehsil({
                 name: "",
@@ -444,87 +446,93 @@ export const LocationDivision = () => {
             document.getElementById("add_halqa_modal").showModal();
             setEditMode(false);
           }}
-          className="btn capitalize p-[8px]"
+          className="px-4 py-2 rounded-md bg-primary text-white capitalize "
         >
           Add Halqa
         </button>
       </div>
-      <label className="input input-bordered flex items-center gap-2">
+
+      <div className="w-full flex md:flex-row flex-col justify-between items-start">
+        <div
+          role="tablist"
+          className="w-auto flex justify-between md:justify-start items-center tabs tabs-boxed"
+        >
+          {["country", "province"].includes(localStorage.getItem("@type")) && (
+            <Link
+              to={"?active=division&view=division"}
+              role="tab"
+              className={`tab  ${
+                view === "division" ? "bg-white text-black" : ""
+              }`}
+            >
+              ڈویژن
+            </Link>
+          )}
+          {districts?.length > 0 && (
+            <Link
+              to={"?active=division&view=district"}
+              role="tab"
+              className={`tab  ${
+                view === "district" ? "bg-white text-black" : ""
+              }`}
+            >
+              ضلع
+            </Link>
+          )}
+          {tehsils?.length > 0 && (
+            <Link
+              to={"?active=division&view=tehsil"}
+              role="tab"
+              className={`tab  ${
+                view === "tehsil" ? "bg-white text-black" : ""
+              }`}
+            >
+              تحصیل
+            </Link>
+          )}
+          <Link
+            to={"?active=division&view=halqa"}
+            role="tab"
+            className={`tab  ${view === "halqa" ? "bg-white text-black" : ""}`}
+          >
+            حلقہ
+          </Link>
+        </div>
+
         <input
           type="text"
-          className="grow p-2"
+          className="input input-bordered input-sm md:w-[30%] w-full"
           placeholder="Search"
           onChange={(e) => handleSearch(e.target.value)}
         />
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 16 16"
-          fill="currentColor"
-          className="w-4 h-4 opacity-70"
-        >
-          <path
-            fillRule="evenodd"
-            d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
-            clipRule="evenodd"
-          />
-        </svg>
-      </label>
-      <div role="tablist" className="w-full flex justify-between items-center">
-        {["country", "province"].includes(localStorage.getItem("@type")) && (
-          <Link
-            to={"?active=division&view=division"}
-            role="tab"
-            className={`tab w-full ${view === "division" ? "tab-active" : ""}`}
-          >
-            ڈویژن
-          </Link>
-        )}
-        {districts?.length > 0 && (
-          <Link
-            to={"?active=division&view=district"}
-            role="tab"
-            className={`tab w-full ${view === "district" ? "tab-active" : ""}`}
-          >
-            ضلع
-          </Link>
-        )}
-        {tehsils?.length > 0 && (
-          <Link
-            to={"?active=division&view=tehsil"}
-            role="tab"
-            className={`tab w-full ${view === "tehsil" ? "tab-active" : ""}`}
-          >
-            تحصیل
-          </Link>
-        )}
-        <Link
-          to={"?active=division&view=halqa"}
-          role="tab"
-          className={`tab w-full ${view === "halqa" ? "tab-active" : ""}`}
-        >
-          حلقہ
-        </Link>
       </div>
 
       {view === "division" && (
         <div className="w-full overflow-x-auto">
-          <table className="table table-zebra">
+          <table className="table">
             <thead>
               <tr>
-                <th></th>
-                <th>Name</th>
-                <th>Province</th>
-                <th className="text-center">Edit/Disable</th>
+                <th className="border border-r-0 py-2 px-4 font-semibold text-gray-400">
+                  Name
+                </th>
+                <th className="border border-r-0 border-l-0 text-start py-1 px-4 font-semibold text-gray-400">
+                  Province
+                </th>
+                <th className="text-end border border-l-0 py-2 px-4 font-semibold text-gray-400">
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody>
               {paginatedData?.length > 0 ? (
                 paginatedData.map((division, index) => (
-                  <tr key={division?._id}>
-                    <th>{(currentPage - 1) * itemsPerPage + index + 1}</th>
+                  <tr
+                    key={division?._id}
+                    className="border-r border-l font-semibold"
+                  >
                     <td>{division?.name}</td>
                     <td>{division?.province?.name || "-"}</td>
-                    <td className="flex justify-center gap-4 items-center">
+                    <td className="flex justify-end gap-4 items-center">
                       <button
                         onClick={() => {
                           setEditMode(true);
@@ -537,13 +545,13 @@ export const LocationDivision = () => {
                             name: division?.name || "",
                           });
                         }}
-                        className="btn capitalize "
+                        className="text-green-500"
                       >
-                        <FaEdit />
+                        Edit
                       </button>
                       <input
                         type="checkbox"
-                        className="toggle toggle-error"
+                        className="toggle toggle-white bg-white [--tglbg:#E2E8F0] checked:[--tglbg:#002856]"
                         defaultChecked={division?.disabled}
                         onChange={() => {
                           handleDisable(division?._id, !division?.disabled);
@@ -554,7 +562,7 @@ export const LocationDivision = () => {
                 ))
               ) : (
                 <>
-              <div>No Report Found</div>
+                  <div>No Report Found</div>
                 </>
               )}
             </tbody>
@@ -563,32 +571,35 @@ export const LocationDivision = () => {
       )}
       {view === "tehsil" && (
         <div className="w-full overflow-x-auto">
-          <table className="table table-zebra">
-            <thead className="h-10">
-              <tr className="fixed mb-2 bg-slate-300 flex w-full justify-between items-start">
-                <th className=" text-start"></th>
-                <th className="w-full text-start">Name</th>
-                <th className="w-full text-start">District</th>
-                <th className="w-full text-center">Edit/Disable</th>
+          <table className="table ">
+            <thead>
+              <tr className="">
+                <th className="border border-r-0 py-2 px-4 font-semibold text-gray-400">
+                  Name
+                </th>
+                <th className="border border-r-0 border-l-0 text-start py-1 px-4 font-semibold text-gray-400">
+                  District
+                </th>
+                <th className="text-end border border-l-0 py-2 px-4 font-semibold text-gray-400">
+                  Actions
+                </th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="">
               {paginatedData.length > 0 ? (
                 paginatedData?.map((tehsil, index) => (
-                  <tr
-                    key={tehsil?._id}
-                    className="flex w-full justify-between items-center"
-                  >
-                    <th>{(currentPage - 1) * itemsPerPage + index + 1}</th>
-                    <td className="w-full text-start">{tehsil?.name}</td>
-                    <td className="w-full text-start">{` ${
+                  <tr key={tehsil?._id} className="border-r border-l ">
+                    <td className="font-semibold  text-start">
+                      {tehsil?.name}
+                    </td>
+                    <td className="font-semibold  text-start">{` ${
                       tehsil?.district?.name
                     }( District  of ${
                       tehsil?.district?.division?.name
                         ? tehsil?.district?.division?.name
                         : tehsil?.parentId?.name
                     }) (${tehsil?.district?.division?.province?.name})`}</td>
-                    <td className="flex w-full justify-center items-center gap-4">
+                    <td className="font-semibold flex  justify-center items-center gap-4">
                       <button
                         onClick={() => {
                           setEditMode(true);
@@ -601,13 +612,13 @@ export const LocationDivision = () => {
                             name: tehsil?.name || "",
                           });
                         }}
-                        className="btn capitalize "
+                        className="text-green-500"
                       >
-                        <FaEdit />
+                        Edit
                       </button>
                       <input
                         type="checkbox"
-                        className="toggle toggle-error"
+                        className="toggle toggle-white bg-white [--tglbg:#E2E8F0] checked:[--tglbg:#002856]"
                         defaultChecked={tehsil?.disabled}
                         onChange={() => {
                           handleDisable(tehsil?._id, !tehsil?.disabled);
@@ -625,32 +636,35 @@ export const LocationDivision = () => {
       )}
       {view === "district" && (
         <div className="w-full overflow-x-auto">
-          <table className="table table-zebra">
-            <thead className="h-10">
-              <tr className="fixed mb-2 bg-slate-300 flex w-full justify-between items-start">
-                <th className=" text-start"></th>
-                <th className="w-full text-start">Name</th>
-                <th className="w-full text-start">Division</th>
-                <th className="w-full text-center">Edit/Disable</th>
+          <table className="table ">
+            <thead className="">
+              <tr className="">
+                <th className="border border-r-0 py-2 px-4 font-semibold text-gray-400">
+                  Name
+                </th>
+                <th className="border border-r-0 border-l-0 text-start py-1 px-4 font-semibold text-gray-400">
+                  Division
+                </th>
+                <th className="text-end border border-l-0 py-2 px-4 font-semibold text-gray-400">
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody>
               {paginatedData?.length > 0 ? (
                 paginatedData?.map((district, index) => (
-                  <tr
-                    key={district?._id}
-                    className="flex w-full justify-between items-center"
-                  >
-                    <th>{(currentPage - 1) * itemsPerPage + index + 1}</th>
-                    <td className="w-full text-start">{district?.name}</td>
-                    <td className="w-full text-start">{` ${
+                  <tr key={district?._id} className="border-r border-l ">
+                    <td className="font-semibold text-start">
+                      {district?.name}
+                    </td>
+                    <td className="font-semibold text-start">{` ${
                       district?.division?.name
                     }( ${
                       district?.division?.province?.name
                         ? district?.division?.province?.name
                         : district?.parentId?.name
                     }) `}</td>
-                    <td className="flex w-full justify-center items-center gap-4">
+                    <td className="font-semibold flex justify-end items-center gap-4">
                       <button
                         onClick={() => {
                           setEditMode(true);
@@ -663,13 +677,13 @@ export const LocationDivision = () => {
                             name: district?.name || "",
                           });
                         }}
-                        className="btn capitalize "
+                        className="text-green-500"
                       >
-                        <FaEdit />
+                        Edit
                       </button>
                       <input
                         type="checkbox"
-                        className="toggle toggle-error"
+                        className="toggle toggle-white bg-white [--tglbg:#E2E8F0] checked:[--tglbg:#002856]"
                         defaultChecked={district?.disabled}
                         onChange={() => {
                           handleDisable(district?._id, !district?.disabled);
@@ -680,7 +694,7 @@ export const LocationDivision = () => {
                 ))
               ) : (
                 <>
-                  <div>No Report Found</div>
+                  <div>No Location Found</div>
                 </>
               )}
             </tbody>
@@ -689,66 +703,68 @@ export const LocationDivision = () => {
       )}
       {view === "halqa" && (
         <div className="w-full overflow-x-auto">
-          <table className="table table-zebra">
+          <table className="table">
             <thead className="h-10">
-              <tr className="fixed mb-2 bg-slate-300 flex w-full justify-between items-start">
-                <th className=" text-start"></th>
-                <th className="w-full text-start">Name</th>
-                <th className="w-full text-center">
+              <tr className="">
+                <th className="border border-r-0 py-2 px-4 font-semibold text-gray-400">
+                  Name
+                </th>
+                <th className="border border-r-0 border-l-0 text-start py-1 px-4 font-semibold text-gray-400">
                   {tehsils?.length > 0 ? "Area Details" : "Division"}
                 </th>
-                <th className="w-full text-center">Edit/Disable</th>
+                <th className="text-end border border-l-0 py-2 px-4 font-semibold text-gray-400">
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody>
               {paginatedData?.length > 0 ? (
                 paginatedData?.map((halqa, index) => (
-                    <tr
-                      key={halqa?._id}
-                      className="flex w-full justify-between items-center"
-                    >
-                      <th>{(currentPage - 1) * itemsPerPage + index + 1}</th>
-                      <td className="w-full">{halqa?.name}</td>
-                      <td className="">
-                        <div
-                          onClick={() => {
-                            getAreaDetails(halqa);
-                          }}
-                        >
-                          <FcViewDetails className="cursor-pointer text-2xl" />
-                        </div>
-                      </td>
+                  <tr
+                    key={halqa?._id}
+                    className="border-r border-l font-semibold"
+                  >
+                    <td className="">{halqa?.name}</td>
+                    <td className="">
+                      <div
+                        onClick={() => {
+                          getAreaDetails(halqa);
+                        }}
+                      >
+                        <FcViewDetails className="cursor-pointer text-2xl" />
+                      </div>
+                    </td>
 
-                      <td className="flex w-full justify-center items-center gap-4">
-                        <button
-                          onClick={() => {
-                            setEditMode(true);
-                            setId(halqa?._id);
-                            document
-                              .getElementById("add_halqa_modal")
-                              .showModal();
-                            setFormHalqa({
-                              parentId: halqa?.parentId?._id || "",
-                              name: halqa?.name || "",
-                              parentType: halqa?.parentType || "",
-                              unitType: halqa?.unitType || "",
-                            });
-                          }}
-                          className="btn capitalize "
-                        >
-                          <FaEdit />
-                        </button>
-                        <input
-                          type="checkbox"
-                          className="toggle toggle-error"
-                          defaultChecked={halqa?.disabled}
-                          onChange={() => {
-                            handleDisable(halqa?._id, !halqa?.disabled);
-                          }}
-                        />
-                      </td>
-                    </tr>
-                  ))
+                    <td className="flex justify-center items-center gap-4">
+                      <button
+                        onClick={() => {
+                          setEditMode(true);
+                          setId(halqa?._id);
+                          document
+                            .getElementById("add_halqa_modal")
+                            .showModal();
+                          setFormHalqa({
+                            parentId: halqa?.parentId?._id || "",
+                            name: halqa?.name || "",
+                            parentType: halqa?.parentType || "",
+                            unitType: halqa?.unitType || "",
+                          });
+                        }}
+                        className="text-green-500"
+                      >
+                        Edit
+                      </button>
+                      <input
+                        type="checkbox"
+                        className="toggle toggle-white bg-white [--tglbg:#E2E8F0] checked:[--tglbg:#002856]"
+                        defaultChecked={halqa?.disabled}
+                        onChange={() => {
+                          handleDisable(halqa?._id, !halqa?.disabled);
+                        }}
+                      />
+                    </td>
+                  </tr>
+                ))
               ) : (
                 <div>No Report Found</div>
               )}
@@ -758,25 +774,62 @@ export const LocationDivision = () => {
       )}
 
       {/* Pagination Controls */}
-      {value === '' && <div className="flex w-full px-4 justify-between items-center mt-4">
-        <button
-          className="btn capitalize p-[8px]"
-          disabled={currentPage === 1}
-          onClick={() => setCurrentPage((prev) => prev - 1)}
-        >
-          Previous
-        </button>
-        <span className="mx-4">
-          Page {currentPage} of {totalPages}
-        </span>
-        <button
-          className="btn capitalize p-[8px]"
-          disabled={currentPage === totalPages}
-          onClick={() => {setCurrentPage((prev) => prev + 1); setValue('')}}
-        >
-          Next
-        </button>
-      </div>}
+      {value === "" && (
+        <div className="flex w-full gap-4 px-4 justify-end items-center mt-4">
+          <select
+            readOnly
+            disabled
+            name="items_per_page"
+            id="items"
+            className="select select-sm max-w-xs bg-gray-200 rounded-full"
+          >
+            <option value="" disabled selected>
+              rows per page 10
+            </option>
+          </select>
+
+          {/* Previous Button */}
+          <button
+            className="rounded-full border-none w-7 h-7"
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          >
+            <IoIosArrowBack className="text-[1.5rem] rounded-full bg-gray-200" />
+          </button>
+
+          {/* Page Numbers */}
+          <div className="flex items-center">
+            {currentPage > 1 && (
+              <span className="rounded-full  border border-gray-500 border-1 mx-1 bg-white w-7 h-7 flex justify-center items-center">
+                1
+              </span>
+            )}
+            {totalPages > 2 && (
+              <button className="rounded-full  border border-gray-500 border-1 mx-1 bg-white w-7 h-7 flex justify-center items-center">
+                2
+              </button>
+            )}
+            {totalPages > 3 && <span>...</span>}
+
+            {totalPages && (
+              <span className="rounded-full  border border-gray-500 border-1 mx-1 bg-white w-7 h-7 flex justify-center items-center">
+                {totalPages}
+              </span>
+            )}
+          </div>
+
+          {/* Next Button */}
+          <button
+            className="rounded-full border-none w-7 h-7"
+            disabled={currentPage === totalPages}
+            onClick={() =>
+              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+            }
+          >
+            <IoIosArrowForward className="text-[1.5rem] rounded-full bg-gray-200" />
+          </button>
+        </div>
+      )}
 
       <dialog id="add_division_modal" className="modal">
         <div className="modal-box">
@@ -791,7 +844,7 @@ export const LocationDivision = () => {
                 required
                 value={form.province}
                 onChange={(e) => setForm({ ...form, province: e.target.value })}
-                className="w-full input input-bordered input-primary"
+                className="w-full input input-bordered "
               >
                 <option value="" disabled>
                   Select Province
@@ -823,24 +876,30 @@ export const LocationDivision = () => {
                 placeholder="Enter Division Name"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className="w-full input input-bordered input-primary"
+                className="w-full input input-bordered "
                 required
               />
             </div>
           </div>
           <div className="modal-action">
             {editMode ? (
-              <button className="btn capitalize " onClick={handleSubmitEdit}>
+              <button className="text-green-500" onClick={handleSubmitEdit}>
                 Update
               </button>
             ) : (
-              <button className="btn capitalize" onClick={handleSubmit}>
+              <button
+                className="px-4 py-2 rounded-md bg-primary text-white capitalize"
+                onClick={handleSubmit}
+              >
                 Add
               </button>
             )}
             <form method="dialog">
               {/* if there is a button in form, it will close the modal */}
-              <button id="close-division-modal" className="btn ms-3">
+              <button
+                id="close-division-modal"
+                className="border px-4 py-2 rounded-md bg-none text-primary capitalize"
+              >
                 Close
               </button>
             </form>
@@ -862,7 +921,7 @@ export const LocationDivision = () => {
                 onChange={(e) =>
                   setFormDistrict({ ...formDistrict, division: e.target.value })
                 }
-                className="w-full input input-bordered input-primary"
+                className="w-full input input-bordered "
               >
                 <option value="" disabled>
                   Select Division
@@ -888,7 +947,7 @@ export const LocationDivision = () => {
                 onChange={(e) =>
                   setFormDistrict({ ...formDistrict, name: e.target.value })
                 }
-                className="w-full input input-bordered input-primary"
+                className="w-full input input-bordered "
                 required
               />
             </div>
@@ -896,19 +955,25 @@ export const LocationDivision = () => {
           <div className="modal-action">
             {editMode ? (
               <button
-                className="btn capitalize"
+                className="px-4 py-2 rounded-md bg-primary text-white capitalize"
                 onClick={handleSubmitDistrictEdit}
               >
                 Update
               </button>
             ) : (
-              <button className="btn capitalize" onClick={handleSubmitDistrict}>
+              <button
+                className="px-4 py-2 rounded-md bg-primary text-white capitalize"
+                onClick={handleSubmitDistrict}
+              >
                 Add
               </button>
             )}
             <form method="dialog">
               {/* if there is a button in form, it will close the modal */}
-              <button id="close-district-modal" className="btn ms-3">
+              <button
+                id="close-district-modal"
+                className="border px-4 py-2 rounded-md bg-none text-primary capitalize"
+              >
                 Close
               </button>
             </form>
@@ -930,13 +995,14 @@ export const LocationDivision = () => {
                 onChange={(e) =>
                   setFormTehsil({ ...formTehsil, district: e.target.value })
                 }
-                className="w-full input input-bordered input-primary"
+                className="w-full input input-bordered "
               >
                 <option value="" disabled>
                   Select District
                 </option>
                 {districts
-                  ?.filter((i) => !i?.disabled)?.sort((a, b) => a.name.localeCompare(b.name))
+                  ?.filter((i) => !i?.disabled)
+                  ?.sort((a, b) => a.name.localeCompare(b.name))
                   ?.map((i, index) => (
                     <option value={i?._id} key={index}>
                       {i?.name}
@@ -956,7 +1022,7 @@ export const LocationDivision = () => {
                 onChange={(e) =>
                   setFormTehsil({ ...formTehsil, name: e.target.value })
                 }
-                className="w-full input input-bordered input-primary"
+                className="w-full input input-bordered "
                 required
               />
             </div>
@@ -964,19 +1030,25 @@ export const LocationDivision = () => {
           <div className="modal-action">
             {editMode ? (
               <button
-                className="btn capitalize"
+                className="px-4 py-2 rounded-md bg-primary text-white capitalize"
                 onClick={handleSubmitTehsilEdit}
               >
                 Update
               </button>
             ) : (
-              <button className="btn capitalize" onClick={handleSubmitTehsil}>
+              <button
+                className="px-4 py-2 rounded-md bg-primary text-white capitalize"
+                onClick={handleSubmitTehsil}
+              >
                 Add
               </button>
             )}
             <form method="dialog">
               {/* if there is a button in form, it will close the modal */}
-              <button id="close-tehsil-modal" className="btn ms-3">
+              <button
+                id="close-tehsil-modal"
+                className="border px-4 py-2 rounded-md bg-none text-primary capitalize"
+              >
                 Close
               </button>
             </form>
@@ -1027,7 +1099,7 @@ export const LocationDivision = () => {
                   onChange={(e) =>
                     setFormHalqa({ ...formHalqa, parentId: e.target.value })
                   }
-                  className="w-full input input-bordered input-primary"
+                  className="w-full input input-bordered "
                 >
                   <option value="" disabled>
                     Select Division
@@ -1053,7 +1125,7 @@ export const LocationDivision = () => {
                   onChange={(e) =>
                     setFormHalqa({ ...formHalqa, parentId: e.target.value })
                   }
-                  className="w-full input input-bordered input-primary"
+                  className="w-full input input-bordered "
                 >
                   <option value="" disabled>
                     Select Tehsil
@@ -1098,7 +1170,7 @@ export const LocationDivision = () => {
                 onChange={(e) =>
                   setFormHalqa({ ...formHalqa, name: e.target.value })
                 }
-                className="w-full input input-bordered input-primary"
+                className="w-full input input-bordered "
                 required
               />
             </div>
@@ -1107,7 +1179,7 @@ export const LocationDivision = () => {
             {editMode ? (
               <button
                 disabled={loading}
-                className="btn capitalize"
+                className="px-4 py-2 rounded-md bg-primary text-white capitalize"
                 onClick={handleSubmitHalqaEdit}
               >
                 Update
@@ -1115,7 +1187,7 @@ export const LocationDivision = () => {
             ) : (
               <button
                 disabled={loading}
-                className="btn capitalize"
+                className="px-4 py-2 rounded-md bg-primary text-white capitalize"
                 onClick={handleSubmitHalqa}
               >
                 Add
@@ -1125,7 +1197,7 @@ export const LocationDivision = () => {
               <button
                 disabled={loading}
                 id="close-maqam-modal"
-                className="btn ms-3"
+                className="border px-4 py-2 rounded-md bg-none text-primary capitalize"
               >
                 Close
               </button>
@@ -1224,7 +1296,7 @@ export const LocationDivision = () => {
               <div className=" w-full flex justify-end gap-3 items-center">
                 <button
                   id="close-details-modal"
-                  className="btn ms-3 capitalize"
+                  className="border px-4 py-2 rounded-md bg-none text-primary capitalize capitalize"
                 >
                   Close
                 </button>
