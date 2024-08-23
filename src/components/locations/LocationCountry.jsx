@@ -75,11 +75,11 @@ export const LocationCountry = () => {
   }, [provinces]);
   return (
     <>
-      <div className="w-full flex justify-end items-center ">
+      <div className="p-2 grid grid-cols-1">
         {["country"].includes(localStorage.getItem("@type")) && (
           <button
             disabled={loading}
-            className="px-4 py-2 rounded-md bg-primary text-white"
+            className="btn"
             onClick={() => {
               setForm({
                 name: "",
@@ -94,22 +94,20 @@ export const LocationCountry = () => {
         )}
       </div>
       <div className="w-full overflow-x-auto">
-        <table className="table">
+        <table className="table table-zebra">
           <thead>
             <tr>
-              <th className="border border-r-0 py-2 px-4 font-semibold text-gray-400">
-                Name
-              </th>
-              <th className="text-end border border-l-0 py-2 px-4 font-semibold text-gray-400">
-                Action
-              </th>
+              <th></th>
+              <th>Name</th>
+              <th className="text-center">Edit/Disable</th>
             </tr>
           </thead>
           <tbody>
             {data?.map((province, index) => (
               <tr key={index}>
-                <td className="p-3 border-l font-bold">{province?.name}</td>
-                <td className="flex justify-end items-center gap-4 border-r">
+                <th>{index + 1}</th>
+                <td>{province?.name}</td>
+                <td className="flex justify-center items-center gap-4">
                   <button
                     disabled={loading}
                     onClick={() => {
@@ -121,13 +119,13 @@ export const LocationCountry = () => {
                         name: province?.name || "",
                       });
                     }}
-                    className="text-green-500"
+                    className="btn"
                   >
-                    Edit
+                    <FaEdit />
                   </button>
                   <input
                     type="checkbox"
-                    className="toggle toggle-white bg-white [--tglbg:#E2E8F0] checked:[--tglbg:#002856]"
+                    className="toggle toggle-error"
                     defaultChecked={province?.disabled}
                     onChange={() => {
                       handleDisable(province?._id, !province?.disabled);
@@ -152,7 +150,7 @@ export const LocationCountry = () => {
                 name="country"
                 type="text"
                 disabled
-                className="w-full input input-bordered "
+                className="w-full input input-bordered input-primary"
                 value={"Pakistan"}
               />
             </div>
@@ -174,7 +172,7 @@ export const LocationCountry = () => {
                     country: "Pakistan",
                   })
                 }
-                className="w-full input input-bordered "
+                className="w-full input input-bordered input-primary"
                 required
               />
             </div>
@@ -183,17 +181,13 @@ export const LocationCountry = () => {
             {editMode ? (
               <button
                 disabled={loading}
-                className="px-4 py-2 rounded-md bg-primary text-white capitalize"
+                className="btn"
                 onClick={handleSubmitEdit}
               >
                 Update
               </button>
             ) : (
-              <button
-                disabled={loading}
-                className="px-4 py-2 rounded-md bg-primary text-white capitalize"
-                onClick={handleSubmit}
-              >
+              <button disabled={loading} className="btn" onClick={handleSubmit}>
                 Add
               </button>
             )}
@@ -202,7 +196,7 @@ export const LocationCountry = () => {
               <button
                 disabled={loading}
                 id="close-province-modal"
-                className="border px-4 py-2 rounded-md bg-none text-primary capitalize"
+                className="btn ms-3"
               >
                 Close
               </button>

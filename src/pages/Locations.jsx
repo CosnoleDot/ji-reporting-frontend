@@ -35,56 +35,46 @@ export const Locations = () => {
 
   return (
     <GeneralLayout title="Locations" active={"locations"}>
-      <div className="relative flex flex-col items-center py-3 px-5 pt-0 justify-start h-[calc(100vh-75.6px-75px)]">
-        <div className="w-full flex md:flex-row flex-col md:justify-between justify-start items-center py-4">
-          <div className="mb-4 w-full md:w-[30%] flex flex-col">
-            <h1 className="text-2xl font-bold text-start ">Location</h1>
-            <p className="text-gray-500">Manage Your location easily </p>
-          </div>
-        </div>
-        <div className="w-full flex justify-start items-center">
-          <div
-            role="tablist"
-            className="w-full flex justify-between md:justify-start items-start tabs tabs-boxed md:w-auto "
-          >
-            {["country", "province", "maqam"].includes(
-              localStorage.getItem("@type")
-            ) && (
-              <Link
-                to={"?active=maqam&view=halqa"}
-                role="tab"
-                className={`tab ${
-                  active === "maqam" ? "bg-white text-black" : ""
-                }`}
-              >
-                مقام
-              </Link>
-            )}
-            {["country", "province", "division"].includes(
-              localStorage.getItem("@type")
-            ) && (
-              <Link
-                to={"?active=division&view=tehsil"}
-                role="tab"
-                className={`tab ${
-                  active === "division" ? "bg-white text-black" : ""
-                }`}
-              >
-                ڈویژن
-              </Link>
-            )}
-            {["country"].includes(localStorage.getItem("@type")) && (
-              <Link
-                to={"?active=country"}
-                role="tab"
-                className={`tab ${
-                  active === "country" ? "bg-white text-black" : ""
-                }`}
-              >
-                صوبہ
-              </Link>
-            )}
-          </div>
+      <div className="relative flex flex-col items-center py-3 px-0 pt-0 justify-start h-[calc(100vh-65.6px-64px)]">
+        <div
+          role="tablist"
+          className="w-full flex justify-between items-center"
+        >
+          {["country", "province", "maqam"].includes(
+            localStorage.getItem("@type")
+          ) && (
+            <Link
+              to={"?active=maqam&view=halqa"}
+              role="tab"
+              className={`tab w-full ${active === "maqam" ? "tab-active" : ""}`}
+            >
+              مقام
+            </Link>
+          )}
+          {["country", "province", "division"].includes(
+            localStorage.getItem("@type")
+          ) && (
+            <Link
+              to={"?active=division&view=tehsil"}
+              role="tab"
+              className={`tab w-full ${
+                active === "division" ? "tab-active" : ""
+              }`}
+            >
+              ڈویژن
+            </Link>
+          )}
+          {["country"].includes(localStorage.getItem("@type")) && (
+            <Link
+              to={"?active=country"}
+              role="tab"
+              className={`tab w-full ${
+                active === "country" ? "tab-active" : ""
+              }`}
+            >
+              صوبہ
+            </Link>
+          )}
         </div>
         <div className="relative w-full flex flex-col gap-3 items-center justify-start h-[calc(100vh-65.6px-64px-32px)]">
           {active === "maqam" && <LocationMaqam />}
