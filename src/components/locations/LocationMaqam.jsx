@@ -37,6 +37,7 @@ export const LocationMaqam = () => {
   const [isIlaqa, setIsIlaqa] = useState(false);
   const params = useLocation();
   const [muntakhib, setMuntakhib] = useState(ilaqas?.length > 0 ? true : false);
+  const [value , setValue] = useState('')
 
   useEffect(() => {
     setLoading(true); // Set loading to true before fetching data
