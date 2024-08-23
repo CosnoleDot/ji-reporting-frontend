@@ -28,8 +28,7 @@ export const DeleteUser = () => {
   const provinces = useContext(ProvinceContext);
   const divisions = useContext(DivisionContext);
   const areaDetails = useContext(ViewDetails);
-  const { nazim, loading, setLoading, getNazim, getAreaDetails } =
-    useContext(UIContext);
+  const { nazim, loading, setLoading, getNazim, getAreaDetails } = useContext(UIContext);
   const { dispatch } = useToastState();
 
   const [data, setData] = useState(nazim);
@@ -201,6 +200,18 @@ export const DeleteUser = () => {
       userAreaId: selectedId,
       userId: singleUser?._id,
     };
+    if (
+      !data?.nazim ||
+      !data?.nazim === "" ||
+      !data?.userAreaId ||
+      !data?.userAreaId === "" ||
+      !data?.nazimType ||
+      !data?.nazimType === "" ||
+      !data?.userId ||
+      !data?.userId === ""
+    ) {
+      dispatch({ type: "ERROR", payload: "Please select all fields" });
+    }
     let req;
     try {
       req = await instance.put("/user/update-status", data, {
@@ -210,11 +221,17 @@ export const DeleteUser = () => {
         },
       });
       dispatch({ type: "SUCCESS", payload: req.data?.message });
-      await getNazim();
-      if (nazim) {
-        setData(nazim);
-      }
+      getNazim();
+      setData(nazim);
+      setUserAreaType("");
+      setSingleUser("");
+      setNazimType("");
     } catch (err) {
+      setUserAreaType("");
+      setSingleUser("");
+      setNazimType("");
+      setSelectedId("");
+      document.getElementById("autocomplete0").value = "";
       dispatch({ type: "ERROR", payload: err?.response?.data?.message });
     }
   };
