@@ -16,7 +16,7 @@ export const GeneralLayout = ({ children, active, title }) => {
 
   const sidebarClasses = useMemo(
     () =>
-      `md:w-[20%] ${
+      `md:w-[16%] ${
         isSideBarOpen ? "block w-[80%] z-50 absolute top-0 left-0" : "hidden"
       } md:block`,
     [isSideBarOpen]

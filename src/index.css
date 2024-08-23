@@ -4304,22 +4304,6 @@ html {
   padding: 8px;
 }
 
-.p-\[2px\] {
-  padding: 2px;
-}
-
-.p-\[3px\] {
-  padding: 3px;
-}
-
-.p-\[4px\] {
-  padding: 4px;
-}
-
-.p-\[5px\] {
-  padding: 5px;
-}
-
 .p-\[6px\] {
   padding: 6px;
 }
@@ -5340,6 +5324,14 @@ html {
 
   .md\:w-auto {
     width: auto;
+  }
+
+  .md\:w-\[15\%\] {
+    width: 15%;
+  }
+
+  .md\:w-\[16\%\] {
+    width: 16%;
   }
 
   .md\:max-w-lg {
