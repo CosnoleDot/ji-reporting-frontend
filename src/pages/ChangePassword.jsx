@@ -30,7 +30,19 @@ export const ChangePassword = () => {
   };
   return (
     <GeneralLayout>
-      <div className='relative flex flex-col justify-center h-[calc(100vh-65.6px-64px)]'>
+      <div className='relative flex  justify-center  overflow-hidden h-[calc(100vh-65.6px-64px)]'>
+      <div className=" w-[40%] bg-secondary h-[calc(100vh-65.6px-64px)] p-[40px] md:flex md:flex-col md:justify-between  hidden">
+        <div></div>
+        <div className="flex flex-col gap-4">
+          <h2 class="text-white font-inter text-2xl font-bold leading-7 text-left">
+            Welcome to IJT Reporting
+          </h2>
+          <p class="text-white font-inter text-base font-normal leading-7 text-left">
+            Get better view of your activities and manage your nazims in an easy
+            way. Report your activities here.
+          </p>
+        </div>
+      </div>
         <div className='w-full p-6 m-auto bg-white rounded-md lg:max-w-lg'>
           <h3 className='font-bold text-2xl'>Change Password</h3>
           <form className='space-y-4' onSubmit={handleSubmit}>

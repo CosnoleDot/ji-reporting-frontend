@@ -114,7 +114,7 @@ export const LocationIlaqa = () => {
 
   return (
     <>
-      <div className="p-5 grid grid-cols-1">
+      <div className="w-full flex flex-wrap gap-2 justify-end items-center">
         <button
           disabled={loading}
           onClick={() => {
@@ -127,21 +127,28 @@ export const LocationIlaqa = () => {
             document.getElementById("add_halqa_modal").showModal();
             setEditMode(false);
           }}
-          className="btn ms-3"
+          className="px-4 py-2 rounded-md bg-primary text-white capitalize"
         >
           Add Halqa
         </button>
       </div>
 
       <div className="w-full overflow-x-auto">
-        <table className="table table-zebra">
-          <thead className="h-10">
-            <tr className="fixed mb-2 bg-slate-300 flex w-full justify-between items-start">
-              <th className=" text-start"></th>
-              <th className="w-full text-start">Name</th>
-              <th className="w-full text-start">Ilaqa</th>
-              <th className="w-full text-start">Type</th>
-              <th className="w-full text-center">Edit/Disable</th>
+        <table className="table ">
+          <thead className="">
+            <tr className="">
+              <th className="border border-r-0 py-2 px-4 font-semibold text-gray-400">
+                Name
+              </th>
+              <th className="border border-r-0 border-l-0 text-start py-1 px-4 font-semibold text-gray-400">
+                Ilaqa
+              </th>
+              <th className="border border-r-0 border-l-0 text-start py-1 px-4 font-semibold text-gray-400">
+                Type
+              </th>
+              <th className="text-end border border-l-0 py-2 px-4 font-semibold text-gray-400">
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -150,15 +157,12 @@ export const LocationIlaqa = () => {
               ?.map((halqa, index) => (
                 <tr
                   key={halqa?._id}
-                  className="flex w-full justify-between items-start"
+                  className="border-r border-l font-semibold"
                 >
-                  <th>{indexOfFirstItem + index + 1}</th>
-                  <td className="w-full text-start">{halqa?.name}</td>
-                  <td className="w-full text-start">
-                    {halqa?.parentId?.name || "-"}
-                  </td>
-                  <td className="w-full text-start">{halqa?.unitType}</td>
-                  <td className="flex w-full justify-center  items-center gap-4">
+                  <td className="text-start">{halqa?.name}</td>
+                  <td className="text-start">{halqa?.parentId?.name || "-"}</td>
+                  <td className="text-start">{halqa?.unitType}</td>
+                  <td className="flex justify-end  items-center gap-4">
                     <button
                       disabled={loading}
                       onClick={() => {
@@ -172,13 +176,13 @@ export const LocationIlaqa = () => {
                           unitType: "",
                         });
                       }}
-                      className="btn"
+                      className="text-green-500"
                     >
-                      <FaEdit />
+                      Edit
                     </button>
                     <input
                       type="checkbox"
-                      className="toggle toggle-error"
+                      className="toggle toggle-white bg-white [--tglbg:#E2E8F0] checked:[--tglbg:#002856]"
                       defaultChecked={halqa?.disabled}
                       onChange={() => {
                         handleDisable(halqa?._id, !halqa?.disabled);
@@ -226,7 +230,7 @@ export const LocationIlaqa = () => {
                 onChange={(e) =>
                   setFormHalqa({ ...formHalqa, parentId: e.target.value })
                 }
-                className="w-full input input-bordered input-primary"
+                className="w-full input input-bordered "
               >
                 <option value="" disabled>
                   Select Ilaqa
@@ -252,7 +256,7 @@ export const LocationIlaqa = () => {
                 onChange={(e) =>
                   setFormHalqa({ ...formHalqa, name: e.target.value })
                 }
-                className="w-full input input-bordered input-primary"
+                className="w-full input input-bordered "
                 required
               />
             </div>
@@ -287,7 +291,7 @@ export const LocationIlaqa = () => {
             ) : (
               <button
                 disabled={loading}
-                className="btn"
+                className="px-4 py-2 rounded-md bg-primary text-white capitalize"
                 onClick={handleSubmitHalqa}
               >
                 Add
@@ -298,7 +302,7 @@ export const LocationIlaqa = () => {
               <button
                 disabled={loading}
                 id="close-maqam-modal"
-                className="btn ms-3"
+                className="border px-4 py-2 rounded-md bg-none text-primary capitalize"
               >
                 Close
               </button>
