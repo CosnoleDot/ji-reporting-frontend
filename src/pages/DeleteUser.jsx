@@ -1428,6 +1428,7 @@ export const DeleteUser = () => {
                         </label>
                       </div>
                     )}
+                    {/* jhgjgkjgkgkjhkhkj */}
                     {(me?.nazim?.toLowerCase() === "maqam" ||
                       me?.nazim?.toLowerCase() === "country" ||
                       me?.nazim?.toLowerCase() === "province") &&
