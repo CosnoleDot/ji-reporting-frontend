@@ -1379,7 +1379,6 @@ export const DeleteUser = () => {
                   </span>
                   <div className="flex flex-wrap items-center justify-start border border-primary p-2 rounded-lg">
                     {me?.nazim.toLowerCase() === "country" && (
-
                       <>
                         <div className="form-control">
                           <label className="label cursor-pointer gap-2">
@@ -1417,27 +1416,25 @@ export const DeleteUser = () => {
                             <span className="label-text">Province</span>
                           </label>
                         </div>
+                        <div className="form-control">
+                          <label className="label cursor-pointer gap-2">
+                            <input
+                              type="radio"
+                              name="userAreaType"
+                              className="radio checked:bg-blue-500"
+                              checked={userAreaType === "Country"}
+                              value="Country"
+                              onChange={(e) => {
+                                setUserAreaType(e.target.value);
+                                setSearchArea("");
+                                document.getElementById("autocomplete0").value =
+                                  "";
+                              }}
+                            />
+                            <span className="label-text">Markaz</span>
+                          </label>
+                        </div>
                       </>
-
-                      <div className="form-control">
-                        <label className="label cursor-pointer gap-2">
-                          <input
-                            type="radio"
-                            name="userAreaType"
-                            className="radio checked:bg-blue-500"
-                            checked={userAreaType === "Country"}
-                            value="Country"
-                            onChange={(e) => {
-                              setUserAreaType(e.target.value);
-                              setSearchArea("");
-                              document.getElementById("autocomplete0").value =
-                                "";
-                            }}
-                          />
-                          <span className="label-text">Markaz</span>
-                        </label>
-                      </div>
-
                     )}
                     {me?.nazim.toLowerCase() === "country" && (
                       <div className="form-control">
@@ -1571,9 +1568,7 @@ export const DeleteUser = () => {
                         <input
                           type="radio"
                           name="nazimType"
-
                           className="radio checked:bg-primary"
-
                           value="umeedwaar"
                           checked={nazimType === "umeedwar"}
                           onChange={() => setNazimType("umeedwar")}
@@ -1600,9 +1595,7 @@ export const DeleteUser = () => {
                         <input
                           type="radio"
                           name="nazimType"
-
                           className="radio checked:bg-primary"
-
                           value="rukan"
                           checked={nazimType === "rukan"}
                           onChange={() => setNazimType("rukan")}
@@ -1769,7 +1762,6 @@ export const DeleteUser = () => {
                     ? "(Province)"
                     : `(${areaDetails?.areaType || "Pakistan"})`}
                 </h4>
-
               </div>
 
               <div className="w-full flex justify-start items-center gap-5">
@@ -1826,8 +1818,6 @@ export const DeleteUser = () => {
               )}
 
               {(!areaDetails?.country || areaDetails?.name === "Pakistan") && (
-
-
                 <div className="w-full flex justify-start items-center gap-5">
                   <h4>Province:</h4>
                   <h4 className="text-gray-400 font-bold">
