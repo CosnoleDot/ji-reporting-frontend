@@ -471,7 +471,7 @@ export const LocationMaqam = () => {
                             name: maqam?.name || "",
                           });
                         }}
-                        className="text-green-500"
+                        className="text-green"
                       >
                         Edit
                       </button>
@@ -540,7 +540,7 @@ export const LocationMaqam = () => {
                             name: ilaqa?.name,
                           });
                         }}
-                        className="text-green-500"
+                        className="text-green"
                       >
                         Edit
                       </button>
@@ -615,7 +615,7 @@ export const LocationMaqam = () => {
                               parentType: isIlaqa ? "Ilaqa" : "Maqam",
                             });
                           }}
-                          className="text-green-500"
+                          className="text-green"
                         >
                           Edit
                         </button>

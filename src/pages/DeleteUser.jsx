@@ -370,26 +370,24 @@ export const DeleteUser = () => {
         <div className="w-full overflow-scroll">
           <table className="w-full">
             <thead>
-              <tr className="">
-                <th className="border py-2 px-4 font-semibold text-gray-400">
+              <tr className="border-t rounded-md">
+                <th className="border-l py-2 px-4 font-semibold text-gray-400">
                   Name
                 </th>
-                <th className="border py-2 px-4 font-semibold text-gray-400">
+                <th className=" py-2 px-4 font-semibold text-gray-400">
                   Nazim Type
                 </th>
-                <th className="border py-2 px-4 font-semibold text-gray-400">
+                <th className=" py-2 px-4 font-semibold text-gray-400">
                   Email
                 </th>
-                <th className="border py-2 px-4 font-semibold text-gray-400">
-                  Area
-                </th>
-                <th className="border py-2 px-4 font-semibold text-gray-400">
+                <th className=" py-2 px-4 font-semibold text-gray-400">Area</th>
+                <th className=" py-2 px-4 font-semibold text-gray-400">
                   Country
                 </th>
-                <th className="border py-2 px-4 font-semibold text-gray-400">
+                <th className=" py-2 px-4 font-semibold text-gray-400">
                   Status
                 </th>
-                <th className="border py-2 px-4 font-semibold text-gray-400">
+                <th className="border-r py-2 px-4 font-semibold text-gray-400">
                   Action
                 </th>
               </tr>
@@ -398,11 +396,9 @@ export const DeleteUser = () => {
               {paginatedData
                 ?.filter((i) => i?.userAreaId?._id !== me?.userAreaId?._id)
                 ?.map((user, index) => (
-                  <tr key={user.email}>
-                    <td className="border-b-2 border-l-2 p-4">
-                      {user?.name || "-"}
-                    </td>
-                    <td className="border-b-2 p-4">
+                  <tr key={user.email} className="border-b border-r border-l">
+                    <td className="  p-4">{user?.name || "-"}</td>
+                    <td className=" p-4">
                       {user?.nazimType
                         ?.replace(/-/g, " ")
                         .split(" ")
@@ -411,8 +407,8 @@ export const DeleteUser = () => {
                         )
                         .join(" ") || "-"}
                     </td>
-                    <td className="border-b-2 p-4">{user?.email || "-"}</td>
-                    <td className="border-b-2 p-4">
+                    <td className=" p-4">{user?.email || "-"}</td>
+                    <td className=" p-4">
                       {" "}
                       <div
                         onClick={() => {
@@ -425,19 +421,19 @@ export const DeleteUser = () => {
                         />
                       </div>
                     </td>
-                    <td className="border-b-2 p-4">Pakistan</td>
-                    <td className="border-b-2 p-4">
+                    <td className=" p-4">Pakistan</td>
+                    <td className=" p-4">
                       {user?.isDeleted ? (
-                        <div className="bg-red-200 badge badge-lg flex justify-center items-center py-2 text-red-800">
+                        <div className=" badge text-red-500 badge-lg flex justify-center items-center py-3 bg-[#f39898]">
                           inActive
                         </div>
                       ) : (
-                        <div className="bg-green-200 badge badge-lg flex justify-center items-center py-2 text-green-800">
+                        <div className="bg-[#a1f1c4] badge badge-lg flex justify-center items-center py-3 text-green">
                           active
                         </div>
                       )}
                     </td>
-                    <td className="border-b-2 border-r-2 p-4 ">
+                    <td className="p-1 ">
                       <div className="w-full flex justify-between items-center">
                         <button
                           onClick={() => {
@@ -586,26 +582,6 @@ export const DeleteUser = () => {
                 </button>
               </div>
 
-              {/* <div className="flex md:flex-row flex-col gap-2 justify-between items-center">
-                <button
-                  className="btn btn-primary border-none capitalize w-full sm:w-auto"
-                  onClick={(e) => {
-                    setWithArea(true);
-                    e.preventDefault();
-                  }}
-                >
-                  Categorize with area
-                </button>
-                <button
-                  className="btn btn-primary border-none capitalize w-full sm:w-auto"
-                  onClick={(e) => {
-                    setWithArea(false);
-                    e.preventDefault();
-                  }}
-                >
-                  Categorize with details
-                </button>
-              </div> */}
               {!withArea && (
                 <div>
                   <div>

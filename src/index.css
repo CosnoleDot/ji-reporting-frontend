@@ -3341,6 +3341,14 @@ html {
   top: 80%;
 }
 
+.-top-10 {
+  top: -2.5rem;
+}
+
+.top-10 {
+  top: 2.5rem;
+}
+
 .z-0 {
   z-index: 0;
 }
@@ -3359,6 +3367,10 @@ html {
 
 .z-\[1\] {
   z-index: 1;
+}
+
+.z-20 {
+  z-index: 20;
 }
 
 .m-0 {
@@ -3795,6 +3807,10 @@ html {
   width: 100%;
 }
 
+.w-\[70\%\] {
+  width: 70%;
+}
+
 .min-w-\[230px\] {
   min-width: 230px;
 }
@@ -4079,10 +4095,6 @@ html {
   border-left-width: 0px;
 }
 
-.border-l-2 {
-  border-left-width: 2px;
-}
-
 .border-r {
   border-right-width: 1px;
 }
@@ -4091,8 +4103,12 @@ html {
   border-right-width: 0px;
 }
 
-.border-r-2 {
-  border-right-width: 2px;
+.border-t {
+  border-top-width: 1px;
+}
+
+.border-t-0 {
+  border-top-width: 0px;
 }
 
 .border-dashed {
@@ -4168,6 +4184,11 @@ html {
   background-color: rgb(178 213 255 / var(--tw-bg-opacity));
 }
 
+.bg-\[\#a1f1c4\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(161 241 196 / var(--tw-bg-opacity));
+}
+
 .bg-\[\#eee\] {
   --tw-bg-opacity: 1;
   background-color: rgb(238 238 238 / var(--tw-bg-opacity));
@@ -4176,6 +4197,11 @@ html {
 .bg-\[\#f1f1f6\] {
   --tw-bg-opacity: 1;
   background-color: rgb(241 241 246 / var(--tw-bg-opacity));
+}
+
+.bg-\[\#f39898\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(243 152 152 / var(--tw-bg-opacity));
 }
 
 .bg-base-100 {
@@ -4211,11 +4237,6 @@ html {
 .bg-red-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(254 226 226 / var(--tw-bg-opacity));
-}
-
-.bg-red-200 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(254 202 202 / var(--tw-bg-opacity));
 }
 
 .bg-red-400 {
@@ -4643,11 +4664,6 @@ html {
 .text-red-500 {
   --tw-text-opacity: 1;
   color: rgb(239 68 68 / var(--tw-text-opacity));
-}
-
-.text-red-800 {
-  --tw-text-opacity: 1;
-  color: rgb(153 27 27 / var(--tw-text-opacity));
 }
 
 .text-secondaryText {
@@ -5212,10 +5228,6 @@ html {
     width: 1rem;
   }
 
-  .sm\:w-auto {
-    width: auto;
-  }
-
   .sm\:grid-cols-1 {
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
@@ -5279,10 +5291,6 @@ html {
 
   .md\:w-40 {
     width: 10rem;
-  }
-
-  .md\:w-\[16\%\] {
-    width: 16%;
   }
 
   .md\:w-\[20\%\] {

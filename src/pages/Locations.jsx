@@ -35,7 +35,7 @@ export const Locations = () => {
 
   return (
     <GeneralLayout title="Locations" active={"locations"}>
-      <div className="relative flex flex-col items-center py-3 px-5 pt-0 justify-start h-[calc(100vh-75.6px-75px)]">
+      <div className="flex flex-col items-center py-3 px-5 pt-0 justify-start h-[calc(100vh-75.6px-75px)]">
         <div className="w-full flex md:flex-row flex-col md:justify-between justify-start items-center py-4">
           <div className="mb-4 w-full md:w-[30%] flex flex-col">
             <h1 className="text-2xl font-bold text-start ">Location</h1>
@@ -86,7 +86,7 @@ export const Locations = () => {
             )}
           </div>
         </div>
-        <div className="relative w-full flex flex-col gap-3 items-center justify-start h-[calc(100vh-65.6px-64px-32px)]">
+        <div className=" w-full flex flex-col gap-3 items-center justify-start h-[calc(100vh-65.6px-64px-32px)]">
           {active === "maqam" && <LocationMaqam />}
           {active === "division" && <LocationDivision />}
           {active === "ilaqa" && <LocationIlaqa />}

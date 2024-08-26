@@ -545,7 +545,7 @@ export const LocationDivision = () => {
                             name: division?.name || "",
                           });
                         }}
-                        className="text-green-500"
+                        className="text-green"
                       >
                         Edit
                       </button>
@@ -612,7 +612,7 @@ export const LocationDivision = () => {
                             name: tehsil?.name || "",
                           });
                         }}
-                        className="text-green-500"
+                        className="text-green"
                       >
                         Edit
                       </button>
@@ -677,7 +677,7 @@ export const LocationDivision = () => {
                             name: district?.name || "",
                           });
                         }}
-                        className="text-green-500"
+                        className="text-green"
                       >
                         Edit
                       </button>
@@ -750,7 +750,7 @@ export const LocationDivision = () => {
                             unitType: halqa?.unitType || "",
                           });
                         }}
-                        className="text-green-500"
+                        className="text-green"
                       >
                         Edit
                       </button>
@@ -883,7 +883,7 @@ export const LocationDivision = () => {
           </div>
           <div className="modal-action">
             {editMode ? (
-              <button className="text-green-500" onClick={handleSubmitEdit}>
+              <button className="text-green" onClick={handleSubmitEdit}>
                 Update
               </button>
             ) : (
