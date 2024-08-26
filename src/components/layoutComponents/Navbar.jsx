@@ -72,7 +72,7 @@ export const Navbar = ({ title , setIsSideBarOpen ,isSideBarOpen }) => {
               <div
                 tabIndex={0}
                 role="button"
-                className="btn btn-ghost btn-circle"
+                className="px-4"
                 onClick={() => {
                   setShowNotifications(!showNotifications);
                   showRequests(false);
@@ -80,8 +80,8 @@ export const Navbar = ({ title , setIsSideBarOpen ,isSideBarOpen }) => {
                 }}
               >
                 <div className="indicator">
-                  <FaBell className="text-xl" />
-                  <span className="badge badge-sm absolute -top-2 -right-3 z-0">
+                  <FaBell className="text-xl text-secondaryText" />
+                  <span className="badge badge-sm absolute -top-2 -right-3 z-0 bg-primary text-white">
                     {notifications?.length || 0}
                   </span>
                 </div>
@@ -95,7 +95,7 @@ export const Navbar = ({ title , setIsSideBarOpen ,isSideBarOpen }) => {
                 <div
                   tabIndex={0}
                   role="button"
-                  className="p-2 border rounded-full bg-primary btn-primary hover:bg-white"
+                  className="px-4"
                   onClick={() => {
                     setShowNotifications(false);
                     showRequests(!requests);
@@ -103,8 +103,8 @@ export const Navbar = ({ title , setIsSideBarOpen ,isSideBarOpen }) => {
                   }}
                 >
                   <div className="indicator">
-                    <FaUserPlus className="text-xl" />
-                    <span className="badge badge-sm absolute -top-2 -right-3 z-0">
+                    <FaUserPlus className="text-xl text-secondaryText" />
+                    <span className="badge badge-sm absolute -top-2 -right-3 z-0 bg-primary text-white">
                       {userRequests.length}
                     </span>
                   </div>

@@ -94,7 +94,7 @@ export const EditProfile = () => {
     setSelectedSubject(me?.subject);
   }, [me]);
   return (
-    <GeneralLayout>
+    <GeneralLayout active={'profile'}>
       <div className="flex flex-col justify-start h-[calc(100vh-64px-64px)] overflow-hidden overflow-y-scroll">
         <div className="w-full flex   justify-between  items-center p-4">
           <div className="w-full  flex flex-col">

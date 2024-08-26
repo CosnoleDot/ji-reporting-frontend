@@ -341,7 +341,7 @@ export const Dashboard = () => {
   return (
     <GeneralLayout title={"Dashboard"} active={"dashboard"}>
       {
-        <div className="relative  flex flex-col gap-3 items-center p-5 justify-start overflow-hidden overflow-y-scroll">
+        <div className="  flex flex-col gap-3 items-center p-5 justify-start overflow-y-scroll">
           <div className="flex w-full py-4 mb-4 border-b border-inputBorder">
             <div className="">
               <h1 class="font-inter text-heading text-[18px] font-medium leading-[28px] text-left">

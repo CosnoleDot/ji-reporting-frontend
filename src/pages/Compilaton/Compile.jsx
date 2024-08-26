@@ -224,27 +224,34 @@ export const Compile = () => {
       } else if (type === "Maqam") {
         return `- ${area?.parentId?.name}(Maqam)`;
       }
-    } else if (areaType==="ilaqa") {
+    } else if (areaType === "ilaqa") {
       let maqam = maqams.find((i) => area?.parentId?.maqam === i?._id);
-        return `- ${area?.maqam?.name}(Maqam) - ${area?.maqam?.province?.name}(Province)`;
-    }
-    else if (areaType==="division") {
+      return `- ${area?.maqam?.name}(Maqam) - ${area?.maqam?.province?.name}(Province)`;
+    } else if (areaType === "division") {
       return `- ${area?.province?.name}(Province)`;
-    }
-    else if (areaType==="maqam") {
+    } else if (areaType === "maqam") {
       return `- ${area?.province?.name}(Province)`;
-    }
-    else{
-      return 'Pakistan'
+    } else {
+      return "Pakistan";
     }
   };
   return (
-    <GeneralLayout title={me?.userAreaId?.name.toUpperCase()}>
+    <GeneralLayout
+      title={me?.userAreaId?.name.toUpperCase()}
+      active={"compilation"}
+    >
       <div className="relative flex flex-col gap-3 items-start p-5 justify-start h-[calc(100vh-65.6px-64px)]">
-        <h3 className="w-full font-bold text-left text-xl hidden lg:block xl:block">
-          Reports Compilation
-        </h3>
-        <div className="flex items-center my-4">
+        <div className="flex w-full py-4 mb-4 border-b border-inputBorder">
+          <div className="">
+            <h1 class="font-inter text-heading text-[18px] font-medium leading-[28px] text-left">
+              Reports Compilation
+            </h1>
+            <p class="font-inter text-[14px] font-normal leading-[20px] text-left text-secondaryText">
+              Get a sneak peek into your data
+            </p>
+          </div>
+        </div>
+        <div className="flex items-center gap-4 py-2">
           <input
             id="self-checkbox"
             type="checkbox"
@@ -254,7 +261,7 @@ export const Compile = () => {
           />
           <label
             htmlFor="self-checkbox"
-            className="ms-2 text-md font-medium text-gray-900 dark:text-gray-300"
+            className="font-inter text-[16px] font-semibold leading-[14.52px] text-left text-primary"
           >
             {`Compile ${me?.userAreaId?.name}`}
           </label>
@@ -266,45 +273,100 @@ export const Compile = () => {
             localStorage.getItem("@type") !== "division" && (
               <>
                 <div className="flex flex-col gap-2 w-full">
-                  <label htmlFor="select">Select Area Type:</label>
+                  <label
+                    htmlFor="select"
+                    className="text-heading font-inter text-[14px] leading-5"
+                  >
+                    Select Area Type:
+                  </label>
                   <select
                     defaultValue={"selected"}
                     value={areaType}
                     // Ensure the first option is selected initially
                     onChange={(e) => setAreaType(e.target.value)}
-                    className="select select-bordered w-full"
+                    className="w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
                   >
-                    <option value={"selected"}>Select Area</option>
+                    <option
+                      value={"selected"}
+                      className="text-[16px] hover:bg-primary"
+                    >
+                      Select Area
+                    </option>
 
                     {["country"].includes(localStorage.getItem("@type")) && (
-                      <option value="province">Province</option>
+                      <option
+                        value="province"
+                        className="text-[16px] hover:bg-primary"
+                      >
+                        Province
+                      </option>
                     )}
                     {["country", "province"].includes(
                       localStorage.getItem("@type")
-                    ) && <option value="maqam">Maqam</option>}
+                    ) && (
+                      <option
+                        value="maqam"
+                        className="text-[16px] hover:bg-primary"
+                      >
+                        Maqam
+                      </option>
+                    )}
                     {["country", "province"].includes(
                       localStorage.getItem("@type")
-                    ) && <option value="division">Division</option>}
+                    ) && (
+                      <option
+                        value="division"
+                        className="text-[16px] hover:bg-primary"
+                      >
+                        Division
+                      </option>
+                    )}
                     {["country", "province"].includes(
                       localStorage.getItem("@type")
-                    ) && <option value="ilaqa">Ilaqa</option>}
+                    ) && (
+                      <option
+                        value="ilaqa"
+                        className="text-[16px] hover:bg-primary"
+                      >
+                        Ilaqa
+                      </option>
+                    )}
                     {localStorage.getItem("@type") === "maqam" && isMun && (
-                      <option value="ilaqa">Ilaqa</option>
+                      <option
+                        value="ilaqa"
+                        className="text-[16px] hover:bg-primary"
+                      >
+                        Ilaqa
+                      </option>
                     )}
-                    <option value="halqa">Halqa</option>
+                    <option
+                      value="halqa"
+                      className="text-[16px] hover:bg-primary"
+                    >
+                      Halqa
+                    </option>
                   </select>
                 </div>
 
                 {areaType && areaType !== "selected" && (
                   <div className="flex flex-col gap-2 w-full">
-                    <label htmlFor="select">Select Area:</label>
+                    <label
+                      htmlFor="select"
+                      className="text-heading font-inter text-[14px] leading-5"
+                    >
+                      Select Area:
+                    </label>
                     <select
                       onChange={(e) => setAreaId(e.target.value)}
-                      className="select select-bordered w-full"
+                      className="w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
                     >
                       <option value={"selected"}>Select Area</option>
                       {areas?.map((i) => (
-                        <option key={i?._id} value={i?._id}>
+                        <option
+                          key={i?._id}
+                          value={i?._id}
+                          className="text-[16px]"
+                        >
                           {`${i?.name} - ${getDivName(i, i?.parentType)}`}
                         </option>
                       ))}
@@ -337,7 +399,7 @@ export const Compile = () => {
         </div>
         <div className="flex flex-col justify-between w-full gap-4 mt-4">
           <div className="flex items-center w-full justify-evenly gap-4">
-            <div className="flex items-center">
+            <div className="flex items-center gap-4">
               <input
                 id="month-checkbox"
                 type="checkbox"
@@ -347,22 +409,22 @@ export const Compile = () => {
               />
               <label
                 htmlFor="month-checkbox"
-                className="ms-2 text-md xs:text-sm font-medium text-gray-900 dark:text-gray-300"
+                className="font-inter text-[16px] font-semibold leading-[14.52px] text-left text-primary"
               >
                 By month
               </label>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center gap-4">
               <input
                 id="year-checkbox"
                 type="checkbox"
                 checked={checked === "year-checkbox"}
                 onChange={handleCheckboxChange}
-                className="w-6 h-6 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+                className="w-6 h-6 md:w-4 md:h-4 sm:w-4 sm:h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
               />
               <label
                 htmlFor="year-checkbox"
-                className="ms-2 text-md font-medium text-gray-900 dark:text-gray-300"
+                className="font-inter text-[16px] font-semibold leading-[14.52px] text-left text-primary"
               >
                 By year
               </label>
@@ -371,21 +433,21 @@ export const Compile = () => {
           {checked === "month-checkbox" && (
             <div className="flex flex-col lg:flex-row justify-center gap-4 lg:gap-12 ">
               <div className="flex flex-row gap-4 items-center">
-                <label>Start Date:</label>
+                <label className="font-inter text-[12px] font-semibold leading-[14.52px] text-left text-primary">Start Date:</label>
                 <select
-                  className="select select-bordered p-2"
+                  className="select select-bordered select-sm"
                   onChange={(e) => setStartMonth(e.target.value)}
                   value={startMonth}
                 >
-                  <option value="">Month</option>
+                  <option value="" className="hover:bg-primary">Month</option>
                   {months.map((month, index) => (
-                    <option value={month.value} key={index}>
+                    <option value={month.value} key={index} className="hover:bg-primary">
                       {month.title}
                     </option>
                   ))}
                 </select>
                 <select
-                  className="select select-bordered "
+                  className="select select-bordered select-sm"
                   onChange={(e) => setStartYear(e.target.value)}
                   value={startYear}
                 >
@@ -400,9 +462,9 @@ export const Compile = () => {
                 </select>
               </div>
               <div className="flex flex-row gap-4 items-center">
-                <label>End Date:</label>
+                <label className="font-inter text-[12px] font-semibold leading-[14.52px] text-left text-primary">End Date:</label>
                 <select
-                  className="select select-bordered p-2"
+                  className="select select-bordered select-sm"
                   onChange={(e) => {
                     setEndMonth(e.target.value);
                     setShowReport(false);
@@ -417,7 +479,7 @@ export const Compile = () => {
                   ))}
                 </select>
                 <select
-                  className="select select-bordered"
+                  className="select select-bordered select-sm"
                   onChange={(e) => setEndYear(e.target.value)}
                   value={endYear}
                 >
@@ -436,9 +498,11 @@ export const Compile = () => {
           {checked === "year-checkbox" && (
             <div className="flex flex-row items-center justify-center gap-4">
               <div className="flex flex-col md:flex-row gap-4 items-center">
-                <label>Start Year:</label>
+                <label className="font-inter text-[12px] font-semibold leading-[14.52px] text-left text-primary">
+                  Start Year:
+                </label>
                 <select
-                  className="select select-bordered"
+                  className="select select-bordered select-sm"
                   onChange={(e) => setStartYear(e.target.value)}
                   value={startYear}
                 >
@@ -453,9 +517,11 @@ export const Compile = () => {
                 </select>
               </div>
               <div className="flex flex-col md:flex-row gap-4 items-center">
-                <label>End Year:</label>
+                <label className="font-inter text-[12px] font-semibold leading-[14.52px] text-left text-primary">
+                  End Year:
+                </label>
                 <select
-                  className="select select-bordered"
+                  className="select select-bordered select-sm"
                   onChange={(e) => setEndYear(e.target.value)}
                   value={endYear}
                 >
