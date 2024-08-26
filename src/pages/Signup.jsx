@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import instance from "../api/instrance";
-import { DistrictContext, useToastState } from "../context";
+import { useToastState } from "../context";
 import { Loader } from "../components";
 import { Link, useNavigate } from "react-router-dom";
 import { UIContext } from "../context/ui";
@@ -129,6 +129,12 @@ export const Signup = () => {
         setAreas(data.data.data);
         setMaqams(data2.data.data);
         break;
+      case "Ilaqa":
+        setLoading(true);
+        data = await instance.get("/locations/ilaqa");
+        setLoading(false);
+        setAreas(data.data.data);
+        break;
       case "Markaz":
         setLoading(true);
         data = await instance.get("/locations/country");
@@ -187,7 +193,6 @@ export const Signup = () => {
           <h2 class="text-white font-inter text-2xl font-bold leading-7 text-left">
             Welcome to IJT Reporting
           </h2>
-         
         </div>
       </div>
       <div className="w-full p-6 m-auto">
@@ -804,14 +809,17 @@ export const Signup = () => {
             </div>
           </div>
           <div className="w-full p-4">
-          <Link
-            to="/"
-            className="text-[14px] py-4 leading-5 font-medium text-accentForeground font-inter underline"
-          >
-            Already have an account?
-          </Link></div>
+            <Link
+              to="/"
+              className="text-[14px] py-4 leading-5 font-medium text-accentForeground font-inter underline"
+            >
+              Already have an account?
+            </Link>
+          </div>
           <div className="w-full">
-            <button type="submit" className="text-[14px] leading-6 font-medium font-inter text-white bg-primary w-full py-2 border rounded"
+            <button
+              type="submit"
+              className="text-[14px] leading-6 font-medium font-inter text-white bg-primary w-full py-2 border rounded"
             >
               Sign Up
             </button>

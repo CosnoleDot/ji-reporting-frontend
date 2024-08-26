@@ -64,7 +64,7 @@ import { MaqamReport } from "./pages/MaqamReport";
 import { MarkazReportPrint } from "./pages/MarkazReportPrint";
 import { Page404 } from "./pages/PageNotFound/Page404";
 import { Compile } from "./pages/Compilaton/Compile";
-import { CompileReports, MaqamCompile, Markaz } from "./pages/Compilaton";
+import { CompileReports } from "./pages/Compilaton";
 import { HalqaCompileReport } from "./pages/Compilaton/HalqaCompileReport";
 import { IlaqaCompileReport } from "./pages/Compilaton/IlaqaCompileReport";
 import { DivisionCompileReport } from "./pages/Compilaton/DivisionCompileReport";
@@ -1144,7 +1144,7 @@ function App() {
                                             filterMuntakhib,
                                           }}
                                         >
-                                          <div className="flex flex-col">
+                                          <div className="w-full flex">
                                             <Routes>
                                               <Route
                                                 path="/signup"
@@ -1403,7 +1403,6 @@ function App() {
                                                 />
                                               }
                                             /> */}
-                                   
                                             </Routes>
                                             <LoadingScreen
                                               count={count}

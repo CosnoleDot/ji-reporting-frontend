@@ -177,7 +177,7 @@ export const LocationIlaqa = () => {
                           unitType: "",
                         });
                       }}
-                      className="text-green-500"
+                      className="text-green"
                     >
                       Edit
                     </button>

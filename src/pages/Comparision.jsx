@@ -31,8 +31,8 @@ const Dates = ({
   const [year, setYear] = useState(2024);
 
   return (
-    <div className="fixed top-0 left-0 z-1 w-full h-screen bg-white">
-      <div className="flex z-50 w-full p-3 items-center border-b justify-between">
+    <div className=" w-full h-screen bg-white">
+      <div className="flex  w-full p-3 items-center border-b justify-between">
         <h1 className="text-xl font-bold">Dates</h1>
         <div className="flex justify-end items-center gap-3">
           <button
@@ -841,31 +841,33 @@ export const Comparision = () => {
           </div>
         </div>
         <div className="divider mt-0"></div>
-        <div className="flex flex-col gap-3 w-full p-3 overflow-hidden overflow-x-scroll h-[80vh]">
-          {response ? (
-            response?.chart === "radial" ? (
-              <CircularChart res={response} type={selectedProperty} />
+        {!dates && (
+          <div className="flex flex-col gap-3 w-full p-3 overflow-hidden overflow-x-scroll h-[80vh]">
+            {response ? (
+              response?.chart === "radial" ? (
+                <CircularChart res={response} type={selectedProperty} />
+              ) : (
+                <ReportChart res={response} type={selectedProperty} />
+              )
             ) : (
-              <ReportChart res={response} type={selectedProperty} />
-            )
-          ) : (
-            <div className="flex justify-center items-center top-[50%] relative left-[0%]">
-              <p className="text-2xl text-[#7a7a7a]">No Reports Data</p>
-            </div>
-          )}
-        </div>
+              <div className="flex justify-center items-center top-[50%] relative left-[0%]">
+                <p className="text-2xl text-[#7a7a7a]">No Reports Data</p>
+              </div>
+            )}
+          </div>
+        )}
+        {dates && durationType !== "" && (
+          <Dates
+            durationMonths={durationMonths}
+            setDurationMonths={setDurationMonths}
+            durationType={durationType}
+            showDates={showDates}
+            durationYears={durationYears}
+            setDurationYears={setDurationYears}
+            getData={getData}
+          />
+        )}
       </div>
-      {dates && durationType !== "" && (
-        <Dates
-          durationMonths={durationMonths}
-          setDurationMonths={setDurationMonths}
-          durationType={durationType}
-          showDates={showDates}
-          durationYears={durationYears}
-          setDurationYears={setDurationYears}
-          getData={getData}
-        />
-      )}
 
       <dialog id="add_comparison_modal" className="modal">
         <div className="modal-box min-w-[90%] h-full flex flex-col justify-between">

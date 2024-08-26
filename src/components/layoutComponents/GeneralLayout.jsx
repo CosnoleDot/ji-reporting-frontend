@@ -13,14 +13,6 @@ export const GeneralLayout = ({ children, active, title }) => {
       navigate("/login");
     }
   }, [navigate]);
-
-  const sidebarClasses = useMemo(
-    () =>
-      `md:w-[16%] ${
-        isSideBarOpen ? "block w-[80%] z-50 absolute top-0 left-0" : "hidden"
-      } md:block`,
-    [isSideBarOpen]
-  );
   useEffect(() => {
     setIsSideBarOpen(false);
   }, []);
@@ -33,12 +25,16 @@ export const GeneralLayout = ({ children, active, title }) => {
           isSideBarOpen={isSideBarOpen}
         />
       </div>
-      <div className="flex w-full">
-        <div className={sidebarClasses}>
+      <div className={`flex w-full justify-between`}>
+        <div
+          className={`md:block ${
+            isSideBarOpen ? "absolute top-10 z-20 w-[70%]" : "hidden"
+          } w-full md:w-[20%]`}
+        >
           <BottomNav active={active} />
         </div>
         <div
-          className={`md:w-[80%] w-[100%] overflow-hidden mt-[50px] ${
+          className={`md:w-[80%] w-full overflow-hidden h-screen mt-[50px] ${
             isSideBarOpen && "opacity-50"
           }`}
         >

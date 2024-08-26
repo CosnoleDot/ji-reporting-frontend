@@ -56,7 +56,6 @@ export const LocationCountry = () => {
   const handleDisable = async (id) => {
     setLoading(true);
     try {
-   
       const req = await instance.patch(`/locations/province/${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("@token")}`,
@@ -107,9 +106,9 @@ export const LocationCountry = () => {
           </thead>
           <tbody>
             {data?.map((province, index) => (
-              <tr key={index}>
-                <td className="p-3 border-l font-bold">{province?.name}</td>
-                <td className="flex justify-end items-center gap-4 border-r">
+              <tr key={index} className="border border-t-0">
+                <td className="p-3  font-bold">{province?.name}</td>
+                <td className="flex justify-end items-center gap-4 ">
                   <button
                     disabled={loading}
                     onClick={() => {
@@ -121,7 +120,7 @@ export const LocationCountry = () => {
                         name: province?.name || "",
                       });
                     }}
-                    className="text-green-500"
+                    className="text-green"
                   >
                     Edit
                   </button>
