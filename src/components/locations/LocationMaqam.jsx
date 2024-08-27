@@ -649,7 +649,7 @@ export const LocationMaqam = () => {
             className="select select-sm max-w-xs bg-gray-200 rounded-full"
           >
             <option value="" disabled selected>
-              rows per page 10
+              Rows per page 10
             </option>
           </select>
 
@@ -661,23 +661,22 @@ export const LocationMaqam = () => {
           >
             <IoIosArrowBack className="text-[1.5rem] rounded-full bg-gray-200" />
           </button>
-
           {/* Page Numbers */}
           <div className="flex items-center">
             {totalPages > 1 && (
-              <span className="rounded-full  border border-gray-500 border-1 mx-1 bg-white w-7 h-7 flex justify-center items-center">
+              <span className="rounded-full text-[12px] p-2 font-bold border-gray-500 border-2 mx-1 bg-white w-7 h-7 flex justify-center items-center">
                 1
               </span>
             )}
             {totalPages > 2 && (
-              <button className="rounded-full  border border-gray-500 border-1 mx-1 bg-white w-7 h-7 flex justify-center items-center">
+              <button className="rounded-full text-[12px] p-2 font-bold border-gray-500 border-2 mx-1 bg-white w-7 h-7 flex justify-center items-center">
                 2
               </button>
             )}
             {totalPages > 3 && <span>...</span>}
 
             {totalPages && (
-              <span className="rounded-full  border border-gray-500 border-1 mx-1 bg-white w-7 h-7 flex justify-center items-center">
+              <span className="rounded-full text-[12px] p-2 font-bold border-gray-500 border-2 mx-1 bg-white w-7 h-7 flex justify-center items-center">
                 {totalPages}
               </span>
             )}

@@ -34,7 +34,7 @@ export const GeneralLayout = ({ children, active, title }) => {
           <BottomNav active={active} />
         </div>
         <div
-          className={`md:w-[80%] w-full overflow-x-hidden overflow-y-scroll h-screen md:h-[calc(100vh - 65px)]  ${
+          className={`md:w-[80%] w-full overflow-x-hidden overflow-y-scroll h-screen md:h-[calc(100vh - 65px)] md:mt-0 mt-8  ${
             isSideBarOpen && "opacity-50"
           }`}
         >

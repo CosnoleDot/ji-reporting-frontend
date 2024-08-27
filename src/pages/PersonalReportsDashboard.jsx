@@ -142,8 +142,8 @@ export const PersonalReportsDashboard = () => {
             {nazim
               ?.filter((n) => n?.nazimType && n?.nazimType !== "nazim")
               .map((nazim) => (
-                <option key={nazim._id} value={nazim._id}>
-                  {nazim.name} Of {nazim.userAreaId.name}
+                <option key={nazim?._id} value={nazim?._id}>
+                  {nazim?.name} Of {nazim?.userAreaId?.name}
                 </option>
               ))}
           </select>

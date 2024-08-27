@@ -105,7 +105,7 @@ export const BottomNav = ({ active }) => {
             <Link
               to={isCompleted ? "/reports" : "/profile"}
               className={
-                !active || active === "reports" || active === "compilation"
+                !active || active === "reports" || active === "compilation" || active ==="personalReports"
                   ? "bg-primary text-white p-2 rounded w-full"
                   : "bg-blue-50 p-2 rounded text-heading w-full"
               }
