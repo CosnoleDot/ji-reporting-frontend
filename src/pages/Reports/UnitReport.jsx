@@ -300,17 +300,21 @@ export const UnitReport = () => {
           )}
           <div className="flex justify-between mt-4">
             <button
-              className="btn"
+              className={`font-inter text-[14px] ${
+                currentPage === 1 ? "bg-slate-500" : "bg-primary"
+              }  flex justify-center text-white p-2 rounded font-medium leading-[20px] text-left cursor-pointer`}
               onClick={handlePrevPage}
               disabled={currentPage === 1}
             >
               Previous
             </button>
-            <span>
+            <span className="cursor-pointer text-primary font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left">
               Page {currentPage} of {totalPages}
             </span>
             <button
-              className="btn"
+              className={`font-inter text-[14px] ${
+                currentPage === totalPages ? "bg-slate-500" : "bg-primary"
+              }  flex justify-center text-white p-2 rounded font-medium leading-[20px] text-left cursor-pointer`}
               onClick={handleNextPage}
               disabled={currentPage === totalPages}
             >

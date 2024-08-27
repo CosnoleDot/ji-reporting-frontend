@@ -187,7 +187,10 @@ export const ProvinceReports = () => {
                     ))}
                 </select>
               </div>
-              <button className="font-inter px-2 text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left" onClick={searchResults}>
+              <button
+                className="font-inter px-2 text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left"
+                onClick={searchResults}
+              >
                 Search
               </button>
             </div>
@@ -197,7 +200,9 @@ export const ProvinceReports = () => {
         <div className="indicator flex justify-between items-center w-full">
           {/* <span className='indicator-item badge badge-secondary'>new</span> */}
           <button
-            className={`font-inter px-2 text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left ${!isMobileView ? "join-item" : ""}`}
+            className={`font-inter px-2 text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left ${
+              !isMobileView ? "join-item" : ""
+            }`}
             onClick={() => (!isMobileView ? searchResults() : toggleSearch())}
           >
             Search
@@ -208,13 +213,17 @@ export const ProvinceReports = () => {
                 document.getElementById("filter-area-dialog").showModal();
                 setIsSearch(false);
               }}
-              className={`font-inter px-2 text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left ${!isMobileView ? "join-item" : "ms-3"}`}
+              className={`font-inter px-2 text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left ${
+                !isMobileView ? "join-item" : "ms-3"
+              }`}
             >
               filter
             </button>
           )}
           <button
-            className={`font-inter px-2 text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left ${!isMobileView ? "join-item" : "ms-3"}`}
+            className={`font-inter px-2 text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left ${
+              !isMobileView ? "join-item" : "ms-3"
+            }`}
             onClick={clearFilters}
           >
             Clear
@@ -222,74 +231,99 @@ export const ProvinceReports = () => {
         </div>
       </div>
       {!isSearch ? (
-  <>
-    {currentData?.length > 0 ? (
-      <table className="table mb-7 w-full">
-        {/* Head */}
-        <thead>
-          <tr>
-            <th className="text-left">Report</th>
-            <th className="text-left">Last modified</th>
-            <th className="text-left">Month</th>
-            <th className="md:block hidden"></th>
-            <th className="md:block hidden"></th>
-            <th className="text-left">Action</th>
-          </tr>
-        </thead>
-        {/* Body */}
-        <tbody>
-          {currentData.map((p, index) => (
-            <tr key={index}>
-              <td>
-                <span className="font-medium md:text-sm text-xs leading-[16.94px] text-left font-inter text-heading">{p?.provinceAreaId?.name}</span>
-              </td>
-              <td>
-                <span className="font-medium md:text-sm text-xs leading-[16.94px] text-left font-inter text-heading">{moment(p?.updatedAt).fromNow()}</span>
-              </td>
-              <td>
-                <span className="font-medium md:text-sm text-xs leading-[16.94px] text-left font-inter text-heading">{moment(p?.month).format("MMMM YYYY")}</span>
-              </td>
-              <td className="md:block hidden"></td>
-              <td className="md:block hidden"></td>
-              <td>
-                <div className="flex items-center gap-2">
-                  <span onClick={() => navigate(`/reports/view/${p._id}`)} className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left">View</span>
-                  {me?.userAreaType === "Province" && (
-                    <span onClick={() => navigate(`/reports/edit/${p._id}`)} className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left text-green">Edit</span>
-                  )}
-                  <span onClick={() => handlePrint(p?._id)} className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left text-blue">Print</span>
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    ) : (
-      <NoReports />
-    )}
-    <div className="flex justify-between mt-4">
-      <button
-        className="btn"
-        onClick={handlePrevPage}
-        disabled={currentPage === 1}
-      >
-        Previous
-      </button>
-      <span>
-        Page {currentPage} of {totalPages}
-      </span>
-      <button
-        className="btn"
-        onClick={handleNextPage}
-        disabled={currentPage === totalPages}
-      >
-        Next
-      </button>
-    </div>
-  </>
-) : (
-  <SearchPage data={searchData?.data} area={"province"} />
-)}
+        <>
+          {currentData?.length > 0 ? (
+            <table className="table mb-7 w-full">
+              {/* Head */}
+              <thead>
+                <tr>
+                  <th className="text-left">Report</th>
+                  <th className="text-left">Last modified</th>
+                  <th className="text-left">Month</th>
+                  <th className="md:block hidden"></th>
+                  <th className="md:block hidden"></th>
+                  <th className="text-left">Action</th>
+                </tr>
+              </thead>
+              {/* Body */}
+              <tbody>
+                {currentData.map((p, index) => (
+                  <tr key={index}>
+                    <td>
+                      <span className="font-medium md:text-sm text-xs leading-[16.94px] text-left font-inter text-heading">
+                        {p?.provinceAreaId?.name}
+                      </span>
+                    </td>
+                    <td>
+                      <span className="font-medium md:text-sm text-xs leading-[16.94px] text-left font-inter text-heading">
+                        {moment(p?.updatedAt).fromNow()}
+                      </span>
+                    </td>
+                    <td>
+                      <span className="font-medium md:text-sm text-xs leading-[16.94px] text-left font-inter text-heading">
+                        {moment(p?.month).format("MMMM YYYY")}
+                      </span>
+                    </td>
+                    <td className="md:block hidden"></td>
+                    <td className="md:block hidden"></td>
+                    <td>
+                      <div className="flex items-center gap-2">
+                        <span
+                          onClick={() => navigate(`/reports/view/${p._id}`)}
+                          className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left"
+                        >
+                          View
+                        </span>
+                        {me?.userAreaType === "Province" && (
+                          <span
+                            onClick={() => navigate(`/reports/edit/${p._id}`)}
+                            className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left text-green"
+                          >
+                            Edit
+                          </span>
+                        )}
+                        <span
+                          onClick={() => handlePrint(p?._id)}
+                          className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left text-blue"
+                        >
+                          Print
+                        </span>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <NoReports />
+          )}
+          <div className="flex justify-between mt-4">
+            <button
+              className={`font-inter text-[14px] ${
+                currentPage === 1 ? "bg-slate-500" : "bg-primary"
+              }  flex justify-center text-white p-2 rounded font-medium leading-[20px] text-left cursor-pointer`}
+              onClick={handlePrevPage}
+              disabled={currentPage === 1}
+            >
+              Previous
+            </button>
+            <span className="cursor-pointer text-primary font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left">
+              Page {currentPage} of {totalPages}
+            </span>
+            <button
+              className={`font-inter text-[14px] ${
+                currentPage === totalPages ? "bg-slate-500" : "bg-primary"
+              }  flex justify-center text-white p-2 rounded font-medium leading-[20px] text-left cursor-pointer`}
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </button>
+          </div>
+        </>
+      ) : (
+        <SearchPage data={searchData?.data} area={"province"} />
+      )}
 
       <dialog id="filter-area-dialog" className="modal">
         <FilterDialog

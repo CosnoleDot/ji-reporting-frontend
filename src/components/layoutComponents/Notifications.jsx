@@ -7,9 +7,11 @@ import { FaBell } from "react-icons/fa6";
 import moment from "moment";
 import { months } from "../../pages/Reports";
 import { UIContext } from "../../context/ui";
+import { Link } from "react-router-dom";
 
 export const Notifications = ({ userRequests, type }) => {
   const { loading, setLoading } = useContext(UIContext);
+  const [activeNoti, setActiveNoti] = useState("all");
   const { dispatch } = useToastState();
   const { getNazim } = useContext(UIContext);
   const { getAllRequests, getAllNotifications } = useContext(UIContext);
@@ -53,13 +55,39 @@ export const Notifications = ({ userRequests, type }) => {
     }
     setLoading(false);
   };
+  console.log(userRequests, "aaa");
   return (
-    <div className="card-body max-h-[320px] overflow-y-scroll">
+    <div className="overflow-y-scroll">
+      <div className="flex w-full gap-8 items-center justify-between">
+        <Link
+          to="#"
+          className={`text-[16px] w-full p-2 rounded font-medium leading-[20px] text-center ${
+            activeNoti === "all"
+              ? "text-heading border-b border-primary"
+              : "text-secondaryText"
+          }`}
+          onClick={() => setActiveNoti("all")}
+        >
+          All
+        </Link>
+        <Link
+          to="#"
+          className={`text-[16px] w-full p-2 rounded font-medium leading-[20px] text-center ${
+            activeNoti === "unread"
+              ? "text-heading border-b border-primary"
+              : "text-secondaryText"
+          }`}
+          onClick={() => setActiveNoti("unread")}
+        >
+          Unread
+        </Link>
+      </div>
       {type === "request" ? (
         <>
           {userRequests?.length < 1 && (
             <h1 className="p-2">No requests found!</h1>
           )}
+
           {loading ? (
             <Loader />
           ) : (
@@ -114,33 +142,62 @@ export const Notifications = ({ userRequests, type }) => {
           {loading ? (
             <Loader />
           ) : (
+            activeNoti == "all" ?
             userRequests?.map((req, index) => (
-              <div
-                key={index}
-                className="p-3 hover:bg-slate-300 flex flex-col lg:flex-row lg:items-center justify-between"
-              >
-                <div className="flex items-center justify-start">
-                  <div className="avatar">
-                    <div className="w-8 flex items-center justify-center rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                      <FaBell className="w-8 h-8" />
+              <div key={index} className="  flex flex-col">
+                <div className="flex hover:bg-slate-300 items-center justify-between p-4 mb-2">
+                  <div className="flex items-center justify-between">
+                    <div className="avatar">
+                      <div className="w-8 flex items-center justify-center rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                        <FaBell className="w-8 h-8" />
+                      </div>
+                    </div>
+                    <div className="flex flex-col px-3">
+                      <span className="font-semibold">{req?.content}</span>
+                      <span>
+                        {months[moment(req?.createdAt).month()].title},
+                        {moment(req?.createdAt).year()}
+                      </span>
                     </div>
                   </div>
-                  <div className="flex flex-col px-3">
-                    <span className="font-semibold">{req?.content}</span>
-                    <span>
-                      {months[moment(req?.createdAt).month()].title},
-                      {moment(req?.createdAt).year()}
-                    </span>
+                  <div className="flex items-end justify-end lg:justify-end gap-3 py-2">
+                    <button
+                      disabled={loading}
+                      onClick={() => markRead(req?._id)}
+                      className="p-2 bg-slate-200 rounded-lg"
+                    >
+                      <FaCheck />
+                    </button>
                   </div>
                 </div>
-                <div className="flex items-end justify-end lg:justify-end gap-3 py-2">
-                  <button
-                    disabled={loading}
-                    onClick={() => markRead(req?._id)}
-                    className="p-2 bg-slate-200 rounded-lg"
-                  >
-                    <FaCheck />
-                  </button>
+              </div>
+            )) :
+            userRequests?.filter((i)=> i?.isRead === false)?.map((req, index) => (
+              <div key={index} className="  flex flex-col">
+                <div className="flex hover:bg-slate-300 items-center justify-between p-4 mb-2">
+                  <div className="flex items-center justify-between">
+                    <div className="avatar">
+                      <div className="w-8 flex items-center justify-center rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                        <FaBell className="w-8 h-8" />
+                      </div>
+                    </div>
+                    <div className="flex flex-col px-3">
+                      <span className="font-semibold">{req?.content}</span>
+                      <span>
+                        {months[moment(req?.createdAt).month()].title},
+                        {moment(req?.createdAt).year()}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex items-end justify-end lg:justify-end gap-3 py-2">
+                    <button
+                      disabled={loading}
+                      onClick={() => markRead(req?._id)}
+                      className="p-2 bg-slate-200 rounded-lg"
+                    >
+                      <FaCheck />
+                    </button>
+                  </div>
                 </div>
               </div>
             ))

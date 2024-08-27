@@ -197,7 +197,10 @@ export const IlaqaReports = () => {
                     ))}
                 </select>
               </div>
-              <button className="font-inter px-2 text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left" onClick={searchResults}>
+              <button
+                className="font-inter px-2 text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left"
+                onClick={searchResults}
+              >
                 Search
               </button>
             </div>
@@ -207,7 +210,9 @@ export const IlaqaReports = () => {
         <div className="indicator flex justify-between items-center w-full">
           {/* <span className='indicator-item badge badge-secondary'>new</span> */}
           <button
-            className={`font-inter px-2 text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left ${!isMobileView ? "join-item" : ""}`}
+            className={`font-inter px-2 text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left ${
+              !isMobileView ? "join-item" : ""
+            }`}
             onClick={() => (!isMobileView ? searchResults() : toggleSearch())}
           >
             Search
@@ -218,13 +223,17 @@ export const IlaqaReports = () => {
                 document.getElementById("filter-area-dialog").showModal();
                 setIsSearch(false);
               }}
-              className={`font-inter px-2 text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left ${!isMobileView ? "join-item" : "ms-3"}`}
+              className={`font-inter px-2 text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left ${
+                !isMobileView ? "join-item" : "ms-3"
+              }`}
             >
               filter
             </button>
           )}
           <button
-            className={`font-inter px-2 text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left ${!isMobileView ? "join-item" : "ms-3"}`}
+            className={`font-inter px-2 text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left ${
+              !isMobileView ? "join-item" : "ms-3"
+            }`}
             onClick={clearFilters}
           >
             Clear
@@ -301,17 +310,21 @@ export const IlaqaReports = () => {
           {!isFilter && (
             <div className="flex justify-between mt-4">
               <button
-                className="btn"
+                className={`font-inter text-[14px] ${
+                  currentPage === 1 ? "bg-slate-500" : "bg-primary"
+                }  flex justify-center text-white p-2 rounded font-medium leading-[20px] text-left cursor-pointer`}
                 onClick={handlePrevPage}
                 disabled={currentPage === 1}
               >
                 Previous
               </button>
-              <span>
+              <span className="cursor-pointer text-primary font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left">
                 Page {currentPage} of {totalPages}
               </span>
               <button
-                className="btn"
+                className={`font-inter text-[14px] ${
+                  currentPage === totalPages ? "bg-slate-500" : "bg-primary"
+                }  flex justify-center text-white p-2 rounded font-medium leading-[20px] text-left cursor-pointer`}
                 onClick={handleNextPage}
                 disabled={currentPage === totalPages}
               >

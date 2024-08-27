@@ -115,7 +115,7 @@ export const FilterDialog = ({ setFilterAllData, tab ,setIsFilter}) => {
       <form method="dialog" className="mb-3">
         <button
           id="filter-area-dialog-close-btn"
-          className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+          className=" btn-sm btn-circle btn-ghost text-white bg-primary absolute right-2 top-2"
           onClick={() => {
             setUserAreaType("");
             if (
@@ -133,17 +133,17 @@ export const FilterDialog = ({ setFilterAllData, tab ,setIsFilter}) => {
         </button>
       </form>
       <div className="relative">
-        <span className="px-1 py-1 block font-semibold w-[50%]">
+        <span class="font-inter text-heading text-[16px] font-medium leading-[28px] text-left">
           Select Area:
         </span>
 
-        <div className="flex items-center gap-3 justify-start border border-primary p-2 rounded-lg mb-3">
+        <div className="flex items-center mt-2 gap-3 justify-start border border-inputBorder p-2 rounded-lg mb-3">
           <div className="form-control">
             <label className="label cursor-pointer gap-2">
               <input
                 type="radio"
                 name="userAreaType"
-                className="radio checked:bg-blue-500"
+                className="radio checked:bg-primary"
                 value={active}
                 checked={userAreaType === active}
                 onChange={(e) => setUserAreaType(e.target.value)}
@@ -158,7 +158,7 @@ export const FilterDialog = ({ setFilterAllData, tab ,setIsFilter}) => {
           id="autocomplete"
           autoComplete="off"
           type="search"
-          className="input input-bordered input-primary w-full"
+          className="w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
           placeholder={`Select ${userAreaType}`}
           onChange={(e) => setSearchArea(e.target.value)}
           onClick={() => {
@@ -235,13 +235,13 @@ export const FilterDialog = ({ setFilterAllData, tab ,setIsFilter}) => {
         <input
           type="month"
           name="month"
-          className="w-full mt-5 mb-5 input input-bordered input-primary"
+          className="w-full mt-5 mb-5  text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
           value={selectedMonth}
           onChange={(e) => setSelectedMonth(e.target.value)}
         />
-        <div className="w-full flex justify-end items-end">
+        <div className="w-full flex justify-center items-end">
           <button
-            className="btn"
+            className="font-inter w-full text-[14px] bg-primary flex justify-center text-white p-2 rounded font-medium leading-[20px] text-left"
             onClick={() => {
               document.getElementById("filter-area-dialog-close-btn").click();
               getFilterData();
@@ -249,7 +249,7 @@ export const FilterDialog = ({ setFilterAllData, tab ,setIsFilter}) => {
               setIsFilter(true)
             }}
           >
-            ok
+           Filter
           </button>
         </div>
       </div>
