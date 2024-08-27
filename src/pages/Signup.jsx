@@ -141,6 +141,12 @@ export const Signup = () => {
         setLoading(false);
         setAreas(data.data.data);
         break;
+        case "Ilaqa":
+        setLoading(true);
+        data = await instance.get("/locations/ilaqa");
+        setLoading(false);
+        setAreas(data.data.data);
+        break;
       default:
         break;
     }

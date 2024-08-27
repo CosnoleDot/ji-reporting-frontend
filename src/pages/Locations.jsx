@@ -86,7 +86,7 @@ export const Locations = () => {
             )}
           </div>
         </div>
-        <div className=" w-full flex flex-col gap-3 items-center justify-start h-[calc(100vh-65.6px-64px-32px)]">
+        <div className=" w-full flex flex-col gap-3 items-center justify-start h-[calc(100vh-65.6px-64px-82px)]">
           {active === "maqam" && <LocationMaqam />}
           {active === "division" && <LocationDivision />}
           {active === "ilaqa" && <LocationIlaqa />}

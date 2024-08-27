@@ -57,7 +57,7 @@ export const BottomNav = ({ active }) => {
         <div className="flex w-full items-center justify-center">
           <button
             onClick={() => navigate("/profile")}
-            className="w-full hover:bg-primary hover:text-white p-2 font-inter text-[14px] leading-5 font-medium rounded text-heading text-center border border-inputBorder"
+            className={`w-full hover:bg-primary ${active === 'profile' ? "bg-primary text-white":'' } hover:text-white p-2 font-inter text-[14px] leading-5 font-medium rounded text-heading text-center border border-inputBorder`}
           >
             Edit Profile
           </button>
@@ -105,7 +105,7 @@ export const BottomNav = ({ active }) => {
             <Link
               to={isCompleted ? "/reports" : "/profile"}
               className={
-                !active || active === "reports"
+                !active || active === "reports" || active === "compilation"
                   ? "bg-primary text-white p-2 rounded w-full"
                   : "bg-blue-50 p-2 rounded text-heading w-full"
               }
@@ -129,7 +129,7 @@ export const BottomNav = ({ active }) => {
                 to={isCompleted ? "/comparison" : "/profile"}
                 className={
                   !active || active === "comparison"
-                    ? "bg-primary text-white p-2 roundedw-full"
+                    ? "bg-primary text-white p-2 rounded w-full"
                     : "bg-blue-50 p-2 rounded text-heading w-full"
                 }
               >
