@@ -17,19 +17,19 @@ export const GeneralLayout = ({ children, active, title }) => {
     setIsSideBarOpen(false);
   }, []);
   return (
-    <>
-      <div className="fixed top-0 w-full z-10">
+    <div className="relative">
+      <div className="fixed top-0 w-full z-10 border-b border-inputBorder">
         <Navbar
           title={title}
           setIsSideBarOpen={setIsSideBarOpen}
           isSideBarOpen={isSideBarOpen}
         />
       </div>
-      <div className={`flex w-full justify-between`}>
+      <div className={`flex w-full justify-between h-[calc(100vh - 264px)] fixed left-0 md:top-[65px] top-6`}>
         <div
           className={`md:block ${
             isSideBarOpen ? "absolute top-10 z-20 w-[70%]" : "hidden"
-          } w-full md:w-[20%]`}
+          }  md:w-[20%]`}
         >
           <BottomNav active={active} />
         </div>
@@ -41,6 +41,6 @@ export const GeneralLayout = ({ children, active, title }) => {
           {children}
         </div>
       </div>
-    </>
+    </div>
   );
 };

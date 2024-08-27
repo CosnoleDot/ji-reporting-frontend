@@ -333,7 +333,7 @@ export const DeleteUser = () => {
   }, []);
   return (
     <GeneralLayout title={"Manage Users"} active={"user-switch"}>
-      <div className="px-5 relative flex flex-col items-center py-3 pt-0 justify-start h-[calc(100vh-65.6px-64px)] overflow-hidden overflow-y-auto">
+      <div className="px-5 relative flex flex-col items-center py-3 pt-0 justify-start h-screen md:h-[calc(100vh-63.6px)] overflow-hidden overflow-y-auto">
         <div className="w-full flex md:flex-row flex-col md:justify-between justify-start items-center py-4">
           <div className="mb-4 w-full md:w-[30%] flex flex-col">
             <h1 className="text-2xl font-bold text-start ">Manage Users</h1>
@@ -499,7 +499,7 @@ export const DeleteUser = () => {
             className="select select-sm max-w-xs bg-gray-200 rounded-full"
           >
             <option value="" disabled selected>
-              rows per page 10
+              Rows per page 10
             </option>
           </select>
 
