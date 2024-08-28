@@ -57,7 +57,7 @@ export const Locations = () => {
                   active === "maqam" ? "bg-white text-black" : ""
                 }`}
               >
-                مقام
+                Maqam
               </Link>
             )}
             {["country", "province", "division"].includes(
@@ -70,7 +70,7 @@ export const Locations = () => {
                   active === "division" ? "bg-white text-black" : ""
                 }`}
               >
-                ڈویژن
+                Division
               </Link>
             )}
             {["country"].includes(localStorage.getItem("@type")) && (
@@ -81,7 +81,7 @@ export const Locations = () => {
                   active === "country" ? "bg-white text-black" : ""
                 }`}
               >
-                صوبہ
+                Province
               </Link>
             )}
           </div>

@@ -9,6 +9,7 @@ import { MdCancel } from "react-icons/md";
 import { MeContext } from "../context";
 import { UIContext } from "../context/ui";
 // import { ProvinceContext } from "../context";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 export const PersonalReportsDashboard = () => {
   const [data, setData] = useState([]);
@@ -30,7 +31,7 @@ export const PersonalReportsDashboard = () => {
   let navigate = useNavigate();
   const getAllReports = async (inset, offset) => {
     setLoading(true);
-    
+
     let req;
     if (rukanId) {
       req = await instance.get(
@@ -85,9 +86,9 @@ export const PersonalReportsDashboard = () => {
   const handleClear = () => {
     setIsSearch(false);
     setRukanId(null);
-    getAllReports(0,10)
+    getAllReports(0, 10);
   };
- 
+
   const searchResults = async () => {
     setIsSearch(true);
     setToggle(false);
@@ -126,11 +127,14 @@ export const PersonalReportsDashboard = () => {
   };
   return (
     <GeneralLayout title={"Personal Dashboard"} active={"personalReports"}>
-      <div className="w-full flex flex-col justify-start items-center p-5">
-        <div className="w-full overflow-hidden overflow-x-scroll md:justify-center md:items-center flex gap-2 m-2">
+      <div className="w-full flex flex-col justify-start p-5">
+
+    
+
+        <div className="w-full overflow-hidden overflow-x-scroll md:justify-center md:items-center flex md:flex-row flex-col gap-4 md:gap-2 m-2">
           <select
             name="nazim"
-            className="select w-full border-gray-200 max-w-xs"
+            className="w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[14px] leading-6 font-inter"
             value={rukanId ? rukanId : "none"}
             onChange={(e) => {
               setRukanId(e.target.value);
@@ -147,131 +151,258 @@ export const PersonalReportsDashboard = () => {
                 </option>
               ))}
           </select>
-          {rukanId && (
-            <button className="btn" onClick={()=>getAllReports(0,10)}>
-              Get All
-            </button>
-          )}
-          <button className="btn" onClick={handleClear}>
-            Clear
-          </button>
-          <button className="btn" onClick={() => setToggle(true)}>
-            Search
-          </button>
-          {toggle && (
-            <div className="fixed p-3 z-40 rounded-lg top-[140px] left-[5px] w-[calc(100%-10px)] overflow-hidden bg-white min-h-[100px] border">
-              <div className="flex flex-col gap-3">
-                <div className="w-full flex flex-col">
-                  <select
-                    className="select select-bordered w-full rounded-none rounded-tl-lg rounded-tr-lg"
-                    onChange={(e) => setMonth(e.target.value)}
-                    value={month}
+
+          <div className="w-full flex gap-4">
+            {!toggle ? (
+              <>
+                {" "}
+                {rukanId && (
+                  <button
+                    className="font-inter w-full md:text-[14px] text-[10px] bg-primary flex justify-center text-white p-2 rounded font-medium leading-[20px] text-left"
+                    onClick={() => getAllReports(0, 10)}
                   >
-                    <option value={""}>Month</option>
-                    {months.map((month, index) => (
-                      <option value={month?.value} key={index}>
-                        {month.title}
-                      </option>
-                    ))}
-                  </select>
-                  <select
-                    className="select select-bordered w-full rounded-none rounded-bl-lg rounded-br-lg"
-                    value={year}
-                    onChange={(e) => setYear(e.target.value)}
-                  >
-                    <option value={""} disabled>
-                      Year
-                    </option>
-                    {Array(10)
-                      .fill(1)
-                      .map((_, index) => (
-                        <option key={index} value={2023 + index}>
-                          {2023 + index}
+                    Get All
+                  </button>
+                )}
+                <button
+                  className="font-inter w-full md:text-[14px] text-[10px] bg-primary flex justify-center text-white p-2 rounded font-medium leading-[20px] text-left"
+                  onClick={handleClear}
+                >
+                  Clear
+                </button>
+                <button
+                  className="font-inter w-full md:text-[14px] text-[10px] bg-primary flex justify-center text-white p-2 rounded font-medium leading-[20px] text-left"
+                  onClick={() => setToggle(true)}
+                >
+                  Search
+                </button>
+              </>
+            ) : (
+              <div className=" p-3 z-40 rounded-lg w-full overflow-hidden bg-white border border-inputBorder">
+                <div className="flex gap-3">
+                  <div className="w-full flex">
+                    <select
+                      className="select select-bordered select-sm w-full rounded-none rounded-tl-lg rounded-tr-lg"
+                      onChange={(e) => setMonth(e.target.value)}
+                      value={month}
+                    >
+                      <option value={""}>Month</option>
+                      {months.map((month, index) => (
+                        <option value={month?.value} key={index}>
+                          {month.title}
                         </option>
                       ))}
-                  </select>
-                </div>
-                <div className="w-full flex justify-center items-center gap-2">
-                  <button className="btn" onClick={searchResults}>
-                    Search
-                  </button>
-                  <button
-                    className="btn"
-                    onClick={() => {
-                      setMonth("");
-                      setYear("2023");
-                      setToggle(false);
-                    }}
-                  >
-                    <MdCancel />
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-          {me?.nazimType !== "nazim" && (
-            <button
-              className="btn btn-primary"
-              onClick={() => navigate("/personalReport/create")}
-            >
-              + New Report
-            </button>
-          )}
-        </div>
-        <div className="w-full overflow-hidden overflow-y-scroll h-[calc(100vh-64px-64px-54px-76px)] flex flex-col justify-start items-start">
-          {filteredData?.length > 0 ? (
-            filteredData?.map((obj, index) => (
-              <div
-                key={index}
-                className="card-body flex items-center max-h-[170px]  justify-between w-full p-5 mb-1 bg-blue-300 rounded-xl lg:flex-row md:flex-row sm:flex-col mt-5"
-              >
-                <div className="flex w-full flex-col items-start justify-center">
-                  <span className="text-lg font-semibold" key={index}>
-                    {`${obj?.userId?.name} from ${obj?.areaId?.name}  `}
-                    {moment(obj?.month).format("MMMM YYYY")}
-                  </span>
-                  <span>Last Modified: {moment(obj?.updatedAt).fromNow()}</span>
-                </div>
-                <div className="flex items-center w-full justify-end gap-3 ">
-                  <button className="btn" onClick={() => viewReport(obj?._id)}>
-                    <FaEye />
-                  </button>
-                  {me?._id === obj?.userId?._id && (
-                    <button
-                      className="btn"
-                      onClick={() => editReport(obj?._id)}
+                    </select>
+                    <select
+                      className="select select-bordered select-sm w-full rounded-none rounded-bl-lg rounded-br-lg"
+                      value={year}
+                      onChange={(e) => setYear(e.target.value)}
                     >
-                      <FaEdit />
+                      <option value={""} disabled>
+                        Year
+                      </option>
+                      {Array(10)
+                        .fill(1)
+                        .map((_, index) => (
+                          <option key={index} value={2023 + index}>
+                            {2023 + index}
+                          </option>
+                        ))}
+                    </select>
+                  </div>
+                  <div className="w-full flex justify-center items-center gap-2">
+                    <button
+                      className="font-inter w-full md:text-[14px] text-[10px] bg-primary flex justify-center text-white p-2 rounded font-medium leading-[20px] text-left"
+                      onClick={searchResults}
+                    >
+                      Search
                     </button>
-                  )}
-                  <button className="btn" onClick={() => printReport(obj?._id)}>
-                    <FaPrint />
-                  </button>
+                    <button
+                      className="font-inter w-full md:text-[14px] text-[10px] bg-primary flex items-center justify-center text-white p-2 rounded font-medium leading-[20px] text-left"
+                      onClick={() => {
+                        setMonth("");
+                        setYear("2023");
+                        setToggle(false);
+                      }}
+                    >
+                      <MdCancel />
+                      Cancel
+                    </button>
+                  </div>
                 </div>
               </div>
-            ))
+            )}
+            {me?.nazimType !== "nazim" && !toggle && (
+              <button
+                className="font-inter w-full md:text-[14px] text-[10px] bg-primary flex justify-center text-white p-2 rounded font-medium leading-[20px] text-left"
+                onClick={() => navigate("/personalReport/create")}
+              >
+                + New Report
+              </button>
+            )}
+          </div>
+        </div>
+        <div className="w-full overflow-hidden h-[calc(100vh-64px-54px)] flex flex-col justify-start items-start">
+          {filteredData?.length > 0 ? (
+            <table className="table mb-7">
+              {/* head */}
+              <thead className="">
+                <tr className="w-full flex justify-between ">
+                  <th className="text-start">Area</th>
+                  <th className="text-start">Nazim</th>
+                  <th className="text-center">Last Modified</th>
+                  <th className="md:block hidden"></th>
+                  <th className="md:block hidden"></th>
+                  <th className="text-left mr-2">Action</th>
+                </tr>
+              </thead>
+              <tbody
+                className="w-full mb-3 h-[300px] overflow-auto overflow-y-scroll"
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                {filteredData.map((obj, index) => (
+                  <tr key={index} className={`w-full flex`}>
+                    <td className="w-full">
+                      <p
+                        className="font-inter text-[14px] font-medium leading-[16.94px] text-left"
+                        style={{
+                          textTransform: "capitalize",
+                          fontSize: "smaller",
+                        }}
+                      >
+                        {obj?.areaId?.name}
+                      </p>
+                    </td>
+                    <td className="w-full">
+                      <span
+                        style={{
+                          textTransform: "capitalize",
+                          fontSize: "smaller",
+                        }}
+                        className="text-center text-destructive font-medium text-[14px] leading-4"
+                      >
+                        {obj?.userId?.name}
+                      </span>
+                    </td>
+                    <td className="w-full text-[14px]">
+                      {moment(obj?.updatedAt).fromNow()}
+                    </td>
+                    <td className="w-[50%] md:block hidden"></td>
+                    <td className="w-[50%] md:block hidden"></td>
+                    <td className="w-full">
+                      <div className="flex items-center justify-end gap-2">
+                        <span
+                          className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left"
+                          onClick={() => viewReport(obj?._id)}
+                        >
+                          View
+                        </span>
+                        {me?._id === obj?.userId?._id && (
+                          <span
+                            className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left text-green"
+                            onClick={() => editReport(obj?._id)}
+                          >
+                            Edit
+                          </span>
+                        )}
+                        <span
+                          className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left text-blue"
+                          onClick={() => printReport(obj?._id)}
+                        >
+                          Print
+                        </span>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           ) : (
             <NoReports />
           )}
+
           {!isSearch && (
-            <div className="flex w-full justify-between mt-4">
+            <div className="flex w-full gap-4 px-4 justify-end items-center mt-4">
+              <select
+                readOnly
+                disabled
+                name="items_per_page"
+                id="items"
+                className="select select-sm max-w-xs bg-gray-200 rounded-full"
+              >
+                <option value="" disabled selected>
+                  rows per page 10
+                </option>
+              </select>
+
+              {/* Previous Button */}
               <button
-                className="btn"
-                onClick={handlePrevPage}
+                className="rounded-full border-none w-7 h-7"
                 disabled={currentPage === 1}
+                onClick={handlePrevPage}
               >
-                Previous
+                <IoIosArrowBack
+                  className={`text-[1.5rem] rounded-full bg-gray-200 ${
+                    currentPage === 1 && "text-gray-400"
+                  }`}
+                />
               </button>
-              <span>
-                Page {currentPage} of {totalPages}
-              </span>
+
+              {/* Page Numbers */}
+              <div className="flex items-center">
+                <span
+                  className={`rounded-full text-bold text-sm ${
+                    currentPage === 1 && "border-2 border-gray-500"
+                  } mx-1 bg-white w-7 h-7 flex justify-center items-center`}
+                >
+                  1
+                </span>
+
+                {totalPages > 1 && (
+                  <button
+                    className={`rounded-full text-bold text-sm ${
+                      currentPage === 2 && "border-2 border-gray-500"
+                    } mx-1 bg-white w-7 h-7 flex justify-center items-center`}
+                  >
+                    2
+                  </button>
+                )}
+                {totalPages > 3 && <span>...</span>}
+                {totalPages && currentPage > 2 && currentPage < totalPages && (
+                  <span
+                    className={`rounded-full text-bold text-sm ${
+                      currentPage !== totalPages && "border-2 border-gray-500"
+                    } mx-1 bg-white w-7 h-7 flex justify-center items-center`}
+                  >
+                    {currentPage}
+                  </span>
+                )}
+                {totalPages && totalPages > 2 && (
+                  <span
+                    className={`rounded-full text-bold text-sm ${
+                      currentPage === totalPages && "border-2 border-gray-500"
+                    } mx-1 bg-white w-7 h-7 flex justify-center items-center`}
+                  >
+                    {totalPages}
+                  </span>
+                )}
+              </div>
+
+              {/* Next Button */}
               <button
-                className="btn"
-                onClick={handleNextPage}
+                className="rounded-full border-none w-7 h-7"
                 disabled={currentPage === totalPages}
+                onClick={handleNextPage}
               >
-                Next
+                <IoIosArrowForward
+                  className={`text-[1.5rem] rounded-full bg-gray-200 ${
+                    currentPage === totalPages && "text-gray-400"
+                  }`}
+                />
               </button>
             </div>
           )}

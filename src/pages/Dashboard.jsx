@@ -25,6 +25,7 @@ import {
 import { UIContext } from "../context/ui";
 import { useNavigate } from "react-router-dom";
 import instance from "../api/instrance";
+import {District, Division, Map} from "../assets/png"
 
 export const Dashboard = () => {
   const { getHalqas } = useContext(UIContext);
@@ -407,8 +408,9 @@ export const Dashboard = () => {
                     </h3>
                   </div>
                   <div className="flex flex-row w-full justify-end">
-                    <div className="p-3 border border-innerAlignment rounded-2xl max-h-11">
-                      <CiLocationOn className="h-5 w-4.5 text-primary" />
+                    <div className=" p-1 border border-innerAlignment rounded-xl w-10 h-10 flex items-center justify-center">
+                     <img src={Map} alt="" className="w-8 h-8" />
+                    
                     </div>
                   </div>
                 </div>
@@ -431,8 +433,9 @@ export const Dashboard = () => {
                     </h3>
                   </div>
                   <div className="flex flex-row w-full justify-end">
-                    <div className="p-3 border border-innerAlignment rounded-2xl max-h-11">
-                      <FaLocationDot className="h-5 w-4.5 text-primary" />
+                  <div className=" p-1 border border-innerAlignment rounded-xl w-10 h-10 flex items-center justify-center">
+                     <img src={District} alt="" className="w-8 h-8" />
+                    
                     </div>
                   </div>
                 </div>
@@ -457,8 +460,9 @@ export const Dashboard = () => {
                     </h3>
                   </div>
                   <div className="flex flex-row w-full justify-end">
-                    <div className="p-3 border border-innerAlignment rounded-2xl max-h-11">
-                      <FaLocationDot className="h-5 w-4.5 text-primary" />
+                  <div className=" p-1 border border-innerAlignment rounded-xl w-10 h-10 flex items-center justify-center">
+                     <img src={Division} alt="" className="w-8 h-8" />
+                    
                     </div>
                   </div>
                 </div>

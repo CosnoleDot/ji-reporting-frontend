@@ -525,7 +525,7 @@ export const DeleteUser = () => {
               </button>
             )}
             {totalPages > 3 && <span>...</span>}
-
+           
             {totalPages && (
               <span className="rounded-full  border border-gray-700 border-1 mx-1 bg-gray-200 w-5 h-5 flex justify-center items-center">
                 {totalPages}
@@ -1106,14 +1106,14 @@ export const DeleteUser = () => {
                   {/* if there is a button in form, it will close the modal */}
                   <button
                     id="filter-area-dialog-close-btn"
-                    className="border border-innerAlignment rounded-md bg-white text-black capitalize py-1 px-4"
+                    className="py-1 px-4 rounded-md bg-primary text-white border-none capitalize"
                   >
                     Cancel
                   </button>
                 </form>
                 <button
                   type="submit"
-                  className="rounded-md border bg-primary text-white capitalize py-1 px-4"
+                  className="py-1 px-4 rounded-md bg-primary text-white border-none capitalize"
                   onClick={() =>
                     document
                       .getElementById("filter-area-dialog-close-btn")
@@ -1132,7 +1132,7 @@ export const DeleteUser = () => {
             <div className="flex justify-between items-center w-full">
               <h3 className="font-bold text-2xl">User Details</h3>
               <button
-                className="btn rounded-lg"
+                className="py-1 px-4 rounded-md bg-primary text-white border-none capitalize"
                 onClick={() =>
                   document.getElementById("view-details-modal").close()
                 }
@@ -1679,12 +1679,15 @@ export const DeleteUser = () => {
             <form method="dialog" className="modal-backdrop">
               <div className="flex justify-end items-end w-full gap-5">
                 <button
-                  className="btn rounded-lg"
+                  className="py-1 px-4 rounded-md bg-primary text-white border-none capitalize"
                   onClick={handleCloseUpdateModel}
                 >
                   Close
                 </button>
-                <button className="btn rounded-lg" onClick={updateStatus}>
+                <button
+                  className="py-1 px-4 rounded-md bg-primary text-white border-none capitalize"
+                  onClick={updateStatus}
+                >
                   Update
                 </button>
               </div>
@@ -1795,7 +1798,7 @@ export const DeleteUser = () => {
                 <div className=" w-full flex justify-end gap-3 items-center">
                   <button
                     id="close-details-modal"
-                    className="btn ms-3 capitalize"
+                    className="py-1 px-4 rounded-md bg-primary text-white border-none capitalize"
                   >
                     Close
                   </button>
