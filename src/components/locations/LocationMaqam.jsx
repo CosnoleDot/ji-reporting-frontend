@@ -400,7 +400,7 @@ export const LocationMaqam = () => {
               className={`tab ${view === "maqam" ? "bg-white text-black" : ""}`}
               onClick={() => setCurrentPage(1)}
             >
-              مقام
+              Maqam
             </Link>
           )}
           <Link
@@ -409,7 +409,7 @@ export const LocationMaqam = () => {
             className={`tab ${view === "halqa" ? "bg-white text-black" : ""}`}
             onClick={() => setCurrentPage(1)}
           >
-            حلقہ
+            Halqa
           </Link>
           {muntakhib && (
             <Link
@@ -418,7 +418,7 @@ export const LocationMaqam = () => {
               className={`tab ${view === "ilaqa" ? "bg-white text-black" : ""}`}
               onClick={() => setCurrentPage(1)}
             >
-              علاقہ/Zone
+              Ilaqa/Zone
             </Link>
           )}
         </div>
@@ -649,7 +649,7 @@ export const LocationMaqam = () => {
             className="select select-sm max-w-xs bg-gray-200 rounded-full"
           >
             <option value="" disabled selected>
-              Rows per page 10
+              rows per page 10
             </option>
           </select>
 
@@ -659,24 +659,48 @@ export const LocationMaqam = () => {
             disabled={currentPage === 1}
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           >
-            <IoIosArrowBack className="text-[1.5rem] rounded-full bg-gray-200" />
+            <IoIosArrowBack
+              className={`text-[1.5rem] rounded-full bg-gray-200 ${
+                currentPage === 1 && "text-gray-400"
+              }`}
+            />
           </button>
+
           {/* Page Numbers */}
           <div className="flex items-center">
+            <span
+              className={`rounded-full text-bold text-sm ${
+                currentPage === 1 && "border-2 border-gray-500"
+              } mx-1 bg-white w-7 h-7 flex justify-center items-center`}
+            >
+              1
+            </span>
+
             {totalPages > 1 && (
-              <span className="rounded-full text-[12px] p-2 font-bold border-gray-500 border-2 mx-1 bg-white w-7 h-7 flex justify-center items-center">
-                1
-              </span>
-            )}
-            {totalPages > 2 && (
-              <button className="rounded-full text-[12px] p-2 font-bold border-gray-500 border-2 mx-1 bg-white w-7 h-7 flex justify-center items-center">
+              <button
+                className={`rounded-full text-bold text-sm ${
+                  currentPage === 2 && "border-2 border-gray-500"
+                } mx-1 bg-white w-7 h-7 flex justify-center items-center`}
+              >
                 2
               </button>
             )}
             {totalPages > 3 && <span>...</span>}
-
+            {totalPages && currentPage > 2 && currentPage < totalPages && (
+              <span
+                className={`rounded-full text-bold text-sm ${
+                  currentPage !== totalPages && "border-2 border-gray-500"
+                } mx-1 bg-white w-7 h-7 flex justify-center items-center`}
+              >
+                {currentPage}
+              </span>
+            )}
             {totalPages && (
-              <span className="rounded-full text-[12px] p-2 font-bold border-gray-500 border-2 mx-1 bg-white w-7 h-7 flex justify-center items-center">
+              <span
+                className={`rounded-full text-bold text-sm ${
+                  currentPage === totalPages && "border-2 border-gray-500"
+                } mx-1 bg-white w-7 h-7 flex justify-center items-center`}
+              >
                 {totalPages}
               </span>
             )}
@@ -690,7 +714,11 @@ export const LocationMaqam = () => {
               setCurrentPage((prev) => Math.min(prev + 1, totalPages))
             }
           >
-            <IoIosArrowForward className="text-[1.5rem] rounded-full bg-gray-200" />
+            <IoIosArrowForward
+              className={`text-[1.5rem] rounded-full bg-gray-200 ${
+                currentPage === totalPages && "text-gray-400"
+              }`}
+            />
           </button>
         </div>
       )}
