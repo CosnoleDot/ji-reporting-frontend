@@ -360,7 +360,7 @@ export const Dashboard = () => {
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
               ) && (
-                <div className="flex bg-white border rounded-2xl h-[130px] p-4 overflow-hidden shadow">
+                <div className="flex border rounded-2xl h-[130px] p-4 overflow-hidden shadow bg-cardsBg">
                   <div className="px-4 flex flex-col gap-2  justify-end">
                     <p className="text-[32px] font-extrabold font-inter leading-10 text-primary">
                       {nazim?.filter((naz) => naz?.isDeleted == false).length}
@@ -394,7 +394,7 @@ export const Dashboard = () => {
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
               ) && (
-                <div className="flex bg-white border rounded-2xl h-[130px] p-4 overflow-hidden shadow">
+                <div className="flex border rounded-2xl h-[130px] p-4 overflow-hidden shadow bg-cardsBg">
                   <div className="px-4 flex flex-col gap-2  justify-end">
                     <p className="text-[32px] font-extrabold font-inter leading-10 text-primary">
                       {
@@ -419,7 +419,7 @@ export const Dashboard = () => {
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
               ) && (
-                <div className="flex bg-white border rounded-2xl h-[130px] p-4 overflow-hidden shadow">
+                <div className="flex border rounded-2xl h-[130px] p-4 overflow-hidden shadow bg-cardsBg">
                   <div className="px-4 flex flex-col gap-2  justify-end">
                     <p className="text-[32px] font-extrabold font-inter leading-10 text-primary">
                       {
@@ -446,7 +446,7 @@ export const Dashboard = () => {
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
               ) && (
-                <div className="flex bg-white border rounded-2xl h-[130px] p-4 overflow-hidden shadow">
+                <div className="flex border rounded-2xl h-[130px] p-4 overflow-hidden shadow bg-cardsBg">
                   <div className="px-4 flex flex-col gap-2  justify-end">
                     <p className="text-[32px] font-extrabold font-inter leading-10 text-primary">
                       {
@@ -474,7 +474,7 @@ export const Dashboard = () => {
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
               ) && (
-                <div className="flex bg-white border rounded-2xl h-[130px] p-4 overflow-hidden shadow">
+                <div className="flex border rounded-2xl h-[130px] p-4 overflow-hidden shadow bg-cardsBg">
                   <div className="px-4 flex flex-col gap-2  justify-end">
                     <p className="text-[32px] font-extrabold font-inter leading-10 text-primary">
                       {
@@ -499,7 +499,7 @@ export const Dashboard = () => {
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
               ) && (
-                <div className="flex bg-white border rounded-2xl h-[130px] p-4 overflow-hidden shadow">
+                <div className="flex border rounded-2xl h-[130px] p-4 overflow-hidden shadow bg-cardsBg">
                   <div className="px-4 flex flex-col gap-2  justify-end">
                     <p className="text-[32px] font-extrabold font-inter leading-10 text-primary">
                       {
@@ -525,7 +525,7 @@ export const Dashboard = () => {
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
               ) && (
-                <div className="flex bg-white border rounded-2xl h-[130px] p-4 overflow-hidden shadow">
+                <div className="flex border rounded-2xl h-[130px] p-4 overflow-hidden shadow bg-cardsBg">
                   <div className="px-4 flex flex-col gap-2  justify-end">
                     <p className="text-[32px] font-extrabold font-inter leading-10 text-primary">
                       {ilaqa?.filter((il) => il?.disabled !== true).length}
@@ -545,7 +545,7 @@ export const Dashboard = () => {
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
               ) && (
-                <div className="flex bg-white border rounded-2xl h-[130px] p-4 overflow-hidden shadow">
+                <div className="flex border rounded-2xl h-[130px] p-4 overflow-hidden shadow bg-cardsBg">
                   <div className="px-4 flex flex-col gap-2  justify-end">
                     <p className="text-[32px] font-extrabold font-inter leading-10 text-primary">
                       {unit.length}
@@ -570,7 +570,7 @@ export const Dashboard = () => {
                 }
                 className="flex items-center bg-white border rounded-sm overflow-hidden shadow cursor-pointer"
               >
-                <div className="p-4 bg-red-400">
+                <div className="p-4 bg-primary">
                   <FaPlus className="w-12 h-12 text-white" />
                 </div>
                 <div className="px-4 text-gray-700">
@@ -637,17 +637,18 @@ export const Dashboard = () => {
                 </div>
 
                 {showData && (
-                  <div className="w-full flex justify-between items-center flex-wrap">
+                  <div className="w-full flex justify-between items-center flex-wrap bg-cardsBg p-2">
                     <div
                       style={{
                         color: toggle === "pFilled" ? "#71717A" : "#09090B",
+                        backgroundColor: toggle === "pFilled" ? "white" : "",
                       }}
                       onClick={() => {
                         setToggle("pFilled");
                         setUserAreaType("personal");
                         setShow(false);
                       }}
-                      className="font-inter md:text-[14px] text-[12px] font-medium leading-[20px] text-left cursor-pointer"
+                      className={`font-inter md:text-[14px] ${toggle === 'pFilled' ? 'bg-white p-1 rounded-sm':''} p-1 text-[12px] font-medium leading-[20px] text-left cursor-pointer`}
                     >
                       Personal Filled {personalFilled?.length}
                     </div>
@@ -660,7 +661,7 @@ export const Dashboard = () => {
                         setUserAreaType("personal");
                         setShow(false);
                       }}
-                      className="font-inter md:text-[14px] text-[12px] font-medium leading-[20px] text-left cursor-pointer"
+                      className={`font-inter md:text-[14px] ${toggle === 'pUnFilled' ? 'bg-white p-1 rounded-sm':''} p-1 text-[12px] font-medium leading-[20px] text-left cursor-pointer`}
                     >
                       Personal Unfilled {personalUnfilled?.length}
                     </div>
@@ -673,7 +674,7 @@ export const Dashboard = () => {
                         setShow(true);
                         setToggle("filled");
                       }}
-                      className="font-inter md:text-[14px] text-[12px] font-medium leading-[20px] text-left cursor-pointer"
+                      className={`font-inter md:text-[14px] ${toggle === 'filled' ? 'bg-white p-1 rounded-sm':''} p-1 text-[12px] font-medium leading-[20px] text-left cursor-pointer`}
                     >
                       Filled {data?.filled?.length}
                     </div>
@@ -685,7 +686,7 @@ export const Dashboard = () => {
                         setShow(true);
                         setToggle("unFilled");
                       }}
-                      className="font-inter md:text-[14px] text-[12px] font-medium leading-[20px] text-left cursor-pointer"
+                      className={`font-inter md:text-[14px] ${toggle === 'unFilled' ? 'bg-white p-1 rounded-sm':''} p-1 text-[12px] font-medium leading-[20px] text-left cursor-pointer`}
                     >
                       Unfilled {data?.unfilled?.length}
                     </div>
@@ -697,7 +698,7 @@ export const Dashboard = () => {
                 <div className="overflow-x-auto grid grid-cols-1 gap-4 mt-3 sm:grid-cols-1 sm:px-4 w-full transition ease-in-out duration-300">
                   <div>
                     {show && (
-                      <table className="table mb-7" ref={tableRef}>
+                      <table className="table mb-7 " ref={tableRef}>
                         {/* head */}
                         <thead className="">
                           <tr className="w-full flex justify-between ">

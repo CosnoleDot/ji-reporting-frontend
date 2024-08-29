@@ -16,7 +16,8 @@ module.exports = {
         innerAlignment:"#94A3B8",
         destructive:"#EF4343",
         green:"#08AE51",
-        blue:"#138DFE"
+        blue:"#138DFE",
+        cardsBg:"#f5f6f8"
       },
       screens: { 
         'md': '768px',  
