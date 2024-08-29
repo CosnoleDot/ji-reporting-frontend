@@ -566,7 +566,7 @@ export const Dashboard = () => {
                 }
                 className="flex items-center bg-white border rounded-sm overflow-hidden shadow cursor-pointer"
               >
-                <div className="p-4 bg-red-400">
+                <div className="p-4 bg-primary">
                   <FaPlus className="w-12 h-12 text-white" />
                 </div>
                 <div className="px-4 text-gray-700">

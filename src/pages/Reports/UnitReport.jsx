@@ -122,9 +122,9 @@ export const UnitReport = () => {
     <>
       <div className="md:join xs:w-full mb-4 flex justify-between items-center">
         {!isMobileView && (
-          <div className="w-full">
+          <div className="w-full flex items-center">
             <select
-              className="select select-bordered select-sm join-item"
+              className="select select-bordered select-sm w-full rounded-none rounded-tl-lg rounded-tr-lg"
               onChange={(e) => setMonth(e.target.value)}
               value={month}
             >
@@ -136,7 +136,7 @@ export const UnitReport = () => {
               ))}
             </select>
             <select
-              className="select select-bordered join-item"
+              className="select select-bordered select-sm w-full rounded-none rounded-bl-lg rounded-br-lg"
               onChange={(e) => setYear(e.target.value)}
               value={year}
             >
@@ -168,7 +168,7 @@ export const UnitReport = () => {
                   </div>
                 )}
                 <select
-                  className="select select-bordered w-full rounded-none rounded-tl-lg rounded-tr-lg"
+                  className="select select-bordered select-sm w-full rounded-none rounded-bl-lg rounded-br-lg"
                   onChange={(e) => setMonth(e.target.value)}
                   value={month}
                 >
@@ -180,7 +180,7 @@ export const UnitReport = () => {
                   ))}
                 </select>
                 <select
-                  className="select select-bordered w-full rounded-none rounded-bl-lg rounded-br-lg"
+                  className="select select-bordered select-sm w-full rounded-none rounded-bl-lg rounded-br-lg"
                   value={year}
                   onChange={(e) => setYear(e.target.value)}
                 >
@@ -196,17 +196,17 @@ export const UnitReport = () => {
                     ))}
                 </select>
               </div>
-              <button className="btn" onClick={searchResults}>
+              <button className="font-inter px-2 text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left" onClick={searchResults}>
                 Search
               </button>
             </div>
           </div>
         )}
 
-        <div className="indicator flex justify-between items-center w-full">
+        <div className="indicator flex items-center w-full">
           {/* <span className='indicator-item badge badge-secondary'>new</span> */}
           <button
-            className={`btn ${!isMobileView ? "join-item" : ""}`}
+            className={`font-inter px-2 text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left ${!isMobileView ? "join-item" : ""}`}
             onClick={() => (!isMobileView ? searchResults() : toggleSearch())}
           >
             Search
@@ -217,13 +217,13 @@ export const UnitReport = () => {
                 document.getElementById("filter-area-dialog").showModal();
                 setIsSearch(false);
               }}
-              className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
+              className={`font-inter px-2 text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left ${!isMobileView ? "join-item" : "ms-3"}`}
             >
               filter
             </button>
           )}
           <button
-            className={`btn ${!isMobileView ? "join-item" : "ms-3"}`}
+            className={`font-inter px-2 text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left ${!isMobileView ? "join-item" : "ms-3"}`}
             onClick={clearFilters}
           >
             Clear
