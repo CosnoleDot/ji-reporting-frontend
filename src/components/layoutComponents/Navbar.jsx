@@ -118,7 +118,7 @@ export const Navbar = ({ title , setIsSideBarOpen ,isSideBarOpen }) => {
         <div
           tabIndex={0}
           ref={requestsRef}
-          className="mt-3 top-[60.5px] right-[10px] lg:right-10 fixed z-[1] w-[calc(100%-20px)] lg:w-[420px] card card-compact dropdown-content bg-base-100 border-2 overflow-hidden"
+          className="top-0 right-0 lg:right-0 fixed z-[1] w-[calc(100%-20px)] lg:w-[420px] h-screen bg-white border overflow-hidden"
         >
           <h2 className="p-5 font-bold text-xl">User Request(s)</h2>
           <Notifications userRequests={userRequests} type="request" />

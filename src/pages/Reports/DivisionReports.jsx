@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { UIContext } from "../../context/ui";
 import instance from "../../api/instrance";
 import { SearchPage } from "./SearchPage";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 export const DivisionReports = () => {
   const d = useContext(DivisionReportContext);
@@ -307,29 +308,85 @@ export const DivisionReports = () => {
             <NoReports />
           )}
           {!isFilter && (
-            <div className="flex justify-between mt-4">
-              <button
-                className={`font-inter text-[14px] ${
-                  currentPage === 1 ? "bg-slate-500" : "bg-primary"
-                }  flex justify-center text-white p-2 rounded font-medium leading-[20px] text-left cursor-pointer`}
-                onClick={handlePrevPage}
-                disabled={currentPage === 1}
+            <div className="flex w-full gap-4 px-4 justify-end items-center mt-4">
+            <select
+              readOnly
+              disabled
+              name="items_per_page"
+              id="items"
+              className="select select-sm max-w-xs bg-gray-200 rounded-full"
+            >
+              <option value="" disabled selected>
+                rows per page 10
+              </option>
+            </select>
+
+            {/* Previous Button */}
+            <button
+              className="rounded-full border-none w-7 h-7"
+              disabled={currentPage === 1}
+              onClick={handlePrevPage}
+            >
+              <IoIosArrowBack
+                className={`text-[1.5rem] rounded-full bg-gray-200 ${
+                  currentPage === 1 && "text-gray-400"
+                }`}
+              />
+            </button>
+
+            {/* Page Numbers */}
+            <div className="flex items-center">
+              <span
+                className={`rounded-full text-bold text-sm ${
+                  currentPage === 1 && "border-2 border-gray-500"
+                } mx-1 bg-white w-7 h-7 flex justify-center items-center`}
               >
-                Previous
-              </button>
-              <span className="cursor-pointer text-primary font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left">
-                Page {currentPage} of {totalPages}
+                1
               </span>
-              <button
-                className={`font-inter text-[14px] ${
-                  currentPage === totalPages ? "bg-slate-500" : "bg-primary"
-                }  flex justify-center text-white p-2 rounded font-medium leading-[20px] text-left cursor-pointer`}
-                onClick={handleNextPage}
-                disabled={currentPage === totalPages}
-              >
-                Next
-              </button>
+
+              {totalPages > 1 && (
+                <button
+                  className={`rounded-full text-bold text-sm ${
+                    currentPage === 2 && "border-2 border-gray-500"
+                  } mx-1 bg-white w-7 h-7 flex justify-center items-center`}
+                >
+                  2
+                </button>
+              )}
+              {totalPages > 3 && <span>...</span>}
+              {totalPages && currentPage > 2 && currentPage < totalPages && (
+                <span
+                  className={`rounded-full text-bold text-sm ${
+                    currentPage !== totalPages && "border-2 border-gray-500"
+                  } mx-1 bg-white w-7 h-7 flex justify-center items-center`}
+                >
+                  {currentPage}
+                </span>
+              )}
+              {totalPages && totalPages > 2 && (
+                <span
+                  className={`rounded-full text-bold text-sm ${
+                    currentPage === totalPages && "border-2 border-gray-500"
+                  } mx-1 bg-white w-7 h-7 flex justify-center items-center`}
+                >
+                  {totalPages}
+                </span>
+              )}
             </div>
+
+            {/* Next Button */}
+            <button
+              className="rounded-full border-none w-7 h-7"
+              disabled={currentPage === totalPages}
+              onClick={handleNextPage}
+            >
+              <IoIosArrowForward
+                className={`text-[1.5rem] rounded-full bg-gray-200 ${
+                  currentPage === totalPages && "text-gray-400"
+                }`}
+              />
+            </button>
+          </div>
           )}{" "}
         </>
       ) : (
