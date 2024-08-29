@@ -3,8 +3,8 @@ import { GeneralLayout } from "../components";
 import { UIContext } from "../context/ui";
 import { FiTrash } from "react-icons/fi";
 import { HiOutlineUpload } from "react-icons/hi";
-import { IoIosArrowDropright } from "react-icons/io";
-import { IoIosArrowDropleft } from "react-icons/io";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+
 import {
   DivisionContext,
   HalqaContext,
@@ -334,12 +334,16 @@ export const DeleteUser = () => {
   return (
     <GeneralLayout title={"Manage Users"} active={"user-switch"}>
       <div className="px-5 relative flex flex-col items-center py-3 pt-0 justify-start h-screen md:h-[calc(100vh-63.6px)] overflow-hidden overflow-y-auto">
-        <div className="w-full flex md:flex-row flex-col md:justify-between justify-start items-center py-4">
-          <div className="mb-4 w-full md:w-[30%] flex flex-col">
-            <h1 className="text-2xl font-bold text-start ">Manage Users</h1>
-            <p className="text-gray-500">Manage Your users easily </p>
+        <div className="flex md:flex-row flex-col w-full items-center justify-between py-4 mb-4 border-b border-inputBorder">
+          <div className="flex flex-col w-[50%] justify-start mb-4">
+            <h1 class="font-inter text-heading text-[18px] font-medium leading-[28px] text-left">
+              Manage Users
+            </h1>
+            <p class="font-inter text-[14px] font-normal leading-[20px] text-left text-secondaryText">
+              Manage Your users easily
+            </p>
           </div>
-          <div className="flex md:flex-row flex-col w-full md:w-[70%] items-center justify-start md:justify-center gap-2 p-2 overflow-hidden overflow-x-scroll">
+          <div className="flex md:flex-row flex-col items-end w-full justify-end   gap-2  overflow-hidden overflow-x-scroll">
             <input
               type="search"
               name="Search"
@@ -360,7 +364,7 @@ export const DeleteUser = () => {
               </button>
               <button
                 onClick={() => clearSearchFilters()}
-                className="border border-innerAlignment rounded-md py-1 px-4 bg-none"
+                className="border border-inputBorder rounded-md py-1 px-4 bg-none"
               >
                 Clear Filters
               </button>
@@ -370,24 +374,26 @@ export const DeleteUser = () => {
         <div className="w-full overflow-scroll">
           <table className="w-full">
             <thead>
-              <tr className="border-t rounded-md">
-                <th className="border-l py-2 px-4 font-semibold text-gray-400">
+              <tr className="">
+                <th class="font-inter text-[14px] font-medium leading-[16.94px] text-left text-secondaryText">
                   Name
                 </th>
-                <th className=" py-2 px-4 font-semibold text-gray-400">
+                <th class="font-inter text-[14px] font-medium leading-[16.94px] text-left text-secondaryText">
                   Nazim Type
                 </th>
-                <th className=" py-2 px-4 font-semibold text-gray-400">
+                <th class="font-inter text-[14px] font-medium leading-[16.94px] text-left text-secondaryText">
                   Email
                 </th>
-                <th className=" py-2 px-4 font-semibold text-gray-400">Area</th>
-                <th className=" py-2 px-4 font-semibold text-gray-400">
+                <th class="font-inter text-[14px] font-medium leading-[16.94px] text-left text-secondaryText">
+                  Area
+                </th>
+                <th class="font-inter text-[14px] font-medium leading-[16.94px] text-left text-secondaryText">
                   Country
                 </th>
-                <th className=" py-2 px-4 font-semibold text-gray-400">
+                <th class="font-inter text-[14px] font-medium leading-[16.94px] text-left text-secondaryText">
                   Status
                 </th>
-                <th className="border-r py-2 px-4 font-semibold text-gray-400">
+                <th class="font-inter text-[14px] font-medium leading-[16.94px] text-left text-secondaryText">
                   Action
                 </th>
               </tr>
@@ -396,9 +402,11 @@ export const DeleteUser = () => {
               {paginatedData
                 ?.filter((i) => i?.userAreaId?._id !== me?.userAreaId?._id)
                 ?.map((user, index) => (
-                  <tr key={user.email} className="border-b border-r border-l">
-                    <td className="  p-4">{user?.name || "-"}</td>
-                    <td className=" p-4">
+                  <tr key={user.email} className="border-b w-full">
+                    <td class="font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left py-2 w-1/7">
+                      {user?.name || "-"}
+                    </td>
+                    <td class="font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left py-2 w-1/7">
                       {user?.nazimType
                         ?.replace(/-/g, " ")
                         .split(" ")
@@ -407,8 +415,10 @@ export const DeleteUser = () => {
                         )
                         .join(" ") || "-"}
                     </td>
-                    <td className=" p-4">{user?.email || "-"}</td>
-                    <td className=" p-4">
+                    <td class="font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left py-2 w-1/7">
+                      {user?.email || "-"}
+                    </td>
+                    <td class="font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left py-2 w-1/7">
                       {" "}
                       <div
                         onClick={() => {
@@ -421,19 +431,21 @@ export const DeleteUser = () => {
                         />
                       </div>
                     </td>
-                    <td className=" p-4">Pakistan</td>
-                    <td className=" p-4">
+                    <td class="font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left py-2 w-1/7">
+                      Pakistan
+                    </td>
+                    <td class="font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left py-2 w-1/7">
                       {user?.isDeleted ? (
-                        <div className=" badge text-red-500 badge-lg flex justify-center items-center py-3 bg-[#f39898]">
-                          inActive
+                        <div className=" badge w-[70%] text-[12px] text-heading badge-lg flex justify-center items-center py-3 bg-[#f5cfcf]">
+                          Inactive
                         </div>
                       ) : (
-                        <div className="bg-[#a1f1c4] badge badge-lg flex justify-center items-center py-3 text-green">
-                          active
+                        <div className="bg-[#cff5df] w-[70%] text-[12px] text-heading badge badge-lg flex justify-center items-center py-3">
+                          Active
                         </div>
                       )}
                     </td>
-                    <td className="p-1 ">
+                    <td class="font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left py-2 w-1/7">
                       <div className="w-full flex justify-between items-center">
                         <button
                           onClick={() => {
@@ -462,7 +474,7 @@ export const DeleteUser = () => {
                           {user?.isDeleted ? (
                             <RiDeviceRecoverFill />
                           ) : (
-                            <FiTrash className="text-red-500" />
+                            <FiTrash className="text-destructive" />
                           )}
                         </button>
                         {me?.userAreaType !== "halqa" && (
@@ -499,35 +511,58 @@ export const DeleteUser = () => {
             className="select select-sm max-w-xs bg-gray-200 rounded-full"
           >
             <option value="" disabled selected>
-              Rows per page 10
+              rows per page 10
             </option>
           </select>
 
           {/* Previous Button */}
           <button
-            className="rounded-full border-none"
+            className="rounded-full border-none w-7 h-7"
             disabled={currentPage === 1}
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           >
-            <IoIosArrowDropleft className="text-[1.5rem] rounded-full bg-gray-200" />
+            <IoIosArrowBack
+              className={`text-[1.5rem] rounded-full bg-gray-200 ${
+                currentPage === 1 && "text-gray-400"
+              }`}
+            />
           </button>
 
           {/* Page Numbers */}
           <div className="flex items-center">
-            {currentPage > 1 && (
-              <span className="rounded-full  border border-gray-700 border-1 mx-1 bg-gray-200 w-5 h-5 flex justify-center items-center">
-                1
-              </span>
-            )}
-            {totalPages > 2 && (
-              <button className="rounded-full  border border-gray-700 border-1 mx-1 bg-gray-200 w-5 h-5 flex justify-center items-center">
+            <span
+              className={`rounded-full text-bold text-sm ${
+                currentPage === 1 && "border-2 border-gray-500"
+              } mx-1 bg-white w-7 h-7 flex justify-center items-center`}
+            >
+              1
+            </span>
+
+            {totalPages > 1 && (
+              <button
+                className={`rounded-full text-bold text-sm ${
+                  currentPage === 2 && "border-2 border-gray-500"
+                } mx-1 bg-white w-7 h-7 flex justify-center items-center`}
+              >
                 2
               </button>
             )}
             {totalPages > 3 && <span>...</span>}
-           
-            {totalPages && (
-              <span className="rounded-full  border border-gray-700 border-1 mx-1 bg-gray-200 w-5 h-5 flex justify-center items-center">
+            {totalPages && currentPage > 2 && currentPage < totalPages && (
+              <span
+                className={`rounded-full text-bold text-sm ${
+                  currentPage !== totalPages && "border-2 border-gray-500"
+                } mx-1 bg-white w-7 h-7 flex justify-center items-center`}
+              >
+                {currentPage}
+              </span>
+            )}
+            {totalPages && totalPages > 2 && (
+              <span
+                className={`rounded-full text-bold text-sm ${
+                  currentPage === totalPages && "border-2 border-gray-500"
+                } mx-1 bg-white w-7 h-7 flex justify-center items-center`}
+              >
                 {totalPages}
               </span>
             )}
@@ -535,16 +570,19 @@ export const DeleteUser = () => {
 
           {/* Next Button */}
           <button
-            className="rounded-full border-none"
+            className="rounded-full border-none w-7 h-7"
             disabled={currentPage === totalPages}
             onClick={() =>
               setCurrentPage((prev) => Math.min(prev + 1, totalPages))
             }
           >
-            <IoIosArrowDropright className="text-[1.5rem] rounded-full bg-gray-200" />
+            <IoIosArrowForward
+              className={`text-[1.5rem] rounded-full bg-gray-200 ${
+                currentPage === totalPages && "text-gray-400"
+              }`}
+            />
           </button>
         </div>
-
         {/* DIALOG BOXES */}
 
         <dialog id="categorize-filter" className="modal">
@@ -586,7 +624,7 @@ export const DeleteUser = () => {
                 <div>
                   <div>
                     <label className="label">
-                      <span className="text-base label-text">Full Name</span>
+                      <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">Full Name</span>
                     </label>
                     <input
                       type="text"
@@ -598,7 +636,7 @@ export const DeleteUser = () => {
 
                   <div className="relative">
                     <label className="label">
-                      <span className="text-base label-text">
+                      <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">
                         Year of becoming rukan/umeedwar
                       </span>
                     </label>
@@ -652,7 +690,7 @@ export const DeleteUser = () => {
                   </div>
                   <div className="relative">
                     <label className="label">
-                      <span className="text-base label-text">
+                      <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">
                         Year of birth
                       </span>
                     </label>
@@ -706,7 +744,7 @@ export const DeleteUser = () => {
                   </div>
                   <div className="w-full">
                     <label className="label">
-                      <span className="text-base label-text">
+                      <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">
                         Qualifications
                       </span>
                     </label>
@@ -726,7 +764,7 @@ export const DeleteUser = () => {
                   </div>
                   <div className="w-full">
                     <label className="label">
-                      <span className="text-base label-text">
+                      <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">
                         Select Subject
                       </span>
                     </label>
@@ -752,7 +790,7 @@ export const DeleteUser = () => {
 
                   <div className="w-full">
                     <label className="label">
-                      <span className="text-base label-text">
+                      <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">
                         Semester/Year
                       </span>
                     </label>
@@ -783,7 +821,7 @@ export const DeleteUser = () => {
                   </div>
                   <div className="w-full">
                     <label className="label">
-                      <span className="text-base label-text">Institution</span>
+                      <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">Institution</span>
                     </label>
                     <input
                       type="text"
@@ -1130,7 +1168,7 @@ export const DeleteUser = () => {
         <dialog id="view-details-modal" className="modal">
           <div className="modal-box">
             <div className="flex justify-between items-center w-full">
-              <h3 className="font-bold text-2xl">User Details</h3>
+              <h3 class="font-inter text-heading text-[16px] font-medium leading-[28px] text-left">User Details</h3>
               <button
                 className="py-1 px-4 rounded-md bg-primary text-white border-none capitalize"
                 onClick={() =>
@@ -1145,27 +1183,27 @@ export const DeleteUser = () => {
               <div className="flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col">
                 <div className="w-full">
                   <label className="label">
-                    <span className="text-base label-text">Full Name</span>
+                    <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">Full Name</span>
                   </label>
                   <input
                     readOnly
                     type="text"
                     placeholder="Full Name"
                     name="name"
-                    className="w-full text-[#7a7a7a]"
+                    className="w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
                     defaultValue={singleUser?.name}
                   />
                 </div>
                 <div className="w-full">
                   <label className="label">
-                    <span className="text-base label-text">Father Name</span>
+                    <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">Father Name</span>
                   </label>
                   <input
                     readOnly
                     type="text"
                     placeholder="Father name"
                     name="fatherName"
-                    className="w-full text-[#7a7a7a]"
+                    className="w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
                     defaultValue={singleUser?.fatherName}
                   />
                 </div>
@@ -1173,7 +1211,7 @@ export const DeleteUser = () => {
               <div className="flex w-full items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col">
                 <div className="w-full">
                   <label className="label">
-                    <span className="text-base label-text">Date of birth</span>
+                    <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">Date of birth</span>
                   </label>
                   <input
                     readOnly
@@ -1181,7 +1219,7 @@ export const DeleteUser = () => {
                     type="text"
                     placeholder="Date of birth"
                     name="dob"
-                    className=" w-full text-[#7a7a7a]"
+                    className=" w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
                   />
                 </div>
                 <div className="w-full">
@@ -1195,7 +1233,7 @@ export const DeleteUser = () => {
                     type="text"
                     placeholder="JoiningDate"
                     name="joiningDate"
-                    className="w-full text-[#7a7a7a]"
+                    className="w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
                     defaultValue={singleUser?.joiningDate?.date?.split("T")[0]}
                   />
                 </div>
@@ -1203,20 +1241,20 @@ export const DeleteUser = () => {
               <div className="flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col">
                 <div className="w-full">
                   <label className="label">
-                    <span className="text-base label-text">Qualifications</span>
+                    <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">Qualifications</span>
                   </label>
                   <input
                     readOnly
                     type="text"
                     placeholder="Qualification"
                     name="qualification"
-                    className="w-full text-[#7a7a7a] capitalize "
+                    className="w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter capitalize "
                     defaultValue={singleUser?.qualification}
                   />
                 </div>
                 <div className="w-full relative">
                   <label className="label">
-                    <span className="text-base label-text">Subject</span>
+                    <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">Subject</span>
                   </label>
 
                   <input
@@ -1237,20 +1275,20 @@ export const DeleteUser = () => {
               <div className="flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col">
                 <div className="w-full">
                   <label className="label">
-                    <span className="text-base label-text">Semester/Year</span>
+                    <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">Semester/Year</span>
                   </label>
                   <input
                     readOnly
                     type="text"
                     placeholder="Semester"
                     name="semester"
-                    className="w-full text-[#7a7a7a]  capitalize "
+                    className="w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter  capitalize "
                     defaultValue={singleUser?.semester}
                   />
                 </div>
                 <div className="w-full">
                   <label className="label">
-                    <span className="text-base label-text">Institution</span>
+                    <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">Institution</span>
                   </label>
                   <input
                     readOnly
@@ -1258,14 +1296,14 @@ export const DeleteUser = () => {
                     type="text"
                     placeholder="Institution"
                     name="institution"
-                    className=" w-full text-[#7a7a7a]"
+                    className=" w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
                   />
                 </div>
               </div>
               <div className="flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col">
                 <div className="w-full">
                   <label className="label">
-                    <span className="text-base label-text">Age</span>
+                    <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">Age</span>
                   </label>
                   <input
                     readOnly
@@ -1273,12 +1311,12 @@ export const DeleteUser = () => {
                     type="number"
                     placeholder="Age"
                     name="age"
-                    className=" w-full text-[#7a7a7a]"
+                    className=" w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
                   />
                 </div>
                 <div className="w-full">
                   <label className="label">
-                    <span className="text-base label-text">Nazim Type</span>
+                    <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">Nazim Type</span>
                   </label>
                   <input
                     readOnly
@@ -1291,14 +1329,14 @@ export const DeleteUser = () => {
                       )
                       .join(" ")}
                     name="nazimType"
-                    className=" w-full text-[#7a7a7a]"
+                    className=" w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
                   />
                 </div>
               </div>
               <div className="flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col">
                 <div className="w-full">
                   <label className="label">
-                    <span className="text-base label-text">Phone Number</span>
+                    <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">Phone Number</span>
                   </label>
                   <input
                     readOnly
@@ -1306,12 +1344,12 @@ export const DeleteUser = () => {
                     type="text"
                     placeholder="Phone Number"
                     name="phoneNumber"
-                    className=" w-full text-[#7a7a7a]"
+                    className=" w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
                   />
                 </div>
                 <div className="w-full">
                   <label className="label">
-                    <span className="text-base label-text">
+                    <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">
                       WhatsApp Number
                     </span>
                   </label>
@@ -1321,26 +1359,26 @@ export const DeleteUser = () => {
                     type="text"
                     placeholder="WhatsApp Number"
                     name="whatsAppNumber"
-                    className=" w-full text-[#7a7a7a]"
+                    className=" w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
                   />
                 </div>
               </div>
 
               <div className="w-full">
                 <label className="label">
-                  <span className="text-base label-text">Home address</span>
+                  <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">Home address</span>
                 </label>
                 <textarea
                   placeholder="Address"
                   name="address"
-                  className="w-full text-[#7a7a7a]"
+                  className="w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
                   required
                   defaultValue={decryptData(singleUser?.address)}
                 ></textarea>
               </div>
               <div className="w-full">
                 <label className="label">
-                  <span className="text-base label-text">Area</span>
+                  <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">Area</span>
                 </label>
                 <input
                   readOnly
@@ -1348,12 +1386,12 @@ export const DeleteUser = () => {
                   type="text"
                   placeholder="UserArea"
                   name="userArea"
-                  className=" w-full text-[#7a7a7a]"
+                  className=" w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
                 />
               </div>
               <div className="w-full">
                 <label className="label">
-                  <span className="text-base label-text">Email</span>
+                  <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">Email</span>
                 </label>
                 <input
                   readOnly
@@ -1361,7 +1399,7 @@ export const DeleteUser = () => {
                   type="email"
                   placeholder="Email Address"
                   name="email"
-                  className=" w-full text-[#7a7a7a]"
+                  className=" w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
                 />
               </div>
             </form>
@@ -1696,12 +1734,12 @@ export const DeleteUser = () => {
         </dialog>
         <dialog id="area_details" className="modal">
           <div className="modal-box">
-            <h3 className="font-bold text-lg mb-3">Details of the area</h3>
+            <h3 class="font-inter text-heading text-[16px] font-medium leading-[28px] text-left mb-4">Details of the area</h3>
             <div className="w-full  flex flex-col justify-between items-start text-left gap-4  flex-wrap">
               <div className="w-full flex justify-start items-center gap-5">
-                <h5>Area Name:</h5>
-                <h4 className="text-gray-400 font-bold">{areaDetails?.name}</h4>
-                <h4 className="text-gray-400 font-semibold">
+                <h5 class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">Area Name:</h5>
+                <h4 class="font-inter text-secondaryText text-[12px] font-medium leading-[28px] text-left">{areaDetails?.name}</h4>
+                <h4 class="font-inter text-secondaryText text-[12px] font-medium leading-[28px] text-left">
                   {areaDetails?.parentType === "Ilaqa" ||
                   areaDetails?.parentType === "Tehsil" ||
                   areaDetails?.parentType === "Division" ||
@@ -1720,7 +1758,7 @@ export const DeleteUser = () => {
                   : areaDetails?.maqam
                   ? "Maqam"
                   : ""}
-                <h4 className="text-gray-400 font-bold">
+                <h4 class="font-inter text-secondaryText text-[12px] font-medium leading-[28px] text-left">
                   {areaDetails?.parentType === "Ilaqa"
                     ? areaDetails?.parentId?.name
                     : areaDetails?.parentType === "Maqam"
@@ -1739,8 +1777,8 @@ export const DeleteUser = () => {
                 !areaDetails?.parentType === "Division" && (
                   <>
                     <div className="w-full flex justify-start items-center gap-5">
-                      <h5> District:</h5>
-                      <h4 className="text-gray-400 font-bold">
+                      <h5 class="font-inter text-heading text-[16px] font-medium leading-[28px] text-left"> District:</h5>
+                      <h4 class="font-inter text-secondaryText text-[14px] font-medium leading-[28px] text-left">
                         {areaDetails?.parentId?.district
                           ? areaDetails?.parentId?.district?.name
                           : "Not a District aera"}
@@ -1748,7 +1786,7 @@ export const DeleteUser = () => {
                     </div>
                     <div className="w-full flex justify-start items-center gap-5">
                       <h5>Division:</h5>
-                      <h4 className="text-gray-400 font-bold">
+                      <h4 class="font-inter text-secondaryText text-[14px] font-medium leading-[28px] text-left">
                         {areaDetails?.parentId?.district
                           ? areaDetails?.parentId?.district?.division?.name
                           : areaDetails?.division?.name}
@@ -1758,8 +1796,8 @@ export const DeleteUser = () => {
                 )}
               {areaDetails?.parentType === "Ilaqa" && (
                 <div className="w-full flex justify-start items-center gap-5">
-                  <h5>Maqam:</h5>
-                  <h4 className="text-gray-400 font-bold">
+                  <h5 class="font-inter text-heading text-[16px] font-medium leading-[28px] text-left">Maqam:</h5>
+                  <h4 class="font-inter text-secondaryText text-[14px] font-medium leading-[28px] text-left">
                     {areaDetails?.parentType === "Ilaqa"
                       ? areaDetails?.parentId?.maqam?.name
                       : ""}
@@ -1769,8 +1807,8 @@ export const DeleteUser = () => {
 
               {!areaDetails?.country && areaDetails.name !== "Pakistan" && (
                 <div className="w-full flex justify-start items-center gap-5">
-                  <h4>Province:</h4>
-                  <h4 className="text-gray-400 font-bold">
+                  <h4 class="font-inter text-heading text-[16px] font-medium leading-[28px] text-left">Province:</h4>
+                  <h4 class="font-inter text-secondaryText text-[14px] font-medium leading-[28px] text-left">
                     {areaDetails?.parentType === "Ilaqa"
                       ? areaDetails?.parentId?.maqam?.province?.name
                       : areaDetails?.parentType === "Maqam"
@@ -1789,8 +1827,8 @@ export const DeleteUser = () => {
                 </div>
               )}
               <div className="w-full flex justify-start items-center gap-5">
-                <h5>Country:</h5>
-                <h4 className="text-gray-400 font-bold">Pakistan</h4>
+                <h5 class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">Country:</h5>
+                <h4 class="font-inter text-secondaryText text-[14px] font-medium leading-[28px] text-left">Pakistan</h4>
               </div>
             </div>
             <div className="modal-action w-full">

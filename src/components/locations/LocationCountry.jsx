@@ -107,7 +107,7 @@ export const LocationCountry = () => {
           <tbody>
             {data?.map((province, index) => (
               <tr key={index} className="border border-t-0">
-                <td className="p-3  font-bold">{province?.name}</td>
+                <td className="font-inter text-[14px] font-medium leading-[16.94px] text-left">{province?.name}</td>
                 <td className="flex justify-end items-center gap-4 ">
                   <button
                     disabled={loading}
