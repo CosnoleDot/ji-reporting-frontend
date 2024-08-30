@@ -1,16 +1,20 @@
 import { Link, useNavigate } from "react-router-dom";
 import { CiLocationOn } from "react-icons/ci";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { UIContext } from "../context/ui";
 import { MeContext } from "../context";
 import { HiOutlineHome } from "react-icons/hi2";
 import { VscGraph } from "react-icons/vsc";
 import { IoIosGitCompare } from "react-icons/io";
+import Logo from "../assets/jpgs/profile.jpeg"
 import { LuUsers } from "react-icons/lu";
 import { CiLogout } from "react-icons/ci";
 export const BottomNav = ({ active }) => {
   const { isCompleted } = useContext(UIContext);
   const me = useContext(MeContext);
+  const profileImageUrl = me?.profileImage
+    ? `http://localhost:5000/api/v1/user/upload/${me.profileImage}`
+    : Logo;
   const navigate = useNavigate();
   const user = localStorage.getItem("@type");
   const route = {
@@ -34,15 +38,15 @@ export const BottomNav = ({ active }) => {
         return "/"; // Default route if user type doesn't match any case
     }
   })();
-
+ 
   return (
     <div className="w-full  h-[calc(100vh-65.6px)] bg-white text-gray-300 flex flex-col border-r border-inputBorder">
       {/* Dashboard Link */}
       <div className="flex flex-col w-full gap-4 p-4 mb-4 border-b border-inputBorder">
-        <div className="flex items-center gap-8">
+        <div className="flex items-center gap-8 ">
           <img
-            class="w-20 h-20 rounded-full"
-            src="/pofile.jpeg"
+            class="w-20 h-20 rounded-full border border-primary"
+            src={profileImageUrl}
             alt="Rounded avatar"
           />
           <div>

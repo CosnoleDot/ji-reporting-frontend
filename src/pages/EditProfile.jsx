@@ -1,18 +1,74 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import { GeneralLayout } from "../components";
 import instance from "../api/instrance";
 import { MeContext, useToastState } from "../context";
 import { UIContext } from "../context/ui";
 import { decryptData } from "../utils";
-import logo from "../assets/jpgs/profile.jpg";
+import logo from "../assets/jpgs/profile.jpeg";
 import { IoCameraOutline } from "react-icons/io5";
+import axios from "axios";
+
 export const EditProfile = () => {
   const me = useContext(MeContext);
   const { getMe } = useContext(UIContext);
   const [selectedSubject, setSelectedSubject] = useState("");
   const [subject, setSubject] = useState("");
   const [subjects, setSubjects] = useState([]);
+  const [file, setFile] = useState();
   const { dispatch } = useToastState();
+  const [image, setImage] = useState(null);
+  const fileInputRef = useRef(null);
+  const handleImage = (e) => {
+    setImage(URL.createObjectURL(e.target.files[0]));
+    setFile(e.target.files[0]);
+  };
+
+  const uploadImage = async () => {
+    if (!file) return; // Do nothing if no image
+
+    try {
+      const formData = new FormData();
+      formData.append("profileImage", file);
+      const response = await axios.post(
+        `http://localhost:5000/api/v1/user/upload`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
+        }
+      );
+      return dispatch({ type: "SUCCESS", payload: response?.data?.message });
+    } catch (error) {
+      console.log("Error occurred", error);
+      throw error;
+    }
+  };
+  const updateImage = async () => {
+    if (!file) return;
+
+    try {
+      const formData = new FormData();
+      formData.append("profileImage", file);
+      const response = await axios.put(
+        `http://localhost:5000/api/v1/user/upload/${me?.profileImage}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
+        }
+      );
+      dispatch({ type: "SUCCESS", payload: response?.data?.message });
+      return  window.location.reload(); 
+    } catch (error) {
+      console.log("Error occurred", error);
+      throw error;
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -47,8 +103,6 @@ export const EditProfile = () => {
     }
   };
 
-  // FETCH ALL SUBJECTS
-
   const getSubjects = async () => {
     try {
       const request = await instance.get("/subjects", {
@@ -61,11 +115,12 @@ export const EditProfile = () => {
       console.log(error);
     }
   };
+
   const handleSubjectChange = (e) => {
     const value = e.target.value;
     setSelectedSubject(value);
   };
-  // ADD NEW SUBJECT CALL
+
   const addNewSubjectCall = async () => {
     document.getElementById("subject").setAttribute("disabled", true);
     try {
@@ -83,18 +138,22 @@ export const EditProfile = () => {
       document.getElementById("subject").removeAttribute("disabled");
     }
   };
+
   useEffect(() => {
     getSubjects();
   }, []);
+
   useEffect(() => {
     const sub = subjects.find((f) => f?._id === me?.subject);
     setSubject(sub?.title);
   }, [me?.subject, subjects]);
+
   useEffect(() => {
     setSelectedSubject(me?.subject);
   }, [me]);
+
   return (
-    <GeneralLayout active={'profile'}>
+    <GeneralLayout active={"profile"}>
       <div className="flex flex-col justify-start h-[calc(100vh-64px-64px)] overflow-hidden overflow-y-scroll">
         <div className="w-full flex   justify-between  items-center p-4">
           <div className="w-full  flex flex-col">
@@ -370,23 +429,46 @@ export const EditProfile = () => {
               </form>
             )}
           </div>
-          <div className="w-full md:w-[30%]  bg-white md:h-full flex justify-center items-start mt-[5rem]">
-            <div className=" border border-[#ccc] w-[90%] md:w-[80%] p-6  bg-white rounded-2xl space-y-4  flex justify-start items-center flex-col">
+          <div className="w-full md:w-[30%] bg-white md:h-full flex justify-center items-start mt-[5rem]">
+            <div className="border border-[#ccc] w-[90%] md:w-[80%] p-6 bg-white rounded-2xl space-y-4 flex justify-start items-center flex-col">
               <div className="w-[140px] h-[140px] flex justify-center items-center relative border border-dashed border-secondaryText rounded-full">
                 <div
-                  className="rounded-full w-[130px] h-[130px] bg-contain"
-                  style={{ backgroundImage: `url(${logo})` }}
+                  className="rounded-full w-[130px] h-[130px] bg-contain bg-center bg-no-repeat"
+                  style={{
+                    backgroundImage: image
+                      ? `url(${image})` // Display the selected file if available
+                      : me?.profileImage
+                      ? `url(http://localhost:5000/api/v1/user/upload/${me?.profileImage})` // Display profileImage if available
+                      : `url(${logo})`, // Fallback to the logo
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "cover",
+                  }}
                 ></div>
-                <button className="absolute bg-[#f1f1f6] w-8 h-8 flex justify-center items-center rounded-full top-[80%] right-[18%]">
+                <button
+                  className="absolute bg-[#f1f1f6] w-8 h-8 flex justify-center items-center rounded-full top-[80%] right-[18%]"
+                  onClick={() => fileInputRef.current.click()}
+                >
                   <IoCameraOutline className="text-lg" />
                 </button>
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  style={{ display: "none" }}
+                  accept="image/jpeg, image/png"
+                  onChange={handleImage}
+                />
               </div>
               <p className="text-center text-secondaryText">
-                Allowed *.jpeg, *.jpg , *.png max size of 5 Mb
+                Allowed *.jpeg, *.jpg, *.png max size of 5 MB
               </p>
               <div>
-                <button className="px-4 py-2 rounded-md bg-primary text-white capitalize">
-                  Upload Profile Picture
+                <button
+                  onClick={me?.profileImage ? updateImage : uploadImage}
+                  className="px-4 py-2 rounded-md bg-primary text-white capitalize"
+                >
+                  { me?.profileImage
+                    ? "Change Profile Picture"
+                    : "Upload Profile Picture"}
                 </button>
               </div>
             </div>
