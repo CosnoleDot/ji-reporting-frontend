@@ -8,6 +8,7 @@ import logo from "../assets/jpgs/profile.jpeg";
 import { IoCameraOutline } from "react-icons/io5";
 import axios from "axios";
 
+import { useNavigate } from "react-router-dom";
 export const EditProfile = () => {
   const me = useContext(MeContext);
   const { getMe } = useContext(UIContext);
@@ -161,13 +162,13 @@ export const EditProfile = () => {
             <p className="text-gray-500">Edit Your Profile</p>
           </div>
           <div className="flex md:flex-row flex-col w-full items-center justify-start md:justify-end gap-2 p-2 overflow-hidden overflow-x-scroll">
-            <button className="py-1 px-4 rounded-md bg-primary text-white border-none capitalize">
+            <button onClick={()=> navigate("/change-password")} className="py-1 px-4 rounded-md bg-primary text-white border-none capitalize">
               Change Password
             </button>
           </div>
         </div>
         <div className="divider mt-0 mb-0"></div>
-        <div className="w-full flex  md:flex-row flex-col-reverse justify-start items-center gap-3">
+        <div className="w-full flex  md:flex-row flex-col-reverse justify-start gap-3">
           <div className="w-full md:w-[65%]  p-6 m-auto bg-white rounded-md  ">
             {me && (
               <form className="space-y-4 mb-12" onSubmit={handleSubmit}>
@@ -175,7 +176,7 @@ export const EditProfile = () => {
                   <div className="w-full flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col ">
                     <div className="w-full">
                       <label className="label">
-                        <span className="text-base label-text font-semibold">
+                        <span className="text-base label-text font-semibold font-inter">
                           Full Name
                         </span>
                       </label>
@@ -184,13 +185,13 @@ export const EditProfile = () => {
                         type="text"
                         placeholder="Full Name"
                         name="name"
-                        className="w-full input input-bordered input-sm "
+                        className="w-full input input-bordered input-sm font-inter"
                         defaultValue={me?.name}
                       />
                     </div>
                     <div className="w-full">
                       <label className="label">
-                        <span className="text-base label-text font-semibold">
+                        <span className="text-base label-text font-semibold font-inter">
                           Father Name
                         </span>
                       </label>
@@ -199,7 +200,7 @@ export const EditProfile = () => {
                         type="text"
                         placeholder="No data"
                         name="fatherName"
-                        className="w-full input input-bordered input-sm "
+                        className="w-full input input-bordered input-sm font-inter"
                         defaultValue={me?.fatherName}
                       />
                     </div>
@@ -207,7 +208,7 @@ export const EditProfile = () => {
                   <div className="w-full flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col ">
                     <div className="w-[50%]">
                       <label className="label">
-                        <span className="text-base label-text font-semibold">
+                        <span className="text-base label-text font-semibold font-inter">
                           Date of birth
                         </span>
                       </label>
@@ -216,7 +217,7 @@ export const EditProfile = () => {
                         type="month"
                         placeholder="No data"
                         name="dob"
-                        className="w-full input input-bordered input-sm  "
+                        className="w-full input input-bordered input-sm font-inter "
                         defaultValue={me?.dob?.split("-").slice(0, 2).join("-")}
                       />
                     </div>
@@ -224,7 +225,7 @@ export const EditProfile = () => {
                   <div className="w-full flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col ">
                     <div className="w-full">
                       <label className="label">
-                        <span className="text-base label-text font-semibold">
+                        <span className="text-base label-text font-semibold font-inter">
                           Qualifications
                         </span>
                       </label>
@@ -232,7 +233,7 @@ export const EditProfile = () => {
                         required
                         defaultValue={me?.qualification}
                         name="qualification"
-                        className="select select-bordered select-sm w-full"
+                        className="select select-bordered select-sm w-full font-inter"
                       >
                         <option value={""}>Qualification</option>
                         <option value={"matric"}>Matric</option>
@@ -244,7 +245,7 @@ export const EditProfile = () => {
                     </div>
                     <div className="w-full relative">
                       <label className="label">
-                        <span className="text-base label-text font-semibold">
+                        <span className="text-base label-text font-semibold font-inter">
                           Subject
                         </span>
                       </label>
@@ -253,12 +254,15 @@ export const EditProfile = () => {
                         required
                         name="subject"
                         id="subject"
-                        className="select select-bordered select-sm w-full capitalize"
+                        className="select select-bordered select-sm w-full capitalize font-inter"
                         onChange={handleSubjectChange}
                         defaultValue={selectedSubject}
                       >
                         {me?.subject ? (
-                          <option className="capitalize" value={me?.subject}>
+                          <option
+                            className="capitalize font-inter"
+                            value={me?.subject}
+                          >
                             {subjects
                               ?.find((i) => i?._id === me?.subject)
                               ?.title.split("_")
@@ -280,7 +284,7 @@ export const EditProfile = () => {
                           ))}
                       </select>
                       <span
-                        className="text-sm absolute top-1 p-1 right-0 text-slate-500 cursor-pointer hover:text-primary hover:font-semibold"
+                        className="text-sm font-inter absolute top-1 p-1 right-0 text-slate-500 cursor-pointer hover:text-primary hover:font-semibold"
                         onClick={() =>
                           document
                             .getElementById("add_subject_modal")
@@ -294,7 +298,7 @@ export const EditProfile = () => {
                   <div className="w-full flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col ">
                     <div className="w-full">
                       <label className="label">
-                        <span className="text-base label-text font-semibold">
+                        <span className="text-base label-text font-semibold font-inter">
                           Semester/Year
                         </span>
                       </label>
@@ -302,7 +306,7 @@ export const EditProfile = () => {
                         required
                         defaultValue={me?.semester}
                         name="semester"
-                        className="select select-bordered select-sm w-full "
+                        className="select select-bordered select-sm w-full font-inter"
                       >
                         <option value={""}>Semester/Year</option>
                         <option value={"semester 1"}>Semester 1</option>
@@ -326,7 +330,7 @@ export const EditProfile = () => {
                     </div>
                     <div className="w-full">
                       <label className="label">
-                        <span className="text-base label-text font-semibold">
+                        <span className="text-base label-text font-semibold font-inter">
                           Institution
                         </span>
                       </label>
@@ -336,14 +340,14 @@ export const EditProfile = () => {
                         type="text"
                         placeholder="No data"
                         name="institution"
-                        className="w-full input input-bordered input-sm "
+                        className="w-full input input-bordered input-sm font-inter"
                       />
                     </div>
                   </div>
                   <div className="w-full flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col ">
                     <div className="w-full">
                       <label className="label">
-                        <span className="text-base label-text font-semibold">
+                        <span className="text-base label-text font-semibold font-inter">
                           Email
                         </span>
                       </label>
@@ -353,12 +357,12 @@ export const EditProfile = () => {
                         type="email"
                         placeholder="No data"
                         name="email"
-                        className="w-full input input-bordered input-sm "
+                        className="w-full input input-bordered input-sm font-inter"
                       />
                     </div>
                     <div className="w-full">
                       <label className="label">
-                        <span className="text-base label-text font-semibold">
+                        <span className="text-base label-text font-semibold font-inter">
                           Age
                         </span>
                       </label>
@@ -368,14 +372,14 @@ export const EditProfile = () => {
                         type="number"
                         placeholder="No data"
                         name="age"
-                        className="w-full input input-bordered input-sm "
+                        className="w-full input input-bordered input-sm font-inter"
                       />
                     </div>
                   </div>
                   <div className="w-full flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col ">
                     <div className="w-full">
                       <label className="label">
-                        <span className="text-base label-text font-semibold">
+                        <span className="text-base label-text font-semibold font-inter">
                           Phone Number
                         </span>
                       </label>
@@ -385,12 +389,12 @@ export const EditProfile = () => {
                         type="text"
                         placeholder="No data"
                         name="phoneNumber"
-                        className="w-full input input-bordered input-sm "
+                        className="w-full input input-bordered input-sm font-inter"
                       />
                     </div>
                     <div className="w-full">
                       <label className="label">
-                        <span className="text-base label-text font-semibold">
+                        <span className="text-base label-text font-semibold font-inter">
                           WhatsApp Number
                         </span>
                       </label>
@@ -400,21 +404,21 @@ export const EditProfile = () => {
                         type="text"
                         placeholder="No data "
                         name="whatsAppNumber"
-                        className="w-full input input-bordered input-sm "
+                        className="w-full input input-bordered input-sm font-inter"
                       />
                     </div>
                   </div>
                   <div className="w-full flex items-start justify-start">
                     <div className="w-full">
                       <label className="label">
-                        <span className="text-base label-text font-semibold">
+                        <span className="text-base label-text font-semibold font-inter">
                           Home address
                         </span>
                       </label>
                       <textarea
                         placeholder="No data"
                         name="address"
-                        className="w-full input input-bordered  "
+                        className="w-full input input-bordered font-inter"
                         required
                         defaultValue={decryptData(me?.address)}
                       ></textarea>
@@ -422,7 +426,7 @@ export const EditProfile = () => {
                   </div>
                 </div>
                 <div>
-                  <button className=" px-4 py-2 rounded-md text-white bg-primary">
+                  <button className=" px-4 py-2 rounded-md text-white bg-primary font-inter">
                     Update Account
                   </button>
                 </div>
@@ -477,11 +481,11 @@ export const EditProfile = () => {
       </div>
       <dialog id="add_subject_modal" className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Add Subject</h3>
+          <h3 className="font-bold text-lg font-inter">Add Subject</h3>
           <div className="space-y-4">
             <div>
               <label className="label">
-                <span className="text-base label-text font-semibold">
+                <span className="text-base label-text font-semibold font-inter">
                   Subject
                 </span>
               </label>
@@ -492,7 +496,7 @@ export const EditProfile = () => {
                 placeholder="Enter Subject Name"
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
-                className="w-full input input-bordered input-sm "
+                className="w-full input input-bordered input-sm font-inter"
               />
             </div>
           </div>
@@ -501,13 +505,13 @@ export const EditProfile = () => {
               <div className=" w-full flex justify-end gap-3 items-center">
                 <button
                   id="close-division-modal"
-                  className="p-5 py-3 rounded-md bg-slate-400 text-white font-semibold border ms-3"
+                  className="p-5 py-3 rounded-md bg-slate-400 font-inter text-white font-semibold border ms-3"
                 >
                   Cancel
                 </button>
                 <button
                   id="close-division-modal"
-                  className="btn ms-3 capitalize"
+                  className="btn ms-3 capitalize font-inter"
                   onClick={addNewSubjectCall}
                 >
                   Add
