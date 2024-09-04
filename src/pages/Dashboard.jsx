@@ -590,7 +590,7 @@ export const Dashboard = () => {
                   getData();
                   getPsersonalReports();
                 }}
-                className="bg-primary mt-8 flex items-center gap-2 p-2 rounded w-full md:w-auto border-none capitalize text-white "
+                className="bg-primary mt-8 flex items-center justify-center gap-2 p-2 rounded w-full md:w-auto border-none capitalize text-white "
               >
                 See Reports Status
                 <FaArrowDown />
