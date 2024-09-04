@@ -306,8 +306,8 @@ export const ProvinceReports = () => {
               id="items"
               className="select select-sm max-w-xs bg-gray-200 rounded-full"
             >
-              <option value="" disabled selected>
-                rows per page 10
+              <option value="text-[8px]" disabled selected>
+                Rows per page 10
               </option>
             </select>
 
@@ -329,7 +329,7 @@ export const ProvinceReports = () => {
               <span
                 className={`rounded-full text-bold text-sm ${
                   currentPage === 1 && "border-2 border-gray-500"
-                } mx-1 bg-white w-7 h-7 flex justify-center items-center`}
+                } mx-1 bg-white text-[8px] w-7 h-7 flex justify-center items-center`}
               >
                 1
               </span>
@@ -338,7 +338,7 @@ export const ProvinceReports = () => {
                 <button
                   className={`rounded-full text-bold text-sm ${
                     currentPage === 2 && "border-2 border-gray-500"
-                  } mx-1 bg-white w-7 h-7 flex justify-center items-center`}
+                  } mx-1 bg-white text-[8px] w-7 h-7 flex justify-center items-center`}
                 >
                   2
                 </button>
@@ -348,7 +348,7 @@ export const ProvinceReports = () => {
                 <span
                   className={`rounded-full text-bold text-sm ${
                     currentPage !== totalPages && "border-2 border-gray-500"
-                  } mx-1 bg-white w-7 h-7 flex justify-center items-center`}
+                  } mx-1 bg-white text-[8px] w-7 h-7 flex justify-center items-center`}
                 >
                   {currentPage}
                 </span>
@@ -357,7 +357,7 @@ export const ProvinceReports = () => {
                 <span
                   className={`rounded-full text-bold text-sm ${
                     currentPage === totalPages && "border-2 border-gray-500"
-                  } mx-1 bg-white w-7 h-7 flex justify-center items-center`}
+                  } mx-1 bg-white text-[8px] w-7 h-7 flex justify-center items-center`}
                 >
                   {totalPages}
                 </span>

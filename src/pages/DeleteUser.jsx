@@ -375,25 +375,25 @@ export const DeleteUser = () => {
           <table className="w-full">
             <thead>
               <tr className="">
-                <th class="font-inter text-[12px] md:text-[14px] font-medium leading-[16.94px]  text-secondaryText">
+                <th class="font-inter text-[12px] md:text-[14px] font-medium leading-[16.94px]  text-secondaryText text-left">
                   Name
                 </th>
-                <th class="font-inter text-[12px] md:text-[14px] font-medium leading-[16.94px]  text-secondaryText">
+                <th class="font-inter text-[12px] md:text-[14px] font-medium leading-[16.94px]  text-secondaryText text-left">
                   Nazim Type
                 </th>
-                <th class="font-inter text-[12px] md:text-[14px] font-medium leading-[16.94px]  text-secondaryText">
+                <th class="font-inter text-[12px] md:text-[14px] font-medium leading-[16.94px]  text-secondaryText text-left">
                   Email
                 </th>
-                <th class="font-inter text-[12px] md:text-[14px] font-medium leading-[16.94px]  text-secondaryText">
+                <th class="font-inter text-[12px] md:text-[14px] font-medium leading-[16.94px]  text-secondaryText text-left">
                   Area
                 </th>
-                <th class="font-inter text-[12px] md:text-[14px] font-medium leading-[16.94px]  text-secondaryText">
+                <th class="font-inter text-[12px] md:text-[14px] font-medium leading-[16.94px]  text-secondaryText text-left">
                   Country
                 </th>
-                <th class="font-inter text-[12px] md:text-[14px] font-medium leading-[16.94px]  text-secondaryText">
+                <th class="font-inter text-[12px] md:text-[14px] font-medium leading-[16.94px]  text-secondaryText text-left">
                   Status
                 </th>
-                <th class="font-inter text-[12px] md:text-[14px] font-medium leading-[16.94px]  text-secondaryText">
+                <th class="font-inter text-[12px] md:text-[14px] font-medium leading-[16.94px]  text-secondaryText text-left">
                   Action
                 </th>
               </tr>
@@ -510,8 +510,8 @@ export const DeleteUser = () => {
             id="items"
             className="select select-sm max-w-xs bg-gray-200 rounded-full"
           >
-            <option value="" disabled selected>
-              rows per page 10
+            <option value="text-[8px]" disabled selected>
+              Rows per page 10
             </option>
           </select>
 
@@ -533,7 +533,7 @@ export const DeleteUser = () => {
             {totalPages>1 && <span
               className={`rounded-full text-bold text-sm ${
                 currentPage === 1 && "border-2 border-gray-500"
-              } mx-1 bg-white w-7 h-7 flex justify-center items-center`}
+              } mx-1 bg-white w-7 h-7 flex justify-center items-center text-[8px]`}
             >
               1
             </span>}
@@ -542,7 +542,7 @@ export const DeleteUser = () => {
               <button
                 className={`rounded-full text-bold text-sm ${
                   currentPage === 2 && "border-2 border-gray-500"
-                } mx-1 bg-white w-7 h-7 flex justify-center items-center`}
+                } mx-1 bg-white w-7 h-7 flex justify-center items-center text-[8px]`}
               >
                 2
               </button>
@@ -552,7 +552,7 @@ export const DeleteUser = () => {
               <span
                 className={`rounded-full text-bold text-sm ${
                   currentPage !== totalPages && "border-2 border-gray-500"
-                } mx-1 bg-white w-7 h-7 flex justify-center items-center`}
+                } mx-1 bg-white w-7 h-7 flex justify-center items-center text-[8px]`}
               >
                 {currentPage}
               </span>
@@ -561,7 +561,7 @@ export const DeleteUser = () => {
               <span
                 className={`rounded-full text-bold text-sm ${
                   currentPage === totalPages && "border-2 border-gray-500"
-                } mx-1 bg-white w-7 h-7 flex justify-center items-center`}
+                } mx-1 bg-white w-7 h-7 flex justify-center items-center text-[8px]`}
               >
                 {totalPages}
               </span>

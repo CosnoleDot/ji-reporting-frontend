@@ -783,8 +783,8 @@ export const LocationDivision = () => {
             id="items"
             className="select select-sm max-w-xs bg-gray-200 rounded-full"
           >
-            <option value="" disabled selected>
-              rows per page 10
+            <option value="text-[8px]" disabled selected>
+              Rows per page 10
             </option>
           </select>
 
@@ -794,29 +794,48 @@ export const LocationDivision = () => {
             disabled={currentPage === 1}
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           >
-            <IoIosArrowBack className={`text-[1.5rem] rounded-full bg-gray-200 ${currentPage===1 && 'text-gray-400'}`} />
+            <IoIosArrowBack
+              className={`text-[1.5rem] rounded-full bg-gray-200 ${
+                currentPage === 1 && "text-gray-400"
+              }`}
+            />
           </button>
 
           {/* Page Numbers */}
           <div className="flex items-center">
-          
-              <span className={`rounded-full text-bold text-sm ${currentPage===1 && 'border-2 border-gray-500'} mx-1 bg-white w-7 h-7 flex justify-center items-center`}>
-                1
-              </span>
-          
+            <span
+              className={`rounded-full text-bold text-sm ${
+                currentPage === 1 && "border-2 border-gray-500"
+              } mx-1 bg-white w-7 h-7 flex justify-center items-center text-[8px]`}
+            >
+              1
+            </span>
+
             {totalPages > 1 && (
-              <button className={`rounded-full text-bold text-sm ${currentPage===2 && 'border-2 border-gray-500'} mx-1 bg-white w-7 h-7 flex justify-center items-center`}>
+              <button
+                className={`rounded-full text-bold text-sm ${
+                  currentPage === 2 && "border-2 border-gray-500"
+                } mx-1 bg-white w-7 h-7 flex justify-center items-center text-[8px]`}
+              >
                 2
               </button>
             )}
             {totalPages > 3 && <span>...</span>}
-            {totalPages && currentPage>2 && currentPage<totalPages && (
-              <span className={`rounded-full text-bold text-sm ${currentPage !== totalPages && 'border-2 border-gray-500'} mx-1 bg-white w-7 h-7 flex justify-center items-center`}>
+            {totalPages && currentPage > 2 && currentPage < totalPages && (
+              <span
+                className={`rounded-full text-bold text-sm ${
+                  currentPage !== totalPages && "border-2 border-gray-500"
+                } mx-1 bg-white w-7 h-7 flex justify-center items-center text-[8px]`}
+              >
                 {currentPage}
               </span>
             )}
             {totalPages && (
-              <span className={`rounded-full text-bold text-sm ${currentPage===totalPages && 'border-2 border-gray-500'} mx-1 bg-white w-7 h-7 flex justify-center items-center`}>
+              <span
+                className={`rounded-full text-bold text-sm ${
+                  currentPage === totalPages && "border-2 border-gray-500"
+                } mx-1 bg-white w-7 h-7 flex justify-center items-center text-[8px]`}
+              >
                 {totalPages}
               </span>
             )}
@@ -830,7 +849,11 @@ export const LocationDivision = () => {
               setCurrentPage((prev) => Math.min(prev + 1, totalPages))
             }
           >
-            <IoIosArrowForward className={`text-[1.5rem] rounded-full bg-gray-200 ${currentPage===totalPages && 'text-gray-400'}`}/>
+            <IoIosArrowForward
+              className={`text-[1.5rem] rounded-full bg-gray-200 ${
+                currentPage === totalPages && "text-gray-400"
+              }`}
+            />
           </button>
         </div>
       )}

@@ -204,8 +204,8 @@ export const LocationIlaqa = () => {
           id="items"
           className="select select-sm max-w-xs bg-gray-200 rounded-full"
         >
-          <option value="" disabled selected>
-            rows per page 10
+          <option value="text-[8px]" disabled selected>
+            Rows per page 10
           </option>
         </select>
 
@@ -221,19 +221,19 @@ export const LocationIlaqa = () => {
         {/* Page Numbers */}
         <div className="flex items-center">
           {totalPages > 1 && (
-            <span className="rounded-full  border border-gray-500 border-1 mx-1 bg-white w-7 h-7 flex justify-center items-center">
+            <span className="rounded-full  border border-gray-500 border-1 mx-1 bg-white w-7 h-7 flex justify-center items-center text-[8px]">
               1
             </span>
           )}
           {totalPages > 2 && (
-            <button className="rounded-full  border border-gray-500 border-1 mx-1 bg-white w-7 h-7 flex justify-center items-center">
+            <button className="rounded-full  border border-gray-500 border-1 mx-1 bg-white w-7 h-7 flex justify-center items-center text-[8px]">
               2
             </button>
           )}
           {totalPages > 3 && <span>...</span>}
 
           {totalPages && (
-            <span className="rounded-full  border border-gray-500 border-1 mx-1 bg-white w-7 h-7 flex justify-center items-center">
+            <span className="rounded-full  border border-gray-500 border-1 mx-1 bg-white w-7 h-7 flex justify-center items-center text-[8px]">
               {totalPages}
             </span>
           )}

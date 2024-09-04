@@ -382,8 +382,8 @@ export const HalqaReports = () => {
               id="items"
               className="select select-sm max-w-xs bg-gray-200 rounded-full"
             >
-              <option value="" disabled selected>
-                rows per page 10
+              <option value="text-[8px]" disabled selected>
+                Rows per page 10
               </option>
             </select>
 
@@ -402,19 +402,19 @@ export const HalqaReports = () => {
 
             {/* Page Numbers */}
             <div className="flex items-center">
-              <span
+              {totalPages>1 && <span
                 className={`rounded-full text-bold text-sm ${
                   currentPage === 1 && "border-2 border-gray-500"
-                } mx-1 bg-white w-7 h-7 flex justify-center items-center`}
+                } mx-1 bg-white w-7 h-7 flex justify-center items-center text-[8px]`}
               >
                 1
-              </span>
+              </span>}
 
               {totalPages > 1 && (
                 <button
                   className={`rounded-full text-bold text-sm ${
                     currentPage === 2 && "border-2 border-gray-500"
-                  } mx-1 bg-white w-7 h-7 flex justify-center items-center`}
+                  } mx-1 bg-white w-7 h-7 flex justify-center items-center text-[8px]`}
                 >
                   2
                 </button>
@@ -424,7 +424,7 @@ export const HalqaReports = () => {
                 <span
                   className={`rounded-full text-bold text-sm ${
                     currentPage !== totalPages && "border-2 border-gray-500"
-                  } mx-1 bg-white w-7 h-7 flex justify-center items-center`}
+                  } mx-1 bg-white w-7 h-7 flex justify-center items-center text-[8px]`}
                 >
                   {currentPage}
                 </span>
@@ -433,7 +433,7 @@ export const HalqaReports = () => {
                 <span
                   className={`rounded-full text-bold text-sm ${
                     currentPage === totalPages && "border-2 border-gray-500"
-                  } mx-1 bg-white w-7 h-7 flex justify-center items-center`}
+                  } mx-1 bg-white w-7 h-7 flex justify-center items-center text-[8px]`}
                 >
                   {totalPages}
                 </span>
