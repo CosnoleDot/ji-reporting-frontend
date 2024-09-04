@@ -4,14 +4,13 @@ import { FaBell, FaUserPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { FaRegUserCircle } from "react-icons/fa";
 import { IoMdArrowRoundBack } from "react-icons/io";
-
+import { RxCross2 } from "react-icons/rx";
 import { UIContext } from "../../context/ui";
 import { MeContext } from "../../context";
 import { AiOutlineMenu } from "react-icons/ai";
-import { RxCross2 } from "react-icons/rx";
-export const Navbar = ({ title , setIsSideBarOpen ,isSideBarOpen }) => {
+export const Navbar = ({ title, setIsSideBarOpen, isSideBarOpen }) => {
   const navigate = useNavigate();
- 
+
   const [requests, showRequests] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [profileTab, showProfileTab] = useState(false);
@@ -58,12 +57,23 @@ export const Navbar = ({ title , setIsSideBarOpen ,isSideBarOpen }) => {
           <span className="text-[18px] font-black font-inter leading-5 md:block hidden">
             IJT REPORTING
           </span>
-          {!isSideBarOpen ? <span className="md:hidden block cursor-pointer" >
-            <AiOutlineMenu width={12} height={12} onClick={()=>setIsSideBarOpen(true)}/>
-          </span> :
-          <span className="md:hidden block cursor-pointer" >
-            <RxCross2 width={12} height={12} onClick={()=>setIsSideBarOpen(false)}/>
-          </span>}
+          {!isSideBarOpen ? (
+            <span className="md:hidden block cursor-pointer">
+              <AiOutlineMenu
+                width={12}
+                height={12}
+                onClick={() => setIsSideBarOpen(true)}
+              />
+            </span>
+          ) : (
+            <span className="md:hidden block cursor-pointer">
+              <RxCross2
+                width={12}
+                height={12}
+                onClick={() => setIsSideBarOpen(false)}
+              />
+            </span>
+          )}
         </div>
         <div className="flex-none">
           {localStorage.getItem("@type") !== "country" && (
@@ -79,7 +89,7 @@ export const Navbar = ({ title , setIsSideBarOpen ,isSideBarOpen }) => {
                   setShowNotifications(!showNotifications);
                   showRequests(false);
                   showProfileTab(false);
-                  setIsSideBarOpen(false)
+                  setIsSideBarOpen(false);
                 }}
               >
                 <div className="indicator">
@@ -103,7 +113,7 @@ export const Navbar = ({ title , setIsSideBarOpen ,isSideBarOpen }) => {
                     setShowNotifications(false);
                     showRequests(!requests);
                     showProfileTab(false);
-                    setIsSideBarOpen(false)
+                    setIsSideBarOpen(false);
                   }}
                 >
                   <div className="indicator">
@@ -124,10 +134,20 @@ export const Navbar = ({ title , setIsSideBarOpen ,isSideBarOpen }) => {
           ref={requestsRef}
           className="top-0 right-0 lg:right-0 fixed z-[1] w-[calc(100%-20px)] lg:w-[420px] h-screen bg-white border overflow-hidden"
         >
-           <div className=" py-2 w-full cursor-pointer md:hidden flex" onClick={()=> {showRequests(false); setIsSideBarOpen(false)}}>
-        <IoMdArrowRoundBack className="h-7 w-7"/>
-      </div>
-          <h2 className="p-5 font-bold text-xl">User Request(s)</h2>
+          <div
+            className=" py-2 w-full cursor-pointer flex items-center justify-between"
+            onClick={() => {
+              showRequests(false);
+              setIsSideBarOpen(false);
+            }}
+          >
+            <h2 className="p-5 font-bold text-xl">User Request(s)</h2>
+            <div className="mr-4  md:hidden ">
+              {" "}
+              <RxCross2 className="h-5 w-5" />
+            </div>
+          </div>
+
           <Notifications userRequests={userRequests} type="request" />
         </div>
       )}
@@ -138,10 +158,20 @@ export const Navbar = ({ title , setIsSideBarOpen ,isSideBarOpen }) => {
           ref={notificationsRef}
           className=" top-0 right-0 lg:right-0 fixed z-[1] w-[calc(100%-20px)] lg:w-[420px] h-screen bg-white border overflow-hidden"
         >
-          <div className=" py-2 w-full cursor-pointer md:hidden flex" onClick={()=> {setShowNotifications(false); setIsSideBarOpen(false)}}>
-        <IoMdArrowRoundBack className="h-7 w-7"/>
-      </div>
-          <h2 className="p-5 font-bold text-xl">Notification(s)</h2>
+          <div
+            className=" py-2 w-full cursor-pointer flex items-center justify-between"
+            onClick={() => {
+              setShowNotifications(false);
+              setIsSideBarOpen(false);
+            }}
+          >
+            <h2 className="p-5 font-bold text-xl">Notification(s)</h2>
+            <div className="mr-4  md:hidden ">
+              {" "}
+              <RxCross2 className="h-5 w-5" />
+            </div>
+          </div>
+
           <Notifications
             userRequests={notifications}
             getAllRequests={getAllNotifications}
