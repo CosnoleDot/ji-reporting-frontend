@@ -35,7 +35,7 @@ export const Locations = () => {
 
   return (
     <GeneralLayout title="Locations" active={"locations"}>
-      <div className="flex flex-col items-center py-3 px-2 md:px-5 pt-0 justify-start h-[calc(100vh-75.6px-75px)]">
+      <div className="flex flex-col items-center py-3 px-2 md:px-5 pt-0 justify-start ">
         <div className="w-full flex md:flex-row flex-col md:justify-between justify-start items-center py-4">
           <div className="mb-4 md:mt-0 mt-4 w-full md:w-[30%] flex flex-col">
             <h1 className="text-2xl font-bold text-start ">Location</h1>
@@ -47,7 +47,7 @@ export const Locations = () => {
             role="tablist"
             className="w-full flex justify-between md:justify-start items-start tabs tabs-boxed md:w-auto "
           >
-            {["country", "province", "maqam"].includes(
+            {["country", "province"].includes(
               localStorage.getItem("@type")
             ) && (
               <Link

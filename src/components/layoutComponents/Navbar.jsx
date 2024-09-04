@@ -3,6 +3,8 @@ import { Notifications } from "./Notifications";
 import { FaBell, FaUserPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { FaRegUserCircle } from "react-icons/fa";
+import { IoMdArrowRoundBack } from "react-icons/io";
+
 import { UIContext } from "../../context/ui";
 import { MeContext } from "../../context";
 import { AiOutlineMenu } from "react-icons/ai";
@@ -77,11 +79,12 @@ export const Navbar = ({ title , setIsSideBarOpen ,isSideBarOpen }) => {
                   setShowNotifications(!showNotifications);
                   showRequests(false);
                   showProfileTab(false);
+                  setIsSideBarOpen(false)
                 }}
               >
                 <div className="indicator">
-                  <FaBell className="text-xl text-secondaryText" />
-                  <span className="badge badge-sm absolute -top-2 -right-3 z-0 bg-primary text-white">
+                  <FaBell className="text-xl text-gray-300" />
+                  <span className="badge badge-sm absolute -top-2 -right-3 z-0 border-secondaryText text-secondaryText">
                     {notifications?.length || 0}
                   </span>
                 </div>
@@ -100,11 +103,12 @@ export const Navbar = ({ title , setIsSideBarOpen ,isSideBarOpen }) => {
                     setShowNotifications(false);
                     showRequests(!requests);
                     showProfileTab(false);
+                    setIsSideBarOpen(false)
                   }}
                 >
                   <div className="indicator">
-                    <FaUserPlus className="text-xl text-secondaryText" />
-                    <span className="badge badge-sm absolute -top-2 -right-3 z-0 bg-primary text-white">
+                    <FaUserPlus className="text-xl text-gray-300" />
+                    <span className="badge badge-sm absolute -top-2 -right-3 z-0 border-secondaryText text-secondaryText">
                       {userRequests.length}
                     </span>
                   </div>
@@ -120,6 +124,9 @@ export const Navbar = ({ title , setIsSideBarOpen ,isSideBarOpen }) => {
           ref={requestsRef}
           className="top-0 right-0 lg:right-0 fixed z-[1] w-[calc(100%-20px)] lg:w-[420px] h-screen bg-white border overflow-hidden"
         >
+           <div className=" py-2 w-full cursor-pointer md:hidden flex" onClick={()=> {showRequests(false); setIsSideBarOpen(false)}}>
+        <IoMdArrowRoundBack className="h-7 w-7"/>
+      </div>
           <h2 className="p-5 font-bold text-xl">User Request(s)</h2>
           <Notifications userRequests={userRequests} type="request" />
         </div>
@@ -131,6 +138,9 @@ export const Navbar = ({ title , setIsSideBarOpen ,isSideBarOpen }) => {
           ref={notificationsRef}
           className=" top-0 right-0 lg:right-0 fixed z-[1] w-[calc(100%-20px)] lg:w-[420px] h-screen bg-white border overflow-hidden"
         >
+          <div className=" py-2 w-full cursor-pointer md:hidden flex" onClick={()=> {setShowNotifications(false); setIsSideBarOpen(false)}}>
+        <IoMdArrowRoundBack className="h-7 w-7"/>
+      </div>
           <h2 className="p-5 font-bold text-xl">Notification(s)</h2>
           <Notifications
             userRequests={notifications}

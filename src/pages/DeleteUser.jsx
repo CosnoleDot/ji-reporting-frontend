@@ -335,7 +335,7 @@ export const DeleteUser = () => {
     <GeneralLayout title={"Manage Users"} active={"user-switch"}>
       <div className="px-5 relative flex flex-col items-center py-3 pt-0 justify-start h-screen md:h-[calc(100vh-63.6px)] overflow-hidden overflow-y-auto">
         <div className="flex md:flex-row flex-col w-full items-center justify-between py-4 mb-4 border-b border-inputBorder">
-          <div className="flex flex-col w-[50%] justify-start mb-4">
+          <div className="flex flex-col w-full md:w-[50%] justify-start mb-4">
             <h1 class="font-inter text-heading text-[18px] font-medium leading-[28px] text-left">
               Manage Users
             </h1>

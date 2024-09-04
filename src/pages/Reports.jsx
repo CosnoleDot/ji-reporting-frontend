@@ -258,7 +258,7 @@ export const Reports = () => {
                 localStorage.getItem("@type") !== "country")) && (
               <button
                 onClick={sendNotification}
-                className={`font-inter w-full text-[12px] md:text-[14px] bg-primary flex justify-center text-white p-2 rounded font-medium leading-[20px] ${
+                className={`font-inter md:w-auto w-full text-[12px] md:text-[14px] bg-primary flex justify-center text-white p-2 rounded font-medium leading-[20px] ${
                   !isMobileView ? "join-item" : ""
                 } `}
               >
