@@ -710,7 +710,7 @@ export const Dashboard = () => {
                             <th className="text-left mr-2">Action</th>
                           </tr>
                         </thead>
-                        <div className="w-full mb-3 h-[300px] overflow-auto overflow-y-scroll">
+                        <div className="w-full mb-3 md:h-[350px] h-[320px] overflow-auto overflow-y-scroll">
                           <tbody
                             style={{
                               width: "100%",

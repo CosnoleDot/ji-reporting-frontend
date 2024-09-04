@@ -640,7 +640,7 @@ export const LocationMaqam = () => {
 
       {/* Pagination Controls */}
       {value === "" && (
-        <div className="flex w-full gap-4 px-4 justify-end items-center mt-4">
+        <div className="flex w-full gap-4 px-4 justify-end items-center ">
           <select
             readOnly
             disabled
@@ -668,14 +668,15 @@ export const LocationMaqam = () => {
 
           {/* Page Numbers */}
           <div className="flex items-center">
-            <span
-              className={`rounded-full text-bold text-sm ${
-                currentPage === 1 && "border-2 border-gray-500"
-              } mx-1 bg-white w-7 h-7 flex justify-center items-center`}
-            >
-              1
-            </span>
-
+            {totalPages > 1 && (
+              <span
+                className={`rounded-full text-bold text-sm ${
+                  currentPage === 1 && "border-2 border-gray-500"
+                } mx-1 bg-white w-7 h-7 flex justify-center items-center`}
+              >
+                1
+              </span>
+            )}
             {totalPages > 1 && (
               <button
                 className={`rounded-full text-bold text-sm ${
