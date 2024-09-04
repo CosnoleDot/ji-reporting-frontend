@@ -19,7 +19,7 @@ export const GeneralLayout = ({ children, active, title }) => {
   }, []);
 
   return (
-    <div className="flex w-full flex-col h-screen overflow-x-hidden">
+    <div className="flex w-full flex-col  overflow-x-hidden">
       {/* Navbar Section */}
       <div className="fixed top-0 w-full z-10 border-b border-inputBorder">
         <Navbar
@@ -29,9 +29,9 @@ export const GeneralLayout = ({ children, active, title }) => {
         />
       </div>
 
-      {/* Main Layout Section */}
+
       <div className="flex flex-grow pt-[65px] md:pt-[65px]">
-        {/* Sidebar Section */}
+      
         <div
           className={`${
             isSideBarOpen ? "block" : "hidden"
@@ -40,9 +40,8 @@ export const GeneralLayout = ({ children, active, title }) => {
           <BottomNav active={active} />
         </div>
 
-        {/* Content Section */}
         <div
-          className={`w-full md:w-[80%] transition-opacity duration-300 ${
+          className={`w-full md:w-[80%] transition-opacity duration-300 h-[calc(100vh-64.5px)] ${
             isSideBarOpen && "opacity-50 md:opacity-100"
           }`}
         >

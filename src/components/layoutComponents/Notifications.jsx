@@ -58,6 +58,7 @@ export const Notifications = ({ userRequests, type }) => {
   console.log(userRequests, "aaa");
   return (
     <div className="overflow-y-scroll">
+      
       {type !== "request" && (
         <div className="flex w-full gap-8 items-center justify-between">
           <Link
@@ -128,7 +129,7 @@ export const Notifications = ({ userRequests, type }) => {
                       onClick={() => update(req?.req_id, "rejected")}
                       className="p-2 bg-slate-200 rounded-lg"
                     >
-                      <FaTimes className="w-3 h-3 text-destructive"/>
+                      <FaTimes className="w-3 h-3 text-destructive" />
                     </button>
                   </div>
                 </div>
@@ -150,7 +151,7 @@ export const Notifications = ({ userRequests, type }) => {
                   <div className="flex items-center justify-between">
                     <div className="avatar">
                       <div className="w-8 flex items-center justify-center rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                        <FaBell className="w-8 h-8"/>
+                        <FaBell className="w-8 h-8" />
                       </div>
                     </div>
                     <div className="flex flex-col px-3">

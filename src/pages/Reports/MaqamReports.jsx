@@ -129,7 +129,7 @@ export const MaqamReports = () => {
   }, [window.innerWidth]);
   return (
     <>
-      <div className="md:join xs:w-full mb-4 flex justify-between items-center">
+      <div className="md:join xs:w-full mb-4 flex justify-between items-center overflow-y-scroll">
         {!isMobileView && (
           <div className="w-full flex">
             <select
@@ -215,9 +215,9 @@ export const MaqamReports = () => {
           </div>
         )}
 
-        <div className="indicator flex items-center justify-end w-full">
+        <div className="indicator flex items-center justify-end gap-2 md:gap-4 w-full">
           <button
-            className={`font-inter px-2 text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left ${
+            className={`font-inter px-2 text-[12px] md:text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left ${
               !isMobileView ? "join-item" : ""
             }`}
             onClick={() => (!isMobileView ? searchResults() : toggleSearch())}
@@ -230,7 +230,7 @@ export const MaqamReports = () => {
                 document.getElementById("filter-area-dialog").showModal();
                 setIsSearch(false);
               }}
-              className={`font-inter text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left ${
+              className={`font-inter text-[12px] md:text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left ${
                 !isMobileView ? "join-item" : "ms-3"
               }`}
             >
@@ -238,7 +238,7 @@ export const MaqamReports = () => {
             </button>
           )}
           <button
-            className={`font-inter text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left ${
+            className={`font-inter text-[12px] md:text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left ${
               !isMobileView ? "join-item" : "ms-3"
             }`}
             onClick={clearFilters}

@@ -266,7 +266,7 @@ export const HalqaReports = () => {
           </div>
         )}
 
-        <div className="indicator flex justify-between items-center w-full">
+        <div className="indicator flex items-center justify-end w-full">
           <button
             className={`font-inter px-2 text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left ${
               !isMobileView ? "join-item" : ""

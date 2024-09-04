@@ -208,7 +208,7 @@ export const Reports = () => {
             </p>
           </div>
           <div className="flex gap-2 md:flex-row flex-col w-full">
-            <div className="flex items-center gap-2 w-full">
+            <div className="flex items-center justify-center gap-2 w-full">
               {active === localStorage.getItem("@type") && (
                 <button
                   className="font-inter w-full gap-1 justify-center flex items-center bg-primary  text-white p-2 rounded text-[14px] font-medium leading-[20px] text-left"
@@ -219,7 +219,7 @@ export const Reports = () => {
                 </button>
               )}
               <button
-                className="font-inter w-full text-[14px] bg-primary flex justify-center text-white p-2 rounded font-medium leading-[20px] text-left"
+                className="font-inter w-full text-[12px] md:text-[14px] bg-primary flex justify-center text-white p-2 rounded font-medium leading-[20px] text-left"
                 onClick={() => navigate("/compilation")}
               >
                 Compile
@@ -233,7 +233,7 @@ export const Reports = () => {
               "nazim",
             ].includes(me?.nazimType) && (
               <button
-                className="font-inter w-full text-[14px] bg-primary flex justify-center text-white p-2 rounded font-medium leading-[20px] text-left"
+                className="font-inter w-full text-[12px] md:text-[14px] bg-primary flex justify-center text-white p-2 rounded font-medium leading-[20px] text-left"
                 onClick={() => {
                   setTab("personal");
                   navigate("/personalReport");
@@ -258,8 +258,8 @@ export const Reports = () => {
                 localStorage.getItem("@type") !== "country")) && (
               <button
                 onClick={sendNotification}
-                className={`text-[14px] bg-primary  text-white p-2 rounded font-medium leading-[20px] text-left ${
-                  !isMobileView ? "join-item" : "ms-3"
+                className={`font-inter md:w-auto w-full text-[12px] md:text-[14px] bg-primary flex justify-center text-white p-2 rounded font-medium leading-[20px] ${
+                  !isMobileView ? "join-item" : ""
                 } `}
               >
                 <AiFillBell />
@@ -377,7 +377,7 @@ export const Reports = () => {
           <div></div>
         </div>
 
-        <div className=" gap-3 w-full items-center  justify-center h-[calc(100vh-65.6px-94px-88px)]">
+        <div className="relative overflow-y-scroll gap-3 w-full items-center  justify-center h-full md:h-[calc(100vh-65.6px-84px-88px)]">
           {active === "province" ? (
             <ProvinceReports />
           ) : active === "division" ? (

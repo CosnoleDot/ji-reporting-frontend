@@ -335,7 +335,7 @@ export const DeleteUser = () => {
     <GeneralLayout title={"Manage Users"} active={"user-switch"}>
       <div className="px-5 relative flex flex-col items-center py-3 pt-0 justify-start h-screen md:h-[calc(100vh-63.6px)] overflow-hidden overflow-y-auto">
         <div className="flex md:flex-row flex-col w-full items-center justify-between py-4 mb-4 border-b border-inputBorder">
-          <div className="flex flex-col w-[50%] justify-start mb-4">
+          <div className="flex flex-col w-full md:w-[50%] justify-start mb-4">
             <h1 class="font-inter text-heading text-[18px] font-medium leading-[28px] text-left">
               Manage Users
             </h1>
@@ -375,25 +375,25 @@ export const DeleteUser = () => {
           <table className="w-full">
             <thead>
               <tr className="">
-                <th class="font-inter text-[14px] font-medium leading-[16.94px] text-left text-secondaryText">
+                <th class="font-inter text-[12px] md:text-[14px] font-medium leading-[16.94px]  text-secondaryText">
                   Name
                 </th>
-                <th class="font-inter text-[14px] font-medium leading-[16.94px] text-left text-secondaryText">
+                <th class="font-inter text-[12px] md:text-[14px] font-medium leading-[16.94px]  text-secondaryText">
                   Nazim Type
                 </th>
-                <th class="font-inter text-[14px] font-medium leading-[16.94px] text-left text-secondaryText">
+                <th class="font-inter text-[12px] md:text-[14px] font-medium leading-[16.94px]  text-secondaryText">
                   Email
                 </th>
-                <th class="font-inter text-[14px] font-medium leading-[16.94px] text-left text-secondaryText">
+                <th class="font-inter text-[12px] md:text-[14px] font-medium leading-[16.94px]  text-secondaryText">
                   Area
                 </th>
-                <th class="font-inter text-[14px] font-medium leading-[16.94px] text-left text-secondaryText">
+                <th class="font-inter text-[12px] md:text-[14px] font-medium leading-[16.94px]  text-secondaryText">
                   Country
                 </th>
-                <th class="font-inter text-[14px] font-medium leading-[16.94px] text-left text-secondaryText">
+                <th class="font-inter text-[12px] md:text-[14px] font-medium leading-[16.94px]  text-secondaryText">
                   Status
                 </th>
-                <th class="font-inter text-[14px] font-medium leading-[16.94px] text-left text-secondaryText">
+                <th class="font-inter text-[12px] md:text-[14px] font-medium leading-[16.94px]  text-secondaryText">
                   Action
                 </th>
               </tr>
@@ -530,13 +530,13 @@ export const DeleteUser = () => {
 
           {/* Page Numbers */}
           <div className="flex items-center">
-            <span
+            {totalPages>1 && <span
               className={`rounded-full text-bold text-sm ${
                 currentPage === 1 && "border-2 border-gray-500"
               } mx-1 bg-white w-7 h-7 flex justify-center items-center`}
             >
               1
-            </span>
+            </span>}
 
             {totalPages > 1 && (
               <button
