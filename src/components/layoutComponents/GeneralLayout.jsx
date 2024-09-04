@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { BottomNav } from "../BottomNav";
 import { Navbar } from "./Navbar";
 import { useNavigate } from "react-router-dom";
@@ -13,11 +13,14 @@ export const GeneralLayout = ({ children, active, title }) => {
       navigate("/login");
     }
   }, [navigate]);
+
   useEffect(() => {
     setIsSideBarOpen(false);
   }, []);
+
   return (
-    <div className="relative">
+    <div className="flex w-full flex-col h-screen overflow-x-hidden">
+      {/* Navbar Section */}
       <div className="fixed top-0 w-full z-10 border-b border-inputBorder">
         <Navbar
           title={title}
@@ -25,17 +28,22 @@ export const GeneralLayout = ({ children, active, title }) => {
           isSideBarOpen={isSideBarOpen}
         />
       </div>
-      <div className={`flex w-full justify-between h-[calc(100vh - 264px)] fixed left-0 md:top-[65px] top-6`}>
+
+      {/* Main Layout Section */}
+      <div className="flex flex-grow pt-[65px] md:pt-[65px]">
+        {/* Sidebar Section */}
         <div
-          className={`md:block ${
-            isSideBarOpen ? "absolute top-10 z-20 w-[70%]" : "hidden"
-          }  md:w-[20%]`}
+          className={`${
+            isSideBarOpen ? "block" : "hidden"
+          } md:block md:w-[20%] absolute md:static top-[65px] z-20 bg-white md:bg-transparent h-full`}
         >
           <BottomNav active={active} />
         </div>
+
+        {/* Content Section */}
         <div
-          className={`md:w-[80%] w-full overflow-x-hidden overflow-y-scroll h-screen md:h-[calc(100vh - 65px)] md:mt-0 mt-8  ${
-            isSideBarOpen && "opacity-50"
+          className={`w-full md:w-[80%] transition-opacity duration-300 ${
+            isSideBarOpen && "opacity-50 md:opacity-100"
           }`}
         >
           {children}

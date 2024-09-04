@@ -16,7 +16,8 @@ export const EditProfile = () => {
   const [subject, setSubject] = useState("");
   const [subjects, setSubjects] = useState([]);
   const [file, setFile] = useState();
-  const { dispatch } = useToastState();
+  const { dispatch } = useToastState(); 
+  const navigate = useNavigate()
   const [image, setImage] = useState(null);
   const fileInputRef = useRef(null);
   const handleImage = (e) => {
@@ -155,7 +156,7 @@ export const EditProfile = () => {
 
   return (
     <GeneralLayout active={"profile"}>
-      <div className="flex flex-col justify-start h-[calc(100vh-64px-64px)] overflow-hidden overflow-y-scroll">
+      <div className="flex flex-col justify-start  overflow-hidden overflow-y-scroll">
         <div className="w-full flex   justify-between  items-center p-4">
           <div className="w-full  flex flex-col">
             <h1 className="text-2xl font-bold text-start ">Edit Profile</h1>

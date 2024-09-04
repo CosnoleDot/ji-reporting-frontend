@@ -39,7 +39,7 @@ export const Navbar = ({ title , setIsSideBarOpen ,isSideBarOpen }) => {
       ) {
         showProfileTab(false);
       }
-    }, 150);
+    }, 0);
   };
 
   useEffect(() => {
