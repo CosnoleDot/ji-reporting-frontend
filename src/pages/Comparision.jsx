@@ -823,7 +823,7 @@ export const Comparision = () => {
 
   return (
     <GeneralLayout title={"Comparison"} active={"comparison"}>
-      <div className=" flex flex-col gap-3 h-[calc(100vh)] overflow-y-scroll w-full p-3">
+      <div className=" flex flex-col gap-3  overflow-y-scroll w-full p-3">
         <div className="w-full flex md:flex-row flex-col justify-between items-center py-4">
           <div className="mb-4 w-full md:w-[70%] flex flex-col">
             <h1 className="text-2xl font-bold text-start ">Comparison</h1>

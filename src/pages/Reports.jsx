@@ -377,7 +377,7 @@ export const Reports = () => {
           <div></div>
         </div>
 
-        <div className="relative overflow-y-scroll gap-3 w-full items-center  justify-center h-[calc(100vh-65.6px-84px-88px)]">
+        <div className=" gap-3 w-full items-center  justify-center h-[calc(100vh-65.6px-94px-88px)]">
           {active === "province" ? (
             <ProvinceReports />
           ) : active === "division" ? (
