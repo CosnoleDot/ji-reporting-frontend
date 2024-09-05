@@ -35,13 +35,13 @@ export const GeneralLayout = ({ children, active, title }) => {
         <div
           className={`${
             isSideBarOpen ? "block" : "hidden"
-          } md:block md:w-[20%] absolute md:static top-[65px] z-20 bg-white md:bg-transparent h-full`}
+          } md:block md:w-[20%] absolute md:fixed top-[65px] z-20 bg-white md:bg-transparent h-full`}
         >
           <BottomNav active={active} />
         </div>
 
         <div
-          className={`w-full md:w-[80%] transition-opacity duration-300 h-[calc(100vh-64.5px)] ${
+          className={`w-full md:w-[80%] transition-opacity md:fixed md:left-[20%] overflow-y-scroll duration-300 h-[calc(100vh-64.5px)] ${
             isSideBarOpen && "opacity-50 md:opacity-100"
           }`}
         >
