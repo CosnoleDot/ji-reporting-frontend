@@ -6,14 +6,15 @@ import { MeContext } from "../context";
 import { HiOutlineHome } from "react-icons/hi2";
 import { VscGraph } from "react-icons/vsc";
 import { IoIosGitCompare } from "react-icons/io";
-import Logo from "../assets/jpgs/profile.jpeg"
+import Logo from "../assets/jpgs/profile.png";
 import { LuUsers } from "react-icons/lu";
 import { CiLogout } from "react-icons/ci";
+import { Powered } from "./consoledot";
 export const BottomNav = ({ active }) => {
   const { isCompleted } = useContext(UIContext);
   const me = useContext(MeContext);
   const profileImageUrl = me?.profileImage
-    ? `http://localhost:5000/api/v1/user/upload/${me.profileImage}`
+    ? `https://apiv2.staging.jamiatreporting.com/api/v1/user/upload/${me.profileImage}`
     : Logo;
   const navigate = useNavigate();
   const user = localStorage.getItem("@type");
@@ -38,7 +39,7 @@ export const BottomNav = ({ active }) => {
         return "/"; // Default route if user type doesn't match any case
     }
   })();
- 
+
   return (
     <div className="w-full  h-[calc(100vh-65.6px)] bg-white text-gray-300 flex flex-col border-r border-inputBorder">
       {/* Dashboard Link */}
@@ -61,7 +62,11 @@ export const BottomNav = ({ active }) => {
         <div className="flex w-full items-center justify-center">
           <button
             onClick={() => navigate("/profile")}
-            className={`w-full hover:bg-primary ${(active === 'profile' || active === "changePassword") ? "bg-primary text-white":'' } hover:text-white p-2 font-inter text-[14px] leading-5 font-medium rounded text-heading text-center border border-inputBorder`}
+            className={`w-full hover:bg-primary ${
+              active === "profile" || active === "changePassword"
+                ? "bg-primary text-white"
+                : ""
+            } hover:text-white p-2 font-inter text-[14px] leading-5 font-medium rounded text-heading text-center border border-inputBorder`}
           >
             Edit Profile
           </button>
@@ -109,7 +114,10 @@ export const BottomNav = ({ active }) => {
             <Link
               to={isCompleted ? "/reports" : "/profile"}
               className={
-                !active || active === "reports" || active === "compilation" || active ==="personalReports"
+                !active ||
+                active === "reports" ||
+                active === "compilation" ||
+                active === "personalReports"
                   ? "bg-primary text-white p-2 rounded w-full"
                   : "bg-blue-50 p-2 rounded text-heading w-full"
               }
@@ -197,9 +205,9 @@ export const BottomNav = ({ active }) => {
               </Link>
             )}
         </div>
-        <div className="w-full flex items-center justify-start">
+        <div className="w-full flex flex-col items-center justify-start">
           <div
-            className="flex items-center gap-2 cursor-pointer p-4"
+            className="flex items-center w-full justify-start gap-2 cursor-pointer p-4"
             onClick={() => {
               localStorage.clear();
               navigate("/login");
@@ -211,6 +219,7 @@ export const BottomNav = ({ active }) => {
               Logout
             </span>
           </div>
+          <Powered />
         </div>
       </div>
     </div>

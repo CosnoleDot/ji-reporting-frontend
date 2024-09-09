@@ -30,7 +30,7 @@ export const GeneralLayout = ({ children, active, title }) => {
       </div>
 
 
-      <div className="flex flex-grow pt-[65px] md:pt-[65px]">
+      <div className="flex flex-grow pt-12 ">
       
         <div
           className={`${
@@ -41,7 +41,7 @@ export const GeneralLayout = ({ children, active, title }) => {
         </div>
 
         <div
-          className={`w-full md:w-[80%] transition-opacity md:fixed md:left-[20%] overflow-y-scroll duration-300 h-[calc(100vh-64.5px)] ${
+          className={`w-full md:w-[80%] transition-opacity md:fixed md:left-[20%] top-[65px] overflow-y-scroll duration-300 h-full md:h-[calc(100vh-64.5px)] ${
             isSideBarOpen && "opacity-50 md:opacity-100"
           }`}
         >

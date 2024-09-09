@@ -18,6 +18,9 @@ export const Signup = () => {
   const [joiningDate, setJoiningDate] = useState({ title: "", date: "" });
   const { dispatch } = useToastState();
   const navigate = useNavigate();
+  const handleClick = () => {
+    window.open('https://consoledot.com', '_blank'); 
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -236,7 +239,7 @@ export const Signup = () => {
               />
             </div>
           </div>
-          <div className="flex items-center justify-between gap-4">
+          <div className="flex md:flex-row flex-col items-center justify-between gap-4">
             <div className="w-full">
               <label className="label">
                 <span className="text-heading font-inter text-[14px] leading-5">
@@ -825,6 +828,20 @@ export const Signup = () => {
             </button>
           </div>
         </form>
+        <div
+            className="w-full flex items-center justify-center mt-2 gap-2 y cursor-pointer"
+            onClick={handleClick}
+          >
+            <span className="text-black font-inter text-[14px]">
+              Powered By:
+            </span>
+            <div className="flex gap-2 items-center">
+              <img src="/cd.png" alt="icon" width={15} height={15} />
+              <span className="text-black font-inter text-[14px]">
+                ConsoleDot
+              </span>
+            </div>
+          </div>
       </div>
       {loading && <Loader />}
       <dialog id="add_subject_modal" className="modal">
