@@ -26,7 +26,7 @@ export const Forget = () => {
   };
   return (
     <div className="relative flex  justify-center min-h-screen overflow-hidden">
-      <div className=" w-[40%] bg-secondary h-screen p-[40px] md:flex md:flex-col md:justify-between  hidden">
+      <div className=" md:w-[40%] w-0 bg-secondary h-screen p-[40px] md:flex md:flex-col md:justify-between  hidden">
         <div></div>
         <div className="flex flex-col gap-4">
           <h2 class="text-white font-inter text-2xl font-bold leading-7 text-left">
@@ -38,11 +38,11 @@ export const Forget = () => {
           </p>
         </div>
       </div>
-      <div className="w-full md:p-6 m-auto  p-16 ">
+      <div className="w-full flex flex-col justify-center items-center md:p-16 m-auto  p-6 ">
         <div className="w-full flex items-center justify-center">
           <img src="/logo.png" className="h-[104px] w-[142px]" alt="LOGO" />
         </div>
-        <form className="space-y-4 bg-white rounded-md shadow-md p-4" onSubmit={handleForget}>
+        <form className="space-y-4 bg-white rounded-md shadow-md p-4 w-full" onSubmit={handleForget}>
           <div>
             <label className="label">
               <span className="text-heading font-inter text-[14px] leading-5">
@@ -56,14 +56,14 @@ export const Forget = () => {
               className="w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
             />
           </div>
-          <div className="flex items-center w-full">
+          <div className="flex items-center w-full gap-4 md:gap-0">
             <Link
               to="/login"
-              className="w-[40%] font-inter text-sm font-medium leading-6 text-center"
+              className="md:w-[40%] w-full font-inter text-sm font-medium leading-6 text-center"
             >
               Back to login
             </Link>
-            <div className="w-[60%]">
+            <div className="md:w-[60%] w-full">
               <button
                 disabled={loading}
                 className="bg-primary text-white py-2 rounded w-full"

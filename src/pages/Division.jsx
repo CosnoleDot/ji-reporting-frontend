@@ -365,8 +365,8 @@ export const Division = () => {
   data.litrature = data["literatureDistribution"];
 
   return (
-    <GeneralLayout>
-      <div className="reports h-[calc(100vh-64.4px-64px)] overflow-hidden overflow-y-scroll w-full">
+    <>
+      <div className="reports  overflow-hidden overflow-y-scroll w-full">
         <form
           className="flex w-full flex-col justify-center items-center p-4 font-notoUrdu mb-5"
           dir="rtl"
@@ -375,9 +375,9 @@ export const Division = () => {
         >
           <button
             type="button"
-            class="absolute top-20 left-5 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 "
-           onClick={()=>navigate('/reports')}
-           >
+            class="absolute top-20 left-5 text-white bg-primary text-[14px] rounded py-2 px-4"
+            onClick={() => navigate("/reports")}
+          >
             Back
           </button>
           {/* <fieldset disabled={view} className="w-full"> */}
@@ -481,6 +481,6 @@ export const Division = () => {
         </form>
       </div>
       {loading && <Loader />}
-    </GeneralLayout>
+    </>
   );
 };

@@ -6,13 +6,16 @@ import { useContext, useState } from "react";
 import { Loader } from "../components";
 import { UIContext } from "../context/ui";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { Powered } from "../components/consoledot";
 
 export const Login = ({ setAuthenticated }) => {
   const navigate = useNavigate();
   const { dispatch } = useToastState();
   const { loading, setLoading } = useContext(UIContext);
   const [showPass, setShowPass] = useState(false);
-
+  const handleClick = () => {
+    window.open('https://consoledot.com', '_blank'); 
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -128,6 +131,22 @@ export const Login = ({ setAuthenticated }) => {
             </Link>
           </div>
         </form>
+      
+          <div
+            className="w-full flex items-center justify-center mt-2 gap-2 border-t-primary cursor-pointer"
+            onClick={handleClick}
+          >
+            <span className="text-black font-inter text-[14px]">
+              Powered By:
+            </span>
+            <div className="flex gap-2 items-center">
+              <img src="/cd.png" alt="icon" width={15} height={15} />
+              <span className="text-black font-inter text-[14px]">
+                ConsoleDot
+              </span>
+            </div>
+          </div>
+        
         {/* <div className="w-full flex justify-center items-start gap-3">
           <span className="text-slate-800">Powered By:</span>
           <a

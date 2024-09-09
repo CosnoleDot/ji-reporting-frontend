@@ -1,3 +1,3 @@
-import Profile from "./profile.jpeg";
+import Profile from "./profile.png";
 
 export {Profile}

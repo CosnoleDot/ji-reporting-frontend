@@ -4,7 +4,7 @@ import instance from "../api/instrance";
 import { MeContext, useToastState } from "../context";
 import { UIContext } from "../context/ui";
 import { decryptData } from "../utils";
-import logo from "../assets/jpgs/profile.jpeg";
+import logo from "../assets/jpgs/profile.png";
 import { IoCameraOutline } from "react-icons/io5";
 import axios from "axios";
 
@@ -32,7 +32,7 @@ export const EditProfile = () => {
       const formData = new FormData();
       formData.append("profileImage", file);
       const response = await axios.post(
-        `http://localhost:5000/api/v1/user/upload`,
+        `https://apiv2.staging.jamiatreporting.com/api/v1/user/upload`,
         formData,
         {
           headers: {
@@ -443,7 +443,7 @@ export const EditProfile = () => {
                     backgroundImage: image
                       ? `url(${image})` // Display the selected file if available
                       : me?.profileImage
-                      ? `url(http://localhost:5000/api/v1/user/upload/${me?.profileImage})` // Display profileImage if available
+                      ? `url(https://apiv2.staging.jamiatreporting.com/api/v1/user/upload/${me?.profileImage})` // Display profileImage if available
                       : `url(${logo})`, // Fallback to the logo
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",

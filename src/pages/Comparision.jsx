@@ -825,9 +825,9 @@ export const Comparision = () => {
     <GeneralLayout title={"Comparison"} active={"comparison"}>
       <div className=" flex flex-col gap-3  overflow-y-scroll w-full p-3">
         <div className="w-full flex md:flex-row flex-col justify-between items-center py-4">
-          <div className="mb-4 w-full md:w-[70%] flex flex-col">
-            <h1 className="text-2xl font-bold text-start ">Comparison</h1>
-            <p className="text-gray-500">Get a sneak peak into your reports </p>
+          <div className="flex flex-col justify-start w-full md:mb-0 mb-4">
+            <h1 className="font-inter text-heading text-[18px] font-medium leading-[28px] text-left">Comparison</h1>
+            <p className="font-inter text-[14px] font-normal leading-[20px] text-left text-secondaryText">Get a sneak peak into your reports </p>
           </div>
           <div className="w-full md:w-[30%]  flex justify-start md:justify-end">
             <button
@@ -836,7 +836,7 @@ export const Comparision = () => {
                 document.getElementById("add_comparison_modal").showModal();
               }}
             >
-              +New Comparios
+              +New Comparison
             </button>
           </div>
         </div>
