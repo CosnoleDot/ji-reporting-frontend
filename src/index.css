@@ -3582,6 +3582,10 @@ html {
   height: 100vh;
 }
 
+.h-\[calc\(100vh-64\.5px\)\] {
+  height: calc(100vh - 64.5px);
+}
+
 .max-h-11 {
   max-height: 2.75rem;
 }
@@ -3690,6 +3694,10 @@ html {
   width: 50%;
 }
 
+.w-\[60\%\] {
+  width: 60%;
+}
+
 .w-\[70\%\] {
   width: 70%;
 }
@@ -3711,6 +3719,10 @@ html {
 }
 
 .w-full {
+  width: 100%;
+}
+
+.w-\[100\%\] {
   width: 100%;
 }
 
@@ -4583,11 +4595,6 @@ html {
   color: rgb(0 40 86 / var(--tw-text-opacity));
 }
 
-.text-red-100 {
-  --tw-text-opacity: 1;
-  color: rgb(254 226 226 / var(--tw-text-opacity));
-}
-
 .text-red-500 {
   --tw-text-opacity: 1;
   color: rgb(239 68 68 / var(--tw-text-opacity));
@@ -4616,11 +4623,6 @@ html {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
-.text-red-950 {
-  --tw-text-opacity: 1;
-  color: rgb(69 10 10 / var(--tw-text-opacity));
 }
 
 .underline {
@@ -5063,6 +5065,11 @@ html {
 .focus\:border-innerAlignment:focus {
   --tw-border-opacity: 1;
   border-color: rgb(148 163 184 / var(--tw-border-opacity));
+}
+
+.focus\:border-inputBorder:focus {
+  --tw-border-opacity: 1;
+  border-color: rgb(228 228 231 / var(--tw-border-opacity));
 }
 
 .focus\:outline-none:focus {

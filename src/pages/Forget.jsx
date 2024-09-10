@@ -25,7 +25,7 @@ export const Forget = () => {
     setLoading(false);
   };
   return (
-    <div className="relative flex  justify-center min-h-screen overflow-hidden">
+    <div className="relative flex w-full justify-center min-h-screen overflow-hidden">
       <div className=" md:w-[40%] w-0 bg-secondary h-screen p-[40px] md:flex md:flex-col md:justify-between  hidden">
         <div></div>
         <div className="flex flex-col gap-4">
@@ -42,7 +42,7 @@ export const Forget = () => {
         <div className="w-full flex items-center justify-center">
           <img src="/logo.png" className="h-[104px] w-[142px]" alt="LOGO" />
         </div>
-        <form className="space-y-4 bg-white rounded-md shadow-md p-4 w-full" onSubmit={handleForget}>
+        <form className="space-y-4 bg-white rounded-md shadow-md p-4 w-full md:w-[60%]" onSubmit={handleForget}>
           <div>
             <label className="label">
               <span className="text-heading font-inter text-[14px] leading-5">

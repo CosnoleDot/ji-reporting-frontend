@@ -35,7 +35,7 @@ export const GeneralLayout = ({ children, active, title }) => {
         <div
           className={`${
             isSideBarOpen ? "block" : "hidden"
-          } md:block md:w-[20%] absolute md:fixed top-[65px] z-20 bg-white md:bg-transparent h-full`}
+          }  md:w-[20%] md:block  fixed top-[65px] z-20 bg-white md:bg-transparent h-[calc(100vh-64.5px)]`}
         >
           <BottomNav active={active} />
         </div>

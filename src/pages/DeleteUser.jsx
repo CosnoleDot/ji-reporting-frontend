@@ -594,13 +594,13 @@ export const DeleteUser = () => {
               onSubmit={handleSubmit}
               id="filter-form"
             >
-              <h1 className="font-semibold text-md md:text-2xl">
-                Categorize Users
+              <h1 className="font-bold text-[14px] md:text-[16px] font-inter">
+                Apply Filters
               </h1>
-              <div role="tablist" className="tabs tabs-boxed md:w-[50%] w-full">
+              <div role="tablist" className="flex  tabs-boxed w-full">
                 <button
                   role="tab"
-                  className={`tab ${withArea ? "bg-white text-black" : ""}`}
+                  className={`tab w-full ${withArea ? "bg-primary text-white" : "text-black"}`}
                   onClick={(e) => {
                     setWithArea(true);
                     e.preventDefault();
@@ -610,7 +610,7 @@ export const DeleteUser = () => {
                 </button>
                 <button
                   role="tab"
-                  className={`tab ${!withArea ? "bg-white text-black" : ""}`}
+                  className={`tab w-full ${!withArea ? "bg-primary text-white" : "text-black"}`}
                   onClick={(e) => {
                     setWithArea(false);
                     e.preventDefault();
@@ -630,7 +630,7 @@ export const DeleteUser = () => {
                       type="text"
                       placeholder="Full Name"
                       name="name"
-                      className="w-full input input-bordered "
+                      className="w-full input input-bordered text-[14px] p-2"
                     />
                   </div>
 
@@ -645,7 +645,7 @@ export const DeleteUser = () => {
                       id="year-of-joining"
                       placeholder={"Select year"}
                       name="joiningDate"
-                      className="input input-bordered w-full"
+                      className="w-full input input-bordered text-[14px] p-2"
                       value={selectedYear}
                       onClick={() => setOpenYears(!openYears)}
                     />
@@ -699,7 +699,7 @@ export const DeleteUser = () => {
                       id="year-of-joining"
                       placeholder={"Select year"}
                       name="dob"
-                      className="input input-bordered w-full"
+                      className="w-full input input-bordered text-[14px] p-2"
                       value={birthYear}
                       onClick={() => setOpenBirthYears(!openBirthYears)}
                     />
@@ -750,7 +750,7 @@ export const DeleteUser = () => {
                     </label>
                     <select
                       name="qualification"
-                      className="select  select-bordered w-full"
+                      className="select  select-bordered w-full  text-[14px] p-2"
                       defaultValue={""}
                     >
                       {/* <button>add</button> */}
@@ -771,7 +771,7 @@ export const DeleteUser = () => {
                     <select
                       name="subject"
                       id="subject"
-                      className="select select-bordered  w-full"
+                      className="w-full input input-bordered text-[14px] p-2"
                       value={selectedSubject}
                       onChange={(e) => setSelectedSubject(e.target.value)}
                     >
@@ -796,7 +796,7 @@ export const DeleteUser = () => {
                     </label>
                     <select
                       name="semester"
-                      className="select select-bordered  w-full "
+                      className="select select-bordered  w-full  text-[14px] p-2"
                       defaultValue={""}
                     >
                       <option value={""}>Semester/Year</option>
@@ -827,7 +827,7 @@ export const DeleteUser = () => {
                       type="text"
                       placeholder="Institution"
                       name="institution"
-                      className="w-full input input-bordered "
+                      className="w-full input input-bordered text-[14px] p-2 "
                     />
                   </div>
                 </div>
@@ -1053,7 +1053,7 @@ export const DeleteUser = () => {
                     <input
                       id="autocomplete0"
                       type="search"
-                      className="input input-bordered w-full"
+                      className="w-full input input-bordered text-[14px] p-2"
                       placeholder="Select area"
                       onChange={(e) => setSearchArea(e.target.value)}
                       onClick={() => {
