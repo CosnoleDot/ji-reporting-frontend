@@ -52,7 +52,7 @@ export const BottomNav = ({ active }) => {
           />
           <div>
             <h2 className="text-heading font-inter font-semibold text-[16px] leading-5">
-              {me?.name}
+              {me?.name?.split(' ').length > 2 ? me?.name?.split(' ')[0] +' ' + me?.name?.split(' ')[1] : me?.name}
             </h2>
             <span className="text-heading font-inter font-normal text-[12px] leading-3 text-center">
               {me?.qualification}

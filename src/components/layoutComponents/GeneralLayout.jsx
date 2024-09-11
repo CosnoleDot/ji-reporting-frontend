@@ -29,9 +29,7 @@ export const GeneralLayout = ({ children, active, title }) => {
         />
       </div>
 
-
       <div className="flex flex-grow pt-12 ">
-      
         <div
           className={`${
             isSideBarOpen ? "block" : "hidden"
