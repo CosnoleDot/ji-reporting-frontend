@@ -24,7 +24,7 @@ export const Navbar = ({ title, setIsSideBarOpen, isSideBarOpen }) => {
   const profileTabRef = useRef();
 
   const handleClickOutside = (event) => {
-    setTimeout(() => {
+
       if (
         notificationsRef.current &&
         !notificationsRef.current.contains(event.target)
@@ -40,7 +40,7 @@ export const Navbar = ({ title, setIsSideBarOpen, isSideBarOpen }) => {
       ) {
         showProfileTab(false);
       }
-    }, 0);
+
   };
 
   useEffect(() => {
@@ -84,7 +84,7 @@ export const Navbar = ({ title, setIsSideBarOpen, isSideBarOpen }) => {
               <div
                 tabIndex={0}
                 role="button"
-                className="px-4"
+                className="mx-4"
                 onClick={() => {
                   setShowNotifications(!showNotifications);
                   showRequests(false);
@@ -108,7 +108,7 @@ export const Navbar = ({ title, setIsSideBarOpen, isSideBarOpen }) => {
                 <div
                   tabIndex={0}
                   role="button"
-                  className="px-4"
+                  className="mx-4"
                   onClick={() => {
                     setShowNotifications(false);
                     showRequests(!requests);
