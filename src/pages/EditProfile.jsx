@@ -11,6 +11,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 export const EditProfile = () => {
   const me = useContext(MeContext);
+  const { setLoading } = useContext(UIContext);
   const { getMe } = useContext(UIContext);
   const [selectedSubject, setSelectedSubject] = useState("");
   const [subject, setSubject] = useState("");
@@ -27,12 +28,12 @@ export const EditProfile = () => {
 
   const uploadImage = async () => {
     if (!file) return; // Do nothing if no image
-
+    setLoading(true);
     try {
       const formData = new FormData();
       formData.append("profileImage", file);
       const response = await axios.post(
-        `https://apiv2.staging.jamiatreporting.com/api/v1/user/upload`,
+        `http://localhost:5000/api/v1/user/upload`,
         formData,
         {
           headers: {
@@ -46,6 +47,8 @@ export const EditProfile = () => {
       console.log("Error occurred", error);
       throw error;
     }
+    setLoading(false);
+
   };
   const updateImage = async () => {
     if (!file) return;
@@ -162,8 +165,8 @@ export const EditProfile = () => {
             <h1 className="text-2xl font-bold text-start ">Edit Profile</h1>
             <p className="text-gray-500">Edit Your Profile</p>
           </div>
-          <div className="flex md:flex-row flex-col w-full items-center justify-start md:justify-end gap-2 p-2 overflow-hidden overflow-x-scroll">
-            <button onClick={()=> navigate("/change-password")} className="py-1 px-4 rounded-md bg-primary text-white border-none capitalize">
+          <div className="flex justify-end w-full  overflow-hidden overflow-x-scroll">
+            <button onClick={()=> navigate("/change-password")} className="py-1 px-4 rounded-md bg-primary text-white border-none capitalize md:text-[16px] text-[12px]">
               Change Password
             </button>
           </div>
@@ -443,7 +446,7 @@ export const EditProfile = () => {
                     backgroundImage: image
                       ? `url(${image})` // Display the selected file if available
                       : me?.profileImage
-                      ? `url(https://apiv2.staging.jamiatreporting.com/api/v1/user/upload/${me?.profileImage})` // Display profileImage if available
+                      ? `url(http://localhost:5000/api/v1/user/upload/${me?.profileImage})` // Display profileImage if available
                       : `url(${logo})`, // Fallback to the logo
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",

@@ -14,7 +14,7 @@ export const BottomNav = ({ active }) => {
   const { isCompleted } = useContext(UIContext);
   const me = useContext(MeContext);
   const profileImageUrl = me?.profileImage
-    ? `https://apiv2.staging.jamiatreporting.com/api/v1/user/upload/${me.profileImage}`
+    ? `http://localhost:5000/api/v1/user/upload/${me.profileImage}`
     : Logo;
   const navigate = useNavigate();
   const user = localStorage.getItem("@type");
