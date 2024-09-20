@@ -240,7 +240,7 @@ export const Compile = () => {
       title={me?.userAreaId?.name.toUpperCase()}
       active={"compilation"}
     >
-      <div className="relative flex flex-col gap-3 items-start p-5 justify-start h-[calc(100vh-65.6px-64px)]">
+      <div className="relative flex flex-col gap-3 items-start p-5 justify-start h-[calc(100vh-565.6px)]">
         <div className="flex w-full py-4 mb-4 border-b border-inputBorder">
           <div className="">
             <h1 class="font-inter text-heading text-[18px] font-medium leading-[28px] text-left">
@@ -433,15 +433,23 @@ export const Compile = () => {
           {checked === "month-checkbox" && (
             <div className="flex flex-col lg:flex-row justify-center gap-4 lg:gap-12 ">
               <div className="flex flex-row gap-4 items-center">
-                <label className="font-inter text-[12px] font-semibold leading-[14.52px] text-left text-primary">Start Date:</label>
+                <label className="font-inter text-[12px] font-semibold leading-[14.52px] text-left text-primary">
+                  Start Date:
+                </label>
                 <select
                   className="select select-bordered select-sm"
                   onChange={(e) => setStartMonth(e.target.value)}
                   value={startMonth}
                 >
-                  <option value="" className="hover:bg-primary">Month</option>
+                  <option value="" className="hover:bg-primary">
+                    Month
+                  </option>
                   {months.map((month, index) => (
-                    <option value={month.value} key={index} className="hover:bg-primary">
+                    <option
+                      value={month.value}
+                      key={index}
+                      className="hover:bg-primary"
+                    >
                       {month.title}
                     </option>
                   ))}
@@ -462,7 +470,9 @@ export const Compile = () => {
                 </select>
               </div>
               <div className="flex flex-row gap-4 items-center">
-                <label className="font-inter text-[12px] font-semibold leading-[14.52px] text-left text-primary">End Date:</label>
+                <label className="font-inter text-[12px] font-semibold leading-[14.52px] text-left text-primary">
+                  End Date:
+                </label>
                 <select
                   className="select select-bordered select-sm"
                   onChange={(e) => {
@@ -538,14 +548,15 @@ export const Compile = () => {
             </div>
           )}
         </div>
-
-        <button
-          onClick={getReports}
-          type="button"
-          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none "
-        >
-          Compile
-        </button>
+        <div className="flex w-full justify-center mt-2">
+          <button
+            onClick={getReports}
+            type="button"
+            class="text-white bg-primary p-1 rounded "
+          >
+            Compile
+          </button>
+        </div>
         <div className="w-full flex justify-end items-end text-white">
           <span>HASSAAN MUJTABA</span>
         </div>

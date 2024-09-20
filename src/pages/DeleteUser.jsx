@@ -4,7 +4,7 @@ import { UIContext } from "../context/ui";
 import { FiTrash } from "react-icons/fi";
 import { HiOutlineUpload } from "react-icons/hi";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-
+import { FaEye } from "react-icons/fa";
 import {
   DivisionContext,
   HalqaContext,
@@ -170,27 +170,15 @@ export const DeleteUser = () => {
         },
       });
       setData(request?.data?.data);
-      document.getElementById("filter-form").reset();
-      setSelectedYear("");
-      setBirthYear("");
-      setSelectedSubject("");
-      setData(nazim);
       document.getElementById("categorize-filter").close();
       dispatch({ type: "SUCCESS", payload: request.data?.message });
       e.target.reset();
+      setUserAreaType('');
+      setNazimType('')
     } catch (err) {
-      document.getElementById("filter-form").reset();
-      setSelectedYear("");
-      setBirthYear("");
-      setSelectedSubject("");
-      setData(nazim);
       dispatch({ type: "ERROR", payload: err.response.data.message });
     }
-    document.getElementById("filter-form").reset();
-    setSelectedYear("");
-    setBirthYear("");
-    setSelectedSubject("");
-    setData(nazim);
+
     setLoading(false);
   };
 
@@ -387,9 +375,7 @@ export const DeleteUser = () => {
                 <th class="font-inter text-[12px] md:text-[14px] font-medium leading-[16.94px]  text-secondaryText text-left">
                   Area
                 </th>
-                <th class="font-inter text-[12px] md:text-[14px] font-medium leading-[16.94px]  text-secondaryText text-left">
-                  Country
-                </th>
+
                 <th class="font-inter text-[12px] md:text-[14px] font-medium leading-[16.94px]  text-secondaryText text-left">
                   Status
                 </th>
@@ -425,14 +411,11 @@ export const DeleteUser = () => {
                           getAreaDetails(user?.userAreaId);
                         }}
                       >
-                        <FcViewDetails
-                          className="cursor-pointer text-2xl p-0 m-0"
+                        <FaEye
+                          className="cursor-pointer text-lg p-0 m-0"
                           id="sv"
                         />
                       </div>
-                    </td>
-                    <td class="font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left py-2 w-1/7">
-                      Pakistan
                     </td>
                     <td class="font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left py-2 w-1/7">
                       {user?.isDeleted ? (
@@ -530,13 +513,15 @@ export const DeleteUser = () => {
 
           {/* Page Numbers */}
           <div className="flex items-center">
-            {totalPages>1 && <span
-              className={`rounded-full text-bold text-sm ${
-                currentPage === 1 && "border-2 border-gray-500"
-              } mx-1 bg-white w-7 h-7 flex justify-center items-center text-[8px]`}
-            >
-              1
-            </span>}
+            {totalPages > 1 && (
+              <span
+                className={`rounded-full text-bold text-sm ${
+                  currentPage === 1 && "border-2 border-gray-500"
+                } mx-1 bg-white w-7 h-7 flex justify-center items-center text-[8px]`}
+              >
+                1
+              </span>
+            )}
 
             {totalPages > 1 && (
               <button
@@ -557,13 +542,21 @@ export const DeleteUser = () => {
                 {currentPage}
               </span>
             )}
-            {totalPages && totalPages > 2 && (
+            {totalPages && totalPages > 2 ? (
               <span
                 className={`rounded-full text-bold text-sm ${
                   currentPage === totalPages && "border-2 border-gray-500"
                 } mx-1 bg-white w-7 h-7 flex justify-center items-center text-[8px]`}
               >
                 {totalPages}
+              </span>
+            ) : (
+              <span
+                className={`rounded-full text-bold text-sm ${
+                  currentPage === totalPages && "border-2 border-gray-500"
+                } mx-1 bg-white w-7 h-7 flex justify-center items-center text-[8px]`}
+              >
+                1
               </span>
             )}
           </div>
@@ -624,7 +617,9 @@ export const DeleteUser = () => {
                 <div>
                   <div>
                     <label className="label">
-                      <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">Full Name</span>
+                      <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">
+                        Full Name
+                      </span>
                     </label>
                     <input
                       type="text"
@@ -821,7 +816,9 @@ export const DeleteUser = () => {
                   </div>
                   <div className="w-full">
                     <label className="label">
-                      <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">Institution</span>
+                      <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">
+                        Institution
+                      </span>
                     </label>
                     <input
                       type="text"
@@ -1168,7 +1165,9 @@ export const DeleteUser = () => {
         <dialog id="view-details-modal" className="modal">
           <div className="modal-box">
             <div className="flex justify-between items-center w-full">
-              <h3 class="font-inter text-heading text-[16px] font-medium leading-[28px] text-left">User Details</h3>
+              <h3 class="font-inter text-heading text-[16px] font-medium leading-[28px] text-left">
+                User Details
+              </h3>
               <button
                 className="py-1 px-4 rounded-md bg-primary text-white border-none capitalize"
                 onClick={() =>
@@ -1183,7 +1182,9 @@ export const DeleteUser = () => {
               <div className="flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col">
                 <div className="w-full">
                   <label className="label">
-                    <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">Full Name</span>
+                    <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">
+                      Full Name
+                    </span>
                   </label>
                   <input
                     readOnly
@@ -1196,7 +1197,9 @@ export const DeleteUser = () => {
                 </div>
                 <div className="w-full">
                   <label className="label">
-                    <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">Father Name</span>
+                    <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">
+                      Father Name
+                    </span>
                   </label>
                   <input
                     readOnly
@@ -1211,7 +1214,9 @@ export const DeleteUser = () => {
               <div className="flex w-full items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col">
                 <div className="w-full">
                   <label className="label">
-                    <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">Date of birth</span>
+                    <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">
+                      Date of birth
+                    </span>
                   </label>
                   <input
                     readOnly
@@ -1241,7 +1246,9 @@ export const DeleteUser = () => {
               <div className="flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col">
                 <div className="w-full">
                   <label className="label">
-                    <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">Qualifications</span>
+                    <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">
+                      Qualifications
+                    </span>
                   </label>
                   <input
                     readOnly
@@ -1254,7 +1261,9 @@ export const DeleteUser = () => {
                 </div>
                 <div className="w-full relative">
                   <label className="label">
-                    <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">Subject</span>
+                    <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">
+                      Subject
+                    </span>
                   </label>
 
                   <input
@@ -1275,7 +1284,9 @@ export const DeleteUser = () => {
               <div className="flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col">
                 <div className="w-full">
                   <label className="label">
-                    <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">Semester/Year</span>
+                    <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">
+                      Semester/Year
+                    </span>
                   </label>
                   <input
                     readOnly
@@ -1288,7 +1299,9 @@ export const DeleteUser = () => {
                 </div>
                 <div className="w-full">
                   <label className="label">
-                    <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">Institution</span>
+                    <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">
+                      Institution
+                    </span>
                   </label>
                   <input
                     readOnly
@@ -1303,7 +1316,9 @@ export const DeleteUser = () => {
               <div className="flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col">
                 <div className="w-full">
                   <label className="label">
-                    <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">Age</span>
+                    <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">
+                      Age
+                    </span>
                   </label>
                   <input
                     readOnly
@@ -1316,7 +1331,9 @@ export const DeleteUser = () => {
                 </div>
                 <div className="w-full">
                   <label className="label">
-                    <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">Nazim Type</span>
+                    <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">
+                      Nazim Type
+                    </span>
                   </label>
                   <input
                     readOnly
@@ -1336,7 +1353,9 @@ export const DeleteUser = () => {
               <div className="flex items-center justify-between gap-2 lg:flex-row md:flex-row sm:flex-col">
                 <div className="w-full">
                   <label className="label">
-                    <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">Phone Number</span>
+                    <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">
+                      Phone Number
+                    </span>
                   </label>
                   <input
                     readOnly
@@ -1366,7 +1385,9 @@ export const DeleteUser = () => {
 
               <div className="w-full">
                 <label className="label">
-                  <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">Home address</span>
+                  <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">
+                    Home address
+                  </span>
                 </label>
                 <textarea
                   placeholder="Address"
@@ -1378,7 +1399,9 @@ export const DeleteUser = () => {
               </div>
               <div className="w-full">
                 <label className="label">
-                  <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">Area</span>
+                  <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">
+                    Area
+                  </span>
                 </label>
                 <input
                   readOnly
@@ -1391,7 +1414,9 @@ export const DeleteUser = () => {
               </div>
               <div className="w-full">
                 <label className="label">
-                  <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">Email</span>
+                  <span class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">
+                    Email
+                  </span>
                 </label>
                 <input
                   readOnly
@@ -1734,11 +1759,17 @@ export const DeleteUser = () => {
         </dialog>
         <dialog id="area_details" className="modal">
           <div className="modal-box">
-            <h3 class="font-inter text-heading text-[16px] font-medium leading-[28px] text-left mb-4">Details of the area</h3>
+            <h3 class="font-inter text-heading text-[16px] font-medium leading-[28px] text-left mb-4">
+              Details of the area
+            </h3>
             <div className="w-full  flex flex-col justify-between items-start text-left gap-4  flex-wrap">
               <div className="w-full flex justify-start items-center gap-5">
-                <h5 class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">Area Name:</h5>
-                <h4 class="font-inter text-secondaryText text-[12px] font-medium leading-[28px] text-left">{areaDetails?.name}</h4>
+                <h5 class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">
+                  Area Name:
+                </h5>
+                <h4 class="font-inter text-secondaryText text-[12px] font-medium leading-[28px] text-left">
+                  {areaDetails?.name}
+                </h4>
                 <h4 class="font-inter text-secondaryText text-[12px] font-medium leading-[28px] text-left">
                   {areaDetails?.parentType === "Ilaqa" ||
                   areaDetails?.parentType === "Tehsil" ||
@@ -1777,7 +1808,10 @@ export const DeleteUser = () => {
                 !areaDetails?.parentType === "Division" && (
                   <>
                     <div className="w-full flex justify-start items-center gap-5">
-                      <h5 class="font-inter text-heading text-[16px] font-medium leading-[28px] text-left"> District:</h5>
+                      <h5 class="font-inter text-heading text-[16px] font-medium leading-[28px] text-left">
+                        {" "}
+                        District:
+                      </h5>
                       <h4 class="font-inter text-secondaryText text-[14px] font-medium leading-[28px] text-left">
                         {areaDetails?.parentId?.district
                           ? areaDetails?.parentId?.district?.name
@@ -1796,7 +1830,9 @@ export const DeleteUser = () => {
                 )}
               {areaDetails?.parentType === "Ilaqa" && (
                 <div className="w-full flex justify-start items-center gap-5">
-                  <h5 class="font-inter text-heading text-[16px] font-medium leading-[28px] text-left">Maqam:</h5>
+                  <h5 class="font-inter text-heading text-[16px] font-medium leading-[28px] text-left">
+                    Maqam:
+                  </h5>
                   <h4 class="font-inter text-secondaryText text-[14px] font-medium leading-[28px] text-left">
                     {areaDetails?.parentType === "Ilaqa"
                       ? areaDetails?.parentId?.maqam?.name
@@ -1807,7 +1843,9 @@ export const DeleteUser = () => {
 
               {!areaDetails?.country && areaDetails.name !== "Pakistan" && (
                 <div className="w-full flex justify-start items-center gap-5">
-                  <h4 class="font-inter text-heading text-[16px] font-medium leading-[28px] text-left">Province:</h4>
+                  <h4 class="font-inter text-heading text-[16px] font-medium leading-[28px] text-left">
+                    Province:
+                  </h4>
                   <h4 class="font-inter text-secondaryText text-[14px] font-medium leading-[28px] text-left">
                     {areaDetails?.parentType === "Ilaqa"
                       ? areaDetails?.parentId?.maqam?.province?.name
@@ -1827,8 +1865,12 @@ export const DeleteUser = () => {
                 </div>
               )}
               <div className="w-full flex justify-start items-center gap-5">
-                <h5 class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">Country:</h5>
-                <h4 class="font-inter text-secondaryText text-[14px] font-medium leading-[28px] text-left">Pakistan</h4>
+                <h5 class="font-inter text-heading text-[14px] font-medium leading-[28px] text-left">
+                  Country:
+                </h5>
+                <h4 class="font-inter text-secondaryText text-[14px] font-medium leading-[28px] text-left">
+                  Pakistan
+                </h4>
               </div>
             </div>
             <div className="modal-action w-full">

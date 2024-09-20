@@ -27,7 +27,7 @@ import { Jamiaat } from "../components/divisionReport/Jamiaat";
 import { Colleges } from "../components/divisionReport/Colleges";
 import { ZailiActivities } from "../components/divisionReport/ZailiActivities";
 import { Baitulmal } from "../components/divisionReport/Baitulmal";
-
+import { RxCross1 } from "react-icons/rx";
 export const Division = () => {
   // EDIT CODE START
   const [createData, setCreateData] = useState();
@@ -47,6 +47,7 @@ export const Division = () => {
     setPage(url);
   }, [window.location]);
   const autoFill = () => {
+    setLoading(true);
     const halq = {};
 
     document.getElementById("division-form").reset();
@@ -175,9 +176,11 @@ export const Division = () => {
     afd.forEach((i) => {
       calcultate(i);
     });
+    setLoading(false);
   };
   // GET REPORTS OF Division HALQA TO CREATE Division REPORT THE COMING REPORTS WILL BE POPULATED
   const getHalqaReports = async () => {
+    setLoading(true);
     try {
       const req = await instance.get(`/reports/division`, {
         params: { areaId: me?.userAreaId?._id },
@@ -209,6 +212,7 @@ export const Division = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const getDivisionReport = async () => {
+    setLoading(true);
     try {
       const req = await instance.get(`/reports/division/${id}`, {
         headers: {
@@ -367,30 +371,35 @@ export const Division = () => {
   return (
     <>
       <div className="reports  overflow-hidden overflow-y-scroll w-full">
+        <div>
+          <button
+            type="button"
+            className="p-2"
+            onClick={() => navigate("/reports")}
+          >
+            <RxCross1 />
+          </button>
+
+          <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
+            {" "}
+            جائزہ کارکردگی رپورٹ (برائے ڈویژن){" "}
+          </h2>
+        </div>
         <form
           className="flex w-full flex-col justify-center items-center p-4 font-notoUrdu mb-5"
           dir="rtl"
           onSubmit={handleSubmit}
           id="division-form"
         >
-          <button
-            type="button"
-            class="absolute top-20 left-5 text-white bg-primary text-[14px] rounded py-2 px-4"
-            onClick={() => navigate("/reports")}
-          >
-            Back
-          </button>
-          {/* <fieldset disabled={view} className="w-full"> */}
-          <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
-            جائزہ کارکردگی رپورٹ (برائے ڈویژن)
-          </h2>
           <div className="w-full">
             <div className="mb-4">
               <GeneralInfo
                 month={month}
                 me={me}
+                newMonth={data?.month}
                 setMonth={setMonth}
                 area={"ڈویژن"}
+                name={data?.["name"]}
               />
             </div>
             <div className="mb-4">

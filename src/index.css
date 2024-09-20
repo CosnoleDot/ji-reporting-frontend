@@ -3527,6 +3527,10 @@ html {
   height: 2rem;
 }
 
+.h-\[100px\] {
+  height: 100px;
+}
+
 .h-\[104px\] {
   height: 104px;
 }
@@ -3555,6 +3559,10 @@ html {
   height: 80vh;
 }
 
+.h-\[calc\(100vh-565\.6px\)\] {
+  height: calc(100vh - 565.6px);
+}
+
 .h-\[calc\(100vh-64\.4px-64px\)\] {
   height: calc(100vh - 64.4px - 64px);
 }
@@ -3569,10 +3577,6 @@ html {
 
 .h-\[calc\(100vh-65\.6px-64px\)\] {
   height: calc(100vh - 65.6px - 64px);
-}
-
-.h-\[calc\(100vh-65\.6px-64px-62px\)\] {
-  height: calc(100vh - 65.6px - 64px - 62px);
 }
 
 .h-\[calc\(100vh-72\.8px-64px\)\] {
@@ -4050,11 +4054,6 @@ html {
   border-color: rgb(107 114 128 / var(--tw-border-opacity));
 }
 
-.border-innerAlignment {
-  --tw-border-opacity: 1;
-  border-color: rgb(148 163 184 / var(--tw-border-opacity));
-}
-
 .border-inputBorder {
   --tw-border-opacity: 1;
   border-color: rgb(228 228 231 / var(--tw-border-opacity));
@@ -4394,8 +4393,8 @@ html {
   font-size: 20px;
 }
 
-.text-\[32px\] {
-  font-size: 32px;
+.text-\[24px\] {
+  font-size: 24px;
 }
 
 .text-\[8px\] {
@@ -5216,6 +5215,10 @@ html {
     height: 10rem;
   }
 
+  .md\:h-\[130px\] {
+    height: 130px;
+  }
+
   .md\:h-\[350px\] {
     height: 350px;
   }
@@ -5238,6 +5241,10 @@ html {
 
   .md\:h-full {
     height: 100%;
+  }
+
+  .md\:max-h-11 {
+    max-height: 2.75rem;
   }
 
   .md\:w-4 {
@@ -5332,10 +5339,6 @@ html {
     gap: 0.75rem;
   }
 
-  .md\:gap-4 {
-    gap: 1rem;
-  }
-
   .md\:bg-transparent {
     background-color: transparent;
   }
@@ -5344,13 +5347,31 @@ html {
     padding: 4rem;
   }
 
+  .md\:p-4 {
+    padding: 1rem;
+  }
+
   .md\:p-5 {
     padding: 1.25rem;
+  }
+
+  .md\:p-\[6px\] {
+    padding: 6px;
+  }
+
+  .md\:px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
   .md\:px-5 {
     padding-left: 1.25rem;
     padding-right: 1.25rem;
+  }
+
+  .md\:py-2 {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
   }
 
   .md\:pr-0 {
@@ -5373,6 +5394,10 @@ html {
 
   .md\:text-\[16px\] {
     font-size: 16px;
+  }
+
+  .md\:text-\[32px\] {
+    font-size: 32px;
   }
 
   .md\:text-lg {

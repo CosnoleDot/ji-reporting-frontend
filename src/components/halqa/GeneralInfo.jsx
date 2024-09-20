@@ -1,37 +1,44 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
-export function GeneralInfo({ me, area, view, newMonth, setMonth }) {
+export function GeneralInfo({ me, area, view, newMonth, setMonth, name }) {
   const [date, setDate] = useState("");
+  const location = useLocation();
+  const l = location.pathname?.split("/")[2];
   useEffect(() => {
-    if (me && !view) {
-      if (document.getElementById("name")) {
-        document.getElementById("name").value = me?.userAreaId?.name;
-      }
+    if (l !== "view") {
+      document.getElementById("name").value = me?.userAreaId?.name;
+    } else {
+      document.getElementById("name").value = name;
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  });
+  }, [name]);
+
   const setDateFn = () => {
-    const date0 = new Date();
-    date0.setMonth(date0.getMonth() - 1);
-    setDate(
-      `${date0.getFullYear()}-${
-        date0.getMonth() > 9
-          ? date0.getMonth() + 1
-          : "0".toString() + (date0.getMonth() + 1).toString()
-      }`
-    );
-    setMonth &&
-      setMonth(
+    if (l !== "view") {
+      const date0 = new Date();
+      date0.setMonth(date0.getMonth() - 1);
+      setDate(
         `${date0.getFullYear()}-${
           date0.getMonth() > 9
             ? date0.getMonth() + 1
             : "0".toString() + (date0.getMonth() + 1).toString()
         }`
       );
+      setMonth &&
+        setMonth(
+          `${date0.getFullYear()}-${
+            date0.getMonth() > 9
+              ? date0.getMonth() + 1
+              : "0".toString() + (date0.getMonth() + 1).toString()
+          }`
+        );
+    }
   };
   useEffect(() => {
     setDateFn();
-  }, []);
+  }, [view]);
   return (
     <div className="grid w-full grid-cols-1 lg:grid-cols-2">
       <div className="flex justify-start items-center gap-2 w-full p-2">

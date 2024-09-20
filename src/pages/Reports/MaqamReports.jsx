@@ -215,9 +215,9 @@ export const MaqamReports = () => {
           </div>
         )}
 
-        <div className="indicator flex items-center justify-end gap-2 md:gap-4 w-full">
+        <div className="indicator flex items-center justify-end w-full">
           <button
-            className={`font-inter px-2 text-[12px] md:text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left ${
+            className={`font-inter px-2  bg-primary flex justify-center text-white p-1 md:p-[6px] text-[12px] md:text-[14px] mb-1 rounded font-medium leading-[20px] text-left ${
               !isMobileView ? "join-item" : ""
             }`}
             onClick={() => (!isMobileView ? searchResults() : toggleSearch())}
@@ -230,7 +230,7 @@ export const MaqamReports = () => {
                 document.getElementById("filter-area-dialog").showModal();
                 setIsSearch(false);
               }}
-              className={`font-inter text-[12px] md:text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left ${
+              className={`font-inter  bg-primary flex justify-center text-white p-1 md:p-[6px] text-[12px] md:text-[14px] mb-1 rounded font-medium leading-[20px] text-left ${
                 !isMobileView ? "join-item" : "ms-3"
               }`}
             >
@@ -238,7 +238,7 @@ export const MaqamReports = () => {
             </button>
           )}
           <button
-            className={`font-inter text-[12px] md:text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left ${
+            className={`font-inter  bg-primary flex justify-center text-white p-1 md:p-[6px] text-[12px] md:text-[14px] mb-1 rounded font-medium leading-[20px] text-left ${
               !isMobileView ? "join-item" : "ms-3"
             }`}
             onClick={clearFilters}
@@ -250,67 +250,69 @@ export const MaqamReports = () => {
       {!isSearch ? (
         <>
           {currentData?.length > 0 ? (
-            <table className="table mb-7 w-full">
-              {/* Head */}
-              <thead>
-                <tr>
-                  <th className="text-left">Report</th>
-                  <th className="text-left">Last modified</th>
-                  <th className="text-left">Month</th>
-                  <th className="md:block hidden"></th>
-                  <th className="md:block hidden"></th>
-                  <th className="text-left">Action</th>
-                </tr>
-              </thead>
-              {/* Body */}
-              <tbody>
-                {currentData.map((p, index) => (
-                  <tr key={index}>
-                    <td>
-                      <span className="font-medium md:text-sm text-xs leading-[16.94px] text-left font-inter text-heading">
-                        {p?.maqamAreaId?.name}
-                      </span>
-                    </td>
-                    <td>
-                      <span className="font-medium md:text-sm text-xs leading-[16.94px] text-left font-inter text-heading">
-                        {moment(p?.updatedAt).fromNow()}
-                      </span>
-                    </td>
-                    <td>
-                      <span className="font-medium md:text-sm text-xs leading-[16.94px] text-left font-inter text-heading">
-                        {moment(p?.month).format("MMMM YYYY")}
-                      </span>
-                    </td>
-                    <td className="md:block hidden"></td>
-                    <td className="md:block hidden"></td>
-                    <td>
-                      <div className="flex items-center gap-2">
-                        <span
-                          onClick={() => navigate(`/reports/view/${p._id}`)}
-                          className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left"
-                        >
-                          View
-                        </span>
-                        {me?.userAreaType === "Maqam" && (
-                          <span
-                            onClick={() => navigate(`/reports/edit/${p._id}`)}
-                            className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left text-green"
-                          >
-                            Edit
-                          </span>
-                        )}
-                        <span
-                          onClick={() => handlePrint(p?._id)}
-                          className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left text-blue"
-                        >
-                          Print
-                        </span>
-                      </div>
-                    </td>
+            <div className="overflow-scroll">
+              <table className="table mb-7 w-full">
+                {/* Head */}
+                <thead>
+                  <tr>
+                    <th className="text-left">Report</th>
+                    <th className="text-left">Last modified</th>
+                    <th className="text-left">Month</th>
+                    <th className="md:block hidden"></th>
+                    <th className="md:block hidden"></th>
+                    <th className="text-left">Action</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                {/* Body */}
+                <tbody>
+                  {currentData.map((p, index) => (
+                    <tr key={index}>
+                      <td>
+                        <span className="font-medium md:text-sm text-xs leading-[16.94px] text-left font-inter text-heading">
+                          {p?.maqamAreaId?.name}
+                        </span>
+                      </td>
+                      <td>
+                        <span className="font-medium md:text-sm text-xs leading-[16.94px] text-left font-inter text-heading">
+                          {moment(p?.updatedAt).fromNow()}
+                        </span>
+                      </td>
+                      <td>
+                        <span className="font-medium md:text-sm text-xs leading-[16.94px] text-left font-inter text-heading">
+                          {moment(p?.month).format("MMMM YYYY")}
+                        </span>
+                      </td>
+                      <td className="md:block hidden"></td>
+                      <td className="md:block hidden"></td>
+                      <td>
+                        <div className="flex items-center gap-2">
+                          <span
+                            onClick={() => navigate(`/reports/view/${p._id}`)}
+                            className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left"
+                          >
+                            View
+                          </span>
+                          {me?.userAreaType === "Maqam" && (
+                            <span
+                              onClick={() => navigate(`/reports/edit/${p._id}`)}
+                              className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left text-green"
+                            >
+                              Edit
+                            </span>
+                          )}
+                          <span
+                            onClick={() => handlePrint(p?._id)}
+                            className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left text-blue"
+                          >
+                            Print
+                          </span>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           ) : (
             <NoReports />
           )}

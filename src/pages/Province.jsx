@@ -25,7 +25,7 @@ import { RozOShabDiary } from "../components/provinceReport/RozOShabDiary";
 import { Jamiaat } from "../components/provinceReport/Jamiaat";
 import { Colleges } from "../components/provinceReport/Colleges";
 import { Baitulmal } from "../components/provinceReport/Baitulmal";
-
+import { RxCross1 } from "react-icons/rx";
 export const Province = () => {
   // EDIT CODE START
   const [createData, setCreateData] = useState([]);
@@ -160,7 +160,6 @@ export const Province = () => {
         }
       });
     });
-
     if (page === "create") {
       [
         "ijtArkan",
@@ -176,6 +175,8 @@ export const Province = () => {
         "ijtKarkunan",
       ].map((i) => (provinceFinalData[`${i}-averageAttendance`] = 0));
     }
+
+
     Object.keys(provinceFinalData).forEach((i) => {
       let j = i;
       const elem = document.getElementById(j);
@@ -202,9 +203,12 @@ export const Province = () => {
       document.getElementById("comments").value = null;
       document.getElementById("anyOther").value = null;
     }
+    
+
   };
   // GET REPORTS OF Division and Maqams TO CREATE Province REPORT THE COMING REPORTS WILL BE POPULATED
   const getReportsForProvinceReport = async () => {
+    setLoading(true);
     try {
       const req = await instance.get(`/reports/province`, {
         params: { areaId: me?.userAreaId?._id },
@@ -222,6 +226,7 @@ export const Province = () => {
     setLoading(false);
   };
   const getProvinceSingleReport = async () => {
+    setLoading(true);
     try {
       const req = await instance.get(`/reports/province/${id}`, {
         headers: {
@@ -536,34 +541,41 @@ export const Province = () => {
       data[i] = 0;
     }
   });
-
+ 
   return (
    
       <div className="reports  overflow-y-scroll">
+        <div>
+          <button
+            type="button"
+            className="p-2"
+            onClick={() => navigate("/reports")}
+          >
+            <RxCross1 />
+          </button>
+
+          <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
+            جائزہ کارکردگی رپورٹ (براے صوبہ)
+          </h2>
+        </div>
         <form
           className="flex flex-col justify-center items-center p-4 font-notoUrdu mb-5"
           dir="rtl"
           onSubmit={handleSubmit}
           id="province-form"
         >
-          <button
-            type="button"
-            class="absolute top-20 left-5 text-white bg-primary text-[14px] rounded py-2 px-4"
-           onClick={()=>navigate('/reports')}
-           >
-            Back
-          </button>
-          <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
-            جائزہ کارکردگی رپورٹ (براے صوبہ)
-          </h2>
+          
+         
           <div className="w-full">
             <div>
               <GeneralInfo
                 setMonth={setMonth}
                 month={month}
                 me={me}
+                newMonth={data?.month}
                 area={"صوبہ"}
                 view={view}
+                name={data?.['name']}
               />
             </div>
             <div>

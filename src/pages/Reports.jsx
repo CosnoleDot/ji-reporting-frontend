@@ -197,7 +197,7 @@ export const Reports = () => {
       title={me?.userAreaId?.name.toUpperCase()}
       active={"reports"}
     >
-      <div className="relative flex flex-col gap-3 items-center p-5 justify-center">
+      <div className="relative flex flex-col gap-3 items-center md:p-5 p-2 justify-center">
         <div className="flex md:flex-row flex-col w-full items-center justify-between py-4 mb-4 border-b border-inputBorder">
           <div className="flex flex-col justify-start w-full md:mb-0 mb-4">
             <h1 class="font-inter text-heading text-[18px] font-medium leading-[28px] text-left">
@@ -377,7 +377,7 @@ export const Reports = () => {
           <div></div>
         </div>
 
-        <div className="relative overflow-y-scroll gap-3 w-full items-center  justify-center h-full md:h-[calc(100vh-65.6px-84px-88px)]">
+        <div className="relative  gap-3 w-full items-center  justify-center h-full md:h-[calc(100vh-65.6px-84px-88px)]">
           {active === "province" ? (
             <ProvinceReports />
           ) : active === "division" ? (

@@ -15,7 +15,7 @@ export const FilterDialog = ({ setFilterAllData, tab ,setIsFilter}) => {
   const { active, setActive } = useContext(UIContext);
 
   // const [showNotification, setShowNotification] = useState(false);
-
+  const { loading, setLoading } = useContext(UIContext);
   const [areas, setAreas] = useState([]);
   const [searchArea, setSearchArea] = useState("");
   const [userAreaType, setUserAreaType] = useState(active);
@@ -53,6 +53,7 @@ export const FilterDialog = ({ setFilterAllData, tab ,setIsFilter}) => {
   };
 
   const getFilterData = async () => {
+    setLoading(true)
     try {
      
       const req = await instance.get(`/reports/${userAreaType ==="country" ? "markaz": userAreaType}/${selectedId}`, {
@@ -68,6 +69,8 @@ export const FilterDialog = ({ setFilterAllData, tab ,setIsFilter}) => {
     } catch (err) {
       dispatch({ type: "ERROR", payload: err?.response?.data?.message });
     }
+    setLoading(false)
+
   };
   const getAreaWithType = () => {
     switch (userAreaType) {
