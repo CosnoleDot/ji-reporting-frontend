@@ -12,7 +12,7 @@ import {
 import { Link, useLocation } from "react-router-dom";
 import instance from "../../api/instrance";
 import { UIContext } from "../../context/ui";
-import { FcViewDetails } from "react-icons/fc";
+import { FaEye } from "react-icons/fa";
 import {
   IoIosArrowBack,
   IoIosArrowDropright,
@@ -155,12 +155,16 @@ export const LocationDivision = () => {
         },
       });
       await getDivisions();
+      document.getElementById("add_division_modal").close();
+
       dispatch({ type: "SUCCESS", payload: req.data?.message });
       setForm({
         name: "",
         province: "",
       });
     } catch (err) {
+      document.getElementById("add_division_modal").close();
+
       dispatch({ type: "ERROR", payload: err.response.data.message });
     }
   };
@@ -174,10 +178,13 @@ export const LocationDivision = () => {
         },
       });
       await getDivisions();
+      document.getElementById("add_division_modal").close();
+
       dispatch({ type: "SUCCESS", payload: req.data?.message });
     } catch (err) {
       console.log(err);
       setLoading(false);
+      document.getElementById("add_division_modal").close();
       dispatch({ type: "ERROR", payload: err.response.data.message });
     }
     setLoading(false);
@@ -192,12 +199,14 @@ export const LocationDivision = () => {
         },
       });
       await getDistricts();
+      document.getElementById("add_district_modal").close();
       dispatch({ type: "SUCCESS", payload: req.data?.message });
       setFormDistrict({
         name: "",
         division: "",
       });
     } catch (err) {
+      document.getElementById("add_district_modal").close();
       dispatch({ type: "ERROR", payload: err.response.data.message });
     }
   };
@@ -215,9 +224,12 @@ export const LocationDivision = () => {
         }
       );
       await getDistricts();
+      document.getElementById("add_district_modal").close();
       dispatch({ type: "SUCCESS", payload: req.data?.message });
     } catch (err) {
       console.log(err);
+      document.getElementById("add_district_modal").close();
+
       dispatch({ type: "ERROR", payload: err.response.data.message });
     }
     setLoading(false);
@@ -232,12 +244,15 @@ export const LocationDivision = () => {
         },
       });
       await getTehsils();
+      document.getElementById("add_tehsil_modal").close();
       dispatch({ type: "SUCCESS", payload: req.data?.message });
       setFormTehsil({
         name: "",
         district: "",
       });
     } catch (err) {
+      document.getElementById("add_tehsil_modal").close();
+
       dispatch({ type: "ERROR", payload: err.response.data.message });
     }
   };
@@ -251,10 +266,13 @@ export const LocationDivision = () => {
         },
       });
       await getTehsils();
+      document.getElementById("add_tehsil_modal").close();
+
       dispatch({ type: "SUCCESS", payload: req.data?.message });
     } catch (err) {
       console.log(err);
       setLoading(false);
+      document.getElementById("add_tehsil_modal").close();
       dispatch({ type: "ERROR", payload: err.response.data.message });
     }
     setLoading(false);
@@ -270,6 +288,7 @@ export const LocationDivision = () => {
         },
       });
       await getHalqas();
+      document.getElementById("add_halqa_modal").close();
       dispatch({ type: "SUCCESS", payload: req.data?.message });
       setFormHalqa({
         parentId: "",
@@ -279,6 +298,7 @@ export const LocationDivision = () => {
       });
     } catch (err) {
       setLoading(false);
+      document.getElementById("add_halqa_modal").close();
       dispatch({ type: "ERROR", payload: err.response.data.message });
     }
     setLoading(false);
@@ -294,10 +314,12 @@ export const LocationDivision = () => {
       });
       await getHalqas();
       setFilteredData(halqas);
+      document.getElementById("add_halqa_modal").close();
       dispatch({ type: "SUCCESS", payload: req.data?.message });
     } catch (err) {
       console.log(err);
       setLoading(false);
+      document.getElementById("add_halqa_modal").close();
       dispatch({ type: "ERROR", payload: err.response.data.message });
     }
     setLoading(false);
@@ -731,7 +753,7 @@ console.log(view,'aaa')
                           getAreaDetails(halqa);
                         }}
                       >
-                        <FcViewDetails className="cursor-pointer text-2xl" />
+                        <FaEye className="cursor-pointer text-lg" />
                       </div>
                     </td>
 
