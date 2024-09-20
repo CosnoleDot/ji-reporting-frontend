@@ -155,7 +155,10 @@ export const LocationMaqam = () => {
         province: "",
       });
       await getMaqams();
+      document.getElementById("add_maqam_modal").close();
+
     } catch (err) {
+      document.getElementById("add_maqam_modal").close();
       dispatch({ type: "ERROR", payload: err?.response?.data?.message });
     }
     setLoading(false);
@@ -171,8 +174,11 @@ export const LocationMaqam = () => {
         },
       });
       await getMaqams();
+      document.getElementById("add_maqam_modal").close();
+
       dispatch({ type: "SUCCESS", payload: req?.data?.message });
     } catch (err) {
+      document.getElementById("add_maqam_modal").close();
       dispatch({ type: "ERROR", payload: err?.response?.data?.message });
     }
     setLoading(false);
@@ -188,6 +194,8 @@ export const LocationMaqam = () => {
         },
       });
       await getHalqas();
+      document.getElementById("add_halqa_modal").close();
+
       dispatch({ type: "SUCCESS", payload: req?.data?.message });
       setFormHalqa({
         name: "",
@@ -196,6 +204,7 @@ export const LocationMaqam = () => {
         unitType: "",
       });
     } catch (err) {
+      document.getElementById("add_halqa_modal").close();
       dispatch({ type: "ERROR", payload: err?.response?.data?.message });
     }
     setLoading(false);
@@ -211,8 +220,11 @@ export const LocationMaqam = () => {
         },
       });
       await getHalqas();
+      document.getElementById("add_halqa_modal").close();
+
       dispatch({ type: "SUCCESS", payload: req?.data?.message });
     } catch (err) {
+      document.getElementById("add_halqa_modal").close();
       dispatch({ type: "ERROR", payload: err?.response?.data?.message });
     }
     setLoading(false);
@@ -227,13 +239,16 @@ export const LocationMaqam = () => {
           "Content-Type": "application/json",
         },
       });
+
       dispatch({ type: "SUCCESS", payload: req?.data?.message });
+      document.getElementById("add_ilaqa_modal").close();
       setIlaqaForm({
         name: "",
         maqam: "",
       });
       await getIlaqas();
     } catch (err) {
+      document.getElementById("add_ilaqa_modal").close();
       dispatch({ type: "ERROR", payload: err?.response?.data?.message });
     }
     setLoading(false);
@@ -253,8 +268,11 @@ export const LocationMaqam = () => {
         maqam: "",
       });
       await getIlaqas();
+      document.getElementById("add_ilaqa_modal").close();
+
       dispatch({ type: "SUCCESS", payload: req?.data?.message });
     } catch (err) {
+      document.getElementById("add_ilaqa_modal").close();
       dispatch({ type: "ERROR", payload: err?.response?.data?.message });
     }
     setLoading(false);
