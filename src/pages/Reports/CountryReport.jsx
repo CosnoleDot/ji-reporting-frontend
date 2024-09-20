@@ -205,10 +205,10 @@ export const CountryReport = () => {
           </div>
         )}
 
-        <div className="indicator flex items-center justify-end w-full">
+        <div className="indicator flex items-center justify-end w-full ">
           {/* <span className='indicator-item badge badge-secondary'>new</span> */}
           <button
-            className={`font-inter px-2 text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left ${
+            className={`font-inter px-2 bg-primary flex justify-center text-white p-1 md:p-[6px] text-[12px] md:text-[14px] mb-1 rounded font-medium leading-[20px] text-left ${
               !isMobileView ? "join-item" : ""
             }`}
             onClick={() => (!isMobileView ? searchResults() : toggleSearch())}
@@ -220,7 +220,7 @@ export const CountryReport = () => {
               onClick={() => {
                 document.getElementById("filter-area-dialog").showModal();
               }}
-              className={`font-inter px-2 text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left ${
+              className={`font-inter px-2 bg-primary flex justify-center text-white p-1 md:p-[6px] text-[12px] md:text-[14px] mb-1 rounded font-medium leading-[20px] text-left ${
                 !isMobileView ? "join-item" : "ms-3"
               }`}
             >
@@ -228,7 +228,7 @@ export const CountryReport = () => {
             </button>
           )}
           <button
-            className={`font-inter px-2 text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left ${
+            className={`font-inter px-2 bg-primary flex justify-center text-white p-1 md:p-[6px] text-[12px] md:text-[14px] mb-1 rounded font-medium leading-[20px] text-left ${
               !isMobileView ? "join-item" : "ms-3"
             }`}
             onClick={clearFilters}
@@ -240,7 +240,8 @@ export const CountryReport = () => {
       {!isSearch ? (
         <>
           {currentData?.length > 0 ? (
-            <table className="table mb-7 w-full">
+            <div className="overflow-scroll">
+            <table className="table mb-7 w-full overflow-scroll">
               {/* Head */}
               <thead>
                 <tr>
@@ -301,6 +302,7 @@ export const CountryReport = () => {
                 ))}
               </tbody>
             </table>
+            </div>
           ) : (
             <NoReports />
           )}

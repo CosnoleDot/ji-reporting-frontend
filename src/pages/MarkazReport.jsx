@@ -4,6 +4,7 @@ import instance from "../api/instrance";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useContext, useState } from "react";
 import { useEffect } from "react";
+import { RxCross1 } from "react-icons/rx";
 import {
   MarkazReportContext,
   MeContext,
@@ -233,6 +234,7 @@ export const MarkazReport = () => {
       });
       const repo = req?.data?.data?.data;
       setCreateData(repo);
+
       dispatch({ type: "SUCCESS", payload: req.data?.message });
     } catch (err) {
       dispatch({ type: "ERROR", payload: err.response.data.message });
@@ -251,6 +253,7 @@ export const MarkazReport = () => {
       const repo = req?.data?.data;
 
       setData(reverseDataFormat(repo));
+
       setCreateData(reverseDataFormat(repo));
 
       if (data) {
@@ -355,106 +358,105 @@ export const MarkazReport = () => {
   });
 
   return (
-    
-      <div className="reports overflow-y-scroll">
-        <form
-          className="flex flex-col justify-center items-center p-4 font-notoUrdu mb-5"
-          dir="rtl"
-          onSubmit={handleSubmit}
-          id="markaz-form"
+    <div className="reports overflow-y-scroll">
+      <div>
+        <button
+          type="button"
+          className="p-2"
+          onClick={() => navigate("/reports")}
         >
-          <button
-            type="button"
-            class="absolute top-20 left-5 text-white bg-primary text-[14px] rounded py-2 px-4"
-           onClick={()=>navigate('/reports')}
-           >
-            Back
-          </button>
+          <RxCross1 />
+        </button>
 
-          <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
-            {" "}
-            جائزہ کارکردگی رپورٹ (برائے مرکز)
-          </h2>
-
-          <div className="w-full">
-            <div className="mb-4">
-              <GeneralInfo
-                setMonth={setMonth}
-                month={month}
-                me={me}
-                area={"مقام"}
-                view={view}
-              />
-            </div>
-            <div className="mb-4">
-              <Jamiaat view={view} />
-            </div>
-            <div className="mb-4">
-              <Colleges view={view} />
-            </div>
-            <div className="mb-4">
-              <Tanzeem view={view} />
-            </div>
-            <div className="mb-4">
-              <IfradiKuwat view={view} />
-            </div>
-            <div className="mb-4">
-              <MarkaziActivities view={view} />
-            </div>
-            <div className="mb-4">
-              <ZailiActivities view={view} obj={obj} />
-            </div>
-            <div className="mb-4">
-              <OtherActivities view={view} />
-            </div>
-            <div className="mb-4">
-              <ToseeDawat />
-            </div>
-            <div className="mb-4">
-              <Library />
-            </div>
-            <div className="mb-4">
-              <Baitulmal view={view} />
-            </div>
-            <div className="mb-4">
-              <RozOShabDiary view={view} />
-            </div>
-            <div className="w-full flex p-2">
-              <label htmlFor="comments">تبصرہ</label>
-              <input
-                type="text"
-                required
-                name="comments"
-                maxLength={150}
-                className="border-b-2 border-dashed w-full"
-                id="comments"
-                readOnly={view}
-              />
-            </div>
-            {!view && (
-              <div className="w-full flex flex-col items-end gap-3 p-2">
-                <div>
-                  <label htmlFor="nazim">نام ناظم اعلیٰ:</label>
-                  <input
-                    type="text"
-                    className="border-b-2 border-dashed text-center"
-                    id="nazim"
-                    defaultValue={me?.name || ""}
-                    readOnly
-                  />
-                </div>
-              </div>
-            )}
+        <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
+          جائزہ کارکردگی رپورٹ (برائے مرکز)
+        </h2>
+      </div>
+      <form
+        className="flex flex-col justify-center items-center p-4 font-notoUrdu mb-5"
+        dir="rtl"
+        onSubmit={handleSubmit}
+        id="markaz-form"
+      >
+        <div className="w-full">
+          <div className="mb-4">
+            <GeneralInfo
+              setMonth={setMonth}
+              month={data?.month}
+              me={me}
+              newMonth={data?.month}
+              area={"مقام"}
+              view={view}
+            />
+          </div>
+          <div className="mb-4">
+            <Jamiaat view={view} />
+          </div>
+          <div className="mb-4">
+            <Colleges view={view} />
+          </div>
+          <div className="mb-4">
+            <Tanzeem view={view} />
+          </div>
+          <div className="mb-4">
+            <IfradiKuwat view={view} />
+          </div>
+          <div className="mb-4">
+            <MarkaziActivities view={view} />
+          </div>
+          <div className="mb-4">
+            <ZailiActivities view={view} obj={obj} />
+          </div>
+          <div className="mb-4">
+            <OtherActivities view={view} />
+          </div>
+          <div className="mb-4">
+            <ToseeDawat />
+          </div>
+          <div className="mb-4">
+            <Library />
+          </div>
+          <div className="mb-4">
+            <Baitulmal view={view} />
+          </div>
+          <div className="mb-4">
+            <RozOShabDiary view={view} />
+          </div>
+          <div className="w-full flex p-2">
+            <label htmlFor="comments">تبصرہ</label>
+            <input
+              type="text"
+              required
+              name="comments"
+              maxLength={150}
+              className="border-b-2 border-dashed w-full"
+              id="comments"
+              readOnly={view}
+            />
           </div>
           {!view && (
-            <div className="w-full">
-              <button disabled={loading} className="btn btn-primary">
-                {id ? "Update" : "Add"}
-              </button>
+            <div className="w-full flex flex-col items-end gap-3 p-2">
+              <div>
+                <label htmlFor="nazim">نام ناظم اعلیٰ:</label>
+                <input
+                  type="text"
+                  className="border-b-2 border-dashed text-center"
+                  id="nazim"
+                  defaultValue={me?.name || ""}
+                  readOnly
+                />
+              </div>
             </div>
           )}
-        </form>
-      </div>
-  
+        </div>
+        {!view && (
+          <div className="w-full">
+            <button disabled={loading} className="btn btn-primary">
+              {id ? "Update" : "Add"}
+            </button>
+          </div>
+        )}
+      </form>
+    </div>
   );
 };

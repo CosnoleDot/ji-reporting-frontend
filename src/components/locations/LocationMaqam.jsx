@@ -12,7 +12,7 @@ import instance from "../../api/instrance";
 import { UIContext } from "../../context/ui";
 import { FcViewDetails } from "react-icons/fc";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-
+import {  FaEye } from "react-icons/fa";
 export const LocationMaqam = () => {
   const provinces = useContext(ProvinceContext);
   const maqams = useContext(MaqamContext);
@@ -273,9 +273,12 @@ export const LocationMaqam = () => {
         }
       );
       const getAreas = () => {
+        
         switch (view) {
           case "halqa":
+            setLoading(true);
             getHalqas();
+            setLoading(false);
             break;
           case "maqam":
             getMaqams();
@@ -286,6 +289,8 @@ export const LocationMaqam = () => {
           default:
             break;
         }
+    
+
       };
       getAreas();
     } catch (err) {
@@ -330,14 +335,14 @@ export const LocationMaqam = () => {
     }
     setCurrentPage(1); // Reset to the first page after search
   };
-
+  
   return (
     <>
       <div className="w-full flex flex-wrap gap-2 justify-end items-center">
-        {["province", "country"].includes(localStorage.getItem("@type")) && (
+        {["province", "country"].includes(localStorage.getItem("@type")) && view==="maqam" && (
           <button
             disabled={loading}
-            className="px-4 py-2 rounded-md bg-primary text-white capitalize "
+            className="md:px-4 md:py-2 px-2 py-1 text-[14px] rounded-md bg-primary text-white capitalize "
             onClick={() => {
               setForm({
                 name: "",
@@ -356,7 +361,7 @@ export const LocationMaqam = () => {
           view === "ilaqa" && (
             <button
               disabled={loading}
-              className="px-4 py-2 rounded-md bg-primary text-white capitalize "
+              className="md:px-4 md:py-2 px-2 py-1 text-[14px] rounded-md bg-primary text-white capitalize "
               onClick={() => {
                 setIlaqaForm({
                   name: "",
@@ -369,7 +374,7 @@ export const LocationMaqam = () => {
               Add Ilaqa
             </button>
           )}
-        {view !== "ilaqa" && (
+        {view === "halqa" && (
           <button
             disabled={loading}
             onClick={() => {
@@ -381,7 +386,7 @@ export const LocationMaqam = () => {
               document.getElementById("add_halqa_modal").showModal();
               setEditMode(false);
             }}
-            className="px-4 py-2 rounded-md bg-primary text-white capitalize "
+            className="md:px-4 md:py-2 px-2 py-1 text-[14px] rounded-md bg-primary text-white capitalize "
           >
             Add Halqa
           </button>
@@ -523,7 +528,7 @@ export const LocationMaqam = () => {
                           getAreaDetails(ilaqa);
                         }}
                       >
-                        <FcViewDetails className="cursor-pointer text-2xl" />
+                        <FaEye className="cursor-pointer text-lg" />
                       </div>
                     </td>
                     <td className="flex justify-end items-center gap-4">
@@ -591,13 +596,13 @@ export const LocationMaqam = () => {
                       className="font-semibold border-r border-l"
                     >
                       <td className=" text-start">{halqa?.name}</td>
-                      <td className=" text-start">
+                      <td className=" text-center ">
                         <div
                           onClick={() => {
                             getAreaDetails(halqa);
                           }}
                         >
-                          <FcViewDetails className="cursor-pointer text-2xl" />
+                          <FaEye className="cursor-pointer text-lg" />
                         </div>
                       </td>
                       <td className="flex  justify-end  items-center gap-4">

@@ -85,7 +85,7 @@ export const CircularChart = ({ res, type }) => {
         style={{
           width: "100%",
           height: "100%",
-
+          overflow:"scroll",
           transform: `scale(${zoomLevel})`,
           transformOrigin: "center",
           transition: "transform 0.3s ease-in-out",
@@ -96,7 +96,7 @@ export const CircularChart = ({ res, type }) => {
           series={options.series}
           type="radialBar"
           height={3000}
-          width={"110%"}
+          width={"100%"}
         />
       </div>
       <div

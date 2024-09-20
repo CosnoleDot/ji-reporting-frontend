@@ -27,11 +27,13 @@ const Dates = ({
   durationYears,
   setDurationYears,
   getData,
+  selectedProperty
+  
 }) => {
   const [year, setYear] = useState(2024);
 
   return (
-    <div className=" w-full h-screen bg-white">
+    <div className=" w-full  bg-white">
       <div className="flex  w-full p-3 items-center border-b justify-between">
         <h1 className="text-xl font-bold">Dates</h1>
         <div className="flex justify-end items-center gap-3">
@@ -53,96 +55,123 @@ const Dates = ({
         </div>
       </div>
       {durationType === "month" && (
-        <div className="flex items-start justify-start w-full h-[calc(100vh-72.8px-64px)]">
-          <div className="w-full h-[calc(100vh-72.8px-64px)] overflow-hidden overflow-y-scroll">
-            <input
-              type="number"
-              id="yearInput"
-              name="yearInput"
-              placeholder="YYYY"
-              min="1900"
-              max="2100"
-              step="1"
-              className="input-bordered input w-full input-sm mt-4"
-              value={year}
-              onChange={(e) => setYear(e.target.value)}
-            />
-            {months?.map((i, index) => (
-              <div
-                key={index}
-                className="flex p-3 hover:bg-slate-200 items-center justify-between"
-                onClick={() =>
-                  setDurationMonths([
-                    ...durationMonths,
-                    { month: i?.title, year, value: i?.value },
-                  ])
-                }
-              >
-                <span>
-                  {i?.title}, {year}
-                </span>
-                <FaChevronCircleRight />
-              </div>
-            ))}
-          </div>
-          <div className="w-full h-[calc(100vh-72.8px-64px)] overflow-hidden overflow-y-scroll">
-            {durationMonths?.map((i, index) => (
-              <div
-                key={index}
-                onClick={() =>
-                  setDurationMonths([
-                    ...durationMonths.slice(0, index),
-                    ...durationMonths.slice(index + 1, durationMonths.length),
-                  ])
-                }
-                className="flex p-3 hover:bg-slate-200 items-center justify-between"
-              >
-                <span>
-                  {i?.month}, {i?.year}
-                </span>
-                <FaTimesCircle />
-              </div>
-            ))}
-          </div>
+  <div className="flex items-start justify-start w-full h-[calc(100vh-72.8px-64px)]">
+    <div className="w-full h-[calc(100vh-72.8px-64px)] overflow-hidden overflow-y-scroll">
+      <input
+        type="number"
+        id="yearInput"
+        name="yearInput"
+        placeholder="YYYY"
+        min="1900"
+        max="2100"
+        step="1"
+        className="input-bordered input w-full input-sm mt-4"
+        value={year}
+        onChange={(e) => setYear(e.target.value)}
+      />
+      {months?.map((i, index) => (
+        <div
+          key={index}
+          className="flex p-3 hover:bg-slate-200 items-center justify-between"
+          onClick={() => {
+            const isAlreadySelected = durationMonths.some(
+              (item) => item.month === i?.title && item.year === year
+            );
+
+            // Block selection for radialChart if already one date is selected
+            if (selectedProperty === "radialChart" && durationMonths.length > 0) {
+              return; // Don't allow selecting more than one date for radialChart
+            }
+
+            // For non-radialChart cases, allow up to two months to be selected
+            if (selectedProperty !== "radialChart" && durationMonths.length >= 2) {
+              return; // Block selecting more than two dates for comparison
+            }
+
+            // Add selected month and year to durationMonths if not already selected
+            if (!isAlreadySelected) {
+              setDurationMonths([...durationMonths, { month: i?.title, year, value: i?.value }]);
+            }
+          }}
+        >
+          <span>
+            {i?.title}, {year}
+          </span>
+          <FaChevronCircleRight />
         </div>
-      )}
-      {durationType === "year" && (
-        <div className="flex items-start justify-start w-full h-[calc(100vh-72.8px-64px)]">
-          <div className="w-full h-[calc(100vh-72.8px-64px)] overflow-hidden overflow-y-scroll">
-            {Array(10)
-              .fill(1)
-              ?.map((_, index) => (
-                <div
-                  key={index}
-                  className="flex p-3 hover:bg-slate-200 items-center justify-between"
-                  onClick={() =>
-                    setDurationYears([...durationYears, 2023 + index])
-                  }
-                >
-                  <span>{2023 + index}</span>
-                  <FaChevronCircleRight />
-                </div>
-              ))}
-          </div>
-          <div className="w-full h-[calc(100vh-72.8px-64px)] overflow-hidden overflow-y-scroll">
-            {durationYears?.map((i, index) => (
-              <div
-                key={index}
-                onClick={() =>
-                  setDurationYears([
-                    ...durationYears.slice(0, index),
-                    ...durationYears.slice(index + 1, durationYears.length),
-                  ])
-                }
-                className="flex p-3 hover:bg-slate-200 items-center justify-between"
-              >
-                <span>{i}</span>
-                <FaTimesCircle />
-              </div>
-            ))}
-          </div>
+      ))}
+    </div>
+    <div className="w-full h-[calc(100vh-72.8px-64px)] overflow-hidden overflow-y-scroll">
+      {durationMonths?.map((i, index) => (
+        <div
+          key={index}
+          onClick={() =>
+            setDurationMonths([
+              ...durationMonths.slice(0, index),
+              ...durationMonths.slice(index + 1, durationMonths.length),
+            ])
+          }
+          className="flex p-3 hover:bg-slate-200 items-center justify-between"
+        >
+          <span>
+            {i?.month}, {i?.year}
+          </span>
+          <FaTimesCircle />
         </div>
-      )}
+      ))}
+    </div>
+  </div>
+)}
+
+{durationType === "year" && (
+  <div className="flex items-start justify-start w-full h-[calc(100vh-72.8px-64px)]">
+    <div className="w-full h-[calc(100vh-72.8px-64px)] overflow-hidden overflow-y-scroll">
+      {Array(10)
+        .fill(1)
+        ?.map((_, index) => (
+          <div
+            key={index}
+            className="flex p-3 hover:bg-slate-200 items-center justify-between"
+            onClick={() => {
+              // Block selection for radialChart if already one year is selected
+              if (selectedProperty === "radialChart" && durationYears.length > 0) {
+                return; // Don't allow selecting more than one date for radialChart
+              }
+
+              // For non-radialChart cases, allow up to two years to be selected
+              if (selectedProperty !== "radialChart" && durationYears.length >= 2) {
+                return; // Block selecting more than two dates for comparison
+              }
+
+              // Add selected year to durationYears if not already selected
+              setDurationYears([...durationYears, 2023 + index]);
+            }}
+          >
+            <span>{2023 + index}</span>
+            <FaChevronCircleRight />
+          </div>
+        ))}
+    </div>
+    <div className="w-full h-[calc(100vh-72.8px-64px)] overflow-hidden overflow-y-scroll">
+      {durationYears?.map((i, index) => (
+        <div
+          key={index}
+          onClick={() =>
+            setDurationYears([
+              ...durationYears.slice(0, index),
+              ...durationYears.slice(index + 1, durationYears.length),
+            ])
+          }
+          className="flex p-3 hover:bg-slate-200 items-center justify-between"
+        >
+          <span>{i}</span>
+          <FaTimesCircle />
+        </div>
+      ))}
+    </div>
+  </div>
+)}
+
     </div>
   );
 };
@@ -865,6 +894,7 @@ export const Comparision = () => {
             durationYears={durationYears}
             setDurationYears={setDurationYears}
             getData={getData}
+            selectedProperty={selectedProperty}
           />
         )}
       </div>
@@ -1043,8 +1073,8 @@ export const Comparision = () => {
                 {reportType !== "personal" && (
                   <>
                     <option value={"compareAll"}>Compare All</option>
-                    <option value={"spiderChart"}>Spider Chart</option>
-                    <option value={"radialChart"}>Radial Chart</option>
+                    <option value={"radialChart"}>Spider Chart</option>
+                    {/* <option value={"radialChart"}>Radial Chart</option> */}
                   </>
                 )}
                 {[

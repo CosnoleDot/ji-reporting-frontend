@@ -197,7 +197,10 @@ export const UnitReport = () => {
                     ))}
                 </select>
               </div>
-              <button className="font-inter px-2 text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left" onClick={searchResults}>
+              <button
+                className="font-inter px-2 text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left"
+                onClick={searchResults}
+              >
                 Search
               </button>
             </div>
@@ -207,7 +210,9 @@ export const UnitReport = () => {
         <div className="indicator flex items-center justify-end w-full">
           {/* <span className='indicator-item badge badge-secondary'>new</span> */}
           <button
-            className={`font-inter px-2 text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left ${!isMobileView ? "join-item" : ""}`}
+            className={`font-inter px-2 bg-primary flex justify-center text-white p-1 md:p-[6px] text-[12px] md:text-[14px] mb-1 rounded font-medium leading-[20px] text-left ${
+              !isMobileView ? "join-item" : ""
+            }`}
             onClick={() => (!isMobileView ? searchResults() : toggleSearch())}
           >
             Search
@@ -218,13 +223,17 @@ export const UnitReport = () => {
                 document.getElementById("filter-area-dialog").showModal();
                 setIsSearch(false);
               }}
-              className={`font-inter px-2 text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left ${!isMobileView ? "join-item" : "ms-3"}`}
+              className={`font-inter px-2 bg-primary flex justify-center text-white p-1 md:p-[6px] text-[12px] md:text-[14px] mb-1 rounded font-medium leading-[20px] text-left ${
+                !isMobileView ? "join-item" : "ms-3"
+              }`}
             >
               filter
             </button>
           )}
           <button
-            className={`font-inter px-2 text-[14px] bg-primary flex justify-center text-white p-[6px] mb-1 rounded font-medium leading-[20px] text-left ${!isMobileView ? "join-item" : "ms-3"}`}
+            className={`font-inter px-2 bg-primary flex justify-center text-white p-1 md:p-[6px] text-[12px] md:text-[14px] mb-1 rounded font-medium leading-[20px] text-left ${
+              !isMobileView ? "join-item" : "ms-3"
+            }`}
             onClick={clearFilters}
           >
             Clear
@@ -235,67 +244,69 @@ export const UnitReport = () => {
         <>
           {" "}
           {currentData?.length > 0 ? (
-            <table className="table mb-7 w-full">
-              {/* Head */}
-              <thead>
-                <tr>
-                  <th className="text-left">Report</th>
-                  <th className="text-left">Last modified</th>
-                  <th className="text-left">Month</th>
-                  <th className="md:block hidden"></th>
-                  <th className="md:block hidden"></th>
-                  <th className="text-left">Action</th>
-                </tr>
-              </thead>
-              {/* Body */}
-              <tbody>
-                {currentData.map((p, index) => (
-                  <tr key={index}>
-                    <td>
-                      <span className="font-medium md:text-sm text-xs leading-[16.94px] text-left font-inter text-heading">
-                        {p?.halqaAreaId?.name}
-                      </span>
-                    </td>
-                    <td>
-                      <span className="font-medium md:text-sm text-xs leading-[16.94px] text-left font-inter text-heading">
-                        {moment(p?.updatedAt).fromNow()}
-                      </span>
-                    </td>
-                    <td>
-                      <span className="font-medium md:text-sm text-xs leading-[16.94px] text-left font-inter text-heading">
-                        {moment(p?.month).format("MMMM YYYY")}
-                      </span>
-                    </td>
-                    <td className="md:block hidden"></td>
-                    <td className="md:block hidden"></td>
-                    <td>
-                      <div className="flex items-center gap-2">
-                        <span
-                          onClick={() => viewReport(p?._id)}
-                          className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left"
-                        >
-                          View
-                        </span>
-                        {me?.userAreaType === "Ilaqa" && (
-                          <span
-                            onClick={() => editReport(p?._id)}
-                            className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left text-green"
-                          >
-                            Edit
-                          </span>
-                        )}
-                        <span
-                          onClick={() => handlePrint(p?._id)}
-                          className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left text-blue"
-                        >
-                          Print
-                        </span>
-                      </div>
-                    </td>
+            <div className="overflow-scroll">
+              <table className="table mb-7 w-full">
+                {/* Head */}
+                <thead>
+                  <tr>
+                    <th className="text-left">Report</th>
+                    <th className="text-left">Last modified</th>
+                    <th className="text-left">Month</th>
+                    <th className="md:block hidden"></th>
+                    <th className="md:block hidden"></th>
+                    <th className="text-left">Action</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                {/* Body */}
+                <tbody>
+                  {currentData.map((p, index) => (
+                    <tr key={index}>
+                      <td>
+                        <span className="font-medium md:text-sm text-xs leading-[16.94px] text-left font-inter text-heading">
+                          {p?.halqaAreaId?.name}
+                        </span>
+                      </td>
+                      <td>
+                        <span className="font-medium md:text-sm text-xs leading-[16.94px] text-left font-inter text-heading">
+                          {moment(p?.updatedAt).fromNow()}
+                        </span>
+                      </td>
+                      <td>
+                        <span className="font-medium md:text-sm text-xs leading-[16.94px] text-left font-inter text-heading">
+                          {moment(p?.month).format("MMMM YYYY")}
+                        </span>
+                      </td>
+                      <td className="md:block hidden"></td>
+                      <td className="md:block hidden"></td>
+                      <td>
+                        <div className="flex items-center gap-2">
+                          <span
+                            onClick={() => viewReport(p?._id)}
+                            className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left"
+                          >
+                            View
+                          </span>
+                          {me?.userAreaType === "Ilaqa" && (
+                            <span
+                              onClick={() => editReport(p?._id)}
+                              className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left text-green"
+                            >
+                              Edit
+                            </span>
+                          )}
+                          <span
+                            onClick={() => handlePrint(p?._id)}
+                            className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left text-blue"
+                          >
+                            Print
+                          </span>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           ) : (
             <NoReports />
           )}

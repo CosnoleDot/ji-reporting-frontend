@@ -16,7 +16,7 @@ import { convertDataFormat, reverseDataFormat, toJson } from "../utils";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { UIContext } from "../context/ui";
 import { Baitulmal } from "../components/halqa/Baitulmal";
-
+import { RxCross1 } from "react-icons/rx";
 export const Halqa = () => {
   const { dispatch } = useToastState();
   const me = useContext(MeContext);
@@ -72,6 +72,7 @@ export const Halqa = () => {
   };
 
   const autoFill = () => {
+    setLoading(true);
     Object.keys(data).forEach((i) => {
       const elem = document.getElementById(i);
       if (elem) {
@@ -90,11 +91,13 @@ export const Halqa = () => {
     afd.forEach((i) => {
       calcultate(i);
     });
+    setLoading(false);
   };
   useEffect(() => {
     autoFill();
   }, [data]);
   const getHalqaReport = async () => {
+    setLoading(true);
     try {
       const req = await instance.get(`/reports/halqa/${id}`, {
         headers: {
@@ -125,88 +128,90 @@ export const Halqa = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
+  console.log(data);
   return (
-  
-      <div className="reports  overflow-y-scroll">
+    <div className="reports w-full overflow-y-scroll">
+      <div>
+        <button
+          type="button"
+          className="p-2"
+          onClick={() => navigate("/reports")}
+        >
+          <RxCross1 />
+        </button>
         <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
           کارکردگی رپورٹ براۓ حلقہ
         </h2>
-        <form
-          className="flex flex-col justify-center items-center p-4 font-notoUrdu mb-5"
-          onSubmit={handleReportSubmit}
-          dir="rtl"
-        >
-          <button
-            type="button"
-            class="absolute top-20 left-5 text-white bg-primary text-[14px] rounded py-2 px-4"
-           onClick={()=>navigate('/reports')}
-           >
-            Back
-          </button>
-          <div className="w-full">
-            <div className="mb-4">
-              <GeneralInfo
-                me={me}
-                area={"حلقہ"}
-                newMonth={data?.month}
-                view={view}
-              />
-            </div>
-            <div className="mb-4">
-              <IfradiKuwat view={view} />
-            </div>
-            <div className="mb-4">
-              <Activity view={view} />
-            </div>
-            <div className="mb-4">
-              <OtherActivities view={view} />
-            </div>
-            <div className="mb-4">
-              <ToseeDawat view={view} />
-            </div>
-            <div className="mb-4">
-              <Library view={view} />
-            </div>
-            <div className="mb-4">
-              <Baitulmal view={view} />
-            </div>
-            <div className="mb-4">
-              <RozOShabDiary view={view} />
-            </div>
-            <div className="w-full flex p-2">
-              <label htmlFor="comments">تبصرہ</label>
-              <input
-                required
-                type="text"
-                name="comments"
-                maxLength={150}
-                className="border-b-2 border-dashed w-full"
-                id="comments"
-                readOnly={view}
-              />
-            </div>
-            {!view && (
-              <div className="w-full flex flex-col items-end gap-3 p-2">
-                <div>
-                  <label htmlFor="nazim">نام ناظمِ:</label>
-                  <input
-                    required
-                    type="text"
-                    className="border-b-2 border-dashed text-center"
-                    id="nazim"
-                    defaultValue={me?.name || ""}
-                    readOnly
-                  />
-                </div>
-              </div>
-            )}
+      </div>
+      <form
+        className="flex flex-col justify-center items-center p-4 font-notoUrdu mb-5"
+        onSubmit={handleReportSubmit}
+        dir="rtl"
+      >
+        <div className="w-full">
+          <div className="mb-4">
+            <GeneralInfo
+              me={me}
+              area={"حلقہ"}
+              newMonth={data?.month}
+              view={view}
+            />
+          </div>
+          <div className="mb-4">
+            <IfradiKuwat view={view} />
+          </div>
+          <div className="mb-4">
+            <Activity view={view} />
+          </div>
+          <div className="mb-4">
+            <OtherActivities view={view} />
+          </div>
+          <div className="mb-4">
+            <ToseeDawat view={view} />
+          </div>
+          <div className="mb-4">
+            <Library view={view} />
+          </div>
+          <div className="mb-4">
+            <Baitulmal view={view} />
+          </div>
+          <div className="mb-4">
+            <RozOShabDiary view={view} />
+          </div>
+          <div className="w-full flex p-2">
+            <label htmlFor="comments">تبصرہ</label>
+            <input
+              required
+              type="text"
+              name="comments"
+              maxLength={150}
+              className="border-b-2 border-dashed w-full"
+              id="comments"
+              readOnly={view}
+            />
           </div>
           {!view && (
-            <button type="submit" className="btn">
-              {id ? "UPDATE" : "Submit"}
-            </button>
+            <div className="w-full flex flex-col items-end gap-3 p-2">
+              <div>
+                <label htmlFor="nazim">نام ناظمِ:</label>
+                <input
+                  required
+                  type="text"
+                  className="border-b-2 border-dashed text-center"
+                  id="nazim"
+                  defaultValue={me?.name || ""}
+                  readOnly
+                />
+              </div>
+            </div>
           )}
-        </form>
-      </div>
+        </div>
+        {!view && (
+          <button type="submit" className="btn">
+            {id ? "UPDATE" : "Submit"}
+          </button>
+        )}
+      </form>
+    </div>
   );
 };

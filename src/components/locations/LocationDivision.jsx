@@ -386,13 +386,13 @@ export const LocationDivision = () => {
     }
     setCurrentPage(1); // Reset to the first page after search
   };
-
+console.log(view,'aaa')
   return (
     <>
       <div className="w-full flex flex-wrap gap-2 justify-end items-center">
-        {["province", "country"].includes(localStorage.getItem("@type")) && (
+        {["province", "country"].includes(localStorage.getItem("@type")) && view==='division' && (
           <button
-            className="px-4 py-2 rounded-md bg-primary text-white capitalize "
+            className="md:px-4 md:py-2 px-2 py-1 text-[14px] rounded-md bg-primary text-white capitalize "
             onClick={() => {
               setForm({
                 name: "",
@@ -405,9 +405,9 @@ export const LocationDivision = () => {
             Add Division
           </button>
         )}
-        {districts?.length > 0 && (
+        {districts?.length > 0 &&  view==='district' && (
           <button
-            className="px-4 py-2 rounded-md bg-primary text-white capitalize p-[8px]"
+            className="md:px-4 md:py-2 px-2 py-1 text-[14px] rounded-md bg-primary text-white capitalize p-[8px]"
             onClick={() => {
               setFormDistrict({
                 name: "",
@@ -420,9 +420,9 @@ export const LocationDivision = () => {
             Add District
           </button>
         )}
-        {tehsils?.length > 0 && (
+        {tehsils?.length > 0 &&  view==='tehsil' && (
           <button
-            className="px-4 py-2 rounded-md bg-primary text-white capitalize p-[8px]"
+            className="md:px-4 md:py-2 px-2 py-1 text-[14px] rounded-md bg-primary text-white capitalize p-[8px]"
             onClick={() => {
               setFormTehsil({
                 name: "",
@@ -435,7 +435,7 @@ export const LocationDivision = () => {
             Add Tehsil
           </button>
         )}
-        <button
+       { view==='halqa' && <button
           onClick={() => {
             setFormHalqa({
               parentId: "",
@@ -446,10 +446,10 @@ export const LocationDivision = () => {
             document.getElementById("add_halqa_modal").showModal();
             setEditMode(false);
           }}
-          className="px-4 py-2 rounded-md bg-primary text-white capitalize "
+          className="md:px-4 md:py-2 px-2 py-1 text-[14px] rounded-md bg-primary text-white capitalize "
         >
           Add Halqa
-        </button>
+        </button>}
       </div>
 
       <div className="w-full flex md:flex-row flex-col justify-between items-start">
@@ -509,7 +509,7 @@ export const LocationDivision = () => {
 
       {view === "division" && (
         <div className="w-full overflow-x-auto">
-          <table className="table">
+          <table className="table ">
             <thead>
               <tr>
                 <th className="border border-r-0 py-2 px-4 font-semibold text-gray-400">

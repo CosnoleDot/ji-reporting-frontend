@@ -67,6 +67,7 @@ export const Dashboard = () => {
     }
   }, [queryDate]);
   const getPsersonalReports = async () => {
+    setLoading(true);
     if (!queryDate) {
       const date = new Date();
       const year = date.getFullYear();
@@ -90,6 +91,7 @@ export const Dashboard = () => {
       setUmeedwarReports(req?.data?.data?.data);
       setLoading(false);
     }
+    setLoading(false);
   };
   useEffect(() => {
     getHalqas();
@@ -360,17 +362,17 @@ export const Dashboard = () => {
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
               ) && (
-                <div className="flex border rounded-2xl h-[130px] p-4 overflow-hidden shadow bg-cardsBg">
+                <div className="flex border rounded-2xl md:h-[130px] h-[100px] p-2 md:p-4 overflow-hidden shadow bg-cardsBg">
                   <div className="px-4 flex flex-col gap-2  justify-end">
-                    <p className="text-[32px] font-extrabold font-inter leading-10 text-primary">
+                    <p className="text-[24px] md:text-[32px] font-extrabold font-inter leading-10 text-primary">
                       {nazim?.filter((naz) => naz?.isDeleted == false).length}
                     </p>
                     <h3 class="font-inter text-[12px] font-semibold leading-[14.52px] text-left text-primary">
                       Total Nazims
                     </h3>
                   </div>
-                  <div className="flex flex-row w-full justify-end">
-                    <div className="p-3 border border-innerAlignment rounded-2xl max-h-11">
+                  <div className="flex flex-row w-full justify-center md:justify-end">
+                    <div className="h-full md:max-h-11">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="h-5 w-4.5 text-primary"
@@ -394,9 +396,9 @@ export const Dashboard = () => {
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
               ) && (
-                <div className="flex border rounded-2xl h-[130px] p-4 overflow-hidden shadow bg-cardsBg">
+                <div className="flex border rounded-2xl md:h-[130px] h-[100px] p-2 md:p-4 overflow-hidden shadow bg-cardsBg">
                   <div className="px-4 flex flex-col gap-2  justify-end">
-                    <p className="text-[32px] font-extrabold font-inter leading-10 text-primary">
+                    <p className="text-[24px] md:text-[32px] font-extrabold font-inter leading-10 text-primary">
                       {
                         provinces?.filter(
                           (province) => province?.disabled !== true
@@ -407,8 +409,8 @@ export const Dashboard = () => {
                       Total Provinces
                     </h3>
                   </div>
-                  <div className="flex flex-row w-full justify-end">
-                    <div className=" p-1 border border-innerAlignment rounded-xl w-10 h-10 flex items-center justify-center">
+                  <div className="flex flex-row w-full justify-center md:justify-end">
+                    <div className="  w-10 h-10 flex items-center justify-center">
                      <img src={Map} alt="" className="w-8 h-8" />
                     
                     </div>
@@ -419,9 +421,9 @@ export const Dashboard = () => {
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
               ) && (
-                <div className="flex border rounded-2xl h-[130px] p-4 overflow-hidden shadow bg-cardsBg">
+                <div className="flex border rounded-2xl md:h-[130px] h-[100px] p-2 md:p-4 overflow-hidden shadow bg-cardsBg">
                   <div className="px-4 flex flex-col gap-2  justify-end">
-                    <p className="text-[32px] font-extrabold font-inter leading-10 text-primary">
+                    <p className="text-[24px] md:text-[32px] font-extrabold font-inter leading-10 text-primary">
                       {
                         divisions?.filter(
                           (division) => division?.disabled !== true
@@ -432,8 +434,8 @@ export const Dashboard = () => {
                       Total Divisions
                     </h3>
                   </div>
-                  <div className="flex flex-row w-full justify-end">
-                  <div className=" p-1 border border-innerAlignment rounded-xl w-10 h-10 flex items-center justify-center">
+                  <div className="flex flex-row w-full justify-center md:justify-end">
+                  <div className="  w-10 h-10 flex items-center justify-center">
                      <img src={District} alt="" className="w-8 h-8" />
                     
                     </div>
@@ -446,9 +448,9 @@ export const Dashboard = () => {
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
               ) && (
-                <div className="flex border rounded-2xl h-[130px] p-4 overflow-hidden shadow bg-cardsBg">
+                <div className="flex border rounded-2xl md:h-[130px] h-[100px] p-2 md:p-4 overflow-hidden shadow bg-cardsBg">
                   <div className="px-4 flex flex-col gap-2  justify-end">
-                    <p className="text-[32px] font-extrabold font-inter leading-10 text-primary">
+                    <p className="text-[24px] md:text-[32px] font-extrabold font-inter leading-10 text-primary">
                       {
                         districts?.filter(
                           (district) => district?.disabled !== true
@@ -459,8 +461,8 @@ export const Dashboard = () => {
                       Total Districts
                     </h3>
                   </div>
-                  <div className="flex flex-row w-full justify-end">
-                  <div className=" p-1 border border-innerAlignment rounded-xl w-10 h-10 flex items-center justify-center">
+                  <div className="flex flex-row w-full justify-center md:justify-end">
+                  <div className="  w-10 h-10 flex items-center justify-center">
                      <img src={Division} alt="" className="w-8 h-8" />
                     
                     </div>
@@ -474,9 +476,9 @@ export const Dashboard = () => {
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
               ) && (
-                <div className="flex border rounded-2xl h-[130px] p-4 overflow-hidden shadow bg-cardsBg">
+                <div className="flex border rounded-2xl md:h-[130px] h-[100px] p-2 md:p-4 overflow-hidden shadow bg-cardsBg">
                   <div className="px-4 flex flex-col gap-2  justify-end">
-                    <p className="text-[32px] font-extrabold font-inter leading-10 text-primary">
+                    <p className="text-[24px] md:text-[32px] font-extrabold font-inter leading-10 text-primary">
                       {
                         tehsils?.filter((tehsil) => tehsil?.disabled !== true)
                           .length
@@ -486,8 +488,8 @@ export const Dashboard = () => {
                       Total Tehsils
                     </h3>
                   </div>
-                  <div className="flex flex-row w-full justify-end">
-                    <div className="p-3 border border-innerAlignment rounded-2xl max-h-11">
+                  <div className="flex flex-row w-full justify-center md:justify-end">
+                    <div className=" max-h-11">
                       <CiLocationOn className="h-5 w-4.5 text-primary" />
                     </div>
                   </div>
@@ -499,9 +501,9 @@ export const Dashboard = () => {
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
               ) && (
-                <div className="flex border rounded-2xl h-[130px] p-4 overflow-hidden shadow bg-cardsBg">
+                <div className="flex border rounded-2xl md:h-[130px] h-[100px] p-2 md:p-4 overflow-hidden shadow bg-cardsBg">
                   <div className="px-4 flex flex-col gap-2  justify-end">
-                    <p className="text-[32px] font-extrabold font-inter leading-10 text-primary">
+                    <p className="text-[24px] md:text-[32px] font-extrabold font-inter leading-10 text-primary">
                       {
                         maqams?.filter((maqam) => maqam?.disabled !== true)
                           .length
@@ -511,8 +513,8 @@ export const Dashboard = () => {
                       Total Maqams
                     </h3>
                   </div>
-                  <div className="flex flex-row w-full justify-end">
-                    <div className="p-3 border border-innerAlignment rounded-2xl max-h-11">
+                  <div className="flex flex-row w-full justify-center md:justify-end">
+                    <div className=" max-h-11">
                       <CiLocationOn className="h-5 w-4.5 text-primary" />
                     </div>
                   </div>
@@ -525,17 +527,17 @@ export const Dashboard = () => {
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
               ) && (
-                <div className="flex border rounded-2xl h-[130px] p-4 overflow-hidden shadow bg-cardsBg">
+                <div className="flex border rounded-2xl md:h-[130px] h-[100px] p-2 md:p-4 overflow-hidden shadow bg-cardsBg">
                   <div className="px-4 flex flex-col gap-2  justify-end">
-                    <p className="text-[32px] font-extrabold font-inter leading-10 text-primary">
+                    <p className="text-[24px] md:text-[32px] font-extrabold font-inter leading-10 text-primary">
                       {ilaqa?.filter((il) => il?.disabled !== true).length}
                     </p>
                     <h3 className="font-inter text-[12px] font-semibold leading-[14.52px] text-left text-primary">
                       Total Ilaqas
                     </h3>
                   </div>
-                  <div className="flex flex-row w-full justify-end">
-                    <div className="p-3 border border-innerAlignment rounded-2xl max-h-11">
+                  <div className="flex flex-row w-full justify-center md:justify-end">
+                    <div className=" max-h-11">
                       <CiLocationOn className="h-5 w-4.5 text-primary" />
                     </div>
                   </div>
@@ -545,17 +547,17 @@ export const Dashboard = () => {
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
               ) && (
-                <div className="flex border rounded-2xl h-[130px] p-4 overflow-hidden shadow bg-cardsBg">
+                <div className="flex border rounded-2xl md:h-[130px] h-[100px] p-2 md:p-4 overflow-hidden shadow bg-cardsBg">
                   <div className="px-4 flex flex-col gap-2  justify-end">
-                    <p className="text-[32px] font-extrabold font-inter leading-10 text-primary">
+                    <p className="text-[24px] md:text-[32px] font-extrabold font-inter leading-10 text-primary">
                       {unit.length}
                     </p>
                     <h3 className="font-inter text-[12px] font-semibold leading-[14.52px] text-left text-primary">
                       Total Units
                     </h3>
                   </div>
-                  <div className="flex flex-row w-full justify-end">
-                    <div className="p-3 border border-innerAlignment rounded-2xl max-h-11">
+                  <div className="flex flex-row w-full justify-center md:justify-end">
+                    <div className=" max-h-11">
                       <FaLocationArrow className="h-5 w-4.5 text-primary" />
                     </div>
                   </div>
