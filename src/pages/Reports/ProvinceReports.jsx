@@ -25,6 +25,7 @@ export const ProvinceReports = () => {
   const me = useContext(MeContext);
   const { getProvinceReports } = useContext(UIContext);
   const [isFilter, setIsFilter] = useState(false);
+  const [noReports, setNoReports] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
   const itemsPerPage = 10;
@@ -73,6 +74,7 @@ export const ProvinceReports = () => {
     setYear("2023");
     setFilterAllData(pReports);
     setIsFilter(false);
+    setNoReports(false);
     setIsSearch(false);
     document.getElementById("autocomplete").value = "";
   };
@@ -231,7 +233,7 @@ export const ProvinceReports = () => {
           </button>
         </div>
       </div>
-      {!isSearch ? (
+      {!isSearch && !noReports ? (
         <>
           {currentData?.length > 0 ? (
             <div className="overflow-scroll">
@@ -380,14 +382,17 @@ export const ProvinceReports = () => {
             </button>
           </div>
         </>
-      ) : (
+      ) : !noReports ? (
         <SearchPage data={searchData?.data} area={"province"} />
+      ) : (
+        <NoReports />
       )}
 
       <dialog id="filter-area-dialog" className="modal">
         <FilterDialog
           setFilterAllData={setFilterAllData}
           setIsFilter={setIsFilter}
+          setNoReports={setNoReports}
         />
       </dialog>
     </>

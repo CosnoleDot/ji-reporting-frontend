@@ -126,13 +126,13 @@ export const PersonalReportsDashboard = () => {
     }
   };
   return (
-    <GeneralLayout title={"Personal Dashboard"} active={"personalReports"}>
+    <GeneralLayout title={"Personal Dashboard"} active={"personalReport"}>
       <div className="w-full flex flex-col justify-start p-5">
 
     
 
         <div className="w-full overflow-hidden overflow-x-scroll md:justify-center md:items-center flex md:flex-row flex-col gap-4 md:gap-2 m-2">
-          <select
+         {localStorage.getItem("@nazimType") !== "umeedwar" && localStorage.getItem("@nazimType") !== "rukan" && <select
             name="nazim"
             className="w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[14px] leading-6 font-inter"
             value={rukanId ? rukanId : "none"}
@@ -150,7 +150,7 @@ export const PersonalReportsDashboard = () => {
                   {nazim?.name} Of {nazim?.userAreaId?.name}
                 </option>
               ))}
-          </select>
+          </select>}
 
           <div className="w-full flex gap-4">
             {!toggle ? (
@@ -164,18 +164,18 @@ export const PersonalReportsDashboard = () => {
                     Get All
                   </button>
                 )}
-                <button
+                {localStorage.getItem("@nazimType") !== "umeedwar" && localStorage.getItem("@nazimType") !== "rukan" && <button
                   className="font-inter w-full md:text-[14px] text-[10px] bg-primary flex justify-center text-white p-2 rounded font-medium leading-[20px] text-left"
                   onClick={handleClear}
                 >
                   Clear
-                </button>
-                <button
+                </button>}
+                {localStorage.getItem("@nazimType") !== "umeedwar" && localStorage.getItem("@nazimType") !== "rukan" && <button
                   className="font-inter w-full md:text-[14px] text-[10px] bg-primary flex justify-center text-white p-2 rounded font-medium leading-[20px] text-left"
                   onClick={() => setToggle(true)}
                 >
                   Search
-                </button>
+                </button>}
               </>
             ) : (
               <div className=" p-3 z-40 rounded-lg w-full overflow-hidden bg-white border border-inputBorder">

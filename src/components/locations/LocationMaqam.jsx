@@ -469,18 +469,18 @@ export const LocationMaqam = () => {
                 </th>
               </tr>
             </thead>
-            <tbody className="mt-5">
+            <tbody className="">
               {paginatedData?.length > 0 ? (
                 paginatedData?.map((maqam, index) => (
                   <tr
                     key={maqam?._id}
                     className="font-semibold border-r border-l"
                   >
-                    <td className=" text-start">{maqam?.name}</td>
-                    <td className=" text-start">
+                    <td className=" text-start font-medium md:text-sm text-xs leading-[16.94px]">{maqam?.name}</td>
+                    <td className=" text-start font-medium md:text-sm text-xs leading-[16.94px]">
                       {maqam?.province?.name || "-"}
                     </td>
-                    <td className="flex justify-end items-center gap-4">
+                    <td className="flex justify-end items-center gap-4 ">
                       <button
                         disabled={loading}
                         onClick={() => {
@@ -494,7 +494,7 @@ export const LocationMaqam = () => {
                             name: maqam?.name || "",
                           });
                         }}
-                        className="text-green"
+                        className="text-green "
                       >
                         Edit
                       </button>
@@ -539,8 +539,8 @@ export const LocationMaqam = () => {
                     key={ilaqa?._id}
                     className="font-semibold border-r border-l"
                   >
-                    <td className=" text-start">{ilaqa?.name}</td>
-                    <td className=" text-start">
+                    <td className=" text-start font-medium md:text-sm text-xs leading-[16.94px]">{ilaqa?.name}</td>
+                    <td className=" text-start font-medium md:text-sm text-xs leading-[16.94px]">
                       <div
                         onClick={() => {
                           getAreaDetails(ilaqa);
@@ -549,7 +549,7 @@ export const LocationMaqam = () => {
                         <FaEye className="cursor-pointer text-lg" />
                       </div>
                     </td>
-                    <td className="flex justify-end items-center gap-4">
+                    <td className="flex justify-end items-center gap-2 md:gap-4">
                       <button
                         disabled={loading}
                         onClick={() => {
@@ -613,8 +613,8 @@ export const LocationMaqam = () => {
                       key={halqa?._id}
                       className="font-semibold border-r border-l"
                     >
-                      <td className=" text-start">{halqa?.name}</td>
-                      <td className=" text-center ">
+                      <td className=" text-start font-medium md:text-sm text-xs leading-[16.94px]">{halqa?.name}</td>
+                      <td className=" text-center font-medium md:text-sm text-xs leading-[16.94px]">
                         <div
                           onClick={() => {
                             getAreaDetails(halqa);

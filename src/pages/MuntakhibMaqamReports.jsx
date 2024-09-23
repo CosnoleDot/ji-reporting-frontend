@@ -4,6 +4,8 @@ import instance from "../api/instrance";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useContext, useState } from "react";
 import { useEffect } from "react";
+import { RxCross1 } from "react-icons/rx";
+
 import {
   DivisionReportContext,
   HalqaReportContext,
@@ -412,23 +414,28 @@ export const MuntakhibMaqamReports = () => {
   return (
    
       <div className="reports overflow-y-scroll">
+        <div>
+        <button
+          type="button"
+          className="p-2"
+          onClick={() => navigate("/reports")}
+        >
+          <RxCross1 />
+        </button>
+
+        <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
+            {" "}
+            جائزہ کارکردگی رپورٹ (برائے منتخب مقام)
+          </h2>
+      </div>
         <form
           className="flex flex-col justify-center items-center p-4 font-notoUrdu mb-5"
           dir="rtl"
           onSubmit={handleSubmit}
           id="maqam-form"
         >
-          <button
-            type="button"
-            class="absolute top-20 left-5 text-white bg-primary text-[14px] rounded py-2 px-4"
-           onClick={()=>navigate('/reports')}
-           >
-            Back
-          </button>
-          <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
-            {" "}
-            جائزہ کارکردگی رپورٹ (برائے منتخب مقام)
-          </h2>
+         
+          
 
           <div className="w-full">
             <div>

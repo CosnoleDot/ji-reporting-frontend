@@ -27,6 +27,7 @@ export const HalqaReports = () => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [length, setLength] = useState(1);
+  const [noReports, setNoReports] = useState(false);
   const itemsPerPage = 10;
 
   const getHalqaReportsTab = async (inset, offset, tab) => {
@@ -132,6 +133,7 @@ export const HalqaReports = () => {
     getHalqaReportsTab(0, 10, tab);
     setIsSearch(false);
     setIsFilter(false);
+    setNoReports(false);
     setFilterAllData([]);
   };
 
@@ -472,6 +474,7 @@ export const HalqaReports = () => {
           setFilterAllData={setFilterAllData}
           tab={tab}
           setIsFilter={setIsFilter}
+          setNoReports={setNoReports}
         />
       </dialog>
     </>

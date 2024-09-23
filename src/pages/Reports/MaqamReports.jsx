@@ -33,6 +33,7 @@ export const MaqamReports = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const { getMaqamReports } = useContext(UIContext);
   const [disable, setDisable] = useState(false);
+  const [noReports, setNoReports] = useState(false);
   const [isFilter, setIsFilter] = useState(false);
   const navigate = useNavigate();
   const itemsPerPage = 10;
@@ -81,6 +82,7 @@ export const MaqamReports = () => {
     setYear("2023");
     setFilterAllData(mReports);
     setIsFilter(false);
+    setNoReports(false);
     setIsSearch(false);
     document.getElementById("autocomplete").value = "";
   };
@@ -247,7 +249,7 @@ export const MaqamReports = () => {
           </button>
         </div>
       </div>
-      {!isSearch ? (
+      {!isSearch && !noReports ? (
         <>
           {currentData?.length > 0 ? (
             <div className="overflow-scroll">
@@ -316,7 +318,7 @@ export const MaqamReports = () => {
           ) : (
             <NoReports />
           )}
-          {!isFilter && (
+          {totalPages && (
             <div className="flex w-full gap-4 px-4 justify-end items-center mt-4">
               <select
                 readOnly
@@ -399,12 +401,14 @@ export const MaqamReports = () => {
           )}
         </>
       ) : (
-        <SearchPage data={searchData} area={"maqam"} />
+        !noReports ? 
+        <SearchPage data={searchData} area={"maqam"} /> : <NoReports/>
       )}
       <dialog id="filter-area-dialog" className="modal">
         <FilterDialog
           setFilterAllData={setFilterAllData}
           setIsFilter={setIsFilter}
+          setNoReports={setNoReports}
         />
       </dialog>
     </>

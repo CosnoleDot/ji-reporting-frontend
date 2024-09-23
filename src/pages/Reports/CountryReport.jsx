@@ -18,7 +18,6 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 export const CountryReport = () => {
   const c = useContext(MarkazReportContext);
   const cReports = c?.reports;
-
   const total = c?.length;
   const [filterAllData, setFilterAllData] = useState(cReports);
   const { dispatch } = useToastState();
@@ -32,6 +31,7 @@ export const CountryReport = () => {
   const { getMarkazReport } = useContext(UIContext);
   const [isFilter, setIsFilter] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [noReports, setNoReports] = useState(false);
   const navigate = useNavigate();
   const itemsPerPage = 10;
   useEffect(() => {
@@ -79,6 +79,7 @@ export const CountryReport = () => {
     setYear("2023");
     setFilterAllData(cReports);
     setIsFilter(false);
+    setNoReports(false);
     setIsSearch(false);
     document.getElementById("autocomplete").value = "";
   };
@@ -237,165 +238,167 @@ export const CountryReport = () => {
           </button>
         </div>
       </div>
-      {!isSearch ? (
+      {!isSearch && !noReports ? (
         <>
           {currentData?.length > 0 ? (
             <div className="overflow-scroll">
-            <table className="table mb-7 w-full overflow-scroll">
-              {/* Head */}
-              <thead>
-                <tr>
-                  <th className="text-left">Report</th>
-                  <th className="text-left">Last modified</th>
-                  <th className="text-left">Month</th>
-                  <th className="md:block hidden"></th>
-                  <th className="md:block hidden"></th>
-                  <th className="text-left">Action</th>
-                </tr>
-              </thead>
-              {/* Body */}
-              <tbody>
-                {currentData.map((p, index) => (
-                  <tr key={index}>
-                    <td>
-                      <span className="font-medium md:text-sm text-xs leading-[16.94px] text-left font-inter text-heading">
-                        {p?.countryAreaId?.name}
-                      </span>
-                    </td>
-                    <td>
-                      <span className="font-medium md:text-sm text-xs leading-[16.94px] text-left font-inter text-heading">
-                        {moment(p?.updatedAt).fromNow()}
-                      </span>
-                    </td>
-                    <td>
-                      <span className="font-medium md:text-sm text-xs leading-[16.94px] text-left font-inter text-heading">
-                        {moment(p?.month).format("MMMM YYYY")}
-                      </span>
-                    </td>
-                    <td className="md:block hidden"></td>
-                    <td className="md:block hidden"></td>
-                    <td>
-                      <div className="flex items-center gap-2">
-                        <span
-                          onClick={() => navigate(`/reports/view/${p._id}`)}
-                          className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left"
-                        >
-                          View
-                        </span>
-                        {me?.userAreaType === "Country" && (
-                          <span
-                            onClick={() => navigate(`/reports/edit/${p._id}`)}
-                            className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left text-green"
-                          >
-                            Edit
-                          </span>
-                        )}
-                        <span
-                          onClick={() => handlePrint(p?._id)}
-                          className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left text-blue"
-                        >
-                          Print
-                        </span>
-                      </div>
-                    </td>
+              <table className="table mb-7 w-full overflow-scroll">
+                {/* Head */}
+                <thead>
+                  <tr>
+                    <th className="text-left">Report</th>
+                    <th className="text-left">Last modified</th>
+                    <th className="text-left">Month</th>
+                    <th className="md:block hidden"></th>
+                    <th className="md:block hidden"></th>
+                    <th className="text-left">Action</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                {/* Body */}
+                <tbody>
+                  {currentData.map((p, index) => (
+                    <tr key={index}>
+                      <td>
+                        <span className="font-medium md:text-sm text-xs leading-[16.94px] text-left font-inter text-heading">
+                          {p?.countryAreaId?.name}
+                        </span>
+                      </td>
+                      <td>
+                        <span className="font-medium md:text-sm text-xs leading-[16.94px] text-left font-inter text-heading">
+                          {moment(p?.updatedAt).fromNow()}
+                        </span>
+                      </td>
+                      <td>
+                        <span className="font-medium md:text-sm text-xs leading-[16.94px] text-left font-inter text-heading">
+                          {moment(p?.month).format("MMMM YYYY")}
+                        </span>
+                      </td>
+                      <td className="md:block hidden"></td>
+                      <td className="md:block hidden"></td>
+                      <td>
+                        <div className="flex items-center gap-2">
+                          <span
+                            onClick={() => navigate(`/reports/view/${p._id}`)}
+                            className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left"
+                          >
+                            View
+                          </span>
+                          {me?.userAreaType === "Country" && (
+                            <span
+                              onClick={() => navigate(`/reports/edit/${p._id}`)}
+                              className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left text-green"
+                            >
+                              Edit
+                            </span>
+                          )}
+                          <span
+                            onClick={() => handlePrint(p?._id)}
+                            className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left text-blue"
+                          >
+                            Print
+                          </span>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           ) : (
             <NoReports />
           )}
           {!isFilter && (
-           <div className="flex w-full gap-4 px-4 justify-end items-center mt-4">
-           <select
-             readOnly
-             disabled
-             name="items_per_page"
-             id="items"
-             className="select select-sm max-w-xs bg-gray-200 rounded-full"
-           >
-             <option value="" disabled selected>
-               rows per page 10
-             </option>
-           </select>
- 
-           {/* Previous Button */}
-           <button
-             className="rounded-full border-none w-7 h-7"
-             disabled={currentPage === 1}
-             onClick={handlePrevPage}
-           >
-             <IoIosArrowBack
-               className={`text-[1.5rem] rounded-full bg-gray-200 ${
-                 currentPage === 1 && "text-gray-400"
-               }`}
-             />
-           </button>
- 
-           {/* Page Numbers */}
-           <div className="flex items-center">
-             <span
-               className={`rounded-full text-bold text-sm ${
-                 currentPage === 1 && "border-2 border-gray-500"
-               } mx-1 bg-white w-7 h-7 flex justify-center items-center`}
-             >
-               1
-             </span>
- 
-             {totalPages > 1 && (
-               <button
-                 className={`rounded-full text-bold text-sm ${
-                   currentPage === 2 && "border-2 border-gray-500"
-                 } mx-1 bg-white w-7 h-7 flex justify-center items-center`}
-               >
-                 2
-               </button>
-             )}
-             {totalPages > 3 && <span>...</span>}
-             {totalPages && currentPage > 2 && currentPage < totalPages && (
-               <span
-                 className={`rounded-full text-bold text-sm ${
-                   currentPage !== totalPages && "border-2 border-gray-500"
-                 } mx-1 bg-white w-7 h-7 flex justify-center items-center`}
-               >
-                 {currentPage}
-               </span>
-             )}
-             {totalPages && totalPages>2 && (
-               <span
-                 className={`rounded-full text-bold text-sm ${
-                   currentPage === totalPages && "border-2 border-gray-500"
-                 } mx-1 bg-white w-7 h-7 flex justify-center items-center`}
-               >
-                 {totalPages}
-               </span>
-             )}
-           </div>
- 
-           {/* Next Button */}
-           <button
-             className="rounded-full border-none w-7 h-7"
-             disabled={currentPage === totalPages}
-             onClick={handleNextPage
-             }
-           >
-             <IoIosArrowForward
-               className={`text-[1.5rem] rounded-full bg-gray-200 ${
-                 currentPage === totalPages && "text-gray-400"
-               }`}
-             />
-           </button>
-         </div>
+            <div className="flex w-full gap-4 px-4 justify-end items-center mt-4">
+              <select
+                readOnly
+                disabled
+                name="items_per_page"
+                id="items"
+                className="select select-sm max-w-xs bg-gray-200 rounded-full"
+              >
+                <option value="" disabled selected>
+                  rows per page 10
+                </option>
+              </select>
+
+              {/* Previous Button */}
+              <button
+                className="rounded-full border-none w-7 h-7"
+                disabled={currentPage === 1}
+                onClick={handlePrevPage}
+              >
+                <IoIosArrowBack
+                  className={`text-[1.5rem] rounded-full bg-gray-200 ${
+                    currentPage === 1 && "text-gray-400"
+                  }`}
+                />
+              </button>
+
+              {/* Page Numbers */}
+              <div className="flex items-center">
+                <span
+                  className={`rounded-full text-bold text-sm ${
+                    currentPage === 1 && "border-2 border-gray-500"
+                  } mx-1 bg-white w-7 h-7 flex justify-center items-center`}
+                >
+                  1
+                </span>
+
+                {totalPages > 1 && (
+                  <button
+                    className={`rounded-full text-bold text-sm ${
+                      currentPage === 2 && "border-2 border-gray-500"
+                    } mx-1 bg-white w-7 h-7 flex justify-center items-center`}
+                  >
+                    2
+                  </button>
+                )}
+                {totalPages > 3 && <span>...</span>}
+                {totalPages && currentPage > 2 && currentPage < totalPages && (
+                  <span
+                    className={`rounded-full text-bold text-sm ${
+                      currentPage !== totalPages && "border-2 border-gray-500"
+                    } mx-1 bg-white w-7 h-7 flex justify-center items-center`}
+                  >
+                    {currentPage}
+                  </span>
+                )}
+                {totalPages && totalPages > 2 && (
+                  <span
+                    className={`rounded-full text-bold text-sm ${
+                      currentPage === totalPages && "border-2 border-gray-500"
+                    } mx-1 bg-white w-7 h-7 flex justify-center items-center`}
+                  >
+                    {totalPages}
+                  </span>
+                )}
+              </div>
+
+              {/* Next Button */}
+              <button
+                className="rounded-full border-none w-7 h-7"
+                disabled={currentPage === totalPages}
+                onClick={handleNextPage}
+              >
+                <IoIosArrowForward
+                  className={`text-[1.5rem] rounded-full bg-gray-200 ${
+                    currentPage === totalPages && "text-gray-400"
+                  }`}
+                />
+              </button>
+            </div>
           )}
         </>
-      ) : (
+      ) : !noReports ? (
         <SearchPage data={searchData?.data} area={"country"} />
+      ) : (
+        <NoReports />
       )}
       <dialog id="filter-area-dialog" className="modal">
         <FilterDialog
           setFilterAllData={setFilterAllData}
           setIsFilter={setIsFilter}
+          setNoReports={setNoReports}
         />
       </dialog>
     </>
