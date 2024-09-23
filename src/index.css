@@ -3273,6 +3273,10 @@ html {
   top: 50%;
 }
 
+.top-\[64px\] {
+  top: 64px;
+}
+
 .top-\[65\%\] {
   top: 65%;
 }
@@ -3591,10 +3595,6 @@ html {
   height: 100vh;
 }
 
-.h-\[calc\(100vh-65\.6px-64px-62px\)\] {
-  height: calc(100vh - 65.6px - 64px - 62px);
-}
-
 .max-h-11 {
   max-height: 2.75rem;
 }
@@ -3615,8 +3615,8 @@ html {
   min-height: 100px;
 }
 
-.min-h-\[300px\] {
-  min-height: 300px;
+.min-h-\[200px\] {
+  min-height: 200px;
 }
 
 .min-h-\[30px\] {
@@ -3725,6 +3725,10 @@ html {
 
 .w-full {
   width: 100%;
+}
+
+.w-1\/2 {
+  width: 50%;
 }
 
 .min-w-\[230px\] {
@@ -5247,20 +5251,12 @@ html {
     height: 100%;
   }
 
-  .md\:h-\[calc\(100vh-60\.5px\)\] {
-    height: calc(100vh - 60.5px);
-  }
-
-  .md\:h-\[calc\(100vh-57\.5px\)\] {
-    height: calc(100vh - 57.5px);
-  }
-
-  .md\:h-\[calc\(100vh-55\.5px\)\] {
-    height: calc(100vh - 55.5px);
-  }
-
   .md\:max-h-11 {
     max-height: 2.75rem;
+  }
+
+  .md\:min-h-\[300px\] {
+    min-height: 300px;
   }
 
   .md\:w-4 {
@@ -5353,6 +5349,10 @@ html {
 
   .md\:gap-3 {
     gap: 0.75rem;
+  }
+
+  .md\:gap-4 {
+    gap: 1rem;
   }
 
   .md\:bg-transparent {

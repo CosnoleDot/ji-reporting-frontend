@@ -25,7 +25,7 @@ import {
 import { UIContext } from "../context/ui";
 import { useNavigate } from "react-router-dom";
 import instance from "../api/instrance";
-import {District, Division, Map} from "../assets/png"
+import { District, Division, Map } from "../assets/png";
 
 export const Dashboard = () => {
   const { getHalqas } = useContext(UIContext);
@@ -105,6 +105,8 @@ export const Dashboard = () => {
     // Check if data is already stored in session storage
     const storedData = sessionStorage.getItem("storedData");
     if (queryDate !== "" || !storedData) {
+      console.log("if");
+      console.log(userAreaType);
       setLoading(true);
       try {
         const getUnfilledReports = async (path) => {
@@ -121,15 +123,83 @@ export const Dashboard = () => {
         };
         let markaz = [];
         let province, maqam, division, ilaqa, halqa;
-        if (me?.userAreaType === "Country" && userAreaType === "All") {
-          markaz = await getUnfilledReports("markaz");
+        // if (me?.userAreaType === "Country" && userAreaType === "All") {
+        //   markaz = await getUnfilledReports("markaz");
+        // }
+
+        // province = await getUnfilledReports("province");
+        // maqam = await getUnfilledReports("maqam");
+        // division = await getUnfilledReports("division");
+        // ilaqa = await getUnfilledReports("ilaqa");
+        // halqa = await getUnfilledReports("halqa");
+
+        switch (userAreaType) {
+          case "All":
+            if (me?.userAreaType === "Country" && userAreaType === "All") {
+              markaz = await getUnfilledReports("markaz");
+              province = await getUnfilledReports("province");
+              maqam = await getUnfilledReports("maqam");
+              division = await getUnfilledReports("division");
+              ilaqa = await getUnfilledReports("ilaqa");
+              halqa = await getUnfilledReports("halqa");
+            } else if (me?.userAreaType === "Division") {
+              division = await getUnfilledReports("division");
+              halqa = await getUnfilledReports("halqa");
+            } else if (me?.userAreaType === "Maqam") {
+              maqam = await getUnfilledReports("maqam");
+              ilaqa = await getUnfilledReports("ilaqa");
+              halqa = await getUnfilledReports("halqa");
+            } else if (me?.userAreaType === "Province") {
+              province = await getUnfilledReports("province");
+              maqam = await getUnfilledReports("maqam");
+              ilaqa = await getUnfilledReports("ilaqa");
+              halqa = await getUnfilledReports("halqa");
+              division = await getUnfilledReports("division");
+            } else if (me?.userAreaType === "Ilaqa") {
+              ilaqa = await getUnfilledReports("ilaqa");
+              halqa = await getUnfilledReports("halqa");
+            }
+            break;
+          case "Province":
+            if (me?.userAreaType === "Country") {
+              province = await getUnfilledReports("province");
+            }
+            break;
+          case "Country":
+            if (me?.userAreaType === "Country") {
+              markaz = await getUnfilledReports("markaz");
+            }
+            break;
+          case "Tehsil":
+            if (
+              me?.userAreaType === "Province" ||
+              me?.userAreaType === "Country"
+            ) {
+              halqa = await getUnfilledReports("halqa");
+            }
+            break;
+          case "Maqam":
+            if (
+              me?.userAreaType === "Province" ||
+              me?.userAreaType === "Country"
+            ) {
+              halqa = await getUnfilledReports("halqa");
+              ilaqa = await getUnfilledReports("ilaqa");
+            }
+            break;
+          case "Ilaqa":
+            if (
+              me?.userAreaType === "Province" ||
+              me?.userAreaType === "Country" ||
+              me?.userAreaType === "Maqam"
+            ) {
+              halqa = await getUnfilledReports("halqa");
+            }
+            break;
+          default:
+            console.log("Invalid user area type");
+            return;
         }
-        province = await getUnfilledReports("province");
-        province = await getUnfilledReports("province");
-        maqam = await getUnfilledReports("maqam");
-        division = await getUnfilledReports("division");
-        ilaqa = await getUnfilledReports("ilaqa");
-        halqa = await getUnfilledReports("halqa");
 
         const markazData = markaz?.data?.data?.allCountries || [];
         const provinceData = province?.data?.data?.allProvince || [];
@@ -193,6 +263,8 @@ export const Dashboard = () => {
                   ...ilaqaData,
                   ...halqaData,
                 ]
+              : userAreaType === "Country"
+              ? [...markazData]
               : userAreaType === "Province"
               ? [...provinceData]
               : userAreaType === "Maqam"
@@ -220,6 +292,8 @@ export const Dashboard = () => {
                 ...(ilaqa?.data?.data?.unfilled || []),
                 ...(halqa?.data?.data?.unfilled || []),
               ]
+            : userAreaType === "Country"
+            ? markaz?.data?.data?.unfilled
             : userAreaType === "Province"
             ? province?.data?.data?.unfilled || []
             : userAreaType === "Maqam"
@@ -245,6 +319,7 @@ export const Dashboard = () => {
           sessionStorage.setItem("storedData", JSON.stringify(temp));
         }
         setData({ ...temp });
+        console.log({ ...temp }, "aaa");
         setLoading(false);
         // saving the initial data so that on clear filter can set it back
         if (!initialData?.data) {
@@ -255,6 +330,7 @@ export const Dashboard = () => {
         console.log(error);
       }
     } else {
+      console.log("else");
       setData(JSON.parse(storedData));
     }
     setLoading(false);
@@ -411,8 +487,7 @@ export const Dashboard = () => {
                   </div>
                   <div className="flex flex-row w-full justify-center md:justify-end">
                     <div className="  w-10 h-10 flex items-center justify-center">
-                     <img src={Map} alt="" className="w-8 h-8" />
-                    
+                      <img src={Map} alt="" className="w-8 h-8" />
                     </div>
                   </div>
                 </div>
@@ -435,9 +510,8 @@ export const Dashboard = () => {
                     </h3>
                   </div>
                   <div className="flex flex-row w-full justify-center md:justify-end">
-                  <div className="  w-10 h-10 flex items-center justify-center">
-                     <img src={District} alt="" className="w-8 h-8" />
-                    
+                    <div className="  w-10 h-10 flex items-center justify-center">
+                      <img src={District} alt="" className="w-8 h-8" />
                     </div>
                   </div>
                 </div>
@@ -462,9 +536,8 @@ export const Dashboard = () => {
                     </h3>
                   </div>
                   <div className="flex flex-row w-full justify-center md:justify-end">
-                  <div className="  w-10 h-10 flex items-center justify-center">
-                     <img src={Division} alt="" className="w-8 h-8" />
-                    
+                    <div className="  w-10 h-10 flex items-center justify-center">
+                      <img src={Division} alt="" className="w-8 h-8" />
                     </div>
                   </div>
                 </div>
@@ -650,7 +723,9 @@ export const Dashboard = () => {
                         setUserAreaType("personal");
                         setShow(false);
                       }}
-                      className={`font-inter md:text-[14px] ${toggle === 'pFilled' ? 'bg-white p-1 rounded-sm':''} p-1 text-[12px] font-medium leading-[20px] text-left cursor-pointer`}
+                      className={`font-inter md:text-[14px] ${
+                        toggle === "pFilled" ? "bg-white p-1 rounded-sm" : ""
+                      } p-1 text-[12px] font-medium leading-[20px] text-left cursor-pointer`}
                     >
                       Personal Filled {personalFilled?.length}
                     </div>
@@ -663,7 +738,9 @@ export const Dashboard = () => {
                         setUserAreaType("personal");
                         setShow(false);
                       }}
-                      className={`font-inter md:text-[14px] ${toggle === 'pUnFilled' ? 'bg-white p-1 rounded-sm':''} p-1 text-[12px] font-medium leading-[20px] text-left cursor-pointer`}
+                      className={`font-inter md:text-[14px] ${
+                        toggle === "pUnFilled" ? "bg-white p-1 rounded-sm" : ""
+                      } p-1 text-[12px] font-medium leading-[20px] text-left cursor-pointer`}
                     >
                       Personal Unfilled {personalUnfilled?.length}
                     </div>
@@ -676,7 +753,9 @@ export const Dashboard = () => {
                         setShow(true);
                         setToggle("filled");
                       }}
-                      className={`font-inter md:text-[14px] ${toggle === 'filled' ? 'bg-white p-1 rounded-sm':''} p-1 text-[12px] font-medium leading-[20px] text-left cursor-pointer`}
+                      className={`font-inter md:text-[14px] ${
+                        toggle === "filled" ? "bg-white p-1 rounded-sm" : ""
+                      } p-1 text-[12px] font-medium leading-[20px] text-left cursor-pointer`}
                     >
                       Filled {data?.filled?.length}
                     </div>
@@ -688,7 +767,9 @@ export const Dashboard = () => {
                         setShow(true);
                         setToggle("unFilled");
                       }}
-                      className={`font-inter md:text-[14px] ${toggle === 'unFilled' ? 'bg-white p-1 rounded-sm':''} p-1 text-[12px] font-medium leading-[20px] text-left cursor-pointer`}
+                      className={`font-inter md:text-[14px] ${
+                        toggle === "unFilled" ? "bg-white p-1 rounded-sm" : ""
+                      } p-1 text-[12px] font-medium leading-[20px] text-left cursor-pointer`}
                     >
                       Unfilled {data?.unfilled?.length}
                     </div>
@@ -1139,7 +1220,7 @@ export const Dashboard = () => {
                 className="btn rounded-md bg-primary  "
                 htmlFor="filterUnfilled"
               >
-                <FaFilter className="text-primary"/>
+                <FaFilter className="text-primary" />
                 <input
                   type="month"
                   className="text-primary"

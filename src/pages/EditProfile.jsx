@@ -33,7 +33,7 @@ export const EditProfile = () => {
       const formData = new FormData();
       formData.append("profileImage", file);
       const response = await axios.post(
-        `http://localhost:5000/api/v1/user/upload`,
+        `https://apiv2.staging.jamiatreporting.com/api/v1/user/upload`,
         formData,
         {
           headers: {
@@ -42,8 +42,10 @@ export const EditProfile = () => {
           },
         }
       );
+      setLoading(false);
       return dispatch({ type: "SUCCESS", payload: response?.data?.message });
     } catch (error) {
+      setLoading(false);
       console.log("Error occurred", error);
       throw error;
     }
@@ -54,10 +56,11 @@ export const EditProfile = () => {
     if (!file) return;
 
     try {
+      setLoading(false);
       const formData = new FormData();
       formData.append("profileImage", file);
       const response = await axios.put(
-        `http://localhost:5000/api/v1/user/upload/${me?.profileImage}`,
+        `https://apiv2.staging.jamiatreporting.com/api/v1/user/upload/${me?.profileImage}`,
         formData,
         {
           headers: {
@@ -66,9 +69,11 @@ export const EditProfile = () => {
           },
         }
       );
+      setLoading(false);
       dispatch({ type: "SUCCESS", payload: response?.data?.message });
       return  window.location.reload(); 
     } catch (error) {
+      setLoading(false);
       console.log("Error occurred", error);
       throw error;
     }
@@ -446,7 +451,7 @@ export const EditProfile = () => {
                     backgroundImage: image
                       ? `url(${image})` // Display the selected file if available
                       : me?.profileImage
-                      ? `url(http://localhost:5000/api/v1/user/upload/${me?.profileImage})` // Display profileImage if available
+                      ? `url(https://apiv2.staging.jamiatreporting.com/api/v1/user/upload/${me?.profileImage})` // Display profileImage if available
                       : `url(${logo})`, // Fallback to the logo
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",

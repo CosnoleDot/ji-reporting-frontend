@@ -892,7 +892,9 @@ function App() {
       }
     }
   };
-  const getAreaDetails = async (obj) => {
+  const getAreaDetails = async (obj, userAreaType) => {
+    
+    setLoading(true);
     const getPath = (parentId) => {
       switch (parentId) {
         case "Ilaqa":
@@ -937,7 +939,21 @@ function App() {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
-      } else if (!obj.parentType && (obj.name = "Pakistan")) {
+      } else if (!obj.parentType && userAreaType === 'Maqam') {
+        res = await instance.get(`/locations/maqam/${obj?._id}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
+        });
+      }
+      else if (!obj.parentType && userAreaType === 'Division') {
+        res = await instance.get(`/locations/division/${obj?._id}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
+        });
+      }
+       else if (!obj.parentType && (obj.name = "Pakistan")) {
         res = await instance.get(`/locations/country`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
@@ -958,7 +974,7 @@ function App() {
     } catch (error) {
       console.log(error);
     }
-
+    setLoading(false);
     document.getElementById("area_details").showModal();
   };
   const getCompileReports = async (startDate, endDate, areaType, areaId) => {

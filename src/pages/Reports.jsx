@@ -272,7 +272,7 @@ export const Reports = () => {
           role="tablist"
           className="w-full flex text-slate-400 justify-between gap-3 items-center overflow-hidden overflow-x-scroll"
         >
-          <div className="flex items-center justify-between w-full">
+          <div className={`flex items-center justify-between w-full ${localStorage.getItem('@type') === 'ilaqa' || localStorage.getItem('@type') === 'division' ? 'w-1/2':""}`}>
             {["country"].includes(localStorage.getItem("@type")) &&
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
@@ -343,7 +343,7 @@ export const Reports = () => {
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
               ) &&
-              ilaqas?.length > 0 && (
+              
                 <Link
                   to={"?active=ilaqa"}
                   role="tab"
@@ -354,7 +354,7 @@ export const Reports = () => {
                 >
                   Zone
                 </Link>
-              )}
+              }
 
             {["country", "province", "maqam", "ilaqa", "division"].includes(
               localStorage.getItem("@type")

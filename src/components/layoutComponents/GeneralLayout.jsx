@@ -32,8 +32,8 @@ export const GeneralLayout = ({ children, active, title }) => {
       <div className="flex flex-grow pt-12 ">
         <div
           className={`${
-            isSideBarOpen ? "block" : "hidden"
-          } md:block md:w-[20%] absolute md:fixed top-[65px] z-20 bg-white md:bg-transparent h-full`}
+            isSideBarOpen ? "fixed" : "hidden"
+          } md:block md:w-[20%] fixed md:fixed top-[64px] z-20 bg-white md:bg-transparent h-full`}
         >
           <BottomNav active={active} />
         </div>

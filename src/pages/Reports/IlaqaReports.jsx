@@ -27,6 +27,7 @@ export const IlaqaReports = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const { getIlaqaReports } = useContext(UIContext);
   const [disable, setDisable] = useState(false);
+  const [noReports, setNoReports] = useState(false);
   const [isFilter, setIsFilter] = useState(false);
   const navigate = useNavigate();
   const itemsPerPage = 10;
@@ -74,6 +75,7 @@ export const IlaqaReports = () => {
     setMonth("");
     setYear("2023");
     setFilterAllData(iReports);
+    setNoReports(false);
     setIsFilter(false);
     setIsSearch(false);
     document.getElementById("autocomplete").value = "";
@@ -241,7 +243,7 @@ export const IlaqaReports = () => {
           </button>
         </div>
       </div>
-      {!isSearch ? (
+      {!isSearch && !noReports ? (
         <>
           {currentData?.length > 0 ? (
             <div className="overflow-scroll">
@@ -393,12 +395,14 @@ export const IlaqaReports = () => {
           )}
         </>
       ) : (
-        <SearchPage data={searchData} area={"ilaqa"} />
+        !noReports ? 
+        <SearchPage data={searchData} area={"ilaqa"} /> : <NoReports/>
       )}
       <dialog id="filter-area-dialog" className="modal">
         <FilterDialog
           setFilterAllData={setFilterAllData}
           setIsFilter={setIsFilter}
+          setNoReports={setNoReports}
         />
       </dialog>
     </>

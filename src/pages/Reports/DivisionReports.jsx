@@ -26,6 +26,7 @@ export const DivisionReports = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const { getDivisionReports } = useContext(UIContext);
   const [disable, setDisable] = useState(false);
+  const [noReports, setNoReports] = useState(false);
   const [isFilter, setIsFilter] = useState(false);
   const navigate = useNavigate();
   const itemsPerPage = 10;
@@ -73,6 +74,7 @@ export const DivisionReports = () => {
     setMonth("");
     setYear("2023");
     setFilterAllData(dReports);
+    setNoReports(false);
     setIsFilter(false);
     setIsSearch(false);
     document.getElementById("autocomplete").value = "";
@@ -240,7 +242,7 @@ export const DivisionReports = () => {
           </button>
         </div>
       </div>
-      {!isSearch ? (
+      {!isSearch && !noReports ? (
         <>
           {currentData?.length > 0 ? (
             <div className="overflow-scroll">
@@ -391,13 +393,16 @@ export const DivisionReports = () => {
             </div>
           )}{" "}
         </>
-      ) : (
+      ) : !noReports ? (
         <SearchPage data={searchData} area={"division"} />
+      ) : (
+        <NoReports />
       )}
       <dialog id="filter-area-dialog" className="modal">
         <FilterDialog
           setFilterAllData={setFilterAllData}
           setIsFilter={setIsFilter}
+          setNoReports={setNoReports}
         />
       </dialog>
     </>

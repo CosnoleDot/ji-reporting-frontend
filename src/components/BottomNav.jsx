@@ -14,7 +14,7 @@ export const BottomNav = ({ active }) => {
   const { isCompleted } = useContext(UIContext);
   const me = useContext(MeContext);
   const profileImageUrl = me?.profileImage
-    ? `http://localhost:5000/api/v1/user/upload/${me.profileImage}`
+    ? `https://apiv2.staging.jamiatreporting.com/api/v1/user/upload/${me.profileImage}`
     : Logo;
   const navigate = useNavigate();
   const user = localStorage.getItem("@type");
@@ -74,7 +74,7 @@ export const BottomNav = ({ active }) => {
       </div>
       <div className="flex flex-col justify-between h-full">
         <div className="w-full flex items-start flex-col p-4">
-          <Link
+         {localStorage.getItem("@nazimType") !== "umeedwar" && localStorage.getItem("@nazimType") !== "rukan" && <Link
             to={isCompleted ? "/" : "/profile"}
             className={
               !active || active === "dashboard"
@@ -89,7 +89,7 @@ export const BottomNav = ({ active }) => {
                 Dashboard
               </span>
             </div>
-          </Link>
+          </Link>}
 
           {/* Personal Report or Reports Link based on user type */}
           {localStorage.getItem("@nazimType") === "rukan" ||

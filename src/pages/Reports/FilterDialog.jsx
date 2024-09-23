@@ -11,11 +11,11 @@ import {
 } from "../../context";
 import instance from "../../api/instrance";
 
-export const FilterDialog = ({ setFilterAllData, tab ,setIsFilter}) => {
+export const FilterDialog = ({ setFilterAllData, tab ,setIsFilter,setNoReports}) => {
   const { active, setActive } = useContext(UIContext);
 
   // const [showNotification, setShowNotification] = useState(false);
-  const { loading, setLoading } = useContext(UIContext);
+
   const [areas, setAreas] = useState([]);
   const [searchArea, setSearchArea] = useState("");
   const [userAreaType, setUserAreaType] = useState(active);
@@ -53,7 +53,6 @@ export const FilterDialog = ({ setFilterAllData, tab ,setIsFilter}) => {
   };
 
   const getFilterData = async () => {
-    setLoading(true)
     try {
      
       const req = await instance.get(`/reports/${userAreaType ==="country" ? "markaz": userAreaType}/${selectedId}`, {
@@ -68,9 +67,8 @@ export const FilterDialog = ({ setFilterAllData, tab ,setIsFilter}) => {
       dispatch({ type: "SUCCESS", payload: req.data?.message });
     } catch (err) {
       dispatch({ type: "ERROR", payload: err?.response?.data?.message });
+      setNoReports(true)
     }
-    setLoading(false)
-
   };
   const getAreaWithType = () => {
     switch (userAreaType) {
@@ -114,7 +112,7 @@ export const FilterDialog = ({ setFilterAllData, tab ,setIsFilter}) => {
   }, [userAreaType]);
   
   return (
-    <div className="modal-box min-h-[300px]">
+    <div className="modal-box md:min-h-[300px] min-h-[200px]">
       <form method="dialog" className="mb-3">
         <button
           id="filter-area-dialog-close-btn"
