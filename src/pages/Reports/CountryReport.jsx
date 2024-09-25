@@ -28,7 +28,7 @@ export const CountryReport = () => {
   const [searchData, setSearchData] = useState([]);
   const [year, setYear] = useState("2024");
   const me = useContext(MeContext);
-  const { getMarkazReport } = useContext(UIContext);
+  const { getMarkazReport , setLoading } = useContext(UIContext);
   const [isFilter, setIsFilter] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [noReports, setNoReports] = useState(false);
@@ -45,6 +45,7 @@ export const CountryReport = () => {
     setFilterAllData(uniqueArray);
   }, [cReports]);
   const searchResults = async () => {
+    setLoading(true)
     showSearch(false);
     if (year !== "" && month !== "") {
       try {
@@ -70,6 +71,7 @@ export const CountryReport = () => {
         });
       }
     }
+    setLoading(false)
   };
   const toggleSearch = () => {
     showSearch(!search);

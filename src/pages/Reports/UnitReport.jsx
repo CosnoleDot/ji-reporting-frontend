@@ -12,7 +12,7 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 export const UnitReport = () => {
   const h = useContext(HalqaReportContext);
-
+   
   const hReports = h?.reports;
   const total = h?.length;
   const [filterAllData, setFilterAllData] = useState(hReports);
@@ -26,7 +26,7 @@ export const UnitReport = () => {
   const [isSearch, setIsSearch] = useState(false);
   const [searchData, setSearchData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const { getHalqaReports } = useContext(UIContext);
+  const { getHalqaReports ,setLoading  } = useContext(UIContext);
   const [isFilter, setIsFilter] = useState(false);
   const itemsPerPage = 10;
   useEffect(() => {
@@ -40,7 +40,9 @@ export const UnitReport = () => {
     setFilterAllData(uniqueArray);
   }, [hReports]);
   const searchResults = async () => {
+    setLoading(true)
     showSearch(false);
+    
     if (year !== "" && month !== "") {
       try {
         setIsSearch(true);
@@ -65,6 +67,7 @@ export const UnitReport = () => {
         });
       }
     }
+    setLoading(false)
   };
   const toggleSearch = () => {
     showSearch(!search);
@@ -72,6 +75,7 @@ export const UnitReport = () => {
   const clearFilters = () => {
     setMonth("");
     setYear("2023");
+    setFilterAllData([])
     setFilterAllData(hReports);
     setIsFilter(false);
     setIsSearch(false);
@@ -286,7 +290,7 @@ export const UnitReport = () => {
                           >
                             View
                           </span>
-                          {me?.userAreaType === "Ilaqa" && (
+                          {me?.userAreaType === "Halqa" && (
                             <span
                               onClick={() => editReport(p?._id)}
                               className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left text-green"
@@ -356,7 +360,7 @@ export const UnitReport = () => {
                 </button>
               )}
               {totalPages > 3 && <span>...</span>}
-              {totalPages && currentPage > 2 && currentPage < totalPages && (
+              {totalPages && currentPage > 2 && currentPage < totalPages ? (
                 <span
                   className={`rounded-full text-bold text-sm ${
                     currentPage !== totalPages && "border-2 border-gray-500"
@@ -364,8 +368,10 @@ export const UnitReport = () => {
                 >
                   {currentPage}
                 </span>
+              ) : (
+                <span></span>
               )}
-              {totalPages && totalPages > 2 && (
+              {totalPages && totalPages > 2 ? (
                 <span
                   className={`rounded-full text-bold text-sm ${
                     currentPage === totalPages && "border-2 border-gray-500"
@@ -373,6 +379,8 @@ export const UnitReport = () => {
                 >
                   {totalPages}
                 </span>
+              ) : (
+                <span></span>
               )}
             </div>
 

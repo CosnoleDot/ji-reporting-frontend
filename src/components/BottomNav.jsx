@@ -52,7 +52,11 @@ export const BottomNav = ({ active }) => {
           />
           <div>
             <h2 className="text-heading font-inter font-semibold text-[16px] leading-5">
-              {me?.name?.split(' ').length > 2 ? me?.name?.split(' ')[0] +' ' + me?.name?.split(' ')[1] : me?.name}
+              {/* {me?.name?.split(' ').length > 2 ? me?.name?.split(' ')[0] +' ' + me?.name?.split(' ')[1] : me?.name} */}
+              {me?.name
+                ?.split("") 
+                .slice(0, 15) 
+                .join("")}
             </h2>
             <span className="text-heading font-inter font-normal text-[12px] leading-3 text-center">
               {me?.qualification}
@@ -74,22 +78,25 @@ export const BottomNav = ({ active }) => {
       </div>
       <div className="flex flex-col justify-between h-full">
         <div className="w-full flex items-start flex-col p-4">
-         {localStorage.getItem("@nazimType") !== "umeedwar" && localStorage.getItem("@nazimType") !== "rukan" && <Link
-            to={isCompleted ? "/" : "/profile"}
-            className={
-              !active || active === "dashboard"
-                ? "bg-primary text-white p-2 rounded w-full"
-                : "bg-blue-50 p-2 rounded text-heading w-full"
-            }
-          >
-            <div className="flex items-center gap-4 ">
-              {" "}
-              <HiOutlineHome className="h-5 w-5" />
-              <span className="font-medium text-[14px] leading-5">
-                Dashboard
-              </span>
-            </div>
-          </Link>}
+          {localStorage.getItem("@nazimType") !== "umeedwar" &&
+            localStorage.getItem("@nazimType") !== "rukan" && (
+              <Link
+                to={isCompleted ? "/" : "/profile"}
+                className={
+                  !active || active === "dashboard"
+                    ? "bg-primary text-white p-2 rounded w-full"
+                    : "bg-blue-50 p-2 rounded text-heading w-full"
+                }
+              >
+                <div className="flex items-center gap-4 ">
+                  {" "}
+                  <HiOutlineHome className="h-5 w-5" />
+                  <span className="font-medium text-[14px] leading-5">
+                    Dashboard
+                  </span>
+                </div>
+              </Link>
+            )}
 
           {/* Personal Report or Reports Link based on user type */}
           {localStorage.getItem("@nazimType") === "rukan" ||
@@ -97,7 +104,7 @@ export const BottomNav = ({ active }) => {
             <Link
               to={"/personalReport"}
               className={
-                !active || active === "personalReport"
+                !active || active === "personalReports"
                   ? "bg-primary text-white p-2 rounded w-full"
                   : "bg-blue-50 p-2 rounded text-heading w-full"
               }
@@ -117,7 +124,8 @@ export const BottomNav = ({ active }) => {
                 !active ||
                 active === "reports" ||
                 active === "compilation" ||
-                active === "personalReports"
+                active === "personalReports" ||
+                active === "personalReport/create"
                   ? "bg-primary text-white p-2 rounded w-full"
                   : "bg-blue-50 p-2 rounded text-heading w-full"
               }

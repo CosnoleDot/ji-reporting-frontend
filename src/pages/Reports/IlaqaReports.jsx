@@ -25,7 +25,7 @@ export const IlaqaReports = () => {
   const [isSearch, setIsSearch] = useState(false);
   const [searchData, setSearchData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const { getIlaqaReports } = useContext(UIContext);
+  const { getIlaqaReports, setLoading } = useContext(UIContext);
   const [disable, setDisable] = useState(false);
   const [noReports, setNoReports] = useState(false);
   const [isFilter, setIsFilter] = useState(false);
@@ -42,6 +42,7 @@ export const IlaqaReports = () => {
     setFilterAllData(uniqueArray);
   }, [iReports]);
   const searchResults = async () => {
+    setLoading(true)
     showSearch(false);
     if (year !== "" && month !== "") {
       try {
@@ -67,6 +68,7 @@ export const IlaqaReports = () => {
         });
       }
     }
+    setLoading(false)
   };
   const toggleSearch = () => {
     showSearch(!search);
@@ -359,7 +361,7 @@ export const IlaqaReports = () => {
                   </button>
                 )}
                 {totalPages > 3 && <span>...</span>}
-                {totalPages && currentPage > 2 && currentPage < totalPages && (
+                {(totalPages && currentPage > 2 && currentPage < totalPages) ? (
                   <span
                     className={`rounded-full text-bold text-sm ${
                       currentPage !== totalPages && "border-2 border-gray-500"
@@ -367,8 +369,8 @@ export const IlaqaReports = () => {
                   >
                     {currentPage}
                   </span>
-                )}
-                {totalPages && totalPages > 2 && (
+                ): <span></span>}
+                {(totalPages && totalPages > 2) ? (
                   <span
                     className={`rounded-full text-bold text-sm ${
                       currentPage === totalPages && "border-2 border-gray-500"
@@ -376,7 +378,7 @@ export const IlaqaReports = () => {
                   >
                     {totalPages}
                   </span>
-                )}
+                ): <span></span>}
               </div>
 
               {/* Next Button */}

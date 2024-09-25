@@ -12,7 +12,7 @@ import instance from "../../api/instrance";
 import { UIContext } from "../../context/ui";
 import { FcViewDetails } from "react-icons/fc";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import {  FaEye } from "react-icons/fa";
+import { FaEye } from "react-icons/fa";
 export const LocationMaqam = () => {
   const provinces = useContext(ProvinceContext);
   const maqams = useContext(MaqamContext);
@@ -156,7 +156,6 @@ export const LocationMaqam = () => {
       });
       await getMaqams();
       document.getElementById("add_maqam_modal").close();
-
     } catch (err) {
       document.getElementById("add_maqam_modal").close();
       dispatch({ type: "ERROR", payload: err?.response?.data?.message });
@@ -291,7 +290,6 @@ export const LocationMaqam = () => {
         }
       );
       const getAreas = () => {
-        
         switch (view) {
           case "halqa":
             setLoading(true);
@@ -307,8 +305,6 @@ export const LocationMaqam = () => {
           default:
             break;
         }
-    
-
       };
       getAreas();
     } catch (err) {
@@ -353,26 +349,27 @@ export const LocationMaqam = () => {
     }
     setCurrentPage(1); // Reset to the first page after search
   };
-  
+
   return (
     <>
       <div className="w-full flex flex-wrap gap-2 justify-end items-center">
-        {["province", "country"].includes(localStorage.getItem("@type")) && view==="maqam" && (
-          <button
-            disabled={loading}
-            className="md:px-4 md:py-2 px-2 py-1 text-[14px] rounded-md bg-primary text-white capitalize "
-            onClick={() => {
-              setForm({
-                name: "",
-                province: "",
-              });
-              document.getElementById("add_maqam_modal").showModal();
-              setEditMode(false);
-            }}
-          >
-            Add Maqam
-          </button>
-        )}
+        {["province", "country"].includes(localStorage.getItem("@type")) &&
+          view === "maqam" && (
+            <button
+              disabled={loading}
+              className="md:px-4 md:py-2 px-2 py-1 text-[14px] rounded-md bg-primary text-white capitalize "
+              onClick={() => {
+                setForm({
+                  name: "",
+                  province: "",
+                });
+                document.getElementById("add_maqam_modal").showModal();
+                setEditMode(false);
+              }}
+            >
+              Add Maqam
+            </button>
+          )}
         {["maqam", "province", "country"].includes(
           localStorage.getItem("@type")
         ) &&
@@ -476,7 +473,9 @@ export const LocationMaqam = () => {
                     key={maqam?._id}
                     className="font-semibold border-r border-l"
                   >
-                    <td className=" text-start font-medium md:text-sm text-xs leading-[16.94px]">{maqam?.name}</td>
+                    <td className=" text-start font-medium md:text-sm text-xs leading-[16.94px]">
+                      {maqam?.name}
+                    </td>
                     <td className=" text-start font-medium md:text-sm text-xs leading-[16.94px]">
                       {maqam?.province?.name || "-"}
                     </td>
@@ -539,7 +538,9 @@ export const LocationMaqam = () => {
                     key={ilaqa?._id}
                     className="font-semibold border-r border-l"
                   >
-                    <td className=" text-start font-medium md:text-sm text-xs leading-[16.94px]">{ilaqa?.name}</td>
+                    <td className=" text-start font-medium md:text-sm text-xs leading-[16.94px]">
+                      {ilaqa?.name}
+                    </td>
                     <td className=" text-start font-medium md:text-sm text-xs leading-[16.94px]">
                       <div
                         onClick={() => {
@@ -613,7 +614,9 @@ export const LocationMaqam = () => {
                       key={halqa?._id}
                       className="font-semibold border-r border-l"
                     >
-                      <td className=" text-start font-medium md:text-sm text-xs leading-[16.94px]">{halqa?.name}</td>
+                      <td className=" text-start font-medium md:text-sm text-xs leading-[16.94px]">
+                        {halqa?.name}
+                      </td>
                       <td className=" text-center font-medium md:text-sm text-xs leading-[16.94px]">
                         <div
                           onClick={() => {
@@ -691,15 +694,14 @@ export const LocationMaqam = () => {
 
           {/* Page Numbers */}
           <div className="flex items-center">
-            {totalPages > 1 && (
-              <span
-                className={`rounded-full text-bold text-sm ${
-                  currentPage === 1 && "border-2 border-gray-500"
-                } mx-1 bg-white w-7 h-7 flex justify-center items-center text-[8px]`}
-              >
-                1
-              </span>
-            )}
+            <span
+              className={`rounded-full text-bold text-sm ${
+                currentPage === 1 && "border-2 border-gray-500"
+              } mx-1 bg-white w-7 h-7 flex justify-center items-center text-[8px]`}
+            >
+              1
+            </span>
+
             {totalPages > 1 && (
               <button
                 className={`rounded-full text-bold text-sm ${
@@ -710,7 +712,7 @@ export const LocationMaqam = () => {
               </button>
             )}
             {totalPages > 3 && <span>...</span>}
-            {totalPages && currentPage > 2 && currentPage < totalPages && (
+            {totalPages && currentPage > 2 && currentPage < totalPages ? (
               <span
                 className={`rounded-full text-bold text-sm ${
                   currentPage !== totalPages && "border-2 border-gray-500"
@@ -718,8 +720,10 @@ export const LocationMaqam = () => {
               >
                 {currentPage}
               </span>
+            ) : (
+              <span></span>
             )}
-            {totalPages && (
+            {totalPages && totalPages > 2 ? (
               <span
                 className={`rounded-full text-bold text-sm ${
                   currentPage === totalPages && "border-2 border-gray-500"
@@ -727,6 +731,8 @@ export const LocationMaqam = () => {
               >
                 {totalPages}
               </span>
+            ) : (
+              <span></span>
             )}
           </div>
 

@@ -408,26 +408,27 @@ export const LocationDivision = () => {
     }
     setCurrentPage(1); // Reset to the first page after search
   };
-console.log(view,'aaa')
+ 
   return (
     <>
       <div className="w-full flex flex-wrap gap-2 justify-end items-center">
-        {["province", "country"].includes(localStorage.getItem("@type")) && view==='division' && (
-          <button
-            className="md:px-4 md:py-2 px-2 py-1 text-[14px] rounded-md bg-primary text-white capitalize "
-            onClick={() => {
-              setForm({
-                name: "",
-                province: "",
-              });
-              document.getElementById("add_division_modal").showModal();
-              setEditMode(false);
-            }}
-          >
-            Add Division
-          </button>
-        )}
-        {districts?.length > 0 &&  view==='district' && (
+        {["province", "country"].includes(localStorage.getItem("@type")) &&
+          view === "division" && (
+            <button
+              className="md:px-4 md:py-2 px-2 py-1 text-[14px] rounded-md bg-primary text-white capitalize "
+              onClick={() => {
+                setForm({
+                  name: "",
+                  province: "",
+                });
+                document.getElementById("add_division_modal").showModal();
+                setEditMode(false);
+              }}
+            >
+              Add Division
+            </button>
+          )}
+        {districts?.length > 0 && view === "district" && (
           <button
             className="md:px-4 md:py-2 px-2 py-1 text-[14px] rounded-md bg-primary text-white capitalize p-[8px]"
             onClick={() => {
@@ -442,7 +443,7 @@ console.log(view,'aaa')
             Add District
           </button>
         )}
-        {tehsils?.length > 0 &&  view==='tehsil' && (
+        {tehsils?.length > 0 && view === "tehsil" && (
           <button
             className="md:px-4 md:py-2 px-2 py-1 text-[14px] rounded-md bg-primary text-white capitalize p-[8px]"
             onClick={() => {
@@ -457,21 +458,23 @@ console.log(view,'aaa')
             Add Tehsil
           </button>
         )}
-       { view==='halqa' && <button
-          onClick={() => {
-            setFormHalqa({
-              parentId: "",
-              name: "",
-              parentType: "",
-              unitType: "",
-            });
-            document.getElementById("add_halqa_modal").showModal();
-            setEditMode(false);
-          }}
-          className="md:px-4 md:py-2 px-2 py-1 text-[14px] rounded-md bg-primary text-white capitalize "
-        >
-          Add Halqa
-        </button>}
+        {view === "halqa" && (
+          <button
+            onClick={() => {
+              setFormHalqa({
+                parentId: "",
+                name: "",
+                parentType: "",
+                unitType: "",
+              });
+              document.getElementById("add_halqa_modal").showModal();
+              setEditMode(false);
+            }}
+            className="md:px-4 md:py-2 px-2 py-1 text-[14px] rounded-md bg-primary text-white capitalize "
+          >
+            Add Halqa
+          </button>
+        )}
       </div>
 
       <div className="w-full flex md:flex-row flex-col justify-between items-start">
@@ -843,7 +846,7 @@ console.log(view,'aaa')
               </button>
             )}
             {totalPages > 3 && <span>...</span>}
-            {totalPages && currentPage > 2 && currentPage < totalPages && (
+            {totalPages && currentPage > 2 && currentPage < totalPages ? (
               <span
                 className={`rounded-full text-bold text-sm ${
                   currentPage !== totalPages && "border-2 border-gray-500"
@@ -851,8 +854,10 @@ console.log(view,'aaa')
               >
                 {currentPage}
               </span>
+            ) : (
+              <span></span>
             )}
-            {totalPages && (
+            {totalPages && totalPages > 2 ? (
               <span
                 className={`rounded-full text-bold text-sm ${
                   currentPage === totalPages && "border-2 border-gray-500"
@@ -860,6 +865,8 @@ console.log(view,'aaa')
               >
                 {totalPages}
               </span>
+            ) : (
+              <span></span>
             )}
           </div>
 

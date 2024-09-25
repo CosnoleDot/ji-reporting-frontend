@@ -13,6 +13,8 @@ import { Course } from "./Course";
 import instance from "../../api/instrance";
 import { MeContext, useToastState } from "../../context";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
+import { RxCross1 } from "react-icons/rx";
+
 
 const intro = [
   {
@@ -210,11 +212,22 @@ export const ReportUmeedwar = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
   return (
-    <GeneralLayout>
+    <GeneralLayout active={'personalReport/create'}>
       <div dir="rtl" className="p-4 reports">
+      <div>
+        <button
+          type="button"
+          className="p-2"
+          onClick={() => navigate("/personalReport")}
+        >
+          <RxCross1 />
+        </button>
+
         <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
           رپورٹ خاکہ
         </h2>
+      </div>
+        
 
         <form
           className="flex w-full flex-col items-center justify-end gap-5 p-3 overflow-auto mb-5"

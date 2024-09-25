@@ -3,17 +3,19 @@ import { useLocation } from "react-router-dom";
 
 export function GeneralInfo({ me, area, view, newMonth, setMonth, name }) {
   const [date, setDate] = useState("");
+  const [areaName, setAreaName] = useState("");
   const location = useLocation();
   const l = location.pathname?.split("/")[2];
+
   useEffect(() => {
     if (l !== "view") {
-      document.getElementById("name").value = me?.userAreaId?.name;
+      setAreaName(me?.userAreaId?.name);
     } else {
-      document.getElementById("name").value = name;
+      setAreaName(name);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [name]);
+  }, [name, l, view, me]);
 
   const setDateFn = () => {
     if (l !== "view") {
@@ -53,6 +55,7 @@ export function GeneralInfo({ me, area, view, newMonth, setMonth, name }) {
           name="name"
           id="name"
           readOnly
+          value={areaName}
         />
       </div>
       {!newMonth ? (

@@ -23,7 +23,7 @@ export const ProvinceReports = () => {
   const [searchData, setSearchData] = useState([]);
   const [year, setYear] = useState("2024");
   const me = useContext(MeContext);
-  const { getProvinceReports } = useContext(UIContext);
+  const { getProvinceReports, setLoading } = useContext(UIContext);
   const [isFilter, setIsFilter] = useState(false);
   const [noReports, setNoReports] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -40,6 +40,7 @@ export const ProvinceReports = () => {
     setFilterAllData(uniqueArray);
   }, [pReports]);
   const searchResults = async () => {
+    setLoading(true)
     showSearch(false);
     if (year !== "" && month !== "") {
       try {
@@ -65,6 +66,7 @@ export const ProvinceReports = () => {
         });
       }
     }
+    setLoading(false)
   };
   const toggleSearch = () => {
     showSearch(!search);
@@ -348,7 +350,7 @@ export const ProvinceReports = () => {
                 </button>
               )}
               {totalPages > 3 && <span>...</span>}
-              {totalPages && currentPage > 2 && currentPage < totalPages && (
+              {(totalPages && currentPage > 2 && currentPage < totalPages) ? (
                 <span
                   className={`rounded-full text-bold text-sm ${
                     currentPage !== totalPages && "border-2 border-gray-500"
@@ -356,8 +358,8 @@ export const ProvinceReports = () => {
                 >
                   {currentPage}
                 </span>
-              )}
-              {totalPages && totalPages > 2 && (
+              ): <span></span>}
+              {totalPages && totalPages > 2 ? (
                 <span
                   className={`rounded-full text-bold text-sm ${
                     currentPage === totalPages && "border-2 border-gray-500"
@@ -365,7 +367,7 @@ export const ProvinceReports = () => {
                 >
                   {totalPages}
                 </span>
-              )}
+              ): <span></span>}
             </div>
 
             {/* Next Button */}

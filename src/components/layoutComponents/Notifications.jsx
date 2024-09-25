@@ -55,7 +55,7 @@ export const Notifications = ({ userRequests, type }) => {
     }
     setLoading(false);
   };
-  console.log(userRequests, "aaa");
+ 
   return (
     <div className="overflow-y-scroll">
       

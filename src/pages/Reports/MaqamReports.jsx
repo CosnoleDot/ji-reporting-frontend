@@ -31,7 +31,7 @@ export const MaqamReports = () => {
   const [isSearch, setIsSearch] = useState(false);
   const [searchData, setSearchData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const { getMaqamReports } = useContext(UIContext);
+  const { getMaqamReports, setLoading } = useContext(UIContext);
   const [disable, setDisable] = useState(false);
   const [noReports, setNoReports] = useState(false);
   const [isFilter, setIsFilter] = useState(false);
@@ -48,6 +48,7 @@ export const MaqamReports = () => {
     setFilterAllData(uniqueArray);
   }, [mReports]);
   const searchResults = async () => {
+    setLoading(true)
     showSearch(false);
     if (year !== "" && month !== "") {
       try {
@@ -73,6 +74,7 @@ export const MaqamReports = () => {
         });
       }
     }
+    setLoading(false)
   };
   const toggleSearch = () => {
     showSearch(!search);
@@ -318,7 +320,7 @@ export const MaqamReports = () => {
           ) : (
             <NoReports />
           )}
-          {totalPages && (
+        
             <div className="flex w-full gap-4 px-4 justify-end items-center mt-4">
               <select
                 readOnly
@@ -365,7 +367,7 @@ export const MaqamReports = () => {
                   </button>
                 )}
                 {totalPages > 3 && <span>...</span>}
-                {totalPages && currentPage > 2 && currentPage < totalPages && (
+                {(totalPages && currentPage > 2 && currentPage < totalPages) ? (
                   <span
                     className={`rounded-full text-bold text-sm ${
                       currentPage !== totalPages && "border-2 border-gray-500"
@@ -373,8 +375,8 @@ export const MaqamReports = () => {
                   >
                     {currentPage}
                   </span>
-                )}
-                {totalPages && totalPages > 2 && (
+                ): <span></span>}
+                {totalPages && totalPages > 2 ? (
                   <span
                     className={`rounded-full text-bold text-sm ${
                       currentPage === totalPages && "border-2 border-gray-500"
@@ -382,7 +384,7 @@ export const MaqamReports = () => {
                   >
                     {totalPages}
                   </span>
-                )}
+                ): <span></span>}
               </div>
 
               {/* Next Button */}
@@ -398,7 +400,7 @@ export const MaqamReports = () => {
                 />
               </button>
             </div>
-          )}
+          
         </>
       ) : (
         !noReports ? 

@@ -32,7 +32,13 @@ export const Login = ({ setAuthenticated }) => {
       setAuthenticated(res?.data?.data?.token);
       localStorage.setItem("@type", res?.data?.data?.type);
       localStorage.setItem("@nazimType", res?.data?.data?.nazimType);
-      navigate("/");
+      if(res?.data?.data?.nazimType === 'umeedwar' || res?.data?.data?.nazimType==="rukan"){
+        navigate("/personalReport");
+      }
+      else{
+        navigate("/");
+
+      }
     } catch (error) {
       const message = error?.response?.data?.message;
       dispatch({ type: "ERROR", payload: message });

@@ -146,7 +146,7 @@ function App() {
         if (isCompleted) {
           if (
             req?.data?.data?.isDeleted ||
-            req?.data?.data?.userAreaId?.disabled
+            req?.data?.data?.userAreaId?.disabled === true
           ) {
             alert(
               "Your account will be logged out as admin has updated your rights"
@@ -446,6 +446,7 @@ function App() {
               i?.division?.province?._id === me?.userAreaId?._id ||
               i?.division?.province?.country === me?.userAreaId?._id
           );
+
           setDistricts(validDistricts);
           setLoading(false);
           dis = validDistricts;
@@ -538,7 +539,7 @@ function App() {
             const newReports = Array.isArray(markazR) ? markazR : [];
 
             return {
-              reports: [...reports, ...newReports],
+              reports: [ ...newReports],
               length: length,
             };
           });
@@ -576,7 +577,7 @@ function App() {
             const newReports = Array.isArray(provinceR) ? provinceR : [];
 
             return {
-              reports: [...reports, ...newReports],
+              reports: [ ...newReports],
               length: length,
             };
           });
@@ -619,7 +620,7 @@ function App() {
             const newReports = Array.isArray(maqamR) ? maqamR : [];
 
             return {
-              reports: [...reports, ...newReports],
+              reports: [ ...newReports],
               length: length,
             };
           });
@@ -657,7 +658,7 @@ function App() {
             const newReports = Array.isArray(ilaqaR) ? ilaqaR : [];
 
             return {
-              reports: [...reports, ...newReports],
+              reports: [ ...newReports],
               length: length,
             };
           });
@@ -699,7 +700,7 @@ function App() {
             const newReports = Array.isArray(divisionR) ? divisionR : [];
 
             return {
-              reports: [...reports, ...newReports],
+              reports: [ ...newReports],
               length: length,
             };
           });
@@ -736,7 +737,7 @@ function App() {
           const newReports = Array.isArray(halqaR) ? halqaR : [];
 
           return {
-            reports: [...reports, ...newReports],
+            reports: [ ...newReports],
             length: length,
           };
         });
@@ -774,7 +775,7 @@ function App() {
             const newReports = Array.isArray(halqaT) ? halqaT : [];
 
             return {
-              reports: [...reports, ...newReports],
+              reports: [ ...newReports],
               length: length,
             };
           });
@@ -893,7 +894,6 @@ function App() {
     }
   };
   const getAreaDetails = async (obj, userAreaType) => {
-    
     setLoading(true);
     const getPath = (parentId) => {
       switch (parentId) {
@@ -939,21 +939,19 @@ function App() {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
-      } else if (!obj.parentType && userAreaType === 'Maqam') {
+      } else if (!obj.parentType && userAreaType === "Maqam") {
         res = await instance.get(`/locations/maqam/${obj?._id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
-      }
-      else if (!obj.parentType && userAreaType === 'Division') {
+      } else if (!obj.parentType && userAreaType === "Division") {
         res = await instance.get(`/locations/division/${obj?._id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
-      }
-       else if (!obj.parentType && (obj.name = "Pakistan")) {
+      } else if (!obj.parentType && (obj.name = "Pakistan")) {
         res = await instance.get(`/locations/country`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
@@ -1057,13 +1055,12 @@ function App() {
       setValue("Fetching halqas");
       await getHalqas();
       setCount((100 / 16) * 13);
-      setValue(null);
+      setValue("Fetching user");
       await getNazim();
       setCount((100 / 16) * 14);
       setValue("Fetching user requests");
       await getAllRequests();
       setCount((100 / 16) * 15);
-      setValue(null);
       setValue("Fetching all notifications");
       await getAllNotifications();
       setCount((100 / 16) * 16);
@@ -1083,8 +1080,18 @@ function App() {
       }
     };
     if (me) {
-      fetchData();
-      setActive(localStorage.getItem("@type"));
+      if (
+        me?.nazimType !== "umeedwar" &&
+        me?.nazimType !== "rukan" &&
+        me?.userAreaId?.disabled !== true
+      ) {
+        fetchData();
+        setActive(localStorage.getItem("@type"));
+      } else {
+        setActive(localStorage.getItem("@type"));
+        setCount((100 / 16) * 16);
+        setValue(null);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [me]);

@@ -83,6 +83,7 @@ export const getDivisionByTehsil = (tehsil, districts) => {
 };
 
 export const Reports = () => {
+  
   const navigate = useNavigate();
   const [isMobileView, setIsMobileView] = useState(false);
 
@@ -109,6 +110,7 @@ export const Reports = () => {
     getProvinceReports,
     getMarkazReport,
   } = useContext(UIContext);
+
   const [notifyTo, setNotifyTo] = useState("halqa");
   const ilaqas = useContext(IlaqaContext);
   const params = useLocation();
@@ -191,7 +193,11 @@ export const Reports = () => {
         break;
     }
   }, [active]);
-
+  useEffect(() => {
+    if (active === "halqa") {
+      getHalqaReports();
+    }
+  }, []);
   return (
     <GeneralLayout
       title={me?.userAreaId?.name.toUpperCase()}
@@ -272,7 +278,14 @@ export const Reports = () => {
           role="tablist"
           className="w-full flex text-slate-400 justify-between gap-3 items-center overflow-hidden overflow-x-scroll"
         >
-          <div className={`flex items-center justify-between w-full ${localStorage.getItem('@type') === 'ilaqa' || localStorage.getItem('@type') === 'division' ? 'w-1/2':""}`}>
+          <div
+            className={`flex items-center justify-between  ${
+              localStorage.getItem("@type") === "ilaqa" ||
+              localStorage.getItem("@type") === "division"
+                ? "w-1/2"
+                : "w-full"
+            }`}
+          >
             {["country"].includes(localStorage.getItem("@type")) &&
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
@@ -342,8 +355,7 @@ export const Reports = () => {
             ) &&
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
-              ) &&
-              
+              ) && (
                 <Link
                   to={"?active=ilaqa"}
                   role="tab"
@@ -354,7 +366,7 @@ export const Reports = () => {
                 >
                   Zone
                 </Link>
-              }
+              )}
 
             {["country", "province", "maqam", "ilaqa", "division"].includes(
               localStorage.getItem("@type")
