@@ -51,12 +51,12 @@ export const Province = () => {
   const autoFill = () => {
     const provinceFinalData = {};
     document.getElementById("province-form").reset();
-    const maqamTFiltered = createData?.maqamReports?.map((item) => {
+    const maqamTFiltered = createData?.data?.maqamReports?.map((item) => {
       const { muntakhibTdId, tdId } = item;
       return { m: muntakhibTdId || [], t: tdId || [] };
     });
 
-    const divisionTFiltered = createData?.divisionReports?.map((item) => {
+    const divisionTFiltered = createData?.data?.divisionReports?.map((item) => {
       const { tdId } = item;
       return { t: tdId || [] };
     });
@@ -84,7 +84,7 @@ export const Province = () => {
         }
       });
     }
-
+  
     for (const key in merged) {
       if (key === "literatureDistribution") {
         setFinalMerged((prevState) => ({
@@ -124,7 +124,7 @@ export const Province = () => {
         }));
       }
     }
-    createData?.maqamReports?.forEach((i) => {
+    createData?.data?.maqamReports?.forEach((i) => {
       const sim = reverseDataFormat(i);
       Object.keys(sim)?.forEach((j) => {
         if (provinceFinalData?.[j]) {
@@ -142,7 +142,7 @@ export const Province = () => {
         }
       });
     });
-    createData?.divisionReports?.forEach((i) => {
+    createData?.data?.divisionReports?.forEach((i) => {
       const sim = reverseDataFormat(i);
       Object.keys(sim)?.forEach((j) => {
         if (provinceFinalData?.[j]) {
@@ -176,7 +176,6 @@ export const Province = () => {
       ].map((i) => (provinceFinalData[`${i}-averageAttendance`] = 0));
     }
 
-
     Object.keys(provinceFinalData).forEach((i) => {
       let j = i;
       const elem = document.getElementById(j);
@@ -199,12 +198,11 @@ export const Province = () => {
         }
       }
     });
+
     if (!id) {
       document.getElementById("comments").value = null;
       document.getElementById("anyOther").value = null;
     }
-    
-
   };
   // GET REPORTS OF Division and Maqams TO CREATE Province REPORT THE COMING REPORTS WILL BE POPULATED
   const getReportsForProvinceReport = async () => {
@@ -541,112 +539,108 @@ export const Province = () => {
       data[i] = 0;
     }
   });
- 
   return (
-   
-      <div className="reports  overflow-y-scroll">
-        <div>
-          <button
-            type="button"
-            className="p-2"
-            onClick={() => navigate("/reports")}
-          >
-            <RxCross1 />
-          </button>
-
-          <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
-            جائزہ کارکردگی رپورٹ (براے صوبہ)
-          </h2>
-        </div>
-        <form
-          className="flex flex-col justify-center items-center p-4 font-notoUrdu mb-5"
-          dir="rtl"
-          onSubmit={handleSubmit}
-          id="province-form"
+    <div className="reports  overflow-y-scroll">
+      <div>
+        <button
+          type="button"
+          className="p-2"
+          onClick={() => navigate("/reports")}
         >
-          
-         
-          <div className="w-full">
+          <RxCross1 />
+        </button>
+
+        <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
+          جائزہ کارکردگی رپورٹ (براے صوبہ)
+        </h2>
+      </div>
+      <form
+        className="flex flex-col justify-center items-center p-4 font-notoUrdu mb-5"
+        dir="rtl"
+        onSubmit={handleSubmit}
+        id="province-form"
+      >
+        <div className="w-full">
+          <div>
+            <GeneralInfo
+              setMonth={setMonth}
+              month={month}
+              me={me}
+              newMonth={data?.month}
+              area={"صوبہ"}
+              view={view}
+              name={data?.["name"]}
+            />
+          </div>
+          <div>
+            <Jamiaat view={view} />
+          </div>
+          <div>
+            <Colleges view={view} />
+          </div>
+          <div>
+            <Tanzeem view={view} id={id} />
+          </div>
+          <div>
+            <IfradiKuwat view={view} id={id} />
+          </div>
+          <div>
+            <MarkaziActivities view={view} />
+          </div>
+          <div>
+            <ZailiActivities view={view} />
+          </div>
+          <div>
+            <OtherActivities view={view} />
+          </div>
+          <div>
+            <ToseeDawat finalMerged={!id ? finalMerged : null} />
+          </div>
+          <div>
+            <Library />
+          </div>
+          <div>
+            <PaighamDigest view={view} />
+          </div>
+          <div>
+            <Baitulmal view={view} />
+          </div>
+          <div>
+            <RozOShabDiary />
+          </div>
+          <div className="w-full flex p-2">
+            <label htmlFor="comments">تبصرہ</label>
+            <input
+              type="text"
+              required
+              name="comments"
+              maxLength={150}
+              className="border-b-2 border-dashed w-full"
+              id="comments"
+              readOnly={view}
+            />
+          </div>
+          <div className="w-full flex flex-col items-end gap-3 p-2">
             <div>
-              <GeneralInfo
-                setMonth={setMonth}
-                month={month}
-                me={me}
-                newMonth={data?.month}
-                area={"صوبہ"}
-                view={view}
-                name={data?.['name']}
-              />
-            </div>
-            <div>
-              <Jamiaat view={view} />
-            </div>
-            <div>
-              <Colleges view={view} />
-            </div>
-            <div>
-              <Tanzeem view={view} id={id} />
-            </div>
-            <div>
-              <IfradiKuwat view={view} id={id} />
-            </div>
-            <div>
-              <MarkaziActivities view={view} />
-            </div>
-            <div>
-              <ZailiActivities view={view} />
-            </div>
-            <div>
-              <OtherActivities view={view} />
-            </div>
-            <div>
-              <ToseeDawat finalMerged={!id ? finalMerged : null} />
-            </div>
-            <div>
-              <Library />
-            </div>
-            <div>
-              <PaighamDigest view={view} />
-            </div>
-            <div>
-              <Baitulmal view={view} />
-            </div>
-            <div>
-              <RozOShabDiary />
-            </div>
-            <div className="w-full flex p-2">
-              <label htmlFor="comments">تبصرہ</label>
+              <label htmlFor="nazim">نام ناظمِ:</label>
               <input
                 type="text"
-                required
-                name="comments"
-                maxLength={150}
-                className="border-b-2 border-dashed w-full"
-                id="comments"
-                readOnly={view}
+                className="border-b-2 border-dashed text-center"
+                id="nazim"
+                defaultValue={me?.name || ""}
+                readOnly
               />
             </div>
-            <div className="w-full flex flex-col items-end gap-3 p-2">
-              <div>
-                <label htmlFor="nazim">نام ناظمِ:</label>
-                <input
-                  type="text"
-                  className="border-b-2 border-dashed text-center"
-                  id="nazim"
-                  defaultValue={me?.name || ""}
-                  readOnly
-                />
-              </div>
-            </div>
           </div>
-          {!view && (
-            <div className="w-full">
-              <button disabled={loading} className="btn btn-primary">
-                {id ? "Update" : "Add"}
-              </button>
-            </div>
-          )}
-        </form>
-      </div>
+        </div>
+        {!view && (
+          <div className="w-full">
+            <button disabled={loading} className="btn btn-primary">
+              {id ? "Update" : "Add"}
+            </button>
+          </div>
+        )}
+      </form>
+    </div>
   );
 };

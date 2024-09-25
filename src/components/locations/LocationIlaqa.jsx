@@ -220,22 +220,45 @@ export const LocationIlaqa = () => {
 
         {/* Page Numbers */}
         <div className="flex items-center">
+          <span
+            className={`rounded-full text-bold text-sm ${
+              currentPage === 1 && "border-2 border-gray-500"
+            } mx-1 bg-white w-7 h-7 flex justify-center items-center text-[8px]`}
+          >
+            1
+          </span>
+
           {totalPages > 1 && (
-            <span className="rounded-full  border border-gray-500 border-1 mx-1 bg-white w-7 h-7 flex justify-center items-center text-[8px]">
-              1
-            </span>
-          )}
-          {totalPages > 2 && (
-            <button className="rounded-full  border border-gray-500 border-1 mx-1 bg-white w-7 h-7 flex justify-center items-center text-[8px]">
+            <button
+              className={`rounded-full text-bold text-sm ${
+                currentPage === 2 && "border-2 border-gray-500"
+              } mx-1 bg-white w-7 h-7 flex justify-center items-center text-[8px]`}
+            >
               2
             </button>
           )}
           {totalPages > 3 && <span>...</span>}
-
-          {totalPages && (
-            <span className="rounded-full  border border-gray-500 border-1 mx-1 bg-white w-7 h-7 flex justify-center items-center text-[8px]">
+          {totalPages && currentPage > 2 && currentPage < totalPages ? (
+            <span
+              className={`rounded-full text-bold text-sm ${
+                currentPage !== totalPages && "border-2 border-gray-500"
+              } mx-1 bg-white w-7 h-7 flex justify-center items-center text-[8px]`}
+            >
+              {currentPage}
+            </span>
+          ) : (
+            <span></span>
+          )}
+          {totalPages && totalPages > 2 ? (
+            <span
+              className={`rounded-full text-bold text-sm ${
+                currentPage === totalPages && "border-2 border-gray-500"
+              } mx-1 bg-white w-7 h-7 flex justify-center items-center text-[8px]`}
+            >
               {totalPages}
             </span>
+          ) : (
+            <span></span>
           )}
         </div>
 

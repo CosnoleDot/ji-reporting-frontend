@@ -2,6 +2,8 @@ import { useContext, useRef, useState } from "react";
 import { GeneralLayout } from "../components";
 import { FaLocationDot } from "react-icons/fa6";
 import { CiLocationOn } from "react-icons/ci";
+import { FaUsers } from "react-icons/fa";
+
 import {
   FaArrowDown,
   FaArrowUp,
@@ -25,7 +27,15 @@ import {
 import { UIContext } from "../context/ui";
 import { useNavigate } from "react-router-dom";
 import instance from "../api/instrance";
-import { District, Division, Map } from "../assets/png";
+import {
+  District,
+  Division,
+  Ilaqas,
+  Map,
+  Maqams,
+  Tehsil,
+  Units,
+} from "../assets/png";
 
 export const Dashboard = () => {
   const { getHalqas } = useContext(UIContext);
@@ -105,11 +115,11 @@ export const Dashboard = () => {
     // Check if data is already stored in session storage
     const storedData = sessionStorage.getItem("storedData");
     if (queryDate !== "" || !storedData) {
-      console.log("if");
-      console.log(userAreaType);
+  
       setLoading(true);
       try {
         const getUnfilledReports = async (path) => {
+          setLoading(true);
           const res = await instance.get(
             `/reports/${path}/data/filled-unfilled`,
             {
@@ -119,6 +129,7 @@ export const Dashboard = () => {
               params: queryDate !== "" ? { queryDate: queryDate } : null,
             }
           );
+          setLoading(false);
           return res;
         };
         let markaz = [];
@@ -319,7 +330,6 @@ export const Dashboard = () => {
           sessionStorage.setItem("storedData", JSON.stringify(temp));
         }
         setData({ ...temp });
-        console.log({ ...temp }, "aaa");
         setLoading(false);
         // saving the initial data so that on clear filter can set it back
         if (!initialData?.data) {
@@ -330,7 +340,7 @@ export const Dashboard = () => {
         console.log(error);
       }
     } else {
-      console.log("else");
+      
       setData(JSON.parse(storedData));
     }
     setLoading(false);
@@ -449,20 +459,7 @@ export const Dashboard = () => {
                   </div>
                   <div className="flex flex-row w-full justify-center md:justify-end">
                     <div className="h-full md:max-h-11">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-4.5 text-primary"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
-                        ></path>
-                      </svg>
+                      <FaUsers className="h-8 w-8 text-[#a834eb]" />
                     </div>
                   </div>
                 </div>
@@ -486,7 +483,7 @@ export const Dashboard = () => {
                     </h3>
                   </div>
                   <div className="flex flex-row w-full justify-center md:justify-end">
-                    <div className="  w-10 h-10 flex items-center justify-center">
+                    <div className="h-full md:max-h-11">
                       <img src={Map} alt="" className="w-8 h-8" />
                     </div>
                   </div>
@@ -510,7 +507,7 @@ export const Dashboard = () => {
                     </h3>
                   </div>
                   <div className="flex flex-row w-full justify-center md:justify-end">
-                    <div className="  w-10 h-10 flex items-center justify-center">
+                    <div className="h-full md:max-h-11">
                       <img src={District} alt="" className="w-8 h-8" />
                     </div>
                   </div>
@@ -563,7 +560,7 @@ export const Dashboard = () => {
                   </div>
                   <div className="flex flex-row w-full justify-center md:justify-end">
                     <div className=" max-h-11">
-                      <CiLocationOn className="h-5 w-4.5 text-primary" />
+                      <img src={Tehsil} className="h-8 w-8" />
                     </div>
                   </div>
                 </div>
@@ -588,7 +585,7 @@ export const Dashboard = () => {
                   </div>
                   <div className="flex flex-row w-full justify-center md:justify-end">
                     <div className=" max-h-11">
-                      <CiLocationOn className="h-5 w-4.5 text-primary" />
+                      <img src={Maqams} className="h-8 w-8" />
                     </div>
                   </div>
                 </div>
@@ -611,7 +608,7 @@ export const Dashboard = () => {
                   </div>
                   <div className="flex flex-row w-full justify-center md:justify-end">
                     <div className=" max-h-11">
-                      <CiLocationOn className="h-5 w-4.5 text-primary" />
+                      <img src={Ilaqas} className="h-8 w-8" />
                     </div>
                   </div>
                 </div>
@@ -631,7 +628,7 @@ export const Dashboard = () => {
                   </div>
                   <div className="flex flex-row w-full justify-center md:justify-end">
                     <div className=" max-h-11">
-                      <FaLocationArrow className="h-5 w-4.5 text-primary" />
+                      <img src={Units} className="h-8 w-8" />
                     </div>
                   </div>
                 </div>

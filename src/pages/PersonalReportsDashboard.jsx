@@ -125,9 +125,10 @@ export const PersonalReportsDashboard = () => {
       getAllReports(inset, offset);
     }
   };
+ 
   return (
-    <GeneralLayout title={"Personal Dashboard"} active={"personalReport"}>
-      <div className="w-full flex flex-col justify-start p-5">
+    <GeneralLayout title={"Personal Dashboard"} active={"personalReports"}>
+      <div className="w-full flex flex-col justify-start p-2 md:p-5">
 
     
 
@@ -242,7 +243,7 @@ export const PersonalReportsDashboard = () => {
             )}
           </div>
         </div>
-        <div className="w-full overflow-hidden h-[calc(100vh-64px-54px)] flex flex-col justify-start items-start">
+        <div className="w-full overflow-x-scroll h-[calc(100vh-64px-54px)] flex flex-col justify-start items-start">
           {filteredData?.length > 0 ? (
             <table className="table mb-7">
               {/* head */}
@@ -264,7 +265,7 @@ export const PersonalReportsDashboard = () => {
                   flexDirection: "column",
                 }}
               >
-                {filteredData.map((obj, index) => (
+                {filteredData?.map((obj, index) => (
                   <tr key={index} className={`w-full flex`}>
                     <td className="w-full">
                       <p

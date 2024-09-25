@@ -128,7 +128,7 @@ export const Halqa = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
-  console.log(data);
+
   return (
     <div className="reports w-full overflow-y-scroll">
       <div>

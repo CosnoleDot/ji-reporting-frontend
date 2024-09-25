@@ -477,7 +477,7 @@ export const EditProfile = () => {
               <div>
                 <button
                   onClick={me?.profileImage ? updateImage : uploadImage}
-                  className="px-4 py-2 rounded-md bg-primary text-white capitalize"
+                  className={`${!file && !me?.profileImage ? 'bg-gray-500': ""} px-4 py-2 rounded-md bg-primary text-white capitalize`}
                 >
                   { me?.profileImage
                     ? "Change Profile Picture"

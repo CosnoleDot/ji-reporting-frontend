@@ -31,32 +31,31 @@ export const HalqaReports = () => {
   const itemsPerPage = 10;
 
   const getHalqaReportsTab = async (inset, offset, tab) => {
-    if (tab) {
-      setLoading(true);
-      try {
-        const req = await instance.get(
-          `/reports/halqa?inset=${inset}&offset=${offset}&tab=${tab}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("@token")}`,
-            },
-          }
-        );
-
-        if (req) {
-          setData(req.data.data?.data || []);
-          setLength(req.data.data.length);
+   
+    setLoading(true);
+    try {
+      const req = await instance.get(
+        `/reports/halqa?inset=${inset}&offset=${offset}&tab=${tab}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
         }
-      } catch (err) {
-        console.log(err);
-        dispatch({
-          type: "ERROR",
-          payload: err?.response?.data?.message || err?.message,
-        });
-      }
-      setLoading(false);
+      );
+
+    
+      setData(req.data.data?.data);
+      setLength(req.data.data.length);
+    } catch (err) {
+      console.log(err);
+      dispatch({
+        type: "ERROR",
+        payload: err?.response?.data?.message || err?.message,
+      });
     }
+    setLoading(false);
   };
+
   useEffect(() => {
     getHalqaReportsTab(0 * itemsPerPage, itemsPerPage, "maqam");
   }, []);
@@ -76,7 +75,7 @@ export const HalqaReports = () => {
         );
 
         if (req) {
-          setSearchData(req.data.data?.data || []);
+          setSearchData(req.data.data?.data);
         }
       } catch (err) {
         console.log(err);
@@ -99,6 +98,7 @@ export const HalqaReports = () => {
   let totalPages = Math.ceil(length / itemsPerPage);
 
   const handlePrevPage = () => {
+
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
       setData([]);
@@ -116,11 +116,13 @@ export const HalqaReports = () => {
     }
   };
 
-  const tabClick = (tab) => {
-    clearFilters();
-    setData([]);
-    setTab(tab);
-    getHalqaReportsTab((currentPage - 1) * itemsPerPage, itemsPerPage, tab);
+  const tabClick = (tab1) => {
+    if (tab !== tab1) {
+      clearFilters();
+      setData([]);
+      setTab(tab1);
+      getHalqaReportsTab((currentPage - 1) * itemsPerPage, itemsPerPage, tab1);
+    }
   };
 
   const handlePrint = (id) => {
@@ -323,7 +325,8 @@ export const HalqaReports = () => {
                   {data
                     ?.filter((i) =>
                       tab === "division"
-                        ? i.halqaAreaId?.parentType === "Tehsil"
+                        ? i.halqaAreaId?.parentType === "Tehsil" ||
+                          i.halqaAreaId?.parentType === "Division"
                         : i.halqaAreaId?.parentType ===
                           tab.charAt(0).toUpperCase() + tab.slice(1)
                     )
@@ -408,15 +411,13 @@ export const HalqaReports = () => {
 
             {/* Page Numbers */}
             <div className="flex items-center">
-              {totalPages > 1 && (
-                <span
-                  className={`rounded-full text-bold text-sm ${
-                    currentPage === 1 && "border-2 border-gray-500"
-                  } mx-1 bg-white w-7 h-7 flex justify-center items-center text-[8px]`}
-                >
-                  1
-                </span>
-              )}
+              <span
+                className={`rounded-full text-bold text-sm ${
+                  currentPage === 1 && "border-2 border-gray-500"
+                } mx-1 bg-white w-7 h-7 flex justify-center items-center text-[8px]`}
+              >
+                1
+              </span>
 
               {totalPages > 1 && (
                 <button
@@ -428,7 +429,7 @@ export const HalqaReports = () => {
                 </button>
               )}
               {totalPages > 3 && <span>...</span>}
-              {totalPages && currentPage > 2 && currentPage < totalPages && (
+              {totalPages && currentPage > 2 && currentPage < totalPages ? (
                 <span
                   className={`rounded-full text-bold text-sm ${
                     currentPage !== totalPages && "border-2 border-gray-500"
@@ -436,8 +437,10 @@ export const HalqaReports = () => {
                 >
                   {currentPage}
                 </span>
+              ) : (
+                <span></span>
               )}
-              {totalPages && totalPages > 2 && (
+              {totalPages && totalPages > 2 ? (
                 <span
                   className={`rounded-full text-bold text-sm ${
                     currentPage === totalPages && "border-2 border-gray-500"
@@ -445,6 +448,8 @@ export const HalqaReports = () => {
                 >
                   {totalPages}
                 </span>
+              ) : (
+                <span></span>
               )}
             </div>
 

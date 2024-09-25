@@ -24,7 +24,7 @@ export const DivisionReports = () => {
   const [isSearch, setIsSearch] = useState(false);
   const [searchData, setSearchData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const { getDivisionReports } = useContext(UIContext);
+  const { getDivisionReports, setLoading } = useContext(UIContext);
   const [disable, setDisable] = useState(false);
   const [noReports, setNoReports] = useState(false);
   const [isFilter, setIsFilter] = useState(false);
@@ -41,6 +41,7 @@ export const DivisionReports = () => {
     setFilterAllData(uniqueArray);
   }, [dReports]);
   const searchResults = async () => {
+    setLoading(true)
     showSearch(false);
     if (year !== "" && month !== "") {
       try {
@@ -66,6 +67,7 @@ export const DivisionReports = () => {
         });
       }
     }
+    setLoading(false)
   };
   const toggleSearch = () => {
     showSearch(!search);
@@ -358,7 +360,7 @@ export const DivisionReports = () => {
                   </button>
                 )}
                 {totalPages > 3 && <span>...</span>}
-                {totalPages && currentPage > 2 && currentPage < totalPages && (
+                {(totalPages && currentPage > 2 && currentPage < totalPages) ? (
                   <span
                     className={`rounded-full text-bold text-sm ${
                       currentPage !== totalPages && "border-2 border-gray-500"
@@ -366,8 +368,8 @@ export const DivisionReports = () => {
                   >
                     {currentPage}
                   </span>
-                )}
-                {totalPages && totalPages > 2 && (
+                ): <span></span>}
+                {(totalPages && totalPages > 2) ? (
                   <span
                     className={`rounded-full text-bold text-sm ${
                       currentPage === totalPages && "border-2 border-gray-500"
@@ -375,7 +377,7 @@ export const DivisionReports = () => {
                   >
                     {totalPages}
                   </span>
-                )}
+                ): <span></span>}
               </div>
 
               {/* Next Button */}
