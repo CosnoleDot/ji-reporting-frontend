@@ -79,7 +79,6 @@ export const CountryReport = () => {
   const clearFilters = () => {
     setMonth("");
     setYear("2023");
-    setFilterAllData(cReports);
     setIsFilter(false);
     setNoReports(false);
     setIsSearch(false);
@@ -392,7 +391,7 @@ export const CountryReport = () => {
           )}
         </>
       ) : !noReports ? (
-        <SearchPage data={searchData?.data} area={"country"} />
+        <SearchPage data={!isFilter ? searchData?.data : filterAllData} area={"country"} />
       ) : (
         <NoReports />
       )}

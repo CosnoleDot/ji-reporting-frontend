@@ -23,6 +23,7 @@ import { Baitulmal } from "../../components/provinceReport/Baitulmal";
 import { RozOShabDiary } from "../../components/provinceReport/RozOShabDiary";
 import { NoReports } from "../Reports";
 import { FaPrint } from "react-icons/fa";
+import { RxCross1 } from "react-icons/rx";
 
 export const ProvinceCompile = () => {
   // EDIT CODE START
@@ -111,19 +112,27 @@ export const ProvinceCompile = () => {
     // window.location.href = `/halqa-report-compile/print?areaId${areaId}&startDate=${startDate}&endDate=${endDate}`;
   };
   return (
-    <GeneralLayout>
+    <GeneralLayout active={"compileReports"}>
       {Object.keys(compileReport).length > 2 ? (
-        <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">
+        <div className="reports  overflow-y-scroll">
+          <div>
+            <button
+              type="button"
+              className="p-2"
+              onClick={() => navigate("/compilation")}
+            >
+              <RxCross1 />
+            </button>
+            <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
+              {" "}
+              رپورٹ تالیف(برائے صوبہ)
+            </h2>
+          </div>
           <form
             className="flex flex-col justify-center items-center p-4 font-notoUrdu mb-5"
             dir="rtl"
             id="markaz-form"
           >
-            <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
-              {" "}
-              رپورٹ تالیف(برائے صوبہ)
-            </h2>
-
             <div className="w-full">
               <div className="grid w-full grid-cols-1 lg:grid-cols-2">
                 <div className="flex justify-start items-center gap-2 w-full p-2">
@@ -206,7 +215,16 @@ export const ProvinceCompile = () => {
           </div>
         </div>
       ) : (
-        <div className="flex w-full justify-center items-center">
+        <div className="flex flex-col w-full justify-center items-center">
+          <div className="flex w-full justify-start">
+            <button
+              type="button"
+              className="p-2"
+              onClick={() => navigate("/compilation")}
+            >
+              <RxCross1 />
+            </button>
+          </div>
           <div>
             <NoReports />
           </div>

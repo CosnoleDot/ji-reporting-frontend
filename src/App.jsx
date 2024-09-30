@@ -539,7 +539,7 @@ function App() {
             const newReports = Array.isArray(markazR) ? markazR : [];
 
             return {
-              reports: [ ...newReports],
+              reports: [ ...reports ,...newReports],
               length: length,
             };
           });
@@ -577,7 +577,7 @@ function App() {
             const newReports = Array.isArray(provinceR) ? provinceR : [];
 
             return {
-              reports: [ ...newReports],
+              reports: [ ...reports ,...newReports],
               length: length,
             };
           });
@@ -620,7 +620,7 @@ function App() {
             const newReports = Array.isArray(maqamR) ? maqamR : [];
 
             return {
-              reports: [ ...newReports],
+              reports: [ ...reports ,...newReports],
               length: length,
             };
           });
@@ -658,7 +658,7 @@ function App() {
             const newReports = Array.isArray(ilaqaR) ? ilaqaR : [];
 
             return {
-              reports: [ ...newReports],
+              reports: [ ...reports ,...newReports],
               length: length,
             };
           });
@@ -700,7 +700,7 @@ function App() {
             const newReports = Array.isArray(divisionR) ? divisionR : [];
 
             return {
-              reports: [ ...newReports],
+              reports: [ ...reports ,...newReports],
               length: length,
             };
           });
@@ -737,7 +737,7 @@ function App() {
           const newReports = Array.isArray(halqaR) ? halqaR : [];
 
           return {
-            reports: [ ...newReports],
+            reports: [ ...reports ,...newReports],
             length: length,
           };
         });
@@ -775,7 +775,7 @@ function App() {
             const newReports = Array.isArray(halqaT) ? halqaT : [];
 
             return {
-              reports: [ ...newReports],
+              reports: [ ...reports ,...newReports],
               length: length,
             };
           });

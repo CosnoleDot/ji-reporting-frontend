@@ -139,6 +139,7 @@ export const Compile = () => {
   };
 
   const getReports = async () => {
+   if(areaId){
     switch (areaType) {
       case "country":
         setAreaName("Pakistan");
@@ -179,7 +180,7 @@ export const Compile = () => {
       setShowReport(true);
     } catch (error) {
       console.error("Error fetching data:", error);
-    }
+    }}
   };
 
   useEffect(() => {
@@ -240,7 +241,7 @@ export const Compile = () => {
       title={me?.userAreaId?.name.toUpperCase()}
       active={"compilation"}
     >
-      <div className="relative flex flex-col gap-3 items-start p-5 justify-start h-[calc(100vh-565.6px)]">
+      <div className="relative flex flex-col gap-3 items-start p-5 justify-start h-full md:h-[calc(100vh-565.6px)]">
         <div className="flex w-full py-4 mb-4 border-b border-inputBorder">
           <div className="">
             <h1 class="font-inter text-heading text-[18px] font-medium leading-[28px] text-left">
@@ -388,7 +389,9 @@ export const Compile = () => {
                   }}
                   className="select select-bordered w-full"
                 >
+                  <option value="" selected>Select halqa</option>
                   {halqas?.map((i) => (
+                    
                     <option key={i?._id} value={i?._id}>
                       {i?.name}
                     </option>

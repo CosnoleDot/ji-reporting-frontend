@@ -4,7 +4,7 @@ import { useToastState } from "../context";
 import { Loader } from "../components";
 import { Link, useNavigate } from "react-router-dom";
 import { UIContext } from "../context/ui";
-
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 export const Signup = () => {
   const [userAreaType, setUserAreaType] = useState("");
   const [areas, setAreas] = useState([]);
@@ -13,13 +13,14 @@ export const Signup = () => {
   const { loading, setLoading } = useContext(UIContext);
   const [selectedSubject, setSelectedSubject] = useState("");
   const [subject, setSubject] = useState();
+  const [showPass, setShowPass] = useState(false);
   const [subjects, setSubjects] = useState([]);
   const [maqams, setMaqams] = useState([]);
   const [joiningDate, setJoiningDate] = useState({ title: "", date: "" });
   const { dispatch } = useToastState();
   const navigate = useNavigate();
   const handleClick = () => {
-    window.open('https://consoledot.com', '_blank'); 
+    window.open("https://consoledot.com", "_blank");
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -144,7 +145,7 @@ export const Signup = () => {
         setLoading(false);
         setAreas(data.data.data);
         break;
-        case "Ilaqa":
+      case "Ilaqa":
         setLoading(true);
         data = await instance.get("/locations/ilaqa");
         setLoading(false);
@@ -198,7 +199,7 @@ export const Signup = () => {
           </h2>
         </div>
       </div>
-      <div className="w-full p-6 m-auto">
+      <div className="w-full md:p-6 p-2 m-auto">
         <div className="w-full flex flex-col items-center justify-center gap-2">
           <img src="/logo.png" className="h-[104px] w-[142px]" alt="LOGO" />
           <h1 className="text-heading text-[20px] leading-7 font-semibold font-inter">
@@ -385,7 +386,7 @@ export const Signup = () => {
               />
             </div>
           </div>
-          <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center md:flex-row flex-col justify-between gap-4">
             <div className="w-full">
               <label className="label">
                 <span className="text-heading font-inter text-[14px] leading-5">
@@ -416,34 +417,44 @@ export const Signup = () => {
             </div>
           </div>
 
-          <div className="flex items-center justify-between gap-4">
-            <div className="w-full">
+          <div className="flex items-center md:flex-row flex-col justify-between gap-4">
+            <div className="relative w-full">
               <label className="label">
                 <span className="text-heading font-inter text-[14px] leading-5">
                   Password
                 </span>
               </label>
               <input
-                type="password"
-                placeholder="Enter Password"
                 name="password1"
-                className="w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
-                required
+                type={showPass ? "text" : "password"}
+                placeholder="Enter Password"
+                className="w-full text-secondaryText border border-inputBorder outline-none rounded p-2 text-[16px] leading-6 font-inter"
               />
+              <span
+                className="absolute right-[4%] top-[65%]"
+                onClick={() => setShowPass(!showPass)}
+              >
+                {showPass ? <FaEyeSlash /> : <FaEye />}
+              </span>
             </div>
-            <div className="w-full">
+            <div className="relative w-full">
               <label className="label">
                 <span className="text-heading font-inter text-[14px] leading-5">
                   Confirm Password
                 </span>
               </label>
               <input
-                type="password"
                 name="password2"
+                type={showPass ? "text" : "password"}
                 placeholder="Confirm Password"
-                className="w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
-                required
+                className="w-full text-secondaryText border border-inputBorder outline-none rounded p-2 text-[16px] leading-6 font-inter"
               />
+              <span
+                className="absolute right-[4%] top-[65%]"
+                onClick={() => setShowPass(!showPass)}
+              >
+                {showPass ? <FaEyeSlash /> : <FaEye />}
+              </span>
             </div>
           </div>
           <div className="flex items-start justify-start">
@@ -829,19 +840,17 @@ export const Signup = () => {
           </div>
         </form>
         <div
-            className="w-full flex items-center justify-center mt-2 gap-2 y cursor-pointer"
-            onClick={handleClick}
-          >
+          className="w-full flex items-center justify-center mt-2 gap-2 y cursor-pointer"
+          onClick={handleClick}
+        >
+          <span className="text-black font-inter text-[14px]">Powered By:</span>
+          <div className="flex gap-2 items-center">
+            <img src="/cd.png" alt="icon" width={15} height={15} />
             <span className="text-black font-inter text-[14px]">
-              Powered By:
+              ConsoleDot
             </span>
-            <div className="flex gap-2 items-center">
-              <img src="/cd.png" alt="icon" width={15} height={15} />
-              <span className="text-black font-inter text-[14px]">
-                ConsoleDot
-              </span>
-            </div>
           </div>
+        </div>
       </div>
       {loading && <Loader />}
       <dialog id="add_subject_modal" className="modal">

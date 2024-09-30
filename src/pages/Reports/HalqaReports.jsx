@@ -31,7 +31,6 @@ export const HalqaReports = () => {
   const itemsPerPage = 10;
 
   const getHalqaReportsTab = async (inset, offset, tab) => {
-   
     setLoading(true);
     try {
       const req = await instance.get(
@@ -43,8 +42,11 @@ export const HalqaReports = () => {
         }
       );
 
+      
+        setData([]);
+        setFilterAllData([]);
+        setData(req.data.data?.data);
     
-      setData(req.data.data?.data);
       setLength(req.data.data.length);
     } catch (err) {
       console.log(err);
@@ -98,10 +100,9 @@ export const HalqaReports = () => {
   let totalPages = Math.ceil(length / itemsPerPage);
 
   const handlePrevPage = () => {
-
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
-      setData([]);
+
       setTab(tab);
       getHalqaReportsTab((currentPage - 2) * itemsPerPage, itemsPerPage, tab);
     }
@@ -110,7 +111,7 @@ export const HalqaReports = () => {
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
-      setData([]);
+
       setTab(tab);
       getHalqaReportsTab(currentPage * itemsPerPage, itemsPerPage, tab);
     }
@@ -119,7 +120,7 @@ export const HalqaReports = () => {
   const tabClick = (tab1) => {
     if (tab !== tab1) {
       clearFilters();
-      setData([]);
+
       setTab(tab1);
       getHalqaReportsTab((currentPage - 1) * itemsPerPage, itemsPerPage, tab1);
     }
@@ -132,7 +133,6 @@ export const HalqaReports = () => {
   const clearFilters = () => {
     setMonth("");
     setYear("2023");
-    getHalqaReportsTab(0, 10, tab);
     setIsSearch(false);
     setIsFilter(false);
     setNoReports(false);

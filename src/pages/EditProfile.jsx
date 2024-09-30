@@ -69,8 +69,9 @@ export const EditProfile = () => {
           },
         }
       );
-      setLoading(false);
+      
       dispatch({ type: "SUCCESS", payload: response?.data?.message });
+      setLoading(false);
       return  window.location.reload(); 
     } catch (error) {
       setLoading(false);

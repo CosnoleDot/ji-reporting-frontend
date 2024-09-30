@@ -17,6 +17,7 @@ import { Baitulmal } from "../../components/divisionReport/Baitulmal";
 import { RozOShabDiary } from "../../components/divisionReport/RozOShabDiary";
 import { NoReports } from "../Reports";
 import { FaPrint } from "react-icons/fa";
+import { RxCross1 } from "react-icons/rx";
 
 export const DivisionCompile = () => {
   // EDIT CODE START
@@ -76,12 +77,22 @@ export const DivisionCompile = () => {
     // window.location.href = `/halqa-report-compile/print?areaId${areaId}&startDate=${startDate}&endDate=${endDate}`;
   };
   return (
-    <GeneralLayout>
+    <GeneralLayout active={"compileReports"}>
       {Object.keys(compileReport).length > 2 ? (
-        <div className="reports h-[calc(100vh-64.4px-64px)] overflow-hidden overflow-y-scroll w-full">
-          <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
-            رپورٹ تالیف(برائے ڈویزن)
-          </h2>
+        <div className="reports overflow-hidden overflow-y-scroll w-full">
+          <div>
+            <button
+              type="button"
+              className="p-2"
+              onClick={() => navigate("/compilation")}
+            >
+              <RxCross1 />
+            </button>
+            <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
+              رپورٹ تالیف(برائے ڈویزن)
+            </h2>
+          </div>
+
           <form
             className="flex flex-col justify-center items-center p-4 font-notoUrdu mb-5"
             dir="rtl"
@@ -183,7 +194,16 @@ export const DivisionCompile = () => {
           </div>
         </div>
       ) : (
-        <div className="flex w-full justify-center items-center">
+        <div className="flex flex-col w-full justify-center items-center">
+          <div className="flex w-full justify-start">
+            <button
+              type="button"
+              className="p-2"
+              onClick={() => navigate("/compilation")}
+            >
+              <RxCross1 />
+            </button>
+          </div>
           <div>
             <NoReports />
           </div>

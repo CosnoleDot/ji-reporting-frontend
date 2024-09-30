@@ -75,8 +75,6 @@ export const UnitReport = () => {
   const clearFilters = () => {
     setMonth("");
     setYear("2023");
-    setFilterAllData([])
-    setFilterAllData(hReports);
     setIsFilter(false);
     setIsSearch(false);
     document.getElementById("autocomplete").value = "";
