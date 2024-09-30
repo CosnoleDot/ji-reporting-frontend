@@ -286,7 +286,7 @@ export const PersonalReportsDashboard = () => {
                         }}
                         className="text-center text-destructive font-medium text-[14px] leading-4"
                       >
-                        {obj?.userId?.name}
+                        {obj?.userId?.name?.split('').length>20 ? obj?.userId?.name?.split("").slice(0, 20).join("") : obj?.userId?.name}
                       </span>
                     </td>
                     <td className="w-full text-[14px]">

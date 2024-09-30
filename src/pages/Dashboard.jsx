@@ -3,7 +3,7 @@ import { GeneralLayout } from "../components";
 import { FaLocationDot } from "react-icons/fa6";
 import { CiLocationOn } from "react-icons/ci";
 import { FaUsers } from "react-icons/fa";
-
+import { FaEye } from "react-icons/fa";
 import {
   FaArrowDown,
   FaArrowUp,
@@ -441,7 +441,7 @@ export const Dashboard = () => {
               </p>
             </div>
           </div>
-          <div className="grid md:grid-cols-4 grid-cols-2 gap-2 w-full">
+          <div className={`grid md:grid-cols-4 ${localStorage.getItem("@type") === "halqa"? 'grid-cols-1':'grid-cols-2'} gap-2 w-full`}>
             {["province", "country", "maqam", "division"].includes(
               localStorage.getItem("@type")
             ) &&
@@ -640,7 +640,7 @@ export const Dashboard = () => {
                     ? navigate("/personalReport/create")
                     : navigate("/reports/create")
                 }
-                className="flex items-center bg-white border rounded-sm overflow-hidden shadow cursor-pointer"
+                className="flex items-center border w-full bg-cardsBg rounded-sm overflow-hidden shadow cursor-pointer"
               >
                 <div className="p-4 bg-primary">
                   <FaPlus className="w-12 h-12 text-white" />
@@ -812,10 +812,10 @@ export const Dashboard = () => {
                                             fontSize: "smaller",
                                           }}
                                         >
-                                          {obj.name}
+                                          {obj.name?.split("").slice(0, 20).join("")}
                                         </p>
                                       </td>
-                                      <td className="font-inter text-[14px] font-medium leading-[16.94px] text-left">
+                                      <td className="font-inter w-[50%] text-[14px] font-medium leading-[16.94px] text-end">
                                         {nazim.find(
                                           (i) => i?.userAreaId?._id === obj?._id
                                         )?.name || (
@@ -839,7 +839,7 @@ export const Dashboard = () => {
                                             getAreaDetails(obj);
                                           }}
                                         >
-                                          <FcViewDetails className="cursor-pointer text-2xl p-0 m-0" />
+                                          <FaEye className="cursor-pointer text-2xl p-0 m-0" />
                                         </div>
                                       </td>
                                     </tr>
@@ -876,7 +876,7 @@ export const Dashboard = () => {
                                     <td className="w-[50%]">
                                       {nazim.find(
                                         (i) => i?.userAreaId?._id === obj?._id
-                                      )?.name || (
+                                      )?.name?.split("").slice(0, 20).join("") || (
                                         <span
                                           style={{
                                             textTransform: "capitalize",
@@ -899,7 +899,7 @@ export const Dashboard = () => {
                                         }}
                                       >
                                         <span class="cursor-pointer font-inter text-[14px] font-medium leading-[16.94px] text-left">
-                                          view
+                                        <FaEye className="cursor-pointer text-2xl p-0 m-0" />
                                         </span>
                                       </div>
                                     </td>
@@ -943,7 +943,7 @@ export const Dashboard = () => {
                                       }`}
                                     >
                                       <td className="w-[50%]">
-                                        {obj.userId?.name}
+                                        {obj.userId?.name?.split("").slice(0, 20).join("")}
                                       </td>
                                       <td className="w-[50%]">
                                         {obj?.areaId?.name}
@@ -967,7 +967,7 @@ export const Dashboard = () => {
                                     }`}
                                     key={index}
                                   >
-                                    <td className="w-[50%]">{obj.name}</td>
+                                    <td className="w-[50%]">{obj.name?.split("").slice(0, 20).join("")}</td>
                                     {obj?.userAreaId?.name}
                                   </tr>
                                 ))

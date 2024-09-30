@@ -60,7 +60,7 @@ export const CustomDropDown = ({ location, onSelect, title }) => {
                               "ml-3 block truncate"
                             )}
                           >
-                            {person.name}
+                            {person.name?.split('').length>20 ? person.name?.split("").slice(0, 20).join("") : person.name}
                           </span>
                         </div>
 

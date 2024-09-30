@@ -76,7 +76,7 @@ export const IlaqaReports = () => {
   const clearFilters = () => {
     setMonth("");
     setYear("2023");
-    setFilterAllData(iReports);
+    setCurrentPage(1)
     setNoReports(false);
     setIsFilter(false);
     setIsSearch(false);
@@ -124,6 +124,7 @@ export const IlaqaReports = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [window.innerWidth]);
+ 
   return (
     <>
       <div className="md:join xs:w-full mb-4 flex justify-between items-center">
@@ -245,7 +246,7 @@ export const IlaqaReports = () => {
           </button>
         </div>
       </div>
-      {!isSearch && !noReports ? (
+      {!isSearch && !noReports && !isFilter ? (
         <>
           {currentData?.length > 0 ? (
             <div className="overflow-scroll">
@@ -398,7 +399,7 @@ export const IlaqaReports = () => {
         </>
       ) : (
         !noReports ? 
-        <SearchPage data={searchData} area={"ilaqa"} /> : <NoReports/>
+        <SearchPage data={!isFilter ?searchData : filterAllData} area={"ilaqa"} /> : <NoReports/>
       )}
       <dialog id="filter-area-dialog" className="modal">
         <FilterDialog

@@ -14,7 +14,7 @@ import { UIContext } from "../../context/ui";
 import { Baitulmal } from "../../components/halqa/Baitulmal";
 import { NoReports } from "../Reports";
 import { FaPrint } from "react-icons/fa";
-
+import { RxCross1 } from "react-icons/rx";
 export const HalqaCompile = () => {
   const { dispatch } = useToastState();
   const me = useContext(MeContext);
@@ -44,16 +44,22 @@ export const HalqaCompile = () => {
       if (elem) {
         elem.value = compileReport[i];
       }
-      if (i.includes("-monthly")) {
-        const newKey = i.replace("-monthly", "-end");
+      if (i.includes("-decrease")) {
+        const newKey = i.replace("-decrease", "-end");
+
         const newElem = document.getElementById(newKey);
         if (newElem) {
-          newElem.value = compileReport[i];
+          let value = i.split("-")[0];
+          let start = value + "-start"
+          let decrease = value + "-decrease"
+          let increase = value + "-increase"
+          
+          newElem.value = compileReport[start] + compileReport[increase] - compileReport[decrease];
         }
       }
     });
   };
-
+  
   useEffect(() => {
     autoFill();
   }, [id, compileReport]);
@@ -71,18 +77,26 @@ export const HalqaCompile = () => {
   };
 
   return (
-    <GeneralLayout>
+    <GeneralLayout active={"compileReports"}>
       {Object.keys(compileReport).length > 2 ? (
-        <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">
+        <div className="reports  overflow-y-scroll">
+          <div>
+            <button
+              type="button"
+              className="p-2"
+              onClick={() => navigate("/compilation")}
+            >
+              <RxCross1 />
+            </button>
+            <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
+              رپورٹ تالیف(برائے حلقہ)
+            </h2>
+          </div>
           <form
             className="flex flex-col justify-center items-center p-4 font-notoUrdu mb-5"
             dir="rtl"
             id="markaz-form"
           >
-            <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
-              {" "}
-              رپورٹ تالیف(برائے حلقہ)
-            </h2>
             <div className="w-full">
               <div className="grid w-full grid-cols-1 lg:grid-cols-2">
                 <div className="flex justify-start items-center gap-2 w-full p-2">
@@ -146,13 +160,22 @@ export const HalqaCompile = () => {
             </div>
           </form>
           <div className="flex w-ful justify-center">
-            <button className="btn" onClick={() => handlePrint()}>
-              <FaPrint /> پرنٹ
+            <button className="btn bg-primary" onClick={() => handlePrint()}>
+              <FaPrint /> Print
             </button>
           </div>
         </div>
       ) : (
-        <div className="flex w-full justify-center items-center">
+        <div className="flex flex-col w-full justify-center items-center">
+          <div className="flex w-full justify-start">
+            <button
+              type="button"
+              className="p-2"
+              onClick={() => navigate("/compilation")}
+            >
+              <RxCross1 />
+            </button>
+          </div>
           <div>
             <NoReports />
           </div>

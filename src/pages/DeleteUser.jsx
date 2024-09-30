@@ -174,8 +174,8 @@ export const DeleteUser = () => {
       document.getElementById("categorize-filter").close();
       dispatch({ type: "SUCCESS", payload: request.data?.message });
       e.target.reset();
-      setUserAreaType('');
-      setNazimType('')
+      setUserAreaType("");
+      setNazimType("");
     } catch (err) {
       dispatch({ type: "ERROR", payload: err.response.data.message });
     }
@@ -392,7 +392,9 @@ export const DeleteUser = () => {
                 ?.map((user, index) => (
                   <tr key={user.email} className="border-b w-full">
                     <td class="font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left py-2 w-1/7">
-                      {user?.name || "-"}
+                      {user?.name?.split("").length > 20
+                        ? user?.name?.split("").slice(0, 20).join("")
+                        : user?.name || "-"}
                     </td>
                     <td class="font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left py-2 w-1/7">
                       {user?.nazimType
@@ -410,7 +412,7 @@ export const DeleteUser = () => {
                       {" "}
                       <div
                         onClick={() => {
-                          getAreaDetails(user?.userAreaId , user?.userAreaType);
+                          getAreaDetails(user?.userAreaId, user?.userAreaType);
                         }}
                       >
                         <FaEye
@@ -515,7 +517,7 @@ export const DeleteUser = () => {
 
           {/* Page Numbers */}
           <div className="flex items-center">
-            {totalPages > 1 && (
+            {totalPages > 0 && (
               <span
                 className={`rounded-full text-bold text-sm ${
                   currentPage === 1 && "border-2 border-gray-500"
@@ -552,7 +554,7 @@ export const DeleteUser = () => {
               >
                 {totalPages}
               </span>
-            ) }
+            )}
           </div>
 
           {/* Next Button */}

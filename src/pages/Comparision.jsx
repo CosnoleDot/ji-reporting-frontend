@@ -27,8 +27,7 @@ const Dates = ({
   durationYears,
   setDurationYears,
   getData,
-  selectedProperty
-  
+  selectedProperty,
 }) => {
   const [year, setYear] = useState(2024);
 
@@ -55,123 +54,137 @@ const Dates = ({
         </div>
       </div>
       {durationType === "month" && (
-  <div className="flex items-start justify-start w-full h-[calc(100vh-72.8px-64px)]">
-    <div className="w-full h-[calc(100vh-72.8px-64px)] overflow-hidden overflow-y-scroll">
-      <input
-        type="number"
-        id="yearInput"
-        name="yearInput"
-        placeholder="YYYY"
-        min="1900"
-        max="2100"
-        step="1"
-        className="input-bordered input w-full input-sm mt-4"
-        value={year}
-        onChange={(e) => setYear(e.target.value)}
-      />
-      {months?.map((i, index) => (
-        <div
-          key={index}
-          className="flex p-3 hover:bg-slate-200 items-center justify-between"
-          onClick={() => {
-            const isAlreadySelected = durationMonths.some(
-              (item) => item.month === i?.title && item.year === year
-            );
+        <div className="flex items-start justify-start w-full h-[calc(100vh-72.8px-64px)]">
+          <div className="w-full h-[calc(100vh-72.8px-64px)] overflow-hidden overflow-y-scroll">
+            <input
+              type="number"
+              id="yearInput"
+              name="yearInput"
+              placeholder="YYYY"
+              min="1900"
+              max="2100"
+              step="1"
+              className="input-bordered input w-full input-sm mt-4"
+              value={year}
+              onChange={(e) => setYear(e.target.value)}
+            />
+            {months?.map((i, index) => (
+              <div
+                key={index}
+                className="flex p-3 hover:bg-slate-200 items-center justify-between"
+                onClick={() => {
+                  const isAlreadySelected = durationMonths.some(
+                    (item) => item.month === i?.title && item.year === year
+                  );
 
-            // Block selection for radialChart if already one date is selected
-            if (selectedProperty === "radialChart" && durationMonths.length > 0) {
-              return; // Don't allow selecting more than one date for radialChart
-            }
+                  // Block selection for radialChart if already one date is selected
+                  if (
+                    selectedProperty === "radialChart" &&
+                    durationMonths.length > 0
+                  ) {
+                    return; // Don't allow selecting more than one date for radialChart
+                  }
 
-            // For non-radialChart cases, allow up to two months to be selected
-            if (selectedProperty !== "radialChart" && durationMonths.length >= 2) {
-              return; // Block selecting more than two dates for comparison
-            }
+                  // For non-radialChart cases, allow up to two months to be selected
+                  if (
+                    selectedProperty !== "radialChart" &&
+                    durationMonths.length >= 2
+                  ) {
+                    return; // Block selecting more than two dates for comparison
+                  }
 
-            // Add selected month and year to durationMonths if not already selected
-            if (!isAlreadySelected) {
-              setDurationMonths([...durationMonths, { month: i?.title, year, value: i?.value }]);
-            }
-          }}
-        >
-          <span>
-            {i?.title}, {year}
-          </span>
-          <FaChevronCircleRight />
-        </div>
-      ))}
-    </div>
-    <div className="w-full h-[calc(100vh-72.8px-64px)] overflow-hidden overflow-y-scroll">
-      {durationMonths?.map((i, index) => (
-        <div
-          key={index}
-          onClick={() =>
-            setDurationMonths([
-              ...durationMonths.slice(0, index),
-              ...durationMonths.slice(index + 1, durationMonths.length),
-            ])
-          }
-          className="flex p-3 hover:bg-slate-200 items-center justify-between"
-        >
-          <span>
-            {i?.month}, {i?.year}
-          </span>
-          <FaTimesCircle />
-        </div>
-      ))}
-    </div>
-  </div>
-)}
-
-{durationType === "year" && (
-  <div className="flex items-start justify-start w-full h-[calc(100vh-72.8px-64px)]">
-    <div className="w-full h-[calc(100vh-72.8px-64px)] overflow-hidden overflow-y-scroll">
-      {Array(10)
-        .fill(1)
-        ?.map((_, index) => (
-          <div
-            key={index}
-            className="flex p-3 hover:bg-slate-200 items-center justify-between"
-            onClick={() => {
-              // Block selection for radialChart if already one year is selected
-              if (selectedProperty === "radialChart" && durationYears.length > 0) {
-                return; // Don't allow selecting more than one date for radialChart
-              }
-
-              // For non-radialChart cases, allow up to two years to be selected
-              if (selectedProperty !== "radialChart" && durationYears.length >= 2) {
-                return; // Block selecting more than two dates for comparison
-              }
-
-              // Add selected year to durationYears if not already selected
-              setDurationYears([...durationYears, 2023 + index]);
-            }}
-          >
-            <span>{2023 + index}</span>
-            <FaChevronCircleRight />
+                  // Add selected month and year to durationMonths if not already selected
+                  if (!isAlreadySelected) {
+                    setDurationMonths([
+                      ...durationMonths,
+                      { month: i?.title, year, value: i?.value },
+                    ]);
+                  }
+                }}
+              >
+                <span>
+                  {i?.title}, {year}
+                </span>
+                <FaChevronCircleRight />
+              </div>
+            ))}
           </div>
-        ))}
-    </div>
-    <div className="w-full h-[calc(100vh-72.8px-64px)] overflow-hidden overflow-y-scroll">
-      {durationYears?.map((i, index) => (
-        <div
-          key={index}
-          onClick={() =>
-            setDurationYears([
-              ...durationYears.slice(0, index),
-              ...durationYears.slice(index + 1, durationYears.length),
-            ])
-          }
-          className="flex p-3 hover:bg-slate-200 items-center justify-between"
-        >
-          <span>{i}</span>
-          <FaTimesCircle />
+          <div className="w-full h-[calc(100vh-72.8px-64px)] overflow-hidden overflow-y-scroll">
+            {durationMonths?.map((i, index) => (
+              <div
+                key={index}
+                onClick={() =>
+                  setDurationMonths([
+                    ...durationMonths.slice(0, index),
+                    ...durationMonths.slice(index + 1, durationMonths.length),
+                  ])
+                }
+                className="flex p-3 hover:bg-slate-200 items-center justify-between"
+              >
+                <span>
+                  {i?.month}, {i?.year}
+                </span>
+                <FaTimesCircle />
+              </div>
+            ))}
+          </div>
         </div>
-      ))}
-    </div>
-  </div>
-)}
+      )}
 
+      {durationType === "year" && (
+        <div className="flex items-start justify-start w-full h-[calc(100vh-72.8px-64px)]">
+          <div className="w-full h-[calc(100vh-72.8px-64px)] overflow-hidden overflow-y-scroll">
+            {Array(10)
+              .fill(1)
+              ?.map((_, index) => (
+                <div
+                  key={index}
+                  className="flex p-3 hover:bg-slate-200 items-center justify-between"
+                  onClick={() => {
+                    // Block selection for radialChart if already one year is selected
+                    if (
+                      selectedProperty === "radialChart" &&
+                      durationYears.length > 0
+                    ) {
+                      return; // Don't allow selecting more than one date for radialChart
+                    }
+
+                    // For non-radialChart cases, allow up to two years to be selected
+                    if (
+                      selectedProperty !== "radialChart" &&
+                      durationYears.length >= 2
+                    ) {
+                      return; // Block selecting more than two dates for comparison
+                    }
+
+                    // Add selected year to durationYears if not already selected
+                    setDurationYears([...durationYears, 2023 + index]);
+                  }}
+                >
+                  <span>{2023 + index}</span>
+                  <FaChevronCircleRight />
+                </div>
+              ))}
+          </div>
+          <div className="w-full h-[calc(100vh-72.8px-64px)] overflow-hidden overflow-y-scroll">
+            {durationYears?.map((i, index) => (
+              <div
+                key={index}
+                onClick={() =>
+                  setDurationYears([
+                    ...durationYears.slice(0, index),
+                    ...durationYears.slice(index + 1, durationYears.length),
+                  ])
+                }
+                className="flex p-3 hover:bg-slate-200 items-center justify-between"
+              >
+                <span>{i}</span>
+                <FaTimesCircle />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -828,12 +841,14 @@ export const Comparision = () => {
     };
   }, []);
   const getDivName = (area, type) => {
+    console.log(type, "aaa");
     if (reportType === "halqa") {
       if (type === "Tehsil") {
         let div = districts?.find((i) => area?.parentId?.district === i._id);
         return `${div?.division?.name}(Division) - ${div?.division?.province?.name}`;
       } else if (type === "Ilaqa") {
         let maqam = maqams.find((i) => area?.parentId?.maqam === i?._id);
+        console.log(maqams, "aaa");
         return `${area?.parentId?.name}(Ilaqa) - ${maqam?.name}(Maqam)`;
       } else if (type === "Maqam") {
         return `${area?.parentId?.name}(Maqam)`;
@@ -855,8 +870,12 @@ export const Comparision = () => {
       <div className=" flex flex-col gap-3  overflow-y-scroll w-full p-3">
         <div className="w-full flex md:flex-row flex-col justify-between items-center py-4">
           <div className="flex flex-col justify-start w-full md:mb-0 mb-4">
-            <h1 className="font-inter text-heading text-[18px] font-medium leading-[28px] text-left">Comparison</h1>
-            <p className="font-inter text-[14px] font-normal leading-[20px] text-left text-secondaryText">Get a sneak peak into your reports </p>
+            <h1 className="font-inter text-heading text-[18px] font-medium leading-[28px] text-left">
+              Comparison
+            </h1>
+            <p className="font-inter text-[14px] font-normal leading-[20px] text-left text-secondaryText">
+              Get a sneak peak into your reports{" "}
+            </p>
           </div>
           <div className="w-full md:w-[30%]  flex justify-start md:justify-end">
             <button
@@ -871,7 +890,7 @@ export const Comparision = () => {
         </div>
         <div className="divider mt-0"></div>
         {!dates && (
-          <div className="flex flex-col gap-3 w-full p-3 overflow-hidden overflow-x-scroll h-[80vh]">
+          <div className="flex flex-col gap-3 w-full p-3 overflow-scroll overflow-x-scroll h-[80vh]">
             {response ? (
               response?.chart === "radial" ? (
                 <CircularChart res={response} type={selectedProperty} />
@@ -901,11 +920,11 @@ export const Comparision = () => {
 
       <dialog id="add_comparison_modal" className="modal">
         <div className="modal-box min-w-[90%] h-full flex flex-col justify-between">
-          <div className="flex mr-10 items-center space-y-10 flex-col justify-between inlineQ">
+          <div className="flex flex-col gap-4">
             <div className="w-full space-y-2">
               <label
                 htmlFor="Reprot Type"
-                className="w-full font-semibold text-innerAlignment"
+                className="w-full font-inter text-[12px] md:text-[14px] font-semibold text-innerAlignment"
               >
                 Select Type of Report
               </label>
@@ -957,7 +976,7 @@ export const Comparision = () => {
             <div className="w-full space-y-2">
               <label
                 htmlFor="area"
-                className="w-full font-semibold text-innerAlignment"
+                className="w-full font-inter text-[12px] md:text-[14px] font-semibold text-innerAlignment"
               >
                 Select Your Area
               </label>
@@ -973,7 +992,7 @@ export const Comparision = () => {
                       Area {reportType}
                     </option>
                     {areas[reportType]?.map((i, index) => (
-                      <option key={index} value={i?._id} className="w-auto">
+                      <option key={index} value={i?._id} className="w-full">
                         {i?.name} - {getDivName(i, i.parentType)}
                       </option>
                     ))}
@@ -1047,9 +1066,12 @@ export const Comparision = () => {
                             .getElementById("autocomplete0-list")
                             .classList.add("hidden");
                         }}
-                        className="p-2 cursor-pointer hover:bg-gray-100"
+                        className="p-1 cursor-pointer font-inter text-[12px] md:text-[14px] hover:bg-gray-100"
                       >
-                        {area?.userAreaId?.name} - {area?.name}
+                        {area?.userAreaId?.name} -{" "}
+                        {area?.name.split("").length > 20
+                          ? me?.name?.split("").slice(0, 20).join("")
+                          : area?.name}
                       </div>
                     ))}
                 </div>
@@ -1058,7 +1080,7 @@ export const Comparision = () => {
             <div className="w-full space-y-2">
               <label
                 htmlFor="area"
-                className="w-full font-semibold text-innerAlignment"
+                className="w-full font-inter text-[12px] md:text-[14px] font-semibold text-innerAlignment"
               >
                 Select Property
               </label>
@@ -1085,9 +1107,26 @@ export const Comparision = () => {
                 ].includes(me?.nazimType) &&
                   reportType === "personal" && (
                     <>
-                      <option value={"prayers"}> Prayers</option>
-                      <option value={"studies"}> Mutalajaat</option>
-                      <option value={"toseeDawa"}>ToseeDawat</option>
+                      <option
+                        value={"prayers"}
+                        className="font-inter text-[12px] md:text-[14px]"
+                      >
+                        {" "}
+                        Prayers
+                      </option>
+                      <option
+                        value={"studies"}
+                        className="font-inter text-[12px] md:text-[14px]"
+                      >
+                        {" "}
+                        Mutalajaat
+                      </option>
+                      <option
+                        value={"toseeDawa"}
+                        className="font-inter text-[12px] md:text-[14px]"
+                      >
+                        ToseeDawat
+                      </option>
                     </>
                   )}
               </select>
@@ -1095,7 +1134,7 @@ export const Comparision = () => {
             <div className="w-full space-y-2">
               <label
                 htmlFor="area"
-                className="w-full font-semibold text-innerAlignment"
+                className="w-full font-inter text-[12px] md:text-[14px] font-semibold text-innerAlignment"
               >
                 Select Duration
               </label>

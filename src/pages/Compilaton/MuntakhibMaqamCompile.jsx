@@ -3,7 +3,7 @@ import { GeneralLayout, calcultate } from "../../components";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useContext, useRef, useState } from "react";
 import { useEffect } from "react";
-
+import { RxCross1 } from "react-icons/rx";
 import { Jamiaat } from "../../components/maqamReport/Jamiaat";
 import { Colleges } from "../../components/maqamReport/Colleges";
 import { Tanzeem } from "../../components/maqamReport/Tanzeem";
@@ -36,7 +36,9 @@ export const MuntakhibMaqamCompile = () => {
   const navigate = useNavigate();
   const report = useContext(CompileReportContext);
   const compileReport = report?.b;
-  const [date, setDate] = useState(`${report?.startDate} تا  ${report?.endDate}`);
+  const [date, setDate] = useState(
+    `${report?.startDate} تا  ${report?.endDate}`
+  );
   const queryParams = new URLSearchParams(location.search);
   const areaType = queryParams.get("areaType");
   const areaName = queryParams.get("areaName");
@@ -115,18 +117,26 @@ export const MuntakhibMaqamCompile = () => {
     // window.location.href = `/halqa-report-compile/print?areaId${areaId}&startDate=${startDate}&endDate=${endDate}`;
   };
   return (
-    <GeneralLayout>
-      <div className="reports h-[calc(100vh-64.4px-64px)] overflow-y-scroll">
+    <GeneralLayout active={"compileReports"}>
+      <div className="reports  overflow-y-scroll">
+        <div>
+          <button
+            type="button"
+            className="p-2"
+            onClick={() => navigate("/compilation")}
+          >
+            <RxCross1 />
+          </button>
+          <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
+            {" "}
+            رپورٹ تالیف(برائے منتخب مقام)
+          </h2>
+        </div>
         <form
           className="flex flex-col justify-center items-center p-4 font-notoUrdu mb-5"
           dir="rtl"
           id="markaz-form"
         >
-          <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
-            {" "}
-            رپورٹ تالیف(برائے منتخب مقام)
-          </h2>
-
           <div className="w-full">
             <div className="grid w-full grid-cols-1 lg:grid-cols-2">
               <div className="flex justify-start items-center gap-2 w-full p-2">

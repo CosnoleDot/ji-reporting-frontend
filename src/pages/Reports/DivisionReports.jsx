@@ -75,7 +75,7 @@ export const DivisionReports = () => {
   const clearFilters = () => {
     setMonth("");
     setYear("2023");
-    setFilterAllData(dReports);
+   
     setNoReports(false);
     setIsFilter(false);
     setIsSearch(false);

@@ -51,16 +51,17 @@ export const BottomNav = ({ active }) => {
             alt="Rounded avatar"
           />
           <div>
-            <h2 className="text-heading font-inter font-semibold text-[16px] leading-5">
-              {/* {me?.name?.split(' ').length > 2 ? me?.name?.split(' ')[0] +' ' + me?.name?.split(' ')[1] : me?.name} */}
-              {me?.name
-                ?.split("") 
-                .slice(0, 15) 
-                .join("")}
-            </h2>
-            <span className="text-heading font-inter font-normal text-[12px] leading-3 text-center">
-              {me?.qualification}
-            </span>
+           
+            <div className="tooltip p-0 bg-white text-black" data-tip={me?.name}>
+              <h2 className="text-heading font-inter font-semibold text-[16px] leading-5">
+                {me?.name?.split('').length>20 ? me?.name?.split("").slice(0, 20).join("") : me?.name}
+              </h2>
+            </div>
+            <div className="flex justify-center mt-1">
+              <span className="text-heading font-inter font-normal text-[12px] leading-3 text-center">
+                {me?.qualification}
+              </span>
+            </div>
           </div>
         </div>
         <div className="flex w-full items-center justify-center">
@@ -125,6 +126,7 @@ export const BottomNav = ({ active }) => {
                 active === "reports" ||
                 active === "compilation" ||
                 active === "personalReports" ||
+                active === "compileReports" ||
                 active === "personalReport/create"
                   ? "bg-primary text-white p-2 rounded w-full"
                   : "bg-blue-50 p-2 rounded text-heading w-full"

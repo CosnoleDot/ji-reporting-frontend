@@ -4,7 +4,7 @@ import instance from "../api/instrance";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useContext, useState } from "react";
 import { useEffect } from "react";
-import { MeContext, useToastState } from "../context";
+import { HalqaContext, MeContext, useToastState } from "../context";
 import { UIContext } from "../context/ui";
 import { Tanzeem } from "../components/ilaqaReport/Tanzeem";
 import { IfradiKuwat } from "../components/ilaqaReport/IfradiKuwat";
@@ -29,6 +29,7 @@ export const Ilaqa = () => {
   const { loading, setLoading, getIlaqaReports } = useContext(UIContext);
   const [view, setView] = useState(false);
   const location = useLocation();
+  const halqas = useContext(HalqaContext)
   const me = useContext(MeContext);
   const navigate = useNavigate();
   const autoFill = () => {
@@ -128,13 +129,24 @@ export const Ilaqa = () => {
     });
     document.getElementById("studyCircle-averageAttendance").value = 0;
     document.getElementById("studyCircle-done").value = 0;
+    document.getElementById("paighamEvent-decided").value=0;
+    document.getElementById("shaheenMeeting-decided").value=0;
+    if(!view){
+      document.getElementById("ijtRafaqa-decided").value=halqas.length;
+      document.getElementById("ijtKarkunan-decided").value=halqas.length;
+      document.getElementById("darseQuran-decided").value=halqas.length;
+      document.getElementById("studyCircleMentioned-decided").value=halqas.length;
+    }
+
     ["arkan", "umeedWaran"].forEach((i) => {
+      
       document.getElementById(`${i}-start`).value = 0;
       document.getElementById(`${i}-end`).value = 0;
       document.getElementById(`${i}-increase`).value = 0;
       document.getElementById(`${i}-decrease`).value = 0;
       document.getElementById(`${i}-monthly`).value = 0;
     });
+    
     const afd = [
       "rehaishHalqay",
       "taleemHalqay",
@@ -327,14 +339,7 @@ export const Ilaqa = () => {
   // ***************To set the values on change
 
   useEffect(() => {
-    document.getElementById("studyCircleMentioned-decided").value = totalHalqay;
-    document.getElementById("ijtRafaqa-decided").value = totalHalqay;
-    document.getElementById("darseQuran-decided").value = parseFloat(
-      totalHalqay + subTotalHalqay
-    );
-    document.getElementById("ijtKarkunan-decided").value = parseFloat(
-      totalHalqay + subTotalHalqay
-    );
+    
     document.getElementById("paighamEvent-decided").value = busmTotalUnits;
     document.getElementById("shaheenMeeting-decided").value = busmTotalUnits;
   }, [totalHalqay, subTotalHalqay, busmTotalUnits]);
