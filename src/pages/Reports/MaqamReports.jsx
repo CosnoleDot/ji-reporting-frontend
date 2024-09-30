@@ -20,6 +20,7 @@ export const MaqamReports = () => {
   const m = useContext(MaqamReportContext);
   const ilaqas = useContext(IlaqaContext);
   const mReports = m?.reports;
+  
   const total = m?.length;
   const [filterAllData, setFilterAllData] = useState([]);
   const { dispatch } = useToastState();
@@ -38,15 +39,24 @@ export const MaqamReports = () => {
   const navigate = useNavigate();
   const itemsPerPage = 10;
   useEffect(() => {
+    // 1. Start by reducing the mReports array to a unique list of items
     const uniqueArray = mReports?.reduce((acc, current) => {
+      // 2. Check if the current item already exists in the accumulated array
       const x = acc.find((item) => item?._id === current?._id);
+  
+      // 3. If it doesn't exist, push it to the accumulated array
       if (!x) {
         acc.push(current);
       }
+      
+      // 4. Return the accumulated array for the next iteration
       return acc;
     }, []);
+  
+    // 5. Set the state 'filterAllData' with the unique array
     setFilterAllData(uniqueArray);
   }, [mReports]);
+  
   const searchResults = async () => {
     setLoading(true)
     showSearch(false);
@@ -82,6 +92,7 @@ export const MaqamReports = () => {
   const clearFilters = () => {
     setMonth("");
     setYear("2023");
+    setFilterAllData([])
     setFilterAllData(mReports);
     setIsFilter(false);
     setNoReports(false);
@@ -131,6 +142,7 @@ export const MaqamReports = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [window.innerWidth]);
+ 
   return (
     <>
       <div className="md:join xs:w-full mb-4 flex justify-between items-center overflow-y-scroll">

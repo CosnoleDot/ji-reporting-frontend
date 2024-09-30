@@ -8,6 +8,7 @@ import { RxCross1 } from "react-icons/rx";
 import {
   MarkazReportContext,
   MeContext,
+  ProvinceContext,
   ProvinceReportContext,
   useToastState,
 } from "../context";
@@ -39,6 +40,7 @@ export const MarkazReport = () => {
   // EDIT CODE START
   const province = useContext(ProvinceReportContext);
   const markaz = useContext(MarkazReportContext);
+  const provinces = useContext(ProvinceContext);
   const [month, setMonth] = useState("");
   const [createData, setCreateData] = useState([]);
   const params = useParams();
@@ -181,7 +183,13 @@ export const MarkazReport = () => {
         }
       }
     });
-
+    if (!view) {
+      document.getElementById("ijtRafaqa-decided").value = provinces.length;
+      document.getElementById("ijtKarkunan-decided").value = provinces.length;
+      document.getElementById("darseQuran-decided").value = provinces.length;
+      document.getElementById("studyCircleMentioned-decided").value =
+        provinces.length;
+    }
     document.getElementById("rawabitDecided").value = halq["rawabitDecided"];
     [
       "studyCircleMentioned",

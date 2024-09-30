@@ -6,6 +6,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import {
   DivisionReportContext,
+  HalqaContext,
   HalqaReportContext,
   MaqamReportContext,
   MeContext,
@@ -39,6 +40,7 @@ export const Division = () => {
   const { loading, setLoading, getDivisionReports } = useContext(UIContext);
   const [view, setView] = useState(false);
   const location = useLocation();
+  const halqas = useContext(HalqaContext);
   const me = useContext(MeContext);
   const navigate = useNavigate();
   const [page, setPage] = useState();
@@ -126,6 +128,13 @@ export const Division = () => {
 
     document.getElementById("studyCircle-averageAttendance").value = 0;
     document.getElementById("studyCircle-done").value = 0;
+    if (!view) {
+      document.getElementById("ijtRafaqa-decided").value = halqas.length;
+      document.getElementById("ijtKarkunan-decided").value = halqas.length;
+      document.getElementById("darseQuran-decided").value = halqas.length;
+      document.getElementById("studyCircleMentioned-decided").value =
+        halqas.length;
+    }
     ["arkan", "umeedWaran"].forEach((i) => {
       document.getElementById(`${i}-start`).value = 0;
       document.getElementById(`${i}-end`).value = 0;
@@ -355,14 +364,6 @@ export const Division = () => {
   );
 
   useEffect(() => {
-    document.getElementById("studyCircleMentioned-decided").value = totalHalqay;
-    document.getElementById("ijtRafaqa-decided").value = totalHalqay;
-    document.getElementById("darseQuran-decided").value = parseFloat(
-      totalHalqay + subTotalHalqay
-    );
-    document.getElementById("ijtKarkunan-decided").value = parseFloat(
-      totalHalqay + subTotalHalqay
-    );
     document.getElementById("paighamEvent-decided").value = busmTotalUnits;
     document.getElementById("shaheenMeeting-decided").value = busmTotalUnits;
   }, [totalHalqay, subTotalHalqay, busmTotalUnits]);

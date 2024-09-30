@@ -5,8 +5,10 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useContext, useState } from "react";
 import { useEffect } from "react";
 import {
+  DivisionContext,
   DivisionReportContext,
   HalqaReportContext,
+  MaqamContext,
   MaqamReportContext,
   MeContext,
   ProvinceReportContext,
@@ -31,6 +33,9 @@ export const Province = () => {
   const [createData, setCreateData] = useState([]);
   const division = useContext(DivisionReportContext);
   const province = useContext(ProvinceReportContext);
+  const maqams = useContext(MaqamContext);
+  const divisions = useContext(DivisionContext);
+
   const [month, setMonth] = useState("");
   const params = useParams();
   const [id, setId] = useState(null);
@@ -49,6 +54,7 @@ export const Province = () => {
     setPage(url);
   }, [window.location]);
   const autoFill = () => {
+    setLoading(true);
     const provinceFinalData = {};
     document.getElementById("province-form").reset();
     const maqamTFiltered = createData?.data?.maqamReports?.map((item) => {
@@ -84,7 +90,7 @@ export const Province = () => {
         }
       });
     }
-  
+
     for (const key in merged) {
       if (key === "literatureDistribution") {
         setFinalMerged((prevState) => ({
@@ -175,7 +181,15 @@ export const Province = () => {
         "ijtKarkunan",
       ].map((i) => (provinceFinalData[`${i}-averageAttendance`] = 0));
     }
-
+    if (!view) {
+      provinceFinalData["ijtRafaqa-decided"] = maqams.length + divisions.length;
+      provinceFinalData["ijtKarkunan-decided"] =
+        maqams.length + divisions.length;
+      provinceFinalData["darseQuran-decided"] =
+        maqams.length + divisions.length;
+      provinceFinalData["studyCircleMentioned-decided"] =
+        maqams.length + divisions.length;
+    }
     Object.keys(provinceFinalData).forEach((i) => {
       let j = i;
       const elem = document.getElementById(j);
@@ -203,6 +217,7 @@ export const Province = () => {
       document.getElementById("comments").value = null;
       document.getElementById("anyOther").value = null;
     }
+    setLoading(false);
   };
   // GET REPORTS OF Division and Maqams TO CREATE Province REPORT THE COMING REPORTS WILL BE POPULATED
   const getReportsForProvinceReport = async () => {
@@ -496,7 +511,7 @@ export const Province = () => {
       autoFill();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [month, createData, id]);
+  }, [month, createData, id, data]);
   useEffect(() => {
     if (id) {
       getProvinceSingleReport();
