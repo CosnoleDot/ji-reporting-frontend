@@ -61,7 +61,7 @@ export const CountryReport = () => {
 
         if (req) {
           setSearchData([]);
-          setSearchData(req.data?.data);
+          setSearchData(req.data?.data?.data);
         }
       } catch (err) {
         console.log(err);
@@ -221,6 +221,7 @@ export const CountryReport = () => {
             <button
               onClick={() => {
                 document.getElementById("filter-area-dialog").showModal();
+                
               }}
               className={`font-inter px-2 bg-primary flex justify-center text-white p-1 md:p-[6px] text-[12px] md:text-[14px] mb-1 rounded font-medium leading-[20px] text-left ${
                 !isMobileView ? "join-item" : "ms-3"
@@ -391,7 +392,7 @@ export const CountryReport = () => {
           )}
         </>
       ) : !noReports ? (
-        <SearchPage data={!isFilter ? searchData?.data : filterAllData} area={"country"} />
+        <SearchPage data={searchData} area={"country"} />
       ) : (
         <NoReports />
       )}
@@ -400,6 +401,8 @@ export const CountryReport = () => {
           setFilterAllData={setFilterAllData}
           setIsFilter={setIsFilter}
           setNoReports={setNoReports}
+          setSearchData={setSearchData}
+          setIsSearch={setIsSearch}
         />
       </dialog>
     </>

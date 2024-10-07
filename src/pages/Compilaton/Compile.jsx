@@ -129,8 +129,8 @@ export const Compile = () => {
   const clearDates = () => {
     setStartMonth("");
     setEndMonth("");
-    setStartYear("2023");
-    setEndYear("2023");
+    setStartYear("2024");
+    setEndYear("2024");
   };
   const handleCheckboxChange = (event) => {
     clearDates();
@@ -139,48 +139,56 @@ export const Compile = () => {
   };
 
   const getReports = async () => {
-   if(areaId){
-    switch (areaType) {
-      case "country":
-        setAreaName("Pakistan");
-        break;
-      case "province":
-        let provinceName = provinces.find((i) => i._id === areaId)?.name;
-        setAreaName(provinceName?.split(" ").join(""));
-        break;
-      case "division":
-        let divisionName = divisions.find((i) => i._id === areaId)?.name;
+    if (areaId) {
+      switch (areaType) {
+        case "country":
+          setAreaName("Pakistan");
+          break;
+        case "province":
+          let provinceName = provinces.find((i) => i._id === areaId)?.name;
+          setAreaName(provinceName?.split(" ").join(""));
+          break;
+        case "division":
+          let divisionName = divisions.find((i) => i._id === areaId)?.name;
 
-        setAreaName(divisionName?.split(" ").join(""));
-      case "maqam":
-        let maqamName = maqams.find((i) => i._id === areaId)?.name;
-        setAreaName(maqamName?.split(" ").join(""));
-        break;
-      case "ilaqa":
-        let ilaqaName = ilaqas.find((i) => i._id === areaId)?.name;
-        setAreaName(ilaqaName?.split(" ").join(""));
-        break;
-      case "halqa":
-        let halqaName = halqas.find((i) => i._id === areaId)?.name;
-        setAreaName(halqaName?.split(" ").join(""));
-        break;
-      default:
-        break;
+          setAreaName(divisionName?.split(" ").join(""));
+        case "maqam":
+          let maqamName = maqams.find((i) => i._id === areaId)?.name;
+          setAreaName(maqamName?.split(" ").join(""));
+          break;
+        case "ilaqa":
+          let ilaqaName = ilaqas.find((i) => i._id === areaId)?.name;
+          setAreaName(ilaqaName?.split(" ").join(""));
+          break;
+        case "halqa":
+          let halqaName = halqas.find((i) => i._id === areaId)?.name;
+          setAreaName(halqaName?.split(" ").join(""));
+          break;
+        default:
+          break;
+      }
+
+      const startDate =
+        startMonth === "" ? startYear : `${startYear}-${startMonth}`;
+      setSDate(startDate);
+      const endDate = endMonth === "" ? endYear : `${endYear}-${endMonth}`;
+      setEDate(endDate);
+
+      try {
+        if (startDate > endDate) {
+          dispatch({
+            type: "ERROR",
+            payload: "Start date must be less than end date",
+          });
+        } else {
+          await getCompileReports(startDate, endDate, areaType, areaId);
+
+          setShowReport(true);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     }
-
-    const startDate =
-      startMonth === "" ? startYear : `${startYear}-${startMonth}`;
-    setSDate(startDate);
-    const endDate = endMonth === "" ? endYear : `${endYear}-${endMonth}`;
-    setEDate(endDate);
-
-    try {
-      await getCompileReports(startDate, endDate, areaType, areaId);
-
-      setShowReport(true);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }}
   };
 
   useEffect(() => {
@@ -389,9 +397,10 @@ export const Compile = () => {
                   }}
                   className="select select-bordered w-full"
                 >
-                  <option value="" selected>Select halqa</option>
+                  <option value="" selected>
+                    Select halqa
+                  </option>
                   {halqas?.map((i) => (
-                    
                     <option key={i?._id} value={i?._id}>
                       {i?.name}
                     </option>

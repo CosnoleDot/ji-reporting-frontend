@@ -118,6 +118,7 @@ export const MuntakhibMaqamCompile = () => {
   };
   return (
     <GeneralLayout active={"compileReports"}>
+      {Object.keys(compileReport).length > 2 ? (
       <div className="reports  overflow-y-scroll">
         <div>
           <button
@@ -223,7 +224,22 @@ export const MuntakhibMaqamCompile = () => {
         <button className="btn" onClick={() => handlePrint()}>
           <FaPrint />
         </button>
-      </div>
+      </div>) : (
+        <div className="flex flex-col w-full justify-center items-center">
+          <div className="flex w-full justify-start">
+            <button
+              type="button"
+              className="p-2"
+              onClick={() => navigate("/compilation")}
+            >
+              <RxCross1 />
+            </button>
+          </div>
+          <div>
+            <NoReports />
+          </div>
+        </div>
+      )}
     </GeneralLayout>
   );
 };

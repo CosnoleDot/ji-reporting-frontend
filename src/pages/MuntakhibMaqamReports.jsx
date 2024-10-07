@@ -9,6 +9,7 @@ import { RxCross1 } from "react-icons/rx";
 import {
   DivisionReportContext,
   HalqaReportContext,
+  IlaqaContext,
   IlaqaReportContext,
   MaqamReportContext,
   MeContext,
@@ -47,7 +48,7 @@ export const MuntakhibMaqamReports = () => {
   const [id, setId] = useState(null);
   const { dispatch } = useToastState();
   const [data, setData] = useState({});
-
+  const ilaqas = useContext(IlaqaContext);
   const { loading, setLoading, getMaqamReports } = useContext(UIContext);
   const [view, setView] = useState(false);
   const location = useLocation();
@@ -151,6 +152,13 @@ export const MuntakhibMaqamReports = () => {
     });
     document.getElementById("studyCircle-averageAttendance").value = 0;
     document.getElementById("studyCircle-done").value = 0;
+    if (!view) {
+      document.getElementById("ijtRafaqa-decided").value = ilaqas.length;
+      document.getElementById("ijtKarkunan-decided").value = ilaqas.length;
+      document.getElementById("darseQuran-decided").value = ilaqas.length;
+      document.getElementById("studyCircleMentioned-decided").value =
+        ilaqas.length;
+    }
     ["arkan", "umeedWaran"].forEach((i) => {
       document.getElementById(`${i}-start`).value = 0;
       document.getElementById(`${i}-end`).value = 0;
@@ -391,14 +399,7 @@ export const MuntakhibMaqamReports = () => {
   );
 
   useEffect(() => {
-    document.getElementById("studyCircleMentioned-decided").value = totalHalqay;
-    document.getElementById("ijtRafaqa-decided").value = totalHalqay;
-    document.getElementById("darseQuran-decided").value = parseFloat(
-      totalHalqay + subTotalHalqay
-    );
-    document.getElementById("ijtKarkunan-decided").value = parseFloat(
-      totalHalqay + subTotalHalqay
-    );
+    
     document.getElementById("paighamEvent-decided").value = busmTotalUnits;
     document.getElementById("shaheenMeeting-decided").value = busmTotalUnits;
   }, [totalHalqay, subTotalHalqay, busmTotalUnits]);
@@ -412,9 +413,8 @@ export const MuntakhibMaqamReports = () => {
     }
   });
   return (
-   
-      <div className="reports overflow-y-scroll">
-        <div>
+    <div className="reports overflow-y-scroll">
+      <div>
         <button
           type="button"
           className="p-2"
@@ -424,101 +424,97 @@ export const MuntakhibMaqamReports = () => {
         </button>
 
         <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
-            {" "}
-            جائزہ کارکردگی رپورٹ (برائے منتخب مقام)
-          </h2>
+          {" "}
+          جائزہ کارکردگی رپورٹ (برائے منتخب مقام)
+        </h2>
       </div>
-        <form
-          className="flex flex-col justify-center items-center p-4 font-notoUrdu mb-5"
-          dir="rtl"
-          onSubmit={handleSubmit}
-          id="maqam-form"
-        >
-         
-          
-
-          <div className="w-full">
-            <div>
-              <GeneralInfo
-                setMonth={setMonth}
-                month={month}
-                me={me}
-                area={"مقام"}
-                view={view}
-              />
-            </div>
-            <div className="mb-4">
-              <Jamiaat view={view} />
-            </div>
-            <div className="mb-4">
-              <Colleges view={view} />
-            </div>
-            <div className="mb-4">
-              <Tanzeem view={view} />
-            </div>
-            <div className="mb-4">
-              <IfradiKuwat view={view} />
-            </div>
-            <div className="mb-4">
-              <MarkaziActivities view={view} />
-            </div>
-            <div className="mb-4">
-              <ZailiActivities view={view} />
-            </div>
-            <div className="mb-4">
-              <OtherActivities view={view} />
-            </div>
-            <div className="mb-4">
-              <ToseeDawat />
-            </div>
-            <div className="mb-4">
-              <Library />
-            </div>
-            <div className="mb-4">
-              <PaighamDigest view={view} />
-            </div>
-            <div className="mb-4">
-              <Baitulmal view={view} />
-            </div>
-            <div className="mb-4">
-              <RozOShabDiary view={view} />
-            </div>
-            <div className="w-full flex p-2">
-              <label htmlFor="comments">تبصرہ</label>
-              <input
-                type="text"
-                required
-                name="comments"
-                maxLength={150}
-                className="border-b-2 border-dashed w-full"
-                id="comments"
-                readOnly={view}
-              />
-            </div>
-            {!view && (
-              <div className="w-full flex flex-col items-end gap-3 p-2">
-                <div>
-                  <label htmlFor="nazim">نام ناظمِ:</label>
-                  <input
-                    type="text"
-                    className="border-b-2 border-dashed text-center"
-                    id="nazim"
-                    defaultValue={me?.name || ""}
-                    readOnly
-                  />
-                </div>
-              </div>
-            )}
+      <form
+        className="flex flex-col justify-center items-center p-4 font-notoUrdu mb-5"
+        dir="rtl"
+        onSubmit={handleSubmit}
+        id="maqam-form"
+      >
+        <div className="w-full">
+          <div>
+            <GeneralInfo
+              setMonth={setMonth}
+              month={month}
+              me={me}
+              area={"مقام"}
+              view={view}
+            />
+          </div>
+          <div className="mb-4">
+            <Jamiaat view={view} />
+          </div>
+          <div className="mb-4">
+            <Colleges view={view} />
+          </div>
+          <div className="mb-4">
+            <Tanzeem view={view} />
+          </div>
+          <div className="mb-4">
+            <IfradiKuwat view={view} />
+          </div>
+          <div className="mb-4">
+            <MarkaziActivities view={view} />
+          </div>
+          <div className="mb-4">
+            <ZailiActivities view={view} />
+          </div>
+          <div className="mb-4">
+            <OtherActivities view={view} />
+          </div>
+          <div className="mb-4">
+            <ToseeDawat />
+          </div>
+          <div className="mb-4">
+            <Library />
+          </div>
+          <div className="mb-4">
+            <PaighamDigest view={view} />
+          </div>
+          <div className="mb-4">
+            <Baitulmal view={view} />
+          </div>
+          <div className="mb-4">
+            <RozOShabDiary view={view} />
+          </div>
+          <div className="w-full flex p-2">
+            <label htmlFor="comments">تبصرہ</label>
+            <input
+              type="text"
+              required
+              name="comments"
+              maxLength={150}
+              className="border-b-2 border-dashed w-full"
+              id="comments"
+              readOnly={view}
+            />
           </div>
           {!view && (
-            <div className="w-full">
-              <button disabled={loading} className="btn btn-primary">
-                {id ? "Update" : "Add"}
-              </button>
+            <div className="w-full flex flex-col items-end gap-3 p-2">
+              <div>
+                <label htmlFor="nazim">نام ناظمِ:</label>
+                <input
+                  type="text"
+                  className="border-b-2 border-dashed text-center"
+                  id="nazim"
+                  defaultValue={me?.name || ""}
+                  readOnly
+                />
+              </div>
             </div>
           )}
-        </form>
-      </div>
-  
+        </div>
+        {!view && (
+          <div className="w-full">
+            <button disabled={loading} className="btn btn-primary">
+              {id ? "Update" : "Add"}
+            </button>
+          </div>
+        )}
+      </form>
+    </div>
   );
 };

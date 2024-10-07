@@ -11,10 +11,15 @@ import {
 } from "../../context";
 import instance from "../../api/instrance";
 
-export const FilterDialog = ({ setFilterAllData, tab ,setIsFilter,setNoReports}) => {
+export const FilterDialog = ({
+  setFilterAllData,
+  tab,
+  setIsFilter,
+  setNoReports,
+  setSearchData,
+  setIsSearch,
+}) => {
   const { active, setActive } = useContext(UIContext);
-
-  // const [showNotification, setShowNotification] = useState(false);
 
   const [areas, setAreas] = useState([]);
   const [searchArea, setSearchArea] = useState("");
@@ -28,23 +33,33 @@ export const FilterDialog = ({ setFilterAllData, tab ,setIsFilter,setNoReports})
   const ilaqas = useContext(IlaqaContext);
   const tehsils = useContext(TehsilContext);
   const { dispatch } = useToastState();
-  
+  const { setLoading } = useContext(UIContext);
+
+  // Function to reset the form inputs
+  const resetForm = () => {
+    setUserAreaType("");
+    setSearchArea("");
+    setSelectedMonth("");
+    setSelectedId("");
+    document.getElementById("filter-area-dialog-close-btn").click();
+    document.getElementById("autocomplete").value = "";
+    document.getElementById("autocomplete-list").classList.add("hidden");
+  };
+
   const getAreaType = (area) => {
-    
     if (area?.parentType === "Maqam") {
       const name = maqams?.find((i) => i?._id === area?.parentId);
-      return `${name?.name}(Maqam)`;
+      return `${area?.parentId?.name}(Maqam)`;
     } else if (area?.parentType === "Tehsil") {
       const tehsil = tehsils?.find((i) => i._id === area.parentId);
-
-      // const name = getDivisionByTehsil(tehsil, districts);
-      return `${tehsil?.district?.division?.name}(Division)`;
+      return `${area?.parentId?.name}(Tehsil)`;
     } else if (area?.parentType === "Ilaqa") {
       const ilaqa = ilaqas?.find((i) => i?._id === area?.parentId)?.name;
-      
-      return `${ilaqa}(Ilaqa)`;
+      return `${area?.parentId?.name}(Ilaqa)`;
     } else if (area?.province) {
       return maqams?.find((i) => i?._id === area?._id) ? "Maqam" : "Division";
+    } else if (area?.country) {
+      return "Pakistan";
     } else if (area?.name === "Pakistan") {
       return "";
     } else {
@@ -54,22 +69,31 @@ export const FilterDialog = ({ setFilterAllData, tab ,setIsFilter,setNoReports})
 
   const getFilterData = async () => {
     try {
-     
-      const req = await instance.get(`/reports/${userAreaType ==="country" ? "markaz": userAreaType}/${selectedId}`, {
-        params: { date: selectedMonth },
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("@token")}`,
-          "Content-Type": "application/json",
-        },
-      });
- 
-      setFilterAllData([req?.data?.data]);
+      setLoading(true);
+      const req = await instance.get(
+        `/reports/${
+          userAreaType === "country" ? "markaz" : userAreaType
+        }/${selectedId}`,
+        {
+          params: { date: selectedMonth },
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      setSearchData([req?.data?.data]);
       dispatch({ type: "SUCCESS", payload: req.data?.message });
+      resetForm();
+      setLoading(false);
     } catch (err) {
+      setLoading(false);
       dispatch({ type: "ERROR", payload: err?.response?.data?.message });
-      setNoReports(true)
+      setNoReports(true);
     }
   };
+
   const getAreaWithType = () => {
     switch (userAreaType) {
       case "province":
@@ -81,8 +105,8 @@ export const FilterDialog = ({ setFilterAllData, tab ,setIsFilter,setNoReports})
       case "division":
         setAreas(divisions);
         break;
-        case "country":
-        setAreas([{name: "Pakistan", _id: "66011a6296a6587786ad2e49"}]);
+      case "country":
+        setAreas([{ name: "Pakistan", _id: "66011a6296a6587786ad2e49" }]);
         break;
       case "maqam":
         setAreas(maqams);
@@ -108,9 +132,8 @@ export const FilterDialog = ({ setFilterAllData, tab ,setIsFilter,setNoReports})
 
   useEffect(() => {
     if (active) getAreaWithType();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAreaType]);
-  
+
   return (
     <div className="modal-box md:min-h-[300px] min-h-[200px]">
       <form method="dialog" className="mb-3">
@@ -118,16 +141,7 @@ export const FilterDialog = ({ setFilterAllData, tab ,setIsFilter,setNoReports})
           id="filter-area-dialog-close-btn"
           className=" btn-sm btn-circle btn-ghost text-white bg-primary absolute right-2 top-2"
           onClick={() => {
-            setUserAreaType("");
-            if (
-              !document
-                .getElementById("autocomplete-list")
-                .classList.contains("hidden")
-            ) {
-              document
-                .getElementById("autocomplete-list")
-                .classList.add("hidden");
-            }
+            resetForm(); // Reset form on close
           }}
         >
           ✕
@@ -216,15 +230,6 @@ export const FilterDialog = ({ setFilterAllData, tab ,setIsFilter,setNoReports})
                     document
                       .getElementById("autocomplete-list")
                       .classList.add("hidden");
-                    if (
-                      !document
-                        .getElementById("autocomplete-list")
-                        .classList.contains("hidden")
-                    ) {
-                      document
-                        .getElementById("autocomplete-list")
-                        .classList.add("hidden");
-                    }
                   }}
                   className="p-2 cursor-pointer hover:bg-gray-100"
                 >
@@ -244,13 +249,14 @@ export const FilterDialog = ({ setFilterAllData, tab ,setIsFilter,setNoReports})
           <button
             className="font-inter w-full text-[14px] bg-primary flex justify-center text-white p-2 rounded font-medium leading-[20px] text-left"
             onClick={() => {
-              document.getElementById("filter-area-dialog-close-btn").click();
+              
               getFilterData();
-              setUserAreaType("");
-              setIsFilter(true)
+              resetForm(); 
+              setIsFilter(true);
+              setIsSearch(true);
             }}
           >
-           Filter
+            Filter
           </button>
         </div>
       </div>

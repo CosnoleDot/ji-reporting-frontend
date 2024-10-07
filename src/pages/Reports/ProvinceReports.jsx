@@ -56,7 +56,7 @@ export const ProvinceReports = () => {
 
         if (req) {
           setSearchData([]);
-          setSearchData(req.data?.data);
+          setSearchData(req.data?.data?.data);
         }
       } catch (err) {
         console.log(err);
@@ -385,7 +385,7 @@ export const ProvinceReports = () => {
           </div>
         </>
       ) : !noReports ? (
-        <SearchPage data={searchData?.data} area={"province"} />
+        <SearchPage data={searchData} area={"province"} />
       ) : (
         <NoReports />
       )}
@@ -395,6 +395,8 @@ export const ProvinceReports = () => {
           setFilterAllData={setFilterAllData}
           setIsFilter={setIsFilter}
           setNoReports={setNoReports}
+          setSearchData={setSearchData}
+          setIsSearch={setIsSearch}
         />
       </dialog>
     </>

@@ -42,11 +42,10 @@ export const HalqaReports = () => {
         }
       );
 
-      
-        setData([]);
-        setFilterAllData([]);
-        setData(req.data.data?.data);
-    
+      setData([]);
+      setFilterAllData([]);
+      setData(req.data.data?.data);
+
       setLength(req.data.data.length);
     } catch (err) {
       console.log(err);
@@ -64,6 +63,8 @@ export const HalqaReports = () => {
 
   const searchResults = async () => {
     showSearch(false);
+    setLoading(true);
+
     if (year !== "" && month !== "") {
       try {
         setIsSearch(true);
@@ -79,14 +80,18 @@ export const HalqaReports = () => {
         if (req) {
           setSearchData(req.data.data?.data);
         }
+        setLoading(false);
       } catch (err) {
         console.log(err);
+        setLoading(false);
+
         dispatch({
           type: "ERROR",
           payload: err?.response?.data?.message || err?.message,
         });
       }
     }
+    setLoading(false);
   };
 
   const toggleSearch = () => {
@@ -134,9 +139,9 @@ export const HalqaReports = () => {
     setMonth("");
     setYear("2023");
     setIsSearch(false);
+    setSearchData([])
     setIsFilter(false);
     setNoReports(false);
-    setFilterAllData([]);
   };
 
   useEffect(() => {
@@ -282,7 +287,6 @@ export const HalqaReports = () => {
           {me?.userAreaType !== "Halqa" && (
             <button
               onClick={() => {
-                setFilterAllData([]);
                 document.getElementById("filter-area-dialog").showModal();
                 setIsSearch(false);
               }}
@@ -480,6 +484,8 @@ export const HalqaReports = () => {
           tab={tab}
           setIsFilter={setIsFilter}
           setNoReports={setNoReports}
+          setSearchData={setSearchData}
+          setIsSearch={setIsSearch}
         />
       </dialog>
     </>
