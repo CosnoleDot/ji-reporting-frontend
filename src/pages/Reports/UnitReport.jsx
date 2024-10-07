@@ -403,6 +403,8 @@ export const UnitReport = () => {
         <FilterDialog
           setFilterAllData={setFilterAllData}
           setIsFilter={setIsFilter}
+          setSearchData={setSearchData}
+          setIsSearch={setIsSearch}
         />
       </dialog>
     </>

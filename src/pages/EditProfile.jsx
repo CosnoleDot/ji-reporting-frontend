@@ -33,7 +33,7 @@ export const EditProfile = () => {
       const formData = new FormData();
       formData.append("profileImage", file);
       const response = await axios.post(
-        `https://apiv2.staging.jamiatreporting.com/api/v1/user/upload`,
+        `https://apiv2.jamiatreporting.com/api/v1/user/upload`,
         formData,
         {
           headers: {
@@ -60,7 +60,7 @@ export const EditProfile = () => {
       const formData = new FormData();
       formData.append("profileImage", file);
       const response = await axios.put(
-        `https://apiv2.staging.jamiatreporting.com/api/v1/user/upload/${me?.profileImage}`,
+        `https://apiv2.jamiatreporting.com/api/v1/user/upload/${me?.profileImage}`,
         formData,
         {
           headers: {
@@ -452,7 +452,7 @@ export const EditProfile = () => {
                     backgroundImage: image
                       ? `url(${image})` // Display the selected file if available
                       : me?.profileImage
-                      ? `url(https://apiv2.staging.jamiatreporting.com/api/v1/user/upload/${me?.profileImage})` // Display profileImage if available
+                      ? `url(https://apiv2.jamiatreporting.com/api/v1/user/upload/${me?.profileImage})` // Display profileImage if available
                       : `url(${logo})`, // Fallback to the logo
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",

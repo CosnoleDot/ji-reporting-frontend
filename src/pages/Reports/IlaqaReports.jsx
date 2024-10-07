@@ -76,7 +76,6 @@ export const IlaqaReports = () => {
   const clearFilters = () => {
     setMonth("");
     setYear("2023");
-    setCurrentPage(1)
     setNoReports(false);
     setIsFilter(false);
     setIsSearch(false);
@@ -399,13 +398,15 @@ export const IlaqaReports = () => {
         </>
       ) : (
         !noReports ? 
-        <SearchPage data={!isFilter ?searchData : filterAllData} area={"ilaqa"} /> : <NoReports/>
+        <SearchPage data={searchData} area={"ilaqa"} /> : <NoReports/>
       )}
       <dialog id="filter-area-dialog" className="modal">
         <FilterDialog
           setFilterAllData={setFilterAllData}
           setIsFilter={setIsFilter}
           setNoReports={setNoReports}
+          setSearchData={setSearchData}
+          setIsSearch={setIsSearch}
         />
       </dialog>
     </>

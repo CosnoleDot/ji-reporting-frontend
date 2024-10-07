@@ -841,14 +841,12 @@ export const Comparision = () => {
     };
   }, []);
   const getDivName = (area, type) => {
-    console.log(type, "aaa");
     if (reportType === "halqa") {
       if (type === "Tehsil") {
         let div = districts?.find((i) => area?.parentId?.district === i._id);
         return `${div?.division?.name}(Division) - ${div?.division?.province?.name}`;
       } else if (type === "Ilaqa") {
         let maqam = maqams.find((i) => area?.parentId?.maqam === i?._id);
-        console.log(maqams, "aaa");
         return `${area?.parentId?.name}(Ilaqa) - ${maqam?.name}(Maqam)`;
       } else if (type === "Maqam") {
         return `${area?.parentId?.name}(Maqam)`;

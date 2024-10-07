@@ -405,6 +405,8 @@ export const DivisionReports = () => {
           setFilterAllData={setFilterAllData}
           setIsFilter={setIsFilter}
           setNoReports={setNoReports}
+          setSearchData={setSearchData}
+          setIsSearch={setIsSearch}
         />
       </dialog>
     </>
