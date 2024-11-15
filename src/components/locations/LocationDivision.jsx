@@ -337,21 +337,23 @@ export const LocationDivision = () => {
           },
         }
       );
-      switch (view) {
-        case "halqa":
-          getHalqas();
-          break;
-        case "tehsil":
-          getTehsils();
-          break;
-        case "district":
-          getDistricts();
-          break;
-        case "division":
-          getDivisions();
-          break;
-        default:
-          break;
+      if (req) {
+        switch (view) {
+          case "halqa":
+            getHalqas();
+            break;
+          case "tehsil":
+            getTehsils();
+            break;
+          case "district":
+            getDistricts();
+            break;
+          case "division":
+            getDivisions();
+            break;
+          default:
+            break;
+        }
       }
       dispatch({ type: "SUCCESS", payload: req.data?.message });
     } catch (err) {
@@ -408,7 +410,26 @@ export const LocationDivision = () => {
     }
     setCurrentPage(1); // Reset to the first page after search
   };
- 
+
+  const fetchAreas = async () => {
+    if (tehsils.length === 0) {
+      setLoading(true);
+      await getTehsils();
+      setLoading(false);
+    }
+    if (divisions.length === 0) {
+      await getDivisions();
+    }
+    if (districts.length === 0) {
+      await getDistricts();
+    }
+    if (halqas.length === 0) {
+      await getHalqas();
+    }
+  };
+  useEffect(() => {
+    fetchAreas();
+  }, []);
   return (
     <>
       <div className="w-full flex flex-wrap gap-2 justify-end items-center">

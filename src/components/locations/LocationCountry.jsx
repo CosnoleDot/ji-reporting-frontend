@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { ProvinceContext, useToastState } from "../../context";
 import instance from "../../api/instrance";
-import { FaEdit } from "react-icons/fa";
 import { UIContext } from "../../context/ui";
 export const LocationCountry = () => {
   const provinces = useContext(ProvinceContext);
@@ -69,9 +68,12 @@ export const LocationCountry = () => {
     }
     setLoading(false);
   };
+  const fetchProvinces = async () => {
+    await getProvinces();
+  };
   useEffect(() => {
-    setData(provinces);
-  }, [provinces]);
+    fetchProvinces();
+  }, []);
   return (
     <>
       <div className="w-full flex justify-end items-center ">
@@ -105,9 +107,11 @@ export const LocationCountry = () => {
             </tr>
           </thead>
           <tbody>
-            {data?.map((province, index) => (
+            {provinces?.map((province, index) => (
               <tr key={index} className="border border-t-0">
-                <td className="font-inter text-[14px] font-medium leading-[16.94px] text-left">{province?.name}</td>
+                <td className="font-inter text-[14px] font-medium leading-[16.94px] text-left">
+                  {province?.name}
+                </td>
                 <td className="flex justify-end items-center gap-4 ">
                   <button
                     disabled={loading}

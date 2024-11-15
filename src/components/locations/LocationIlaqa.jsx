@@ -1,8 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { HalqaContext, IlaqaContext, useToastState } from "../../context";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import instance from "../../api/instrance";
-import { FaEdit } from "react-icons/fa";
 import { UIContext } from "../../context/ui";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
@@ -112,7 +111,6 @@ export const LocationIlaqa = () => {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = halqas.slice(indexOfFirstItem, indexOfLastItem);
-
   return (
     <>
       <div className="w-full flex flex-wrap gap-2 justify-end items-center">

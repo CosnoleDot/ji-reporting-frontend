@@ -10,7 +10,6 @@ import {
 import { Link, useLocation } from "react-router-dom";
 import instance from "../../api/instrance";
 import { UIContext } from "../../context/ui";
-import { FcViewDetails } from "react-icons/fc";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { FaEye } from "react-icons/fa";
 export const LocationMaqam = () => {
@@ -19,6 +18,7 @@ export const LocationMaqam = () => {
   const halqas = useContext(HalqaContext);
   const ilaqas = useContext(IlaqaContext);
   const areaDetails = useContext(ViewDetails);
+  const [isCalled, setIsCalled] = useState(false);
   const {
     getHalqas,
     getMaqams,
@@ -280,7 +280,7 @@ export const LocationMaqam = () => {
   const handleDisable = async (id, disabled) => {
     setLoading(true);
     try {
-      await instance.patch(
+      const req = await instance.patch(
         `/locations/${view}/disable-location/${id}`,
         { disabled },
         {
@@ -289,6 +289,7 @@ export const LocationMaqam = () => {
           },
         }
       );
+
       const getAreas = () => {
         switch (view) {
           case "halqa":
@@ -306,7 +307,9 @@ export const LocationMaqam = () => {
             break;
         }
       };
-      getAreas();
+      if (req) {
+        getAreas();
+      }
     } catch (err) {
       dispatch({ type: "ERROR", payload: err?.response?.data?.message });
     }
@@ -349,7 +352,24 @@ export const LocationMaqam = () => {
     }
     setCurrentPage(1); // Reset to the first page after search
   };
-
+  const fetchAreas = async () => {
+    setIsCalled(true);
+    if (maqams.length === 0) {
+      await getMaqams();
+    }
+    if (ilaqas.length === 0) {
+      await getIlaqas();
+      setMuntakhib(true);
+    }
+    if (halqas.length === 0) {
+      await getHalqas();
+    }
+  };
+  useEffect(() => {
+    if (!isCalled) {
+      fetchAreas();
+    }
+  }, []);
   return (
     <>
       <div className="w-full flex flex-wrap gap-2 justify-end items-center">
