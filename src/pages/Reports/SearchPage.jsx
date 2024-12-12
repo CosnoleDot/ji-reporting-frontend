@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import moment from "moment";
-import { FaEdit, FaEye, FaPrint } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { LuSearchX } from "react-icons/lu";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
@@ -25,7 +24,7 @@ export const SearchPage = ({ data, area }) => {
     navigate(`edit/${id}`);
   };
   const handlePrint = (id) => {
-    window.open(`halqa-report/print/${id}`, "blank");
+    window.location.href(`halqa-report/print/${id}`, "blank");
   };
 
   const handlePrevPageSearch = () => {

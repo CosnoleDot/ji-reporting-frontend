@@ -9,7 +9,7 @@ import { FaCross, FaCut, FaEdit, FaEye, FaPrint } from "react-icons/fa";
 import moment from "moment";
 import { NoReports, months } from "../Reports";
 import { FilterDialog } from "./FilterDialog";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UIContext } from "../../context/ui";
 import instance from "../../api/instrance";
 import { SearchPage } from "./SearchPage";
@@ -28,7 +28,7 @@ export const CountryReport = () => {
   const [searchData, setSearchData] = useState([]);
   const [year, setYear] = useState("2024");
   const me = useContext(MeContext);
-  const { getMarkazReport , setLoading } = useContext(UIContext);
+  const { getMarkazReport, setLoading } = useContext(UIContext);
   const [isFilter, setIsFilter] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [noReports, setNoReports] = useState(false);
@@ -45,7 +45,7 @@ export const CountryReport = () => {
     setFilterAllData(uniqueArray);
   }, [cReports]);
   const searchResults = async () => {
-    setLoading(true)
+    setLoading(true);
     showSearch(false);
     if (year !== "" && month !== "") {
       try {
@@ -71,7 +71,7 @@ export const CountryReport = () => {
         });
       }
     }
-    setLoading(false)
+    setLoading(false);
   };
   const toggleSearch = () => {
     showSearch(!search);
@@ -221,7 +221,6 @@ export const CountryReport = () => {
             <button
               onClick={() => {
                 document.getElementById("filter-area-dialog").showModal();
-                
               }}
               className={`font-inter px-2 bg-primary flex justify-center text-white p-1 md:p-[6px] text-[12px] md:text-[14px] mb-1 rounded font-medium leading-[20px] text-left ${
                 !isMobileView ? "join-item" : "ms-3"
@@ -293,12 +292,12 @@ export const CountryReport = () => {
                               Edit
                             </span>
                           )}
-                          <span
-                            onClick={() => handlePrint(p?._id)}
+                          <Link
+                            to={`/markaz-report/print/${p?._id}`}
                             className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left text-blue"
                           >
                             Print
-                          </span>
+                          </Link>
                         </div>
                       </td>
                     </tr>

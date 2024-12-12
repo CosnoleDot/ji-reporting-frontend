@@ -4,7 +4,7 @@ import { FaEdit, FaEye, FaPrint } from "react-icons/fa";
 import moment from "moment";
 import { NoReports, months } from "../Reports";
 import { FilterDialog } from "./FilterDialog";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UIContext } from "../../context/ui";
 import instance from "../../api/instrance";
 import { SearchPage } from "./SearchPage";
@@ -40,7 +40,7 @@ export const ProvinceReports = () => {
     setFilterAllData(uniqueArray);
   }, [pReports]);
   const searchResults = async () => {
-    setLoading(true)
+    setLoading(true);
     showSearch(false);
     if (year !== "" && month !== "") {
       try {
@@ -66,7 +66,7 @@ export const ProvinceReports = () => {
         });
       }
     }
-    setLoading(false)
+    setLoading(false);
   };
   const toggleSearch = () => {
     showSearch(!search);
@@ -288,12 +288,12 @@ export const ProvinceReports = () => {
                               Edit
                             </span>
                           )}
-                          <span
-                            onClick={() => handlePrint(p?._id)}
+                          <Link
+                            to={`/province-report/print/${p?._id}`}
                             className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left text-blue"
                           >
                             Print
-                          </span>
+                          </Link>
                         </div>
                       </td>
                     </tr>
@@ -350,7 +350,7 @@ export const ProvinceReports = () => {
                 </button>
               )}
               {totalPages > 3 && <span>...</span>}
-              {(totalPages && currentPage > 2 && currentPage < totalPages) ? (
+              {totalPages && currentPage > 2 && currentPage < totalPages ? (
                 <span
                   className={`rounded-full text-bold text-sm ${
                     currentPage !== totalPages && "border-2 border-gray-500"
@@ -358,7 +358,9 @@ export const ProvinceReports = () => {
                 >
                   {currentPage}
                 </span>
-              ): <span></span>}
+              ) : (
+                <span></span>
+              )}
               {totalPages && totalPages > 2 ? (
                 <span
                   className={`rounded-full text-bold text-sm ${
@@ -367,7 +369,9 @@ export const ProvinceReports = () => {
                 >
                   {totalPages}
                 </span>
-              ): <span></span>}
+              ) : (
+                <span></span>
+              )}
             </div>
 
             {/* Next Button */}

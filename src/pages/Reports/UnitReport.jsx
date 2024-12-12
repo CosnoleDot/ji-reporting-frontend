@@ -87,7 +87,7 @@ export const UnitReport = () => {
     navigate(`edit/${id}`);
   };
   const handlePrint = (id) => {
-    window.open(`halqa-report/print/${id}`, "blank");
+    window.location.href(`halqa-report/print/${id}`);
   };
 
   let totalPages = Math.ceil(total / itemsPerPage);

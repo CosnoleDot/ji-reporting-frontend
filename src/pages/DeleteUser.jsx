@@ -17,7 +17,6 @@ import {
 } from "../context";
 import instance from "../api/instrance";
 import { RiDeviceRecoverFill } from "react-icons/ri";
-import { FcViewDetails } from "react-icons/fc";
 import { decryptData } from "../utils";
 import { IoEyeOutline } from "react-icons/io5";
 export const DeleteUser = () => {

@@ -115,7 +115,6 @@ function App() {
   );
   let length;
   let dis;
-
   const getMe = async () => {
     try {
       sessionStorage.removeItem("storedData");
@@ -452,6 +451,7 @@ function App() {
     }
   };
   const getHalqas = async () => {
+    setLoading(true);
     try {
       let req;
       if (me && me?.userAreaType === "Halqa") {
@@ -461,6 +461,7 @@ function App() {
           },
         });
         if (req) {
+          setLoading(false);
           setHalqas([req?.data?.data]);
         } else {
           dispatch({
@@ -482,6 +483,7 @@ function App() {
           }
         }
       }
+      setLoading(false);
     } catch (err) {
       console.log(err);
       setLoading(false);
@@ -499,7 +501,6 @@ function App() {
       setMuntakhibMaqam(false);
     }
   };
-  useEffect(() => {}, [muntakhibMaqam]);
   let provinceR, maqamR, divisionR, halqaR, ilaqaR, markazR, halqaT;
   const getMarkazReport = async (inset, offset) => {
     if (me?.userAreaType === "Country")
@@ -782,6 +783,7 @@ function App() {
       const req = await instance.get("/user/nazim", {
         headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
       });
+      console.log("nazim", req);
       if (req) setNazim(req?.data?.data);
       setLoading(false);
     } catch (err) {
@@ -1013,34 +1015,9 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authenticated]);
   useEffect(() => {
-    function sleep(ms) {
-      return new Promise((resolve) => setTimeout(resolve, ms));
-    }
     const fetchData = async () => {
-      // setCount((100 / 16) * 1);
-      // setValue("Fetching provinces");
-      // await getProvinces();
-      // setCount((100 / 16) * 2);
-      // setValue("Fetching maqams");
-      // await getMaqams();
-      // setCount((100 / 16) * 3);
-      // setValue("Fetching Ilaqas");
-      // await getIlaqas();
-      // setCount((100 / 16) * 4);
-      // setValue("Fetching divisions");
-      // await getDivisions();
-      // setCount((100 / 16) * 5);
-      // setValue("Fetching districts");
-      // await getDistricts();
-      // setCount((100 / 16) * 6);
-      // setValue("Fetching tehsils");
-      // await getTehsils();
-      // setCount((100 / 16) * 7);
-      // setValue("Fetching halqas");
-      // await getHalqas();
-      // setCount((100 / 16) * 13);
-      // setValue("Fetching user");
-      // await getNazim();
+      setValue("Fetching user");
+      await getNazim();
       setCount((100 / 16) * 14);
       setValue("Fetching user requests");
       await getAllRequests();

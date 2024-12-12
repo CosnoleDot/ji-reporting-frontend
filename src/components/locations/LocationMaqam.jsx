@@ -12,6 +12,7 @@ import instance from "../../api/instrance";
 import { UIContext } from "../../context/ui";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { FaEye } from "react-icons/fa";
+import { validateForm, validateSnakeCase } from "../../utils";
 export const LocationMaqam = () => {
   const provinces = useContext(ProvinceContext);
   const maqams = useContext(MaqamContext);
@@ -36,7 +37,16 @@ export const LocationMaqam = () => {
   const [isIlaqa, setIsIlaqa] = useState(false);
   const params = useLocation();
   const [muntakhib, setMuntakhib] = useState(ilaqas?.length > 0 ? true : false);
-
+  const [message, setMessage] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [paginatedData, setPaginatedData] = useState([]);
+  const handleKeyDown = (e) => {
+    if (e.key === " ") {
+      setMessage("Please use '_' for space.");
+    } else {
+      setMessage("");
+    }
+  };
   useEffect(() => {
     setLoading(true); // Set loading to true before fetching data
     const getQueryParams = () => {
@@ -115,14 +125,25 @@ export const LocationMaqam = () => {
       }
     }
   }, [halqas, maqams, ilaqas]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const itemsPerPage = 10; // Adjust this as needed
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
-  const paginatedData = filteredData.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
+  // Compute the displayed items based on the current page
+
+  useEffect(() => {
+    const dataToPaginate = filteredData;
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = currentPage * itemsPerPage;
+    setPaginatedData(dataToPaginate.slice(startIndex, endIndex));
+  }, [currentPage, filteredData, value]);
+
+  const handlePreviousPage = () => {
+    setCurrentPage((prev) => Math.max(prev - 1, 1));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  };
   const [form, setForm] = useState({
     name: "",
     province: "",
@@ -136,13 +157,24 @@ export const LocationMaqam = () => {
   const [formHalqa, setFormHalqa] = useState({
     name: "",
     parentId: "",
-    parentType: isIlaqa ? "Ilaqa" : "Maqam",
+    parentType: "",
     unitType: "",
   });
 
+  // ****************MAQAM************************
+
   const handleSubmit = async () => {
-    setLoading(true);
+    if (!validateForm(form)) {
+      alert("All fields are required. Please fill out all fields.");
+      return;
+    }
+    if (validateSnakeCase(form.name)) {
+      console.log("Form Submitted:", form.name);
+    } else {
+      alert("Please use snake_case format.");
+    }
     try {
+      setLoading(true);
       const req = await instance.post("/locations/maqam", form, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("@token")}`,
@@ -183,9 +215,20 @@ export const LocationMaqam = () => {
     setLoading(false);
   };
 
+  // ****************HALQA************************
+
   const handleSubmitHalqa = async () => {
-    setLoading(true);
+    if (!validateForm(formHalqa)) {
+      alert("All fields are required. Please fill out all fields.");
+      return;
+    }
+    if (validateSnakeCase(formHalqa.name)) {
+      console.log("Form Submitted:", formHalqa.name);
+    } else {
+      alert("Please use snake_case format.");
+    }
     try {
+      setLoading(true);
       const req = await instance.post("/locations/halqa", formHalqa, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("@token")}`,
@@ -199,7 +242,7 @@ export const LocationMaqam = () => {
       setFormHalqa({
         name: "",
         parentId: "",
-        parentType: isIlaqa ? "Ilaqa" : "Maqam",
+        parentType: "",
         unitType: "",
       });
     } catch (err) {
@@ -229,9 +272,20 @@ export const LocationMaqam = () => {
     setLoading(false);
   };
 
+  // ****************ILAQA************************
+
   const handleSubmitIlaqa = async () => {
-    setLoading(true);
+    if (!validateForm(ilaqaForm)) {
+      alert("All fields are required. Please fill out all fields.");
+      return;
+    }
+    if (validateSnakeCase(ilaqaForm.name)) {
+      console.log("Form Submitted:", ilaqaForm.name);
+    } else {
+      alert("Please use snake_case format.");
+    }
     try {
+      setLoading(true);
       const req = await instance.post("/locations/ilaqa", ilaqaForm, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("@token")}`,
@@ -277,11 +331,27 @@ export const LocationMaqam = () => {
     setLoading(false);
   };
 
-  const handleDisable = async (id, disabled) => {
-    setLoading(true);
+  const handleDisable = async (area, disabled) => {
+    // Validation for active child counts
+    if (
+      area.activeHalqaCount > 0 ||
+      area.activeTehsilCount > 0 ||
+      area.activeDistrictCount > 0 ||
+      area.activeMaqamCount > 0 ||
+      area.activeDivisionCount > 0 ||
+      area.activeIlaqaCount > 0
+    ) {
+      dispatch({
+        type: "ERROR",
+        payload:
+          "Parent cannot be disabled until all child entities are disabled.",
+      });
+      return;
+    }
     try {
+      setLoading(true);
       const req = await instance.patch(
-        `/locations/${view}/disable-location/${id}`,
+        `/locations/${view}/disable-location/${area?._id}`,
         { disabled },
         {
           headers: {
@@ -293,9 +363,7 @@ export const LocationMaqam = () => {
       const getAreas = () => {
         switch (view) {
           case "halqa":
-            setLoading(true);
             getHalqas();
-            setLoading(false);
             break;
           case "maqam":
             getMaqams();
@@ -308,6 +376,11 @@ export const LocationMaqam = () => {
         }
       };
       if (req) {
+        const updatedData = filteredData.map((item) =>
+          item._id === area._id ? { ...item, disabled } : item
+        );
+        setPaginatedData(updatedData);
+        dispatch({ type: "SUCCESS", payload: req.data?.message });
         getAreas();
       }
     } catch (err) {
@@ -370,6 +443,7 @@ export const LocationMaqam = () => {
       fetchAreas();
     }
   }, []);
+
   return (
     <>
       <div className="w-full flex flex-wrap gap-2 justify-end items-center">
@@ -416,7 +490,8 @@ export const LocationMaqam = () => {
               setFormHalqa({
                 name: "",
                 parentId: "",
-                parentType: isIlaqa ? "Ilaqa" : "Maqam",
+                parentType: "",
+                unitType: "",
               });
               document.getElementById("add_halqa_modal").showModal();
               setEditMode(false);
@@ -520,9 +595,9 @@ export const LocationMaqam = () => {
                       <input
                         type="checkbox"
                         className="toggle toggle-white bg-white [--tglbg:#E2E8F0] checked:[--tglbg:#002856]"
-                        defaultChecked={maqam?.disabled}
+                        checked={maqam?.disabled}
                         onChange={() => {
-                          handleDisable(maqam?._id, !maqam?.disabled);
+                          handleDisable(maqam, !maqam?.disabled);
                         }}
                       />
                     </td>
@@ -591,9 +666,9 @@ export const LocationMaqam = () => {
                       <input
                         type="checkbox"
                         className="toggle toggle-white bg-white [--tglbg:#E2E8F0] checked:[--tglbg:#002856]"
-                        defaultChecked={ilaqa?.disabled}
+                        checked={ilaqa?.disabled}
                         onChange={() => {
-                          handleDisable(ilaqa?._id, !ilaqa?.disabled);
+                          handleDisable(ilaqa, !ilaqa?.disabled);
                         }}
                       />
                     </td>
@@ -668,9 +743,9 @@ export const LocationMaqam = () => {
                         <input
                           type="checkbox"
                           className="toggle toggle-white bg-white [--tglbg:#E2E8F0] checked:[--tglbg:#002856]"
-                          defaultChecked={halqa?.disabled}
+                          checked={halqa?.disabled}
                           onChange={() => {
-                            handleDisable(halqa?._id, !halqa?.disabled);
+                            handleDisable(halqa, !halqa?.disabled);
                           }}
                         />
                       </td>
@@ -686,7 +761,8 @@ export const LocationMaqam = () => {
 
       {/* Pagination Controls */}
       {value === "" && (
-        <div className="flex w-full gap-4 px-4 justify-end items-center ">
+        <div className="flex w-full gap-4 px-4 justify-end items-center mt-4">
+          {/* Pagination Controls */}
           <select
             readOnly
             disabled
@@ -699,11 +775,10 @@ export const LocationMaqam = () => {
             </option>
           </select>
 
-          {/* Previous Button */}
           <button
             className="rounded-full border-none w-7 h-7"
             disabled={currentPage === 1}
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            onClick={handlePreviousPage}
           >
             <IoIosArrowBack
               className={`text-[1.5rem] rounded-full bg-gray-200 ${
@@ -712,7 +787,7 @@ export const LocationMaqam = () => {
             />
           </button>
 
-          {/* Page Numbers */}
+          {/* Render Page Numbers */}
           <div className="flex items-center">
             <span
               className={`rounded-full text-bold text-sm ${
@@ -732,7 +807,7 @@ export const LocationMaqam = () => {
               </button>
             )}
             {totalPages > 3 && <span>...</span>}
-            {totalPages && currentPage > 2 && currentPage < totalPages ? (
+            {totalPages && currentPage > 2 && currentPage < totalPages && (
               <span
                 className={`rounded-full text-bold text-sm ${
                   currentPage !== totalPages && "border-2 border-gray-500"
@@ -740,10 +815,8 @@ export const LocationMaqam = () => {
               >
                 {currentPage}
               </span>
-            ) : (
-              <span></span>
             )}
-            {totalPages && totalPages > 2 ? (
+            {totalPages && totalPages > 2 && (
               <span
                 className={`rounded-full text-bold text-sm ${
                   currentPage === totalPages && "border-2 border-gray-500"
@@ -751,18 +824,13 @@ export const LocationMaqam = () => {
               >
                 {totalPages}
               </span>
-            ) : (
-              <span></span>
             )}
           </div>
 
-          {/* Next Button */}
           <button
             className="rounded-full border-none w-7 h-7"
             disabled={currentPage === totalPages}
-            onClick={() =>
-              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-            }
+            onClick={handleNextPage}
           >
             <IoIosArrowForward
               className={`text-[1.5rem] rounded-full bg-gray-200 ${
@@ -807,12 +875,19 @@ export const LocationMaqam = () => {
               <input
                 name="name"
                 type="text"
-                placeholder="Enter Maqam Name"
+                placeholder="Enter_Maqam_Name"
                 value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                onChange={(e) => {
+                  let value = e.target.value;
+                  value = value.trim();
+                  value = value.replace(/[^a-z0-9_]/g, "_");
+                  setForm({ ...form, name: value });
+                }}
+                onKeyDown={handleKeyDown}
                 className="w-full input input-bordered "
                 required
               />
+              {message && <p className="text-red-500">{message}</p>}
             </div>
           </div>
           <div className="modal-action">
@@ -845,6 +920,86 @@ export const LocationMaqam = () => {
           </div>
         </div>
       </dialog>
+      <dialog id="add_ilaqa_modal" className="modal">
+        <div className="modal-box">
+          <h3 className="font-bold text-lg">Add Ilaqa</h3>
+          <div className="space-y-4">
+            <div>
+              <label className="label">
+                <span className="text-base label-text">Maqam</span>
+              </label>
+              <select
+                name="ilaqa"
+                required
+                value={ilaqaForm.maqam}
+                onChange={(e) =>
+                  setIlaqaForm({ ...ilaqaForm, maqam: e.target.value })
+                }
+                className="w-full input input-bordered "
+              >
+                <option value="" disabled>
+                  Select Maqam
+                </option>
+                {maqams
+                  ?.filter((i) => !i?.disabled)
+                  ?.map((i, index) => (
+                    <option value={i?._id} key={index}>
+                      {i?.name}
+                    </option>
+                  ))}
+              </select>
+            </div>
+            <div>
+              <label className="label">
+                <span className="text-base label-text">Ilaqa</span>
+              </label>
+              <input
+                name="name"
+                type="text"
+                placeholder="Enter_Ilaqa_Name"
+                value={ilaqaForm.name}
+                onChange={(e) => {
+                  let value = e.target.value;
+                  value = value.trim();
+                  value = value.replace(/[^a-z0-9_]/g, "_");
+                  setIlaqaForm({ ...ilaqaForm, name: value });
+                }}
+                className="w-full input input-bordered "
+                required
+              />
+              {message && <p className="text-red-500">{message}</p>}
+            </div>
+          </div>
+          <div className="modal-action">
+            {editMode ? (
+              <button
+                disabled={loading}
+                className="px-4 py-2 rounded-md bg-primary text-white capitalize "
+                onClick={handleSubmitEditIlaqa}
+              >
+                Update
+              </button>
+            ) : (
+              <button
+                disabled={loading}
+                className="px-4 py-2 rounded-md bg-primary text-white capitalize "
+                onClick={handleSubmitIlaqa}
+              >
+                Add
+              </button>
+            )}
+            <form method="dialog">
+              <button
+                disabled={loading}
+                id="close-maqam-modal"
+                className="border px-4 py-2 rounded-md bg-none text-primary capitalize"
+              >
+                Close
+              </button>
+            </form>
+          </div>
+        </div>
+      </dialog>
 
       <dialog id="add_halqa_modal" className="modal">
         <div className="modal-box">
@@ -857,10 +1012,16 @@ export const LocationMaqam = () => {
                     type="radio"
                     name="radio-10"
                     className="radio checked:bg-red-500"
-                    checked={isIlaqa}
+                    checked={isIlaqa && formHalqa.parentType === "Ilaqa"}
                     onChange={() => {
                       setIsIlaqa(!isIlaqa);
-                      setFormHalqa({ ...formHalqa, parentType: "Ilaqa" });
+                      setFormHalqa({
+                        ...formHalqa,
+                        parentType: "Ilaqa",
+                        parentId: "",
+                        unitType: "",
+                        name: "",
+                      });
                     }}
                   />
                   <span className="label-text">Ilaqa Halqa</span>
@@ -871,10 +1032,16 @@ export const LocationMaqam = () => {
                   type="radio"
                   name="radio-10"
                   className="radio checked:bg-blue-500"
-                  checked={!isIlaqa}
+                  checked={!isIlaqa && formHalqa.parentType === "Maqam"}
                   onChange={() => {
                     setIsIlaqa(!isIlaqa);
-                    setFormHalqa({ ...formHalqa, parentType: "Maqam" });
+                    setFormHalqa({
+                      ...formHalqa,
+                      parentType: "Maqam",
+                      parentId: "",
+                      unitType: "",
+                      name: "",
+                    });
                   }}
                 />
                 <span className="label-text">Maqam Halqa</span>
@@ -958,14 +1125,19 @@ export const LocationMaqam = () => {
               <input
                 name="name"
                 type="text"
-                placeholder="Enter Halqa Name"
+                placeholder="Enter_Halqa_Name"
                 value={formHalqa.name}
-                onChange={(e) =>
-                  setFormHalqa({ ...formHalqa, name: e.target.value })
-                }
-                className="w-full input input-bordered "
+                onChange={(e) => {
+                  let value = e.target.value;
+                  value = value.trim();
+                  value = value.replace(/[^a-z0-9_]/g, "_");
+                  setFormHalqa({ ...formHalqa, name: value });
+                }}
+                className="w-full input input-bordered"
                 required
+                onKeyDown={handleKeyDown}
               />
+              {message && <p className="text-red-500">{message}</p>}
             </div>
           </div>
           <div className="modal-action">
@@ -998,82 +1170,7 @@ export const LocationMaqam = () => {
           </div>
         </div>
       </dialog>
-      <dialog id="add_ilaqa_modal" className="modal">
-        <div className="modal-box">
-          <h3 className="font-bold text-lg">Add Ilaqa</h3>
-          <div className="space-y-4">
-            <div>
-              <label className="label">
-                <span className="text-base label-text">Maqam</span>
-              </label>
-              <select
-                name="ilaqa"
-                required
-                value={ilaqaForm.maqam}
-                onChange={(e) =>
-                  setIlaqaForm({ ...ilaqaForm, maqam: e.target.value })
-                }
-                className="w-full input input-bordered "
-              >
-                <option value="" disabled>
-                  Select Maqam
-                </option>
-                {maqams
-                  ?.filter((i) => !i?.disabled)
-                  ?.map((i, index) => (
-                    <option value={i?._id} key={index}>
-                      {i?.name}
-                    </option>
-                  ))}
-              </select>
-            </div>
-            <div>
-              <label className="label">
-                <span className="text-base label-text">Ilaqa</span>
-              </label>
-              <input
-                name="name"
-                type="text"
-                placeholder="Enter Ilaqa Name"
-                value={ilaqaForm.name}
-                onChange={(e) =>
-                  setIlaqaForm({ ...ilaqaForm, name: e.target.value })
-                }
-                className="w-full input input-bordered "
-                required
-              />
-            </div>
-          </div>
-          <div className="modal-action">
-            {editMode ? (
-              <button
-                disabled={loading}
-                className="px-4 py-2 rounded-md bg-primary text-white capitalize "
-                onClick={handleSubmitEditIlaqa}
-              >
-                Update
-              </button>
-            ) : (
-              <button
-                disabled={loading}
-                className="px-4 py-2 rounded-md bg-primary text-white capitalize "
-                onClick={handleSubmitIlaqa}
-              >
-                Add
-              </button>
-            )}
-            <form method="dialog">
-              <button
-                disabled={loading}
-                id="close-maqam-modal"
-                className="border px-4 py-2 rounded-md bg-none text-primary capitalize"
-              >
-                Close
-              </button>
-            </form>
-          </div>
-        </div>
-      </dialog>
+
       <dialog id="area_details" className="modal">
         <div className="modal-box">
           <h3 className="font-bold text-lg mb-3">Details of the area</h3>
