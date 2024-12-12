@@ -10,7 +10,6 @@ export const HalqaReport = () => {
   const compileReport = useContext(CompileReportContext);
   const maqams = useContext(MaqamContext);
   const tehsils = useContext(TehsilContext);
-  const [compile , setCompile]=useState();
   const printReport = async (id) => {
     const req = await instance.get(`/reports/halqa/${id}`, {
       headers: {

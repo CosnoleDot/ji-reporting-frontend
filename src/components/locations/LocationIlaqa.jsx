@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { HalqaContext, IlaqaContext, useToastState } from "../../context";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import instance from "../../api/instrance";
-import { FaEdit } from "react-icons/fa";
 import { UIContext } from "../../context/ui";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { validateForm, validateSnakeCase } from "../../utils";
 
 export const LocationIlaqa = () => {
   const halqas = useContext(HalqaContext);
@@ -16,6 +16,14 @@ export const LocationIlaqa = () => {
   const { dispatch } = useToastState();
   const [view, setView] = useState("halqa");
   const params = useLocation();
+  const [message, setMessage] = useState("");
+  const handleKeyDown = (e) => {
+    if (e.key === " ") {
+      setMessage("Please use '_' for space.");
+    } else {
+      setMessage("");
+    }
+  };
   useEffect(() => {
     // Function to parse query parameters
     const getQueryParams = () => {
@@ -41,8 +49,17 @@ export const LocationIlaqa = () => {
   });
 
   const handleSubmitHalqa = async () => {
-    setLoading(true);
+    if (!validateForm(formHalqa)) {
+      alert("All fields are required. Please fill out all fields.");
+      return;
+    }
+    if (validateSnakeCase(formHalqa.name)) {
+      console.log("Form Submitted:", formHalqa.name);
+    } else {
+      alert("Please use snake_case format.");
+    }
     try {
+      setLoading(true);
       const req = await instance.post("/locations/halqa", formHalqa, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("@token")}`,
@@ -112,7 +129,6 @@ export const LocationIlaqa = () => {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = halqas.slice(indexOfFirstItem, indexOfLastItem);
-
   return (
     <>
       <div className="w-full flex flex-wrap gap-2 justify-end items-center">
@@ -305,19 +321,24 @@ export const LocationIlaqa = () => {
             </div>
             <div>
               <label className="label">
-                <span className="text-base label-text">Halqa Name</span>
+                <span className="text-base label-text">Halqa</span>
               </label>
               <input
                 name="name"
                 type="text"
-                placeholder="Enter Halqa Name"
+                placeholder="Enter_Halqa_Name"
                 value={formHalqa.name}
-                onChange={(e) =>
-                  setFormHalqa({ ...formHalqa, name: e.target.value })
-                }
-                className="w-full input input-bordered "
+                onChange={(e) => {
+                  let value = e.target.value;
+                  value = value.trim();
+                  value = value.replace(/[^a-z0-9_]/g, "_");
+                  setFormHalqa({ ...formHalqa, name: value });
+                }}
+                className="w-full input input-bordered"
                 required
+                onKeyDown={handleKeyDown}
               />
+              {message && <p className="text-red-500">{message}</p>}
             </div>
             <div>
               <label className="label">

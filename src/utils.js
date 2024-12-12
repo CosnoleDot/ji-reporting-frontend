@@ -134,3 +134,12 @@ export const getPReports = async (tab, id, areaType) => {
     console.log(err);
   }
 };
+export const validateForm = (form) => {
+  // Check if any key in the object has an empty value
+  return Object.entries(form).every(([key, value]) => value.trim() !== "");
+};
+export const validateSnakeCase = (input) => {
+  // Regex to match snake_case format
+  const regex = /^[a-z0-9]+(_[a-z0-9]+)*$/;
+  return regex.test(input);
+};

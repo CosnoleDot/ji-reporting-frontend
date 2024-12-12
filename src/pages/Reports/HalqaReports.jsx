@@ -132,14 +132,14 @@ export const HalqaReports = () => {
   };
 
   const handlePrint = (id) => {
-    window.open(`halqa-report/print/${id}`, "blank");
+    window.location.href(`halqa-report/print/${id}`);
   };
 
   const clearFilters = () => {
     setMonth("");
     setYear("2023");
     setIsSearch(false);
-    setSearchData([])
+    setSearchData([]);
     setIsFilter(false);
     setNoReports(false);
   };
@@ -371,12 +371,12 @@ export const HalqaReports = () => {
                                 Edit
                               </span>
                             )}
-                            <span
-                              onClick={() => handlePrint(p?._id)}
+                            <Link
+                              to={`/halqa-report/print/${p?._id}`}
                               className="cursor-pointer font-inter text-[14px] font-medium leading-[16.94px] text-left text-blue"
                             >
                               Print
-                            </span>
+                            </Link>
                           </div>
                         </td>
                       </tr>

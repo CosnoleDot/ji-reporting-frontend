@@ -9,7 +9,7 @@ import { FaEdit, FaEye, FaPrint } from "react-icons/fa";
 import moment from "moment";
 import { NoReports, months } from "../Reports";
 import { FilterDialog } from "./FilterDialog";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UIContext } from "../../context/ui";
 import { SearchPage } from "./SearchPage";
 import instance from "../../api/instrance";
@@ -20,7 +20,7 @@ export const MaqamReports = () => {
   const m = useContext(MaqamReportContext);
   const ilaqas = useContext(IlaqaContext);
   const mReports = m?.reports;
-  
+
   const total = m?.length;
   const [filterAllData, setFilterAllData] = useState([]);
   const { dispatch } = useToastState();
@@ -43,22 +43,22 @@ export const MaqamReports = () => {
     const uniqueArray = mReports?.reduce((acc, current) => {
       // 2. Check if the current item already exists in the accumulated array
       const x = acc.find((item) => item?._id === current?._id);
-  
+
       // 3. If it doesn't exist, push it to the accumulated array
       if (!x) {
         acc.push(current);
       }
-      
+
       // 4. Return the accumulated array for the next iteration
       return acc;
     }, []);
-  
+
     // 5. Set the state 'filterAllData' with the unique array
     setFilterAllData(uniqueArray);
   }, [mReports]);
-  
+
   const searchResults = async () => {
-    setLoading(true)
+    setLoading(true);
     showSearch(false);
     if (year !== "" && month !== "") {
       try {
@@ -84,7 +84,7 @@ export const MaqamReports = () => {
         });
       }
     }
-    setLoading(false)
+    setLoading(false);
   };
   const toggleSearch = () => {
     showSearch(!search);
@@ -92,7 +92,7 @@ export const MaqamReports = () => {
   const clearFilters = () => {
     setMonth("");
     setYear("2023");
-    setFilterAllData([])
+    setFilterAllData([]);
     setFilterAllData(mReports);
     setIsFilter(false);
     setNoReports(false);
@@ -142,7 +142,7 @@ export const MaqamReports = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [window.innerWidth]);
- 
+
   return (
     <>
       <div className="md:join xs:w-full mb-4 flex justify-between items-center overflow-y-scroll">
@@ -316,12 +316,12 @@ export const MaqamReports = () => {
                               Edit
                             </span>
                           )}
-                          <span
-                            onClick={() => handlePrint(p?._id)}
+                          <Link
+                            to={`/maqam-report/print/${p?._id}`}
                             className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left text-blue"
                           >
                             Print
-                          </span>
+                          </Link>
                         </div>
                       </td>
                     </tr>
@@ -332,91 +332,95 @@ export const MaqamReports = () => {
           ) : (
             <NoReports />
           )}
-        
-            <div className="flex w-full gap-4 px-4 justify-end items-center mt-4">
-              <select
-                readOnly
-                disabled
-                name="items_per_page"
-                id="items"
-                className="select select-sm max-w-xs bg-gray-200 rounded-full"
-              >
-                <option value="text-[8px]" disabled selected>
-                  Rows per page 10
-                </option>
-              </select>
 
-              {/* Previous Button */}
-              <button
-                className="rounded-full border-none w-7 h-7"
-                disabled={currentPage === 1}
-                onClick={handlePrevPage}
-              >
-                <IoIosArrowBack
-                  className={`text-[1.5rem] rounded-full bg-gray-200 ${
-                    currentPage === 1 && "text-gray-400"
-                  }`}
-                />
-              </button>
+          <div className="flex w-full gap-4 px-4 justify-end items-center mt-4">
+            <select
+              readOnly
+              disabled
+              name="items_per_page"
+              id="items"
+              className="select select-sm max-w-xs bg-gray-200 rounded-full"
+            >
+              <option value="text-[8px]" disabled selected>
+                Rows per page 10
+              </option>
+            </select>
 
-              {/* Page Numbers */}
-              <div className="flex items-center">
-                <span
+            {/* Previous Button */}
+            <button
+              className="rounded-full border-none w-7 h-7"
+              disabled={currentPage === 1}
+              onClick={handlePrevPage}
+            >
+              <IoIosArrowBack
+                className={`text-[1.5rem] rounded-full bg-gray-200 ${
+                  currentPage === 1 && "text-gray-400"
+                }`}
+              />
+            </button>
+
+            {/* Page Numbers */}
+            <div className="flex items-center">
+              <span
+                className={`rounded-full text-bold text-sm ${
+                  currentPage === 1 && "border-2 border-gray-500"
+                } mx-1 bg-white w-7 h-7 flex justify-center items-center text-[8px]`}
+              >
+                1
+              </span>
+
+              {totalPages > 1 && (
+                <button
                   className={`rounded-full text-bold text-sm ${
-                    currentPage === 1 && "border-2 border-gray-500"
+                    currentPage === 2 && "border-2 border-gray-500"
                   } mx-1 bg-white w-7 h-7 flex justify-center items-center text-[8px]`}
                 >
-                  1
+                  2
+                </button>
+              )}
+              {totalPages > 3 && <span>...</span>}
+              {totalPages && currentPage > 2 && currentPage < totalPages ? (
+                <span
+                  className={`rounded-full text-bold text-sm ${
+                    currentPage !== totalPages && "border-2 border-gray-500"
+                  } mx-1 bg-white w-7 h-7 flex justify-center items-center text-[8px]`}
+                >
+                  {currentPage}
                 </span>
-
-                {totalPages > 1 && (
-                  <button
-                    className={`rounded-full text-bold text-sm ${
-                      currentPage === 2 && "border-2 border-gray-500"
-                    } mx-1 bg-white w-7 h-7 flex justify-center items-center text-[8px]`}
-                  >
-                    2
-                  </button>
-                )}
-                {totalPages > 3 && <span>...</span>}
-                {(totalPages && currentPage > 2 && currentPage < totalPages) ? (
-                  <span
-                    className={`rounded-full text-bold text-sm ${
-                      currentPage !== totalPages && "border-2 border-gray-500"
-                    } mx-1 bg-white w-7 h-7 flex justify-center items-center text-[8px]`}
-                  >
-                    {currentPage}
-                  </span>
-                ): <span></span>}
-                {totalPages && totalPages > 2 ? (
-                  <span
-                    className={`rounded-full text-bold text-sm ${
-                      currentPage === totalPages && "border-2 border-gray-500"
-                    } mx-1 bg-white w-7 h-7 flex justify-center items-center text-[8px]`}
-                  >
-                    {totalPages}
-                  </span>
-                ): <span></span>}
-              </div>
-
-              {/* Next Button */}
-              <button
-                className="rounded-full border-none w-7 h-7"
-                disabled={currentPage === totalPages}
-                onClick={handleNextPage}
-              >
-                <IoIosArrowForward
-                  className={`text-[1.5rem] rounded-full bg-gray-200 ${
-                    currentPage === totalPages && "text-gray-400"
-                  }`}
-                />
-              </button>
+              ) : (
+                <span></span>
+              )}
+              {totalPages && totalPages > 2 ? (
+                <span
+                  className={`rounded-full text-bold text-sm ${
+                    currentPage === totalPages && "border-2 border-gray-500"
+                  } mx-1 bg-white w-7 h-7 flex justify-center items-center text-[8px]`}
+                >
+                  {totalPages}
+                </span>
+              ) : (
+                <span></span>
+              )}
             </div>
-          
+
+            {/* Next Button */}
+            <button
+              className="rounded-full border-none w-7 h-7"
+              disabled={currentPage === totalPages}
+              onClick={handleNextPage}
+            >
+              <IoIosArrowForward
+                className={`text-[1.5rem] rounded-full bg-gray-200 ${
+                  currentPage === totalPages && "text-gray-400"
+                }`}
+              />
+            </button>
+          </div>
         </>
+      ) : !noReports ? (
+        <SearchPage data={searchData} area={"maqam"} />
       ) : (
-        !noReports ? 
-        <SearchPage data={searchData} area={"maqam"} /> : <NoReports/>
+        <NoReports />
       )}
       <dialog id="filter-area-dialog" className="modal">
         <FilterDialog

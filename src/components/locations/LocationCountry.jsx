@@ -1,24 +1,38 @@
 import { useContext, useEffect, useState } from "react";
 import { ProvinceContext, useToastState } from "../../context";
 import instance from "../../api/instrance";
-import { FaEdit } from "react-icons/fa";
 import { UIContext } from "../../context/ui";
+import { validateForm, validateSnakeCase } from "../../utils";
 export const LocationCountry = () => {
   const provinces = useContext(ProvinceContext);
   const { setLoading, loading, getProvinces } = useContext(UIContext);
   const [editMode, setEditMode] = useState(false);
-  const [data, setData] = useState(provinces);
   const [id, setId] = useState("");
   const { dispatch } = useToastState();
-
+  const [message, setMessage] = useState("");
   const [form, setForm] = useState({
     name: "",
     country: "Pakistan",
   });
-
+  const handleKeyDown = (e) => {
+    if (e.key === " ") {
+      setMessage("Please use '_' for space.");
+    } else {
+      setMessage("");
+    }
+  };
   const handleSubmit = async () => {
-    setLoading(true);
+    if (!validateForm(form)) {
+      alert("All fields are required. Please fill out all fields.");
+      return;
+    }
+    if (validateSnakeCase(form.name)) {
+      console.log("Form Submitted:", form.name);
+    } else {
+      alert("Please use snake_case format.");
+    }
     try {
+      setLoading(true);
       const req = await instance.post("/locations/province", form, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("@token")}`,
@@ -53,14 +67,33 @@ export const LocationCountry = () => {
     setLoading(false);
   };
 
-  const handleDisable = async (id) => {
-    setLoading(true);
-    try {
-      const req = await instance.patch(`/locations/province/${id}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("@token")}`,
-        },
+  const handleDisable = async (area, disabled) => {
+    if (
+      area.activeHalqaCount > 0 ||
+      area.activeTehsilCount > 0 ||
+      area.activeDistrictCount > 0 ||
+      area.activeMaqamCount > 0 ||
+      area.activeDivisionCount > 0 ||
+      area.activeIlaqaCount > 0
+    ) {
+      dispatch({
+        type: "ERROR",
+        payload:
+          "Parent cannot be disabled until all child entities are disabled.",
       });
+      return;
+    }
+    try {
+      setLoading(true);
+      const req = await instance.patch(
+        `/locations/province/disable-location/${area?._id}`,
+        { disabled },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
+        }
+      );
       dispatch({ type: "SUCCESS", payload: req.data?.message });
       getProvinces();
     } catch (err) {
@@ -69,9 +102,21 @@ export const LocationCountry = () => {
     }
     setLoading(false);
   };
+  const fetchProvinces = async () => {
+    await getProvinces();
+  };
   useEffect(() => {
-    setData(provinces);
-  }, [provinces]);
+    fetchProvinces();
+  }, []);
+  const handleInputChange = (e) => {
+    let value = e.target.value;
+    value = value.trim();
+    value = value.replace(/[^a-z0-9_]/g, "_");
+    setForm((prevForm) => ({
+      ...prevForm,
+      name: value,
+    }));
+  };
   return (
     <>
       <div className="w-full flex justify-end items-center ">
@@ -105,9 +150,11 @@ export const LocationCountry = () => {
             </tr>
           </thead>
           <tbody>
-            {data?.map((province, index) => (
+            {provinces?.map((province, index) => (
               <tr key={index} className="border border-t-0">
-                <td className="font-inter text-[14px] font-medium leading-[16.94px] text-left">{province?.name}</td>
+                <td className="font-inter text-[14px] font-medium leading-[16.94px] text-left">
+                  {province?.name}
+                </td>
                 <td className="flex justify-end items-center gap-4 ">
                   <button
                     disabled={loading}
@@ -127,9 +174,9 @@ export const LocationCountry = () => {
                   <input
                     type="checkbox"
                     className="toggle toggle-white bg-white [--tglbg:#E2E8F0] checked:[--tglbg:#002856]"
-                    defaultChecked={province?.disabled}
+                    checked={province?.disabled}
                     onChange={() => {
-                      handleDisable(province?._id, !province?.disabled);
+                      handleDisable(province, !province?.disabled);
                     }}
                   />
                 </td>
@@ -164,18 +211,14 @@ export const LocationCountry = () => {
               <input
                 name="name"
                 type="text"
-                placeholder="Enter Province Name"
+                placeholder="Enter_Province_Name"
                 value={form.name}
-                onChange={(e) =>
-                  setForm({
-                    ...form,
-                    name: e.target.value,
-                    country: "Pakistan",
-                  })
-                }
+                onChange={handleInputChange}
+                onKeyDown={handleKeyDown}
                 className="w-full input input-bordered "
                 required
               />
+              {message && <p className="text-red-500">{message}</p>}
             </div>
           </div>
           <div className="modal-action">

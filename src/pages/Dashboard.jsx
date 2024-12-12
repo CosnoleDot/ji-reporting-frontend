@@ -115,7 +115,6 @@ export const Dashboard = () => {
     // Check if data is already stored in session storage
     const storedData = sessionStorage.getItem("storedData");
     if (queryDate !== "" || !storedData) {
-  
       setLoading(true);
       try {
         const getUnfilledReports = async (path) => {
@@ -340,7 +339,6 @@ export const Dashboard = () => {
         console.log(error);
       }
     } else {
-      
       setData(JSON.parse(storedData));
     }
     setLoading(false);
@@ -441,7 +439,13 @@ export const Dashboard = () => {
               </p>
             </div>
           </div>
-          <div className={`grid md:grid-cols-4 ${localStorage.getItem("@type") === "halqa"? 'grid-cols-1':'grid-cols-2'} gap-2 w-full`}>
+          <div
+            className={`grid md:grid-cols-4 ${
+              localStorage.getItem("@type") === "halqa"
+                ? "grid-cols-1"
+                : "grid-cols-2"
+            } gap-2 w-full`}
+          >
             {["province", "country", "maqam", "division"].includes(
               localStorage.getItem("@type")
             ) &&
@@ -454,7 +458,7 @@ export const Dashboard = () => {
                       {nazim?.filter((naz) => naz?.isDeleted == false).length}
                     </p>
                     <h3 class="font-inter text-[12px] font-semibold leading-[14.52px] text-left text-primary">
-                      Total Nazims
+                      Active Nazims
                     </h3>
                   </div>
                   <div className="flex flex-row w-full justify-center md:justify-end">
@@ -472,14 +476,12 @@ export const Dashboard = () => {
                 <div className="flex border rounded-2xl md:h-[130px] h-[100px] p-2 md:p-4 overflow-hidden shadow bg-cardsBg">
                   <div className="px-4 flex flex-col gap-2  justify-end">
                     <p className="text-[24px] md:text-[32px] font-extrabold font-inter leading-10 text-primary">
-                      {
-                        provinces?.filter(
-                          (province) => province?.disabled !== true
-                        ).length
-                      }
+                      {provinces?.filter(
+                        (province) => province?.disabled !== true
+                      ).length || me?.userAreaId?.activeProvinceCount}
                     </p>
                     <h3 className="font-inter text-[12px] font-semibold leading-[14.52px] text-left text-primary">
-                      Total Provinces
+                      Active Provinces
                     </h3>
                   </div>
                   <div className="flex flex-row w-full justify-center md:justify-end">
@@ -496,14 +498,12 @@ export const Dashboard = () => {
                 <div className="flex border rounded-2xl md:h-[130px] h-[100px] p-2 md:p-4 overflow-hidden shadow bg-cardsBg">
                   <div className="px-4 flex flex-col gap-2  justify-end">
                     <p className="text-[24px] md:text-[32px] font-extrabold font-inter leading-10 text-primary">
-                      {
-                        divisions?.filter(
-                          (division) => division?.disabled !== true
-                        ).length
-                      }
+                      {divisions?.filter(
+                        (division) => division?.disabled !== true
+                      ).length || me?.userAreaId?.activeDivisionCount}
                     </p>
                     <h3 className="font-inter text-[12px] font-semibold leading-[14.52px] text-left text-primary">
-                      Total Divisions
+                      Active Divisions
                     </h3>
                   </div>
                   <div className="flex flex-row w-full justify-center md:justify-end">
@@ -522,14 +522,12 @@ export const Dashboard = () => {
                 <div className="flex border rounded-2xl md:h-[130px] h-[100px] p-2 md:p-4 overflow-hidden shadow bg-cardsBg">
                   <div className="px-4 flex flex-col gap-2  justify-end">
                     <p className="text-[24px] md:text-[32px] font-extrabold font-inter leading-10 text-primary">
-                      {
-                        districts?.filter(
-                          (district) => district?.disabled !== true
-                        ).length
-                      }
+                      {districts?.filter(
+                        (district) => district?.disabled !== true
+                      ).length || me?.userAreaId?.activeDistrictCount}
                     </p>
                     <h3 className="font-inter text-[12px] font-semibold leading-[14.52px] text-left text-primary">
-                      Total Districts
+                      Active Districts
                     </h3>
                   </div>
                   <div className="flex flex-row w-full justify-center md:justify-end">
@@ -542,25 +540,27 @@ export const Dashboard = () => {
             {["division", "country", "province"].includes(
               localStorage.getItem("@type")
             ) &&
-              tehsils?.length > 0 &&
+              me?.userAreaId?.activeTehsilCount &&
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
               ) && (
                 <div className="flex border rounded-2xl md:h-[130px] h-[100px] p-2 md:p-4 overflow-hidden shadow bg-cardsBg">
                   <div className="px-4 flex flex-col gap-2  justify-end">
                     <p className="text-[24px] md:text-[32px] font-extrabold font-inter leading-10 text-primary">
-                      {
-                        tehsils?.filter((tehsil) => tehsil?.disabled !== true)
-                          .length
-                      }
+                      {tehsils?.filter((tehsil) => tehsil?.disabled !== true)
+                        .length || me?.userAreaId?.activeTehsilCount}
                     </p>
                     <h3 className="font-inter text-[12px] font-semibold leading-[14.52px] text-left text-primary">
-                      Total Tehsils
+                      Active Tehsils
                     </h3>
                   </div>
                   <div className="flex flex-row w-full justify-center md:justify-end">
                     <div className=" max-h-11">
-                      <img src={Tehsil} className="h-8 w-8" />
+                      <img
+                        src={Tehsil}
+                        className="h-8 w-8"
+                        alt="tehsil_image"
+                      />
                     </div>
                   </div>
                 </div>
@@ -574,18 +574,16 @@ export const Dashboard = () => {
                 <div className="flex border rounded-2xl md:h-[130px] h-[100px] p-2 md:p-4 overflow-hidden shadow bg-cardsBg">
                   <div className="px-4 flex flex-col gap-2  justify-end">
                     <p className="text-[24px] md:text-[32px] font-extrabold font-inter leading-10 text-primary">
-                      {
-                        maqams?.filter((maqam) => maqam?.disabled !== true)
-                          .length
-                      }
+                      {maqams?.filter((maqam) => maqam?.disabled !== true)
+                        .length || me?.userAreaId?.activeMaqamCount}
                     </p>
                     <h3 className="font-inter text-[12px] font-semibold leading-[14.52px] text-left text-primary">
-                      Total Maqams
+                      Active Maqams
                     </h3>
                   </div>
                   <div className="flex flex-row w-full justify-center md:justify-end">
                     <div className=" max-h-11">
-                      <img src={Maqams} className="h-8 w-8" />
+                      <img src={Maqams} className="h-8 w-8" alt="maqam_image" />
                     </div>
                   </div>
                 </div>
@@ -593,22 +591,23 @@ export const Dashboard = () => {
             {["maqam", "country", "province"].includes(
               localStorage.getItem("@type")
             ) &&
-              ilaqa?.length > 0 &&
+              me?.userAreaId?.activeIlaqaCount &&
               ["nazim", "rukan-nazim", "umeedwaar-nazim"].includes(
                 localStorage.getItem("@nazimType")
               ) && (
                 <div className="flex border rounded-2xl md:h-[130px] h-[100px] p-2 md:p-4 overflow-hidden shadow bg-cardsBg">
                   <div className="px-4 flex flex-col gap-2  justify-end">
                     <p className="text-[24px] md:text-[32px] font-extrabold font-inter leading-10 text-primary">
-                      {ilaqa?.filter((il) => il?.disabled !== true).length}
+                      {ilaqa?.filter((il) => il?.disabled !== true).length ||
+                        me?.userAreaId?.activeIlaqaCount}
                     </p>
                     <h3 className="font-inter text-[12px] font-semibold leading-[14.52px] text-left text-primary">
-                      Total Ilaqas
+                      Active Ilaqas
                     </h3>
                   </div>
                   <div className="flex flex-row w-full justify-center md:justify-end">
                     <div className=" max-h-11">
-                      <img src={Ilaqas} className="h-8 w-8" />
+                      <img src={Ilaqas} className="h-8 w-8" alt="ilaqa_image" />
                     </div>
                   </div>
                 </div>
@@ -620,15 +619,15 @@ export const Dashboard = () => {
                 <div className="flex border rounded-2xl md:h-[130px] h-[100px] p-2 md:p-4 overflow-hidden shadow bg-cardsBg">
                   <div className="px-4 flex flex-col gap-2  justify-end">
                     <p className="text-[24px] md:text-[32px] font-extrabold font-inter leading-10 text-primary">
-                      {unit.length}
+                      {unit.length || me?.userAreaId?.activeHalqaCount}
                     </p>
                     <h3 className="font-inter text-[12px] font-semibold leading-[14.52px] text-left text-primary">
-                      Total Units
+                      Active Units
                     </h3>
                   </div>
                   <div className="flex flex-row w-full justify-center md:justify-end">
                     <div className=" max-h-11">
-                      <img src={Units} className="h-8 w-8" />
+                      <img src={Units} className="h-8 w-8" alt="unit_image" />
                     </div>
                   </div>
                 </div>
@@ -812,7 +811,10 @@ export const Dashboard = () => {
                                             fontSize: "smaller",
                                           }}
                                         >
-                                          {obj.name?.split("").slice(0, 20).join("")}
+                                          {obj.name
+                                            ?.split("")
+                                            .slice(0, 20)
+                                            .join("")}
                                         </p>
                                       </td>
                                       <td className="font-inter w-[50%] text-[14px] font-medium leading-[16.94px] text-end">
@@ -874,9 +876,13 @@ export const Dashboard = () => {
                                       </p>
                                     </td>
                                     <td className="w-[50%]">
-                                      {nazim.find(
-                                        (i) => i?.userAreaId?._id === obj?._id
-                                      )?.name?.split("").slice(0, 20).join("") || (
+                                      {nazim
+                                        .find(
+                                          (i) => i?.userAreaId?._id === obj?._id
+                                        )
+                                        ?.name?.split("")
+                                        .slice(0, 20)
+                                        .join("") || (
                                         <span
                                           style={{
                                             textTransform: "capitalize",
@@ -899,7 +905,7 @@ export const Dashboard = () => {
                                         }}
                                       >
                                         <span class="cursor-pointer font-inter text-[14px] font-medium leading-[16.94px] text-left">
-                                        <FaEye className="cursor-pointer text-2xl p-0 m-0" />
+                                          <FaEye className="cursor-pointer text-2xl p-0 m-0" />
                                         </span>
                                       </div>
                                     </td>
@@ -943,7 +949,10 @@ export const Dashboard = () => {
                                       }`}
                                     >
                                       <td className="w-[50%]">
-                                        {obj.userId?.name?.split("").slice(0, 20).join("")}
+                                        {obj.userId?.name
+                                          ?.split("")
+                                          .slice(0, 20)
+                                          .join("")}
                                       </td>
                                       <td className="w-[50%]">
                                         {obj?.areaId?.name}
@@ -967,7 +976,12 @@ export const Dashboard = () => {
                                     }`}
                                     key={index}
                                   >
-                                    <td className="w-[50%]">{obj.name?.split("").slice(0, 20).join("")}</td>
+                                    <td className="w-[50%]">
+                                      {obj.name
+                                        ?.split("")
+                                        .slice(0, 20)
+                                        .join("")}
+                                    </td>
                                     {obj?.userAreaId?.name}
                                   </tr>
                                 ))

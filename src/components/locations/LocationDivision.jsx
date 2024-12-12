@@ -13,12 +13,8 @@ import { Link, useLocation } from "react-router-dom";
 import instance from "../../api/instrance";
 import { UIContext } from "../../context/ui";
 import { FaEye } from "react-icons/fa";
-import {
-  IoIosArrowBack,
-  IoIosArrowDropright,
-  IoIosArrowForward,
-} from "react-icons/io";
-import { IoIosArrowDropleft } from "react-icons/io";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { validateForm, validateSnakeCase } from "../../utils";
 export const LocationDivision = () => {
   const provinces = useContext(ProvinceContext);
   const me = useContext(MeContext);
@@ -33,10 +29,11 @@ export const LocationDivision = () => {
   const [searchData, setSearchData] = useState([]);
   const [value, setValue] = useState("");
   const districts = useContext(DistrictContext);
-  const [filteredData, setFilteredData] = useState(halqas);
+  const [filteredData, setFilteredData] = useState(tehsils);
   const [isDivision, setIsDivision] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-
+  const [paginatedData, setPaginatedData] = useState([]);
+  const [message, setMessage] = useState("");
   const {
     getHalqas,
     getDivisions,
@@ -51,67 +48,45 @@ export const LocationDivision = () => {
   const { dispatch } = useToastState();
   const [view, setView] = useState(
     ["country", "province", "maqam"].includes(localStorage.getItem("@type"))
-      ? "province"
+      ? "tehsil"
       : "halqa"
   );
   const params = useLocation();
-
-  // Pagination states
-
+  const handleKeyDown = (e) => {
+    if (e.key === " ") {
+      setMessage("Please use '_' for space.");
+    } else {
+      setMessage("");
+    }
+  };
   useEffect(() => {
     setLoading(true);
-    // Function to parse query parameters
     const getQueryParams = () => {
       const searchParams = new URLSearchParams(params.search);
       const queryParams = {};
-
       for (let [key, value] of searchParams.entries()) {
         queryParams[key] = value;
       }
-      if (
-        queryParams.hasOwnProperty !== "halqa" &&
-        Object.keys(queryParams).length === 1
-      ) {
+      if (queryParams.active === "division" && view === "tehsil") {
+        setView("tehsil");
+        setFilteredData(tehsils);
+      } else if (queryParams.active === "division" && view === "district") {
+        setView("district");
+        setFilteredData(districts);
+      } else if (queryParams.active === "division" && view === "halqa") {
+        setView("halqa");
         setFilteredData(halqas);
       } else {
-        setView(queryParams.view);
-        if (queryParams.view) {
-          if (queryParams.view === "halqa") {
-            setFilteredData(halqas);
-          }
-          if (queryParams.view === "district") {
-            setFilteredData(districts);
-          }
-          if (queryParams.view === "tehsil") {
-            setFilteredData(tehsils);
-          }
-          if (queryParams.view === "division") {
-            setFilteredData(divisions);
-          }
-        }
+        setView("division");
+        setFilteredData(divisions);
       }
+
       setLoading(false);
     };
 
-    // Call the function when the component mounts or when the location changes
     getQueryParams();
-  }, [params, view, districts, divisions, halqas, tehsils]);
-  useEffect(() => {
-    if (view) {
-      if (view === "halqa") {
-        setFilteredData(halqas);
-      }
-      if (view === "district") {
-        setFilteredData(districts);
-      }
-      if (view === "tehsil") {
-        setFilteredData(tehsils);
-      }
-      if (view === "division") {
-        setFilteredData(divisions);
-      }
-    }
-  }, [halqas, tehsils, districts]);
+  }, [params.search, view]);
+
   const [form, setForm] = useState({
     name: "",
     province: "",
@@ -134,20 +109,37 @@ export const LocationDivision = () => {
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
   // Compute the displayed items based on the current page
-  const paginatedData =
-    value === ""
-      ? filteredData.slice(
-          (currentPage - 1) * itemsPerPage,
-          currentPage * itemsPerPage
-        )
-      : searchData.slice(
-          (currentPage - 1) * itemsPerPage,
-          currentPage * itemsPerPage
-        );
 
+  useEffect(() => {
+    const dataToPaginate = value === "" ? filteredData : searchData;
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = currentPage * itemsPerPage;
+    setPaginatedData(dataToPaginate.slice(startIndex, endIndex));
+  }, [currentPage, filteredData, searchData, value]);
+
+  const handlePreviousPage = () => {
+    setCurrentPage((prev) => Math.max(prev - 1, 1));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  };
+  useEffect(() => {
+    console.log(filteredData);
+  }, [filteredData]);
   // *****************Division***********************
   const handleSubmit = async () => {
+    if (!validateForm(form)) {
+      alert("All fields are required. Please fill out all fields.");
+      return;
+    }
+    if (validateSnakeCase(form.name)) {
+      console.log("Form Submitted:", form.name);
+    } else {
+      alert("Please use snake_case format.");
+    }
     try {
+      setLoading(true);
       const req = await instance.post("/locations/division", form, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("@token")}`,
@@ -162,7 +154,9 @@ export const LocationDivision = () => {
         name: "",
         province: "",
       });
+      setLoading(false);
     } catch (err) {
+      setLoading(false);
       document.getElementById("add_division_modal").close();
 
       dispatch({ type: "ERROR", payload: err.response.data.message });
@@ -191,7 +185,17 @@ export const LocationDivision = () => {
   };
   // *********************District**************************
   const handleSubmitDistrict = async () => {
+    if (!validateForm(formDistrict)) {
+      alert("All fields are required. Please fill out all fields.");
+      return;
+    }
+    if (validateSnakeCase(formDistrict.name)) {
+      console.log("Form Submitted:", formDistrict.name);
+    } else {
+      alert("Please use snake_case format.");
+    }
     try {
+      setLoading(true);
       const req = await instance.post("/locations/district", formDistrict, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("@token")}`,
@@ -205,9 +209,11 @@ export const LocationDivision = () => {
         name: "",
         division: "",
       });
+      setLoading(false);
     } catch (err) {
       document.getElementById("add_district_modal").close();
       dispatch({ type: "ERROR", payload: err.response.data.message });
+      setLoading(false);
     }
   };
   const handleSubmitDistrictEdit = async () => {
@@ -236,7 +242,17 @@ export const LocationDivision = () => {
   };
   // ***********************Teshsil*************************
   const handleSubmitTehsil = async () => {
+    if (!validateForm(formTehsil)) {
+      alert("All fields are required. Please fill out all fields.");
+      return;
+    }
+    if (validateSnakeCase(formTehsil.name)) {
+      console.log("Form Submitted:", formTehsil.name);
+    } else {
+      alert("Please use snake_case format.");
+    }
     try {
+      setLoading(true);
       const req = await instance.post("/locations/tehsil", formTehsil, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("@token")}`,
@@ -250,9 +266,10 @@ export const LocationDivision = () => {
         name: "",
         district: "",
       });
+      setLoading(false);
     } catch (err) {
       document.getElementById("add_tehsil_modal").close();
-
+      setLoading(false);
       dispatch({ type: "ERROR", payload: err.response.data.message });
     }
   };
@@ -279,8 +296,17 @@ export const LocationDivision = () => {
   };
   // **************************Halqa******************* *
   const handleSubmitHalqa = async () => {
-    setLoading(true);
+    if (!validateForm(formHalqa)) {
+      alert("All fields are required. Please fill out all fields.");
+      return;
+    }
+    if (validateSnakeCase(formHalqa.name)) {
+      console.log("Form Submitted:", formHalqa.name);
+    } else {
+      alert("Please use snake_case format.");
+    }
     try {
+      setLoading(true);
       const req = await instance.post("/locations/halqa", formHalqa, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("@token")}`,
@@ -325,11 +351,45 @@ export const LocationDivision = () => {
     setLoading(false);
   };
   // ************************Disable call *******************
-  const handleDisable = async (id, disabled) => {
-    setLoading(true);
+
+  const handleDisable = async (area, disabled) => {
+    // Validation for active child counts
+    if (area.division) {
+      const tehsilIds = tehsils.map((teh) => {
+        if (teh.district === area?.id) {
+          return true;
+        }
+      });
+      if (tehsilIds.length > 0) {
+        dispatch({
+          type: "ERROR",
+          payload:
+            "Parent cannot be disabled until all child entities are disabled.",
+        });
+        return;
+      }
+    } else if (
+      area.activeHalqaCount > 0 ||
+      area.activeTehsilCount > 0 ||
+      area.activeDistrictCount > 0 ||
+      area.activeMaqamCount > 0 ||
+      area.activeDivisionCount > 0 ||
+      area.activeIlaqaCount > 0
+    ) {
+      dispatch({
+        type: "ERROR",
+        payload:
+          "Parent cannot be disabled until all child entities are disabled.",
+      });
+      return;
+    }
+
     try {
-      let req = await instance.patch(
-        `/locations/${view}/disable-location/${id}`,
+      setLoading(true);
+
+      // Perform API call
+      const req = await instance.patch(
+        `/locations/${view}/disable-location/${area?._id}`,
         { disabled },
         {
           headers: {
@@ -337,30 +397,38 @@ export const LocationDivision = () => {
           },
         }
       );
-      switch (view) {
-        case "halqa":
+
+      if (req) {
+        // Update state only after successful response
+        const updatedData = paginatedData.map((item) =>
+          item._id === area._id ? { ...item, disabled } : item
+        );
+
+        setPaginatedData(updatedData); // Update state
+        dispatch({ type: "SUCCESS", payload: req.data?.message });
+
+        // Re-fetch data if necessary
+        if (view === "halqa") {
           getHalqas();
-          break;
-        case "tehsil":
+        } else if (view === "tehsil") {
           getTehsils();
-          break;
-        case "district":
+        } else if (view === "district") {
           getDistricts();
-          break;
-        case "division":
+        } else if (view === "division") {
           getDivisions();
-          break;
-        default:
-          break;
+        }
       }
-      dispatch({ type: "SUCCESS", payload: req.data?.message });
     } catch (err) {
-      setLoading(false);
       console.log(err);
-      dispatch({ type: "ERROR", payload: err.response.data.message });
+      dispatch({
+        type: "ERROR",
+        payload: err.response?.data?.message || "An error occurred.",
+      });
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
+
   const handleSearch = (value) => {
     setValue(value);
     if (view === "halqa") {
@@ -408,7 +476,29 @@ export const LocationDivision = () => {
     }
     setCurrentPage(1); // Reset to the first page after search
   };
- 
+
+  const fetchAreas = async () => {
+    if (tehsils.length === 0) {
+      await getTehsils();
+    }
+    if (divisions.length === 0) {
+      await getDivisions();
+    }
+    if (districts.length === 0) {
+      await getDistricts();
+    }
+    if (halqas.length === 0) {
+      await getHalqas();
+    }
+  };
+  useEffect(() => {
+    fetchAreas();
+  }, []);
+
+  useEffect(() => {
+    setFilteredData(tehsils);
+  }, [tehsils]);
+
   return (
     <>
       <div className="w-full flex flex-wrap gap-2 justify-end items-center">
@@ -489,6 +579,7 @@ export const LocationDivision = () => {
               className={`tab  ${
                 view === "division" ? "bg-white text-black" : ""
               }`}
+              onClick={() => setView("division")}
             >
               Division
             </Link>
@@ -500,6 +591,7 @@ export const LocationDivision = () => {
               className={`tab  ${
                 view === "district" ? "bg-white text-black" : ""
               }`}
+              onClick={() => setView("district")}
             >
               District
             </Link>
@@ -511,6 +603,7 @@ export const LocationDivision = () => {
               className={`tab  ${
                 view === "tehsil" ? "bg-white text-black" : ""
               }`}
+              onClick={() => setView("tehsil")}
             >
               Tehsil
             </Link>
@@ -519,6 +612,7 @@ export const LocationDivision = () => {
             to={"?active=division&view=halqa"}
             role="tab"
             className={`tab  ${view === "halqa" ? "bg-white text-black" : ""}`}
+            onClick={() => setView("halqa")}
           >
             Halqa
           </Link>
@@ -577,9 +671,9 @@ export const LocationDivision = () => {
                       <input
                         type="checkbox"
                         className="toggle toggle-white bg-white [--tglbg:#E2E8F0] checked:[--tglbg:#002856]"
-                        defaultChecked={division?.disabled}
+                        checked={division?.disabled} // Use `checked` instead of `defaultChecked`
                         onChange={() => {
-                          handleDisable(division?._id, !division?.disabled);
+                          handleDisable(division, !division?.disabled);
                         }}
                       />
                     </td>
@@ -644,9 +738,9 @@ export const LocationDivision = () => {
                       <input
                         type="checkbox"
                         className="toggle toggle-white bg-white [--tglbg:#E2E8F0] checked:[--tglbg:#002856]"
-                        defaultChecked={tehsil?.disabled}
+                        checked={tehsil?.disabled}
                         onChange={() => {
-                          handleDisable(tehsil?._id, !tehsil?.disabled);
+                          handleDisable(tehsil, !tehsil?.disabled);
                         }}
                       />
                     </td>
@@ -709,9 +803,9 @@ export const LocationDivision = () => {
                       <input
                         type="checkbox"
                         className="toggle toggle-white bg-white [--tglbg:#E2E8F0] checked:[--tglbg:#002856]"
-                        defaultChecked={district?.disabled}
+                        checked={district?.disabled}
                         onChange={() => {
-                          handleDisable(district?._id, !district?.disabled);
+                          handleDisable(district, !district?.disabled);
                         }}
                       />
                     </td>
@@ -782,9 +876,12 @@ export const LocationDivision = () => {
                       <input
                         type="checkbox"
                         className="toggle toggle-white bg-white [--tglbg:#E2E8F0] checked:[--tglbg:#002856]"
-                        defaultChecked={halqa?.disabled}
+                        checked={halqa?.disabled}
                         onChange={() => {
-                          handleDisable(halqa?._id, !halqa?.disabled);
+                          handleDisable(
+                            halqa,
+                            halqa?.disabled === false ? true : false
+                          );
                         }}
                       />
                     </td>
@@ -801,6 +898,7 @@ export const LocationDivision = () => {
       {/* Pagination Controls */}
       {value === "" && (
         <div className="flex w-full gap-4 px-4 justify-end items-center mt-4">
+          {/* Pagination Controls */}
           <select
             readOnly
             disabled
@@ -813,11 +911,10 @@ export const LocationDivision = () => {
             </option>
           </select>
 
-          {/* Previous Button */}
           <button
             className="rounded-full border-none w-7 h-7"
             disabled={currentPage === 1}
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            onClick={handlePreviousPage}
           >
             <IoIosArrowBack
               className={`text-[1.5rem] rounded-full bg-gray-200 ${
@@ -826,7 +923,7 @@ export const LocationDivision = () => {
             />
           </button>
 
-          {/* Page Numbers */}
+          {/* Render Page Numbers */}
           <div className="flex items-center">
             <span
               className={`rounded-full text-bold text-sm ${
@@ -846,7 +943,7 @@ export const LocationDivision = () => {
               </button>
             )}
             {totalPages > 3 && <span>...</span>}
-            {totalPages && currentPage > 2 && currentPage < totalPages ? (
+            {totalPages && currentPage > 2 && currentPage < totalPages && (
               <span
                 className={`rounded-full text-bold text-sm ${
                   currentPage !== totalPages && "border-2 border-gray-500"
@@ -854,10 +951,8 @@ export const LocationDivision = () => {
               >
                 {currentPage}
               </span>
-            ) : (
-              <span></span>
             )}
-            {totalPages && totalPages > 2 ? (
+            {totalPages && totalPages > 2 && (
               <span
                 className={`rounded-full text-bold text-sm ${
                   currentPage === totalPages && "border-2 border-gray-500"
@@ -865,18 +960,13 @@ export const LocationDivision = () => {
               >
                 {totalPages}
               </span>
-            ) : (
-              <span></span>
             )}
           </div>
 
-          {/* Next Button */}
           <button
             className="rounded-full border-none w-7 h-7"
             disabled={currentPage === totalPages}
-            onClick={() =>
-              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-            }
+            onClick={handleNextPage}
           >
             <IoIosArrowForward
               className={`text-[1.5rem] rounded-full bg-gray-200 ${
@@ -929,12 +1019,18 @@ export const LocationDivision = () => {
               <input
                 name="name"
                 type="text"
-                placeholder="Enter Division Name"
+                placeholder="Enter_Division_Name"
                 value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                onChange={(e) => {
+                  let value = e.target.value;
+                  value = value.trim();
+                  value = value.replace(/[^a-z0-9_]/g, "_");
+                  setForm({ ...form, name: value });
+                }}
                 className="w-full input input-bordered "
-                required
+                onKeyDown={handleKeyDown}
               />
+              {message && <p className="text-red-500">{message}</p>}
             </div>
           </div>
           <div className="modal-action">
@@ -998,14 +1094,18 @@ export const LocationDivision = () => {
               <input
                 name="name"
                 type="text"
-                placeholder="Enter District Name"
+                placeholder="Enter_District_Name"
                 value={formDistrict.name}
-                onChange={(e) =>
-                  setFormDistrict({ ...formDistrict, name: e.target.value })
-                }
+                onChange={(e) => {
+                  let value = e.target.value;
+                  value = value.trim();
+                  value = value.replace(/[^a-z0-9_]/g, "_");
+                  setFormDistrict({ ...formDistrict, name: value });
+                }}
                 className="w-full input input-bordered "
-                required
+                onKeyDown={handleKeyDown}
               />
+              {message && <p className="text-red-500">{message}</p>}
             </div>
           </div>
           <div className="modal-action">
@@ -1073,14 +1173,18 @@ export const LocationDivision = () => {
               <input
                 name="name"
                 type="text"
-                placeholder="Enter Tehsil Name"
+                placeholder="Enter_Tehsil_Name"
                 value={formTehsil.name}
-                onChange={(e) =>
-                  setFormTehsil({ ...formTehsil, name: e.target.value })
-                }
+                onChange={(e) => {
+                  let value = e.target.value;
+                  value = value.trim();
+                  value = value.replace(/[^a-z0-9_]/g, "_");
+                  setFormTehsil({ ...formTehsil, name: value });
+                }}
                 className="w-full input input-bordered "
-                required
+                onKeyDown={handleKeyDown}
               />
+              {message && <p className="text-red-500">{message}</p>}
             </div>
           </div>
           <div className="modal-action">
@@ -1121,10 +1225,14 @@ export const LocationDivision = () => {
                   type="radio"
                   name="radio-10"
                   className="radio checked:bg-red-500"
-                  checked={isDivision}
+                  checked={isDivision && formHalqa.parentType === "Division"}
                   onChange={() => {
                     setIsDivision(!isDivision);
-                    setFormHalqa({ ...formHalqa, parentType: "Division" });
+                    setFormHalqa({
+                      ...formHalqa,
+                      parentType: "Division",
+                      parentId: "",
+                    });
                   }}
                 />
                 <span className="label-text">Division Halqa</span>
@@ -1134,10 +1242,14 @@ export const LocationDivision = () => {
                   type="radio"
                   name="radio-10"
                   className="radio checked:bg-blue-500"
-                  checked={!isDivision}
+                  checked={!isDivision && formHalqa.parentType === "Tehsil"}
                   onChange={() => {
                     setIsDivision(!isDivision);
-                    setFormHalqa({ ...formHalqa, parentType: "Tehsil" });
+                    setFormHalqa({
+                      ...formHalqa,
+                      parentType: "Tehsil",
+                      parentId: "",
+                    });
                   }}
                 />
                 <span className="label-text">Tehsil Halqa</span>
@@ -1221,14 +1333,19 @@ export const LocationDivision = () => {
               <input
                 name="name"
                 type="text"
-                placeholder="Enter Halqa Name"
+                placeholder="Enter_Halqa_Name"
                 value={formHalqa.name}
-                onChange={(e) =>
-                  setFormHalqa({ ...formHalqa, name: e.target.value })
-                }
-                className="w-full input input-bordered "
+                onChange={(e) => {
+                  let value = e.target.value;
+                  value = value.trim();
+                  value = value.replace(/[^a-z0-9_]/g, "_");
+                  setFormHalqa({ ...formHalqa, name: value });
+                }}
+                className="w-full input input-bordered"
                 required
+                onKeyDown={handleKeyDown}
               />
+              {message && <p className="text-red-500">{message}</p>}
             </div>
           </div>
           <div className="modal-action">

@@ -4,7 +4,7 @@ import { FaEdit, FaEye, FaPrint } from "react-icons/fa";
 import moment from "moment";
 import { NoReports, months } from "../Reports";
 import { FilterDialog } from "./FilterDialog";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UIContext } from "../../context/ui";
 import { SearchPage } from "./SearchPage";
 import instance from "../../api/instrance";
@@ -26,7 +26,6 @@ export const IlaqaReports = () => {
   const [searchData, setSearchData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const { getIlaqaReports, setLoading } = useContext(UIContext);
-  const [disable, setDisable] = useState(false);
   const [noReports, setNoReports] = useState(false);
   const [isFilter, setIsFilter] = useState(false);
   const navigate = useNavigate();
@@ -42,7 +41,7 @@ export const IlaqaReports = () => {
     setFilterAllData(uniqueArray);
   }, [iReports]);
   const searchResults = async () => {
-    setLoading(true)
+    setLoading(true);
     showSearch(false);
     if (year !== "" && month !== "") {
       try {
@@ -68,7 +67,7 @@ export const IlaqaReports = () => {
         });
       }
     }
-    setLoading(false)
+    setLoading(false);
   };
   const toggleSearch = () => {
     showSearch(!search);
@@ -123,7 +122,7 @@ export const IlaqaReports = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [window.innerWidth]);
- 
+
   return (
     <>
       <div className="md:join xs:w-full mb-4 flex justify-between items-center">
@@ -298,12 +297,12 @@ export const IlaqaReports = () => {
                               Edit
                             </span>
                           )}
-                          <span
-                            onClick={() => handlePrint(p?._id)}
+                          <Link
+                            to={`/ilaqa-report/print/${p?._id}`}
                             className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left text-blue"
                           >
                             Print
-                          </span>
+                          </Link>
                         </div>
                       </td>
                     </tr>
@@ -361,7 +360,7 @@ export const IlaqaReports = () => {
                   </button>
                 )}
                 {totalPages > 3 && <span>...</span>}
-                {(totalPages && currentPage > 2 && currentPage < totalPages) ? (
+                {totalPages && currentPage > 2 && currentPage < totalPages ? (
                   <span
                     className={`rounded-full text-bold text-sm ${
                       currentPage !== totalPages && "border-2 border-gray-500"
@@ -369,8 +368,10 @@ export const IlaqaReports = () => {
                   >
                     {currentPage}
                   </span>
-                ): <span></span>}
-                {(totalPages && totalPages > 2) ? (
+                ) : (
+                  <span></span>
+                )}
+                {totalPages && totalPages > 2 ? (
                   <span
                     className={`rounded-full text-bold text-sm ${
                       currentPage === totalPages && "border-2 border-gray-500"
@@ -378,7 +379,9 @@ export const IlaqaReports = () => {
                   >
                     {totalPages}
                   </span>
-                ): <span></span>}
+                ) : (
+                  <span></span>
+                )}
               </div>
 
               {/* Next Button */}
@@ -396,9 +399,10 @@ export const IlaqaReports = () => {
             </div>
           )}
         </>
+      ) : !noReports ? (
+        <SearchPage data={searchData} area={"ilaqa"} />
       ) : (
-        !noReports ? 
-        <SearchPage data={searchData} area={"ilaqa"} /> : <NoReports/>
+        <NoReports />
       )}
       <dialog id="filter-area-dialog" className="modal">
         <FilterDialog

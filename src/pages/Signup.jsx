@@ -25,6 +25,7 @@ export const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+
     const formData = new FormData(e.currentTarget);
     const data = {
       userAreaId: formData.get("userAreaId"),
@@ -42,13 +43,21 @@ export const Signup = () => {
       subject: formData.get("subject"),
       semester: formData.get("semester"),
       institution: formData.get("institution"),
-      joiningDate: joiningDate,
+      joiningDate: joiningDate?.title, // Ensure joiningDate is properly checked
       phoneNumber: formData.get("phoneNumber"),
       whatsAppNumber: formData.get("whatsAppNumber"),
       nazimType: formData.get("nazimType"),
     };
-    if (!joiningDate.title) {
-      alert("please select the nazim");
+
+    // Validation: Check for empty fields
+    const missingFields = Object.entries(data)
+      .filter(([key, value]) => !value) // Find fields with falsy values
+      .map(([key]) => key); // Extract field names
+
+    if (missingFields.length > 0) {
+      alert(`Please fill in the following fields: ${missingFields.join(", ")}`);
+      setLoading(false);
+      return;
     }
     try {
       const request = await instance.post("/user/signup", data, {
@@ -62,6 +71,7 @@ export const Signup = () => {
     }
     setLoading(false);
   };
+
   // FETCH ALL SUBJECTS
 
   const getSubjects = async () => {
@@ -142,12 +152,6 @@ export const Signup = () => {
       case "Markaz":
         setLoading(true);
         data = await instance.get("/locations/country");
-        setLoading(false);
-        setAreas(data.data.data);
-        break;
-      case "Ilaqa":
-        setLoading(true);
-        data = await instance.get("/locations/ilaqa");
         setLoading(false);
         setAreas(data.data.data);
         break;

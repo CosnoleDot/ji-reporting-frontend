@@ -115,7 +115,6 @@ function App() {
   );
   let length;
   let dis;
-
   const getMe = async () => {
     try {
       sessionStorage.removeItem("storedData");
@@ -338,7 +337,6 @@ function App() {
     ) {
       let req;
       try {
-        setLoading(true);
         if (me?.userAreaType === "Province" || me?.userAreaType === "Country") {
           req = await instance.get("/locations/division", {
             headers: {
@@ -347,17 +345,13 @@ function App() {
           });
           if (req) {
             setDivisions(req?.data?.data);
-            setLoading(false);
           } else {
-            setLoading(false);
-
             dispatch({
               type: "ERROR",
               payload: req?.response?.data?.message,
             });
           }
         } else if (me?.userAreaType === "Division") {
-          setLoading(true);
           req = await instance.get(
             `/locations/division/${me?.userAreaId?._id}`,
             {
@@ -368,9 +362,7 @@ function App() {
           );
           if (req) {
             setDivisions([req?.data?.data]);
-            setLoading(false);
           } else {
-            setLoading(false);
             dispatch({
               type: "ERROR",
               payload: req?.response?.data?.message,
@@ -379,7 +371,6 @@ function App() {
         }
       } catch (err) {
         console.log(err);
-        setLoading(false);
         dispatch({
           type: "ERROR",
           payload: err?.response?.data?.message || err?.message,
@@ -396,7 +387,6 @@ function App() {
       me?.userAreaType !== "Ilaqa"
     ) {
       try {
-        setLoading(true);
         const req = await instance.get("/locations/tehsil", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
@@ -410,12 +400,11 @@ function App() {
               i?.district?.division?.province?._id === me?.userAreaId?._id ||
               i?.district?.division?.province?.country === me?.userAreaId?._id
           );
-          setLoading(false);
+
           setTehsils(validTehsils);
         }
       } catch (err) {
         console.log(err);
-        setLoading(false);
         dispatch({
           type: "ERROR",
           payload: err?.response?.data?.message || err?.message,
@@ -432,7 +421,6 @@ function App() {
       me?.userAreaType !== "Ilaqa"
     ) {
       try {
-        setLoading(true);
         const req = await instance.get("/locations/district", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
@@ -448,12 +436,11 @@ function App() {
           );
 
           setDistricts(validDistricts);
-          setLoading(false);
+
           dis = validDistricts;
         }
       } catch (err) {
         console.log(err);
-        setLoading(false);
         dispatch({
           type: "ERROR",
           payload: err?.response?.data?.message || err?.message,
@@ -464,21 +451,19 @@ function App() {
     }
   };
   const getHalqas = async () => {
+    setLoading(true);
     try {
       let req;
       if (me && me?.userAreaType === "Halqa") {
-        setLoading(true);
-
         req = await instance.get(`/locations/halqa/${me?.userAreaId?._id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
           },
         });
         if (req) {
+          setLoading(false);
           setHalqas([req?.data?.data]);
-          setLoading(false);
         } else {
-          setLoading(false);
           dispatch({
             type: "ERROR",
             payload: req?.response?.data?.message,
@@ -498,6 +483,7 @@ function App() {
           }
         }
       }
+      setLoading(false);
     } catch (err) {
       console.log(err);
       setLoading(false);
@@ -515,7 +501,6 @@ function App() {
       setMuntakhibMaqam(false);
     }
   };
-  useEffect(() => {}, [muntakhibMaqam]);
   let provinceR, maqamR, divisionR, halqaR, ilaqaR, markazR, halqaT;
   const getMarkazReport = async (inset, offset) => {
     if (me?.userAreaType === "Country")
@@ -539,7 +524,7 @@ function App() {
             const newReports = Array.isArray(markazR) ? markazR : [];
 
             return {
-              reports: [ ...reports ,...newReports],
+              reports: [...reports, ...newReports],
               length: length,
             };
           });
@@ -577,7 +562,7 @@ function App() {
             const newReports = Array.isArray(provinceR) ? provinceR : [];
 
             return {
-              reports: [ ...reports ,...newReports],
+              reports: [...reports, ...newReports],
               length: length,
             };
           });
@@ -620,7 +605,7 @@ function App() {
             const newReports = Array.isArray(maqamR) ? maqamR : [];
 
             return {
-              reports: [ ...reports ,...newReports],
+              reports: [...reports, ...newReports],
               length: length,
             };
           });
@@ -658,7 +643,7 @@ function App() {
             const newReports = Array.isArray(ilaqaR) ? ilaqaR : [];
 
             return {
-              reports: [ ...reports ,...newReports],
+              reports: [...reports, ...newReports],
               length: length,
             };
           });
@@ -700,7 +685,7 @@ function App() {
             const newReports = Array.isArray(divisionR) ? divisionR : [];
 
             return {
-              reports: [ ...reports ,...newReports],
+              reports: [...reports, ...newReports],
               length: length,
             };
           });
@@ -737,7 +722,7 @@ function App() {
           const newReports = Array.isArray(halqaR) ? halqaR : [];
 
           return {
-            reports: [ ...reports ,...newReports],
+            reports: [...reports, ...newReports],
             length: length,
           };
         });
@@ -775,7 +760,7 @@ function App() {
             const newReports = Array.isArray(halqaT) ? halqaT : [];
 
             return {
-              reports: [ ...reports ,...newReports],
+              reports: [...reports, ...newReports],
               length: length,
             };
           });
@@ -798,6 +783,7 @@ function App() {
       const req = await instance.get("/user/nazim", {
         headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
       });
+      console.log("nazim", req);
       if (req) setNazim(req?.data?.data);
       setLoading(false);
     } catch (err) {
@@ -1029,32 +1015,7 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authenticated]);
   useEffect(() => {
-    function sleep(ms) {
-      return new Promise((resolve) => setTimeout(resolve, ms));
-    }
     const fetchData = async () => {
-      setCount((100 / 16) * 1);
-      setValue("Fetching provinces");
-      await getProvinces();
-      setCount((100 / 16) * 2);
-      setValue("Fetching maqams");
-      await getMaqams();
-      setCount((100 / 16) * 3);
-      setValue("Fetching Ilaqas");
-      await getIlaqas();
-      setCount((100 / 16) * 4);
-      setValue("Fetching divisions");
-      await getDivisions();
-      setCount((100 / 16) * 5);
-      setValue("Fetching districts");
-      await getDistricts();
-      setCount((100 / 16) * 6);
-      setValue("Fetching tehsils");
-      await getTehsils();
-      setCount((100 / 16) * 7);
-      setValue("Fetching halqas");
-      await getHalqas();
-      setCount((100 / 16) * 13);
       setValue("Fetching user");
       await getNazim();
       setCount((100 / 16) * 14);

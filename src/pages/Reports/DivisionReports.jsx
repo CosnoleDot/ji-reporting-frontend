@@ -4,7 +4,7 @@ import { FaEdit, FaEye, FaPrint } from "react-icons/fa";
 import moment from "moment";
 import { NoReports, months } from "../Reports";
 import { FilterDialog } from "./FilterDialog";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UIContext } from "../../context/ui";
 import instance from "../../api/instrance";
 import { SearchPage } from "./SearchPage";
@@ -41,7 +41,7 @@ export const DivisionReports = () => {
     setFilterAllData(uniqueArray);
   }, [dReports]);
   const searchResults = async () => {
-    setLoading(true)
+    setLoading(true);
     showSearch(false);
     if (year !== "" && month !== "") {
       try {
@@ -67,7 +67,7 @@ export const DivisionReports = () => {
         });
       }
     }
-    setLoading(false)
+    setLoading(false);
   };
   const toggleSearch = () => {
     showSearch(!search);
@@ -75,7 +75,7 @@ export const DivisionReports = () => {
   const clearFilters = () => {
     setMonth("");
     setYear("2023");
-   
+
     setNoReports(false);
     setIsFilter(false);
     setIsSearch(false);
@@ -297,12 +297,12 @@ export const DivisionReports = () => {
                               Edit
                             </span>
                           )}
-                          <span
-                            onClick={() => handlePrint(p?._id)}
+                          <Link
+                            to={`/division-report/print/${p?._id}`}
                             className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left text-blue"
                           >
                             Print
-                          </span>
+                          </Link>
                         </div>
                       </td>
                     </tr>
@@ -360,7 +360,7 @@ export const DivisionReports = () => {
                   </button>
                 )}
                 {totalPages > 3 && <span>...</span>}
-                {(totalPages && currentPage > 2 && currentPage < totalPages) ? (
+                {totalPages && currentPage > 2 && currentPage < totalPages ? (
                   <span
                     className={`rounded-full text-bold text-sm ${
                       currentPage !== totalPages && "border-2 border-gray-500"
@@ -368,8 +368,10 @@ export const DivisionReports = () => {
                   >
                     {currentPage}
                   </span>
-                ): <span></span>}
-                {(totalPages && totalPages > 2) ? (
+                ) : (
+                  <span></span>
+                )}
+                {totalPages && totalPages > 2 ? (
                   <span
                     className={`rounded-full text-bold text-sm ${
                       currentPage === totalPages && "border-2 border-gray-500"
@@ -377,7 +379,9 @@ export const DivisionReports = () => {
                   >
                     {totalPages}
                   </span>
-                ): <span></span>}
+                ) : (
+                  <span></span>
+                )}
               </div>
 
               {/* Next Button */}
