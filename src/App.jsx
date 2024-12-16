@@ -836,6 +836,7 @@ function App() {
     }
   };
   const getAreaDetails = async (obj, userAreaType) => {
+    console.log(obj, userAreaType);
     const getPath = (parentId) => {
       switch (parentId) {
         case "Ilaqa":
@@ -859,15 +860,12 @@ function App() {
     };
     let res;
     try {
-      if (obj?.parentType) {
-        res = await instance.get(
-          `/locations/${getPath(obj?.parentType)}/${obj?._id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("@token")}`,
-            },
-          }
-        );
+      if (obj?.type) {
+        res = await instance.get(`/locations/${userAreaType}/${obj?._id}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
+        });
       } else if (!obj?.parentType && obj?.maqam) {
         res = await instance.get(`/locations/ilaqa/${obj?._id}`, {
           headers: {
