@@ -187,8 +187,6 @@ function App() {
   const getProvinces = async () => {
     if (me?.userAreaType === "Province") {
       try {
-        setLoading(true);
-
         const req = await instance.get(
           `/locations/province/${me?.userAreaId?._id}`,
           {
@@ -199,11 +197,8 @@ function App() {
         );
         if (req) {
           setProvinces([req.data?.data]);
-          setLoading(false);
         }
       } catch (err) {
-        setLoading(false);
-
         console.log(err);
         dispatch({
           type: "ERROR",
@@ -213,7 +208,6 @@ function App() {
     } else {
       if (me?.userAreaType === "Country") {
         try {
-          setLoading(true);
           const req = await instance.get(`/locations/province`, {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("@token")}`,
@@ -221,11 +215,10 @@ function App() {
           });
           if (req) {
             setProvinces(req.data?.data);
-            setLoading(false);
           }
         } catch (err) {
           console.log(err);
-          setLoading(false);
+
           dispatch({
             type: "ERROR",
             payload: err?.response?.data?.message || err?.message,
@@ -237,7 +230,6 @@ function App() {
   const getIlaqas = async () => {
     if (me?.userAreaType !== "Halqa" && me?.userAreaType !== "Division") {
       try {
-        setLoading(true);
         let req;
         if (me?.userAreaType === "Ilaqa") {
           req = await instance.get(`/locations/ilaqa/${me?.userAreaId?._id}`, {
@@ -246,19 +238,14 @@ function App() {
             },
           });
           if (req) {
-            setLoading(false);
-
             setIlaqas([req?.data?.data]);
           } else {
-            setLoading(false);
-
             dispatch({
               type: "ERROR",
               payload: req?.response?.data?.message,
             });
           }
         } else {
-          setLoading(true);
           req = await instance.get("/locations/ilaqa", {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("@token")}`,
@@ -266,9 +253,7 @@ function App() {
           });
           if (req?.data?.data.length > 1) {
             setIlaqas(req?.data?.data);
-            setLoading(false);
           } else {
-            setLoading(false);
             dispatch({
               type: "ERROR",
               payload: req?.response?.data?.message,
@@ -277,7 +262,7 @@ function App() {
         }
       } catch (err) {
         console.log(err);
-        setLoading(false);
+
         dispatch({
           type: "ERROR",
           payload: err?.response?.data?.message || err?.message,
@@ -294,8 +279,6 @@ function App() {
       me?.userAreaType !== "Ilaqa"
     ) {
       try {
-        setLoading(true);
-
         let req;
         if (me?.userAreaType === "Maqam") {
           req = await instance.get(`/locations/maqam/${me?.userAreaId?._id}`, {
@@ -305,21 +288,18 @@ function App() {
           });
           if (req) {
             setMaqams([req?.data?.data]);
-            setLoading(false);
           }
         } else {
-          setLoading(true);
           req = await instance.get("/locations/maqam", {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("@token")}`,
             },
           });
           setMaqams(req?.data?.data);
-          setLoading(false);
         }
       } catch (err) {
         console.log(err);
-        setLoading(false);
+
         dispatch({
           type: "ERROR",
           payload: err?.response?.data?.message || err?.message,
@@ -451,7 +431,6 @@ function App() {
     }
   };
   const getHalqas = async () => {
-    setLoading(true);
     try {
       let req;
       if (me && me?.userAreaType === "Halqa") {
@@ -461,7 +440,6 @@ function App() {
           },
         });
         if (req) {
-          setLoading(false);
           setHalqas([req?.data?.data]);
         } else {
           dispatch({
@@ -471,7 +449,6 @@ function App() {
         }
       } else {
         if (me && me.userAreaType !== "Halqa") {
-          setLoading(true);
           req = await instance.get("/locations/halqa", {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("@token")}`,
@@ -479,14 +456,12 @@ function App() {
           });
           if (req) {
             setHalqas(req?.data?.data);
-            setLoading(false);
           }
         }
       }
-      setLoading(false);
     } catch (err) {
       console.log(err);
-      setLoading(false);
+
       dispatch({
         type: "ERROR",
         payload: err?.response?.data?.message || err?.message,
@@ -505,7 +480,6 @@ function App() {
   const getMarkazReport = async (inset, offset) => {
     if (me?.userAreaType === "Country")
       try {
-        setLoading(true);
         const req = await instance.get(
           `/reports/markaz?inset=${inset}&offset=${offset}`,
           {
@@ -528,11 +502,10 @@ function App() {
               length: length,
             };
           });
-          setLoading(false);
         }
       } catch (err) {
         console.log(err);
-        setLoading(false);
+
         dispatch({
           type: "ERROR",
           payload: err?.response?.data?.message || err?.message,
@@ -543,7 +516,6 @@ function App() {
   const getProvinceReports = async (inset, offset) => {
     if (me?.userAreaType === "Country" || me?.userAreaType === "Province")
       try {
-        setLoading(true);
         const req = await instance.get(
           `/reports/province?inset=${inset}&offset=${offset}`,
           {
@@ -566,12 +538,10 @@ function App() {
               length: length,
             };
           });
-          setLoading(false);
         }
-        setLoading(false);
       } catch (err) {
         console.log(err);
-        setLoading(false);
+
         dispatch({
           type: "ERROR",
           payload: err?.response?.data?.message || err?.message,
@@ -586,7 +556,6 @@ function App() {
       me?.userAreaType === "Maqam"
     )
       try {
-        setLoading(true);
         const req = await instance.get(
           `/reports/maqam?inset=${inset}&offset=${offset}`,
           {
@@ -609,11 +578,10 @@ function App() {
               length: length,
             };
           });
-          setLoading(false);
         }
       } catch (err) {
         console.log(err);
-        setLoading(false);
+
         dispatch({
           type: "ERROR",
           payload: err?.response?.data?.message || err?.message,
@@ -624,7 +592,6 @@ function App() {
   const getIlaqaReports = async (inset, offset) => {
     if (me?.userAreaType !== "Halqa" && me?.userAreaType !== "Division")
       try {
-        setLoading(true);
         const req = await instance.get(
           `/reports/ilaqa?inset=${inset}&offset=${offset}`,
           {
@@ -647,11 +614,10 @@ function App() {
               length: length,
             };
           });
-          setLoading(false);
         }
       } catch (err) {
         console.log(err);
-        setLoading(false);
+
         dispatch({
           type: "ERROR",
           payload: err?.response?.data?.message || err?.message,
@@ -666,7 +632,6 @@ function App() {
       me?.userAreaType === "Division"
     )
       try {
-        setLoading(true);
         const req = await instance.get(
           `/reports/division?inset=${inset}&offset=${offset}`,
           {
@@ -689,11 +654,10 @@ function App() {
               length: length,
             };
           });
-          setLoading(false);
         }
       } catch (err) {
         console.log(err);
-        setLoading(false);
+
         dispatch({
           type: "ERROR",
           payload: err?.response?.data?.message || err?.message,
@@ -703,7 +667,6 @@ function App() {
   };
   const getHalqaReports = async (inset, offset) => {
     try {
-      setLoading(true);
       const req = await instance.get(
         `/reports/halqa?inset=${inset}&offset=${offset}`,
         {
@@ -726,12 +689,10 @@ function App() {
             length: length,
           };
         });
-        setLoading(false);
       }
-      setLoading(false);
     } catch (err) {
       console.log(err);
-      setLoading(false);
+
       dispatch({
         type: "ERROR",
         payload: err?.response?.data?.message || err?.message,
@@ -741,7 +702,6 @@ function App() {
   const getHalqaReportsTab = async (inset, offset, tab) => {
     if (tab) {
       try {
-        setLoading(true);
         const req = await instance.get(
           `/reports/halqa?inset=${inset}&offset=${offset}&tab=${tab}`,
           {
@@ -764,11 +724,10 @@ function App() {
               length: length,
             };
           });
-          setLoading(false);
         }
       } catch (err) {
         console.log(err);
-        setLoading(false);
+
         dispatch({
           type: "ERROR",
           payload: err?.response?.data?.message || err?.message,
@@ -779,16 +738,13 @@ function App() {
 
   const getNazim = async () => {
     try {
-      setLoading(true);
       const req = await instance.get("/user/nazim", {
         headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
       });
       console.log("nazim", req);
       if (req) setNazim(req?.data?.data);
-      setLoading(false);
     } catch (err) {
       console.log(err);
-      setLoading(false);
       dispatch({
         type: "ERROR",
         payload: err?.response?.data?.message || err?.message,
@@ -880,7 +836,6 @@ function App() {
     }
   };
   const getAreaDetails = async (obj, userAreaType) => {
-    setLoading(true);
     const getPath = (parentId) => {
       switch (parentId) {
         case "Ilaqa":
@@ -963,7 +918,6 @@ function App() {
   };
   const getCompileReports = async (startDate, endDate, areaType, areaId) => {
     try {
-      setLoading(true);
       const req = await instance.get(
         `/compilation/${areaId}?startDate=${startDate}&endDate=${endDate}&areaType=${areaType}`,
         {
@@ -975,10 +929,8 @@ function App() {
 
       if (req) {
         setCompileReports(req.data.data);
-        setLoading(false);
       }
     } catch (err) {
-      setLoading(false);
       console.log(err);
       dispatch({
         type: "ERROR",
@@ -1016,8 +968,6 @@ function App() {
   }, [authenticated]);
   useEffect(() => {
     const fetchData = async () => {
-      setValue("Fetching user");
-      await getNazim();
       setCount((100 / 16) * 14);
       setValue("Fetching user requests");
       await getAllRequests();
@@ -1056,6 +1006,7 @@ function App() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [me]);
+
   useEffect(() => {
     if (me) {
       if (!isCompleted) {
@@ -1103,10 +1054,10 @@ function App() {
                                             isCompleted,
                                             setLoading,
                                             getMe,
+                                            getCompileReports,
                                             getProvinces,
                                             getMaqams,
                                             getDivisions,
-                                            getCompileReports,
                                             getDistricts,
                                             getTehsils,
                                             getHalqas,
