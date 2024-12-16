@@ -1,7 +1,5 @@
 import { useContext, useRef, useState } from "react";
 import { GeneralLayout } from "../components";
-import { FaLocationDot } from "react-icons/fa6";
-import { CiLocationOn } from "react-icons/ci";
 import { FaUsers } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
 import {
@@ -119,50 +117,54 @@ export const Dashboard = () => {
     handlePersonalFilledReports();
   }, [umeedwarReports]);
   const fetchReports = async () => {
-    try {
-      setLoading(true);
-      const id = me?.userAreaId?._id;
-      // API endpoint
-      const endpoint = `http://localhost:5000/api/v1/reports/halqa/data/all`;
+    if (me) {
+      try {
+        setLoading(true);
+        // API endpoint
+        const endpoint = `reports/halqa/data/all`;
 
-      // Fetch data from API
-      const response = await instance.get(endpoint, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("@token")}`,
-        },
-        params: {
-          areaType:
-            userAreaType === "All"
-              ? me?.userAreaType
-              : userAreaType || me?.userAreaType,
-          areaId: userAreaType === "All" ? me?.userAreaId?._id : selectedId,
-          queryDate: queryDate,
-        },
-      });
-      // Extract data from response
-      const data = response.data;
+        // Fetch data from API
+        const response = await instance.get(endpoint, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@token")}`,
+          },
+          params: {
+            areaType:
+              userAreaType === "All"
+                ? me?.userAreaType
+                : userAreaType || me?.userAreaType,
+            areaId: userAreaType === "All" ? me?.userAreaId?._id : selectedId,
+            queryDate: queryDate,
+          },
+        });
+        // Extract data from response
+        const data = response.data;
 
-      if (data?.status === 200) {
-        setData(data.data);
-        //  Save data to session storage
-        const storedData = sessionStorage.getItem("storedData");
-        setLoading(false);
-        if (!storedData) {
-          sessionStorage.setItem("storedData", JSON.stringify(data.data));
+        if (data?.status === 200) {
+          setData(data.data);
+          //  Save data to session storage
+          const storedData = sessionStorage.getItem("storedData");
+          setLoading(false);
+          if (!storedData) {
+            sessionStorage.setItem("storedData", JSON.stringify(data.data));
+          }
+        } else {
+          console.error("Error fetching reports:", data.message);
+          return null;
         }
-      } else {
-        console.error("Error fetching reports:", data.message);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        console.error("Error occurred while fetching reports:", error);
         return null;
       }
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      console.error("Error occurred while fetching reports:", error);
-      return null;
     }
   };
   useEffect(() => {
-    fetchReports();
+    const storedData = sessionStorage.getItem("storedData");
+    if (!storedData) {
+      fetchReports();
+    }
   }, [me]);
   // const getData = async () => {
   //   setLoading(true);
@@ -455,7 +457,41 @@ export const Dashboard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAreaType]);
 
-  // filter PERSONAL REPORTS
+  useEffect(() => {
+    if (me && me?.userAreaType === "Country") {
+      getDivisions();
+
+      getMaqams();
+
+      getIlaqas();
+
+      getProvinces();
+
+      getHalqas();
+    } else if (me?.userAreaType === "Province") {
+      getDivisions();
+
+      getMaqams();
+
+      getIlaqas();
+
+      getHalqas();
+    } else if (me?.userAreaType === "Maqam") {
+      getHalqas();
+
+      getIlaqas();
+    } else if (me?.userAreaType === "Division") {
+      getHalqas();
+
+      getDistricts();
+
+      getTehsils();
+    } else if (me?.userAreaType === "Ilaqa") {
+      getHalqas();
+    } else {
+      getHalqas();
+    }
+  }, [me]);
 
   const handlePersonalFilledReports = () => {
     // Filter out nazim who are not of type "nazim"
@@ -885,17 +921,17 @@ export const Dashboard = () => {
                                       </p>
                                     </td>
                                     <td className="font-inter w-[50%] text-[14px] font-medium leading-[16.94px] text-end">
-                                      {nazim.find(
-                                        (i) => i?.userAreaId?._id === obj?._id
-                                      )?.name || (
+                                      {obj?.users.length > 0 ? (
+                                        obj.users.map((user) => user.name)
+                                      ) : (
                                         <span
                                           style={{
                                             textTransform: "capitalize",
                                             fontSize: "smaller",
                                           }}
-                                          className="text-start text-destructive font-medium text-[14px] leading-4"
+                                          className="text-start text-error"
                                         >
-                                          User Not Registered Yet
+                                          User Not Registered
                                         </span>
                                       )}
                                     </td>
@@ -938,7 +974,9 @@ export const Dashboard = () => {
                                     </p>
                                   </td>
                                   <td className="w-[50%]">
-                                    {obj.users.map((user) => user.name) || (
+                                    {obj?.users.length > 0 ? (
+                                      obj.users.map((user) => user.name)
+                                    ) : (
                                       <span
                                         style={{
                                           textTransform: "capitalize",

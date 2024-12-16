@@ -741,7 +741,6 @@ function App() {
       const req = await instance.get("/user/nazim", {
         headers: { Authorization: `Bearer ${localStorage.getItem("@token")}` },
       });
-      console.log("nazim", req);
       if (req) setNazim(req?.data?.data);
     } catch (err) {
       console.log(err);
@@ -836,7 +835,6 @@ function App() {
     }
   };
   const getAreaDetails = async (obj, userAreaType) => {
-    console.log(obj, userAreaType);
     const getPath = (parentId) => {
       switch (parentId) {
         case "Ilaqa":
