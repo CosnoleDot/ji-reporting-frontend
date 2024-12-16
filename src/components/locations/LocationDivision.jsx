@@ -124,9 +124,7 @@ export const LocationDivision = () => {
   const handleNextPage = () => {
     setCurrentPage((prev) => Math.min(prev + 1, totalPages));
   };
-  useEffect(() => {
-    console.log(filteredData);
-  }, [filteredData]);
+
   // *****************Division***********************
   const handleSubmit = async () => {
     if (!validateForm(form)) {

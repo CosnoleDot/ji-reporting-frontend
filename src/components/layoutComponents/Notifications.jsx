@@ -55,10 +55,8 @@ export const Notifications = ({ userRequests, type }) => {
     }
     setLoading(false);
   };
- 
   return (
     <div className="overflow-y-scroll">
-      
       {type !== "request" && (
         <div className="flex w-full gap-8 items-center justify-between">
           <Link
@@ -102,7 +100,6 @@ export const Notifications = ({ userRequests, type }) => {
                 <div className="bg-primary text-white w-[40%] h-full py-2 flex items-center justify-center capitalize">
                   {req?.nazimType}
                 </div>
-
                 <div className="flex w-full gap-2 items-center">
                   <div className="flex items-center w-full flex-col justify-start">
                     <div className="flex w-full px-3">

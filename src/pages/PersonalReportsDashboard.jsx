@@ -3,7 +3,7 @@ import { GeneralLayout } from "../components";
 import { FaEdit, FaEye, FaPrint } from "react-icons/fa";
 import moment from "moment";
 import instance from "../api/instrance";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { NoReports, getDivisionByTehsil, months } from "./Reports";
 import { MdCancel } from "react-icons/md";
 import { MeContext } from "../context";
@@ -92,6 +92,7 @@ export const PersonalReportsDashboard = () => {
   const searchResults = async () => {
     setIsSearch(true);
     setToggle(false);
+    setLoading(true);
     const findData = `${year}-${
       parseInt(month) > 9 ? month : "0" + month.toString()
     }`;
@@ -101,6 +102,7 @@ export const PersonalReportsDashboard = () => {
         Authorization: `Bearer ${localStorage.getItem("@token")}`,
       },
     });
+    setLoading(false);
     setFilteredData(req?.data?.data?.data);
   };
   let totalPages = Math.ceil(total / itemsPerPage);
@@ -125,58 +127,32 @@ export const PersonalReportsDashboard = () => {
       getAllReports(inset, offset);
     }
   };
- 
+
   return (
     <GeneralLayout title={"Personal Dashboard"} active={"personalReports"}>
       <div className="w-full flex flex-col justify-start p-2 md:p-5">
-
-    
-
         <div className="w-full overflow-hidden overflow-x-scroll md:justify-center md:items-center flex md:flex-row flex-col gap-4 md:gap-2 m-2">
-         {localStorage.getItem("@nazimType") !== "umeedwar" && localStorage.getItem("@nazimType") !== "rukan" && <select
-            name="nazim"
-            className="w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[14px] leading-6 font-inter"
-            value={rukanId ? rukanId : "none"}
-            onChange={(e) => {
-              setRukanId(e.target.value);
-            }}
-          >
-            <option disabled selected value={"none"}>
-              Name...
-            </option>
-            {nazim
-              ?.filter((n) => n?.nazimType && n?.nazimType !== "nazim")
-              .map((nazim) => (
-                <option key={nazim?._id} value={nazim?._id}>
-                  {nazim?.name} Of {nazim?.userAreaId?.name}
-                </option>
-              ))}
-          </select>}
-
           <div className="w-full flex gap-4">
             {!toggle ? (
               <>
-                {" "}
-                {rukanId && (
-                  <button
-                    className="font-inter w-full md:text-[14px] text-[10px] bg-primary flex justify-center text-white p-2 rounded font-medium leading-[20px] text-left"
-                    onClick={() => getAllReports(0, 10)}
-                  >
-                    Get All
-                  </button>
-                )}
-                {localStorage.getItem("@nazimType") !== "umeedwar" && localStorage.getItem("@nazimType") !== "rukan" && <button
-                  className="font-inter w-full md:text-[14px] text-[10px] bg-primary flex justify-center text-white p-2 rounded font-medium leading-[20px] text-left"
-                  onClick={handleClear}
-                >
-                  Clear
-                </button>}
-                {localStorage.getItem("@nazimType") !== "umeedwar" && localStorage.getItem("@nazimType") !== "rukan" && <button
-                  className="font-inter w-full md:text-[14px] text-[10px] bg-primary flex justify-center text-white p-2 rounded font-medium leading-[20px] text-left"
-                  onClick={() => setToggle(true)}
-                >
-                  Search
-                </button>}
+                {localStorage.getItem("@nazimType") !== "umeedwar" &&
+                  localStorage.getItem("@nazimType") !== "rukan" && (
+                    <button
+                      className="font-inter w-full md:text-[14px] text-[10px] bg-primary flex justify-center text-white p-2 rounded font-medium leading-[20px] text-left"
+                      onClick={handleClear}
+                    >
+                      Clear
+                    </button>
+                  )}
+                {localStorage.getItem("@nazimType") !== "umeedwar" &&
+                  localStorage.getItem("@nazimType") !== "rukan" && (
+                    <button
+                      className="font-inter w-full md:text-[14px] text-[10px] bg-primary flex justify-center text-white p-2 rounded font-medium leading-[20px] text-left"
+                      onClick={() => setToggle(true)}
+                    >
+                      Search
+                    </button>
+                  )}
               </>
             ) : (
               <div className=" p-3 z-40 rounded-lg w-full overflow-hidden bg-white border border-inputBorder">
@@ -286,7 +262,9 @@ export const PersonalReportsDashboard = () => {
                         }}
                         className="text-center text-destructive font-medium text-[14px] leading-4"
                       >
-                        {obj?.userId?.name?.split('').length>20 ? obj?.userId?.name?.split("").slice(0, 20).join("") : obj?.userId?.name}
+                        {obj?.userId?.name?.split("").length > 20
+                          ? obj?.userId?.name?.split("").slice(0, 20).join("")
+                          : obj?.userId?.name}
                       </span>
                     </td>
                     <td className="w-full text-[14px]">
@@ -310,12 +288,12 @@ export const PersonalReportsDashboard = () => {
                             Edit
                           </span>
                         )}
-                        <span
+                        <Link
                           className="cursor-pointer font-inter md:text-sm text-xs font-medium leading-[16.94px] text-left text-blue"
-                          onClick={() => printReport(obj?._id)}
+                          to={`/personalReport/print/${obj?._id}`}
                         >
                           Print
-                        </span>
+                        </Link>
                       </div>
                     </td>
                   </tr>

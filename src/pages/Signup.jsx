@@ -44,7 +44,7 @@ export const Signup = () => {
       subject: formData.get("subject"),
       semester: formData.get("semester"),
       institution: formData.get("institution"),
-      joiningDate: joiningDate?.title, // Ensure joiningDate is properly checked
+      joiningDate: joiningDate,
       phoneNumber: formData.get("phoneNumber"),
       whatsAppNumber: formData.get("whatsAppNumber"),
       nazimType: formData.get("nazimType"),
@@ -200,7 +200,9 @@ export const Signup = () => {
       document.removeEventListener("click", handleEventClick);
     };
   }, []);
-
+  useEffect(() => {
+    console.log(areas);
+  }, [areas]);
   return (
     <div className="relative flex  justify-center min-h-screen overflow-hidden w-full">
       <div className=" w-[40%] bg-secondary min-h-screen p-[40px] md:flex md:flex-col md:justify-between  hidden">
@@ -688,7 +690,7 @@ export const Signup = () => {
             />
           </div>
           {/* NAZIM TYPES */}
-          {joiningDate?.title && userAreaType !== "Markaz" && (
+          {joiningDate?.title && (
             <div className="w-full">
               <span className="px-1 py-2 block font-semibold"> Status:</span>
               <div className="flex  items-center justify-start flex-wrap border border-primary p-2 rounded-lg">
@@ -719,17 +721,19 @@ export const Signup = () => {
                       </label>
                     </div>
 
-                    <div className="form-control">
-                      <label className="label cursor-pointer gap-2">
-                        <input
-                          type="radio"
-                          name="nazimType"
-                          className="radio checked:bg-blue-500"
-                          value="rukan-nazim"
-                        />
-                        <span className="label-text">Rukan-Nazim</span>
-                      </label>
-                    </div>
+                    {userAreaType !== "Markaz" && (
+                      <div className="form-control">
+                        <label className="label cursor-pointer gap-2">
+                          <input
+                            type="radio"
+                            name="nazimType"
+                            className="radio checked:bg-blue-500"
+                            value="rukan-nazim"
+                          />
+                          <span className="label-text">Rukan-Nazim</span>
+                        </label>
+                      </div>
+                    )}
                   </>
                 )}
                 {joiningDate?.title === "umeedwar" && (
@@ -746,17 +750,19 @@ export const Signup = () => {
                       </label>
                     </div>
 
-                    <div className="form-control">
-                      <label className="label cursor-pointer gap-2">
-                        <input
-                          type="radio"
-                          name="nazimType"
-                          className="radio checked:bg-blue-500"
-                          value="umeedwaar-nazim"
-                        />
-                        <span className="label-text">Umeedwaar-Nazim</span>
-                      </label>
-                    </div>
+                    {userAreaType !== "Markaz" && (
+                      <div className="form-control">
+                        <label className="label cursor-pointer gap-2">
+                          <input
+                            type="radio"
+                            name="nazimType"
+                            className="radio checked:bg-blue-500"
+                            value="umeedwaar-nazim"
+                          />
+                          <span className="label-text">Umeedwaar-Nazim</span>
+                        </label>
+                      </div>
+                    )}
                   </>
                 )}
               </div>
