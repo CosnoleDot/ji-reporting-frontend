@@ -957,7 +957,7 @@ export const Dashboard = () => {
                                   <td className="">
                                     <div
                                       onClick={() => {
-                                        getAreaDetails(obj);
+                                        getAreaDetails(obj, obj.type);
                                       }}
                                     >
                                       <span class="cursor-pointer font-inter text-[14px] font-medium leading-[16.94px] text-left">
@@ -1349,7 +1349,7 @@ export const Dashboard = () => {
                   ? "(Ilaqa)"
                   : areaDetails?.country
                   ? "(Province)"
-                  : `(${areaDetails?.areaType})`}
+                  : `(maqam/division)`}
               </h4>
             </div>
             <div className="w-full flex justify-start items-center gap-5">
