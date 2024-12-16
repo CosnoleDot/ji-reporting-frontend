@@ -19,13 +19,14 @@ export const Signup = () => {
   const [joiningDate, setJoiningDate] = useState({ title: "", date: "" });
   const { dispatch } = useToastState();
   const navigate = useNavigate();
+  const [message, setMessage] = useState("");
+
   const handleClick = () => {
     window.open("https://consoledot.com", "_blank");
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
     const formData = new FormData(e.currentTarget);
     const data = {
       userAreaId: formData.get("userAreaId"),
@@ -170,7 +171,14 @@ export const Signup = () => {
       }
     }
   };
-
+  const nonNumaricCal = (e) => {
+    if (!/^[0-9]$/.test(e.key)) {
+      setMessage("No alphabets or special characters are allowed.");
+      e.preventDefault(); // Prevents the input of non-numeric characters
+    } else {
+      setMessage("");
+    }
+  };
   useEffect(() => {
     getAreas();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -274,6 +282,7 @@ export const Signup = () => {
                 </option>
                 <option value={"matric"}>Matric</option>
                 <option value={"intermediate"}>Intermediate</option>
+                <option value={"diploma"}>Diploma</option>
                 <option value={"bachelors"}>Bachelors</option>
                 <option value={"masters"}>Masters</option>
                 <option value={"phd"}>PHD</option>
@@ -369,6 +378,8 @@ export const Signup = () => {
                 type="number"
                 placeholder="Age"
                 name="age"
+                min={12}
+                max={80}
                 className="w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
                 required
               />
@@ -398,12 +409,22 @@ export const Signup = () => {
                 </span>
               </label>
               <input
-                type="text"
-                placeholder="Phone Number"
+                type="tel"
+                placeholder="030********"
                 name="phoneNumber"
                 className="w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
                 required
+                maxLength={11}
+                minLength={11}
+                inputMode="numeric" // Suggests a numeric keyboard on mobile devices
+                pattern="[0-9]*" // Ensures only numbers are valid for form submission
+                onChange={(e) => {
+                  const value = e.target.value.replace(/[^0-9]/g, ""); // Removes non-numeric characters
+                  e.target.value = value; // Updates the value to only numeric
+                }}
+                onKeyDown={(e) => nonNumaricCal(e)}
               />
+              <div className="text-red-500">{message}</div>
             </div>
             <div className="w-full">
               <label className="label">
@@ -412,12 +433,22 @@ export const Signup = () => {
                 </span>
               </label>
               <input
-                type="text"
+                type="tel"
                 placeholder="WhatsApp Number"
                 name="whatsAppNumber"
                 className="w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
                 required
+                maxLength={11}
+                minLength={11}
+                inputMode="numeric" // Suggests a numeric keyboard on mobile devices
+                pattern="[0-9]*" // Ensures only numbers are valid for form submission
+                onChange={(e) => {
+                  const value = e.target.value.replace(/[^0-9]/g, ""); // Removes non-numeric characters
+                  e.target.value = value; // Updates the value to only numeric
+                }}
+                onKeyDown={(e) => nonNumaricCal(e)}
               />
+              <div className="text-red-500">{message}</div>
             </div>
           </div>
 
@@ -648,6 +679,7 @@ export const Signup = () => {
               disabled={joiningDate?.title === "nazim"}
               placeholder="No data"
               name="joiningDate"
+              min="1947-01"
               className="w-full text-secondaryText border outline-none border-inputBorder rounded p-2 text-[16px] leading-6 font-inter"
               defaultValue={joiningDate?.date?.split("-").slice(0, 2).join("-")}
               onChange={(e) =>

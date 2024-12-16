@@ -38,7 +38,16 @@ import {
 } from "../assets/png";
 
 export const Dashboard = () => {
-  const { getHalqas } = useContext(UIContext);
+  const {
+    getHalqas,
+    getNazim,
+    getMaqams,
+    getDivisions,
+    getDistricts,
+    getTehsils,
+    getIlaqas,
+    getProvinces,
+  } = useContext(UIContext);
   const { nazim, setLoading, getAreaDetails } = useContext(UIContext);
   const maqams = useContext(MaqamContext);
   const divisions = useContext(DivisionContext);
@@ -104,252 +113,287 @@ export const Dashboard = () => {
     setLoading(false);
   };
   useEffect(() => {
-    getHalqas();
-  }, []);
+    getNazim();
+  }, [me]);
   useEffect(() => {
     handlePersonalFilledReports();
   }, [umeedwarReports]);
-  const getData = async () => {
-    setLoading(true);
-    setShowData(true);
-    // Check if data is already stored in session storage
-    const storedData = sessionStorage.getItem("storedData");
-    if (queryDate !== "" || !storedData) {
+  const fetchReports = async () => {
+    try {
       setLoading(true);
-      try {
-        const getUnfilledReports = async (path) => {
-          setLoading(true);
-          const res = await instance.get(
-            `/reports/${path}/data/filled-unfilled`,
-            {
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("@token")}`,
-              },
-              params: queryDate !== "" ? { queryDate: queryDate } : null,
-            }
-          );
-          setLoading(false);
-          return res;
-        };
-        let markaz = [];
-        let province, maqam, division, ilaqa, halqa;
-        // if (me?.userAreaType === "Country" && userAreaType === "All") {
-        //   markaz = await getUnfilledReports("markaz");
-        // }
+      const id = me?.userAreaId?._id;
+      // API endpoint
+      const endpoint = `http://localhost:5000/api/v1/reports/halqa/data/all`;
 
-        // province = await getUnfilledReports("province");
-        // maqam = await getUnfilledReports("maqam");
-        // division = await getUnfilledReports("division");
-        // ilaqa = await getUnfilledReports("ilaqa");
-        // halqa = await getUnfilledReports("halqa");
-
-        switch (userAreaType) {
-          case "All":
-            if (me?.userAreaType === "Country" && userAreaType === "All") {
-              markaz = await getUnfilledReports("markaz");
-              province = await getUnfilledReports("province");
-              maqam = await getUnfilledReports("maqam");
-              division = await getUnfilledReports("division");
-              ilaqa = await getUnfilledReports("ilaqa");
-              halqa = await getUnfilledReports("halqa");
-            } else if (me?.userAreaType === "Division") {
-              division = await getUnfilledReports("division");
-              halqa = await getUnfilledReports("halqa");
-            } else if (me?.userAreaType === "Maqam") {
-              maqam = await getUnfilledReports("maqam");
-              ilaqa = await getUnfilledReports("ilaqa");
-              halqa = await getUnfilledReports("halqa");
-            } else if (me?.userAreaType === "Province") {
-              province = await getUnfilledReports("province");
-              maqam = await getUnfilledReports("maqam");
-              ilaqa = await getUnfilledReports("ilaqa");
-              halqa = await getUnfilledReports("halqa");
-              division = await getUnfilledReports("division");
-            } else if (me?.userAreaType === "Ilaqa") {
-              ilaqa = await getUnfilledReports("ilaqa");
-              halqa = await getUnfilledReports("halqa");
-            }
-            break;
-          case "Province":
-            if (me?.userAreaType === "Country") {
-              province = await getUnfilledReports("province");
-            }
-            break;
-          case "Country":
-            if (me?.userAreaType === "Country") {
-              markaz = await getUnfilledReports("markaz");
-            }
-            break;
-          case "Tehsil":
-            if (
-              me?.userAreaType === "Province" ||
-              me?.userAreaType === "Country"
-            ) {
-              halqa = await getUnfilledReports("halqa");
-            }
-            break;
-          case "Maqam":
-            if (
-              me?.userAreaType === "Province" ||
-              me?.userAreaType === "Country"
-            ) {
-              halqa = await getUnfilledReports("halqa");
-              ilaqa = await getUnfilledReports("ilaqa");
-            }
-            break;
-          case "Ilaqa":
-            if (
-              me?.userAreaType === "Province" ||
-              me?.userAreaType === "Country" ||
-              me?.userAreaType === "Maqam"
-            ) {
-              halqa = await getUnfilledReports("halqa");
-            }
-            break;
-          default:
-            console.log("Invalid user area type");
-            return;
-        }
-
-        const markazData = markaz?.data?.data?.allCountries || [];
-        const provinceData = province?.data?.data?.allProvince || [];
-        const maqamData = maqam?.data?.data?.allMaqams || [];
-        const divisionData = division?.data?.data?.allDivisions || [];
-        const ilaqaData = ilaqa?.data?.data?.allIlaqas || [];
-        const halqaData = halqa?.data?.data?.allHalqas || [];
-        const getFilteredHalqas = (fData) => [
-          ...fData.filter((h) => {
-            if (userAreaType === "Maqam") {
-              if (
-                (h?.parentType === "Ilaqa" ||
-                  h?.province ||
-                  h?.parentType === "Maqam") &&
-                (h?.parentId?.maqam === selectedId ||
-                  h?._id === selectedId ||
-                  h?.parentId?._id === selectedId ||
-                  h?.parentId === selectedId)
-              ) {
-                return true;
-              }
-              return false;
-            }
-            if (userAreaType === "Tehsil") {
-              if (h.parentType === "Tehsil" || h.parentType === "Division") {
-                const district = h?.parentId?.district;
-                const halqas = h?.parentId?.division === selectedId;
-                const filteredDistricts = districts
-                  ?.filter((dis) => dis?.division?._id === selectedId)
-                  ?.map((div) => div?._id);
-
-                return filteredDistricts.includes(district) || halqas;
-              }
-              return false;
-            }
-            if (userAreaType === "Ilaqa") {
-              if (
-                (h?.parentType === "Ilaqa" || h?.maqam) &&
-                (h?.parentId?._id === selectedId || h?._id === selectedId)
-              ) {
-                return true;
-              }
-              return false;
-            }
-            return false;
-          }),
-        ];
-        const tempMaqamData = [...maqamData, ...ilaqaData, ...halqaData];
-        const tempIlaqaData = [...ilaqaData, ...halqaData];
-        const temp = {
-          unfilled: null,
-          totalAreas: 1,
-          filled: null,
-          allData:
+      // Fetch data from API
+      const response = await instance.get(endpoint, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("@token")}`,
+        },
+        params: {
+          areaType:
             userAreaType === "All"
-              ? [
-                  ...markazData,
-                  ...provinceData,
-                  ...maqamData,
-                  ...divisionData,
-                  ...ilaqaData,
-                  ...halqaData,
-                ]
-              : userAreaType === "Country"
-              ? [...markazData]
-              : userAreaType === "Province"
-              ? [...provinceData]
-              : userAreaType === "Maqam"
-              ? getFilteredHalqas(tempMaqamData)
-              : userAreaType === "Ilaqa"
-              ? getFilteredHalqas(tempIlaqaData)
-              : getFilteredHalqas(halqaData),
-        };
-        const temMaqamUnfilled = [
-          ...(halqa?.data?.data?.unfilled || []),
-          ...(ilaqa?.data?.data?.unfilled || []),
-          ...(maqam?.data?.data?.unfilled || []),
-        ];
-        const temIlaqaUnfilled = [
-          ...(halqa?.data?.data?.unfilled || []),
-          ...(ilaqa?.data?.data?.unfilled || []),
-        ];
-        temp.unfilled =
-          userAreaType === "All"
-            ? [
-                ...(markaz?.data?.data?.unfilled || []),
-                ...(province?.data?.data?.unfilled || []),
-                ...(maqam?.data?.data?.unfilled || []),
-                ...(division?.data?.data?.unfilled || []),
-                ...(ilaqa?.data?.data?.unfilled || []),
-                ...(halqa?.data?.data?.unfilled || []),
-              ]
-            : userAreaType === "Country"
-            ? markaz?.data?.data?.unfilled
-            : userAreaType === "Province"
-            ? province?.data?.data?.unfilled || []
-            : userAreaType === "Maqam"
-            ? getFilteredHalqas(temMaqamUnfilled) || []
-            : userAreaType === "Ilaqa"
-            ? getFilteredHalqas(temIlaqaUnfilled) || []
-            : getFilteredHalqas(halqa?.data?.data?.unfilled);
-        temp.totalAreas =
-          markaz?.data?.data?.totalCountries ||
-          0 +
-            province?.data?.data?.totalprovince +
-            maqam?.data?.data?.totalmaqam +
-            division?.data?.data?.totaldivision +
-            ilaqa?.data?.data?.totalIlaqa +
-            halqa?.data?.data?.totalhalqa;
-        const reportFilledBy = temp?.allData?.filter((obj1) => {
-          return !temp?.unfilled?.some((obj2) => obj2._id === obj1._id);
-        });
-        temp.filled = reportFilledBy;
-        // Save data to session storage
+              ? me?.userAreaType
+              : userAreaType || me?.userAreaType,
+          areaId: userAreaType === "All" ? me?.userAreaId?._id : selectedId,
+          queryDate: queryDate,
+        },
+      });
+      // Extract data from response
+      const data = response.data;
+
+      if (data?.status === 200) {
+        setData(data.data);
+        //  Save data to session storage
         const storedData = sessionStorage.getItem("storedData");
+        setLoading(false);
         if (!storedData) {
-          sessionStorage.setItem("storedData", JSON.stringify(temp));
+          sessionStorage.setItem("storedData", JSON.stringify(data.data));
         }
-        setData({ ...temp });
-        setLoading(false);
-        // saving the initial data so that on clear filter can set it back
-        if (!initialData?.data) {
-          setInitialData({ ...initialData, data: temp });
-        }
-      } catch (error) {
-        setLoading(false);
-        console.log(error);
+      } else {
+        console.error("Error fetching reports:", data.message);
+        return null;
       }
-    } else {
-      setData(JSON.parse(storedData));
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.error("Error occurred while fetching reports:", error);
+      return null;
     }
-    setLoading(false);
   };
+  useEffect(() => {
+    fetchReports();
+  }, [me]);
+  // const getData = async () => {
+  //   setLoading(true);
+  //   setShowData(true);
+  //   // Check if data is already stored in session storage
+  //   const storedData = sessionStorage.getItem("storedData");
+  //   if (queryDate !== "" || !storedData) {
+  //     setLoading(true);
+  //     try {
+  //       const getUnfilledReports = async (path) => {
+  //         setLoading(true);
+  //         const res = await instance.get(
+  //           `/reports/${path}/data/filled-unfilled`,
+  //           {
+  //             headers: {
+  //               Authorization: `Bearer ${localStorage.getItem("@token")}`,
+  //             },
+  //             params: queryDate !== "" ? { queryDate: queryDate } : null,
+  //           }
+  //         );
+  //         setLoading(false);
+  //         return res;
+  //       };
+  //       let markaz = [];
+  //       let province, maqam, division, ilaqa, halqa;
+  //       switch (userAreaType) {
+  //         case "All":
+  //           if (me?.userAreaType === "Country" && userAreaType === "All") {
+  //             markaz = await getUnfilledReports("markaz");
+  //             province = await getUnfilledReports("province");
+  //             maqam = await getUnfilledReports("maqam");
+  //             division = await getUnfilledReports("division");
+  //             ilaqa = await getUnfilledReports("ilaqa");
+  //             halqa = await getUnfilledReports("halqa");
+  //           } else if (me?.userAreaType === "Division") {
+  //             division = await getUnfilledReports("division");
+  //             halqa = await getUnfilledReports("halqa");
+  //           } else if (me?.userAreaType === "Maqam") {
+  //             maqam = await getUnfilledReports("maqam");
+  //             ilaqa = await getUnfilledReports("ilaqa");
+  //             halqa = await getUnfilledReports("halqa");
+  //           } else if (me?.userAreaType === "Province") {
+  //             province = await getUnfilledReports("province");
+  //             maqam = await getUnfilledReports("maqam");
+  //             ilaqa = await getUnfilledReports("ilaqa");
+  //             halqa = await getUnfilledReports("halqa");
+  //             division = await getUnfilledReports("division");
+  //           } else if (me?.userAreaType === "Ilaqa") {
+  //             ilaqa = await getUnfilledReports("ilaqa");
+  //             halqa = await getUnfilledReports("halqa");
+  //           }
+  //           break;
+  //         case "Province":
+  //           if (me?.userAreaType === "Country") {
+  //             province = await getUnfilledReports("province");
+  //           }
+  //           break;
+  //         case "Country":
+  //           if (me?.userAreaType === "Country") {
+  //             markaz = await getUnfilledReports("markaz");
+  //           }
+  //           break;
+  //         case "Tehsil":
+  //           if (
+  //             me?.userAreaType === "Province" ||
+  //             me?.userAreaType === "Country"
+  //           ) {
+  //             halqa = await getUnfilledReports("halqa");
+  //           }
+  //           break;
+  //         case "Maqam":
+  //           if (
+  //             me?.userAreaType === "Province" ||
+  //             me?.userAreaType === "Country"
+  //           ) {
+  //             halqa = await getUnfilledReports("halqa");
+  //             ilaqa = await getUnfilledReports("ilaqa");
+  //           }
+  //           break;
+  //         case "Ilaqa":
+  //           if (
+  //             me?.userAreaType === "Province" ||
+  //             me?.userAreaType === "Country" ||
+  //             me?.userAreaType === "Maqam"
+  //           ) {
+  //             halqa = await getUnfilledReports("halqa");
+  //           }
+  //           break;
+  //         default:
+  //           console.log("Invalid user area type");
+  //           return;
+  //       }
+  //       const markazData = markaz?.data?.data?.allCountries || [];
+  //       const provinceData = province?.data?.data?.allProvince || [];
+  //       const maqamData = maqam?.data?.data?.allMaqams || [];
+  //       const divisionData = division?.data?.data?.allDivisions || [];
+  //       const ilaqaData = ilaqa?.data?.data?.allIlaqas || [];
+  //       const halqaData = halqa?.data?.data?.allHalqas || [];
+  //       const getFilteredHalqas = (fData) => [
+  //         ...fData.filter((h) => {
+  //           if (userAreaType === "Maqam") {
+  //             if (
+  //               (h?.parentType === "Ilaqa" ||
+  //                 h?.province ||
+  //                 h?.parentType === "Maqam") &&
+  //               (h?.parentId?.maqam === selectedId ||
+  //                 h?._id === selectedId ||
+  //                 h?.parentId?._id === selectedId ||
+  //                 h?.parentId === selectedId)
+  //             ) {
+  //               return true;
+  //             }
+  //             return false;
+  //           }
+  //           if (userAreaType === "Tehsil") {
+  //             if (h.parentType === "Tehsil" || h.parentType === "Division") {
+  //               const district = h?.parentId?.district;
+  //               const halqas = h?.parentId?.division === selectedId;
+  //               const filteredDistricts = districts
+  //                 ?.filter((dis) => dis?.division?._id === selectedId)
+  //                 ?.map((div) => div?._id);
+
+  //               return filteredDistricts.includes(district) || halqas;
+  //             }
+  //             return false;
+  //           }
+  //           if (userAreaType === "Ilaqa") {
+  //             if (
+  //               (h?.parentType === "Ilaqa" || h?.maqam) &&
+  //               (h?.parentId?._id === selectedId || h?._id === selectedId)
+  //             ) {
+  //               return true;
+  //             }
+  //             return false;
+  //           }
+  //           return false;
+  //         }),
+  //       ];
+  //       const tempMaqamData = [...maqamData, ...ilaqaData, ...halqaData];
+  //       const tempIlaqaData = [...ilaqaData, ...halqaData];
+  //       const temp = {
+  //         unfilled: null,
+  //         totalAreas: 1,
+  //         filled: null,
+  //         allData:
+  //           userAreaType === "All"
+  //             ? [
+  //                 ...markazData,
+  //                 ...provinceData,
+  //                 ...maqamData,
+  //                 ...divisionData,
+  //                 ...ilaqaData,
+  //                 ...halqaData,
+  //               ]
+  //             : userAreaType === "Country"
+  //             ? [...markazData]
+  //             : userAreaType === "Province"
+  //             ? [...provinceData]
+  //             : userAreaType === "Maqam"
+  //             ? getFilteredHalqas(tempMaqamData)
+  //             : userAreaType === "Ilaqa"
+  //             ? getFilteredHalqas(tempIlaqaData)
+  //             : getFilteredHalqas(halqaData),
+  //       };
+  //       console.log("all data", temp.allData);
+  //       const temMaqamUnfilled = [
+  //         ...(halqa?.data?.data?.unfilled || []),
+  //         ...(ilaqa?.data?.data?.unfilled || []),
+  //         ...(maqam?.data?.data?.unfilled || []),
+  //       ];
+  //       const temIlaqaUnfilled = [
+  //         ...(halqa?.data?.data?.unfilled || []),
+  //         ...(ilaqa?.data?.data?.unfilled || []),
+  //       ];
+  //       temp.unfilled =
+  //         userAreaType === "All"
+  //           ? [
+  //               ...(markaz?.data?.data?.unfilled || []),
+  //               ...(province?.data?.data?.unfilled || []),
+  //               ...(maqam?.data?.data?.unfilled || []),
+  //               ...(division?.data?.data?.unfilled || []),
+  //               ...(ilaqa?.data?.data?.unfilled || []),
+  //               ...(halqa?.data?.data?.unfilled || []),
+  //             ]
+  //           : userAreaType === "Country"
+  //           ? markaz?.data?.data?.unfilled
+  //           : userAreaType === "Province"
+  //           ? province?.data?.data?.unfilled || []
+  //           : userAreaType === "Maqam"
+  //           ? getFilteredHalqas(temMaqamUnfilled) || []
+  //           : userAreaType === "Ilaqa"
+  //           ? getFilteredHalqas(temIlaqaUnfilled) || []
+  //           : getFilteredHalqas(halqa?.data?.data?.unfilled);
+  //       temp.totalAreas =
+  //         markaz?.data?.data?.totalCountries ||
+  //         0 +
+  //           province?.data?.data?.totalprovince +
+  //           maqam?.data?.data?.totalmaqam +
+  //           division?.data?.data?.totaldivision +
+  //           ilaqa?.data?.data?.totalIlaqa +
+  //           halqa?.data?.data?.totalhalqa;
+  //       const reportFilledBy = temp?.allData?.filter((obj1) => {
+  //         return !temp?.unfilled?.some((obj2) => obj2._id === obj1._id);
+  //       });
+  //       temp.filled = reportFilledBy;
+  //       // Save data to session storage
+  //       const storedData = sessionStorage.getItem("storedData");
+  //       if (!storedData) {
+  //         sessionStorage.setItem("storedData", JSON.stringify(temp));
+  //       }
+  //       setData({ ...temp });
+  //       setLoading(false);
+  //       // saving the initial data so that on clear filter can set it back
+  //       if (!initialData?.data) {
+  //         setInitialData({ ...initialData, data: temp });
+  //       }
+  //     } catch (error) {
+  //       setLoading(false);
+  //       console.log(error);
+  //     }
+  //   } else {
+  //     setData(JSON.parse(storedData));
+  //   }
+  //   setLoading(false);
+  // };
   useEffect(() => {
     const storedData = sessionStorage.getItem("storedData");
     if (storedData) {
       setData(JSON.parse(storedData));
     }
   }, []);
-
   const clearFilter = () => {
     // setting back the data from initial state back to the respective sates
     setQuerydate("");
@@ -365,7 +409,7 @@ export const Dashboard = () => {
 
   const getAreas = async () => {
     switch (userAreaType) {
-      case "Tehsil":
+      case "Division":
         setAreas(divisions);
         break;
       case "Maqam":
@@ -386,6 +430,28 @@ export const Dashboard = () => {
   };
   useEffect(() => {
     getAreas();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [divisions, maqams, ilaqa, provinces]);
+  useEffect(() => {
+    switch (userAreaType) {
+      case "Division":
+        getDivisions();
+        break;
+      case "Maqam":
+        getMaqams();
+        break;
+      case "Ilaqa":
+        getIlaqas();
+        break;
+      case "Province":
+        getProvinces();
+        break;
+      case "Country":
+        setAreas([me?.userAreaId]);
+        break;
+      default:
+        break;
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAreaType]);
 
@@ -425,6 +491,9 @@ export const Dashboard = () => {
     setPersonalFilled(filledNazim);
     setPersonalUnfilled(unfilledNazim);
   };
+  useEffect(() => {
+    console.log(areas);
+  }, [areas]);
   return (
     <GeneralLayout title={"Dashboard"} active={"dashboard"}>
       {
@@ -658,7 +727,7 @@ export const Dashboard = () => {
             ) && (
               <button
                 onClick={() => {
-                  getData();
+                  setShowData(true);
                   getPsersonalReports();
                 }}
                 className="bg-primary mt-8 flex items-center justify-center gap-2 p-2 rounded w-full md:w-auto border-none capitalize text-white "
@@ -753,7 +822,7 @@ export const Dashboard = () => {
                         toggle === "filled" ? "bg-white p-1 rounded-sm" : ""
                       } p-1 text-[12px] font-medium leading-[20px] text-left cursor-pointer`}
                     >
-                      Filled {data?.filled?.length}
+                      Filled {data?.submitted?.length}
                     </div>
                     <div
                       style={{
@@ -767,7 +836,7 @@ export const Dashboard = () => {
                         toggle === "unFilled" ? "bg-white p-1 rounded-sm" : ""
                       } p-1 text-[12px] font-medium leading-[20px] text-left cursor-pointer`}
                     >
-                      Unfilled {data?.unfilled?.length}
+                      Unfilled {data?.notSubmitted?.length}
                     </div>
                   </div>
                 )}
@@ -798,54 +867,52 @@ export const Dashboard = () => {
                             }}
                           >
                             {toggle === "filled" ? (
-                              data?.filled?.length > 0 ? (
-                                data?.filled
-                                  ?.filter((i) => !i?.disabled)
-                                  ?.map((obj, index) => (
-                                    <tr key={index} className={`w-full flex`}>
-                                      <td className=" ">
-                                        <p
-                                          className="font-inter text-[14px] font-medium leading-[16.94px] text-left"
+                              data?.submitted?.length > 0 ? (
+                                data?.submitted?.map((obj, index) => (
+                                  <tr key={index} className={`w-full flex`}>
+                                    <td className=" ">
+                                      <p
+                                        className="font-inter text-[14px] font-medium leading-[16.94px] text-left"
+                                        style={{
+                                          textTransform: "capitalize",
+                                          fontSize: "smaller",
+                                        }}
+                                      >
+                                        {obj.name
+                                          ?.split("")
+                                          .slice(0, 20)
+                                          .join("")}
+                                      </p>
+                                    </td>
+                                    <td className="font-inter w-[50%] text-[14px] font-medium leading-[16.94px] text-end">
+                                      {nazim.find(
+                                        (i) => i?.userAreaId?._id === obj?._id
+                                      )?.name || (
+                                        <span
                                           style={{
                                             textTransform: "capitalize",
                                             fontSize: "smaller",
                                           }}
+                                          className="text-start text-destructive font-medium text-[14px] leading-4"
                                         >
-                                          {obj.name
-                                            ?.split("")
-                                            .slice(0, 20)
-                                            .join("")}
-                                        </p>
-                                      </td>
-                                      <td className="font-inter w-[50%] text-[14px] font-medium leading-[16.94px] text-end">
-                                        {nazim.find(
-                                          (i) => i?.userAreaId?._id === obj?._id
-                                        )?.name || (
-                                          <span
-                                            style={{
-                                              textTransform: "capitalize",
-                                              fontSize: "smaller",
-                                            }}
-                                            className="text-start text-destructive font-medium text-[14px] leading-4"
-                                          >
-                                            User Not Registered Yet
-                                          </span>
-                                        )}
-                                      </td>
-                                      <td className="w-[50%] md:block hidden"></td>
-                                      <td className="w-[50%] md:block hidden"></td>
-                                      <td className="w-[50%] md:block hidden"></td>
-                                      <td className="">
-                                        <div
-                                          onClick={() => {
-                                            getAreaDetails(obj);
-                                          }}
-                                        >
-                                          <FaEye className="cursor-pointer text-2xl p-0 m-0" />
-                                        </div>
-                                      </td>
-                                    </tr>
-                                  ))
+                                          User Not Registered Yet
+                                        </span>
+                                      )}
+                                    </td>
+                                    <td className="w-[50%] md:block hidden"></td>
+                                    <td className="w-[50%] md:block hidden"></td>
+                                    <td className="w-[50%] md:block hidden"></td>
+                                    <td className="">
+                                      <div
+                                        onClick={() => {
+                                          getAreaDetails(obj);
+                                        }}
+                                      >
+                                        <FaEye className="cursor-pointer text-2xl p-0 m-0" />
+                                      </div>
+                                    </td>
+                                  </tr>
+                                ))
                               ) : (
                                 <tr>
                                   <td colSpan="2">
@@ -853,64 +920,53 @@ export const Dashboard = () => {
                                   </td>
                                 </tr>
                               )
-                            ) : data?.unfilled?.length > 0 ? (
-                              data?.unfilled
-                                ?.filter((i) => !i?.disabled)
-                                ?.map((obj, index) => (
-                                  <tr
-                                    className={`w-full flex items-center`}
-                                    key={obj?._id}
-                                  >
-                                    <td className="w-[50%] ">
-                                      <p
-                                        className="text-xs w-full"
+                            ) : data?.notSubmitted?.length > 0 ? (
+                              data?.notSubmitted?.map((obj, index) => (
+                                <tr
+                                  className={`w-full flex items-center`}
+                                  key={obj?._id}
+                                >
+                                  <td className="w-[50%] ">
+                                    <p
+                                      className="text-xs w-full"
+                                      style={{
+                                        textTransform: "capitalize",
+                                        fontSize: "smaller",
+                                      }}
+                                    >
+                                      {obj.name}
+                                    </p>
+                                  </td>
+                                  <td className="w-[50%]">
+                                    {obj.users.map((user) => user.name) || (
+                                      <span
                                         style={{
                                           textTransform: "capitalize",
                                           fontSize: "smaller",
                                         }}
+                                        className="text-start text-error"
                                       >
-                                        {obj.name}
-                                        {obj?.parentType
-                                          ? "-" + obj?.parentType
-                                          : ""}
-                                      </p>
-                                    </td>
-                                    <td className="w-[50%]">
-                                      {nazim
-                                        .find(
-                                          (i) => i?.userAreaId?._id === obj?._id
-                                        )
-                                        ?.name?.split("")
-                                        .slice(0, 20)
-                                        .join("") || (
-                                        <span
-                                          style={{
-                                            textTransform: "capitalize",
-                                            fontSize: "smaller",
-                                          }}
-                                          className="text-start text-error"
-                                        >
-                                          User Not Registered
-                                        </span>
-                                      )}
-                                    </td>
-                                    <td className="w-[50%] md:block hidden"></td>
-                                    <td className="w-[50%] md:block hidden"></td>
-                                    <td className="w-[50%] md:block hidden"></td>
+                                        User Not Registered
+                                      </span>
+                                    )}
+                                  </td>
+                                  <td className="w-[50%] md:block hidden"></td>
+                                  <td className="w-[50%] md:block hidden"></td>
+                                  <td className="w-[50%] md:block hidden"></td>
 
-                                    <td className="">
-                                      <div
-                                        onClick={() => {
-                                          getAreaDetails(obj);
-                                        }}
-                                      >
-                                        <span class="cursor-pointer font-inter text-[14px] font-medium leading-[16.94px] text-left">
-                                          <FaEye className="cursor-pointer text-2xl p-0 m-0" />
-                                        </span>
-                                      </div>
-                                    </td>
-                                  </tr>
-                                ))
+                                  <td className="">
+                                    <div
+                                      onClick={() => {
+                                        getAreaDetails(obj);
+                                      }}
+                                    >
+                                      <span class="cursor-pointer font-inter text-[14px] font-medium leading-[16.94px] text-left">
+                                        <FaEye className="cursor-pointer text-2xl p-0 m-0" />
+                                      </span>
+                                    </div>
+                                  </td>
+                                </tr>
+                              ))
                             ) : (
                               <tr>
                                 <td colSpan="2">All have filled reports</td>
@@ -1055,8 +1111,8 @@ export const Dashboard = () => {
                             type="radio"
                             name="userAreaType"
                             className="radio checked:bg-blue-500"
-                            value="Tehsil"
-                            checked={userAreaType === "Tehsil"}
+                            value="Division"
+                            checked={userAreaType === "Division"}
                             onChange={(e) => setUserAreaType(e.target.value)}
                           />
                           <span class="font-inter text-[14px] font-medium leading-[20px] text-left">
@@ -1137,94 +1193,90 @@ export const Dashboard = () => {
                   </div>
                 )}
               </div>
-              {userAreaType !== "All" &&
-                userAreaType !== "personal" &&
-                userAreaType !== "Province" && (
-                  <div className="relative w-full mb-3">
-                    <input
-                      type="hidden"
-                      name="userAreaId"
-                      id="userAreaId"
-                      className="w-full"
-                      autoComplete="off"
-                    />
-                    <input
-                      id="autocomplete"
-                      type="search"
-                      autoComplete="off"
-                      className="input  input-bordered input-primary w-full  mb-3"
-                      placeholder="Select area"
-                      onChange={(e) => setSearchArea(e.target.value)}
-                      onClick={() => {
-                        if (
-                          document
-                            .getElementById("autocomplete-list")
-                            .classList.contains("hidden")
-                        ) {
-                          document
-                            .getElementById("autocomplete-list")
-                            .classList.remove("hidden");
-                        } else {
-                          document
-                            .getElementById("autocomplete-list")
-                            .classList.add("hidden");
-                        }
-                      }}
-                    />
-                    <div
-                      id="autocomplete-list"
-                      className="absolute hidden z-10 max-h-[100px] overflow-y-scroll bg-white border border-gray-300 w-full mt-1"
-                    >
-                      {areas
-                        ?.sort((a, b) => a?.name?.localeCompare(b?.name))
-                        ?.filter((item) => {
-                          if (searchArea && searchArea !== "") {
-                            if (
-                              item?.name
-                                ?.toString()
-                                ?.toLowerCase()
-                                ?.includes(
-                                  searchArea?.toString()?.toLowerCase()
-                                )
-                            ) {
-                              return true;
-                            }
-                            return false;
-                          } else {
+              {userAreaType !== "All" && userAreaType !== "personal" && (
+                <div className="relative w-full mb-3">
+                  <input
+                    type="hidden"
+                    name="userAreaId"
+                    id="userAreaId"
+                    className="w-full"
+                    autoComplete="off"
+                  />
+                  <input
+                    id="autocomplete"
+                    type="search"
+                    autoComplete="off"
+                    className="input  input-bordered input-primary w-full  mb-3"
+                    placeholder="Select area"
+                    onChange={(e) => setSearchArea(e.target.value)}
+                    onClick={() => {
+                      if (
+                        document
+                          .getElementById("autocomplete-list")
+                          .classList.contains("hidden")
+                      ) {
+                        document
+                          .getElementById("autocomplete-list")
+                          .classList.remove("hidden");
+                      } else {
+                        document
+                          .getElementById("autocomplete-list")
+                          .classList.add("hidden");
+                      }
+                    }}
+                  />
+                  <div
+                    id="autocomplete-list"
+                    className="absolute hidden z-10 max-h-[100px] overflow-y-scroll bg-white border border-gray-300 w-full mt-1"
+                  >
+                    {areas
+                      ?.sort((a, b) => a?.name?.localeCompare(b?.name))
+                      ?.filter((item) => {
+                        if (searchArea && searchArea !== "") {
+                          if (
+                            item?.name
+                              ?.toString()
+                              ?.toLowerCase()
+                              ?.includes(searchArea?.toString()?.toLowerCase())
+                          ) {
                             return true;
                           }
-                        })
-                        ?.map((area, index) => (
-                          <div
-                            key={index}
-                            onClick={() => {
-                              document.getElementById("userAreaId").value =
-                                area?._id;
-                              setSelectedId(area?._id);
-                              document.getElementById(
-                                "autocomplete"
-                              ).value = `${area?.name}${
-                                userAreaType === "Halqa"
-                                  ? ` - ${area?.parentId?.name} (${area?.parentType})`
-                                  : ""
-                              }`;
-                              document
-                                .getElementById("autocomplete-list")
-                                .classList.add("hidden");
-                            }}
-                            className="p-2 cursor-pointer hover:bg-gray-100"
-                          >
-                            {area?.name}
-                            {userAreaType === "Halqa"
-                              ? ` - ${area?.parentId?.name} (${area?.parentType})`
-                              : userAreaType === "Ilaqa"
-                              ? `- ${area?.maqam?.name}`
-                              : ""}
-                          </div>
-                        ))}
-                    </div>
+                          return false;
+                        } else {
+                          return true;
+                        }
+                      })
+                      ?.map((area, index) => (
+                        <div
+                          key={index}
+                          onClick={() => {
+                            document.getElementById("userAreaId").value =
+                              area?._id;
+                            setSelectedId(area?._id);
+                            document.getElementById("autocomplete").value = `${
+                              area?.name
+                            }${
+                              userAreaType === "Halqa"
+                                ? ` - ${area?.parentId?.name} (${area?.parentType})`
+                                : ""
+                            }`;
+                            document
+                              .getElementById("autocomplete-list")
+                              .classList.add("hidden");
+                          }}
+                          className="p-2 cursor-pointer hover:bg-gray-100"
+                        >
+                          {area?.name}
+                          {userAreaType === "Halqa"
+                            ? ` - ${area?.parentId?.name} (${area?.parentType})`
+                            : userAreaType === "Ilaqa"
+                            ? `- ${area?.maqam?.name}`
+                            : ""}
+                        </div>
+                      ))}
                   </div>
-                )}
+                </div>
+              )}
             </div>
             <div className="w-full flex justify-end">
               <label
@@ -1268,7 +1320,7 @@ export const Dashboard = () => {
                     className="text-white font-inter font-normal text-[14px] p-2 rounded leading-6 bg-primary ms-3 capitalize"
                     onClick={() => {
                       userAreaType !== "personal"
-                        ? getData()
+                        ? fetchReports()
                         : getPsersonalReports();
                     }}
                   >
