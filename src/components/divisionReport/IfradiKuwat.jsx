@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { maqamRawabitDecided } from "./ToseeDawat";
 
 export const Box = ({ children, type }) => {
@@ -11,7 +12,7 @@ export const Box = ({ children, type }) => {
     </td>
   );
 };
-export const IfradiKuwat = ({ view }) => {
+export const IfradiKuwat = ({ view, data }) => {
   const calcultate = (v) => {
     // (start + increase)- decrease
     const s = document.getElementById(`${v}-start`);
@@ -20,6 +21,11 @@ export const IfradiKuwat = ({ view }) => {
     document.getElementById(`${v}-end`).value =
       parseInt(s.value) + parseInt(i.value) - parseInt(d.value);
   };
+  useEffect(() => {
+    console.log('Data:', data); // Log the data object directly
+    console.log('Stringified Data:', JSON.stringify(data, null, 2)); // Pretty print JSON
+  }, [data]);
+  
   return (
     <div className="relative w-full overflow-auto">
       <table className="w-full table">

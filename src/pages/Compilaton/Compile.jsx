@@ -140,34 +140,6 @@ export const Compile = () => {
 
   const getReports = async () => {
     if (areaId) {
-      switch (areaType) {
-        case "country":
-          setAreaName("Pakistan");
-          break;
-        case "province":
-          let provinceName = provinces.find((i) => i._id === areaId)?.name;
-          setAreaName(provinceName?.split(" ").join(""));
-          break;
-        case "division":
-          let divisionName = divisions.find((i) => i._id === areaId)?.name;
-
-          setAreaName(divisionName?.split(" ").join(""));
-        case "maqam":
-          let maqamName = maqams.find((i) => i._id === areaId)?.name;
-          setAreaName(maqamName?.split(" ").join(""));
-          break;
-        case "ilaqa":
-          let ilaqaName = ilaqas.find((i) => i._id === areaId)?.name;
-          setAreaName(ilaqaName?.split(" ").join(""));
-          break;
-        case "halqa":
-          let halqaName = halqas.find((i) => i._id === areaId)?.name;
-          setAreaName(halqaName?.split(" ").join(""));
-          break;
-        default:
-          break;
-      }
-
       const startDate =
         startMonth === "" ? startYear : `${startYear}-${startMonth}`;
       setSDate(startDate);
@@ -182,7 +154,6 @@ export const Compile = () => {
           });
         } else {
           await getCompileReports(startDate, endDate, areaType, areaId);
-
           setShowReport(true);
         }
       } catch (error) {
@@ -192,7 +163,7 @@ export const Compile = () => {
   };
 
   useEffect(() => {
-    if (showReport) {
+   if (showReport && areaName) {
       navigate(
         `/compile/view?areaId=${areaId}&areaType=${areaType}&areaName=${areaName}&startDate=${sDate}&endDate=${eDate}`
       );
@@ -201,6 +172,36 @@ export const Compile = () => {
   const handleSelf = () => {
     setSelf(!self);
   };
+  useEffect(() => {
+    switch (areaType) {
+      case "country":
+        setAreaName("Pakistan");
+        break;
+      case "province":
+        let provinceName = provinces.find((i) => i._id === areaId)?.name;
+        setAreaName(provinceName?.split(" ").join(""));
+        break;
+      case "division":
+        let divisionName = divisions.find((i) => i._id === areaId)?.name;
+        const joinName = divisionName?.split(" ").join("");
+        setAreaName(joinName);
+        break;
+      case "maqam":
+        let maqamName = maqams.find((i) => i._id === areaId)?.name;
+        setAreaName(maqamName?.split(" ").join(""));
+        break;
+      case "ilaqa":
+        let ilaqaName = ilaqas.find((i) => i._id === areaId)?.name;
+        setAreaName(ilaqaName?.split(" ").join(""));
+        break;
+      case "halqa":
+        let halqaName = halqas.find((i) => i._id === areaId)?.name;
+        setAreaName(halqaName?.split(" ").join(""));
+        break;
+      default:
+        break;
+    }
+  }, [areaId, areaType]);
   useEffect(() => {
     if (self === true) {
       setAreaType(localStorage.getItem("@type"));

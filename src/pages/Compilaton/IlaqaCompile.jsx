@@ -44,6 +44,24 @@ export const IlaqaCompile = () => {
   const areaId = queryParams.get("areaId");
   const autoFill = () => {
     Object.keys(compileReport).forEach((i) => {
+      const baseName = i.split("-")[0];
+      if (
+        i.endsWith("start") ||
+        i.endsWith("increase") ||
+        i.endsWith("decrease")
+      ) {
+        const startValue = parseInt(compileReport[`${baseName}-start`]) || 0;
+        const increaseValue =
+          parseInt(compileReport[`${baseName}-increase`]) || 0;
+        const decreaseValue =
+          parseInt(compileReport[`${baseName}-decrease`]) || 0;
+        compileReport[`${baseName}-end`] =
+          startValue + increaseValue - decreaseValue;
+        const endField = document.getElementById(`${baseName}-end`);
+        if (endField) {
+          endField.value = compileReport[`${baseName}-end`];
+        }
+      }
       const elem = document.getElementById(i);
       if (elem) {
         elem.value = compileReport[i];
@@ -81,10 +99,10 @@ export const IlaqaCompile = () => {
     // window.location.href = `/halqa-report-compile/print?areaId${areaId}&startDate=${startDate}&endDate=${endDate}`;
   };
   return (
-    <GeneralLayout active={'compileReports'}>
+    <GeneralLayout active={"compileReports"}>
       {Object.keys(compileReport).length > 2 ? (
         <div className="reports overflow-y-scroll">
-          <div>
+    <div className="mt-9">
             <button
               type="button"
               className="p-2"
@@ -93,8 +111,8 @@ export const IlaqaCompile = () => {
               <RxCross1 />
             </button>
             <h2 className="mb-2 block w-full text-center text-md md:text-2xl p-3">
-                رپورٹ تالیف(برائے علاقہ)
-              </h2>
+              رپورٹ تالیف(برائے علاقہ)
+            </h2>
           </div>
           <form
             className="flex flex-col justify-center items-center p-4 font-notoUrdu mb-5"
@@ -102,7 +120,6 @@ export const IlaqaCompile = () => {
             id="markaz-form"
           >
             <div className="w-full">
-              
               <div className="grid w-full grid-cols-1 lg:grid-cols-2">
                 <div className="flex justify-start items-center gap-2 w-full p-2">
                   <label

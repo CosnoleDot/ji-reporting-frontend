@@ -5,9 +5,9 @@ export const CircularChart = ({ res, type }) => {
   const [zoomLevel, setZoomLevel] = useState(1);
 
   let respond = res?.datasets || [];
-  respond = respond?.map((i) => (i === null ? 0 : i < 0 ? 0 : Math.round(i) ));
+  respond = respond?.map((i) => (i === null ? 0 : i < 0 ? 0 : Math.round(i)));
   respond = respond?.map((i) => (i > 100 ? 100 : i));
- 
+
   const options = {
     series: respond,
     chart: {
@@ -35,8 +35,8 @@ export const CircularChart = ({ res, type }) => {
         barLabels: {
           enabled: true,
           useSeriesColors: true,
-          offsetX: -8, 
-          fontSize: "12px",
+          offsetX: -8,
+          fontSize: "10px",
           formatter: function (seriesName, opts) {
             return seriesName + ":  " + opts.w.globals.series[opts.seriesIndex];
           },
@@ -47,7 +47,6 @@ export const CircularChart = ({ res, type }) => {
     labels: res?.labels,
     responsive: [
       {
-        breakpoint: 480,
         options: {
           legend: {
             show: false,
@@ -77,82 +76,44 @@ export const CircularChart = ({ res, type }) => {
       style={{
         position: "relative",
         width: "100%",
-        height: "100%",
-        overflow: "auto",
+        height: "800px", // Height of the outer container
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        overflow: "hidden", // Prevent overflow of outer container
       }}
     >
+      {/* Chart Container */}
       <div
         style={{
-          width: "100%",
-          height: "100%",
-          overflow:"scroll",
-          transform: `scale(${zoomLevel})`,
+          width: "100%", // Make the chart container responsive
+          height: "100%", // Fill the available height
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
           transformOrigin: "center",
           transition: "transform 0.3s ease-in-out",
         }}
       >
-        <Chart
-          options={options}
-          series={options.series}
-          type="radialBar"
-          height={3000}
-          width={"100%"}
-        />
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: 10,
-          right: 10,
-          fontSize: "30px",
-          padding: "4px",
-          backgroundColor: "rgba(237, 231, 225,0.6)",
-          borderRadius: "5px",
-          display: "flex",
-          alignItems: "center",
-        }}
-      >
-        <button
-          onClick={handleZoomIn}
+        <div
           style={{
-            margin: "0 5px",
-            backgroundColor: "#fff",
-            border: "none",
-            borderRadius: "50%",
-            width: "40px",
-            height: "40px",
+            overflow: "auto", // Ensure inner container can scroll if necessary
+            width: "700px", // Prevent it from overflowing
+            height: "100vh", // Allow it to fill the available height
             display: "flex",
-            alignItems: "center",
             justifyContent: "center",
-            cursor: "pointer",
-            fontSize: "24px",
-            fontWeight: "bold",
+            alignItems: "center",
           }}
         >
-          +
-        </button>
-        <span style={{ color: "#5b5b5b", fontSize: "18px" }}>
-          {Math.round(zoomLevel * 100)}%
-        </span>
-        <button
-          onClick={handleZoomOut}
-          style={{
-            margin: "0 5px",
-            backgroundColor: "#fff",
-            border: "none",
-            borderRadius: "50%",
-            width: "40px",
-            height: "40px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-            fontSize: "24px",
-            fontWeight: "bold",
-          }}
-        >
-          -
-        </button>
+          <Chart
+            options={options}
+            series={options.series}
+            type="radialBar"
+            height={600}
+            width={600}
+          
+          />
+        </div>
       </div>
     </div>
   );

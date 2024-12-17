@@ -34,7 +34,7 @@ export const MaqamCompile = () => {
   const [date, setDate] = useState(
     `${compileReport?.startDate} تا  ${compileReport?.endDate}`
   );
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
   const areaType = queryParams.get("areaType");
   const areaName = queryParams.get("areaName");
@@ -43,6 +43,27 @@ export const MaqamCompile = () => {
   const areaId = queryParams.get("areaId");
   const autoFill = () => {
     Object.keys(compileReport)?.forEach((i) => {
+      const baseName = i.split("-")[0];
+      console.log(i);
+      if (
+        i.endsWith("start") ||
+        i.endsWith("increase") ||
+        i.endsWith("decrease")
+      ) {
+        console.log(i);
+        const startValue = parseInt(compileReport[`${baseName}-start`]) || 0;
+        const increaseValue =
+          parseInt(compileReport[`${baseName}-increase`]) || 0;
+        const decreaseValue =
+          parseInt(compileReport[`${baseName}-decrease`]) || 0;
+        compileReport[`${baseName}-end`] =
+          startValue + increaseValue - decreaseValue;
+        const endField = document.getElementById(`${baseName}-end`);
+        if (endField) {
+          endField.value = compileReport[`${baseName}-end`];
+        }
+      }
+
       const elem = document.getElementById(i);
       if (elem) {
         elem.value = compileReport[i];
@@ -98,7 +119,7 @@ export const MaqamCompile = () => {
   };
   return (
     <GeneralLayout active={"compileReports"}>
-      {Object.keys(compileReport)?.length > 2 ? (
+      {compileReport && Object.keys(compileReport)?.length > 2 ? (
         <div className="reports  overflow-y-scroll">
           <div>
             <button

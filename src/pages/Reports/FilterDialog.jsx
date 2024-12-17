@@ -87,6 +87,7 @@ export const FilterDialog = ({
       dispatch({ type: "SUCCESS", payload: req.data?.message });
       resetForm();
       setLoading(false);
+      setNoReports(false);
     } catch (err) {
       setLoading(false);
       dispatch({ type: "ERROR", payload: err?.response?.data?.message });
@@ -249,9 +250,8 @@ export const FilterDialog = ({
           <button
             className="font-inter w-full text-[14px] bg-primary flex justify-center text-white p-2 rounded font-medium leading-[20px] text-left"
             onClick={() => {
-              
               getFilterData();
-              resetForm(); 
+              resetForm();
               setIsFilter(true);
               setIsSearch(true);
             }}

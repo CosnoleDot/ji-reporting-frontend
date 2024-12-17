@@ -25,7 +25,6 @@ export const DivisionReports = () => {
   const [searchData, setSearchData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const { getDivisionReports, setLoading } = useContext(UIContext);
-  const [disable, setDisable] = useState(false);
   const [noReports, setNoReports] = useState(false);
   const [isFilter, setIsFilter] = useState(false);
   const navigate = useNavigate();
