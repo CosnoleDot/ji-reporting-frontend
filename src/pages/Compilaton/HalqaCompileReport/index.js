@@ -27,18 +27,7 @@ export const HalqaCompileReport = () => {
       setData(compileReport);
     }
   });
-  const getAreaType = (area) => {
-    if (area?.parentType === "Maqam") {
-      return `Halqa of Maqam`;
-    } else if (area?.parentType === "Tehsil") {
-      const tehsil = tehsils?.find((teh) => teh?._id === area?.parentId);
-      const districtId = tehsil?.district;
-      return `Division-${districtId?.division?.name}`;
-    } else if (area?.province) {
-      return maqams.find((i) => i?._id === area?._id) ? "Maqam" : "Division";
-    }
-    return "UNKNOWN";
-  };
+
   const areaName = queryParams.get("areaName");
   const startDate = queryParams.get("startDate");
   const endDate = queryParams.get("endDate");

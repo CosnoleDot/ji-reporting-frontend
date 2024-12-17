@@ -1,5 +1,3 @@
-
-
 export const Box = ({ children, type }) => {
   return (
     <td
@@ -12,7 +10,7 @@ export const Box = ({ children, type }) => {
   );
 };
 export const IfradiKuwat = ({ view }) => {
-   const sumUpTwoValues = (val1, val2, final) => {
+  const sumUpTwoValues = (val1, val2, final) => {
     document.getElementById(final).value = val1 + val2;
   };
   return (
@@ -39,21 +37,22 @@ export const IfradiKuwat = ({ view }) => {
                   required
                   name={`arkan-start`}
                   id={`arkan-start`}
-                  
                   className="p-1 text-center "
                 />
                 +
                 <input
                   readOnly={view}
                   type="number"
-                        required
+                  required
                   name={`arkan-manualStart`}
                   id={`arkan-manualStart`}
                   className="p-1 text-center "
                   onChange={() =>
                     sumUpTwoValues(
                       parseInt(document.getElementById("arkan-start").value),
-                      parseInt(document.getElementById("arkan-manualStart").value),
+                      parseInt(
+                        document.getElementById("arkan-manualStart").value
+                      ),
                       "arkan-startSum"
                     )
                   }
@@ -68,7 +67,6 @@ export const IfradiKuwat = ({ view }) => {
                   required
                   name={`arkan-startSum`}
                   id={`arkan-startSum`}
-                  
                   className="p-1 text-center "
                 />
               </div>
@@ -78,24 +76,24 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={true}
                   type="number"
-                  
                   required
                   name={`arkan-increase`}
                   id={`arkan-increase`}
-                  
                   className="p-1 text-center "
                 />
                 +
                 <input
                   readOnly={view}
                   type="number"
-                        required
+                  required
                   name={`arkan-manualIncrease`}
                   id={`arkan-manualIncrease`}
                   onChange={() =>
                     sumUpTwoValues(
                       parseInt(document.getElementById("arkan-increase").value),
-                      parseInt(document.getElementById("arkan-manualIncrease").value),
+                      parseInt(
+                        document.getElementById("arkan-manualIncrease").value
+                      ),
                       "arkan-increaseSum"
                     )
                   }
@@ -111,7 +109,6 @@ export const IfradiKuwat = ({ view }) => {
                   required
                   name={`arkan-increaseSum`}
                   id={`arkan-increaseSum`}
-                  
                   className="p-1 text-center "
                 />
               </div>
@@ -121,24 +118,24 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={true}
                   type="number"
-                  
                   required
                   name={`arkan-decrease`}
                   id={`arkan-decrease`}
-                  
                   className="p-1 text-center "
                 />
                 +
                 <input
                   readOnly={view}
                   type="number"
-                        required
+                  required
                   name={`arkan-manualDecrease`}
                   id={`arkan-manualDecrease`}
                   onChange={() =>
                     sumUpTwoValues(
                       parseInt(document.getElementById("arkan-decrease").value),
-                      parseInt(document.getElementById("arkan-manualDecrease").value),
+                      parseInt(
+                        document.getElementById("arkan-manualDecrease").value
+                      ),
                       "arkan-decreaseSum"
                     )
                   }
@@ -154,7 +151,6 @@ export const IfradiKuwat = ({ view }) => {
                   required
                   name={`arkan-decreaseSum`}
                   id={`arkan-decreaseSum`}
-                  
                   className="p-1 text-center "
                 />
               </div>
@@ -167,6 +163,11 @@ export const IfradiKuwat = ({ view }) => {
                 required
                 name={`arkan-end`}
                 id={`arkan-end`}
+                // value={
+                //   document.getElementById("arkan-increaseSum")?.value +
+                //   document.getElementById("arkan-startSum")?.value -
+                //   document.getElementById("arkan-decreaseSum")?.value
+                // }
                 className="p-1 text-center "
               />
             </Box>
@@ -193,20 +194,23 @@ export const IfradiKuwat = ({ view }) => {
                   required
                   name={`umeedWaran-start`}
                   id={`umeedWaran-start`}
-                  
                   className="p-1 text-center "
                 />
                 +
                 <input
                   readOnly={view}
                   type="number"
-                        required
+                  required
                   name={`umeedWaran-manualStart`}
                   id={`umeedWaran-manualStart`}
                   onChange={() =>
                     sumUpTwoValues(
-                      parseInt(document.getElementById("umeedWaran-start").value),
-                      parseInt(document.getElementById("umeedWaran-manualStart").value),
+                      parseInt(
+                        document.getElementById("umeedWaran-start").value
+                      ),
+                      parseInt(
+                        document.getElementById("umeedWaran-manualStart").value
+                      ),
                       "umeedWaran-startSum"
                     )
                   }
@@ -217,12 +221,11 @@ export const IfradiKuwat = ({ view }) => {
                   readOnly={true}
                   type="number"
                   defaultValue={
-                   document.getElementById("umeedWaran-startSum")?.value
+                    document.getElementById("umeedWaran-startSum")?.value
                   }
                   required
                   name={`umeedWaran-startSum`}
                   id={`umeedWaran-startSum`}
-                  
                   className="p-1 text-center "
                 />
               </div>
@@ -233,7 +236,6 @@ export const IfradiKuwat = ({ view }) => {
                   readOnly={true}
                   type="number"
                   required
-                  
                   name={`umeedWaran-increase`}
                   id={`umeedWaran-increase`}
                   className="p-1 text-center "
@@ -242,14 +244,19 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                        required
+                  required
                   name={`umeedWaran-manualIncrease`}
                   id={`umeedWaran-manualIncrease`}
                   className="p-1 text-center "
                   onChange={() =>
                     sumUpTwoValues(
-                      parseInt(document.getElementById("umeedWaran-increase").value),
-                      parseInt(document.getElementById("umeedWaran-manualIncrease").value),
+                      parseInt(
+                        document.getElementById("umeedWaran-increase").value
+                      ),
+                      parseInt(
+                        document.getElementById("umeedWaran-manualIncrease")
+                          .value
+                      ),
                       "umeedWaran-increaseSum"
                     )
                   }
@@ -276,20 +283,24 @@ export const IfradiKuwat = ({ view }) => {
                   required
                   name={`umeedWaran-decrease`}
                   id={`umeedWaran-decrease`}
-                 
                   className="p-1 text-center "
                 />
                 +
                 <input
                   readOnly={view}
                   type="number"
-                        required
+                  required
                   name={`umeedWaran-manualDecrease`}
                   id={`umeedWaran-manualDecrease`}
                   onChange={() =>
                     sumUpTwoValues(
-                      parseInt(document.getElementById("umeedWaran-decrease").value),
-                      parseInt(document.getElementById("umeedWaran-manualDecrease").value),
+                      parseInt(
+                        document.getElementById("umeedWaran-decrease").value
+                      ),
+                      parseInt(
+                        document.getElementById("umeedWaran-manualDecrease")
+                          .value
+                      ),
                       "umeedWaran-decreaseSum"
                     )
                   }
@@ -305,7 +316,6 @@ export const IfradiKuwat = ({ view }) => {
                   required
                   name={`umeedWaran-decreaseSum`}
                   id={`umeedWaran-decreaseSum`}
-                  
                   className="p-1 text-center "
                 />
               </div>
@@ -344,7 +354,6 @@ export const IfradiKuwat = ({ view }) => {
                   type="number"
                   required
                   name={`rafaqa-start`}
-                  
                   id={`rafaqa-start`}
                   className="p-1 text-center "
                 />
@@ -352,14 +361,16 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                        required
+                  required
                   name={`rafaqa-manualStart`}
                   id={`rafaqa-manualStart`}
                   className="p-1 text-center "
                   onChange={() =>
                     sumUpTwoValues(
                       parseInt(document.getElementById("rafaqa-start").value),
-                      parseInt(document.getElementById("rafaqa-manualStart").value),
+                      parseInt(
+                        document.getElementById("rafaqa-manualStart").value
+                      ),
                       "rafaqa-startSum"
                     )
                   }
@@ -392,13 +403,17 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                        required
+                  required
                   name={`rafaqa-manualIncrease`}
                   id={`rafaqa-manualIncrease`}
                   onChange={() =>
                     sumUpTwoValues(
-                      parseInt(document.getElementById("rafaqa-increase").value),
-                      parseInt(document.getElementById("rafaqa-manualIncrease").value),
+                      parseInt(
+                        document.getElementById("rafaqa-increase").value
+                      ),
+                      parseInt(
+                        document.getElementById("rafaqa-manualIncrease").value
+                      ),
                       "rafaqa-increaseSum"
                     )
                   }
@@ -414,7 +429,6 @@ export const IfradiKuwat = ({ view }) => {
                   required
                   name={`rafaqa-increaseSum`}
                   id={`rafaqa-increaseSum`}
-                  
                   className="p-1 text-center "
                 />
               </div>
@@ -426,7 +440,6 @@ export const IfradiKuwat = ({ view }) => {
                   type="number"
                   required
                   name={`rafaqa-decrease`}
-                  
                   id={`rafaqa-decrease`}
                   className="p-1 text-center "
                 />
@@ -434,12 +447,16 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                        required
+                  required
                   name={`rafaqa-manualDecrease`}
                   onChange={() =>
                     sumUpTwoValues(
-                      parseInt(document.getElementById("rafaqa-decrease").value),
-                      parseInt(document.getElementById("rafaqa-manualDecrease").value),
+                      parseInt(
+                        document.getElementById("rafaqa-decrease").value
+                      ),
+                      parseInt(
+                        document.getElementById("rafaqa-manualDecrease").value
+                      ),
                       "rafaqa-decreaseSum"
                     )
                   }
@@ -455,7 +472,6 @@ export const IfradiKuwat = ({ view }) => {
                   }
                   required
                   name={`rafaqa-decreaseSum`}
-                  
                   id={`rafaqa-decreaseSum`}
                   className="p-1 text-center "
                 />
@@ -496,20 +512,21 @@ export const IfradiKuwat = ({ view }) => {
                   required
                   name={`karkunan-start`}
                   id={`karkunan-start`}
-                  
                   className="p-1 text-center "
                 />
                 +
                 <input
                   readOnly={view}
                   type="number"
-                        required
+                  required
                   name={`karkunan-manualStart`}
                   id={`karkunan-manualStart`}
                   onChange={() =>
                     sumUpTwoValues(
                       parseInt(document.getElementById("karkunan-start").value),
-                      parseInt(document.getElementById("karkunan-manualStart").value),
+                      parseInt(
+                        document.getElementById("karkunan-manualStart").value
+                      ),
                       "karkunan-startSum"
                     )
                   }
@@ -525,7 +542,6 @@ export const IfradiKuwat = ({ view }) => {
                   required
                   name={`karkunan-startSum`}
                   id={`karkunan-startSum`}
-                  
                   className="p-1 text-center "
                 />
               </div>
@@ -537,7 +553,6 @@ export const IfradiKuwat = ({ view }) => {
                   type="number"
                   required
                   name={`karkunan-increase`}
-                  
                   id={`karkunan-increase`}
                   className="p-1 text-center "
                 />
@@ -545,12 +560,16 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                        required
+                  required
                   name={`karkunan-manualIncrease`}
                   onChange={() =>
                     sumUpTwoValues(
-                      parseInt(document.getElementById("karkunan-increase").value),
-                      parseInt(document.getElementById("karkunan-manualIncrease").value),
+                      parseInt(
+                        document.getElementById("karkunan-increase").value
+                      ),
+                      parseInt(
+                        document.getElementById("karkunan-manualIncrease").value
+                      ),
                       "karkunan-increaseSum"
                     )
                   }
@@ -566,7 +585,6 @@ export const IfradiKuwat = ({ view }) => {
                   }
                   required
                   name={`karkunan-increaseSum`}
-                  
                   id={`karkunan-increaseSum`}
                   className="p-1 text-center "
                 />
@@ -581,20 +599,23 @@ export const IfradiKuwat = ({ view }) => {
                   required
                   name={`karkunan-decrease`}
                   id={`karkunan-decrease`}
-                  
                   className="p-1 text-center "
                 />
                 +
                 <input
                   readOnly={view}
                   type="number"
-                        required
+                  required
                   name={`karkunan-manualDecrease`}
                   id={`karkunan-manualDecrease`}
                   onChange={() =>
                     sumUpTwoValues(
-                      parseInt(document.getElementById("karkunan-decrease").value),
-                      parseInt(document.getElementById("karkunan-manualDecrease").value),
+                      parseInt(
+                        document.getElementById("karkunan-decrease").value
+                      ),
+                      parseInt(
+                        document.getElementById("karkunan-manualDecrease").value
+                      ),
                       "karkunan-decreaseSum"
                     )
                   }
@@ -610,7 +631,6 @@ export const IfradiKuwat = ({ view }) => {
                   required
                   name={`karkunan-decreaseSum`}
                   id={`karkunan-decreaseSum`}
-                  
                   className="p-1 text-center "
                 />
               </div>
@@ -649,7 +669,6 @@ export const IfradiKuwat = ({ view }) => {
                   type="number"
                   required
                   name={`shaheen-start`}
-                  
                   id={`shaheen-start`}
                   className="p-1 text-center "
                 />
@@ -657,12 +676,14 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                        required
+                  required
                   name={`shaheen-manualStart`}
                   onChange={() =>
                     sumUpTwoValues(
                       parseInt(document.getElementById("shaheen-start").value),
-                      parseInt(document.getElementById("shaheen-manualStart").value),
+                      parseInt(
+                        document.getElementById("shaheen-manualStart").value
+                      ),
                       "shaheen-startSum"
                     )
                   }
@@ -678,7 +699,6 @@ export const IfradiKuwat = ({ view }) => {
                   }
                   required
                   name={`shaheen-startSum`}
-                  
                   id={`shaheen-startSum`}
                   className="p-1 text-center "
                 />
@@ -688,7 +708,6 @@ export const IfradiKuwat = ({ view }) => {
               <div className="flex w-full">
                 <input
                   readOnly={true}
-                  
                   type="number"
                   required
                   name={`shaheen-increase`}
@@ -698,16 +717,19 @@ export const IfradiKuwat = ({ view }) => {
                 +
                 <input
                   readOnly={view}
-                  
                   type="number"
-                        required
+                  required
                   name={`shaheen-manualIncrease`}
                   id={`shaheen-manualIncrease`}
                   className="p-1 text-center "
                   onChange={() =>
                     sumUpTwoValues(
-                      parseInt(document.getElementById("shaheen-increase").value),
-                      parseInt(document.getElementById("shaheen-manualIncrease").value),
+                      parseInt(
+                        document.getElementById("shaheen-increase").value
+                      ),
+                      parseInt(
+                        document.getElementById("shaheen-manualIncrease").value
+                      ),
                       "shaheen-increaseSum"
                     )
                   }
@@ -715,7 +737,6 @@ export const IfradiKuwat = ({ view }) => {
                 =
                 <input
                   readOnly={true}
-                  
                   type="number"
                   defaultValue={
                     document.getElementById("shaheen-increaseSum")?.value
@@ -741,13 +762,17 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                        required
+                  required
                   name={`shaheen-manualDecrease`}
                   id={`shaheen-manualDecrease`}
                   onChange={() =>
                     sumUpTwoValues(
-                      parseInt(document.getElementById("shaheen-decrease").value),
-                      parseInt(document.getElementById("shaheen-manualDecrease").value),
+                      parseInt(
+                        document.getElementById("shaheen-decrease").value
+                      ),
+                      parseInt(
+                        document.getElementById("shaheen-manualDecrease").value
+                      ),
                       "shaheen-decreaseSum"
                     )
                   }
@@ -763,7 +788,6 @@ export const IfradiKuwat = ({ view }) => {
                   required
                   name={`shaheen-decreaseSum`}
                   id={`shaheen-decreaseSum`}
-                  
                   className="p-1 text-center "
                 />
               </div>
@@ -809,13 +833,15 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                        required
+                  required
                   name={`members-manualStart`}
                   id={`members-manualStart`}
                   onChange={() =>
                     sumUpTwoValues(
                       parseInt(document.getElementById("members-start").value),
-                      parseInt(document.getElementById("members-manualStart").value),
+                      parseInt(
+                        document.getElementById("members-manualStart").value
+                      ),
                       "members-startSum"
                     )
                   }
@@ -849,13 +875,17 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                        required
+                  required
                   name={`members-manualIncrease`}
                   id={`members-manualIncrease`}
                   onChange={() =>
                     sumUpTwoValues(
-                      parseInt(document.getElementById("members-increase").value),
-                      parseInt(document.getElementById("members-manualIncrease").value),
+                      parseInt(
+                        document.getElementById("members-increase").value
+                      ),
+                      parseInt(
+                        document.getElementById("members-manualIncrease").value
+                      ),
                       "members-increaseSum"
                     )
                   }
@@ -889,14 +919,18 @@ export const IfradiKuwat = ({ view }) => {
                 <input
                   readOnly={view}
                   type="number"
-                        required
+                  required
                   name={`members-manualDecrease`}
                   id={`members-manualDecrease`}
                   className="p-1 text-center "
                   onChange={() =>
                     sumUpTwoValues(
-                      parseInt(document.getElementById("members-decrease").value),
-                      parseInt(document.getElementById("members-manualDecrease").value),
+                      parseInt(
+                        document.getElementById("members-decrease").value
+                      ),
+                      parseInt(
+                        document.getElementById("members-manualDecrease").value
+                      ),
                       "members-decreaseSum"
                     )
                   }

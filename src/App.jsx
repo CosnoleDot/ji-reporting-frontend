@@ -964,18 +964,19 @@ function App() {
   }, [authenticated]);
   useEffect(() => {
     const fetchData = async () => {
-      setCount((100 / 16) * 14);
+      setCount((100 / 3) * 1);
       setValue("Fetching user requests");
       await getAllRequests();
-      setCount((100 / 16) * 15);
+      setCount((100 / 3) * 2);
       setValue("Fetching all notifications");
       await getAllNotifications();
-      setCount((100 / 16) * 16);
+      setCount((100 / 3) * 3);
       setValue(null);
 
       if (
-        location.pathname?.split("/")[2] === "view" ||
-        location.pathname?.split("/")[2] === "edit"
+        (location.pathname?.split("/")[2] === "view" ||
+          location.pathname?.split("/")[2] === "edit") &&
+        !location.pathname?.includes("compile")
       ) {
         navigate("/reports");
       } else if (

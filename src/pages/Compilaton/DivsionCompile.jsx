@@ -46,17 +46,30 @@ export const DivisionCompile = () => {
   const endDate = queryParams.get("endDate");
   const areaId = queryParams.get("areaId");
   const autoFill = () => {
-    Object.keys(compileReport).forEach((i) => {
-      const elem = document.getElementById(i);
-      if (elem) {
-        elem.value = compileReport[i];
-      }
-      if (i.includes("-monthly")) {
-        const newKey = i.replace("-monthly", "-end");
-        const newElem = document.getElementById(newKey);
-        if (newElem) {
-          newElem.value = compileReport[i];
+    Object.keys(compileReport).forEach((key) => {
+      const baseName = key.split("-")[0];
+      if (
+        key.endsWith("start") ||
+        key.endsWith("increase") ||
+        key.endsWith("decrease")
+      ) {
+        const startValue = parseInt(compileReport[`${baseName}-start`]) || 0;
+        const increaseValue =
+          parseInt(compileReport[`${baseName}-increase`]) || 0;
+        const decreaseValue =
+          parseInt(compileReport[`${baseName}-decrease`]) || 0;
+        compileReport[`${baseName}-end`] =
+          startValue + increaseValue - decreaseValue;
+        const endField = document.getElementById(`${baseName}-end`);
+        if (endField) {
+          endField.value = compileReport[`${baseName}-end`];
         }
+      }
+
+      // Directly set other fields if they exist
+      const elem = document.getElementById(key);
+      if (elem) {
+        elem.value = compileReport[key];
       }
     });
   };
@@ -80,10 +93,10 @@ export const DivisionCompile = () => {
     <GeneralLayout active={"compileReports"}>
       {Object.keys(compileReport).length > 2 ? (
         <div className="reports overflow-hidden overflow-y-scroll w-full">
-          <div>
+         <div className="mt-9">
             <button
               type="button"
-              className="p-2"
+              className="p-2 absolute top-2"
               onClick={() => navigate("/compilation")}
             >
               <RxCross1 />
@@ -130,7 +143,7 @@ export const DivisionCompile = () => {
               </div>
               <div className="mb-4">
                 {/* <TanzeemDivision view={view} /> */}
-                <Tanzeem view={view} data={data} />
+                <Tanzeem view={view} data={compileReport} />
               </div>
               <div className="mb-4">
                 {/* <MenTableDivision view={view} /> */}

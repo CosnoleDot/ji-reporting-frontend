@@ -40,26 +40,31 @@ export const HalqaCompile = () => {
 
   const autoFill = () => {
     Object.keys(compileReport).forEach((i) => {
+      const baseName = i.split("-")[0];
+      if (
+        i.endsWith("start") ||
+        i.endsWith("increase") ||
+        i.endsWith("decrease")
+      ) {
+        const startValue = parseInt(compileReport[`${baseName}-start`]) || 0;
+        const increaseValue =
+          parseInt(compileReport[`${baseName}-increase`]) || 0;
+        const decreaseValue =
+          parseInt(compileReport[`${baseName}-decrease`]) || 0;
+        compileReport[`${baseName}-end`] =
+          startValue + increaseValue - decreaseValue;
+        const endField = document.getElementById(`${baseName}-end`);
+        if (endField) {
+          endField.value = compileReport[`${baseName}-end`];
+        }
+      }
       const elem = document.getElementById(i);
       if (elem) {
         elem.value = compileReport[i];
       }
-      if (i.includes("-decrease")) {
-        const newKey = i.replace("-decrease", "-end");
-
-        const newElem = document.getElementById(newKey);
-        if (newElem) {
-          let value = i.split("-")[0];
-          let start = value + "-start"
-          let decrease = value + "-decrease"
-          let increase = value + "-increase"
-          
-          newElem.value = compileReport[start] + compileReport[increase] - compileReport[decrease];
-        }
-      }
     });
   };
-  
+
   useEffect(() => {
     autoFill();
   }, [id, compileReport]);
@@ -80,7 +85,7 @@ export const HalqaCompile = () => {
     <GeneralLayout active={"compileReports"}>
       {Object.keys(compileReport).length > 2 ? (
         <div className="reports  overflow-y-scroll">
-          <div>
+        <div className="mt-9">
             <button
               type="button"
               className="p-2"

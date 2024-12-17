@@ -54,6 +54,24 @@ export const ProvinceCompile = () => {
   const areaId = queryParams.get("areaId");
   const autoFill = () => {
     Object.keys(compileReport).forEach((i) => {
+      const baseName = i.split("-")[0];
+      if (
+        i.endsWith("startSum") ||
+        i.endsWith("increaseSum") ||
+        i.endsWith("decreaseSum")
+      ) {
+        const startValue = parseInt(compileReport[`${baseName}-startSum`]) || 0;
+        const increaseValue =
+          parseInt(compileReport[`${baseName}-increaseSum`]) || 0;
+        const decreaseValue =
+          parseInt(compileReport[`${baseName}-decreaseSum`]) || 0;
+        compileReport[`${baseName}-end`] =
+          startValue + increaseValue - decreaseValue;
+        const endField = document.getElementById(`${baseName}-end`);
+        if (endField) {
+          endField.value = compileReport[`${baseName}-end`];
+        }
+      }
       const elem = document.getElementById(i);
       if (elem) {
         elem.value = compileReport[i];
@@ -115,7 +133,7 @@ export const ProvinceCompile = () => {
     <GeneralLayout active={"compileReports"}>
       {Object.keys(compileReport).length > 2 ? (
         <div className="reports  overflow-y-scroll">
-          <div>
+       <div className="mt-9">
             <button
               type="button"
               className="p-2"

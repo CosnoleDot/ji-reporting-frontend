@@ -44,7 +44,6 @@ export const IfradiKuwat = ({ view }) => {
                 name={`arkan-start`}
                 id={`arkan-start`}
                 onChange={() => {
-                  calcultate("arkan");
                   maqamRawabitDecided();
                 }}
                 className="p-1 text-center max-w-full"
@@ -58,7 +57,6 @@ export const IfradiKuwat = ({ view }) => {
                 name={`arkan-increase`}
                 id={`arkan-increase`}
                 onChange={() => {
-                  calcultate("arkan");
                   maqamRawabitDecided();
                 }}
                 className="p-1 text-center max-w-full"
@@ -72,7 +70,6 @@ export const IfradiKuwat = ({ view }) => {
                 name={`arkan-decrease`}
                 id={`arkan-decrease`}
                 onChange={() => {
-                  calcultate("arkan");
                   maqamRawabitDecided();
                 }}
                 className="p-1 text-center max-w-full"
@@ -109,7 +106,6 @@ export const IfradiKuwat = ({ view }) => {
                 name={`umeedWaran-start`}
                 id={`umeedWaran-start`}
                 onChange={() => {
-                  calcultate("umeedWaran");
                   maqamRawabitDecided();
                 }}
                 className="p-1 text-center max-w-full"
@@ -121,7 +117,6 @@ export const IfradiKuwat = ({ view }) => {
                 type="number"
                 required
                 onChange={() => {
-                  calcultate("umeedWaran");
                   maqamRawabitDecided();
                 }}
                 name={`umeedWaran-increase`}
@@ -137,7 +132,6 @@ export const IfradiKuwat = ({ view }) => {
                 name={`umeedWaran-decrease`}
                 id={`umeedWaran-decrease`}
                 onChange={() => {
-                  calcultate("umeedWaran");
                   maqamRawabitDecided();
                 }}
                 className="p-1 text-center max-w-full"
@@ -172,7 +166,6 @@ export const IfradiKuwat = ({ view }) => {
                 type="number"
                 required
                 name={`rafaqa-start`}
-                onChange={() => calcultate("rafaqa")}
                 id={`rafaqa-start`}
                 className="p-1 text-center max-w-full"
               />
@@ -184,7 +177,6 @@ export const IfradiKuwat = ({ view }) => {
                 required
                 name={`rafaqa-increase`}
                 id={`rafaqa-increase`}
-                onChange={() => calcultate("rafaqa")}
                 className="p-1 text-center max-w-full"
               />
             </Box>
@@ -194,7 +186,6 @@ export const IfradiKuwat = ({ view }) => {
                 type="number"
                 required
                 name={`rafaqa-decrease`}
-                onChange={() => calcultate("rafaqa")}
                 id={`rafaqa-decrease`}
                 className="p-1 text-center max-w-full"
               />
@@ -229,7 +220,6 @@ export const IfradiKuwat = ({ view }) => {
                 required
                 name={`karkunan-start`}
                 id={`karkunan-start`}
-                onChange={() => calcultate("karkunan")}
                 className="p-1 text-center max-w-full"
               />
             </Box>
@@ -239,7 +229,6 @@ export const IfradiKuwat = ({ view }) => {
                 type="number"
                 required
                 name={`karkunan-increase`}
-                onChange={() => calcultate("karkunan")}
                 id={`karkunan-increase`}
                 className="p-1 text-center max-w-full"
               />
@@ -251,7 +240,6 @@ export const IfradiKuwat = ({ view }) => {
                 required
                 name={`karkunan-decrease`}
                 id={`karkunan-decrease`}
-                onChange={() => calcultate("karkunan")}
                 className="p-1 text-center max-w-full"
               />
             </Box>
@@ -284,7 +272,6 @@ export const IfradiKuwat = ({ view }) => {
                 type="number"
                 required
                 name={`shaheen-start`}
-                onChange={() => calcultate("shaheen")}
                 id={`shaheen-start`}
                 className="p-1 text-center max-w-full"
               />
@@ -292,7 +279,6 @@ export const IfradiKuwat = ({ view }) => {
             <Box>
               <input
                 readOnly={view}
-                onChange={() => calcultate("shaheen")}
                 type="number"
                 required
                 name={`shaheen-increase`}
@@ -307,7 +293,6 @@ export const IfradiKuwat = ({ view }) => {
                 required
                 name={`shaheen-decrease`}
                 id={`shaheen-decrease`}
-                onChange={() => calcultate("shaheen")}
                 className="p-1 text-center max-w-full"
               />
             </Box>
@@ -340,7 +325,6 @@ export const IfradiKuwat = ({ view }) => {
                 type="number"
                 required
                 name={`members-start`}
-                onChange={() => calcultate("members")}
                 id={`members-start`}
                 className="p-1 text-center max-w-full"
               />
@@ -351,7 +335,6 @@ export const IfradiKuwat = ({ view }) => {
                 type="number"
                 required
                 name={`members-increase`}
-                onChange={() => calcultate("members")}
                 id={`members-increase`}
                 className="p-1 text-center max-w-full"
               />
@@ -362,7 +345,6 @@ export const IfradiKuwat = ({ view }) => {
                 type="number"
                 required
                 name={`members-decrease`}
-                onChange={() => calcultate("members")}
                 id={`members-decrease`}
                 className="p-1 text-center max-w-full"
               />

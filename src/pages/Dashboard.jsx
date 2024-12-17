@@ -581,9 +581,7 @@ export const Dashboard = () => {
                 <div className="flex border rounded-2xl md:h-[130px] h-[100px] p-2 md:p-4 overflow-hidden shadow bg-cardsBg">
                   <div className="px-4 flex flex-col gap-2  justify-end">
                     <p className="text-[24px] md:text-[32px] font-extrabold font-inter leading-10 text-primary">
-                      {provinces?.filter(
-                        (province) => province?.disabled !== true
-                      ).length || me?.userAreaId?.activeProvinceCount}
+                      {me?.userAreaId?.activeProvinceCount}
                     </p>
                     <h3 className="font-inter text-[12px] font-semibold leading-[14.52px] text-left text-primary">
                       Active Provinces
@@ -603,9 +601,7 @@ export const Dashboard = () => {
                 <div className="flex border rounded-2xl md:h-[130px] h-[100px] p-2 md:p-4 overflow-hidden shadow bg-cardsBg">
                   <div className="px-4 flex flex-col gap-2  justify-end">
                     <p className="text-[24px] md:text-[32px] font-extrabold font-inter leading-10 text-primary">
-                      {divisions?.filter(
-                        (division) => division?.disabled !== true
-                      ).length || me?.userAreaId?.activeDivisionCount}
+                      {me?.userAreaId?.activeDivisionCount}
                     </p>
                     <h3 className="font-inter text-[12px] font-semibold leading-[14.52px] text-left text-primary">
                       Active Divisions
@@ -627,9 +623,7 @@ export const Dashboard = () => {
                 <div className="flex border rounded-2xl md:h-[130px] h-[100px] p-2 md:p-4 overflow-hidden shadow bg-cardsBg">
                   <div className="px-4 flex flex-col gap-2  justify-end">
                     <p className="text-[24px] md:text-[32px] font-extrabold font-inter leading-10 text-primary">
-                      {districts?.filter(
-                        (district) => district?.disabled !== true
-                      ).length || me?.userAreaId?.activeDistrictCount}
+                      {me?.userAreaId?.activeDistrictCount}
                     </p>
                     <h3 className="font-inter text-[12px] font-semibold leading-[14.52px] text-left text-primary">
                       Active Districts
@@ -652,8 +646,7 @@ export const Dashboard = () => {
                 <div className="flex border rounded-2xl md:h-[130px] h-[100px] p-2 md:p-4 overflow-hidden shadow bg-cardsBg">
                   <div className="px-4 flex flex-col gap-2  justify-end">
                     <p className="text-[24px] md:text-[32px] font-extrabold font-inter leading-10 text-primary">
-                      {tehsils?.filter((tehsil) => tehsil?.disabled !== true)
-                        .length || me?.userAreaId?.activeTehsilCount}
+                      {me?.userAreaId?.activeTehsilCount}
                     </p>
                     <h3 className="font-inter text-[12px] font-semibold leading-[14.52px] text-left text-primary">
                       Active Tehsils
@@ -679,8 +672,7 @@ export const Dashboard = () => {
                 <div className="flex border rounded-2xl md:h-[130px] h-[100px] p-2 md:p-4 overflow-hidden shadow bg-cardsBg">
                   <div className="px-4 flex flex-col gap-2  justify-end">
                     <p className="text-[24px] md:text-[32px] font-extrabold font-inter leading-10 text-primary">
-                      {maqams?.filter((maqam) => maqam?.disabled !== true)
-                        .length || me?.userAreaId?.activeMaqamCount}
+                      {me?.userAreaId?.activeMaqamCount}
                     </p>
                     <h3 className="font-inter text-[12px] font-semibold leading-[14.52px] text-left text-primary">
                       Active Maqams
@@ -703,8 +695,7 @@ export const Dashboard = () => {
                 <div className="flex border rounded-2xl md:h-[130px] h-[100px] p-2 md:p-4 overflow-hidden shadow bg-cardsBg">
                   <div className="px-4 flex flex-col gap-2  justify-end">
                     <p className="text-[24px] md:text-[32px] font-extrabold font-inter leading-10 text-primary">
-                      {ilaqa?.filter((il) => il?.disabled !== true).length ||
-                        me?.userAreaId?.activeIlaqaCount}
+                      {me?.userAreaId?.activeIlaqaCount}
                     </p>
                     <h3 className="font-inter text-[12px] font-semibold leading-[14.52px] text-left text-primary">
                       Active Ilaqas
@@ -724,7 +715,7 @@ export const Dashboard = () => {
                 <div className="flex border rounded-2xl md:h-[130px] h-[100px] p-2 md:p-4 overflow-hidden shadow bg-cardsBg">
                   <div className="px-4 flex flex-col gap-2  justify-end">
                     <p className="text-[24px] md:text-[32px] font-extrabold font-inter leading-10 text-primary">
-                      {unit.length || me?.userAreaId?.activeHalqaCount}
+                      {me?.userAreaId?.activeHalqaCount}
                     </p>
                     <h3 className="font-inter text-[12px] font-semibold leading-[14.52px] text-left text-primary">
                       Active Units
@@ -914,14 +905,14 @@ export const Dashboard = () => {
                                           fontSize: "smaller",
                                         }}
                                       >
-                                        {obj.name
+                                        {obj?.name
                                           ?.split("")
                                           .slice(0, 20)
                                           .join("")}
                                       </p>
                                     </td>
                                     <td className="font-inter w-[50%] text-[14px] font-medium leading-[16.94px] text-end">
-                                      {obj?.users.length > 0 ? (
+                                      {obj?.users?.length > 0 ? (
                                         obj.users.map((user) => user.name)
                                       ) : (
                                         <span
@@ -970,12 +961,12 @@ export const Dashboard = () => {
                                         fontSize: "smaller",
                                       }}
                                     >
-                                      {obj.name}
+                                      {obj?.name}
                                     </p>
                                   </td>
                                   <td className="w-[50%]">
-                                    {obj?.users.length > 0 ? (
-                                      obj.users.map((user) => user.name)
+                                    {obj?.users?.length > 0 ? (
+                                      obj.users?.map((user) => user?.name)
                                     ) : (
                                       <span
                                         style={{

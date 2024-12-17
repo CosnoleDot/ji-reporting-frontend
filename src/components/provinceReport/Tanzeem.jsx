@@ -22,12 +22,12 @@ export const Tanzeem = ({ view, id }) => {
       "busmSchoolUnits",
       "busmRehaishUnits",
       "busmTotalUnits",
-      "arkan",
-      "umeedWaran",
-      "rafaqa",
-      "karkunan",
-      "members",
-      "shaheen",
+      // "arkan",
+      // "umeedWaran",
+      // "rafaqa",
+      // "karkunan",
+      // "members",
+      // "shaheen",
     ];
     afd.forEach((i) => {
       calcultate(i);
