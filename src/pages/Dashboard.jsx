@@ -111,7 +111,9 @@ export const Dashboard = () => {
     setLoading(false);
   };
   useEffect(() => {
-    getNazim();
+    if (me && Object.keys(me).length > 0) {
+      getNazim();
+    }
   }, [me]);
   useEffect(() => {
     handlePersonalFilledReports();
@@ -879,10 +881,7 @@ export const Dashboard = () => {
                           <tr className="w-full flex justify-between ">
                             <th className="text-start">Area</th>
                             <th className="text-center">Nazim</th>
-                            <th className="md:block hidden"></th>
-                            <th className="md:block hidden"></th>
-                            <th className="md:block hidden"></th>
-                            <th className="text-left mr-2">Action</th>
+                            <th className="text-center">Action</th>
                           </tr>
                         </thead>
                         <div className="w-full mb-3 md:h-[350px] h-[320px] overflow-auto overflow-y-scroll">
@@ -897,21 +896,13 @@ export const Dashboard = () => {
                               data?.submitted?.length > 0 ? (
                                 data?.submitted?.map((obj, index) => (
                                   <tr key={index} className={`w-full flex`}>
-                                    <td className=" ">
-                                      <p
-                                        className="font-inter text-[14px] font-medium leading-[16.94px] text-left"
-                                        style={{
-                                          textTransform: "capitalize",
-                                          fontSize: "smaller",
-                                        }}
-                                      >
-                                        {obj?.name
-                                          ?.split("")
-                                          .slice(0, 20)
-                                          .join("")}
-                                      </p>
+                                    <td className="font-inter w-full text-[14px] font-medium leading-[16.94px] text-left ">
+                                      {obj?.name
+                                        ?.split("")
+                                        .slice(0, 20)
+                                        .join("")}
                                     </td>
-                                    <td className="font-inter w-[50%] text-[14px] font-medium leading-[16.94px] text-end">
+                                    <td className="font-inter w-full text-[14px] font-medium text-end">
                                       {obj?.users?.length > 0 ? (
                                         obj.users.map((user) => user.name)
                                       ) : (
@@ -926,17 +917,14 @@ export const Dashboard = () => {
                                         </span>
                                       )}
                                     </td>
-                                    <td className="w-[50%] md:block hidden"></td>
-                                    <td className="w-[50%] md:block hidden"></td>
-                                    <td className="w-[50%] md:block hidden"></td>
-                                    <td className="">
-                                      <div
-                                        onClick={() => {
-                                          getAreaDetails(obj);
-                                        }}
-                                      >
-                                        <FaEye className="cursor-pointer text-2xl p-0 m-0" />
-                                      </div>
+
+                                    <td
+                                      className="font-inter w-full text-[14px] font-medium leading-[16.94px] flex justify-end items-center"
+                                      onClick={() => {
+                                        getAreaDetails(obj, obj.type);
+                                      }}
+                                    >
+                                      <FaEye className="cursor-pointer text-2xl p-0 m-0" />
                                     </td>
                                   </tr>
                                 ))
@@ -979,9 +967,6 @@ export const Dashboard = () => {
                                       </span>
                                     )}
                                   </td>
-                                  <td className="w-[50%] md:block hidden"></td>
-                                  <td className="w-[50%] md:block hidden"></td>
-                                  <td className="w-[50%] md:block hidden"></td>
 
                                   <td className="">
                                     <div

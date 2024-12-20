@@ -21,26 +21,19 @@ import { RxCross1 } from "react-icons/rx";
 
 export const DivisionCompile = () => {
   // EDIT CODE START
-  const [createData, setCreateData] = useState();
-  const [month, setMonth] = useState("");
-  const params = useParams();
   const [id, setId] = useState(null);
-  const { dispatch } = useToastState();
   const [data, setData] = useState({});
-  const { loading, setLoading, getDivisionReports } = useContext(UIContext);
+  const { loading } = useContext(UIContext);
   const [view, setView] = useState(true);
   const location = useLocation();
   const me = useContext(MeContext);
   const navigate = useNavigate();
-  const [page, setPage] = useState();
-
   const compileReport = useContext(CompileReportContext);
 
   const [date, setDate] = useState(
     `${compileReport?.startDate} تا  ${compileReport?.endDate}`
   );
   const queryParams = new URLSearchParams(location.search);
-  const areaType = queryParams.get("areaType");
   const areaName = queryParams.get("areaName");
   const startDate = queryParams.get("startDate");
   const endDate = queryParams.get("endDate");
@@ -93,7 +86,7 @@ export const DivisionCompile = () => {
     <GeneralLayout active={"compileReports"}>
       {Object.keys(compileReport).length > 2 ? (
         <div className="reports overflow-hidden overflow-y-scroll w-full">
-         <div className="mt-9">
+          <div className="mt-9">
             <button
               type="button"
               className="p-2 absolute top-2"
@@ -182,21 +175,6 @@ export const DivisionCompile = () => {
                 <RozOShabDiary view={view} compile={true} />
               </div>
             </div>
-
-            {!view && (
-              <div className="w-full flex flex-col items-end gap-3 p-2">
-                <div>
-                  <label htmlFor="nazim">نام ناظمِ:</label>
-                  <input
-                    type="text"
-                    className="border-b-2 border-dashed text-center"
-                    id="nazim"
-                    defaultValue={me?.name || ""}
-                    readOnly
-                  />
-                </div>
-              </div>
-            )}
 
             {/* </fieldset> */}
           </form>

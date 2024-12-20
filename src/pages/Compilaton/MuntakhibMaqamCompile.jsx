@@ -23,13 +23,7 @@ import { NoReports } from "../Reports";
 import { FaPrint } from "react-icons/fa";
 export const MuntakhibMaqamCompile = () => {
   // EDIT CODE START
-  const [month, setMonth] = useState("");
-  const [createData, setCreateData] = useState();
-  const params = useParams();
   const [id, setId] = useState(null);
-  const { dispatch } = useToastState();
-  const [data, setData] = useState({});
-  const { loading, setLoading, getMaqamReports } = useContext(UIContext);
   const [view, setView] = useState(true);
   const location = useLocation();
   const me = useContext(MeContext);
@@ -138,8 +132,7 @@ export const MuntakhibMaqamCompile = () => {
     <GeneralLayout active={"compileReports"}>
       {Object.keys(compileReport).length > 2 ? (
         <div className="reports  overflow-y-scroll">
-        <div className="mt-9">
-          
+          <div className="mt-9">
             <button
               type="button"
               className="p-2"
@@ -218,21 +211,6 @@ export const MuntakhibMaqamCompile = () => {
               <div className="mb-4">
                 <RozOShabDiary view={view} compile={true} />
               </div>
-
-              {!view && (
-                <div className="w-full flex flex-col items-end gap-3 p-2">
-                  <div>
-                    <label htmlFor="nazim">نام ناظمِ:</label>
-                    <input
-                      type="text"
-                      className="border-b-2 border-dashed text-center"
-                      id="nazim"
-                      defaultValue={me?.name || ""}
-                      readOnly
-                    />
-                  </div>
-                </div>
-              )}
             </div>
             <div className="flex w-ful justify-center">
               <button className="btn" onClick={() => handlePrint()}>

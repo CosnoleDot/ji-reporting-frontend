@@ -14,24 +14,7 @@ import instance from "../../api/instrance";
 import { MeContext, useToastState } from "../../context";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { RxCross1 } from "react-icons/rx";
-
-const intro = [
-  {
-    title: "نام",
-    type: "text",
-    key: "name",
-  },
-  {
-    title: "جمعیت سے تعلق",
-    type: "text",
-    key: "JamiatRelation",
-  },
-  {
-    title: "تنظیمی تعلق",
-    type: "text",
-    key: "organizationRelation",
-  },
-];
+import { UIContext } from "../../context/ui";
 
 export const ReportUmeedwar = () => {
   const [attended, setAttended] = useState("no");
@@ -48,6 +31,7 @@ export const ReportUmeedwar = () => {
   const [fileMode, setFileMode] = useState("");
   const [otherprayers, setOtherprayers] = useState("");
   const [prayers, setPrayers] = useState("");
+  const { loading, setLoading } = useContext(UIContext);
   const getTotalDaysInPreviousMonth = () => {
     const date = new Date();
     date.setMonth(date.getMonth() - 1); // Move to previous month
@@ -75,39 +59,39 @@ export const ReportUmeedwar = () => {
     jsonData["otherPrayersTotal"] = otherprayers;
     jsonData["month"] = date;
     let l = location.pathname?.split("/")[2];
-    if (l === "create") {
-      await instance
-        .post(`/umeedwar`, jsonData, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("@token")}`,
-          },
-        })
-        .then((req) => {
-          dispatch({ type: "SUCCESS", payload: req?.data?.message });
-          navigate("/personalReport");
-        })
-        .catch((req) => {
-          dispatch({ type: "ERROR", payload: req.response.data.message });
+
+    setLoading(true); 
+    try {
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("@token")}`,
+      };
+
+      if (l === "create") {
+        const response = await instance.post(`/umeedwar`, jsonData, {
+          headers,
         });
-    }
-    if (l === "edit") {
-      await instance
-        .put(`/umeedwar/${id}`, jsonData, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("@token")}`,
-          },
-        })
-        .then((req) => {
-          dispatch({ type: "SUCCESS", payload: req?.data?.message });
-          navigate("/personalReport");
-        })
-        .catch((req) => {
-          dispatch({ type: "ERROR", payload: req.response.data.message });
+        dispatch({ type: "SUCCESS", payload: response?.data?.message });
+        navigate("/personalReport");
+      }
+
+      if (l === "edit") {
+        const response = await instance.put(`/umeedwar/${id}`, jsonData, {
+          headers,
         });
+        dispatch({ type: "SUCCESS", payload: response?.data?.message });
+        navigate("/personalReport");
+      }
+    } catch (error) {
+      dispatch({
+        type: "ERROR",
+        payload: error.response?.data?.message || "An error occurred",
+      });
+    } finally {
+      setLoading(false); 
     }
   };
+
   const setDateFn = () => {
     const date0 = new Date();
     date0.setMonth(date0.getMonth() - 1);
@@ -122,9 +106,12 @@ export const ReportUmeedwar = () => {
   useEffect(() => {
     const l = location.pathname?.split("/")[2];
     if (l === "create") {
+      console.log(me);
+      const name = document.getElementById("name");
+      name.value = me?.name;
       setDateFn();
     }
-  }, []);
+  }, [view]);
   useEffect(() => {
     const l = location.pathname?.split("/")[2];
 
@@ -148,7 +135,12 @@ export const ReportUmeedwar = () => {
       },
     });
     if (req.status === 200) {
-      setDate(req.data.data.month.split("")?.slice(0, 7)?.join(""));
+      setDate(req?.data?.data?.month?.split("")?.slice(0, 7)?.join(""));
+
+      document.getElementById("JamiatRelation").value =
+        req?.data?.data?.userId?.nazim;
+      document.getElementById("organizationRelation").value =
+        req?.data?.data?.userId?.nazimType;
       setSingleFile(req?.data?.data);
       setAanat(req?.data?.data?.itaatNazmId?.aanat);
       setAttended(req?.data?.data?.itaatNazmId?.attended);
@@ -196,8 +188,10 @@ export const ReportUmeedwar = () => {
           } else {
             if (key === "month") {
               elem.value = obj[key]?.split("").slice(0, 7).join("");
+            } else if (key == "name") {
+              document.getElementById("name").value = singleFile?.userId?.name;
             } else {
-              if (elem) {
+              if (elem && elem !== "name") {
                 elem.value = obj[key];
               }
             }
@@ -260,12 +254,10 @@ export const ReportUmeedwar = () => {
                 </label>
                 <input
                   type="text"
-                  defaultValue={me?.name || "Name"}
                   readOnly
                   id="name"
                   name="name"
                   className="border-b-2 text-center border-dashed  mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
-                  value={me?.name}
                 />
               </div>
               <div className="w-full flex gap-4  mb-4">
@@ -282,7 +274,6 @@ export const ReportUmeedwar = () => {
                   id="JamiatRelation"
                   name="JamiatRelation"
                   className="border-b-2 text-center border-dashed  mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
-                  value={localStorage.getItem("@type")}
                 />
               </div>
               <div className="flex gap-4 mb-4">
@@ -299,7 +290,6 @@ export const ReportUmeedwar = () => {
                   id="organizationRelation"
                   name="organizationRelation"
                   className="border-b-2 text-center border-dashed  mb-2 lg:mb-0 max-w-[6rem] md:max-w-lg"
-                  value={localStorage.getItem("@nazimType")}
                 />
               </div>
               <h3 className="mb-2 block text-sm md:text-lg">

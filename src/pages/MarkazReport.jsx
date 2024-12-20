@@ -28,14 +28,6 @@ import {
 import { GeneralInfo } from "../components/markazReport/GeneralInfo";
 import { Baitulmal } from "../components/markazReport/Baitulmal";
 
-// const getData = async (path, id, setData, data) => {
-//   const arr = data[path];
-//   const obj = arr.filter((i) => i?._id?.toString() === id?.toString());
-//   // if (req) {
-//   setData(reverseDataFormat(obj[0]));
-//   // }F
-// };
-
 export const MarkazReport = () => {
   // EDIT CODE START
   const province = useContext(ProvinceReportContext);
@@ -104,20 +96,6 @@ export const MarkazReport = () => {
         }
       }
       //  there
-      const afd = [
-        "rehaishHalqay",
-        "taleemHalqay",
-        "totalHalqay",
-        "subRehaishHalqay",
-        "subTaleemHalqay",
-        "subTotalHalqay",
-        "busmSchoolUnits",
-        "busmRehaishUnits",
-        "busmTotalUnits",
-      ];
-      afd.forEach((i) => {
-        calcultate(i);
-      });
 
       setObj({
         ijtRafaqaDecided: halq["ijtRafaqa-decided"],
@@ -241,9 +219,16 @@ export const MarkazReport = () => {
         },
       });
       const repo = req?.data?.data?.data;
-      setCreateData(repo);
-
-      dispatch({ type: "SUCCESS", payload: req.data?.message });
+      if (repo.length === 0) {
+        dispatch({
+          type: "WARNING",
+          payload:
+            "Markaz can not fill report unless one of the province have filled",
+        });
+      } else {
+        setCreateData(repo);
+        dispatch({ type: "SUCCESS", payload: req.data?.message });
+      }
     } catch (err) {
       dispatch({ type: "ERROR", payload: err.response.data.message });
     }
@@ -344,14 +329,24 @@ export const MarkazReport = () => {
         });
         dispatch({ type: "SUCCESS", payload: req?.data?.message });
       } else {
-        const req = await instance.post("/reports/markaz", jsonData, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("@token")}`,
-          },
-        });
-        await getMarkazReport(0, 10);
-        dispatch({ type: "SUCCESS", payload: req.data?.message });
+        if (createData.length === 0) {
+          dispatch({
+            type: "WARNING",
+            payload:
+              "Markaz can not fill report unless one of the province have filled",
+          });
+          setLoading(false);
+          return;
+        } else {
+          const req = await instance.post("/reports/markaz", jsonData, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("@token")}`,
+            },
+          });
+          await getMarkazReport(0, 10);
+          dispatch({ type: "SUCCESS", payload: req.data?.message });
+        }
       }
       navigate("/reports");
     } catch (error) {

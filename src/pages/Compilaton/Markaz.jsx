@@ -14,28 +14,12 @@ import {
   Colleges,
 } from "../../components/markazReport";
 import { GeneralInfo, GeneralLayout, calcultate } from "../../components";
-import { convertDataFormat, reverseDataFormat, toJson } from "../../utils";
-import instance from "../../api/instrance";
-import {
-  CompileReportContext,
-  MarkazReportContext,
-  MeContext,
-  ProvinceReportContext,
-  useToastState,
-} from "../../context";
+import { CompileReportContext, MeContext, useToastState } from "../../context";
 import { UIContext } from "../../context/ui";
 import { Baitulmal } from "../../components/maqamReport/Baitulmal";
 import { NoReports } from "../Reports";
 import { FaPrint } from "react-icons/fa";
 import { RxCross1 } from "react-icons/rx";
-
-// const getData = async (path, id, setData, data) => {
-//   const arr = data[path];
-//   const obj = arr.filter((i) => i?._id?.toString() === id?.toString());
-//   // if (req) {
-//   setData(reverseDataFormat(obj[0]));
-//   // }F
-// };
 
 export const Markaz = () => {
   // EDIT CODE START
@@ -45,7 +29,6 @@ export const Markaz = () => {
   const [id, setId] = useState(null);
   const { dispatch } = useToastState();
   const [data, setData] = useState({});
-  const { loading, setLoading, getMarkazReport } = useContext(UIContext);
   const [view, setView] = useState(true);
   const [obj, setObj] = useState({});
   const location = useLocation();
@@ -197,21 +180,6 @@ export const Markaz = () => {
               <div className="mb-4">
                 <RozOShabDiary view={view} />
               </div>
-
-              {!view && (
-                <div className="w-full flex flex-col items-end gap-3 p-2">
-                  <div>
-                    <label htmlFor="nazim">نام ناظم اعلیٰ:</label>
-                    <input
-                      type="text"
-                      className="border-b-2 border-dashed text-center"
-                      id="nazim"
-                      defaultValue={me?.name || ""}
-                      readOnly
-                    />
-                  </div>
-                </div>
-              )}
             </div>
           </form>
           <div className="flex w-ful justify-center">

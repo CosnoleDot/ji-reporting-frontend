@@ -226,7 +226,7 @@ export const PersonalReportsDashboard = () => {
               <thead className="">
                 <tr className="w-full flex justify-between ">
                   <th className="text-start">Area</th>
-                  <th className="text-start">Nazim</th>
+                  <th className="text-start">Name</th>
                   <th className="text-center">Last Modified</th>
                   <th className="md:block hidden"></th>
                   <th className="md:block hidden"></th>

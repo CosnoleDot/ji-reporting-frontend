@@ -1,15 +1,51 @@
+import { useEffect, useRef, useState } from "react";
 import { Box } from "./IfradiKuwat";
 
 export const Tanzeem = ({ view }) => {
-  const calcultate = (v) => {
-    // (start + increase)- decrease
+  const sRef = useRef(0);
+  const [isRendered, setIsRendered] = useState(false);
+  const afd = [
+    "rehaishHalqay",
+    "taleemHalqay",
+    "totalHalqay",
+    "subRehaishHalqay",
+    "subTaleemHalqay",
+    "subTotalHalqay",
+    "busmSchoolUnits",
+    "busmRehaishUnits",
+    "busmTotalUnits",
+  ];
+
+  // Function to calculate the values based on inputs
+  const calculate = (v) => {
     const s = document.getElementById(`${v}-start`);
     const i = document.getElementById(`${v}-increase`);
     const d = document.getElementById(`${v}-decrease`);
-    document.getElementById(`${v}-end`).value =
-      parseInt(s.value) + parseInt(i.value) - parseInt(d.value);
-    return parseInt(s.value) + parseInt(i.value) - parseInt(d.value);
+    const e = document.getElementById(`${v}-end`);
+
+    if (s && i && d && e) {
+      const result =
+        parseInt(s.value || 0) +
+        parseInt(i.value || 0) -
+        parseInt(d.value || 0);
+      e.value = result;
+      return result;
+    }
+    return 0;
   };
+
+  useEffect(() => {
+    if (isRendered) {
+      afd.forEach((field) => {
+        calculate(field);
+      });
+    }
+  }, [isRendered]);
+  useEffect(() => {
+    if (parseInt(sRef?.current?.value) !== 0) {
+      setIsRendered(true);
+    }
+  });
 
   const totalCalculate = (arg1, arg2, final) => {
     // Function to safely access and set element value
@@ -96,6 +132,7 @@ export const Tanzeem = ({ view }) => {
             <Box>رہائشی حلقے</Box>
             <Box>
               <input
+                ref={sRef}
                 readOnly={true}
                 type="number"
                 defaultValue={0}
@@ -103,7 +140,7 @@ export const Tanzeem = ({ view }) => {
                 name={`rehaishHalqay-start`}
                 id={`rehaishHalqay-start`}
                 onChange={() => {
-                  calcultate("rehaishHalqay");
+                  calculate("rehaishHalqay");
                   totalCalculate(
                     "taleemHalqay",
                     "rehaishHalqay",
@@ -122,7 +159,7 @@ export const Tanzeem = ({ view }) => {
                 name={`rehaishHalqay-increase`}
                 id={`rehaishHalqay-increase`}
                 onChange={() => {
-                  calcultate("rehaishHalqay");
+                  calculate("rehaishHalqay");
                   totalCalculate(
                     "taleemHalqay",
                     "rehaishHalqay",
@@ -141,7 +178,7 @@ export const Tanzeem = ({ view }) => {
                 name={`rehaishHalqay-decrease`}
                 id={`rehaishHalqay-decrease`}
                 onChange={() => {
-                  calcultate("rehaishHalqay");
+                  calculate("rehaishHalqay");
                   totalCalculate(
                     "taleemHalqay",
                     "rehaishHalqay",
@@ -155,11 +192,9 @@ export const Tanzeem = ({ view }) => {
               <input
                 readOnly={true}
                 type="number"
-                defaultValue={0}
                 required
                 name={`rehaishHalqay-end`}
                 id={`rehaishHalqay-end`}
-                
                 className="p-1 text-center min-w-full"
               />
             </Box>
@@ -171,7 +206,7 @@ export const Tanzeem = ({ view }) => {
                 defaultValue={0}
                 required
                 onChange={() => {
-                  calcultate("taleemHalqay");
+                  calculate("taleemHalqay");
                   totalCalculate(
                     "taleemHalqay",
                     "rehaishHalqay",
@@ -192,7 +227,7 @@ export const Tanzeem = ({ view }) => {
                 name={`rehaishHalqay-paused`}
                 id={`rehaishHalqay-paused`}
                 onChange={() => {
-                  calcultate("taleemHalqay");
+                  calculate("taleemHalqay");
                   totalCalculate(
                     "taleemHalqay",
                     "rehaishHalqay",
@@ -225,7 +260,7 @@ export const Tanzeem = ({ view }) => {
                 name={`taleemHalqay-start`}
                 id={`taleemHalqay-start`}
                 onChange={() => {
-                  calcultate("taleemHalqay");
+                  calculate("taleemHalqay");
                   totalCalculate(
                     "taleemHalqay",
                     "rehaishHalqay",
@@ -244,7 +279,7 @@ export const Tanzeem = ({ view }) => {
                 name={`taleemHalqay-increase`}
                 id={`taleemHalqay-increase`}
                 onChange={() => {
-                  calcultate("taleemHalqay");
+                  calculate("taleemHalqay");
                   totalCalculate(
                     "taleemHalqay",
                     "rehaishHalqay",
@@ -263,7 +298,7 @@ export const Tanzeem = ({ view }) => {
                 name={`taleemHalqay-decrease`}
                 id={`taleemHalqay-decrease`}
                 onChange={() => {
-                  calcultate("taleemHalqay");
+                  calculate("taleemHalqay");
                   totalCalculate(
                     "taleemHalqay",
                     "rehaishHalqay",
@@ -430,7 +465,7 @@ export const Tanzeem = ({ view }) => {
                 name={`subRehaishHalqay-start`}
                 id={`subRehaishHalqay-start`}
                 onChange={() => {
-                  calcultate("subRehaishHalqay");
+                  calculate("subRehaishHalqay");
                   totalCalculate(
                     "subTaleemHalqay",
                     "subRehaishHalqay",
@@ -449,7 +484,7 @@ export const Tanzeem = ({ view }) => {
                 name={`subRehaishHalqay-increase`}
                 id={`subRehaishHalqay-increase`}
                 onChange={() => {
-                  calcultate("subRehaishHalqay");
+                  calculate("subRehaishHalqay");
                   totalCalculate(
                     "subTaleemHalqay",
                     "subRehaishHalqay",
@@ -468,7 +503,7 @@ export const Tanzeem = ({ view }) => {
                 name={`subRehaishHalqay-decrease`}
                 id={`subRehaishHalqay-decrease`}
                 onChange={() => {
-                  calcultate("subRehaishHalqay");
+                  calculate("subRehaishHalqay");
                   totalCalculate(
                     "subTaleemHalqay",
                     "subRehaishHalqay",
@@ -531,7 +566,6 @@ export const Tanzeem = ({ view }) => {
                 type="number"
                 defaultValue={0}
                 required
-                
                 name={`subRehaishHalqay-monthly`}
                 id={`subRehaishHalqay-monthly`}
                 className="p-1 text-center min-w-full"
@@ -549,7 +583,7 @@ export const Tanzeem = ({ view }) => {
                 name={`subTaleemHalqay-start`}
                 id={`subTaleemHalqay-start`}
                 onChange={() => {
-                  calcultate("subTaleemHalqay");
+                  calculate("subTaleemHalqay");
                   totalCalculate(
                     "subTaleemHalqay",
                     "subRehaishHalqay",
@@ -568,7 +602,7 @@ export const Tanzeem = ({ view }) => {
                 name={`subTaleemHalqay-increase`}
                 id={`subTaleemHalqay-increase`}
                 onChange={() => {
-                  calcultate("subTaleemHalqay");
+                  calculate("subTaleemHalqay");
                   totalCalculate(
                     "subTaleemHalqay",
                     "subRehaishHalqay",
@@ -587,7 +621,7 @@ export const Tanzeem = ({ view }) => {
                 name={`subTaleemHalqay-decrease`}
                 id={`subTaleemHalqay-decrease`}
                 onChange={() => {
-                  calcultate("subTaleemHalqay");
+                  calculate("subTaleemHalqay");
                   totalCalculate(
                     "subTaleemHalqay",
                     "subRehaishHalqay",
@@ -747,7 +781,7 @@ export const Tanzeem = ({ view }) => {
                 name={`busmSchoolUnits-start`}
                 id={`busmSchoolUnits-start`}
                 onChange={() => {
-                  calcultate("busmSchoolUnits");
+                  calculate("busmSchoolUnits");
                   totalCalculate(
                     "busmSchoolUnits",
                     "busmRehaishUnits",
@@ -766,7 +800,7 @@ export const Tanzeem = ({ view }) => {
                 name={`busmSchoolUnits-increase`}
                 id={`busmSchoolUnits-increase`}
                 onChange={() => {
-                  calcultate("busmSchoolUnits");
+                  calculate("busmSchoolUnits");
                   totalCalculate(
                     "busmSchoolUnits",
                     "busmRehaishUnits",
@@ -785,7 +819,7 @@ export const Tanzeem = ({ view }) => {
                 name={`busmSchoolUnits-decrease`}
                 id={`busmSchoolUnits-decrease`}
                 onChange={() => {
-                  calcultate("busmSchoolUnits");
+                  calculate("busmSchoolUnits");
                   totalCalculate(
                     "busmSchoolUnits",
                     "busmRehaishUnits",
@@ -830,7 +864,7 @@ export const Tanzeem = ({ view }) => {
                 type="number"
                 defaultValue={0}
                 onChange={() => {
-                  calcultate("busmSchoolUnits");
+                  calculate("busmSchoolUnits");
                   totalCalculate(
                     "busmSchoolUnits",
                     "busmRehaishUnits",
@@ -866,7 +900,7 @@ export const Tanzeem = ({ view }) => {
                 name={`busmRehaishUnits-start`}
                 id={`busmRehaishUnits-start`}
                 onChange={() => {
-                  calcultate("busmRehaishUnits");
+                  calculate("busmRehaishUnits");
                   totalCalculate(
                     "busmSchoolUnits",
                     "busmRehaishUnits",
@@ -885,7 +919,7 @@ export const Tanzeem = ({ view }) => {
                 name={`busmRehaishUnits-increase`}
                 id={`busmRehaishUnits-increase`}
                 onChange={() => {
-                  calcultate("busmRehaishUnits");
+                  calculate("busmRehaishUnits");
                   totalCalculate(
                     "busmSchoolUnits",
                     "busmRehaishUnits",
@@ -904,7 +938,7 @@ export const Tanzeem = ({ view }) => {
                 name={`busmRehaishUnits-decrease`}
                 id={`busmRehaishUnits-decrease`}
                 onChange={() => {
-                  calcultate("busmRehaishUnits");
+                  calculate("busmRehaishUnits");
                   totalCalculate(
                     "busmSchoolUnits",
                     "busmRehaishUnits",
@@ -988,6 +1022,7 @@ export const Tanzeem = ({ view }) => {
             </Box>
             <Box>
               <input
+                ref={sRef}
                 readOnly={true}
                 type="number"
                 defaultValue={0}
