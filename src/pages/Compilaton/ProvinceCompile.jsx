@@ -133,7 +133,7 @@ export const ProvinceCompile = () => {
     <GeneralLayout active={"compileReports"}>
       {Object.keys(compileReport).length > 2 ? (
         <div className="reports  overflow-y-scroll">
-       <div className="mt-9">
+          <div className="mt-9">
             <button
               type="button"
               className="p-2"
@@ -210,19 +210,6 @@ export const ProvinceCompile = () => {
               </div>
               <div>
                 <RozOShabDiary />
-              </div>
-
-              <div className="w-full flex flex-col items-end gap-3 p-2">
-                <div>
-                  <label htmlFor="nazim">نام ناظمِ:</label>
-                  <input
-                    type="text"
-                    className="border-b-2 border-dashed text-center"
-                    id="nazim"
-                    defaultValue={me?.name || ""}
-                    readOnly
-                  />
-                </div>
               </div>
             </div>
           </form>

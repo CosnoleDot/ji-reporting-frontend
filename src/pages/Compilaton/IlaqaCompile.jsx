@@ -2,7 +2,6 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { GeneralLayout } from "../../components";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { CompileReportContext, MeContext, useToastState } from "../../context";
-import { UIContext } from "../../context/ui";
 import { Tanzeem } from "../../components/ilaqaReport/Tanzeem";
 import { IfradiKuwat } from "../../components/ilaqaReport/IfradiKuwat";
 import { MarkaziActivities } from "../../components/ilaqaReport/MarkaziActivities";
@@ -13,20 +12,14 @@ import { Library } from "../../components/ilaqaReport/Library";
 import { PaighamDigest } from "../../components/ilaqaReport/PaighamDigest";
 import { Baitulmal } from "../../components/ilaqaReport/Baitulmal";
 import { RozOShabDiary } from "../../components/ilaqaReport/RozOShabDiary";
-import { MdOutlineSearchOff } from "react-icons/md";
 import { RxCross1 } from "react-icons/rx";
 import { NoReports } from "../Reports";
 import { FaPrint } from "react-icons/fa";
 
 export const IlaqaCompile = () => {
   // EDIT CODE START
-  const [createData, setCreateData] = useState();
-  const [month, setMonth] = useState("");
-  const params = useParams();
   const [id, setId] = useState(null);
-  const { dispatch } = useToastState();
   const [data, setData] = useState({});
-  const { loading, setLoading, getIlaqaReports } = useContext(UIContext);
   const [view, setView] = useState(true);
   const location = useLocation();
   const me = useContext(MeContext);
@@ -37,7 +30,6 @@ export const IlaqaCompile = () => {
     `${compileReport?.startDate} تا  ${compileReport?.endDate}`
   );
   const queryParams = new URLSearchParams(location.search);
-  const areaType = queryParams.get("areaType");
   const areaName = queryParams.get("areaName");
   const startDate = queryParams.get("startDate");
   const endDate = queryParams.get("endDate");
@@ -102,7 +94,7 @@ export const IlaqaCompile = () => {
     <GeneralLayout active={"compileReports"}>
       {Object.keys(compileReport).length > 2 ? (
         <div className="reports overflow-y-scroll">
-    <div className="mt-9">
+          <div className="mt-9">
             <button
               type="button"
               className="p-2"
@@ -173,21 +165,6 @@ export const IlaqaCompile = () => {
               <div className="mb-4">
                 <RozOShabDiary view={view} compile={true} />
               </div>
-
-              {!view && (
-                <div className="w-full flex flex-col items-end gap-3 p-2">
-                  <div>
-                    <label htmlFor="nazim">نام ناظمِ:</label>
-                    <input
-                      type="text"
-                      className="border-b-2 border-dashed text-center"
-                      id="nazim"
-                      defaultValue={me?.name || ""}
-                      readOnly
-                    />
-                  </div>
-                </div>
-              )}
             </div>
           </form>
           <div className="flex w-ful justify-center">

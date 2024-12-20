@@ -443,7 +443,9 @@ export const LocationMaqam = () => {
       fetchAreas();
     }
   }, []);
-
+  useEffect(() => {
+    console.log(areaDetails);
+  }, [areaDetails]);
   return (
     <>
       <div className="w-full flex flex-wrap gap-2 justify-end items-center">
@@ -715,7 +717,7 @@ export const LocationMaqam = () => {
                       <td className=" text-center font-medium md:text-sm text-xs leading-[16.94px]">
                         <div
                           onClick={() => {
-                            getAreaDetails(halqa);
+                            getAreaDetails(halqa, "halqa");
                           }}
                         >
                           <FaEye className="cursor-pointer text-lg" />
@@ -1254,7 +1256,7 @@ export const LocationMaqam = () => {
                     ? areaDetails?.parentId?.province?.name
                     : areaDetails?.province
                     ? areaDetails?.province?.name
-                    : ""}
+                    : areaDetails?.maqam?.province?.name}
                 </h4>
               </div>
             )}

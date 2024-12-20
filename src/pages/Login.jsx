@@ -6,7 +6,6 @@ import { useContext, useState } from "react";
 import { Loader } from "../components";
 import { UIContext } from "../context/ui";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Powered } from "../components/consoledot";
 
 export const Login = ({ setAuthenticated }) => {
   const navigate = useNavigate();

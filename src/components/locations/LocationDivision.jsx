@@ -845,7 +845,7 @@ export const LocationDivision = () => {
                     <td className="">
                       <div
                         onClick={() => {
-                          getAreaDetails(halqa);
+                          getAreaDetails(halqa, "halqa");
                         }}
                       >
                         <FaEye className="cursor-pointer text-lg" />

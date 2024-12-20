@@ -172,9 +172,14 @@ export const Signup = () => {
     }
   };
   const nonNumaricCal = (e) => {
+    // Allow backspace and delete keys for erasing
+    if (e.key === "Backspace" || e.key === "Delete") {
+      return;
+    }
+
     if (!/^[0-9]$/.test(e.key)) {
       setMessage("No alphabets or special characters are allowed.");
-      e.preventDefault(); // Prevents the input of non-numeric characters
+      e.preventDefault();
     } else {
       setMessage("");
     }

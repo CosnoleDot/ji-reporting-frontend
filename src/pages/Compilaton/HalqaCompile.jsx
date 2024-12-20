@@ -8,31 +8,23 @@ import {
   ToseeDawat,
   Activity,
 } from "../../components";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { CompileReportContext, MeContext, useToastState } from "../../context";
-import { UIContext } from "../../context/ui";
+import { useLocation, useNavigate } from "react-router-dom";
+import { CompileReportContext } from "../../context";
 import { Baitulmal } from "../../components/halqa/Baitulmal";
 import { NoReports } from "../Reports";
 import { FaPrint } from "react-icons/fa";
 import { RxCross1 } from "react-icons/rx";
 export const HalqaCompile = () => {
-  const { dispatch } = useToastState();
-  const me = useContext(MeContext);
   const [id, setId] = useState(null);
   const [view, setView] = useState(true);
   const [data, setData] = useState({});
-  const { setLoading } = useContext(UIContext);
   const location = useLocation();
-  const { getHalqaReports } = useContext(UIContext);
-  const [compile, setCompile] = useState();
-  const params = useParams();
   let navigate = useNavigate();
   const compileReport = useContext(CompileReportContext);
   const [date, setDate] = useState(
     `${compileReport?.startDate} تا  ${compileReport?.endDate}`
   );
   const queryParams = new URLSearchParams(location.search);
-  const areaType = queryParams.get("areaType");
   const areaName = queryParams.get("areaName");
   const startDate = queryParams.get("startDate");
   const endDate = queryParams.get("endDate");
@@ -85,7 +77,7 @@ export const HalqaCompile = () => {
     <GeneralLayout active={"compileReports"}>
       {Object.keys(compileReport).length > 2 ? (
         <div className="reports  overflow-y-scroll">
-        <div className="mt-9">
+          <div className="mt-9">
             <button
               type="button"
               className="p-2"
@@ -147,21 +139,6 @@ export const HalqaCompile = () => {
               <div className="mb-4">
                 <RozOShabDiary view={view} />
               </div>
-              {!view && (
-                <div className="w-full flex flex-col items-end gap-3 p-2">
-                  <div>
-                    <label htmlFor="nazim">نام ناظمِ:</label>
-                    <input
-                      required
-                      type="text"
-                      className="border-b-2 border-dashed text-center"
-                      id="nazim"
-                      defaultValue={me?.name || ""}
-                      readOnly
-                    />
-                  </div>
-                </div>
-              )}
             </div>
           </form>
           <div className="flex w-ful justify-center">

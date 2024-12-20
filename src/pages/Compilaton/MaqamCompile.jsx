@@ -1,9 +1,7 @@
 import { GeneralLayout, calcultate } from "../../components";
-
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useContext, useRef, useState } from "react";
 import { useEffect } from "react";
-
 import { Jamiaat } from "../../components/maqamReport/Jamiaat";
 import { Colleges } from "../../components/maqamReport/Colleges";
 import { Tanzeem } from "../../components/maqamReport/Tanzeem";
@@ -16,9 +14,7 @@ import { Library } from "../../components/maqamReport/Library";
 import { PaighamDigest } from "../../components/maqamReport/PaighamDigest";
 import { Baitulmal } from "../../components/maqamReport/Baitulmal";
 import { RozOShabDiary } from "../../components/maqamReport/RozOShabDiary";
-import { reverseDataFormat } from "../../utils";
-import { CompileReportContext, MeContext, useToastState } from "../../context";
-import { UIContext } from "../../context/ui";
+import { CompileReportContext, MeContext } from "../../context";
 import { NoReports } from "../Reports";
 import { FaPrint } from "react-icons/fa";
 import { RxCross1 } from "react-icons/rx";
@@ -200,21 +196,6 @@ export const MaqamCompile = () => {
               <div className="mb-4">
                 <RozOShabDiary view={view} />
               </div>
-
-              {!view && (
-                <div className="w-full flex flex-col items-end gap-3 p-2">
-                  <div>
-                    <label htmlFor="nazim">نام ناظمِ:</label>
-                    <input
-                      type="text"
-                      className="border-b-2 border-dashed text-center"
-                      id="nazim"
-                      defaultValue={me?.name || ""}
-                      readOnly
-                    />
-                  </div>
-                </div>
-              )}
             </div>
           </form>
           <div className="flex w-ful justify-center">

@@ -57,15 +57,16 @@ export const Province = () => {
     setLoading(true);
     const provinceFinalData = {};
     document.getElementById("province-form").reset();
-    const maqamTFiltered = createData?.data?.maqamReports?.map((item) => {
+    const maqamTFiltered = createData?.maqamReports?.map((item) => {
       const { muntakhibTdId, tdId } = item;
       return { m: muntakhibTdId || [], t: tdId || [] };
     });
 
-    const divisionTFiltered = createData?.data?.divisionReports?.map((item) => {
+    const divisionTFiltered = createData?.divisionReports?.map((item) => {
       const { tdId } = item;
       return { t: tdId || [] };
     });
+    console.log(divisionTFiltered, maqamTFiltered, "maqamsfsdfas");
     const merged = {};
     if (maqamTFiltered && divisionTFiltered) {
       [...maqamTFiltered, ...divisionTFiltered]?.forEach((item) => {
@@ -90,7 +91,6 @@ export const Province = () => {
         }
       });
     }
-
     for (const key in merged) {
       if (key === "literatureDistribution") {
         setFinalMerged((prevState) => ({
@@ -130,7 +130,7 @@ export const Province = () => {
         }));
       }
     }
-    createData?.data?.maqamReports?.forEach((i) => {
+    createData?.maqamReports?.forEach((i) => {
       const sim = reverseDataFormat(i);
       Object.keys(sim)?.forEach((j) => {
         if (provinceFinalData?.[j]) {
@@ -148,7 +148,7 @@ export const Province = () => {
         }
       });
     });
-    createData?.data?.divisionReports?.forEach((i) => {
+    createData?.divisionReports?.forEach((i) => {
       const sim = reverseDataFormat(i);
       Object.keys(sim)?.forEach((j) => {
         if (provinceFinalData?.[j]) {
@@ -190,6 +190,7 @@ export const Province = () => {
       provinceFinalData["studyCircleMentioned-decided"] =
         maqams.length + divisions.length;
     }
+    console.log(provinceFinalData);
     Object.keys(provinceFinalData).forEach((i) => {
       let j = i;
       const elem = document.getElementById(j);
@@ -252,7 +253,7 @@ export const Province = () => {
 
       dispatch({ type: "SUCCESS", payload: req.data?.message });
     } catch (err) {
-      dispatch({ type: "ERROR", payload: err.response.data.message });
+      dispatch({ type: "ERROR", payload: err?.response?.data?.message });
     }
     setLoading(false);
   };

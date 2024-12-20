@@ -858,7 +858,7 @@ function App() {
     };
     let res;
     try {
-      if (obj?.type) {
+      if (obj?.type || obj.parentType) {
         res = await instance.get(`/locations/${userAreaType}/${obj?._id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("@token")}`,
